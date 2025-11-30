@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { Form, Input, Button, Card, Breadcrumb, Row, Col, message } from "antd";
 import { SaveOutlined, ArrowLeftOutlined, BookOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 
 const OrganizationFiliereCreate = () => {
   const { t } = useTranslation();

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, Card, Descriptions, Space, Button, Divider, Tag, Spin } from "antd";
 import { CreditCardOutlined, ArrowLeftOutlined } from "@ant-design/icons";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 
 const typeOptions = [
   { value: "MENSUEL", label: "Mensuel" },

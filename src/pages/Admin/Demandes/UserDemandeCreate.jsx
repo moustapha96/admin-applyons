@@ -25,7 +25,7 @@ import {
   
 } from "@ant-design/icons";
 import demandeService from "@/services/demandeService";
-import organizationService from "@/services/organizationservice";
+import organizationService from "@/services/organizationService";
 import paymentService from "@/services/paymentService";
 import { useAuth } from "@/hooks/useAuth";
 import { loadStripe } from "@stripe/stripe-js";

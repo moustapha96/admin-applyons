@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { Form, Input, Button, Select, Card, Breadcrumb, Row, Col, message, Steps, DatePicker, Checkbox, Divider, Spin } from "antd";
 import { SaveOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import demandeService from "@/services/demandeService";
-import organizationService from "@/services/organizationservice";
+import organizationService from "@/services/organizationService";
 import { useAuth } from "@/hooks/useAuth";
 
 const { Option } = Select;

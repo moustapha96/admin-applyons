@@ -31,7 +31,7 @@ import {
   TeamOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 import { BiBuilding } from "react-icons/bi";
 
 const { Search } = Input;

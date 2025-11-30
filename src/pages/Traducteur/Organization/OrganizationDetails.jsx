@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Spin, Card, Row, Col, Typography } from "antd";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 
 const OrganizationDetails = () => {
   const { organizationId } = useParams();

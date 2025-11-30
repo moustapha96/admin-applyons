@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, Table, Tag, Space, Button, Input, Select, Typography, message, Modal, Form } from "antd";
-import organizationService from "@/services/organizationservice";
+import organizationService from "@/services/organizationService";
 import userService from "@/services/userService";
 import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";

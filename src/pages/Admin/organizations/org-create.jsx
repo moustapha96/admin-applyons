@@ -19,7 +19,7 @@ import {
   PhoneOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 import { HiBuildingOffice } from "react-icons/hi2";
 
 const { Option } = Select;

@@ -22,7 +22,7 @@ import {
   BarChartOutlined
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import organizationService from "@/services/organizationservice";
+import organizationService from "@/services/organizationService";
 // import { useAuth } from "@/hooks/useAuth";
 import abonnementService from "@/services/abonnement.service";
 

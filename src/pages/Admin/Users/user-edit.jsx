@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
 import userService from "../../../services/userService";
 import { toast } from "sonner";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 import { getPermissionLabel } from "../../../auth/permissions";
 import { PERMS } from "../../../auth/permissions";
 const { Option } = Select;

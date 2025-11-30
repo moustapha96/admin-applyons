@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Form, Input, Button, Select, Card, Breadcrumb, Row, Col, message, Spin } from "antd";
 import { UserOutlined, SaveOutlined, ArrowLeftOutlined } from "@ant-design/icons";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 import userService from "../../../services/userService";
 
 const { Option } = Select;

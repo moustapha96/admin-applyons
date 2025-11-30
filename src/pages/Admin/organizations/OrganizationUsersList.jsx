@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Table, Tag, Space, Avatar, Breadcrumb, Button, Input, Select, message, Modal, Badge } from "antd";
 import { UserOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 import { useAuth } from "../../../hooks/useAuth";
 
 const { Search } = Input;

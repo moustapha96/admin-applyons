@@ -33,7 +33,7 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import demandeService from "@/services/demandeService";
-import organizationService from "@/services/organizationservice";
+import organizationService from "@/services/organizationService";
 import filiereService from "@/services/filiereService";
 import { useAuth } from "@/hooks/useAuth";
 import OrgNotifyPicker from "@/components/OrgNotifyPicker";

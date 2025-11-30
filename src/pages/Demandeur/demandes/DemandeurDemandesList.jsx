@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Table, Tag, Space, Breadcrumb, Button, Input, Select, message } from "antd";
 import { SearchOutlined, PlusOutlined, FileTextOutlined } from "@ant-design/icons";
 import demandeService from "@/services/demandeService";
-import organizationService from "@/services/organizationservice";
+import organizationService from "@/services/organizationService";
 import { useAuth } from "@/hooks/useAuth";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";

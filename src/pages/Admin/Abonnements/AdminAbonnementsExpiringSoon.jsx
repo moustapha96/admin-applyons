@@ -21,7 +21,7 @@ import {
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import abonnementService from "../../services/abonnementService";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 // import { useAuth } from "../../../hooks/useAuth";
 
 const { Title } = Typography;

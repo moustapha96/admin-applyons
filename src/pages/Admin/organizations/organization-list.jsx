@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Table, Tag, Space, Avatar, Breadcrumb, Button, Input, Select, message, Modal, Badge } from "antd";
 import { SearchOutlined, PlusOutlined,  PhoneOutlined, MailOutlined } from "@ant-design/icons";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 import { useAuth } from "../../../hooks/useAuth";
 import { BiBuildingHouse } from "react-icons/bi";
 import { useTranslation } from "react-i18next";

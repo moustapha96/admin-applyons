@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, Card, Descriptions, Space, Button, Divider, Spin } from "antd";
 import { BookOutlined, ArrowLeftOutlined } from "@ant-design/icons";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 
 const OrganizationFiliereDetail = () => {
   const { id: orgId, filiereId } = useParams();

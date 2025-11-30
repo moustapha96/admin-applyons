@@ -19,7 +19,7 @@ import {
   EnvironmentOutlined,
 
 } from "@ant-design/icons";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 import { BiBuilding } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
 

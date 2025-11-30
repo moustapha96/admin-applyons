@@ -18,7 +18,7 @@ import {
 import { UserOutlined, UploadOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import userService from "../../../services/userService";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 import { getPermissionLabel } from "../../../auth/permissions";
 import { PERMS } from "../../../auth/permissions";
 

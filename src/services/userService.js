@@ -1,6 +1,6 @@
 // // src/services/user.service.js
 import axiosInstance from "./api";
-import organizationService from "./organizationservice";
+import organizationService from "./organizationService";
 const userService = {
     list: (params) => axiosInstance.get("/users", { params }),
 

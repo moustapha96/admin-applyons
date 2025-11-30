@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, Card, Descriptions, Space, Button, Divider, Tag, Spin } from "antd";
 import { BankOutlined, ArrowLeftOutlined } from "@ant-design/icons";
-import organizationService from "../../../services/organizationservice";
+import organizationService from "../../../services/organizationService";
 
 const OrganizationDepartmentDetail = () => {
   const { id: orgId, deptId } = useParams();
