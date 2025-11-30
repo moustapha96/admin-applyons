@@ -2193,6 +2193,7 @@
     },
     "adminMailer": {
         "pageTitle": "Envoi d'email",
+        "subtitle": "Envoyez des emails professionnels avec pièces jointes",
         "breadcrumbs": {
             "dashboard": "Dashboard",
             "mailer": "Mailer"
@@ -2238,6 +2239,7 @@
                 "preview": "Prévisualiser",
                 "addFile": "Ajouter un fichier",
                 "send": "Envoyer",
+                "sending": "Envoi en cours...",
                 "clear": "Vider le formulaire"
             }
         },
@@ -2260,6 +2262,24 @@
         "messages": {
             "sendSuccess": "Email envoyé !",
             "sendError": "Échec de l'envoi"
+        },
+        "stats": {
+            "recipients": "Destinataires",
+            "attachments": "Pièces jointes",
+            "characters": "Caractères",
+            "totalSize": "Taille totale"
+        },
+        "common": {
+            "recipients": "Destinataires",
+            "invalidEmails": "Certains emails sont invalides",
+            "invalidEmail": "Email invalide",
+            "enabled": "Activé",
+            "disabled": "Désactivé",
+            "clear": "Effacer",
+            "delete": "Supprimer",
+            "subject": "Sujet",
+            "htmlVersion": "Version HTML",
+            "attachmentsCount": "Pièces jointes"
         }
     },
     "adminAuditLogs": {
@@ -2678,6 +2698,7 @@
             "fullName": "Nom complet",
             "email": "Email",
             "phone": "Téléphone",
+            "address": "Adresse",
             "role": "Rôle",
             "status": "Statut",
             "lastLogin": "Dernière connexion",

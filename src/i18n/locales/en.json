@@ -2154,6 +2154,7 @@
     },
     "adminMailer": {
         "pageTitle": "Send Email",
+        "subtitle": "Send professional emails with attachments",
         "breadcrumbs": {
             "dashboard": "Dashboard",
             "mailer": "Mailer"
@@ -2199,6 +2200,7 @@
                 "preview": "Preview",
                 "addFile": "Add file",
                 "send": "Send",
+                "sending": "Sending...",
                 "clear": "Clear form"
             }
         },
@@ -2221,6 +2223,24 @@
         "messages": {
             "sendSuccess": "Email sent!",
             "sendError": "Send failed"
+        },
+        "stats": {
+            "recipients": "Recipients",
+            "attachments": "Attachments",
+            "characters": "Characters",
+            "totalSize": "Total size"
+        },
+        "common": {
+            "recipients": "Recipients",
+            "invalidEmails": "Some emails are invalid",
+            "invalidEmail": "Invalid email",
+            "enabled": "Enabled",
+            "disabled": "Disabled",
+            "clear": "Clear",
+            "delete": "Delete",
+            "subject": "Subject",
+            "htmlVersion": "HTML Version",
+            "attachmentsCount": "Attachments"
         }
     },
     "adminAuditLogs": {
@@ -2639,6 +2659,7 @@
             "fullName": "Full Name",
             "email": "Email",
             "phone": "Phone",
+            "address": "Address",
             "role": "Role",
             "status": "Status",
             "lastLogin": "Last Login",

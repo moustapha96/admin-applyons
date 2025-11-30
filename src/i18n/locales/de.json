@@ -1923,6 +1923,7 @@
     },
     "adminMailer": {
         "pageTitle": "E-Mail senden",
+        "subtitle": "Senden Sie professionelle E-Mails mit Anhängen",
         "breadcrumbs": {
             "dashboard": "Dashboard",
             "mailer": "Mailer"
@@ -1968,6 +1969,7 @@
                 "preview": "Vorschau",
                 "addFile": "Datei hinzufügen",
                 "send": "Senden",
+                "sending": "Wird gesendet...",
                 "clear": "Formular leeren"
             }
         },
@@ -1990,6 +1992,24 @@
         "messages": {
             "sendSuccess": "E-Mail gesendet!",
             "sendError": "Senden fehlgeschlagen"
+        },
+        "stats": {
+            "recipients": "Empfänger",
+            "attachments": "Anhänge",
+            "characters": "Zeichen",
+            "totalSize": "Gesamtgröße"
+        },
+        "common": {
+            "recipients": "Empfänger",
+            "invalidEmails": "Einige E-Mails sind ungültig",
+            "invalidEmail": "Ungültige E-Mail",
+            "enabled": "Aktiviert",
+            "disabled": "Deaktiviert",
+            "clear": "Löschen",
+            "delete": "Löschen",
+            "subject": "Betreff",
+            "htmlVersion": "HTML-Version",
+            "attachmentsCount": "Anhänge"
         }
     },
     "adminAuditLogs": {
@@ -2404,6 +2424,7 @@
             "fullName": "Vollständiger Name",
             "email": "E-Mail",
             "phone": "Telefon",
+            "address": "Adresse",
             "role": "Rolle",
             "status": "Status",
             "lastLogin": "Letzter Login",

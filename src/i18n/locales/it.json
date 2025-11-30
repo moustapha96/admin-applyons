@@ -1923,6 +1923,7 @@
     },
     "adminMailer": {
         "pageTitle": "Invio email",
+        "subtitle": "Invia email professionali con allegati",
         "breadcrumbs": {
             "dashboard": "Dashboard",
             "mailer": "Mailer"
@@ -1968,6 +1969,7 @@
                 "preview": "Anteprima",
                 "addFile": "Aggiungi file",
                 "send": "Invia",
+                "sending": "Invio in corso...",
                 "clear": "Svuota modulo"
             }
         },
@@ -1990,6 +1992,24 @@
         "messages": {
             "sendSuccess": "Email inviata!",
             "sendError": "Invio fallito"
+        },
+        "stats": {
+            "recipients": "Destinatari",
+            "attachments": "Allegati",
+            "characters": "Caratteri",
+            "totalSize": "Dimensione totale"
+        },
+        "common": {
+            "recipients": "Destinatari",
+            "invalidEmails": "Alcune email non sono valide",
+            "invalidEmail": "Email non valida",
+            "enabled": "Attivato",
+            "disabled": "Disattivato",
+            "clear": "Cancella",
+            "delete": "Elimina",
+            "subject": "Oggetto",
+            "htmlVersion": "Versione HTML",
+            "attachmentsCount": "Allegati"
         }
     },
     "adminAuditLogs": {
@@ -2404,6 +2424,7 @@
             "fullName": "Nome completo",
             "email": "Email",
             "phone": "Telefono",
+            "address": "Indirizzo",
             "role": "Ruolo",
             "status": "Stato",
             "lastLogin": "Ultimo accesso",

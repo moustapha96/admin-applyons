@@ -2076,6 +2076,7 @@
     },
     "adminMailer": {
         "pageTitle": "Envío de correo",
+        "subtitle": "Envíe correos profesionales con archivos adjuntos",
         "breadcrumbs": {
             "dashboard": "Panel",
             "mailer": "Mailer"
@@ -2121,6 +2122,7 @@
                 "preview": "Vista previa",
                 "addFile": "Agregar archivo",
                 "send": "Enviar",
+                "sending": "Enviando...",
                 "clear": "Limpiar formulario"
             }
         },
@@ -2143,6 +2145,24 @@
         "messages": {
             "sendSuccess": "¡Correo enviado!",
             "sendError": "Error al enviar"
+        },
+        "stats": {
+            "recipients": "Destinatarios",
+            "attachments": "Adjuntos",
+            "characters": "Caracteres",
+            "totalSize": "Tamaño total"
+        },
+        "common": {
+            "recipients": "Destinatarios",
+            "invalidEmails": "Algunos correos son inválidos",
+            "invalidEmail": "Correo inválido",
+            "enabled": "Activado",
+            "disabled": "Desactivado",
+            "clear": "Limpiar",
+            "delete": "Eliminar",
+            "subject": "Asunto",
+            "htmlVersion": "Versión HTML",
+            "attachmentsCount": "Adjuntos"
         }
     },
     "adminAuditLogs": {
@@ -2557,6 +2577,7 @@
             "fullName": "Nombre completo",
             "email": "Correo electrónico",
             "phone": "Teléfono",
+            "address": "Dirección",
             "role": "Rol",
             "status": "Estado",
             "lastLogin": "Último inicio de sesión",
