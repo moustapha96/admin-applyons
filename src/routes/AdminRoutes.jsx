@@ -24,42 +24,42 @@ import DepartmentFiliereCreate from "../pages/Admin/Filieres/DepartmentFiliereCr
 import FiliereEdit from "../pages/Admin/Filieres/FiliereEdit";
 
 /* --- Organizations (pages côté admin) --- */
-import OrganizationList from "../pages/Admin/organizations/organization-list";
-import OrganizationCreate from "../pages/Admin/organizations/org-create";
-import OrganizationDetail from "../pages/Admin/organizations/org-details";
-import OrganizationEdit from "../pages/Admin/organizations/org-edit";
+import OrganizationList from "../pages/Admin/organizations/organization-list.jsx";
+import OrganizationCreate from "../pages/Admin/organizations/org-create.jsx";
+import OrganizationDetail from "../pages/Admin/organizations/org-details.jsx";
+import OrganizationEdit from "../pages/Admin/organizations/org-edit.jsx";
 
 /* Organizations - Departments */
-import OrganizationDepartmentsList from "../pages/Admin/organizations/OrganizationDepartmentsList";
-import OrganizationDepartmentCreate from "../pages/Admin/organizations/OrganizationDepartmentCreate";
-import OrganizationDepartmentDetail from "../pages/Admin/organizations/OrganizationDepartmentDetail";
-import OrganizationDepartmentEdit from "../pages/Admin/organizations/OrganizationDepartmentEdit";
+import OrganizationDepartmentsList from "../pages/Admin/organizations/OrganizationDepartmentsList.jsx";
+import OrganizationDepartmentCreate from "../pages/Admin/organizations/OrganizationDepartmentCreate.jsx";
+import OrganizationDepartmentDetail from "../pages/Admin/organizations/OrganizationDepartmentDetail.jsx";
+import OrganizationDepartmentEdit from "../pages/Admin/organizations/OrganizationDepartmentEdit.jsx";
 
 /* Organizations - Filieres */
-import OrganizationFilieresList from "../pages/Admin/organizations/OrganizationFilieresList";
-import OrganizationFiliereCreate from "../pages/Admin/organizations/OrganizationFiliereCreate";
-import OrganizationFiliereDetail from "../pages/Admin/organizations/OrganizationFiliereDetail";
-import OrganizationFiliereEdit from "../pages/Admin/organizations/OrganizationFiliereEdit";
+import OrganizationFilieresList from "../pages/Admin/organizations/OrganizationFilieresList.jsx";
+import OrganizationFiliereCreate from "../pages/Admin/organizations/OrganizationFiliereCreate.jsx";
+import OrganizationFiliereDetail from "../pages/Admin/organizations/OrganizationFiliereDetail.jsx";
+import OrganizationFiliereEdit from "../pages/Admin/organizations/OrganizationFiliereEdit.jsx";
 
 /* Organizations - Demandes */
-import OrganizationDemandesList from "../pages/Admin/organizations/OrganizationDemandesList";
-import OrganizationDemandeDetail from "../pages/Admin/organizations/OrganizationDemandeDetail";
-import OrganizationDemandeCreate from "../pages/Admin/organizations/OrganizationDemandeCreate";
-import OrganizationDemandeEdit from "../pages/Admin/organizations/OrganizationDemandeEdit";
+import OrganizationDemandesList from "../pages/Admin/organizations/OrganizationDemandesList.jsx";
+import OrganizationDemandeDetail from "../pages/Admin/organizations/OrganizationDemandeDetail.jsx";
+import OrganizationDemandeCreate from "../pages/Admin/organizations/OrganizationDemandeCreate.jsx";
+import OrganizationDemandeEdit from "../pages/Admin/organizations/OrganizationDemandeEdit.jsx";
 
-/* Organizations - Documents d’une Demande */
-import OrganizationDemandeDocuments from "../pages/Admin/organizations/OrganizationDemandeDocuments";
+/* Organizations - Documents d'une Demande */
+import OrganizationDemandeDocuments from "../pages/Admin/organizations/OrganizationDemandeDocuments.jsx";
 
 /* Organizations - Abonnements */
-import OrganizationAbonnementsList from "../pages/Admin/organizations/OrganizationAbonnementsList";
-import OrganizationAbonnementDetail from "../pages/Admin/organizations/OrganizationAbonnementDetail";
-import OrganizationAbonnementCreate from "../pages/Admin/organizations/OrganizationAbonnementCreate";
-import OrganizationAbonnementEdit from "../pages/Admin/organizations/OrganizationAbonnementEdit";
+import OrganizationAbonnementsList from "../pages/Admin/organizations/OrganizationAbonnementsList.jsx";
+import OrganizationAbonnementDetail from "../pages/Admin/organizations/OrganizationAbonnementDetail.jsx";
+import OrganizationAbonnementCreate from "../pages/Admin/organizations/OrganizationAbonnementCreate.jsx";
+import OrganizationAbonnementEdit from "../pages/Admin/organizations/OrganizationAbonnementEdit.jsx";
 
-/* Organizations - Users d’organisation */
-import OrganizationUserAdd from "../pages/Admin/organizations/OrganizationUserAdd";
+/* Organizations - Users d'organisation */
+import OrganizationUserAdd from "../pages/Admin/organizations/OrganizationUserAdd.jsx";
 import FilieresList from "../pages/Admin/Filieres/FilieresList";
-import OrganizationUsersList from "../pages/Admin/Organizations/OrganizationUsersList";
+import OrganizationUsersList from "../pages/Admin/organizations/OrganizationUsersList.jsx";
 import UserDemandesList from "../pages/Admin/Demandes/UserDemandesList";
 import UserDemandeEdit from "../pages/Admin/Demandes/UserDemandeEdit";
 import UserDemandeDetail from "../pages/Admin/Demandes/UserDemandeDetail";
