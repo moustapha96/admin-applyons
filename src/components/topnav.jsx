@@ -17,6 +17,7 @@ import { UserOutlined } from "@ant-design/icons";
 
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "../utils/imageUtils";
 
 const LANGS = [
   { key: "fr", label: "Français" },
@@ -186,7 +187,7 @@ export default function Topnav({ setToggle, toggle }) {
                   <div className="round-full">
                     <Avatar
                       size={50}
-                      src={user?.avatar || undefined}
+                      src={user?.avatar ? buildImageUrl(user.avatar) : undefined}
                       alt="avatar"
                       icon={<UserOutlined />}
                       style={{

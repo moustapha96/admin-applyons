@@ -13,6 +13,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import userService from "@/services/userService";
 import { getPermissionLabel, PERMS } from "@/auth/permissions";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "@/utils/imageUtils";
 
 /** Liste des users LIMITÉE à l'organisation du user connecté (institut) */
 export default function UserListTraducteur() {
@@ -73,7 +74,7 @@ export default function UserListTraducteur() {
       sorter: true,
       render: (_, r) => (
         <Space>
-          <Avatar size="default" icon={<UserOutlined />} src={r.avatar} />
+          <Avatar size="default" icon={<UserOutlined />} src={r.avatar ? buildImageUrl(r.avatar) : undefined} />
           <Link to={`/traducteur/users/${r.id}/details`}>{(r.firstName || "") + " " + (r.lastName || "")}</Link>
         </Space>
       ),

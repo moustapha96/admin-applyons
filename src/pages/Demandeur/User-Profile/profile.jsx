@@ -394,6 +394,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { IoTransgender } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 import { getRoleLabel } from "../../../auth/permissions";
+import { buildImageUrl } from "../../../utils/imageUtils";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -581,7 +582,7 @@ export default function DemandeurUserProfile() {
                             <div style={{ position: "relative", cursor: "pointer" }}>
                               <Avatar
                                 size={120}
-                                src={userData.avatar}
+                                src={userData.avatar ? buildImageUrl(userData.avatar) : undefined}
                                 icon={<UserOutlined />}
                                 style={{
                                   border: "4px solid rgba(255,255,255,0.3)",

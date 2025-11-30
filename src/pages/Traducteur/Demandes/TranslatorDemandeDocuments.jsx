@@ -33,6 +33,7 @@ import {
 import documentService from "@/services/documentService";
 import demandeService from "@/services/demandeService";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "@/utils/imageUtils";
 
 const { Dragger } = Upload;
 const { Text } = Typography;
@@ -44,13 +45,8 @@ const STATUS_COLORS = {
   REJECTED: "red",
 };
 
-const safeUrl = (u) => {
-  if (!u) return null;
-  if (/^https?:\/\/[^/]+uploads\//i.test(u)) {
-    return u.replace(/(https?:\/\/[^/]+)uploads\//i, "$1/uploads/");
-  }
-  return u;
-};
+// Utilise buildImageUrl pour construire les URLs d'images
+const safeUrl = (u) => buildImageUrl(u);
 
 export default function DemandeDocumentsPage() {
   const { t } = useTranslation();

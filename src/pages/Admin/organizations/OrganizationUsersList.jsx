@@ -4,6 +4,7 @@ import { Table, Tag, Space, Avatar, Breadcrumb, Button, Input, Select, message, 
 import { UserOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import organizationService from "../../../services/organizationService";
 import { useAuth } from "../../../hooks/useAuth";
+import { buildImageUrl } from "../../../utils/imageUtils";
 
 const { Search } = Input;
 
@@ -138,7 +139,7 @@ const OrganizationUsersList = () => {
           <Avatar
             size="default"
             icon={<UserOutlined />}
-            src={record.avatar}
+            src={record.avatar ? buildImageUrl(record.avatar) : undefined}
           />
           <Link to={`/admin/users/${record.id}/details`}>
             {record.firstName || ""} {record.lastName || ""}

@@ -8,6 +8,7 @@ import { UserOutlined, MailOutlined, PhoneOutlined, EditFilled } from "@ant-desi
 import userService from "@/services/userService";
 import { getPermissionColor, getPermissionLabel } from "@/auth/permissions";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "@/utils/imageUtils";
 
 export default function UserDetailTraducteur() {
   const { t } = useTranslation();
@@ -57,7 +58,7 @@ export default function UserDetailTraducteur() {
         <Card>
           <Descriptions title="Informations personnelles" bordered>
             <Descriptions.Item label="Nom complet" span={2}>
-              <Avatar size="large" icon={<UserOutlined />} src={user.avatar} />
+              <Avatar size="large" icon={<UserOutlined />} src={user.avatar ? buildImageUrl(user.avatar) : undefined} />
               <span className="ml-3">{user.firstName || ""} {user.lastName || ""}</span>
             </Descriptions.Item>
             <Descriptions.Item label="Email">

@@ -28,6 +28,7 @@ import {
   EyeOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { buildImageUrl } from "@/utils/imageUtils";
 import demandeService from "@/services/demandeService";
 import userService from "@/services/userService";
 import documentService from "@/services/documentService";
@@ -52,13 +53,8 @@ const statusColor = (status) => {
 const fmtDate = (d, f = "DD/MM/YYYY") =>
   d ? (dayjs(d).isValid() ? dayjs(d).format(f) : "—") : "—";
 
-const safeUrl = (u) => {
-  if (!u) return null;
-  if (/^https?:\/\/[^/]+uploads\//i.test(u)) {
-    return u.replace(/(https?:\/\/[^/]+)uploads\//i, "$1/uploads/");
-  }
-  return u;
-};
+// Utilise buildImageUrl pour construire les URLs d'images
+const safeUrl = (u) => buildImageUrl(u);
 
 export default function TraducteurDemandeurDetails() {
   const { id: userId } = useParams(); // id du DEMANDEUR dans l'URL
@@ -408,7 +404,7 @@ export default function TraducteurDemandeurDetails() {
             <Descriptions bordered column={1} size="small">
               <Descriptions.Item label="Nom complet">
                 <Space size="middle" wrap>
-                  <Avatar size="large" icon={<UserOutlined />} src={demandeur.avatar} />
+                  <Avatar size="large" icon={<UserOutlined />} src={demandeur.avatar ? buildImageUrl(demandeur.avatar) : undefined} />
                   <Text strong>
                     {(demandeur.firstName || "") + " " + (demandeur.lastName || "")}
                   </Text>

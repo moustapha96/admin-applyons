@@ -368,6 +368,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
 import demandeService from "@/services/demandeService";
 import documentService from "@/services/documentService"; // <-- nouveau service
+import { buildImageUrl } from "@/utils/imageUtils";
 
 const { Title, Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -381,13 +382,8 @@ const STATUS_COLORS = {
 
 // SORT_FIELDS sera défini dans le composant avec useTranslation
 
-const safeUrl = (u) => {
-  if (!u) return null;
-  if (/^https?:\/\/[^/]+uploads\//i.test(u)) {
-    return u.replace(/(https?:\/\/[^/]+)uploads\//i, "$1/uploads/");
-  }
-  return u;
-};
+// Utilise buildImageUrl pour construire les URLs d'images
+const safeUrl = (u) => buildImageUrl(u);
 
 export default function TranslatorDemandesList() {
   const { t } = useTranslation();

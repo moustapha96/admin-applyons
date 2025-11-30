@@ -7,6 +7,10 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 const isProd = process.env.NODE_ENV === "production";
 
+// URL du backend adaptative selon l'environnement
+const backendUrl = process.env.VITE_BACKEND_URL || 
+    (isProd ? 'https://back.applyons.com' : 'http://localhost:5000');
+
 export default defineConfig({
     plugins: [
         react(),
@@ -134,24 +138,23 @@ export default defineConfig({
         open: true,
         proxy: {
             '/api': {
-                target: 'https://back.applyons.com',
+                target: backendUrl,
                 changeOrigin: true,
                 secure: false,
                 rewrite: (path) => path.replace(/^\/api/, ''),
             },
             '/profiles': {
-                target: 'https://back.applyons.com',
+                target: backendUrl,
                 changeOrigin: true,
                 secure: false,
             },
-
             '/settings': {
-                target: 'https://back.applyons.com',
+                target: backendUrl,
                 changeOrigin: true,
                 secure: false,
             },
             '/documents': {
-                target: 'https://back.applyons.com',
+                target: backendUrl,
                 changeOrigin: true,
                 secure: false,
             },

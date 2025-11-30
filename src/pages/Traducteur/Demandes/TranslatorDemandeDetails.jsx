@@ -27,6 +27,7 @@ import demandeService from "@/services/demandeService";
 import documentService from "@/services/documentService";
 import { CloudUploadOutlined, EyeOutlined, DownloadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "@/utils/imageUtils";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
@@ -48,14 +49,8 @@ const statusColor = (status) => {
   }
 };
 
-// Corrige les URLs sans slash après le host (ex: http://localhost:5000uploads/...)
-const safeUrl = (u) => {
-  if (!u) return null;
-  if (/^https?:\/\/[^/]+uploads\//i.test(u)) {
-    return u.replace(/(https?:\/\/[^/]+)uploads\//i, "$1/uploads/");
-  }
-  return u;
-};
+// Utilise buildImageUrl pour construire les URLs d'images
+const safeUrl = (u) => buildImageUrl(u);
 
 export default function TranslatorDemandeDetails() {
   const { t } = useTranslation();

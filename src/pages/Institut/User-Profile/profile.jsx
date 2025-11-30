@@ -17,6 +17,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { IoTransgender } from "react-icons/io5";
 import { getPermissionColor, getPermissionLabel, getRoleLabel } from "../../../auth/permissions";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "../../../utils/imageUtils";
 
 const { Title, Text } = Typography;
 
@@ -248,7 +249,7 @@ export default function InstitutUserProfile() {
                         <Upload showUploadList={false} beforeUpload={handleAvatarUpload} accept="image/*">
                           <Avatar
                             size={120}
-                            src={userData.avatar}
+                            src={userData.avatar ? buildImageUrl(userData.avatar) : undefined}
                             icon={<UserOutlined />}
                             style={{ cursor: "pointer", border: "4px solid rgba(255,255,255,0.3)", transition: "all 0.3s ease" }}
                           />

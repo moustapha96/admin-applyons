@@ -9,6 +9,7 @@ import client2 from '../../../assets/images/client/02.jpg'
 import axiosInstance from "../../../services/api";
 import { Breadcrumb, Button, message, Popconfirm, Space, Table } from "antd";
 import teamMemberService from "../../../services/teamMemberService";
+import { buildImageUrl } from "../../../utils/imageUtils";
 
 const TeamMembersAdmin = () => {
     const [teamMembers, setTeamMembers] = useState([]);
@@ -147,7 +148,7 @@ const TeamMembersAdmin = () => {
                                 <div className="relative inline-block mx-auto max-h-[208px] max-w-[208px] rounded-full overflow-hidden shadow-sm dark:shadow-gray-700">
                                     {member.photo ? (
                                         <img
-                                            src={member.photo}
+                                            src={buildImageUrl(member.photo)}
                                             className="w-full h-full object-cover"
                                             alt={member.name}
                                         />

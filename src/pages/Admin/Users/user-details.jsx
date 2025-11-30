@@ -7,6 +7,7 @@ import userService from "../../../services/userService";
 
 import {  getPermissionColor, getPermissionLabel, getRoleLabel } from "../../../auth/permissions"
 import { PERMS } from "../../../auth/permissions";
+import { buildImageUrl } from "../../../utils/imageUtils";
 
 const UserDetail = () => {
     const { t } = useTranslation();
@@ -63,7 +64,7 @@ const UserDetail = () => {
                 <Card>
                     <Descriptions title={t("adminUserDetails.sections.personalInfo")} bordered>
                         <Descriptions.Item label={t("adminUserDetails.fields.fullName")} span={2}>
-                            <Avatar size="large" icon={<UserOutlined />} src={user.avatar} />
+                            <Avatar size="large" icon={<UserOutlined />} src={user.avatar ? buildImageUrl(user.avatar) : undefined} />
                             <span className="ml-3">{user.firstName || ""} {user.lastName || ""}</span>
                         </Descriptions.Item>
                         <Descriptions.Item label={t("adminUserDetails.fields.email")}>

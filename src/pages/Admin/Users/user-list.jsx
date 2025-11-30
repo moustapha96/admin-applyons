@@ -8,6 +8,7 @@ import userService from "../../../services/userService";
 import { getPermissionLabel } from "../../../auth/permissions"
 import { PERMS } from "../../../auth/permissions";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "../../../utils/imageUtils";
 
 const { Search } = Input;
 
@@ -144,7 +145,7 @@ const UserList = () => {
                     <Avatar
                         size="default"
                         icon={<UserOutlined />}
-                        src={record.avatar}
+                        src={record.avatar ? buildImageUrl(record.avatar) : undefined}
                     />
                     <Link to={`/admin/users/${record.id}/details`}>
                         {record.firstName || ""} {record.lastName || ""}

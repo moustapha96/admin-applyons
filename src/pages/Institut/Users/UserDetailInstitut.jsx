@@ -104,6 +104,7 @@ import { UserOutlined, MailOutlined, PhoneOutlined, EditFilled } from "@ant-desi
 import userService from "@/services/userService";
 import { getPermissionColor, getPermissionLabel } from "@/auth/permissions";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "@/utils/imageUtils";
 
 export default function UserDetailInstitut() {
   const { t, i18n } = useTranslation();
@@ -183,7 +184,7 @@ export default function UserDetailInstitut() {
         <Card>
           <Descriptions title={t("userDetailInstitut.sections.personal")} bordered>
             <Descriptions.Item label={t("userDetailInstitut.fields.fullName")} span={2}>
-              <Avatar size="large" icon={<UserOutlined />} src={user.avatar} />
+              <Avatar size="large" icon={<UserOutlined />} src={user.avatar ? buildImageUrl(user.avatar) : undefined} />
               <span className="ml-3">{user.firstName || ""} {user.lastName || ""}</span>
             </Descriptions.Item>
 
