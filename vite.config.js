@@ -108,7 +108,7 @@ export default defineConfig({
         },
     },
     build: {
-        outDir: "../deploy-applyons/", // dossier de build spécifique à applyons
+        outDir: "../build-admin/", // dossier de build spécifique à applyons
         assetsDir: "assets",
         emptyOutDir: true,
         sourcemap: !isProd,
