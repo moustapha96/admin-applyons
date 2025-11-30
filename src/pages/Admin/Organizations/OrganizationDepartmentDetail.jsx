@@ -1,0 +1,93 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Breadcrumb, Card, Descriptions, Space, Button, Divider, Tag, Spin } from "antd";
+import { BankOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import organizationService from "../../../services/organizationservice";
+
+const OrganizationDepartmentDetail = () => {
+  const { id: orgId, deptId } = useParams();
+  const [department, setDepartment] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    document.documentElement.setAttribute("dir", "ltr");
+    document.documentElement.classList.add("light");
+    document.documentElement.classList.remove("dark");
+    fetchDepartment();
+  }, [orgId, deptId]);
+
+  const fetchDepartment = async () => {
+    setLoading(true);
+    try {
+      const response = await organizationService.getDepartmentById(orgId, deptId);
+      setDepartment(response);
+    } catch (error) {
+      console.error("Erreur lors de la récupération du département:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Spin size="large" />
+      </div>
+    );
+  }
+
+  if (!department) {
+    return <div>Département non trouvé.</div>;
+  }
+
+  return (
+    <div className="container-fluid relative px-3">
+      <div className="layout-specing">
+        <div className="md:flex justify-between items-center mb-6">
+          <h5 className="text-lg font-semibold">Détails du Département</h5>
+          <Breadcrumb
+            items={[
+              { title: <Link to="/">Dashboard</Link> },
+              { title: <Link to="/admin/organisations">Organisations</Link> },
+              { title: "Détails du Département" },
+            ]}
+          />
+        </div>
+        <div className="md:flex md:justify-end justify-end items-center mb-6">
+          <Button onClick={() => navigate(-1)} icon={<ArrowLeftOutlined />}>
+            Retour
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => navigate(`/admin/organisations/${orgId}/departments/${deptId}/edit`)}
+            className="ml-2"
+          >
+            Modifier
+          </Button>
+        </div>
+        <Card>
+          <Descriptions title="Informations du Département" bordered>
+            <Descriptions.Item label="Nom" span={2}>
+              <Space>
+                <BankOutlined />
+                <span className="ml-3">{department.name}</span>
+              </Space>
+            </Descriptions.Item>
+            <Descriptions.Item label="Description" span={2}>
+              {department.description || "N/A"}
+            </Descriptions.Item>
+            <Descriptions.Item label="Créé le">
+              {new Date(department.createdAt).toLocaleString()}
+            </Descriptions.Item>
+            <Descriptions.Item label="Mis à jour le">
+              {new Date(department.updatedAt).toLocaleString()}
+            </Descriptions.Item>
+          </Descriptions>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+export default OrganizationDepartmentDetail;

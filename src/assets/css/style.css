@@ -1,0 +1,134 @@
+.custom-quill-editor .ql-editor {
+  min-height: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+/* styles.css */
+:root {
+  --ant-primary-color: #e28743;
+  --ant-orange-color: #e28743;
+  --ant-primary-color-hover: #e28743;
+  --ant-blue-color: #1e81b0;
+  --riafco-blue: #1e81b0;
+  --riafco-orange: #e28743;
+}
+
+h1,
+h2,
+h3 {
+  margin-bottom: 1em;
+  color: var(--ant-blue-color);
+}
+
+/* Override Ant Design styles to match the design */
+.ant-btn-primary {
+  background-color: var(--ant-primary-color) !important;
+  color : white !important
+}
+
+.ant-btn-primary:hover {
+  background-color: var(--ant-blue-color) !important;
+}
+
+.ant-menu-horizontal {
+  border-bottom: none !important;
+}
+
+.ant-menu-item:hover {
+  color: var(--ant-primary-color) !important;
+}
+
+.ant-menu-item-selected {
+  color: var(--ant-primary-color) !important;
+}
+
+.ant-menu-item-active {
+  color: var(--ant-primary-color) !important;
+}
+
+/* Animation for cards */
+.ant-card {
+  transition: transform 0.3s ease;
+}
+
+.ant-card:hover {
+  transform: translateY(-5px);
+}
+
+.bg-blueLogo:hover {
+  background-color: var(--ant-blue-color) !important;
+}
+
+.ant-text-primary {
+  color: var(--ant-primary-color) !important;
+}
+
+.ant-text-bleu {
+  color: var(--ant-blue-color) !important;
+}
+.ant-text-bleu:hover {
+  color: var(--ant-primary-color) !important;
+}
+
+.ant-text-orange {
+  color: var(--ant-primary-color) !important;
+}
+.ant-text-orange {
+  color: var(--ant-blue-color) !important;
+}
+
+.ant-blue {
+  color: var(--ant-blue-color) !important;
+}
+.ant-orange {
+  color: var(--ant-primary-color) !important;
+}
+
+.ant-btn-primary {
+  background-color: var(--ant-primary-color-hover) !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: var(--ant-blue-color) !important;
+  color: white !important;
+}
+
+.ant-btn-simple {
+  color: black !important;
+  background-color: white !important;
+}
+.ant-btn-simple:hover {
+  background-color: #f0f0f0 !important;
+  color: black !important;
+}
+
+/* dans ton fichier CSS global ou module */
+.container-form {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.layout-specing::-webkit-scrollbar {
+  width: 8px;
+}
+
+.layout-specing::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.layout-specing::-webkit-scrollbar-thumb {
+  background: #e28743;
+  border-radius: 4px;
+}
+
+.layout-specing::-webkit-scrollbar-thumb:hover {
+  background: #c67139;
+}
+
+/* Pour Firefox */
+.layout-specing {
+  scrollbar-width: thin;
+  scrollbar-color: #e28743 #f1f1f1;
+}

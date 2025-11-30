@@ -1,0 +1,290 @@
+
+
+/* routes/AdminRoutes.jsx */
+/* eslint-disable no-unused-vars */
+import { Route } from "react-router-dom";
+import { ProtectedRoute } from "./ProtectedRoute";
+
+/* --- Admin dashboard/profile --- */
+import AdminDashboard from "../pages/Admin/Dashboard";
+import Profile from "../pages/User-Profile/profile";
+
+/* --- Users (globaux) --- */
+import UserList from "../pages/Admin/Users/user-list";
+import UserDetails from "../pages/Admin/Users/user-details";
+import UserEdit from "../pages/Admin/Users/user-edit";
+import UserCreate from "../pages/Admin/Users/user-create";
+
+/* --- Departments & Filieres (globaux côté admin) --- */
+import DepartmentList from "../pages/Admin/Departments/DepartmentList";
+import DepartmentDetail from "../pages/Admin/Departments/DepartmentDetail";
+import DepartmentForm from "../pages/Admin/Departments/DepartmentForm";
+import DepartmentFilieresList from "../pages/Admin/Filieres/DepartmentFilieresList";
+import DepartmentFiliereCreate from "../pages/Admin/Filieres/DepartmentFiliereCreate";
+import FiliereEdit from "../pages/Admin/Filieres/FiliereEdit";
+
+/* --- Organizations (pages côté admin) --- */
+import OrganizationList from "../pages/Admin/organizations/organization-list";
+import OrganizationCreate from "../pages/Admin/organizations/org-create";
+import OrganizationDetail from "../pages/Admin/organizations/org-details";
+import OrganizationEdit from "../pages/Admin/organizations/org-edit";
+
+/* Organizations - Departments */
+import OrganizationDepartmentsList from "../pages/Admin/organizations/OrganizationDepartmentsList";
+import OrganizationDepartmentCreate from "../pages/Admin/organizations/OrganizationDepartmentCreate";
+import OrganizationDepartmentDetail from "../pages/Admin/organizations/OrganizationDepartmentDetail";
+import OrganizationDepartmentEdit from "../pages/Admin/organizations/OrganizationDepartmentEdit";
+
+/* Organizations - Filieres */
+import OrganizationFilieresList from "../pages/Admin/organizations/OrganizationFilieresList";
+import OrganizationFiliereCreate from "../pages/Admin/organizations/OrganizationFiliereCreate";
+import OrganizationFiliereDetail from "../pages/Admin/organizations/OrganizationFiliereDetail";
+import OrganizationFiliereEdit from "../pages/Admin/organizations/OrganizationFiliereEdit";
+
+/* Organizations - Demandes */
+import OrganizationDemandesList from "../pages/Admin/organizations/OrganizationDemandesList";
+import OrganizationDemandeDetail from "../pages/Admin/organizations/OrganizationDemandeDetail";
+import OrganizationDemandeCreate from "../pages/Admin/organizations/OrganizationDemandeCreate";
+import OrganizationDemandeEdit from "../pages/Admin/organizations/OrganizationDemandeEdit";
+
+/* Organizations - Documents d’une Demande */
+import OrganizationDemandeDocuments from "../pages/Admin/organizations/OrganizationDemandeDocuments";
+
+/* Organizations - Abonnements */
+import OrganizationAbonnementsList from "../pages/Admin/organizations/OrganizationAbonnementsList";
+import OrganizationAbonnementDetail from "../pages/Admin/organizations/OrganizationAbonnementDetail";
+import OrganizationAbonnementCreate from "../pages/Admin/organizations/OrganizationAbonnementCreate";
+import OrganizationAbonnementEdit from "../pages/Admin/organizations/OrganizationAbonnementEdit";
+
+/* Organizations - Users d’organisation */
+import OrganizationUserAdd from "../pages/Admin/organizations/OrganizationUserAdd";
+import FilieresList from "../pages/Admin/Filieres/FilieresList";
+import OrganizationUsersList from "../pages/Admin/Organizations/OrganizationUsersList";
+import UserDemandesList from "../pages/Admin/Demandes/UserDemandesList";
+import UserDemandeEdit from "../pages/Admin/Demandes/UserDemandeEdit";
+import UserDemandeDetail from "../pages/Admin/Demandes/UserDemandeDetail";
+import UserDemandeCreate from "../pages/Admin/Demandes/UserDemandeCreate";
+import DocumentsList from "../pages/Admin/Documents/DocumentsList";
+import AdminAbonnementsList from "../pages/Admin/Abonnements/AdminAbonnementsList";
+import AdminAbonnementDetails from "../pages/Admin/Abonnements/AdminAbonnementDetails";
+import AdminAbonnementCreate from "../pages/Admin/Abonnements/AdminAbonnementCreate";
+import AdminAbonnementEdit from "../pages/Admin/Abonnements/AdminAbonnementEdit";
+import AdminAbonnementsStats from "../pages/Admin/Abonnements/AdminAbonnementsStats";
+import AdminPaymentsList from "../pages/Admin/Payments/AdminPaymentsList";
+import AdminPaymentsStats from "../pages/Admin/Payments/AdminPaymentsStats";
+import AdminAbonnementRenew from "../pages/Admin/Abonnements/AdminAbonnementRenew";
+import AdminTransactionsList from "../pages/Admin/Transactions/AdminTransactionsList";
+import AdminTransactionDetails from "../pages/Admin/Transactions/AdminTransactionDetails";
+import AdminTransactionCreate from "../pages/Admin/Transactions/AdminTransactionCreate";
+import AdminTransactionsStats from "../pages/Admin/Transactions/AdminTransactionsStats";
+import AdminContactList from "../pages/Admin/contacts/contact";
+import AuditLogManagement from "../pages/Settings/audit-log";
+import MailerManagement from "../pages/Settings/mailer";
+import SettingsPage from "../pages/Settings/settings";
+
+export const adminRoutes = (
+  <>
+    {/* Scope Admin protégé */}
+    <Route path="/admin" element={<ProtectedRoute />}>
+      {/* Dashboard & profil */}
+      <Route index element={<AdminDashboard />} />
+      <Route path="dashboard" element={<AdminDashboard />} />
+      <Route path="profile" element={<Profile />} />
+
+      {/* ===================== USERS (globaux) ===================== */}
+      <Route
+        element={
+          <ProtectedRoute
+            allowedRoles={["ADMIN", "SUPERVISEUR"]}
+            requiredPermissions={["users.read"]}
+          />
+        }
+      >
+        <Route path="users" element={<UserList />} />
+        <Route path="users/:id/details" element={<UserDetails />} />
+      </Route>
+      <Route
+        element={
+          <ProtectedRoute
+            allowedRoles={["ADMIN", "SUPERVISEUR"]}
+            requiredPermissions={["users.manage", "users.create"]}
+          />
+        }
+      >
+        <Route path="users/create" element={<UserCreate />} />
+        <Route path="users/:id/edit" element={<UserEdit />} />
+      </Route>
+
+      {/* ========== DEPARTMENTS & FILIERES (globaux côté admin) ========== */}
+      <Route element={<ProtectedRoute requiredPermissions={["departments.read"]} />}>
+        <Route path="departments" element={<DepartmentList />} />
+        <Route path="departments/:id" element={<DepartmentDetail />} />
+        <Route path="departments/:id/filieres" element={<DepartmentFilieresList />} />
+      </Route>
+
+      <Route element={<ProtectedRoute requiredPermissions={["departments.manage"]} />}>
+        <Route path="departments/create" element={<DepartmentForm mode="create" />} />
+        <Route path="departments/:id/edit" element={<DepartmentForm mode="edit" />} />
+        <Route path="departments/:id/filieres/create" element={<DepartmentFiliereCreate />} />
+        <Route path="filieres/:id/edit" element={<FiliereEdit />} />
+        <Route path="filieres" element={<FilieresList />} />
+        <Route path="documents" element={<DocumentsList />} />
+      </Route>
+
+      {/* ===================== ORGANIZATIONS (CRUD de base) ===================== */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="organisations" element={<OrganizationList />} />
+        <Route path="organisations/create" element={<OrganizationCreate />} />
+        <Route path="organisations/:id/details" element={<OrganizationDetail />} />
+        <Route path="organisations/:id/edit" element={<OrganizationEdit />} />
+      </Route>
+
+
+      {/* -------- Organizations - Departments -------- */}
+      <Route element={<ProtectedRoute requiredPermissions={["departments.read"]} />}>
+        <Route path="organisations/:id/departments" element={<OrganizationDepartmentsList />} />
+        <Route
+          path="organisations/:id/departments/:deptId/details"
+          element={<OrganizationDepartmentDetail />}
+        />
+      </Route>
+      <Route element={<ProtectedRoute requiredPermissions={["departments.manage"]} />}>
+        <Route
+          path="organisations/:id/departments/create"
+          element={<OrganizationDepartmentCreate />}
+        />
+        <Route
+          path="organisations/:id/departments/:deptId/edit"
+          element={<OrganizationDepartmentEdit />}
+        />
+      </Route>
+
+      {/* -------- Organizations - Filieres -------- */}
+      <Route element={<ProtectedRoute requiredPermissions={["filieres.read"]} />}>
+        <Route path="organisations/:id/filieres" element={<OrganizationFilieresList />} />
+        <Route
+          path="organisations/:id/filieres/:filiereId/details"
+          element={<OrganizationFiliereDetail />}
+        />
+      </Route>
+      <Route element={<ProtectedRoute requiredPermissions={["filieres.manage"]} />}>
+        <Route
+          path="organisations/:id/filieres/create"
+          element={<OrganizationFiliereCreate />}
+        />
+        <Route
+          path="organisations/:id/filieres/:filiereId/edit"
+          element={<OrganizationFiliereEdit />}
+        />
+      </Route>
+
+      {/* -------- Organizations - Demandes -------- */}
+      <Route element={<ProtectedRoute requiredPermissions={["demandes.read"]} />}>
+        <Route path="organisations/:id/demandes" element={<OrganizationDemandesList />} />
+        <Route
+          path="organisations/:id/demandes/:demandeId/details"
+          element={<OrganizationDemandeDetail />}
+        />
+      </Route>
+      <Route element={<ProtectedRoute requiredPermissions={["demandes.manage"]} />}>
+        <Route
+          path="organisations/:id/demandes/create"
+          element={<OrganizationDemandeCreate />}
+        />
+        <Route
+          path="organisations/:id/demandes/:demandeId/edit"
+          element={<OrganizationDemandeEdit />}
+        />
+      </Route>
+
+
+      {/* -------- Organizations - Abonnements -------- */}
+      <Route element={<ProtectedRoute requiredPermissions={["abonnements.read"]} />}>
+        <Route
+          path="organisations/:id/abonnements"
+          element={<OrganizationAbonnementsList />}
+        />
+        <Route
+          path="organisations/:id/abonnements/:abonnementId/details"
+          element={<OrganizationAbonnementDetail />}
+        />
+      </Route>
+      <Route element={<ProtectedRoute requiredPermissions={["abonnements.manage"]} />}>
+        <Route
+          path="organisations/:id/abonnements/create"
+          element={<OrganizationAbonnementCreate />}
+        />
+        <Route
+          path="organisations/:id/abonnements/:abonnementId/edit"
+          element={<OrganizationAbonnementEdit />}
+        />
+      </Route>
+
+      {/* -------- Organizations - Users d’organisation -------- */}
+      <Route element={<ProtectedRoute requiredPermissions={["users.read"]} />}>
+        <Route path="organisations/:id/users" element={<OrganizationUsersList />} />
+      </Route>
+      <Route element={<ProtectedRoute requiredPermissions={["users.manage"]} />}>
+        <Route path="organisations/:id/users/add" element={<OrganizationUserAdd />} />
+      </Route>
+
+      {/* -------- Demandes -------- */}
+      <Route element={<ProtectedRoute requiredPermissions={["demandes.read"]} />}>
+        <Route path="demandes" element={<UserDemandesList />} />
+        <Route path="demandes/:id/details" element={<UserDemandeDetail />} />
+        <Route path="demandes/:id/documents" element={<OrganizationDemandeDocuments />} />
+
+      </Route>
+
+      <Route element={<ProtectedRoute requiredPermissions={["demandes.manage"]} />}>
+        <Route path="demandes/create" element={<UserDemandeCreate />} />
+        <Route path="demandes/:id/edit" element={<UserDemandeEdit />} />
+      </Route>
+
+      {/*  Abonnements */}
+      <Route element={<ProtectedRoute requiredPermissions={["abonnements.read"]} />}>
+        <Route path="abonnements" element={<AdminAbonnementsList />} />
+        <Route path="abonnements/:id/details" element={<AdminAbonnementDetails />} />
+        <Route path="abonnements/stats" element={<AdminAbonnementsStats />} />
+      </Route>
+      <Route element={<ProtectedRoute requiredPermissions={["abonnements.manage"]} />}>
+        <Route path="abonnements/create" element={<AdminAbonnementCreate />} />
+        <Route path="abonnements/:id/edit" element={<AdminAbonnementEdit />} />
+        <Route path="abonnements/:id/renew" element={<AdminAbonnementRenew />} />
+      </Route>
+
+      {/*  Payments */}
+      <Route element={<ProtectedRoute requiredPermissions={["payments.manage"]} />}>
+        <Route path="payments" element={<AdminPaymentsList />} />
+        <Route path="payments/stats" element={<AdminPaymentsStats />} />
+      </Route>
+
+      {/*  Transactions */}
+      <Route element={<ProtectedRoute requiredPermissions={["transactions.read"]} />}>
+        <Route path="transactions" element={<AdminTransactionsList />} />
+        <Route path="transactions/:id/details" element={<AdminTransactionDetails />} />
+      </Route>
+      <Route element={<ProtectedRoute requiredPermissions={["transactions.manage"]} />}>
+        <Route path="transactions/create" element={<AdminTransactionCreate />} />
+        <Route path="transactions/stats" element={<AdminTransactionsStats />} />
+      </Route>
+
+
+      <Route element={<ProtectedRoute requiredPermissions={["contacts.manage"]} />}>
+        <Route path="contacts" element={<AdminContactList />} />
+      </Route>
+
+
+
+      <Route element={<ProtectedRoute requiredPermissions={["config.manage"]} />}>
+        <Route path="config" element={<SettingsPage />} />
+        <Route path="audit-logs" element={<AuditLogManagement />} />
+        <Route path="mailer" element={<MailerManagement />} />
+      </Route>
+
+
+
+
+    </Route>
+  </>
+);

@@ -1,0 +1,3403 @@
+{
+    "common": {
+        "profile": "个人资料",
+        "settings": "设置",
+        "dashboard": "我的仪表盘",
+        "logout": "退出登录",
+        "user": "用户",
+        "organizationMissing": "—",
+        "toggleSidebar": "切换侧边栏",
+        "home": "首页",
+        "loading": "加载中...",
+        "error": "错误",
+        "save": "保存",
+        "cancel": "取消",
+        "edit": "编辑",
+        "notSpecified": "未指定",
+        "noData": "无数据",
+        "reset": "重置"
+    },
+    "roles": {
+        "ADMIN": "管理员",
+        "SUPER_ADMIN": "超级管理员",
+        "INSTITUT": "学院",
+        "SUPERVISEUR": "监督员",
+        "TRADUCTEUR": "翻译员",
+        "DEMANDEUR": "申请人",
+        "UTILISATEUR": "用户",
+        "labels": {
+            "ADMIN": "管理员",
+            "SUPER_ADMIN": "超级管理员",
+            "INSTITUT": "机构",
+            "SUPERVISEUR": "监督员",
+            "TRADUCTEUR": "翻译员",
+            "DEMANDEUR": "申请人",
+            "UTILISATEUR": "用户"
+        }
+    },
+    "permissions": {
+        "users.read": "读取用户",
+        "users.manage": "管理用户",
+        "users.impersonate": "模拟用户",
+        "organizations.read": "读取组织",
+        "organizations.manage": "管理组织",
+        "organizations.write": "编辑组织",
+        "departments.read": "读取部门",
+        "departments.manage": "管理部门",
+        "filieres.read": "读取专业",
+        "filieres.manage": "管理专业",
+        "demandes.read": "读取申请",
+        "demandes.manage": "管理申请",
+        "documents.read": "读取文档",
+        "documents.create": "创建文档",
+        "documents.update": "更新文档",
+        "documents.delete": "删除文档",
+        "documents.translate": "翻译文档",
+        "documents.verify": "验证文档",
+        "payments.read": "读取付款",
+        "payments.manage": "管理付款",
+        "transactions.read": "读取交易",
+        "transactions.manage": "管理交易",
+        "abonnements.read": "读取订阅",
+        "abonnements.manage": "管理订阅",
+        "invites.read": "读取邀请",
+        "invites.manage": "管理邀请",
+        "contacts.read": "读取联系人",
+        "contacts.manage": "管理联系人",
+        "settings.read": "读取设置",
+        "settings.manage": "管理设置",
+        "config.read": "读取配置",
+        "config.manage": "管理配置",
+        "uploads.create": "创建上传",
+        "dashboard.read": "读取仪表板",
+        "audit.read": "读取审计日志",
+        "audit.manage": "管理审计日志"
+    },
+    "routes": {
+        "adminDashboard": "/admin/dashboard",
+        "orgDashboard": "/organisations/dashboard",
+        "tradDashboard": "/traducteur/dashboard",
+        "demandeurDashboard": "/demandeur/dashboard",
+        "adminProfile": "/admin/profile",
+        "orgProfile": "/organisations/profile",
+        "tradProfile": "/traducteur/profile",
+        "demandeurProfile": "/demandeur/profile",
+        "adminSettings": "/admin/settings"
+    },
+    "lang": {
+        "fr": "法语",
+        "en": "英语",
+        "es": "西班牙语",
+        "it": "意大利语",
+        "de": "德语",
+        "zh": "中文"
+    },
+    "sidebar": {
+        "dashboard": "仪表盘",
+        "users": "用户",
+        "userList": "用户列表",
+        "userNew": "新建",
+        "organizations": "组织",
+        "organizationsList": "组织",
+        "departments": "部门",
+        "filieres": "课程",
+        "demandes": "请求",
+        "allDemandes": "所有请求",
+        "documents": "文件",
+        "myDocuments": "我的文件",
+        "payments": "付款",
+        "paymentList": "付款列表",
+        "paymentStats": "统计",
+        "abonnements": "订阅",
+        "abonnementList": "订阅",
+        "abonnementStats": "统计",
+        "contacts": "联系人",
+        "messages": "消息",
+        "configurations": "配置",
+        "settings": "设置",
+        "mailer": "邮件服务",
+        "auditLogs": "审计日志",
+        "profile": "个人资料",
+        "monInstitut": "我的学院",
+        "ajouteDocument": "添加文件",
+        "mesAbonnements": "我的订阅",
+        "souscrire": "订阅",
+        "dossiersTraiter": "待处理文件"
+    },
+    "profile": {
+        "title": "用户资料",
+        "loadingProfile": "加载资料中...",
+        "errorLoading": "加载用户资料时出错",
+        "noData": "无可用用户数据",
+        "avatarUpdateSuccess": "头像更新成功",
+        "avatarUpdateError": "更新头像时出错",
+        "profileUpdateSuccess": "资料更新成功",
+        "profileUpdateError": "更新资料时出错",
+        "editProfile": "编辑资料",
+        "password": "密码",
+        "status": {
+            "active": "活跃",
+            "inactive": "停用"
+        },
+        "sections": {
+            "personalInfo": "个人信息",
+            "organization": "组织",
+            "permissions": "权限和访问"
+        },
+        "stats": {
+            "activePermissions": "活跃权限",
+            "lastConnection": "最后连接",
+            "memberSince": "成员自"
+        },
+        "fields": {
+            "firstName": "名字",
+            "lastName": "姓氏",
+            "fullName": "全名",
+            "email": "邮箱",
+            "phone": "电话",
+            "address": "地址",
+            "country": "国家",
+            "gender": "性别",
+            "createdAt": "创建于",
+            "updatedAt": "更新于",
+            "role": "角色"
+        },
+        "gender": {
+            "male": "男",
+            "female": "女",
+            "other": "其他"
+        },
+        "organization": {
+            "name": "组织名称",
+            "type": "组织类型",
+            "email": "邮箱",
+            "phone": "电话",
+            "address": "地址",
+            "website": "网站",
+            "country": "国家",
+            "updateSuccess": "组织信息更新成功",
+            "updateError": "更新组织时出错",
+            "selectType": "选择类型",
+            "types": {
+                "college": "学院",
+                "banque": "银行",
+                "universite": "大学",
+                "lycee": "高中",
+                "entreprise": "企业",
+                "traducteur": "翻译"
+            },
+            "placeholders": {
+                "name": "组织名称",
+                "email": "组织邮箱",
+                "phone": "组织电话",
+                "address": "组织地址",
+                "website": "https://例子.com",
+                "country": "组织国家"
+            },
+            "validation": {
+                "nameRequired": "请输入组织名称",
+                "typeRequired": "请选择组织类型"
+            }
+        },
+        "permissions": {
+            "granted": "已授予的权限"
+        },
+        "passwordModal": {
+            "title": "更改密码",
+            "currentPassword": "当前密码",
+            "newPassword": "新密码",
+            "confirmPassword": "确认新密码",
+            "updateSuccess": "密码更新成功",
+            "updateError": "更新密码时出错",
+            "validation": {
+                "currentRequired": "请输入您的当前密码",
+                "newRequired": "请输入您的新密码",
+                "minLength": "密码必须至少包含8个字符",
+                "confirmRequired": "请确认您的新密码",
+                "noMatch": "两个密码不匹配！"
+            },
+            "placeholders": {
+                "current": "当前密码",
+                "new": "新密码",
+                "confirm": "确认新密码"
+            }
+        }
+    },
+    "profilePage": {
+        "alerts": {
+            "loading": "正在加载个人资料…",
+            "errorTitle": "错误",
+            "noDataTitle": "无数据",
+            "noDataDesc": "暂无用户数据",
+            "loadError": "加载用户资料时出错"
+        },
+        "header": {
+            "editProfile": "编辑资料",
+            "password": "密码",
+            "active": "启用",
+            "inactive": "禁用",
+            "userFallback": "用户"
+        },
+        "stats": {
+            "activePerms": "生效的权限",
+            "lastLogin": "最近登录",
+            "memberSince": "成为会员自"
+        },
+        "sections": {
+            "personalInfo": "个人信息",
+            "organization": "组织",
+            "permissionsAccess": "权限与访问",
+            "grantedPerms": "已授予的权限",
+            "role": "角色"
+        },
+        "fields": {
+            "firstName": "名",
+            "lastName": "姓",
+            "email": "邮箱",
+            "phone": "电话",
+            "adress": "地址",
+            "country": "国家",
+            "gender": "性别",
+            "fullName": "全名",
+            "createdAt": "创建于",
+            "updatedAt": "更新于",
+            "type": "类型",
+            "slug": "Slug"
+        },
+        "placeholders": {
+            "firstName": "名",
+            "lastName": "姓",
+            "phone": "电话",
+            "adress": "地址",
+            "country": "国家",
+            "currentPwd": "当前密码",
+            "newPwd": "新密码",
+            "confirmPwd": "确认新密码"
+        },
+        "gender": {
+            "MALE": "男",
+            "FEMALE": "女",
+            "OTHER": "其他",
+            "UNSPECIFIED": "未指定"
+        },
+        "org": {
+            "none": "无组织",
+            "unspecified": "未指定"
+        },
+        "buttons": {
+            "edit": "编辑",
+            "save": "保存",
+            "cancel": "取消"
+        },
+        "passwordModal": {
+            "title": "修改密码",
+            "current": "当前密码",
+            "new": "新密码",
+            "confirm": "确认新密码",
+            "currentRequired": "请输入当前密码",
+            "newRequired": "请输入新密码",
+            "newMin": "密码至少 8 个字符",
+            "confirmRequired": "请确认新密码",
+            "confirmMismatch": "两次输入的密码不一致！"
+        },
+        "toasts": {
+            "avatarUpdated": "头像更新成功",
+            "avatarError": "更新头像出错",
+            "profileUpdated": "资料更新成功",
+            "profileError": "资料更新出错",
+            "passwordUpdated": "密码更新成功",
+            "passwordError": "密码更新出错",
+            "orgUpdated": "组织信息更新成功",
+            "orgUpdateError": "更新组织信息出错"
+        },
+        "common": {
+            "na": "—"
+        },
+        "orgEditor": {
+            "title": "组织",
+            "edit": "编辑",
+            "name": "组织名称",
+            "type": "组织类型",
+            "email": "邮箱",
+            "phone": "电话",
+            "address": "地址",
+            "website": "网站",
+            "country": "国家",
+            "selectType": "选择类型",
+            "validators": {
+                "nameRequired": "请输入组织名称",
+                "typeRequired": "请选择组织类型"
+            }
+        },
+        "orgTypes": {
+            "COLLEGE": "学院",
+            "BANQUE": "银行",
+            "UNIVERSITE": "大学",
+            "LYCEE": "中学",
+            "ENTREPRISE": "公司",
+            "TRADUCTEUR": "翻译机构"
+        }
+    },
+    "demandeurDemandes": {
+        "title": "我的申请",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "mine": "我的申请"
+        },
+        "filters": {
+            "searchPlaceholder": "搜索（代码、机构…）",
+            "orgPlaceholder": "目标机构",
+            "periodePlaceholder": "学期/阶段",
+            "yearPlaceholder": "年份",
+            "statusPlaceholder": "状态",
+            "reset": "重置",
+            "new": "新建申请"
+        },
+        "columns": {
+            "code": "编码",
+            "date": "日期",
+            "targetOrg": "目标机构",
+            "periode": "学期/阶段",
+            "year": "年份",
+            "docs": "文件数",
+            "status": "状态",
+            "actions": "操作"
+        },
+        "actions": {
+            "details": "详情",
+            "documents": "文件"
+        },
+        "status": {
+            "PENDING": "待处理",
+            "IN_PROGRESS": "处理中",
+            "VALIDATED": "已通过",
+            "REJECTED": "已拒绝"
+        },
+        "periods": {
+            "FALL": "秋季 / Fall",
+            "WINTER": "冬季 / Winter",
+            "SPRING": "春季 / Spring",
+            "SUMMER": "夏季 / Summer"
+        },
+        "toasts": {
+            "orgLoadError": "加载机构时出错",
+            "loadError": "加载错误"
+        },
+        "common": {
+            "na": "—"
+        }
+    },
+    "demandeDetail": {
+        "title": "我的申请详情",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "mine": "我的申请",
+            "detail": "详情"
+        },
+        "actions": {
+            "documents": "文件"
+        },
+        "sections": {
+            "case": "档案",
+            "academic": "学术信息",
+            "identity": "身份信息",
+            "englishTests": "英语 / 测试",
+            "schooling": "学业 / 成绩",
+            "activities": "活动与荣誉",
+            "family": "家庭",
+            "finance": "财务",
+            "visa": "签证",
+            "essays": "作文",
+            "application": "申请信息",
+            "paymentTransaction": "支付 / 交易"
+        },
+        "fields": {
+            "code": "编码",
+            "status": "状态",
+            "targetOrg": "目标机构",
+            "assignedOrg": "翻译机构",
+            "createdAt": "创建于",
+            "periode": "学期/阶段",
+            "year": "年份",
+            "observation": "备注",
+            "serie": "系列",
+            "niveau": "级别",
+            "mention": "评级",
+            "schoolYear": "学年",
+            "countryOfSchool": "学校所在国家",
+            "secondarySchoolName": "学校",
+            "graduationDate": "毕业日期",
+            "dob": "出生日期",
+            "citizenship": "国籍",
+            "passport": "护照",
+            "isEnglishFirstLanguage": "英语为母语",
+            "testScores": "分数",
+            "englishProficiencyTests": "测试（JSON）",
+            "gradingScale": "评分标准",
+            "gpa": "GPA",
+            "examsTaken": "考试（JSON）",
+            "intendedMajor": "意向专业",
+            "extracurricularActivities": "课外活动",
+            "honorsOrAwards": "荣誉/奖励",
+            "parentGuardianName": "父母/监护人",
+            "occupation": "职业",
+            "educationLevel": "教育程度",
+            "willApplyForFinancialAid": "申请助学金",
+            "hasExternalSponsorship": "外部资助",
+            "visaType": "类型",
+            "hasPreviouslyStudiedInUS": "曾在美国学习",
+            "personalStatement": "个人陈述",
+            "optionalEssay": "可选作文",
+            "applicationRound": "申请轮次",
+            "howDidYouHearAboutUs": "你是如何得知我们的",
+            "txStatus": "交易状态",
+            "txAmount": "金额",
+            "provider": "服务商",
+            "paymentStatus": "状态",
+            "amount": "金额",
+            "paymentType": "类型"
+        },
+        "empty": {
+            "noPayment": "暂无支付记录。"
+        },
+        "common": {
+            "yes": "是",
+            "no": "否",
+            "na": "—"
+        }
+    },
+    "demandeDocuments": {
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "detail": "详情",
+            "documents": "文档"
+        },
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "demandes": "申请",
+            "details": "详情",
+            "docs": "文档"
+        },
+        "title": "申请文档",
+        "tabs": {
+            "documents": "文档",
+            "info": "申请信息"
+        },
+        "columns": {
+            "ownerOrg": "所属组织",
+            "mention": "荣誉",
+            "type": "类型",
+            "createdAt": "创建日期",
+            "encrypted": "已加密",
+            "original": "原件",
+            "translated": "已翻译"
+        },
+        "info": {
+            "general": "一般信息",
+            "academic": "学术信息",
+            "personal": "个人信息",
+            "finance": "财务信息",
+            "visa": "签证信息",
+            "orgs": "组织"
+        },
+        "fields": {
+            "code": "代码",
+            "date": "日期",
+            "status": "状态",
+            "periode": "期间",
+            "year": "年份",
+            "observation": "观察",
+            "serie": "系列",
+            "niveau": "级别",
+            "mention": "荣誉",
+            "schoolYear": "学年",
+            "countryOfSchool": "学校国家",
+            "secondarySchoolName": "机构",
+            "graduationDate": "毕业日期",
+            "dob": "出生日期",
+            "citizenship": "国籍",
+            "passport": "护照",
+            "isEnglishFirstLanguage": "英语为第一语言",
+            "testScores": "测试分数",
+            "willApplyForFinancialAid": "将申请经济援助",
+            "hasExternalSponsorship": "外部赞助",
+            "visaType": "签证类型",
+            "hasPreviouslyStudiedInUS": "曾在美国学习",
+            "targetOrg": "目标组织",
+            "assignedOrg": "翻译组织"
+        },
+        "buttons": {
+            "back": "返回",
+            "open": "打开"
+        },
+        "table": {
+            "institute": "机构",
+            "type": "类型",
+            "mention": "荣誉",
+            "obtainedAt": "获得日期",
+            "doc": "文档",
+            "translated": "已翻译",
+            "empty": "暂无文档",
+            "dash": "—"
+        },
+        "toasts": {
+            "loadDemandeError": "加载申请失败",
+            "loadDocsError": "加载文档失败",
+            "urlMissing": "URL 不可用"
+        },
+        "common": {
+            "na": "—",
+            "yes": "是",
+            "no": "否"
+        },
+        "actions": {
+            "open": "打开"
+        }
+    },
+    "demandeurDashboard": {
+        "header": {
+            "hello": "你好，{{firstName}} {{lastName}}",
+            "welcome": "欢迎！"
+        },
+        "kpis": {
+            "myRequests": "我的请求",
+            "myDocuments": "我的文档",
+            "myTransactions": "我的交易",
+            "myPayments": "我的付款",
+            "seeBreakdown": "查看下面的明细",
+            "none": "无请求",
+            "translatedCount": "已翻译: {{count}}",
+            "myDemandes": "我的请求",
+            "breakdown": "查看下面的明细",
+            "translated": "已翻译: {{count}}"
+        },
+        "activity": {
+            "title": "最近活动",
+            "requestLine": "请求 {{code}} — {{status}} — {{date}}",
+            "paymentLine": "付款 {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
+            "none": "无最近活动"
+        },
+        "toasts": {
+            "loadError": "加载统计错误"
+        },
+        "empty": "无数据显示",
+        "common": {
+            "na": "—"
+        },
+        "title": "仪表板",
+        "hello": "你好，{{firstName}} {{lastName}}",
+        "welcome": "欢迎！",
+        "breakdowns": {
+            "demandesByStatus": "按状态的我的请求",
+            "transactionsByStatus": "按状态的我的交易",
+            "paymentsByStatus": "按状态的我的付款"
+        },
+        "tables": {
+            "recentDemandes": "最近的请求",
+            "recentTransactions": "最近的交易",
+            "recentPayments": "最近的付款"
+        }
+    },
+    "institutDashboard": {
+        "header": {
+            "title": "学院控制台",
+            "orgLabel": "机构："
+        },
+        "breadcrumb": {
+            "home": "首页",
+            "institute": "学院"
+        },
+        "kpis": {
+            "targetRequests": "目标申请（总数）",
+            "assignedRequests": "已分配申请（总数）",
+            "documents": "文件（总数/待翻译/已翻译）",
+            "subscriptions": "订阅（有效/总数）",
+            "expiringSoon": "即将到期：{{count}}",
+            "usersTotal": "用户（总数）"
+        },
+        "charts": {
+            "targetVsAssigned": {
+                "title": "目标 vs 已分配",
+                "format": "已分配 {{percent}}%",
+                "target": "目标：{{n}}",
+                "assigned": "已分配：{{n}}"
+            }
+        },
+        "tables": {
+            "usersByRole": "按角色统计用户",
+            "targetByStatus": "按状态统计目标申请",
+            "assignedByStatus": "按状态统计已分配申请",
+            "paymentsByStatus": "按状态统计付款",
+            "simpleCols": {
+                "name": "状态/角色",
+                "value": "数量"
+            },
+            "listCols": {
+                "name": "名称",
+                "code": "编码",
+                "description": "描述/级别"
+            }
+        },
+        "lists": {
+            "departmentsTitle": "院系（{{n}}）",
+            "tracksTitle": "专业（{{n}}）",
+            "departmentCol": "院系",
+            "noDepartment": "暂无院系",
+            "noTrack": "暂无专业"
+        },
+        "incoming": {
+            "title": "新进申请 — 统计",
+            "totalRecent": "总计（近期）",
+            "otherStatuses": "其他状态"
+        },
+        "toasts": {
+            "loadError": "加载统计失败"
+        },
+        "common": {
+            "noData": "暂无数据",
+            "na": "—",
+            "undef": "未定义"
+        }
+    },
+    "usersInstitutList": {
+        "title": "我所在机构的用户",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "users": "用户"
+        },
+        "columns": {
+            "fullName": "姓名",
+            "email": "邮箱",
+            "phone": "电话",
+            "role": "角色",
+            "status": "状态",
+            "actions": "操作"
+        },
+        "actions": {
+            "details": "详情",
+            "edit": "编辑",
+            "reset": "重置",
+            "newUser": "新建用户"
+        },
+        "filters": {
+            "searchPlaceholder": "搜索…",
+            "rolePlaceholder": "角色",
+            "statusPlaceholder": "状态",
+            "permissionPlaceholder": "权限",
+            "roles": {
+                "DEMANDEUR": "申请人",
+                "TRADUCTEUR": "译员",
+                "SUPERVISEUR": "主管",
+                "INSTITUT": "机构"
+            },
+            "status": {
+                "ACTIVE": "启用",
+                "INACTIVE": "停用"
+            }
+        },
+        "pagination": {
+            "total": "共 {{total}} 位用户"
+        },
+        "toasts": {
+            "loadError": "加载用户失败"
+        },
+        "common": {
+            "na": "无"
+        }
+    },
+    "userDetailInstitut": {
+        "title": "用户详情",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "users": "用户"
+        },
+        "actions": {
+            "edit": "编辑"
+        },
+        "sections": {
+            "personal": "个人信息",
+            "permissions": "权限",
+            "organization": "机构"
+        },
+        "fields": {
+            "fullName": "姓名",
+            "email": "邮箱",
+            "phone": "电话",
+            "role": "角色",
+            "status": "状态",
+            "updatedAt": "最后更新",
+            "createdAt": "创建时间"
+        },
+        "permissions": {
+            "none": "无权限"
+        },
+        "org": {
+            "name": "名称",
+            "type": "类型",
+            "slug": "别名"
+        },
+        "toasts": {
+            "loadError": "加载用户失败"
+        },
+        "common": {
+            "na": "无",
+            "never": "从未",
+            "notFound": "未找到该用户。"
+        }
+    },
+    "userEditInstitut": {
+        "title": "编辑用户",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "users": "用户",
+            "edit": "编辑"
+        },
+        "cardTitle": "编辑用户",
+        "sections": {
+            "permissions": "权限"
+        },
+        "fields": {
+            "avatar": "头像",
+            "firstName": "名",
+            "lastName": "姓",
+            "email": "邮箱",
+            "phone": "电话",
+            "address": "地址",
+            "country": "居住国家",
+            "gender": "性别",
+            "role": "角色",
+            "status": "状态",
+            "permissions": "权限"
+        },
+        "labels": {
+            "active": "启用"
+        },
+        "actions": {
+            "back": "返回",
+            "upload": "上传",
+            "save": "保存",
+            "saving": "保存中..."
+        },
+        "placeholders": {
+            "firstName": "名",
+            "lastName": "姓",
+            "email": "name@example.com",
+            "phone": "电话号码",
+            "address": "地址",
+            "country": "国家",
+            "role": "选择角色",
+            "gender": "选择性别"
+        },
+        "validations": {
+            "firstName": "名为必填项",
+            "lastName": "姓为必填项",
+            "email": "邮箱格式不正确"
+        },
+        "validators": {
+            "gender": "性别为必填项"
+        },
+        "roles": {
+            "MALE": "男",
+            "FEMALE": "女",
+            "OTHER": "其他"
+        },
+        "toasts": {
+            "loadError": "加载用户失败",
+            "updated": "用户已更新",
+            "updateError": "更新失败"
+        }
+    },
+    "userCreateInstitut": {
+        "pageTitle": "新用户（我的机构）",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "users": "用户",
+            "new": "新建"
+        },
+        "cardTitle": "新用户",
+        "photo": {
+            "label": "头像",
+            "upload": "上传"
+        },
+        "fields": {
+            "firstName": "名",
+            "lastName": "姓",
+            "email": "邮箱",
+            "phone": "电话",
+            "address": "地址",
+            "country": "国家",
+            "gender": "性别",
+            "role": "角色",
+            "password": "密码",
+            "confirmPassword": "确认密码",
+            "permissions": "权限"
+        },
+        "placeholders": {
+            "firstName": "名",
+            "lastName": "姓",
+            "email": "name@example.com",
+            "phone": "电话号码",
+            "address": "地址",
+            "country": "国家",
+            "gender": "选择性别"
+        },
+        "dividers": {
+            "permissions": "权限",
+            "password": "密码"
+        },
+        "validators": {
+            "firstNameRequired": "名为必填项",
+            "lastNameRequired": "姓为必填项",
+            "emailRequired": "邮箱为必填项",
+            "emailInvalid": "邮箱格式无效",
+            "gender": "性别为必填项",
+            "passwordRequired": "密码为必填项",
+            "confirmRequired": "请确认密码",
+            "confirmMismatch": "两次输入的密码不一致"
+        },
+        "roles": {
+            "MALE": "男",
+            "FEMALE": "女",
+            "OTHER": "其他"
+        },
+        "buttons": {
+            "submit": "提交",
+            "submitting": "提交中…"
+        },
+        "toasts": {
+            "success": "用户创建成功",
+            "error": "发送数据时出错"
+        }
+    },
+    "departmentListInstitut": {
+        "pageTitle": "院系（我的机构）",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "departments": "院系"
+        },
+        "searchPlaceholder": "搜索（名称、代码、描述）",
+        "buttons": {
+            "exportCsv": "导出 CSV",
+            "new": "新建",
+            "details": "详情",
+            "edit": "编辑"
+        },
+        "columns": {
+            "name": "名称",
+            "code": "代码",
+            "filieres": "专业方向",
+            "actions": "操作"
+        },
+        "messages": {
+            "loadError": "加载错误",
+            "exportError": "导出失败"
+        }
+    },
+    "departmentCreateInstitut": {
+        "pageTitle": "新建部门",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "departments": "部门",
+            "create": "创建"
+        },
+        "fields": {
+            "name": "名称",
+            "code": "代码",
+            "description": "描述"
+        },
+        "placeholders": {
+            "name": "部门名称",
+            "code": "代码（可选）",
+            "description": "描述（可选）"
+        },
+        "validators": {
+            "nameRequired": "名称为必填项"
+        },
+        "buttons": {
+            "save": "保存"
+        },
+        "toasts": {
+            "created": "部门已创建",
+            "createError": "创建时出错"
+        }
+    },
+    "departmentDetailInstitut": {
+        "pageTitle": "院系",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "departments": "院系"
+        },
+        "buttons": {
+            "edit": "编辑",
+            "addFiliere": "新增专业",
+            "delete": "删除",
+            "confirmDeleteTitle": "删除该院系？"
+        },
+        "cards": {
+            "infoTitle": "信息",
+            "filieresTitle": "院系专业"
+        },
+        "fields": {
+            "name": "名称",
+            "code": "代码",
+            "description": "描述",
+            "organization": "机构",
+            "filieresCount": "专业数",
+            "createdAt": "创建时间"
+        },
+        "table": {
+            "name": "名称",
+            "code": "代码",
+            "level": "层级",
+            "createdAt": "创建时间"
+        },
+        "messages": {
+            "loadError": "加载错误",
+            "deleted": "已删除",
+            "deleteError": "删除失败"
+        }
+    },
+    "filiereCreateInstitut": {
+        "pageTitle": "新建专业",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "filieres": "专业",
+            "create": "创建"
+        },
+        "fields": {
+            "department": "院系",
+            "name": "名称",
+            "code": "代码",
+            "level": "层级",
+            "description": "描述"
+        },
+        "placeholders": {
+            "selectDepartment": "选择院系",
+            "name": "专业名称",
+            "code": "代码（可选）",
+            "level": "选择层级（可选）",
+            "description": "描述（可选）"
+        },
+        "validators": {
+            "departmentRequired": "必须选择院系",
+            "nameRequired": "名称为必填项"
+        },
+        "levels": {
+            "licence": "本科",
+            "master": "硕士",
+            "doctorat": "博士"
+        },
+        "buttons": {
+            "save": "保存"
+        },
+        "toasts": {
+            "created": "专业已创建",
+            "createError": "创建时出错",
+            "depsLoadError": "加载院系失败"
+        }
+    },
+    "filiereListInstitut": {
+        "pageTitle": "专业（我的机构）",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "filieres": "专业"
+        },
+        "filters": {
+            "searchPlaceholder": "搜索（名称）",
+            "departmentPlaceholder": "院系",
+            "levelPlaceholder": "层级"
+        },
+        "levels": {
+            "licence": "本科",
+            "master": "硕士",
+            "doctorat": "博士"
+        },
+        "buttons": {
+            "new": "新建专业",
+            "details": "详情",
+            "edit": "编辑"
+        },
+        "columns": {
+            "name": "名称",
+            "code": "代码",
+            "level": "层级",
+            "department": "院系",
+            "actions": "操作"
+        },
+        "messages": {
+            "loadError": "加载错误"
+        }
+    },
+    "filiereDetailInstitut": {
+        "pageTitle": "专业",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "filieres": "专业"
+        },
+        "buttons": {
+            "edit": "编辑",
+            "delete": "删除",
+            "confirmDeleteTitle": "删除该专业？"
+        },
+        "cards": {
+            "infoTitle": "信息"
+        },
+        "fields": {
+            "name": "名称",
+            "code": "代码",
+            "level": "层级",
+            "department": "院系",
+            "description": "描述",
+            "createdAt": "创建时间"
+        },
+        "messages": {
+            "loadError": "加载错误",
+            "deleted": "已删除",
+            "deleteError": "删除失败"
+        }
+    },
+    "filiereEditInstitut": {
+        "pageTitle": "编辑专业",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "filieres": "专业",
+            "edit": "编辑"
+        },
+        "fields": {
+            "name": "名称",
+            "code": "代码",
+            "level": "层级",
+            "description": "描述"
+        },
+        "placeholders": {
+            "name": "专业名称",
+            "code": "代码（可选）",
+            "level": "选择层级（可选）",
+            "description": "描述（可选）"
+        },
+        "validators": {
+            "nameRequired": "名称为必填项"
+        },
+        "levels": {
+            "licence": "本科",
+            "master": "硕士",
+            "doctorat": "博士"
+        },
+        "buttons": {
+            "save": "保存"
+        },
+        "toasts": {
+            "updated": "更新成功",
+            "loadError": "加载错误",
+            "updateError": "更新失败"
+        }
+    },
+    "institutDemandesList": {
+        "pageTitle": "我们的申请",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "demandes": "申请"
+        },
+        "section": {
+            "titleMyInstitute": "申请 — 我的机构",
+            "filters": "筛选",
+            "list": "申请列表"
+        },
+        "filters": {
+            "searchPlaceholder": "搜索（代码、年份、层级、邮箱…）",
+            "statusPlaceholder": "状态",
+            "dateRangePlaceholder": "日期范围",
+            "sortBy": "排序字段",
+            "sortOrder": "排序",
+            "apply": "应用",
+            "reset": "重置"
+        },
+        "sortByOptions": {
+            "dateDemande": "申请日期",
+            "createdAt": "创建时间",
+            "updatedAt": "更新时间",
+            "code": "代码"
+        },
+        "sortOrderOptions": {
+            "asc": "升序",
+            "desc": "降序"
+        },
+        "columns": {
+            "code": "代码",
+            "date": "日期",
+            "demandeur": "申请人",
+            "assigned": "指派给",
+            "docs": "文档",
+            "status": "状态",
+            "actions": "操作"
+        },
+        "buttons": {
+            "details": "详情",
+            "addDoc": "添加文档",
+            "subscribeNow": "立即订阅",
+            "recheck": "重新检查"
+        },
+        "statuses": {
+            "PENDING": "待处理",
+            "VALIDATED": "已通过",
+            "REJECTED": "已拒绝",
+            "IN_PROGRESS": "进行中"
+        },
+        "paywall": {
+            "checking": "正在检查订阅…",
+            "requiredTitle": "需要订阅",
+            "requiredSub1": "您的组织没有有效订阅。请先订阅并付款以访问申请列表。",
+            "hint": "付款后如未显示，请点击“重新检查”。"
+        },
+        "paymentModal": {
+            "title": "订阅付款",
+            "methodStripe": "Stripe",
+            "methodPaypal": "PayPal",
+            "stripeInit": "正在初始化 Stripe…",
+            "stripeRetry": "重试 Stripe",
+            "paypalLoad": "加载 PayPal",
+            "paypalError": "PayPal 错误",
+            "amountTag": "金额"
+        },
+        "toasts": {
+            "loadError": "加载申请失败",
+            "stripeInitError": "Stripe 初始化失败",
+            "stripeSecretMissing": "缺少 Stripe 客户端密钥",
+            "paypalCfgError": "PayPal 配置不可用",
+            "postPayError": "付款后处理失败",
+            "aboActivated": "订阅已激活（{{provider}}）🎉"
+        }
+    },
+    "institutDemandeDetails": {
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "demandes": "申请",
+            "details": "详情"
+        },
+        "title": "申请详情",
+        "buttons": {
+            "back": "返回",
+            "updateStatus": "更新状态",
+            "open": "打开",
+            "seeDocs": "查看文档",
+            "close": "关闭",
+            "save": "保存",
+            "pending": "PENDING",
+            "inProgress": "IN_PROGRESS",
+            "validated": "VALIDATED",
+            "rejected": "REJECTED"
+        },
+        "fields": {
+            "code": "代码",
+            "status": "状态",
+            "requestDate": "申请日期",
+            "updatedAt": "最后更新",
+            "createdAt": "创建时间",
+            "deletedAt": "删除时间",
+            "targetOrg": "目标机构",
+            "assignedOrg": "指派机构",
+            "requester": "申请人",
+            "serie": "科类",
+            "niveau": "层级",
+            "mention": "荣誉",
+            "anneeTxt": "年份（文本）",
+            "periode": "阶段",
+            "year": "年份",
+            "countryOfSchool": "学校所在国",
+            "secondarySchoolName": "学校/机构",
+            "graduationDate": "毕业日期",
+            "observation": "备注"
+        },
+        "docs": {
+            "title": "关联文档",
+            "empty": "暂无文档",
+            "ownerOrg": "机构（来源）",
+            "type": "类型",
+            "mention": "荣誉",
+            "obtainedAt": "获得日期",
+            "doc": "文档",
+            "translated": "已翻译",
+            "isTranslated": "是否翻译",
+            "addedAt": "添加时间",
+            "count": "{{count}}"
+        },
+        "modals": {
+            "statusTitle": "更新状态与备注",
+            "statusField": "状态",
+            "statusPlaceholder": "选择状态",
+            "observationField": "备注（在申请中可见）",
+            "observationPlaceholder": "添加有用备注（通过/拒绝原因、缺失材料等）",
+            "orgSourceTitle": "上传文档的机构",
+            "buyerTitle": "购买机构（被指派的组织）",
+            "noneSelected": "未选择文档。",
+            "noneBuyer": "无购买机构。"
+        },
+        "statuses": {
+            "PENDING": "待处理",
+            "IN_PROGRESS": "进行中",
+            "VALIDATED": "已通过",
+            "REJECTED": "已拒绝"
+        },
+        "tags": {
+            "yes": "是",
+            "no": "否",
+            "dash": "—"
+        },
+        "toasts": {
+            "loadError": "加载申请失败",
+            "statusSaved": "状态/备注已更新",
+            "statusSaveError": "更新失败",
+            "urlMissing": "URL 不可用",
+            "stripeSecretMissing": "缺少 Stripe 客户端密钥"
+        },
+        "sections": {
+            "actionsWorkflow": "操作（工作流）"
+        },
+        "orgFields": {
+            "name": "机构名称",
+            "nameShort": "名称",
+            "slug": "标识",
+            "type": "类型",
+            "phone": "电话",
+            "address": "地址",
+            "country": "国家",
+            "website": "网站"
+        }
+    },
+    "demandeDocAdd": {
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "demandes": "申请",
+            "add": "添加文档"
+        },
+        "title": "为申请添加文档",
+        "buttons": {
+            "back": "返回",
+            "cancel": "取消",
+            "save": "保存文档"
+        },
+        "form": {
+            "code": "申请编码",
+            "codeRequired": "必须填写申请编码",
+            "codePh": "输入编码",
+            "type": "文档类型",
+            "typeRequired": "请选择文档类型",
+            "typePh": "选择类型（如：成绩单、文凭）",
+            "mention": "荣誉/等级",
+            "mentionPh": "输入荣誉/等级（如：良、优…）",
+            "year": "获得年份",
+            "yearRequired": "必须选择获得年份",
+            "file": "文件",
+            "fileHelp": "上传文档文件（PDF/JPG/PNG）。",
+            "fileOriginal": "原始文件",
+            "fileRequired": "请选择一个文件。"
+        },
+        "upload": {
+            "dragTitle": "拖拽到此或点击选择",
+            "dragHint": "PDF / JPG / PNG（最多 1 个文件）",
+            "tooltipRequired": "必填"
+        },
+        "toasts": {
+            "success": "文档添加成功。",
+            "error": "添加文档失败"
+        },
+        "types": {
+            "ATTESTATION": "证明",
+            "RELEVE": "成绩单",
+            "DIPLOME": "文凭",
+            "AUTRE": "其他"
+        }
+    },
+    "auth": {
+        "login": {
+            "title": "登录",
+            "email": "电子邮件地址：",
+            "password": "密码：",
+            "rememberMe": "记住我",
+            "forgotPassword": "忘记密码？",
+            "loginButton": "登录",
+            "loggingIn": "正在登录...",
+            "noAccount": "没有账户？",
+            "signup": "注册",
+            "errorNoToken": "未收到令牌。请重试。",
+            "errorLogin": "电子邮件或密码不正确。请重试。",
+            "showPassword": "显示密码",
+            "hidePassword": "隐藏密码",
+            "footer": "© {{year}} applyons. 由 AuthenticPage 制作。"
+        },
+        "signup": {
+            "title": "创建账户",
+            "personalInfo": "个人信息",
+            "firstName": "名字 *",
+            "lastName": "姓氏 *",
+            "gender": "性别 *",
+            "birthPlace": "出生国家 *",
+            "birthDate": "出生日期 *",
+            "email": "电子邮件地址 *",
+            "phone": "电话",
+            "country": "国家 *",
+            "address": "地址",
+            "accountType": "账户类型 *",
+            "password": "密码 *",
+            "confirmPassword": "确认密码 *",
+            "minPassword": "至少6个字符",
+            "orgInfo": {
+                "institut": "机构信息",
+                "traducteur": "代理机构信息",
+                "banque": "银行信息"
+            },
+            "orgName": "组织名称 *",
+            "orgType": "组织类型 *",
+            "orgEmail": "组织电子邮件 *",
+            "orgPhone": "组织电话",
+            "orgWebsite": "网站（可选）",
+            "orgAddress": "组织地址",
+            "orgNote": "注意：您将自动成为此组织的管理员。",
+            "cancel": "取消",
+            "login": "登录",
+            "createAccount": "创建我的账户",
+            "createAccountAndOrg": "创建账户和组织",
+            "creating": "正在注册...",
+            "success": "注册成功！请检查您的电子邮件以激活您的账户。",
+            "errors": {
+                "firstNameRequired": "名字是必需的。",
+                "lastNameRequired": "姓氏是必需的。",
+                "genderRequired": "性别是必需的。",
+                "birthPlaceRequired": "出生国家是必需的。",
+                "birthDateRequired": "出生日期是必需的。",
+                "birthDateInvalid": "无效的出生日期。",
+                "emailRequired": "电子邮件是必需的。",
+                "emailInvalid": "无效的电子邮件。",
+                "passwordRequired": "密码是必需的。",
+                "passwordMin": "至少6个字符。",
+                "passwordMismatch": "密码不匹配。",
+                "orgNameRequired": "组织名称是必需的。",
+                "orgTypeRequired": "组织类型是必需的。",
+                "orgEmailRequired": "组织电子邮件是必需的。",
+                "orgEmailInvalid": "无效的组织电子邮件。"
+            },
+            "roles": {
+                "DEMANDEUR": "申请人",
+                "INSTITUT": "学院/学校/公司",
+                "TRADUCTEUR": "翻译员/代理机构",
+                "BANQUE": "银行/金融机构"
+            },
+            "orgTypes": {
+                "UNIVERSITE": "大学",
+                "COLLEGE": "学院",
+                "LYCEE": "高中",
+                "ENTREPRISE": "公司",
+                "TRADUCTEUR": "翻译代理机构",
+                "BANQUE": "银行"
+            },
+            "genders": {
+                "MALE": "男",
+                "FEMALE": "女",
+                "OTHER": "其他"
+            },
+            "placeholders": {
+                "firstName": "张",
+                "lastName": "三",
+                "email": "zhangsan@example.com",
+                "phone": "+86 123 4567 8900",
+                "address": "123 主街，城市",
+                "orgNameInstitut": "您的机构名称",
+                "orgNameTraducteur": "您的代理机构名称",
+                "orgNameBanque": "您的银行名称",
+                "orgEmail": "contact@organization.com",
+                "orgPhone": "+86 123 4567 8900",
+                "orgWebsite": "https://organization.com",
+                "orgAddress": "完整组织地址",
+                "selectType": "选择类型"
+            }
+        },
+        "resetPassword": {
+            "title": "重置密码",
+            "subtitle": "输入您的电子邮件地址，我们将向您发送重置链接。",
+            "email": "电子邮件地址：",
+            "sendLink": "发送链接",
+            "sending": "正在发送...",
+            "login": "登录",
+            "success": "已发送密码重置电子邮件。",
+            "error": "发送密码重置电子邮件时出错。",
+            "footer": "© {{year}} applyons. 由 AuthenticPage 制作。"
+        },
+        "newPassword": {
+            "title": "新密码",
+            "subtitle": "请输入您的新密码",
+            "newPassword": "新密码",
+            "confirmPassword": "确认密码",
+            "change": "更改密码",
+            "changing": "正在更改...",
+            "rememberPassword": "还记得您的密码？",
+            "login": "登录",
+            "success": "密码已更改！",
+            "successSubtitle": "您将被重定向到登录页面。",
+            "errors": {
+                "passwordRequired": "密码是必需的",
+                "passwordMin": "密码必须包含至少8个字符",
+                "passwordLowercase": "密码必须包含至少一个小写字母",
+                "passwordUppercase": "密码必须包含至少一个大写字母",
+                "passwordNumber": "密码必须包含至少一个数字",
+                "confirmRequired": "请确认您的密码",
+                "confirmMismatch": "密码不匹配"
+            },
+            "placeholders": {
+                "newPassword": "输入您的新密码",
+                "confirmPassword": "确认您的新密码"
+            },
+            "error": "重置密码时出错。请重试。",
+            "footer": "© {{year}} applyons. 由 ADM 用 ❤️ 制作。"
+        }
+    },
+    "adminDashboard": {
+        "hello": "你好，{{firstName}} {{lastName}}",
+        "welcome": "欢迎！",
+        "kpis": {
+            "usersTotal": "用户（总计）",
+            "usersActive": "活跃：{{count}}",
+            "organizationsTotal": "组织（总计）",
+            "demandesTotal": "请求（总计）",
+            "demandesBreakdown": "查看下面的分类",
+            "demandesNone": "无请求",
+            "documentsTotal": "文档（总计）",
+            "documentsTranslated": "已翻译：{{count}}",
+            "transactionsTotal": "交易（总计）",
+            "transactionsBreakdown": "查看下面的分类",
+            "paymentsTotal": "付款（总计）",
+            "paymentsBreakdown": "查看下面的分类",
+            "abonnementsTotal": "订阅",
+            "abonnementsActive": "活跃：{{active}} · 即将到期：{{expiring}}",
+            "contactsTotal": "联系人（消息）"
+        },
+        "breakdowns": {
+            "usersByRole": "用户角色分类",
+            "orgsByType": "组织类型分类",
+            "demandesByStatus": "按状态的请求",
+            "transactionsByStatus": "按状态的交易",
+            "paymentsByStatus": "按状态的付款"
+        },
+        "empty": {
+            "noItems": "— 无项目 —",
+            "noData": "没有要显示的数据。",
+            "freeSpace": "图表/最近活动的自由空间"
+        },
+        "error": "获取统计信息时出错"
+    },
+    "traducteurDashboard": {
+        "hello": "你好，{{firstName}} {{lastName}}",
+        "welcome": "欢迎！",
+        "kpis": {
+            "usersTotal": "用户（总计）",
+            "usersActive": "活跃：{{count}}",
+            "organizationsTotal": "组织（总计）",
+            "demandesTotal": "请求（总计）",
+            "demandesBreakdown": "查看下面的分类",
+            "demandesNone": "无请求",
+            "documentsTotal": "文档（总计）",
+            "documentsTranslated": "已翻译：{{count}}",
+            "transactionsTotal": "交易（总计）",
+            "transactionsBreakdown": "查看下面的分类",
+            "paymentsTotal": "付款（总计）",
+            "paymentsBreakdown": "查看下面的分类",
+            "abonnementsTotal": "订阅",
+            "abonnementsActive": "活跃：{{active}} · 即将到期：{{expiring}}",
+            "contactsTotal": "联系人（消息）"
+        },
+        "breakdowns": {
+            "usersByRole": "用户角色分类",
+            "orgsByType": "组织类型分类",
+            "demandesByStatus": "按状态的请求",
+            "transactionsByStatus": "按状态的交易",
+            "paymentsByStatus": "按状态的付款"
+        },
+        "empty": {
+            "noItems": "— 无项目 —",
+            "noData": "没有要显示的数据。",
+            "freeSpace": "图表/最近活动的自由空间"
+        },
+        "error": "获取统计信息时出错"
+    },
+    "adminUsers": {
+        "title": "用户列表",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "users": "用户"
+        },
+        "columns": {
+            "fullName": "全名",
+            "email": "电子邮件",
+            "phone": "电话",
+            "role": "角色",
+            "status": "状态",
+            "actions": "操作"
+        },
+        "filters": {
+            "search": "搜索...",
+            "role": "角色",
+            "status": "状态"
+        },
+        "actions": {
+            "new": "新用户",
+            "details": "详情",
+            "edit": "编辑",
+            "delete": "归档"
+        },
+        "roles": {
+            "ADMIN": "管理员",
+            "SUPER_ADMIN": "超级管理员",
+            "SA": "SA",
+            "SUPERVISEUR": "监督员",
+            "INSTITUT": "机构",
+            "DEMANDEUR": "申请人",
+            "TRADUCTEUR": "翻译员",
+            "UTILISATEUR": "用户"
+        },
+        "status": {
+            "ACTIVE": "活跃",
+            "INACTIVE": "非活跃"
+        },
+        "messages": {
+            "archiveSuccess": "用户已成功归档",
+            "archiveError": "归档失败",
+            "loadError": "获取用户时出错"
+        },
+        "common": {
+            "na": "N/A"
+        },
+        "pagination": {
+            "total": "总计 {{total}} 用户"
+        }
+    },
+    "adminOrganizations": {
+        "title": "组织列表",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "organizations": "组织"
+        },
+        "columns": {
+            "name": "名称",
+            "type": "类型",
+            "email": "电子邮件",
+            "phone": "电话",
+            "country": "国家",
+            "status": "状态",
+            "actions": "操作"
+        },
+        "filters": {
+            "search": "搜索...",
+            "type": "类型",
+            "country": "国家"
+        },
+        "actions": {
+            "new": "新组织",
+            "details": "详情",
+            "edit": "编辑",
+            "delete": "归档"
+        },
+        "types": {
+            "ENTREPRISE": "公司",
+            "TRADUCTEUR": "翻译机构",
+            "BANQUE": "银行",
+            "COLLEGE": "学院",
+            "LYCEE": "高中",
+            "UNIVERSITE": "大学"
+        },
+        "countries": {
+            "SN": "塞内加尔",
+            "FR": "法国",
+            "US": "美国",
+            "CA": "加拿大"
+        },
+        "messages": {
+            "archiveSuccess": "组织已成功归档",
+            "archiveError": "归档失败",
+            "loadError": "获取组织时出错"
+        },
+        "pagination": {
+            "total": "总计 {{total}} 组织"
+        }
+    },
+    "adminDemandeCreate": {
+        "title": "创建请求",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "demandes": "请求",
+            "create": "创建"
+        },
+        "steps": {
+            "basic": "基本信息",
+            "academic": "学术信息",
+            "personal": "个人信息",
+            "financial": "财务信息",
+            "payment": "付款"
+        },
+        "fields": {
+            "type": "请求类型",
+            "typeRequired": "类型是必需的",
+            "targetOrg": "目标组织",
+            "targetOrgRequired": "目标组织是必需的",
+            "assignedOrg": "翻译组织",
+            "assignedOrgRequired": "翻译组织是必需的",
+            "observation": "观察",
+            "serie": "系列",
+            "niveau": "级别",
+            "mention": "提及",
+            "annee": "年份",
+            "countryOfSchool": "学校国家",
+            "secondarySchoolName": "学校名称",
+            "graduationDate": "毕业日期",
+            "dob": "出生日期",
+            "citizenship": "国籍",
+            "passport": "护照号码",
+            "isEnglishFirstLanguage": "英语是您的第一语言吗？",
+            "englishProficiencyTests": "英语能力测试",
+            "testScores": "测试分数"
+        },
+        "types": {
+            "TRADUCTION": "翻译",
+            "VERIFICATION": "验证",
+            "AUTRE": "其他"
+        },
+        "placeholders": {
+            "selectType": "选择类型",
+            "selectTargetOrg": "选择目标组织",
+            "selectAssignedOrg": "选择翻译组织",
+            "observation": "额外观察",
+            "serie": "系列（例如：S, L, ES）",
+            "niveau": "级别（例如：Bac, 许可证, 硕士）",
+            "mention": "提及（例如：良好, 非常好）",
+            "annee": "年份（例如：2023）",
+            "countryOfSchool": "学校国家",
+            "secondarySchoolName": "中学名称",
+            "citizenship": "国籍",
+            "passport": "护照号码",
+            "englishTests": "英语能力测试（例如：TOEFL, IELTS）",
+            "testScores": "测试分数"
+        },
+        "buttons": {
+            "next": "下一步",
+            "prev": "上一步",
+            "submit": "创建请求",
+            "cancel": "取消"
+        },
+        "messages": {
+            "orgLoadError": "获取组织时出错",
+            "createSuccess": "请求创建成功",
+            "createError": "创建请求时出错"
+        }
+    },
+    "adminAbonnements": {
+        "title": "订阅管理",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "abonnements": "订阅"
+        },
+        "columns": {
+            "organization": "组织",
+            "period": "期间",
+            "amount": "金额",
+            "status": "状态",
+            "createdAt": "创建于",
+            "actions": "操作",
+            "id": "ID",
+            "periode": "期间",
+            "montant": "金额"
+        },
+        "filters": {
+            "search": "搜索...",
+            "organization": "组织",
+            "status": "状态",
+            "dateRange": "日期范围",
+            "minAmount": "最小金额",
+            "maxAmount": "最大金额"
+        },
+        "actions": {
+            "new": "新订阅",
+            "details": "详情",
+            "edit": "编辑",
+            "stats": "统计",
+            "renew": "续订",
+            "archive": "归档",
+            "restore": "恢复",
+            "delete": "删除",
+            "create": "创建",
+            "refresh": "刷新"
+        },
+        "status": {
+            "ACTIVE": "活跃",
+            "EXPIRED": "已过期",
+            "PENDING": "待处理",
+            "expired": "已过期",
+            "active": "活跃",
+            "coming": "即将到来"
+        },
+        "messages": {
+            "loadError": "加载订阅错误",
+            "orgLoadError": "加载组织错误",
+            "statsError": "加载统计错误",
+            "archiveSuccess": "订阅已成功归档",
+            "archiveError": "归档失败",
+            "restoreSuccess": "订阅已成功恢复",
+            "restoreError": "恢复失败",
+            "deleteSuccess": "订阅已永久删除",
+            "deleteError": "删除失败"
+        },
+        "pagination": {
+            "total": "总计 {{total}} 订阅"
+        },
+        "stats": {
+            "title": "统计",
+            "total": "总订阅数",
+            "active": "活跃",
+            "expired": "已过期",
+            "expiringSoon": "即将过期"
+        },
+        "modals": {
+            "archiveTitle": "归档此订阅？",
+            "archiveContent": "此操作可逆。订阅将不再可见，但可以恢复。",
+            "archiveOk": "归档",
+            "archiveCancel": "取消",
+            "deleteTitle": "永久删除此订阅？",
+            "deleteContent": "此操作不可逆。所有数据将丢失。",
+            "deleteOk": "删除",
+            "deleteCancel": "取消"
+        }
+    },
+    "adminPayments": {
+        "title": "付款",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "payments": "付款"
+        },
+        "columns": {
+            "provider": "提供商",
+            "amount": "金额",
+            "currency": "货币",
+            "status": "状态",
+            "type": "类型",
+            "createdAt": "创建于",
+            "actions": "操作",
+            "date": "日期",
+            "link": "关联"
+        },
+        "filters": {
+            "search": "搜索...",
+            "provider": "提供商",
+            "status": "状态",
+            "type": "类型",
+            "searchProvider": "按提供商搜索",
+            "searchStatus": "按状态筛选",
+            "searchAbonnementId": "按订阅ID搜索",
+            "searchDemandeId": "按请求ID搜索",
+            "searchTransactionId": "按交易ID搜索",
+            "demandePartageId": "DemandePartageId",
+            "abonnementId": "AbonnementId",
+            "transactionId": "TransactionId"
+        },
+        "actions": {
+            "details": "详情",
+            "stats": "统计",
+            "refresh": "刷新"
+        },
+        "status": {
+            "SUCCEEDED": "成功",
+            "CAPTURED": "已捕获",
+            "AUTHORIZED": "已授权",
+            "REQUIRES_ACTION": "需要操作",
+            "INITIATED": "已启动",
+            "FAILED": "失败",
+            "CANCELED": "已取消"
+        },
+        "types": {
+            "CARD": "卡",
+            "STRIPE": "Stripe",
+            "PAYPAL": "PayPal",
+            "BANK_TRANSFER": "银行转账",
+            "MOBILE_MONEY": "移动支付"
+        },
+        "messages": {
+            "loadError": "加载付款失败",
+            "detailsError": "无法检索付款"
+        },
+        "paymentTypes": {
+            "CARD": "卡",
+            "STRIPE": "Stripe",
+            "PAYPAL": "PayPal",
+            "BANK_TRANSFER": "银行转账",
+            "MOBILE_MONEY": "移动支付"
+        },
+        "common": {
+            "na": "—"
+        },
+        "stats": {
+            "totalPayments": "总付款数",
+            "totalAmount": "总金额",
+            "byStatus": "按状态",
+            "linkTypes": "关联",
+            "last": "最后"
+        },
+        "linkTypes": {
+            "ABONNEMENT": "订阅",
+            "DEMANDE": "请求",
+            "SANS_LIEN": "无关联"
+        },
+        "drawer": {
+            "title": "付款详情",
+            "loading": "加载中..."
+        }
+    },
+    "adminContacts": {
+        "pageTitle": "联系人管理",
+        "title": "联系人管理",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "contacts": "联系人"
+        },
+        "columns": {
+            "name": "姓名",
+            "email": "电子邮件",
+            "subject": "主题",
+            "status": "状态",
+            "date": "日期",
+            "actions": "操作"
+        },
+        "filters": {
+            "statusPlaceholder": "按状态筛选"
+        },
+        "statuses": {
+            "PENDING": "待处理",
+            "IN_PROGRESS": "进行中",
+            "RESOLVED": "已解决",
+            "CLOSED": "已关闭"
+        },
+        "fields": {
+            "name": "姓名",
+            "email": "电子邮件",
+            "subject": "主题",
+            "message": "消息",
+            "status": "状态",
+            "createdAt": "创建日期",
+            "response": "回复",
+            "respondedAt": "回复于"
+        },
+        "buttons": {
+            "refresh": "刷新"
+        },
+        "tooltips": {
+            "viewDetails": "查看详情",
+            "reply": "回复"
+        },
+        "pagination": {
+            "showTotal": "{{from}}-{{to}} 共 {{total}} 个联系人"
+        },
+        "modals": {
+            "details": {
+                "title": "联系人详情",
+                "close": "关闭"
+            },
+            "response": {
+                "title": "回复联系人",
+                "contact": "联系人",
+                "subject": "主题",
+                "placeholder": "输入您的回复...",
+                "send": "发送",
+                "cancel": "取消"
+            },
+            "deleteConfirm": {
+                "title": "您确定要删除此联系人吗？",
+                "okText": "是",
+                "cancelText": "否"
+            }
+        },
+        "messages": {
+            "loadError": "加载联系人时出错",
+            "statusUpdated": "状态更新成功",
+            "statusUpdateError": "更新状态时出错",
+            "responseRequired": "请输入回复",
+            "responseSent": "回复发送成功",
+            "responseError": "发送回复时出错",
+            "deleteSuccess": "联系人删除成功",
+            "deleteError": "删除联系人时出错"
+        }
+    },
+    "adminMailer": {
+        "pageTitle": "发送邮件",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "mailer": "邮件"
+        },
+        "form": {
+            "title": "撰写邮件",
+            "fields": {
+                "to": {
+                    "label": "收件人（逗号分隔）",
+                    "placeholder": "例如：a@ex.com, b@ex.com"
+                },
+                "cc": {
+                    "label": "抄送（可选）",
+                    "placeholder": "例如：c@ex.com"
+                },
+                "bcc": {
+                    "label": "密送（可选）",
+                    "placeholder": "例如：d@ex.com"
+                },
+                "replyTo": {
+                    "label": "回复地址（可选）",
+                    "placeholder": "例如：noreply@ex.com"
+                },
+                "notifyAdmins": {
+                    "label": "通知管理员",
+                    "tooltip": "也会向管理员发送副本（后端）",
+                    "placeholder": "管理员（CSV）— 可选"
+                },
+                "subject": {
+                    "label": "主题",
+                    "placeholder": "邮件主题"
+                },
+                "message": {
+                    "label": "消息（富文本格式）",
+                    "charCount": "{{count}} 个字符"
+                },
+                "attachments": {
+                    "label": "附件",
+                    "tooltip": "将以 base64 格式发送到 API"
+                }
+            },
+            "buttons": {
+                "preview": "预览",
+                "addFile": "添加文件",
+                "send": "发送",
+                "clear": "清空表单"
+            }
+        },
+        "modals": {
+            "preview": {
+                "title": "消息预览",
+                "close": "关闭",
+                "empty": "（空）",
+                "textVersion": "文本版本（自动）"
+            }
+        },
+        "validation": {
+            "toRequired": "至少需要一个收件人（收件人）。",
+            "invalidEmails": "检查电子邮件地址（逗号分隔）。",
+            "invalidReplyTo": "回复地址无效。",
+            "subjectRequired": "主题是必需的。",
+            "messageRequired": "消息是必需的。",
+            "invalidAdminEmails": "检查管理员电子邮件（逗号分隔）。"
+        },
+        "messages": {
+            "sendSuccess": "邮件已发送！",
+            "sendError": "发送失败"
+        }
+    },
+    "adminAuditLogs": {
+        "pageTitle": "审计日志",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "auditLogs": "审计日志"
+        },
+        "filters": {
+            "title": "筛选",
+            "search": {
+                "label": "搜索（操作、资源、详细信息…）",
+                "placeholder": "例如：encrypt, order, 192.168…"
+            },
+            "action": {
+                "label": "操作",
+                "placeholder": "选择操作"
+            },
+            "resource": {
+                "label": "资源",
+                "placeholder": "选择资源"
+            },
+            "user": {
+                "label": "用户",
+                "placeholder": "按用户筛选"
+            },
+            "ip": {
+                "label": "IP 地址",
+                "placeholder": "例如：102.124.x.x"
+            },
+            "dateRange": {
+                "label": "期间"
+            },
+            "buttons": {
+                "reset": "重置",
+                "apply": "应用"
+            }
+        },
+        "table": {
+            "title": "审计日志",
+            "na": "N/A",
+            "deletedUser": "已删除用户",
+            "columns": {
+                "user": "用户",
+                "action": "操作",
+                "resource": "资源",
+                "resourceId": "资源 ID",
+                "date": "日期",
+                "ip": "IP",
+                "actions": "操作"
+            },
+            "buttons": {
+                "details": "详情"
+            }
+        },
+        "modals": {
+            "details": {
+                "title": "审计日志详情",
+                "close": "关闭",
+                "generalInfo": "一般信息",
+                "additionalDetails": "附加详情",
+                "fields": {
+                    "id": "ID",
+                    "user": "用户",
+                    "action": "操作",
+                    "resource": "资源",
+                    "resourceId": "资源 ID",
+                    "date": "日期",
+                    "ip": "IP 地址",
+                    "userAgent": "用户代理"
+                }
+            }
+        },
+        "messages": {
+            "loadError": "加载审计日志时出错"
+        }
+    },
+    "adminTransactions": {
+        "title": "交易",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "transactions": "交易"
+        },
+        "columns": {
+            "date": "日期",
+            "demande": "请求",
+            "amount": "金额",
+            "paymentType": "付款类型",
+            "transactionType": "交易类型",
+            "status": "状态",
+            "actions": "操作"
+        },
+        "filters": {
+            "search": "搜索（请求代码，…）",
+            "status": "状态",
+            "dateRange": "日期范围"
+        },
+        "actions": {
+            "new": "新建",
+            "details": "详情",
+            "archive": "归档",
+            "restore": "恢复",
+            "refresh": "刷新"
+        },
+        "status": {
+            "PENDING": "PENDING",
+            "COMPLETED": "COMPLETED",
+            "FAILED": "FAILED"
+        },
+        "messages": {
+            "loadError": "加载错误",
+            "archiveSuccess": "交易已归档",
+            "archiveError": "归档失败",
+            "restoreSuccess": "交易已恢复",
+            "restoreError": "恢复失败"
+        },
+        "confirmArchive": "归档？"
+    },
+    "traducteurUsers": {
+        "title": "我机构的用户",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "users": "用户"
+        },
+        "columns": {
+            "fullName": "全名",
+            "email": "电子邮件",
+            "phone": "电话",
+            "role": "角色",
+            "status": "状态",
+            "actions": "操作"
+        },
+        "filters": {
+            "search": "搜索…",
+            "status": "状态",
+            "permission": "权限"
+        },
+        "actions": {
+            "new": "新用户",
+            "details": "详情",
+            "edit": "编辑",
+            "reset": "重置"
+        },
+        "status": {
+            "ACTIVE": "活跃",
+            "INACTIVE": "非活跃"
+        },
+        "messages": {
+            "loadError": "加载用户时出错"
+        },
+        "common": {
+            "na": "N/A"
+        }
+    },
+    "traducteurDemandes": {
+        "title": "我的请求",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "demandes": "请求"
+        },
+        "columns": {
+            "code": "代码",
+            "date": "日期",
+            "client": "客户",
+            "targetOrg": "目标机构",
+            "docs": "文档",
+            "status": "状态",
+            "actions": "选项"
+        },
+        "filters": {
+            "search": "搜索...",
+            "status": "状态",
+            "dateRange": "日期范围",
+            "onlyMine": "仅我的请求"
+        },
+        "actions": {
+            "view": "查看",
+            "documents": "文档",
+            "start": "开始",
+            "continue": "继续",
+            "validate": "验证",
+            "reject": "拒绝"
+        },
+        "status": {
+            "PENDING": "待处理",
+            "IN_PROGRESS": "进行中",
+            "VALIDATED": "已验证",
+            "REJECTED": "已拒绝"
+        },
+        "messages": {
+            "loadError": "加载请求时出错",
+            "statusUpdateSuccess": "状态已更新：{{status}}",
+            "statusUpdateError": "更新状态时出错"
+        }
+    },
+    "adminDemandesList": {
+        "title": "请求列表",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "demandes": "请求"
+        },
+        "columns": {
+            "code": "代码",
+            "date": "日期",
+            "demandeur": "请求者",
+            "targetOrg": "目标组织",
+            "assignedOrg": "分配组织",
+            "docs": "文档",
+            "status": "状态",
+            "payment": "付款",
+            "actions": "操作"
+        },
+        "filters": {
+            "search": "搜索...",
+            "status": "状态",
+            "targetOrg": "目标组织",
+            "assignedOrg": "分配组织",
+            "dateRange": "日期范围"
+        },
+        "status": {
+            "PENDING": "待处理",
+            "IN_PROGRESS": "进行中",
+            "VALIDATED": "已验证",
+            "REJECTED": "已拒绝"
+        },
+        "payment": {
+            "PAID": "已支付",
+            "PENDING": "待处理",
+            "FAILED": "失败"
+        },
+        "actions": {
+            "details": "详情",
+            "refresh": "刷新",
+            "documents": "文档"
+        },
+        "messages": {
+            "loadError": "加载错误",
+            "orgLoadError": "加载组织错误"
+        },
+        "pagination": {
+            "total": "总计 {{total}} 请求"
+        },
+        "common": {
+            "na": "—"
+        }
+    },
+    "adminDemandeDetail": {
+        "title": "请求 — 详情",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "demandes": "请求",
+            "detail": "详情"
+        },
+        "actions": {
+            "back": "返回"
+        },
+        "sections": {
+            "mainInfo": "主要信息",
+            "documents": "相关文档",
+            "transaction": "交易",
+            "payment": "付款"
+        },
+        "fields": {
+            "code": "代码",
+            "date": "日期",
+            "status": "状态",
+            "demandeur": "请求者",
+            "targetOrg": "目标组织",
+            "assignedOrg": "翻译组织",
+            "periode": "期间",
+            "year": "年份",
+            "observation": "观察"
+        },
+        "documents": {
+            "title": "相关文档",
+            "empty": "无文档",
+            "open": "打开",
+            "download": "下载",
+            "verify": "验证完整性",
+            "original": "文档（原始）",
+            "translated": "文档（翻译）"
+        },
+        "verify": {
+            "title": "完整性验证",
+            "original": "原始",
+            "translated": "翻译",
+            "blockchain": "区块链",
+            "valid": "有效",
+            "invalid": "无效",
+            "ok": "确定",
+            "notValid": "无效"
+        },
+        "messages": {
+            "loadError": "加载错误",
+            "openError": "无法打开文档",
+            "downloadError": "下载失败",
+            "verifyError": "验证失败"
+        },
+        "common": {
+            "na": "—",
+            "yes": "是",
+            "no": "否"
+        },
+        "tabs": {
+            "academic": "学术",
+            "identity": "身份",
+            "financial": "财务和签证",
+            "essays": "论文"
+        },
+        "academicFields": {
+            "serie": "系列",
+            "niveau": "级别",
+            "mention": "提及",
+            "annee": "年份（学校）",
+            "countryOfSchool": "学校国家",
+            "secondarySchoolName": "机构",
+            "graduationDate": "毕业日期"
+        },
+        "identityFields": {
+            "dob": "出生日期",
+            "citizenship": "国籍",
+            "passport": "护照",
+            "isEnglishFirstLanguage": "英语第一语言",
+            "englishProficiencyTests": "英语测试（JSON）",
+            "testScores": "分数"
+        },
+        "financialFields": {
+            "willApplyForFinancialAid": "经济援助",
+            "hasExternalSponsorship": "外部赞助",
+            "visaType": "签证类型",
+            "hasPreviouslyStudiedInUS": "曾在美国学习"
+        },
+        "essayFields": {
+            "personalStatement": "个人陈述",
+            "optionalEssay": "可选论文",
+            "applicationRound": "申请轮次",
+            "howDidYouHearAboutUs": "您如何了解我们"
+        }
+    },
+    "adminUserCreate": {
+        "title": "新用户",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "users": "用户",
+            "new": "新用户"
+        },
+        "cardTitle": "新用户",
+        "fields": {
+            "avatar": "头像",
+            "firstName": "名字",
+            "lastName": "姓氏",
+            "email": "电子邮件",
+            "phone": "电话",
+            "role": "角色",
+            "permissions": "权限",
+            "password": "密码",
+            "confirmPassword": "确认密码"
+        },
+        "placeholders": {
+            "firstName": "名字",
+            "lastName": "姓氏",
+            "email": "电子邮件",
+            "phone": "电话",
+            "role": "选择角色"
+        },
+        "dividers": {
+            "permissions": "权限",
+            "password": "密码"
+        },
+        "upload": {
+            "upload": "上传"
+        },
+        "roles": {
+            "ADMIN": "管理员",
+            "MEMBER": "成员",
+            "GUEST": "访客"
+        },
+        "validators": {
+            "firstNameRequired": "需要名字",
+            "lastNameRequired": "需要姓氏",
+            "emailInvalid": "无效的电子邮件",
+            "passwordRequired": "需要密码",
+            "confirmRequired": "需要确认密码",
+            "passwordMismatch": "密码不匹配",
+            "roleRequired": "需要角色"
+        },
+        "buttons": {
+            "submit": "提交",
+            "submitting": "提交中..."
+        },
+        "messages": {
+            "success": "用户创建成功",
+            "error": "发送数据错误"
+        }
+    },
+    "adminUserDetails": {
+        "title": "用户详情",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "users": "用户列表",
+            "detail": "详情"
+        },
+        "actions": {
+            "edit": "编辑"
+        },
+        "sections": {
+            "personalInfo": "个人信息",
+            "permissions": "权限",
+            "organization": "组织"
+        },
+        "fields": {
+            "fullName": "全名",
+            "email": "电子邮件",
+            "phone": "电话",
+            "role": "角色",
+            "status": "状态",
+            "lastLogin": "最后登录",
+            "createdAt": "创建于"
+        },
+        "status": {
+            "active": "活跃",
+            "inactive": "非活跃"
+        },
+        "permissions": {
+            "none": "无权限"
+        },
+        "org": {
+            "name": "名称",
+            "type": "类型"
+        },
+        "messages": {
+            "notFound": "未找到用户。",
+            "loadError": "检索用户错误"
+        },
+        "common": {
+            "na": "N/A",
+            "never": "从不"
+        }
+    },
+    "adminUserEdit": {
+        "title": "编辑用户",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "users": "用户",
+            "edit": "编辑用户"
+        },
+        "cardTitle": "编辑用户",
+        "actions": {
+            "back": "返回"
+        },
+        "fields": {
+            "avatar": "头像",
+            "firstName": "名字",
+            "lastName": "姓氏",
+            "email": "电子邮件",
+            "phone": "电话",
+            "country": "居住国家",
+            "role": "角色",
+            "status": "状态",
+            "permissions": "权限"
+        },
+        "placeholders": {
+            "firstName": "名字",
+            "lastName": "姓氏",
+            "phone": "电话",
+            "country": "居住国家",
+            "role": "选择角色"
+        },
+        "dividers": {
+            "permissions": "权限"
+        },
+        "upload": {
+            "upload": "上传"
+        },
+        "validators": {
+            "firstNameRequired": "需要名字",
+            "lastNameRequired": "需要姓氏",
+            "emailInvalid": "无效的电子邮件",
+            "roleRequired": "需要角色"
+        },
+        "buttons": {
+            "save": "保存",
+            "saving": "保存中..."
+        },
+        "messages": {
+            "loadError": "检索用户错误",
+            "updated": "用户更新成功",
+            "updateError": "发送数据错误"
+        },
+        "labels": {
+            "active": "活跃"
+        },
+        "roles": {
+            "ADMIN": "管理员",
+            "SUPER_ADMIN": "超级管理员"
+        }
+    },
+    "traducteurDemandesList": {
+        "title": "我的请求",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "demandes": "请求"
+        },
+        "columns": {
+            "code": "代码",
+            "date": "日期",
+            "demandeur": "请求者",
+            "targetOrg": "目标组织",
+            "status": "状态",
+            "actions": "操作",
+            "client": "客户",
+            "docs": "文档"
+        },
+        "filters": {
+            "search": "搜索...",
+            "status": "状态",
+            "dateRange": "日期范围",
+            "onlyMine": "仅我的请求",
+            "title": "筛选和选项"
+        },
+        "status": {
+            "PENDING": "待处理",
+            "IN_PROGRESS": "进行中",
+            "VALIDATED": "已验证",
+            "REJECTED": "已拒绝"
+        },
+        "actions": {
+            "details": "详情",
+            "start": "开始",
+            "validate": "验证",
+            "reject": "拒绝",
+            "refresh": "刷新",
+            "view": "查看",
+            "viewDocuments": "查看文档",
+            "documents": "文档",
+            "translate": "翻译",
+            "addTranslation": "添加翻译",
+            "apply": "应用"
+        },
+        "messages": {
+            "loadError": "加载请求失败",
+            "updateSuccess": "状态已更新: {{status}}",
+            "updateError": "更新状态失败",
+            "documentsError": "加载文档错误",
+            "translationAdded": "翻译已添加",
+            "uploadError": "上传失败"
+        },
+        "pagination": {
+            "total": "总计 {{total}} 请求"
+        },
+        "sortFields": {
+            "updatedAt": "最后更新",
+            "createdAt": "创建",
+            "code": "代码",
+            "dateDemande": "请求日期"
+        },
+        "sortOrder": {
+            "desc": "降序",
+            "asc": "升序"
+        },
+        "documents": {
+            "translated": "已翻译",
+            "notTranslated": "未翻译",
+            "encrypted": "已加密",
+            "notEncrypted": "未加密",
+            "blockchain": "区块链",
+            "original": "原始"
+        },
+        "table": {
+            "title": "已分配的请求列表"
+        },
+        "modal": {
+            "documentsTitle": "请求文档",
+            "noDocuments": "无文档"
+        }
+    },
+    "institutAbos": {
+        "breadcrumbs": {
+            "dashboard": "仪表板",
+            "abos": "订阅"
+        },
+        "title": "我的订阅",
+        "filters": {
+            "title": "筛选",
+            "all": "全部",
+            "active": "活跃",
+            "expired": "已过期",
+            "orderAsc": "ASC",
+            "orderDesc": "DESC",
+            "apply": "应用",
+            "reset": "重置"
+        },
+        "history": {
+            "title": "订阅历史"
+        },
+        "table": {
+            "period": "期间",
+            "amount": "金额",
+            "status": "状态",
+            "createdAt": "创建于",
+            "archived": "已归档",
+            "active": "活跃",
+            "expired": "已过期",
+            "upcoming": "即将到来",
+            "currency": "USD"
+        },
+        "toasts": {
+            "loadError": "加载失败",
+            "softDeleted": "订阅已归档",
+            "restored": "订阅已恢复",
+            "hardDeleted": "订阅已永久删除",
+            "overlap": "此期间订阅重叠。",
+            "invalidPeriod": "期间无效：开始必须在结束之前。",
+            "createFailed": "创建订阅失败",
+            "renewOk": "订阅续订成功！",
+            "renewFail": "续订失败",
+            "paypalErr": "PayPal 错误",
+            "paypalCancel": "支付已取消",
+            "stripeInitErr": "无法初始化 Stripe",
+            "stripeInit": "正在初始化支付…",
+            "stripeSecretMissing": "缺少 Stripe 客户端密钥",
+            "stripeKeyMissing": "缺少 Stripe 公钥",
+            "subscriptionCreated": "订阅创建成功",
+            "paypalLoading": "正在配置 PayPal…"
+        },
+        "createModal": {
+            "titleForm": "创建订阅",
+            "titlePay": "进行支付",
+            "periodLabel": "期间",
+            "periodTextFrom": "从",
+            "periodTextTo": "到",
+            "amountLabel": "金额（美元）",
+            "amountRequired": "需要金额",
+            "methodLabel": "支付方式",
+            "methodRequired": "选择方式",
+            "methodPlaceholder": "选择…",
+            "methodStripe": "Stripe",
+            "methodPaypal": "PayPal",
+            "btnCancel": "取消",
+            "btnContinue": "继续支付",
+            "toPay": "应付金额",
+            "stripeRetry": "重置 Stripe",
+            "payOk": "支付已确认。正在创建订阅…",
+            "payFail": "支付失败。"
+        },
+        "renewModal": {
+            "title": "续订订阅",
+            "period": "期间",
+            "periodRequired": "选择新期间",
+            "amount": "金额（美元）",
+            "amountRequired": "需要金额",
+            "ok": "续订"
+        }
+    },
+    "institutAbonnementSouscription": {
+        "pageTitle": "我的订阅",
+        "breadcrumbs": {
+            "dashboard": "仪表板",
+            "abonnements": "订阅"
+        },
+        "activeCard": {
+            "title": "活跃订阅",
+            "newButton": "新订阅",
+            "period": "期间",
+            "amount": "金额",
+            "active": "活跃",
+            "none": "没有活跃订阅。",
+            "createButton": "创建订阅"
+        },
+        "filters": {
+            "title": "筛选",
+            "all": "全部",
+            "active": "活跃",
+            "expired": "已过期",
+            "apply": "应用",
+            "reset": "重置"
+        },
+        "history": {
+            "title": "订阅历史"
+        },
+        "columns": {
+            "period": "期间",
+            "amount": "金额",
+            "status": "状态",
+            "createdAt": "创建于",
+            "actions": "操作",
+            "archived": "已归档",
+            "active": "活跃",
+            "expired": "已过期",
+            "upcoming": "即将到来",
+            "archive": "归档",
+            "restore": "恢复",
+            "delete": "删除"
+        },
+        "modals": {
+            "create": {
+                "step1Title": "创建订阅",
+                "step2Title": "进行支付",
+                "cancel": "取消",
+                "continue": "继续支付",
+                "period": "期间",
+                "amount": "金额",
+                "priceUnavailable": "价格不可用 – 请重新加载页面。",
+                "paymentMethod": "支付方式",
+                "chooseMethod": "选择方式",
+                "choose": "选择…",
+                "amountToPay": "应付金额：",
+                "paymentConfirmed": "支付已确认。正在创建和跟踪支付…",
+                "paymentFailed": "支付失败。",
+                "initializingPayment": "正在初始化支付…",
+                "resetStripe": "重置 Stripe"
+            },
+            "renew": {
+                "title": "续订订阅",
+                "period": "期间",
+                "selectPeriod": "选择新期间",
+                "amount": "金额（美元）",
+                "amountRequired": "需要金额",
+                "okText": "续订",
+                "success": "订阅续订成功！",
+                "error": "续订失败"
+            },
+            "confirm": {
+                "archive": "归档订阅？",
+                "delete": "永久删除？"
+            }
+        },
+        "messages": {
+            "priceInvalid": "服务器上的订阅金额无效。",
+            "priceError": "无法检索订阅价格。",
+            "stripeInitError": "Stripe 初始化失败（公钥）。",
+            "loadError": "加载失败",
+            "archived": "订阅已归档",
+            "archiveError": "归档失败",
+            "restored": "订阅已恢复",
+            "restoreError": "恢复失败",
+            "deleted": "订阅已永久删除",
+            "deleteError": "删除失败",
+            "archiveFirst": "永久删除前请先归档。",
+            "orgNotFound": "未找到组织",
+            "priceUnavailable": "订阅价格不可用。",
+            "choosePaymentMethod": "选择支付方式",
+            "invalidAmount": "金额无效（服务器）。",
+            "stripeNotInitialized": "Stripe 未初始化（公钥）。",
+            "createPaymentIntentError": "无法创建 PaymentIntent",
+            "overlap": "此期间订阅重叠。",
+            "invalidPeriod": "期间无效：开始必须在结束之前。",
+            "finalizationError": "支付后完成失败",
+            "success": "订阅和支付已记录！",
+            "paypalError": "PayPal 错误",
+            "paymentCancelled": "支付已取消",
+            "stripeKeyInvalid": "Stripe 公钥无效/缺失",
+            "stripeSecretInvalid": "Stripe 客户端密钥无效/缺失",
+            "aboNoId": "创建的订阅没有标识符。"
+        }
+    },
+    "demandeurDemandeCreate": {
+        "pageTitle": "国际学生申请",
+        "steps": {
+            "targetIdentity": "目标与身份",
+            "academic": "学术",
+            "essays": "论文与杂项",
+            "invitations": "邀请 + 摘要",
+            "payment": "支付"
+        },
+        "stepCounter": "第 {{current}} 步，共 {{total}} 步",
+        "messages": {
+            "draftSaveError": "无法保存草稿",
+            "draftLoaded": "草稿已加载",
+            "draftReset": "草稿已重置",
+            "draftResetError": "无法重置草稿",
+            "orgLoadError": "加载组织失败",
+            "priceInvalid": "服务器上的订阅金额无效。",
+            "filieresLoadError": "无法加载此组织的专业",
+            "stripeInitError": "无法初始化 Stripe",
+            "stripeKeyMissing": "Stripe 公钥缺失",
+            "stripeInvalidParams": "Stripe 参数无效",
+            "stripeSecretInvalid": "Stripe 客户端密钥无效/缺失",
+            "paymentIntentError": "无法创建 PaymentIntent",
+            "stripeSuccess": "Stripe 支付已确认！",
+            "paypalSuccess": "PayPal 支付已确认！",
+            "paymentError": "支付失败：{{error}}",
+            "paymentRequired": "请在提交前完成支付",
+            "demandeCreated": "请求已创建（邀请和通知已发送）",
+            "creationError": "创建失败"
+        }
+    },
+    "demandeurDemandePayment": {
+        "pageTitle": "请求支付",
+        "breadcrumbs": {
+            "dashboard": "仪表板",
+            "demandes": "我的请求",
+            "detail": "详情",
+            "payment": "支付"
+        },
+        "summary": {
+            "title": "请求摘要",
+            "code": "代码",
+            "date": "日期",
+            "status": "文件状态",
+            "targetOrg": "目标组织",
+            "assignedOrg": "翻译组织",
+            "paymentStatus": "支付状态"
+        },
+        "alerts": {
+            "totalAmount": "应付总额：",
+            "pricingApplied": "应用的定价：",
+            "source": "来源：",
+            "amountFixed": "金额在服务器上设置，无法在客户端修改。",
+            "alreadyPaid": "此请求已支付 ✅",
+            "backToDetail": "返回详情"
+        },
+        "tabs": {
+            "stripe": "卡（Stripe）",
+            "paypal": "PayPal"
+        },
+        "stripe": {
+            "amountToPay": "应付金额（卡）：",
+            "amountFixed": "金额在服务器上固定（不可修改）。",
+            "payNow": "立即支付",
+            "initError": "无法初始化 Stripe（缺少 client_secret）",
+            "notConfigured": "Stripe 未配置（缺少 VITE_STRIPE_PUBLISHABLE_KEY）",
+            "secretMissing": "Stripe 已初始化，但缺少 client_secret"
+        },
+        "paypal": {
+            "amountToPay": "应付金额（PayPal）：",
+            "amountFixed": "金额在服务器上固定（不可修改）。",
+            "loading": "正在加载 PayPal SDK…",
+            "sdkError": "无法加载 PayPal SDK",
+            "initError": "PayPal 初始化失败",
+            "captureError": "PayPal 捕获失败",
+            "error": "PayPal 错误",
+            "notConfigured": "PayPal 未配置（缺少 VITE_PAYPAL_CLIENT_ID）",
+            "success": "PayPal 支付成功"
+        },
+        "messages": {
+            "loadError": "加载支付错误",
+            "paymentRefused": "支付被拒绝",
+            "stripeError": "Stripe 支付失败"
+        },
+        "paymentStatus": {
+            "PAID": "已支付",
+            "UNPAID": "未支付",
+            "PENDING": "待处理"
+        },
+        "common": {
+            "na": "—"
+        }
+    },
+    "demandeurOrganisationDetail": {
+        "pageTitle": "组织详情",
+        "breadcrumbs": {
+            "dashboard": "仪表板"
+        },
+        "sections": {
+            "generalInfo": "一般信息",
+            "name": "名称",
+            "type": "类型",
+            "email": "电子邮件",
+            "phone": "电话",
+            "address": "地址",
+            "website": "网站",
+            "country": "国家"
+        },
+        "types": {
+            "ENTREPRISE": "企业",
+            "TRADUCTEUR": "翻译机构",
+            "BANQUE": "银行",
+            "COLLEGE": "学院",
+            "LYCEE": "高中",
+            "UNIVERSITE": "大学"
+        },
+        "countries": {
+            "SN": "塞内加尔",
+            "FR": "法国",
+            "US": "美国",
+            "CA": "加拿大"
+        },
+        "messages": {
+            "notFound": "未找到组织。",
+            "loadError": "检索组织时出错"
+        },
+        "common": {
+            "na": "—"
+        }
+    },
+    "institutDocuments": {
+        "create": {
+            "pageTitle": "New Document",
+            "breadcrumbs": {
+                "dashboard": "Dashboard",
+                "demandes": "Requests",
+                "add": "Add Document"
+            },
+            "title": "Add document to request",
+            "titleWithCode": "Add document (attach by request code)",
+            "description": "Fill in the type, mention, date obtained and upload the file. If you are not on a request page, enter the request code for attachment.",
+            "back": "Back"
+        },
+        "details": {
+            "title": "Document #{{id}}",
+            "labels": {
+                "demande": "Request",
+                "ownerOrg": "Owner Org",
+                "traduit": "Translated",
+                "chiffre": "Encrypted"
+            },
+            "yes": "Yes",
+            "no": "No",
+            "buttons": {
+                "viewOriginal": "View original",
+                "viewTranslated": "View translated",
+                "viewEncrypted": "View encrypted",
+                "back": "Back"
+            },
+            "messages": {
+                "openError": "Unable to open content"
+            }
+        },
+        "upload": {
+            "title": "Attach Document",
+            "labels": {
+                "demandeId": "Request ID",
+                "ownerOrg": "Owner Organization",
+                "file": "File",
+                "urlOriginal": "Original File URL",
+                "codeAdn": "ADN Code",
+                "estTraduit": "Already Translated"
+            },
+            "uploadText": "Drag or click to upload",
+            "uploadHint": "PDF / images",
+            "urlPlaceholder": "or paste a URL if already hosted",
+            "buttons": {
+                "save": "Save",
+                "cancel": "Cancel"
+            },
+            "messages": {
+                "uploadSuccess": "File uploaded",
+                "uploadFailed": "Upload failed",
+                "saveSuccess": "Document saved"
+            }
+        },
+        "verify": {
+            "title": "Verify Document Integrity",
+            "placeholder": "Document ID",
+            "button": "Verify",
+            "messages": {
+                "ok": "OK",
+                "ko": "KO"
+            }
+        }
+    },
+    "institutUsers": {
+        "createSupervisor": {
+            "title": "Create Supervisor",
+            "subtitle": "Target Organization:",
+            "labels": {
+                "email": "Email",
+                "password": "Password (optional) ",
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "permissions": "Permissions"
+            },
+            "buttons": {
+                "create": "Create",
+                "reset": "Reset"
+            },
+            "messages": {
+                "success": "Supervisor created",
+                "error": "Failed to create supervisor"
+            }
+        },
+        "editPermissions": {
+            "title": "User Permissions",
+            "buttons": {
+                "save": "Save",
+                "cancel": "Cancel"
+            },
+            "messages": {
+                "loadError": "Failed to load user",
+                "updateSuccess": "Permissions updated",
+                "updateError": "Failed to update permissions"
+            }
+        },
+        "orgUsersList": {
+            "title": "Organization Users",
+            "subtitle": "Organization ID:",
+            "filters": {
+                "title": "Filters",
+                "searchPlaceholder": "Search (email, username, phone…)",
+                "rolePlaceholder": "Role",
+                "sortBy": {
+                    "createdAt": "Created",
+                    "updatedAt": "Updated",
+                    "email": "Email",
+                    "username": "Username"
+                },
+                "sortOrder": {
+                    "asc": "ASC",
+                    "desc": "DESC"
+                },
+                "buttons": {
+                    "apply": "Apply",
+                    "reset": "Reset",
+                    "addUser": "Add User",
+                    "createSupervisor": "Create Supervisor"
+                }
+            },
+            "list": {
+                "title": "Users List",
+                "columns": {
+                    "email": "Email",
+                    "username": "Username",
+                    "role": "Role",
+                    "enabled": "Enabled",
+                    "actions": "Actions"
+                },
+                "enabled": {
+                    "yes": "Yes",
+                    "no": "No"
+                },
+                "buttons": {
+                    "permissions": "Permissions",
+                    "resetPassword": "Reset Password"
+                }
+            },
+            "createModal": {
+                "title": "Add User",
+                "labels": {
+                    "email": "Email",
+                    "password": "Password (optional)",
+                    "role": "Role",
+                    "firstName": "First Name",
+                    "lastName": "Last Name"
+                },
+                "buttons": {
+                    "create": "Create",
+                    "cancel": "Cancel"
+                },
+                "messages": {
+                    "success": "User created",
+                    "error": "Creation failed",
+                    "passwordReset": "Password reset",
+                    "passwordResetError": "Password reset failed",
+                    "newPassword": "New Password: {{password}}"
+                }
+            }
+        }
+    },
+    "institutDossier": {
+        "title": "Files to Process",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Requests"
+        },
+        "columns": {
+            "code": "Code",
+            "date": "Date",
+            "demandeur": "Applicant",
+            "assigned": "Assigned to",
+            "docs": "Docs",
+            "status": "Status",
+            "actions": "Actions"
+        },
+        "buttons": {
+            "details": "Details",
+            "addDocument": "Add Doc",
+            "refresh": "Refresh"
+        },
+        "filters": {
+            "searchPlaceholder": "Search…",
+            "statusPlaceholder": "Status",
+            "dateRangePlaceholder": [
+                "Start Date",
+                "End Date"
+            ],
+            "buttons": {
+                "apply": "Apply",
+                "reset": "Reset"
+            }
+        },
+        "messages": {
+            "loadError": "Failed to load requests"
+        }
+    },
+    "institutDemandeurDetail": {
+        "title": "Applicant Details",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Request List"
+        },
+        "sections": {
+            "personalInfo": "Personal Information",
+            "fullName": "Full Name",
+            "email": "Email",
+            "phone": "Phone"
+        },
+        "messages": {
+            "notFound": "Applicant not found.",
+            "loadError": "Error retrieving user"
+        },
+        "common": {
+            "na": "N/A"
+        }
+    },
+    "traducteurDemandeDetails": {
+        "title": "Requests to Process",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Requests to Process",
+            "detail": "Requests"
+        },
+        "pageTitle": "Request Details",
+        "buttons": {
+            "back": "Back",
+            "documents": "Documents & Translations"
+        },
+        "sections": {
+            "generalInfo": "General Information",
+            "documentsPreview": "Documents (preview)"
+        },
+        "fields": {
+            "code": "Code",
+            "dateDemande": "Request Date",
+            "status": "Status",
+            "demandeur": "Applicant",
+            "targetOrg": "Target Institute",
+            "assignedOrg": "Assigned Organization",
+            "periodeYear": "Period / Year",
+            "serieNiveauMention": "Series / Level / Mention",
+            "secondarySchool": "Secondary School",
+            "graduationDate": "Graduation Date",
+            "dob": "Date of Birth",
+            "citizenshipPassport": "Citizenship / Passport",
+            "englishFirstLanguage": "English First Language",
+            "englishTests": "English Tests",
+            "scoresGpaScale": "Scores / GPA / Scale",
+            "examsTaken": "Exams Taken",
+            "intendedMajor": "Intended Major",
+            "activitiesAwards": "Activities & Awards",
+            "parentInfo": "Parent / Guardian (Level/Profession)",
+            "financialAid": "Financial Aid / Sponsoring",
+            "visa": "Visa / Previous Studies in US",
+            "personalStatement": "Personal Statement",
+            "optionalEssay": "Optional Essay",
+            "applicationRound": "Application Round / Discovery",
+            "observation": "Observation",
+            "createdAt": "Created / Updated",
+            "documents": "Documents"
+        },
+        "documents": {
+            "translated": "Translated",
+            "notTranslated": "Not Translated",
+            "view": "View",
+            "viewTranslated": "View (translated)",
+            "translate": "Translate",
+            "delete": "Delete",
+            "none": "No documents"
+        },
+        "modals": {
+            "uploadTitle": "Upload Translation — Doc {{id}}",
+            "uploadTitleGeneric": "Upload Translation",
+            "uploadText": "Drag the translated PDF here or click to select",
+            "uploadHint": "Max size 5 MB — PDF only",
+            "deleteTitle": "Delete Translation?",
+            "deleteDescription": "This action will remove the translated file and associated metadata.",
+            "deleteButton": "Delete",
+            "cancel": "Cancel",
+            "save": "Save",
+            "previewTitle": "Document Preview",
+            "openInNewTab": "Open in New Tab",
+            "close": "Close",
+            "noContent": "No content to display."
+        },
+        "messages": {
+            "noData": "No request data.",
+            "loadError": "Load failed",
+            "statusUpdated": "Status updated",
+            "statusUpdateError": "Status update failed",
+            "uploadWarning": "Select a translated PDF.",
+            "uploadSuccess": "Translation uploaded (encryption in place)",
+            "uploadError": "Translation upload failed",
+            "deleteSuccess": "Translation deleted",
+            "deleteError": "Deletion failed",
+            "noFileAvailable": "No file available to display.",
+            "noFileToDownload": "No file to download.",
+            "previewTitleOriginal": "Original PDF — {{id}}",
+            "previewTitleTranslated": "Translated PDF — {{id}}"
+        },
+        "tooltips": {
+            "uploadTranslation": "Upload translated PDF",
+            "deleteTranslation": "Delete translation"
+        }
+    },
+    "traducteurDemandeDocuments": {
+        "title": "Request Documents",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Requests",
+            "documents": "Documents"
+        },
+        "buttons": {
+            "back": "Back",
+            "refresh": "Refresh"
+        },
+        "sections": {
+            "demandeInfo": "Request Information"
+        },
+        "columns": {
+            "ownerOrg": "Institute (source)",
+            "demande": "Request",
+            "type": "Type",
+            "original": "Original",
+            "translated": "Translated"
+        },
+        "actions": {
+            "view": "View",
+            "translate": "Translate",
+            "delete": "Delete",
+            "available": "Available"
+        },
+        "filters": {
+            "searchPlaceholder": "Search…",
+            "translatedPlaceholder": "Translated?",
+            "yes": "Yes",
+            "no": "No"
+        },
+        "modals": {
+            "uploadTitle": "Upload Translation — Doc {{id}}",
+            "uploadTitleGeneric": "Upload Translation",
+            "uploadText": "Drag the translated PDF here or click to select",
+            "uploadHint": "Max size 5 MB — PDF only",
+            "deleteTitle": "Delete Translation?",
+            "deleteDescription": "This action will remove the translated file and associated metadata.",
+            "deleteButton": "Delete",
+            "cancel": "Cancel",
+            "save": "Save"
+        },
+        "messages": {
+            "loadDemandeError": "Failed to load request",
+            "loadDocsError": "Error loading documents",
+            "uploadWarning": "Select a translated PDF.",
+            "uploadSuccess": "Translation uploaded (encryption in place)",
+            "uploadError": "Translation upload failed",
+            "deleteSuccess": "Translation deleted",
+            "deleteError": "Deletion failed",
+            "noFileAvailable": "No file available for this display.",
+            "noFileToDownload": "No file to download.",
+            "verifySuccess": "Integrity verified",
+            "verifyError": "Integrity issue detected",
+            "verifyFailed": "Integrity verification failed",
+            "translatedNote": "The translated PDF will be encrypted and attached to this document."
+        },
+        "tooltips": {
+            "uploadTranslation": "Upload translated PDF",
+            "deleteTranslation": "Delete translation"
+        },
+        "pagination": {
+            "showTotal": "{{total}} document(s)"
+        }
+    },
+    "departmentFiliereCreate": {
+        "title": "部门专业",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "departments": "部门",
+            "detail": "详情",
+            "filieres": "专业",
+            "create": "创建"
+        },
+        "cardTitle": "新专业",
+        "form": {
+            "name": "名称",
+            "nameRequired": "名称必填",
+            "namePlaceholder": "例如：计算机科学",
+            "code": "代码",
+            "codePlaceholder": "例如：CS",
+            "level": "级别",
+            "levelPlaceholder": "选择级别",
+            "levels": {
+                "Licence": "学士",
+                "Master": "硕士",
+                "Doctorat": "博士"
+            },
+            "description": "描述",
+            "descriptionPlaceholder": "描述（可选）"
+        },
+        "actions": {
+            "cancel": "取消",
+            "create": "创建"
+        },
+        "messages": {
+            "success": "专业已创建",
+            "errorDuplicate": "此部门中已存在同名专业",
+            "error": "创建专业失败"
+        }
+    },
+    "organizationDemandeCreate": {
+        "title": "新请求",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "organizations": "组织",
+            "newDemande": "新请求"
+        },
+        "cardTitle": "新请求",
+        "form": {
+            "title": "请求标题",
+            "titleRequired": "标题必填",
+            "titlePlaceholder": "请求标题",
+            "type": "请求类型",
+            "typeRequired": "类型必填",
+            "typePlaceholder": "选择类型",
+            "types": {
+                "TRADUCTION": "翻译",
+                "VERIFICATION": "验证",
+                "AUTRE": "其他"
+            },
+            "description": "描述",
+            "descriptionRequired": "描述必填",
+            "descriptionPlaceholder": "请求描述"
+        },
+        "actions": {
+            "back": "返回",
+            "create": "创建请求",
+            "creating": "创建中..."
+        },
+        "messages": {
+            "success": "请求创建成功",
+            "error": "创建请求时出错"
+        }
+    },
+    "organizationFiliereCreate": {
+        "title": "新专业",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "organizations": "组织",
+            "newFiliere": "新专业"
+        },
+        "cardTitle": "新专业",
+        "form": {
+            "name": "专业名称",
+            "nameRequired": "名称必填",
+            "namePlaceholder": "专业名称",
+            "description": "描述",
+            "descriptionPlaceholder": "描述"
+        },
+        "actions": {
+            "back": "返回",
+            "create": "创建专业",
+            "creating": "创建中..."
+        },
+        "messages": {
+            "success": "专业创建成功",
+            "error": "创建专业时出错"
+        }
+    },
+    "adminTransactionCreate": {
+        "title": "新交易",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "transactions": "交易",
+            "create": "创建"
+        },
+        "form": {
+            "demandePartageId": "DemandePartage ID",
+            "demandePartageIdRequired": "必填",
+            "demandePartageIdPlaceholder": "请求ID (demandePartageId)",
+            "userId": "用户（可选）",
+            "userIdPlaceholder": "userId（可选）",
+            "montant": "金额（XOF）",
+            "montantRequired": "必填",
+            "typePaiement": "付款类型",
+            "typePaiementRequired": "必填",
+            "paymentTypes": {
+                "STRIPE": "STRIPE",
+                "PAYPAL": "PAYPAL",
+                "CASH": "现金",
+                "WIRE": "转账"
+            },
+            "typeTransaction": "交易类型",
+            "typeTransactionPlaceholder": "例如：预付款 / 余额 / 文件费…",
+            "statut": "状态",
+            "statusTypes": {
+                "PENDING": "待处理",
+                "COMPLETED": "已完成",
+                "FAILED": "失败"
+            },
+            "dateTransaction": "日期（可选）"
+        },
+        "actions": {
+            "cancel": "取消",
+            "create": "创建"
+        },
+        "messages": {
+            "success": "交易已创建",
+            "error": "创建失败"
+        }
+    },
+    "errorPage": {
+        "title": "找不到页面？",
+        "message": "糟糕，这很尴尬。 <br /> 看起来您要找的页面没有找到。",
+        "backToHome": "返回首页",
+        "error404": "404",
+        "pageNotFound": "您要找的页面不存在。"
+    },
+    "monOrganisation": {
+        "title": "我的组织",
+        "loading": "加载中...",
+        "error": "加载组织时出错"
+    }
+}

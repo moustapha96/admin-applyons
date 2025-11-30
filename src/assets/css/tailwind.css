@@ -1,0 +1,52 @@
+/* Template Name: Techwind - Tailwind CSS Multipurpose Landing & Admin Dashboard Template
+   Author: Shreethemes
+   Email: support@shreethemes.in
+   Website: https://shreethemes.in
+   Version: 3.0.0
+   Created: May 2022
+   File: Main Css File
+*/
+
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+/* Tailwind CSS */
+@import "tailwindcss";
+
+/* Custom */
+@import "./custom/_general.css";
+@import "./custom/structure/_topnav.css";
+@import "./custom/pages/_helper.css";
+@import "./custom/pages/_countdown.css";
+@import "./custom/pages/_portfolio.css";
+@import "./custom/plugins/_testi.css";
+@import "./custom/plugins/_calendar.css";
+@import "./custom/plugins/_ckeditor.css";
+@import "./custom/plugins/_apexchart.css";
+
+/* Dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Theme */
+@theme {
+   --font-nunito: "Nunito", "serif";
+
+   --breakpoint-xs: 540px;
+   --breakpoint-sm: 640px;
+   --breakpoint-md: 720px;
+   --breakpoint-lg: 960px;
+   --breakpoint-xl: 1140px;
+   --breakpoint-2xl: 1140px;
+
+   --shadow-xs: 0 2px 4px 0 rgb(0 0 0 / 0.1);
+   --shadow-xs: 0 0 3px rgb(0 0 0 / 0.1);
+   --shadow-md: 0 5px 13px rgb(0 0 0 / 0.1);
+   --shadow-lg: 0 10px 25px -3px rgb(0 0 0 / 0.1);
+   --shadow-testi: 2px 2px 2px -1px rgb(0 0 0 / 0.1);
+
+   --z-1: 1;
+   --z-2: 2;
+   --z-3: 3;
+   --z-999: 999;
+}

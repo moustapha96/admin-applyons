@@ -1,0 +1,4001 @@
+{
+    "common": {
+        "profile": "Profil",
+        "settings": "Paramètres",
+        "dashboard": "Tableau de bord",
+        "logout": "Déconnexion",
+        "user": "Utilisateur",
+        "organizationMissing": "—",
+        "toggleSidebar": "Basculer le menu latéral",
+        "home": "Accueil",
+        "loading": "Chargement...",
+        "error": "Erreur",
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "edit": "Modifier",
+        "notSpecified": "Non spécifié",
+        "noData": "Aucune donnée",
+        "reset": "Réinitialiser"
+    },
+    "roles": {
+        "ADMIN": "ADMIN",
+        "SUPER_ADMIN": "SUPER ADMIN",
+        "INSTITUT": "INSTITUT",
+        "SUPERVISEUR": "SUPERVISEUR",
+        "TRADUCTEUR": "TRADUCTEUR",
+        "DEMANDEUR": "DEMANDEUR",
+        "UTILISATEUR": "UTILISATEUR",
+        "labels": {
+            "ADMIN": "Administrateur",
+            "SUPER_ADMIN": "Super Administrateur",
+            "INSTITUT": "Institution",
+            "SUPERVISEUR": "Superviseur",
+            "TRADUCTEUR": "Traducteur",
+            "DEMANDEUR": "Demandeur",
+            "UTILISATEUR": "Utilisateur"
+        }
+    },
+    "permissions": {
+        "users.read": "Lire les utilisateurs",
+        "users.manage": "Gérer les utilisateurs",
+        "users.impersonate": "Impersonner les utilisateurs",
+        "organizations.read": "Lire les organisations",
+        "organizations.manage": "Gérer les organisations",
+        "organizations.write": "Modifier les organisations",
+        "departments.read": "Lire les départements",
+        "departments.manage": "Gérer les départements",
+        "filieres.read": "Lire les filières",
+        "filieres.manage": "Gérer les filières",
+        "demandes.read": "Lire les demandes",
+        "demandes.manage": "Gérer les demandes",
+        "documents.read": "Lire les documents",
+        "documents.create": "Créer des documents",
+        "documents.update": "Mettre à jour les documents",
+        "documents.delete": "Supprimer les documents",
+        "documents.translate": "Traduire les documents",
+        "documents.verify": "Vérifier les documents",
+        "payments.read": "Lire les paiements",
+        "payments.manage": "Gérer les paiements",
+        "transactions.read": "Lire les transactions",
+        "transactions.manage": "Gérer les transactions",
+        "abonnements.read": "Lire les abonnements",
+        "abonnements.manage": "Gérer les abonnements",
+        "invites.read": "Lire les invitations",
+        "invites.manage": "Gérer les invitations",
+        "contacts.read": "Lire les contacts",
+        "contacts.manage": "Gérer les contacts",
+        "settings.read": "Lire les paramètres",
+        "settings.manage": "Gérer les paramètres",
+        "config.read": "Lire la configuration",
+        "config.manage": "Gérer la configuration",
+        "uploads.create": "Créer des uploads",
+        "dashboard.read": "Lire le tableau de bord",
+        "audit.read": "Lire les logs d'audit",
+        "audit.manage": "Gérer les logs d'audit"
+    },
+    "routes": {
+        "adminDashboard": "/admin/dashboard",
+        "orgDashboard": "/organisations/dashboard",
+        "tradDashboard": "/traducteur/dashboard",
+        "demandeurDashboard": "/demandeur/dashboard",
+        "adminProfile": "/admin/profile",
+        "orgProfile": "/organisations/profile",
+        "tradProfile": "/traducteur/profile",
+        "demandeurProfile": "/demandeur/profile",
+        "adminSettings": "/admin/settings"
+    },
+    "lang": {
+        "fr": "Français",
+        "en": "Anglais",
+        "es": "Espagnol",
+        "it": "Italien",
+        "de": "Allemand",
+        "zh": "Chinois"
+    },
+    "sidebar": {
+        "dashboard": "Tableau de bord",
+        "users": "Utilisateurs",
+        "userList": "Liste des utilisateurs",
+        "userNew": "Nouveau",
+        "organizations": "Organisations",
+        "organizationsList": "Organisations",
+        "departments": "Départements",
+        "filieres": "Filières",
+        "demandes": "Demandes",
+        "allDemandes": "Toutes les demandes",
+        "documents": "Documents",
+        "myDocuments": "Mes documents",
+        "payments": "Paiements",
+        "paymentList": "Liste des paiements",
+        "paymentStats": "Statistiques",
+        "abonnements": "Abonnements",
+        "abonnementList": "Abonnements",
+        "abonnementStats": "Statistiques",
+        "contacts": "Contacts",
+        "messages": "Messages",
+        "configurations": "Configurations",
+        "settings": "Paramètres",
+        "mailer": "Mailer",
+        "auditLogs": "Audit logs",
+        "profile": "Profil",
+        "monInstitut": "Mon institut",
+        "ajouteDocument": "Ajouter un document",
+        "mesAbonnements": "Mes abonnements",
+        "souscrire": "Souscrire",
+        "dossiersTraiter": "Dossier à traiter"
+    },
+    "profile": {
+        "title": "Profil utilisateur",
+        "loadingProfile": "Chargement du profil...",
+        "errorLoading": "Erreur lors du chargement du profil utilisateur",
+        "noData": "Aucune donnée utilisateur disponible",
+        "avatarUpdateSuccess": "Photo de profil mise à jour avec succès",
+        "avatarUpdateError": "Erreur lors de la mise à jour de la photo",
+        "profileUpdateSuccess": "Profil mis à jour avec succès",
+        "profileUpdateError": "Erreur lors de la mise à jour du profil",
+        "editProfile": "Modifier le profil",
+        "password": "Mot de passe",
+        "status": {
+            "active": "ACTIF",
+            "inactive": "INACTIF"
+        },
+        "sections": {
+            "personalInfo": "Informations personnelles",
+            "organization": "Organisation",
+            "permissions": "Permissions et accès"
+        },
+        "stats": {
+            "activePermissions": "Permissions actives",
+            "lastConnection": "Dernière connexion",
+            "memberSince": "Membre depuis"
+        },
+        "fields": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "fullName": "Nom Complet",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "country": "Pays",
+            "gender": "Genre",
+            "createdAt": "Créé le",
+            "updatedAt": "Mis à jour le",
+            "role": "Rôle"
+        },
+        "gender": {
+            "male": "Homme",
+            "female": "Femme",
+            "other": "Autre"
+        },
+        "organization": {
+            "name": "Nom de l'organisation",
+            "type": "Type d'organisation",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "website": "Site web",
+            "country": "Pays",
+            "updateSuccess": "Informations de l'organisation mises à jour avec succès",
+            "updateError": "Erreur lors de la mise à jour de l'organisation",
+            "selectType": "Sélectionnez le type",
+            "types": {
+                "college": "Collège",
+                "banque": "Banque",
+                "universite": "Université",
+                "lycee": "Lycée",
+                "entreprise": "Entreprise",
+                "traducteur": "Traducteur"
+            },
+            "placeholders": {
+                "name": "Nom de l'organisation",
+                "email": "Email de l'organisation",
+                "phone": "Téléphone de l'organisation",
+                "address": "Adresse de l'organisation",
+                "website": "https://exemple.com",
+                "country": "Pays de l'organisation"
+            },
+            "validation": {
+                "nameRequired": "Veuillez entrer le nom de l'organisation",
+                "typeRequired": "Veuillez sélectionner le type d'organisation"
+            }
+        },
+        "permissions": {
+            "granted": "Permissions accordées"
+        },
+        "passwordModal": {
+            "title": "Changer le mot de passe",
+            "currentPassword": "Mot de passe actuel",
+            "newPassword": "Nouveau mot de passe",
+            "confirmPassword": "Confirmer le nouveau mot de passe",
+            "updateSuccess": "Mot de passe mis à jour avec succès",
+            "updateError": "Erreur lors de la mise à jour du mot de passe",
+            "validation": {
+                "currentRequired": "Veuillez entrer votre mot de passe actuel",
+                "newRequired": "Veuillez entrer votre nouveau mot de passe",
+                "minLength": "Le mot de passe doit contenir au moins 8 caractères",
+                "confirmRequired": "Veuillez confirmer votre nouveau mot de passe",
+                "noMatch": "Les deux mots de passe ne correspondent pas!"
+            },
+            "placeholders": {
+                "current": "Mot de passe actuel",
+                "new": "Nouveau mot de passe",
+                "confirm": "Confirmer le nouveau mot de passe"
+            }
+        }
+    },
+    "profilePage": {
+        "alerts": {
+            "loading": "Chargement du profil...",
+            "errorTitle": "Erreur",
+            "noDataTitle": "Aucune donnée",
+            "noDataDesc": "Aucune donnée utilisateur disponible",
+            "loadError": "Erreur lors du chargement du profil utilisateur"
+        },
+        "header": {
+            "editProfile": "Modifier le profil",
+            "password": "Mot de passe",
+            "active": "ACTIF",
+            "inactive": "INACTIF",
+            "userFallback": "Utilisateur"
+        },
+        "stats": {
+            "activePerms": "Permissions actives",
+            "lastLogin": "Dernière connexion",
+            "memberSince": "Membre depuis"
+        },
+        "sections": {
+            "personalInfo": "Informations personnelles",
+            "organization": "Organisation",
+            "permissionsAccess": "Permissions et accès",
+            "grantedPerms": "Permissions accordées",
+            "role": "Rôle"
+        },
+        "fields": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Email",
+            "phone": "Téléphone",
+            "adress": "Adresse",
+            "country": "Pays",
+            "gender": "Genre",
+            "fullName": "Nom Complet",
+            "createdAt": "Créé le",
+            "updatedAt": "Mis à jour le",
+            "type": "Type",
+            "slug": "Slug"
+        },
+        "placeholders": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "phone": "Téléphone",
+            "adress": "Adresse",
+            "country": "Pays",
+            "currentPwd": "Mot de passe actuel",
+            "newPwd": "Nouveau mot de passe",
+            "confirmPwd": "Confirmer le nouveau mot de passe"
+        },
+        "gender": {
+            "MALE": "Homme",
+            "FEMALE": "Femme",
+            "OTHER": "Autre",
+            "UNSPECIFIED": "Non spécifié"
+        },
+        "org": {
+            "none": "Aucune organisation",
+            "unspecified": "Non spécifié"
+        },
+        "buttons": {
+            "edit": "Modifier",
+            "save": "Enregistrer",
+            "cancel": "Annuler"
+        },
+        "passwordModal": {
+            "title": "Changer le mot de passe",
+            "current": "Mot de passe actuel",
+            "new": "Nouveau mot de passe",
+            "confirm": "Confirmer le nouveau mot de passe",
+            "currentRequired": "Veuillez entrer votre mot de passe actuel",
+            "newRequired": "Veuillez entrer votre nouveau mot de passe",
+            "newMin": "Le mot de passe doit contenir au moins 8 caractères",
+            "confirmRequired": "Veuillez confirmer votre nouveau mot de passe",
+            "confirmMismatch": "Les deux mots de passe ne correspondent pas!"
+        },
+        "toasts": {
+            "avatarUpdated": "Photo de profil mise à jour avec succès",
+            "avatarError": "Erreur lors de la mise à jour de la photo",
+            "profileUpdated": "Profil mis à jour avec succès",
+            "profileError": "Erreur lors de la mise à jour du profil",
+            "passwordUpdated": "Mot de passe mis à jour avec succès",
+            "passwordError": "Erreur lors de la mise à jour du mot de passe",
+            "orgUpdated": "Informations de l'organisation mises à jour avec succès",
+            "orgUpdateError": "Erreur lors de la mise à jour de l'organisation"
+        },
+        "common": {
+            "na": "N/A"
+        },
+        "orgEditor": {
+            "title": "Organisation",
+            "edit": "Modifier",
+            "name": "Nom de l'organisation",
+            "type": "Type d'organisation",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "website": "Site web",
+            "country": "Pays",
+            "selectType": "Sélectionnez le type",
+            "validators": {
+                "nameRequired": "Veuillez entrer le nom de l'organisation",
+                "typeRequired": "Veuillez sélectionner le type d'organisation"
+            }
+        },
+        "orgTypes": {
+            "COLLEGE": "Collège",
+            "BANQUE": "Banque",
+            "UNIVERSITE": "Université",
+            "LYCEE": "Lycée",
+            "ENTREPRISE": "Entreprise",
+            "TRADUCTEUR": "Traducteur"
+        }
+    },
+    "demandeurDemandes": {
+        "title": "Mes demandes",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "mine": "Mes demandes"
+        },
+        "filters": {
+            "searchPlaceholder": "Rechercher (code, org, …)",
+            "orgPlaceholder": "Organisation cible",
+            "periodePlaceholder": "Période",
+            "yearPlaceholder": "Année",
+            "statusPlaceholder": "Statut",
+            "reset": "Réinitialiser",
+            "new": "Nouvelle demande"
+        },
+        "columns": {
+            "code": "Code",
+            "date": "Date",
+            "targetOrg": "Organisation cible",
+            "periode": "Période",
+            "year": "Année",
+            "docs": "Docs",
+            "status": "Statut",
+            "actions": "Actions"
+        },
+        "actions": {
+            "details": "Détails",
+            "documents": "Documents"
+        },
+        "status": {
+            "PENDING": "En attente",
+            "IN_PROGRESS": "En cours",
+            "VALIDATED": "Validée",
+            "REJECTED": "Rejetée"
+        },
+        "periods": {
+            "FALL": "Automne / Fall",
+            "WINTER": "Hiver / Winter",
+            "SPRING": "Printemps / Spring",
+            "SUMMER": "Été / Summer"
+        },
+        "toasts": {
+            "orgLoadError": "Erreur lors du chargement des organisations",
+            "loadError": "Erreur de chargement"
+        },
+        "common": {
+            "na": "—"
+        }
+    },
+    "demandeDetail": {
+        "title": "Détail de ma demande",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "mine": "Mes demandes",
+            "detail": "Détail"
+        },
+        "actions": {
+            "documents": "Documents"
+        },
+        "sections": {
+            "case": "Dossier",
+            "academic": "Académique",
+            "identity": "Identité",
+            "englishTests": "Anglais / Tests",
+            "schooling": "Scolarité / Notes",
+            "activities": "Activités & Distinctions",
+            "family": "Famille",
+            "finance": "Financier",
+            "visa": "Visa",
+            "essays": "Essays",
+            "application": "Candidature",
+            "paymentTransaction": "Paiement / Transaction"
+        },
+        "fields": {
+            "code": "Code",
+            "status": "Statut",
+            "targetOrg": "Organisation cible",
+            "assignedOrg": "Traducteur",
+            "createdAt": "Créée le",
+            "periode": "Période",
+            "year": "Année",
+            "observation": "Observation",
+            "serie": "Série",
+            "niveau": "Niveau",
+            "mention": "Mention",
+            "schoolYear": "Année scol.",
+            "countryOfSchool": "Pays école",
+            "secondarySchoolName": "Établissement",
+            "graduationDate": "Date diplôme",
+            "dob": "Naissance",
+            "citizenship": "Nationalité",
+            "passport": "Passeport",
+            "isEnglishFirstLanguage": "Anglais L1",
+            "testScores": "Scores",
+            "englishProficiencyTests": "Tests (JSON)",
+            "gradingScale": "Échelle de notation",
+            "gpa": "GPA ou moyenne",
+            "examsTaken": "Examens (JSON)",
+            "intendedMajor": "Filière souhaitée",
+            "extracurricularActivities": "Activités",
+            "honorsOrAwards": "Distinctions",
+            "parentGuardianName": "Parent/Tuteur",
+            "occupation": "Profession",
+            "educationLevel": "Niveau d'éducation",
+            "willApplyForFinancialAid": "Aide financière",
+            "hasExternalSponsorship": "Parrainage externe",
+            "visaType": "Type",
+            "hasPreviouslyStudiedInUS": "Déjà étudié aux USA",
+            "personalStatement": "Déclaration personnelle",
+            "optionalEssay": "Essai optionnel / Informations supplémentaires",
+            "applicationRound": "Tour de candidature",
+            "howDidYouHearAboutUs": "Découverte",
+            "txStatus": "Transaction Statut",
+            "txAmount": "Montant",
+            "provider": "Provider",
+            "paymentStatus": "Statut",
+            "amount": "Montant",
+            "paymentType": "Type"
+        },
+        "empty": {
+            "noPayment": "Aucun paiement enregistré."
+        },
+        "common": {
+            "yes": "Oui",
+            "no": "Non",
+            "na": "—"
+        }
+    },
+    "demandeDocuments": {
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "detail": "Détail",
+            "documents": "Documents"
+        },
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Demandes",
+            "details": "Détails",
+            "docs": "Documents"
+        },
+        "title": "Documents de la demande",
+        "tabs": {
+            "documents": "Documents",
+            "info": "Informations de la demande"
+        },
+        "columns": {
+            "ownerOrg": "Organisation propriétaire",
+            "mention": "Mention",
+            "type": "Type",
+            "createdAt": "Date de création",
+            "encrypted": "Chiffré",
+            "original": "Original",
+            "translated": "Traduit"
+        },
+        "info": {
+            "general": "Informations générales",
+            "academic": "Informations académiques",
+            "personal": "Informations personnelles",
+            "finance": "Informations financières",
+            "visa": "Informations visa",
+            "orgs": "Organisations"
+        },
+        "fields": {
+            "code": "Code",
+            "date": "Date",
+            "status": "Statut",
+            "periode": "Période",
+            "year": "Année",
+            "observation": "Observation",
+            "serie": "Série",
+            "niveau": "Niveau",
+            "mention": "Mention",
+            "schoolYear": "Année scolaire",
+            "countryOfSchool": "Pays de l'école",
+            "secondarySchoolName": "Établissement",
+            "graduationDate": "Date de diplôme",
+            "dob": "Date de naissance",
+            "citizenship": "Nationalité",
+            "passport": "Passeport",
+            "isEnglishFirstLanguage": "Anglais langue maternelle",
+            "testScores": "Scores de tests",
+            "willApplyForFinancialAid": "Demande d'aide financière",
+            "hasExternalSponsorship": "Parrainage externe",
+            "visaType": "Type de visa",
+            "hasPreviouslyStudiedInUS": "Déjà étudié aux USA",
+            "targetOrg": "Organisation cible",
+            "assignedOrg": "Organisation de traduction"
+        },
+        "buttons": {
+            "back": "Retour",
+            "open": "Ouvrir"
+        },
+        "table": {
+            "institute": "Institut",
+            "type": "Type",
+            "mention": "Mention",
+            "obtainedAt": "Date d'obtention",
+            "doc": "Document",
+            "translated": "Traduit",
+            "empty": "Aucun document",
+            "dash": "—"
+        },
+        "toasts": {
+            "loadDemandeError": "Erreur lors du chargement de la demande",
+            "loadDocsError": "Échec chargement des documents",
+            "urlMissing": "URL indisponible"
+        },
+        "common": {
+            "na": "—",
+            "yes": "Oui",
+            "no": "Non"
+        },
+        "actions": {
+            "open": "Ouvrir"
+        }
+    },
+    "demandeurDashboard": {
+        "header": {
+            "hello": "Hello, {{firstName}} {{lastName}}",
+            "welcome": "Bienvenue!"
+        },
+        "kpis": {
+            "myRequests": "Mes demandes",
+            "myDocuments": "Mes documents",
+            "myTransactions": "Mes transactions",
+            "myPayments": "Mes paiements",
+            "seeBreakdown": "Voir la répartition ci-dessous",
+            "none": "Aucune demande",
+            "translatedCount": "Traduit: {{count}}",
+            "myDemandes": "Mes demandes",
+            "breakdown": "Voir la répartition ci-dessous",
+            "translated": "Traduit: {{count}}"
+        },
+        "activity": {
+            "title": "Activité récente",
+            "requestLine": "Demande {{code}} — {{status}} — {{date}}",
+            "paymentLine": "Paiement {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
+            "none": "Aucune activité récente"
+        },
+        "toasts": {
+            "loadError": "Erreur lors de la récupération des statistiques"
+        },
+        "empty": "Aucune donnée à afficher",
+        "common": {
+            "na": "—"
+        },
+        "title": "Tableau de bord",
+        "hello": "Hello, {{firstName}} {{lastName}}",
+        "welcome": "Bienvenue!",
+        "breakdowns": {
+            "demandesByStatus": "Mes demandes par statut",
+            "transactionsByStatus": "Mes transactions par statut",
+            "paymentsByStatus": "Mes paiements par statut"
+        },
+        "tables": {
+            "recentDemandes": "Demandes récentes",
+            "recentTransactions": "Transactions récentes",
+            "recentPayments": "Paiements récents"
+        }
+    },
+    "institutDashboard": {
+        "header": {
+            "title": "Dashboard Institut",
+            "orgLabel": "Organisation :"
+        },
+        "breadcrumb": {
+            "home": "Accueil",
+            "institute": "Institut"
+        },
+        "kpis": {
+            "targetRequests": "Demandes cibles (total)",
+            "assignedRequests": "Demandes assignées (total)",
+            "documents": "Documents (total/à traduire/traduit)",
+            "subscriptions": "Abonnements (actifs/total)",
+            "expiringSoon": "Expirent bientôt : {{count}}",
+            "usersTotal": "Utilisateurs (total)"
+        },
+        "charts": {
+            "targetVsAssigned": {
+                "title": "Demandes cibles vs assignées",
+                "format": "{{percent}}% assignées",
+                "target": "Cibles : {{n}}",
+                "assigned": "Assignées : {{n}}"
+            }
+        },
+        "tables": {
+            "usersByRole": "Utilisateurs par rôle",
+            "targetByStatus": "Demandes cibles par statut",
+            "assignedByStatus": "Demandes assignées par statut",
+            "paymentsByStatus": "Paiements par statut",
+            "simpleCols": {
+                "name": "Statut/Rôle",
+                "value": "Nombre"
+            },
+            "listCols": {
+                "name": "Nom",
+                "code": "Code",
+                "description": "Description/Niveau"
+            }
+        },
+        "lists": {
+            "departmentsTitle": "Départements ({{n}})",
+            "tracksTitle": "Filières ({{n}})",
+            "departmentCol": "Département",
+            "noDepartment": "Aucun département",
+            "noTrack": "Aucune filière"
+        },
+        "incoming": {
+            "title": "Demandes entrantes — statistiques",
+            "totalRecent": "Total (récent)",
+            "otherStatuses": "Autres statuts"
+        },
+        "toasts": {
+            "loadError": "Erreur lors du chargement des statistiques"
+        },
+        "common": {
+            "noData": "Aucune donnée",
+            "na": "—",
+            "undef": "Non défini"
+        }
+    },
+    "usersInstitutList": {
+        "title": "Utilisateurs de mon institut",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "users": "Utilisateurs"
+        },
+        "columns": {
+            "fullName": "Nom complet",
+            "email": "Email",
+            "phone": "Téléphone",
+            "role": "Rôle",
+            "status": "Statut",
+            "actions": "Actions"
+        },
+        "actions": {
+            "details": "Détails",
+            "edit": "Modifier",
+            "reset": "Réinitialiser",
+            "newUser": "Nouvel utilisateur"
+        },
+        "filters": {
+            "searchPlaceholder": "Rechercher…",
+            "rolePlaceholder": "Rôle",
+            "statusPlaceholder": "Statut",
+            "permissionPlaceholder": "Permission",
+            "roles": {
+                "DEMANDEUR": "Demandeur",
+                "TRADUCTEUR": "Traducteur",
+                "SUPERVISEUR": "Superviseur",
+                "INSTITUT": "Institution"
+            },
+            "status": {
+                "ACTIVE": "Actif",
+                "INACTIVE": "Inactif"
+            }
+        },
+        "pagination": {
+            "total": "Total {{total}} utilisateurs"
+        },
+        "toasts": {
+            "loadError": "Erreur chargement utilisateurs"
+        },
+        "common": {
+            "na": "N/A"
+        }
+    },
+    "userDetailInstitut": {
+        "title": "Détails utilisateur",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "users": "Utilisateurs"
+        },
+        "actions": {
+            "edit": "Modifier"
+        },
+        "sections": {
+            "personal": "Informations personnelles",
+            "permissions": "Permissions",
+            "organization": "Organisation"
+        },
+        "fields": {
+            "fullName": "Nom complet",
+            "email": "Email",
+            "phone": "Téléphone",
+            "role": "Rôle",
+            "status": "Statut",
+            "updatedAt": "Dernière MAJ",
+            "createdAt": "Créé le"
+        },
+        "permissions": {
+            "none": "Aucune permission"
+        },
+        "org": {
+            "name": "Nom",
+            "type": "Type",
+            "slug": "Slug"
+        },
+        "toasts": {
+            "loadError": "Erreur lors du chargement de l’utilisateur"
+        },
+        "common": {
+            "na": "N/A",
+            "never": "Jamais",
+            "notFound": "Utilisateur non trouvé."
+        }
+    },
+    "userEditInstitut": {
+        "title": "Modifier l'utilisateur",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "users": "Utilisateurs",
+            "edit": "Modifier"
+        },
+        "cardTitle": "Modifier l'utilisateur",
+        "sections": {
+            "permissions": "Permissions"
+        },
+        "fields": {
+            "avatar": "Photo de profil",
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Email",
+            "phone": "Téléphone",
+            "country": "Pays de résidence",
+            "role": "Rôle",
+            "status": "Statut",
+            "permissions": "Permissions"
+        },
+        "labels": {
+            "active": "Actif"
+        },
+        "actions": {
+            "back": "Retour",
+            "upload": "Téléverser",
+            "save": "Enregistrer",
+            "saving": "Enregistrement..."
+        },
+        "placeholders": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "exemple@domaine.com",
+            "phone": "Numéro de téléphone",
+            "address": "Adresse",
+            "country": "Pays",
+            "role": "Sélectionner un rôle",
+            "gender": "Sélectionner un genre"
+        },
+        "validations": {
+            "firstName": "Le prénom est requis",
+            "lastName": "Le nom est requis",
+            "email": "Adresse email invalide"
+        },
+        "validators": {
+            "gender": "Le genre est requis"
+        },
+        "roles": {
+            "MALE": "Homme",
+            "FEMALE": "Femme",
+            "OTHER": "Autre"
+        },
+        "toasts": {
+            "loadError": "Erreur lors du chargement de l'utilisateur",
+            "updated": "Utilisateur mis à jour",
+            "updateError": "Échec de la mise à jour"
+        }
+    },
+    "userCreateInstitut": {
+        "pageTitle": "Nouvel utilisateur (mon institut)",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "users": "Utilisateurs",
+            "new": "Nouveau"
+        },
+        "cardTitle": "Nouvel utilisateur",
+        "photo": {
+            "label": "Photo de profil",
+            "upload": "Téléverser"
+        },
+        "fields": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "country": "Pays",
+            "gender": "Genre",
+            "role": "Rôle",
+            "password": "Mot de passe",
+            "confirmPassword": "Confirmer le mot de passe",
+            "permissions": "Permissions"
+        },
+        "placeholders": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "exemple@domaine.com",
+            "phone": "Numéro de téléphone",
+            "address": "Adresse",
+            "country": "Pays",
+            "gender": "Sélectionner un genre"
+        },
+        "dividers": {
+            "permissions": "Permissions",
+            "password": "Mot de passe"
+        },
+        "validators": {
+            "firstNameRequired": "Prénom obligatoire",
+            "lastNameRequired": "Nom obligatoire",
+            "emailRequired": "Email obligatoire",
+            "emailInvalid": "Email invalide",
+            "gender": "Le genre est requis",
+            "passwordRequired": "Mot de passe obligatoire",
+            "confirmRequired": "Confirmer le mot de passe obligatoire",
+            "confirmMismatch": "Les mots de passe ne correspondent pas"
+        },
+        "roles": {
+            "MALE": "Homme",
+            "FEMALE": "Femme",
+            "OTHER": "Autre"
+        },
+        "buttons": {
+            "submit": "Valider",
+            "submitting": "Validation…"
+        },
+        "toasts": {
+            "success": "Utilisateur créé avec succès",
+            "error": "Erreur lors de l'envoi des données"
+        }
+    },
+    "departmentListInstitut": {
+        "pageTitle": "Départements (mon institut)",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "departments": "Départements"
+        },
+        "searchPlaceholder": "Recherche (nom, code, description)",
+        "buttons": {
+            "exportCsv": "Exporter CSV",
+            "new": "Nouveau",
+            "details": "Détails",
+            "edit": "Modifier"
+        },
+        "columns": {
+            "name": "Nom",
+            "code": "Code",
+            "filieres": "Filières",
+            "actions": "Actions"
+        },
+        "messages": {
+            "loadError": "Erreur de chargement",
+            "exportError": "Export impossible"
+        }
+    },
+    "departmentCreateInstitut": {
+        "pageTitle": "Nouveau département",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "departments": "Départements",
+            "create": "Créer"
+        },
+        "fields": {
+            "name": "Nom",
+            "code": "Code",
+            "description": "Description"
+        },
+        "placeholders": {
+            "name": "Nom du département",
+            "code": "Code (optionnel)",
+            "description": "Description (optionnel)"
+        },
+        "validators": {
+            "nameRequired": "Le nom est obligatoire"
+        },
+        "buttons": {
+            "save": "Enregistrer"
+        },
+        "toasts": {
+            "created": "Département créé",
+            "createError": "Erreur lors de la création"
+        }
+    },
+    "departmentDetailInstitut": {
+        "pageTitle": "Département",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "departments": "Départements"
+        },
+        "buttons": {
+            "edit": "Modifier",
+            "addFiliere": "Ajouter une filière",
+            "delete": "Supprimer",
+            "confirmDeleteTitle": "Supprimer ce département ?"
+        },
+        "cards": {
+            "infoTitle": "Informations",
+            "filieresTitle": "Filières du département"
+        },
+        "fields": {
+            "name": "Nom",
+            "code": "Code",
+            "description": "Description",
+            "organization": "Organisation",
+            "filieresCount": "Filières",
+            "createdAt": "Créé le"
+        },
+        "table": {
+            "name": "Nom",
+            "code": "Code",
+            "level": "Niveau",
+            "createdAt": "Créée le"
+        },
+        "messages": {
+            "loadError": "Erreur de chargement",
+            "deleted": "Supprimé",
+            "deleteError": "Erreur lors de la suppression"
+        }
+    },
+    "filiereCreateInstitut": {
+        "pageTitle": "Nouvelle filière",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "filieres": "Filières",
+            "create": "Créer"
+        },
+        "fields": {
+            "department": "Département",
+            "name": "Nom",
+            "code": "Code",
+            "level": "Niveau",
+            "description": "Description"
+        },
+        "placeholders": {
+            "selectDepartment": "Sélectionner un département",
+            "name": "Nom de la filière",
+            "code": "Code (optionnel)",
+            "level": "Sélectionner un niveau (optionnel)",
+            "description": "Description (optionnel)"
+        },
+        "validators": {
+            "departmentRequired": "Choisir le département",
+            "nameRequired": "Le nom est obligatoire"
+        },
+        "levels": {
+            "licence": "Licence",
+            "master": "Master",
+            "doctorat": "Doctorat"
+        },
+        "buttons": {
+            "save": "Enregistrer"
+        },
+        "toasts": {
+            "created": "Filière créée",
+            "createError": "Erreur lors de la création",
+            "depsLoadError": "Erreur lors du chargement des départements"
+        }
+    },
+    "filiereListInstitut": {
+        "pageTitle": "Filières (mon institut)",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "filieres": "Filières"
+        },
+        "filters": {
+            "searchPlaceholder": "Recherche (nom)",
+            "departmentPlaceholder": "Département",
+            "levelPlaceholder": "Niveau"
+        },
+        "levels": {
+            "licence": "Licence",
+            "master": "Master",
+            "doctorat": "Doctorat"
+        },
+        "buttons": {
+            "new": "Nouvelle filière",
+            "details": "Détails",
+            "edit": "Modifier"
+        },
+        "columns": {
+            "name": "Nom",
+            "code": "Code",
+            "level": "Niveau",
+            "department": "Département",
+            "actions": "Actions"
+        },
+        "messages": {
+            "loadError": "Erreur de chargement"
+        }
+    },
+    "filiereDetailInstitut": {
+        "pageTitle": "Filière",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "filieres": "Filières"
+        },
+        "buttons": {
+            "edit": "Modifier",
+            "delete": "Supprimer",
+            "confirmDeleteTitle": "Supprimer cette filière ?"
+        },
+        "cards": {
+            "infoTitle": "Informations"
+        },
+        "fields": {
+            "name": "Nom",
+            "code": "Code",
+            "level": "Niveau",
+            "department": "Département",
+            "description": "Description",
+            "createdAt": "Créée le"
+        },
+        "messages": {
+            "loadError": "Erreur de chargement",
+            "deleted": "Supprimée",
+            "deleteError": "Erreur lors de la suppression"
+        }
+    },
+    "filiereEditInstitut": {
+        "pageTitle": "Modifier la filière",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "filieres": "Filières",
+            "edit": "Modifier"
+        },
+        "fields": {
+            "name": "Nom",
+            "code": "Code",
+            "level": "Niveau",
+            "description": "Description"
+        },
+        "placeholders": {
+            "name": "Nom de la filière",
+            "code": "Code (optionnel)",
+            "level": "Sélectionner un niveau (optionnel)",
+            "description": "Description (optionnel)"
+        },
+        "validators": {
+            "nameRequired": "Le nom est obligatoire"
+        },
+        "levels": {
+            "licence": "Licence",
+            "master": "Master",
+            "doctorat": "Doctorat"
+        },
+        "buttons": {
+            "save": "Enregistrer"
+        },
+        "toasts": {
+            "updated": "Mise à jour effectuée",
+            "loadError": "Erreur de chargement",
+            "updateError": "Erreur lors de la mise à jour"
+        }
+    },
+    "institutDemandesList": {
+        "pageTitle": "Nos Demandes",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Demandes"
+        },
+        "section": {
+            "titleMyInstitute": "Demandes – Mon institut",
+            "filters": "Filtres",
+            "list": "Liste des demandes"
+        },
+        "filters": {
+            "searchPlaceholder": "Recherche (code, année, niveau, email…)",
+            "statusPlaceholder": "Statut",
+            "dateRangePlaceholder": "Plage de dates",
+            "sortBy": "Trier par",
+            "sortOrder": "Ordre",
+            "apply": "Appliquer",
+            "reset": "Réinitialiser"
+        },
+        "sortByOptions": {
+            "dateDemande": "Date demande",
+            "createdAt": "Créé le",
+            "updatedAt": "MAJ le",
+            "code": "Code"
+        },
+        "sortOrderOptions": {
+            "asc": "ASC",
+            "desc": "DESC"
+        },
+        "columns": {
+            "code": "Code",
+            "date": "Date",
+            "demandeur": "Demandeur",
+            "assigned": "Assignée à",
+            "docs": "Docs",
+            "status": "Statut",
+            "actions": "Actions"
+        },
+        "buttons": {
+            "details": "Détails",
+            "addDoc": "Ajouter doc",
+            "subscribeNow": "Souscrire maintenant",
+            "recheck": "Re-vérifier"
+        },
+        "statuses": {
+            "PENDING": "En attente",
+            "VALIDATED": "Validée",
+            "REJECTED": "Refusée",
+            "IN_PROGRESS": "En cours"
+        },
+        "paywall": {
+            "checking": "Vérification de l’abonnement…",
+            "requiredTitle": "Abonnement requis",
+            "requiredSub1": "Votre organisation n’a pas d’abonnement actif. Veuillez souscrire et payer pour accéder à la liste des demandes.",
+            "hint": "Après paiement, cliquez sur « Re-vérifier » si les demandes ne s’affichent pas."
+        },
+        "paymentModal": {
+            "title": "Paiement abonnement",
+            "methodStripe": "Stripe",
+            "methodPaypal": "PayPal",
+            "stripeInit": "Initialisation Stripe…",
+            "stripeRetry": "Réessayer Stripe",
+            "paypalLoad": "Charger PayPal",
+            "paypalError": "Erreur PayPal",
+            "amountTag": "Montant"
+        },
+        "toasts": {
+            "loadError": "Échec chargement des demandes",
+            "stripeInitError": "Initialisation Stripe impossible",
+            "stripeSecretMissing": "Client secret Stripe manquant",
+            "paypalCfgError": "Configuration PayPal indisponible",
+            "postPayError": "Échec post-paiement",
+            "aboActivated": "Abonnement activé ({{provider}}) 🎉"
+        }
+    },
+    "institutDemandeDetails": {
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Demandes",
+            "details": "Détails"
+        },
+        "title": "Détails de la demande",
+        "buttons": {
+            "back": "Retour",
+            "updateStatus": "Mettre à jour le statut",
+            "open": "Ouvrir",
+            "seeDocs": "Voir les documents",
+            "close": "Fermer",
+            "save": "Enregistrer",
+            "pending": "PENDING",
+            "inProgress": "IN_PROGRESS",
+            "validated": "VALIDATED",
+            "rejected": "REJECTED"
+        },
+        "fields": {
+            "code": "Code",
+            "status": "Statut",
+            "requestDate": "Date de demande",
+            "updatedAt": "Dernière mise à jour",
+            "createdAt": "Créée le",
+            "deletedAt": "Supprimée le",
+            "targetOrg": "Organisation cible",
+            "assignedOrg": "Organisation assignée",
+            "requester": "Demandeur",
+            "serie": "Série",
+            "niveau": "Niveau",
+            "mention": "Mention",
+            "anneeTxt": "Année (texte)",
+            "periode": "Période",
+            "year": "Year",
+            "countryOfSchool": "Pays de l’école",
+            "secondarySchoolName": "Établissement",
+            "graduationDate": "Date de graduation",
+            "observation": "Observation"
+        },
+        "docs": {
+            "title": "Documents associés",
+            "empty": "Aucun document",
+            "ownerOrg": "Institut (source)",
+            "type": "Type",
+            "mention": "Mention",
+            "obtainedAt": "Date d’obtention",
+            "doc": "Document",
+            "translated": "Traduit",
+            "isTranslated": "Est traduit",
+            "addedAt": "Ajouté le",
+            "count": "{{count}}"
+        },
+        "modals": {
+            "statusTitle": "Mettre à jour le statut & l’observation",
+            "statusField": "Statut",
+            "statusPlaceholder": "Choisir un statut",
+            "observationField": "Observation (visible dans la demande)",
+            "observationPlaceholder": "Ajoutez une remarque utile (motif de validation/refus, éléments manquants, etc.)",
+            "orgSourceTitle": "Institut qui a ajouté le document",
+            "buyerTitle": "Institut acheteur (organisation assignée)",
+            "noneSelected": "Aucun document sélectionné.",
+            "noneBuyer": "Aucune organisation acheteuse."
+        },
+        "statuses": {
+            "PENDING": "En attente",
+            "IN_PROGRESS": "En cours",
+            "VALIDATED": "Validée",
+            "REJECTED": "Refusée"
+        },
+        "tags": {
+            "yes": "Oui",
+            "no": "Non",
+            "dash": "—"
+        },
+        "toasts": {
+            "loadError": "Erreur lors du chargement de la demande",
+            "statusSaved": "Statut/Observation mis à jour",
+            "statusSaveError": "Échec de la mise à jour",
+            "urlMissing": "URL indisponible",
+            "stripeSecretMissing": "Client secret Stripe manquant"
+        },
+        "sections": {
+            "actionsWorkflow": "Actions (workflow)"
+        },
+        "orgFields": {
+            "name": "Nom de l'institut",
+            "nameShort": "Nom",
+            "slug": "Slug",
+            "type": "Type",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "country": "Pays",
+            "website": "Site web"
+        }
+    },
+    "demandeDocAdd": {
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Demandes",
+            "add": "Ajouter un document"
+        },
+        "title": "Ajouter un document à la demande",
+        "buttons": {
+            "back": "Retour",
+            "cancel": "Annuler",
+            "save": "Enregistrer le document"
+        },
+        "form": {
+            "code": "Code Demande",
+            "codeRequired": "Le code de la demande est requis",
+            "codePh": "Saisir le code",
+            "type": "Type de document",
+            "typeRequired": "Sélectionnez le type de document",
+            "typePh": "Choisir un type (ex: RELEVE, DIPLOME)",
+            "mention": "Mention",
+            "mentionPh": "Saisir la mention (ex: Bien, Très bien…)",
+            "year": "Année d’obtention",
+            "yearRequired": "Année d'obtention requise",
+            "file": "Fichier",
+            "fileHelp": "Téléversez le fichier du document (PDF/JPG/PNG).",
+            "fileOriginal": "Fichier original",
+            "fileRequired": "Veuillez sélectionner un fichier."
+        },
+        "upload": {
+            "dragTitle": "Glissez-déposez ou cliquez pour sélectionner",
+            "dragHint": "PDF / JPG / PNG (max 1 fichier)",
+            "tooltipRequired": "Obligatoire"
+        },
+        "toasts": {
+            "success": "Document ajouté avec succès.",
+            "error": "Échec de l'ajout du document"
+        },
+        "types": {
+            "ATTESTATION": "ATTESTATION",
+            "RELEVE": "RELEVE",
+            "DIPLOME": "DIPLOME",
+            "AUTRE": "AUTRE"
+        }
+    },
+    "institutAbos": {
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "abos": "Abonnements"
+        },
+        "title": "Mes abonnements",
+        "filters": {
+            "title": "Filtres",
+            "all": "Tous",
+            "active": "Actifs",
+            "expired": "Expirés",
+            "orderAsc": "ASC",
+            "orderDesc": "DESC",
+            "apply": "Appliquer",
+            "reset": "Réinitialiser"
+        },
+        "history": {
+            "title": "Historique des abonnements"
+        },
+        "table": {
+            "period": "Période",
+            "amount": "Montant",
+            "status": "Statut",
+            "createdAt": "Créé le",
+            "archived": "Archivé",
+            "active": "Actif",
+            "expired": "Expiré",
+            "upcoming": "À venir",
+            "currency": "USD"
+        },
+        "toasts": {
+            "loadError": "Échec de chargement",
+            "softDeleted": "Abonnement archivé",
+            "restored": "Abonnement restauré",
+            "hardDeleted": "Abonnement supprimé définitivement",
+            "overlap": "Chevauchement d'abonnement sur cette période.",
+            "invalidPeriod": "Période invalide : début doit être avant la fin.",
+            "createFailed": "Échec création d’abonnement",
+            "renewOk": "Abonnement renouvelé avec succès !",
+            "renewFail": "Échec du renouvellement",
+            "paypalErr": "Erreur PayPal",
+            "paypalCancel": "Paiement annulé",
+            "stripeInitErr": "Impossible d'initialiser Stripe",
+            "stripeInit": "Initialisation du paiement…",
+            "stripeSecretMissing": "Client secret Stripe manquant",
+            "stripeKeyMissing": "Clé publique Stripe manquante",
+            "subscriptionCreated": "Abonnement créé avec succès",
+            "paypalLoading": "Configuration PayPal…"
+        },
+        "createModal": {
+            "titleForm": "Créer un abonnement",
+            "titlePay": "Procéder au paiement",
+            "periodLabel": "Période",
+            "periodTextFrom": "Du",
+            "periodTextTo": "au",
+            "amountLabel": "Montant (USD)",
+            "amountRequired": "Montant requis",
+            "methodLabel": "Méthode de paiement",
+            "methodRequired": "Choisir une méthode",
+            "methodPlaceholder": "Choisir…",
+            "methodStripe": "Stripe",
+            "methodPaypal": "PayPal",
+            "btnCancel": "Annuler",
+            "btnContinue": "Continuer vers le paiement",
+            "toPay": "Montant à payer",
+            "stripeRetry": "Réinitialiser Stripe",
+            "payOk": "Paiement confirmé. Création de l’abonnement…",
+            "payFail": "Échec du paiement."
+        },
+        "renewModal": {
+            "title": "Renouveler l’abonnement",
+            "period": "Période",
+            "periodRequired": "Sélectionnez la nouvelle période",
+            "amount": "Montant (USD)",
+            "amountRequired": "Montant requis",
+            "ok": "Renouveler"
+        }
+    },
+    "auth": {
+        "login": {
+            "title": "Connexion",
+            "email": "Adresse email :",
+            "password": "Mot de passe :",
+            "rememberMe": "Se souvenir de moi",
+            "forgotPassword": "Mot de passe oublié ?",
+            "loginButton": "Se connecter",
+            "loggingIn": "Connexion en cours...",
+            "noAccount": "Pas de compte ?",
+            "signup": "S'inscrire",
+            "errorNoToken": "Aucun token reçu. Veuillez réessayer.",
+            "errorLogin": "Email ou mot de passe incorrect. Veuillez réessayer.",
+            "showPassword": "Afficher le mot de passe",
+            "hidePassword": "Masquer le mot de passe",
+            "footer": "© {{year}} applyons. Réalisé avec par AuthenticPage."
+        },
+        "signup": {
+            "title": "Créer un compte",
+            "personalInfo": "Informations personnelles",
+            "firstName": "Prénom *",
+            "lastName": "Nom *",
+            "gender": "Genre *",
+            "birthPlace": "Pays de naissance *",
+            "birthDate": "Date de naissance *",
+            "email": "Adresse email *",
+            "phone": "Téléphone",
+            "country": "Pays *",
+            "address": "Adresse",
+            "accountType": "Type de compte *",
+            "password": "Mot de passe *",
+            "confirmPassword": "Confirmer le mot de passe *",
+            "minPassword": "Minimum 6 caractères",
+            "orgInfo": {
+                "institut": "Informations de l'institution",
+                "traducteur": "Informations de l'agence",
+                "banque": "Informations de la banque"
+            },
+            "orgName": "Nom de l'organisation *",
+            "orgType": "Type d'organisation *",
+            "orgEmail": "Email de l'organisation *",
+            "orgPhone": "Téléphone de l'organisation",
+            "orgWebsite": "Site web (optionnel)",
+            "orgAddress": "Adresse de l'organisation",
+            "orgNote": "Note : Vous serez automatiquement administrateur de cette organisation.",
+            "cancel": "Annuler",
+            "login": "Se connecter",
+            "createAccount": "Créer mon compte",
+            "createAccountAndOrg": "Créer le compte et l'organisation",
+            "creating": "Inscription en cours...",
+            "success": "Inscription réussie ! Vérifiez votre email pour activer le compte.",
+            "errors": {
+                "firstNameRequired": "Le prénom est obligatoire.",
+                "lastNameRequired": "Le nom est obligatoire.",
+                "genderRequired": "Le genre est obligatoire.",
+                "birthPlaceRequired": "Le lieu de naissance est obligatoire.",
+                "birthDateRequired": "La date de naissance est obligatoire.",
+                "birthDateInvalid": "Date de naissance invalide.",
+                "emailRequired": "L'email est obligatoire.",
+                "emailInvalid": "Email invalide.",
+                "passwordRequired": "Le mot de passe est obligatoire.",
+                "passwordMin": "Au moins 6 caractères.",
+                "passwordMismatch": "Les mots de passe ne correspondent pas.",
+                "orgNameRequired": "Le nom de l'organisation est obligatoire.",
+                "orgTypeRequired": "Le type d'organisation est obligatoire.",
+                "orgEmailRequired": "L'email de l'organisation est obligatoire.",
+                "orgEmailInvalid": "Email d'organisation invalide.",
+                "general": "Une erreur est survenue lors de l'inscription."
+            },
+            "roles": {
+                "DEMANDEUR": "Demandeur",
+                "INSTITUT": "Institut/École/Entreprise",
+                "TRADUCTEUR": "Traducteur/Agence",
+                "BANQUE": "Banque/Institution financière"
+            },
+            "orgTypes": {
+                "UNIVERSITE": "Université",
+                "COLLEGE": "Collège",
+                "LYCEE": "Lycée",
+                "ENTREPRISE": "Entreprise",
+                "TRADUCTEUR": "Agence de traduction",
+                "BANQUE": "Banque"
+            },
+            "genders": {
+                "MALE": "Homme",
+                "FEMALE": "Femme",
+                "OTHER": "Autre"
+            },
+            "placeholders": {
+                "firstName": "Jean",
+                "lastName": "Dupont",
+                "email": "jeandupont@example.com",
+                "phone": "+221 77 000 00 00",
+                "address": "123 rue de la paix, Dakar",
+                "orgNameInstitut": "Nom de votre institution",
+                "orgNameTraducteur": "Nom de votre agence",
+                "orgNameBanque": "Nom de votre banque",
+                "orgEmail": "contact@organisation.com",
+                "orgPhone": "+221 77 000 00 00",
+                "orgWebsite": "https://organisation.com",
+                "orgAddress": "Adresse complète de l'organisation",
+                "selectType": "Sélectionnez un type"
+            }
+        },
+        "resetPassword": {
+            "title": "Réinitialiser le mot de passe",
+            "subtitle": "Entrez votre adresse email, nous vous enverrons un lien de réinitialisation.",
+            "email": "Adresse Email :",
+            "sendLink": "Envoyer le lien",
+            "sending": "Envoi en cours...",
+            "login": "Se connecter",
+            "success": "Un email de réinitialisation a été envoyé.",
+            "error": "Erreur lors de l'envoi de l'email de réinitialisation.",
+            "footer": "© {{year}} applyons. Réaliser par AuthenticPage."
+        },
+        "newPassword": {
+            "title": "Nouveau mot de passe",
+            "subtitle": "Veuillez saisir votre nouveau mot de passe",
+            "newPassword": "Nouveau mot de passe",
+            "confirmPassword": "Confirmer le mot de passe",
+            "change": "Modifier le mot de passe",
+            "changing": "Modification en cours...",
+            "rememberPassword": "Vous vous souvenez de votre mot de passe ?",
+            "login": "Se connecter",
+            "success": "Mot de passe modifié !",
+            "successSubtitle": "Vous allez être redirigé vers la page de connexion.",
+            "errors": {
+                "passwordRequired": "Le mot de passe est requis",
+                "passwordMin": "Le mot de passe doit contenir au moins 8 caractères",
+                "passwordLowercase": "Le mot de passe doit contenir au moins une lettre minuscule",
+                "passwordUppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
+                "passwordNumber": "Le mot de passe doit contenir au moins un chiffre",
+                "confirmRequired": "Veuillez confirmer votre mot de passe",
+                "confirmMismatch": "Les mots de passe ne correspondent pas"
+            },
+            "placeholders": {
+                "newPassword": "Saisissez votre nouveau mot de passe",
+                "confirmPassword": "Confirmez votre nouveau mot de passe"
+            },
+            "error": "Erreur lors de la réinitialisation du mot de passe. Veuillez réessayer.",
+            "footer": "© {{year}} applyons. Réalisé avec ❤️ par ADM."
+        },
+        "lockScreen": {
+            "title": "Compte inactif",
+            "subtitle": "Votre compte est temporairement inactif",
+            "message": "Votre compte a été désactivé temporairement. Veuillez contacter l'administrateur pour réactiver votre accès ou vérifier votre statut d'utilisateur.",
+            "contactSupport": "Contacter le support",
+            "login": "Se connecter",
+            "logout": "Se déconnecter / Changer de compte",
+            "footer": "© {{year}} applyons by ADM."
+        },
+        "notAccess": {
+            "title": "Accès refusé",
+            "messageTitle": "Vous n'avez pas accès à cette page",
+            "message": "Si vous pensez qu'il s'agit d'une erreur, veuillez contacter l'administrateur.",
+            "back": "Retour",
+            "home": "Aller à l'accueil",
+            "footer": "© {{year}} applyons by applyons."
+        },
+        "activate": {
+            "title": "Activation du compte",
+            "activating": "Activation en cours…",
+            "success": "Votre compte a été activé ! Redirection vers la connexion…",
+            "error": "Lien d'activation invalide ou expiré.",
+            "resendLink": "Renvoyer le lien d'activation",
+            "resending": "Renvoi en cours…",
+            "goToLogin": "Aller à la connexion",
+            "errorMissing": "Lien d'activation manquant ou invalide.",
+            "errorExpired": "Lien d'activation invalide ou expiré.",
+            "successMessage": "Compte activé avec succès !",
+            "resendSuccess": "Lien d'activation renvoyé.",
+            "resendError": "Impossible de renvoyer le lien d'activation.",
+            "emailNotFound": "Adresse e-mail introuvable. Veuillez vous reconnecter.",
+            "footer": "© {{year}} applyons. Réalisé avec par AuthenticPage."
+        },
+        "signupSuccess": {
+            "title": "Succès",
+            "congratulations": "Félicitations ! 🎉",
+            "message": "Votre compte a été créé avec succès. Profitez de votre parcours. Merci",
+            "continue": "Continuer",
+            "footer": "© {{year}} applyons by ADM."
+        }
+    },
+    "adminDashboard": {
+        "hello": "Hello, {{firstName}} {{lastName}}",
+        "welcome": "Bienvenue!",
+        "kpis": {
+            "usersTotal": "Utilisateurs (total)",
+            "usersActive": "Actifs: {{count}}",
+            "organizationsTotal": "Organisations (total)",
+            "demandesTotal": "Demandes (total)",
+            "demandesBreakdown": "Voir la répartition ci-dessous",
+            "demandesNone": "Aucune demande",
+            "documentsTotal": "Documents (total)",
+            "documentsTranslated": "Traduit: {{count}}",
+            "transactionsTotal": "Transactions (total)",
+            "transactionsBreakdown": "Voir la répartition ci-dessous",
+            "paymentsTotal": "Paiements (total)",
+            "paymentsBreakdown": "Voir la répartition ci-dessous",
+            "abonnementsTotal": "Abonnements",
+            "abonnementsActive": "Actifs: {{active}} · Expirent bientôt: {{expiring}}",
+            "contactsTotal": "Contacts (messages)"
+        },
+        "breakdowns": {
+            "usersByRole": "Répartition des rôles utilisateurs",
+            "orgsByType": "Répartition des types d'organisation",
+            "demandesByStatus": "Demandes par statut",
+            "transactionsByStatus": "Transactions par statut",
+            "paymentsByStatus": "Paiements par statut"
+        },
+        "empty": {
+            "noItems": "— Aucun élément —",
+            "noData": "Aucune donnée à afficher.",
+            "freeSpace": "Espace libre pour un graphique/activité récente"
+        },
+        "error": "Error fetching stats"
+    },
+    "traducteurDashboard": {
+        "hello": "Hello, {{firstName}} {{lastName}}",
+        "welcome": "Bienvenue!",
+        "kpis": {
+            "usersTotal": "Utilisateurs (total)",
+            "usersActive": "Actifs: {{count}}",
+            "organizationsTotal": "Organisations (total)",
+            "demandesTotal": "Demandes (total)",
+            "demandesBreakdown": "Voir la répartition ci-dessous",
+            "demandesNone": "Aucune demande",
+            "documentsTotal": "Documents (total)",
+            "documentsTranslated": "Traduit: {{count}}",
+            "transactionsTotal": "Transactions (total)",
+            "transactionsBreakdown": "Voir la répartition ci-dessous",
+            "paymentsTotal": "Paiements (total)",
+            "paymentsBreakdown": "Voir la répartition ci-dessous",
+            "abonnementsTotal": "Abonnements",
+            "abonnementsActive": "Actifs: {{active}} · Expirent bientôt: {{expiring}}",
+            "contactsTotal": "Contacts (messages)"
+        },
+        "breakdowns": {
+            "usersByRole": "Répartition des rôles utilisateurs",
+            "orgsByType": "Répartition des types d'organisation",
+            "demandesByStatus": "Demandes par statut",
+            "transactionsByStatus": "Transactions par statut",
+            "paymentsByStatus": "Paiements par statut"
+        },
+        "empty": {
+            "noItems": "— Aucun élément —",
+            "noData": "Aucune donnée à afficher.",
+            "freeSpace": "Espace libre pour un graphique/activité récente"
+        },
+        "error": "Error fetching stats"
+    },
+    "adminUsers": {
+        "title": "Liste des utilisateurs",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "users": "Utilisateurs"
+        },
+        "columns": {
+            "fullName": "Nom complet",
+            "email": "Email",
+            "phone": "Téléphone",
+            "role": "Rôle",
+            "status": "Statut",
+            "actions": "Actions"
+        },
+        "filters": {
+            "search": "Rechercher...",
+            "role": "Rôle",
+            "status": "Statut"
+        },
+        "actions": {
+            "new": "Nouvel utilisateur",
+            "details": "Détails",
+            "edit": "Modifier",
+            "delete": "Archiver"
+        },
+        "roles": {
+            "ADMIN": "Administrateur",
+            "SUPER_ADMIN": "Super Administrateur",
+            "SA": "SA",
+            "SUPERVISEUR": "Superviseur",
+            "INSTITUT": "Institution",
+            "DEMANDEUR": "Demandeur",
+            "TRADUCTEUR": "Traducteur",
+            "UTILISATEUR": "Utilisateur"
+        },
+        "status": {
+            "ACTIVE": "Actif",
+            "INACTIVE": "Inactif"
+        },
+        "messages": {
+            "archiveSuccess": "Utilisateur archivé avec succès",
+            "archiveError": "Échec de l'archivage",
+            "loadError": "Erreur lors de la récupération des utilisateurs"
+        },
+        "common": {
+            "na": "N/A"
+        },
+        "pagination": {
+            "total": "Total {{total}} utilisateurs"
+        }
+    },
+    "adminOrganizations": {
+        "title": "Liste des organisations",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "organizations": "Organisations"
+        },
+        "columns": {
+            "name": "Nom",
+            "type": "Type",
+            "email": "Email",
+            "phone": "Téléphone",
+            "country": "Pays",
+            "status": "Statut",
+            "actions": "Actions"
+        },
+        "filters": {
+            "search": "Rechercher...",
+            "type": "Type",
+            "country": "Pays"
+        },
+        "actions": {
+            "new": "Nouvelle organisation",
+            "details": "Détails",
+            "edit": "Modifier",
+            "delete": "Archiver"
+        },
+        "types": {
+            "ENTREPRISE": "Entreprise",
+            "TRADUCTEUR": "Agence de Traduction",
+            "BANQUE": "Banque",
+            "COLLEGE": "Collège",
+            "LYCEE": "Lycée",
+            "UNIVERSITE": "Université"
+        },
+        "countries": {
+            "SN": "Sénégal",
+            "FR": "France",
+            "US": "États-Unis",
+            "CA": "Canada"
+        },
+        "messages": {
+            "archiveSuccess": "Organisation archivée avec succès",
+            "archiveError": "Échec de l'archivage",
+            "loadError": "Erreur lors de la récupération des organisations"
+        },
+        "pagination": {
+            "total": "Total {{total}} organisations"
+        }
+    },
+    "adminDemandeCreate": {
+        "title": "Créer une demande",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "demandes": "Demandes",
+            "create": "Créer"
+        },
+        "steps": {
+            "basic": "Informations de base",
+            "academic": "Informations académiques",
+            "personal": "Informations personnelles",
+            "financial": "Informations financières",
+            "payment": "Paiement"
+        },
+        "fields": {
+            "type": "Type de demande",
+            "typeRequired": "Le type est obligatoire",
+            "targetOrg": "Organisation cible",
+            "targetOrgRequired": "L'organisation cible est obligatoire",
+            "assignedOrg": "Organisation de traduction",
+            "assignedOrgRequired": "L'organisation de traduction est obligatoire",
+            "observation": "Observations",
+            "serie": "Série",
+            "niveau": "Niveau",
+            "mention": "Mention",
+            "annee": "Année",
+            "countryOfSchool": "Pays de l'école",
+            "secondarySchoolName": "Nom de l'école",
+            "graduationDate": "Date de graduation",
+            "dob": "Date de naissance",
+            "citizenship": "Nationalité",
+            "passport": "Numéro de passeport",
+            "isEnglishFirstLanguage": "L'anglais est-il votre première langue ?",
+            "englishProficiencyTests": "Tests de compétence en anglais",
+            "testScores": "Scores des tests"
+        },
+        "types": {
+            "TRADUCTION": "Traduction",
+            "VERIFICATION": "Vérification",
+            "AUTRE": "Autre"
+        },
+        "placeholders": {
+            "selectType": "Sélectionner un type",
+            "selectTargetOrg": "Sélectionner une organisation cible",
+            "selectAssignedOrg": "Sélectionner une organisation de traduction",
+            "observation": "Observations supplémentaires",
+            "serie": "Série (ex: S, L, ES)",
+            "niveau": "Niveau (ex: Bac, Licence, Master)",
+            "mention": "Mention (ex: Bien, Très Bien)",
+            "annee": "Année (ex: 2023)",
+            "countryOfSchool": "Pays de l'école",
+            "secondarySchoolName": "Nom de l'école secondaire",
+            "citizenship": "Nationalité",
+            "passport": "Numéro de passeport",
+            "englishTests": "Tests de compétence en anglais (ex: TOEFL, IELTS)",
+            "testScores": "Scores des tests"
+        },
+        "buttons": {
+            "next": "Suivant",
+            "prev": "Précédent",
+            "submit": "Créer la demande",
+            "cancel": "Annuler"
+        },
+        "messages": {
+            "orgLoadError": "Erreur lors de la récupération des organisations",
+            "createSuccess": "Demande créée avec succès",
+            "createError": "Erreur lors de la création de la demande"
+        }
+    },
+    "adminAbonnements": {
+        "title": "Gestion des Abonnements",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "abonnements": "Abonnements"
+        },
+        "columns": {
+            "organization": "Organisation",
+            "period": "Période",
+            "amount": "Montant",
+            "status": "Statut",
+            "createdAt": "Créé le",
+            "actions": "Actions",
+            "id": "ID",
+            "periode": "Période",
+            "montant": "Montant"
+        },
+        "filters": {
+            "search": "Rechercher...",
+            "organization": "Organisation",
+            "status": "Statut",
+            "dateRange": "Plage de dates",
+            "minAmount": "Montant min",
+            "maxAmount": "Montant max"
+        },
+        "actions": {
+            "new": "Nouvel abonnement",
+            "details": "Détails",
+            "edit": "Modifier",
+            "stats": "Statistiques",
+            "renew": "Renouveler",
+            "archive": "Archiver",
+            "restore": "Restaurer",
+            "delete": "Supprimer",
+            "create": "Créer",
+            "refresh": "Rafraîchir"
+        },
+        "status": {
+            "ACTIVE": "Actif",
+            "EXPIRED": "Expiré",
+            "PENDING": "En attente",
+            "expired": "Expiré",
+            "active": "Actif",
+            "coming": "À venir"
+        },
+        "messages": {
+            "loadError": "Erreur lors de la récupération des abonnements",
+            "orgLoadError": "Erreur lors de la récupération des organisations",
+            "statsError": "Erreur lors de la récupération des statistiques",
+            "archiveSuccess": "Abonnement archivé avec succès",
+            "archiveError": "Échec de l'archivage",
+            "restoreSuccess": "Abonnement restauré avec succès",
+            "restoreError": "Échec de la restauration",
+            "deleteSuccess": "Abonnement supprimé définitivement",
+            "deleteError": "Échec de la suppression"
+        },
+        "pagination": {
+            "total": "Total {{total}} abonnements"
+        },
+        "stats": {
+            "title": "Statistiques",
+            "titleFull": "Statistiques des abonnements",
+            "breadcrumb": "Statistiques des abonnements",
+            "summaryTitle": "Résumé",
+            "total": "Total des abonnements",
+            "active": "Actifs",
+            "expired": "Expirés",
+            "expiringSoon": "Expirent bientôt",
+            "revenueTotal": "Revenus totaux",
+            "monthlyTitle": "Détails par mois",
+            "noData": "Aucune donnée",
+            "columns": {
+                "month": "Mois",
+                "count": "Nombre d'abonnements",
+                "revenue": "Revenus (USD)"
+            }
+        },
+        "common": {
+            "currency": "USD"
+        },
+        "expiringSoon": {
+            "title": "Abonnements expirant bientôt",
+            "breadcrumb": "Abonnements expirant bientôt",
+            "alert": "Abonnements expirant dans les {{days}} prochains jours",
+            "daysAddon": "Jours",
+            "daysPlaceholder": "Nombre de jours",
+            "columns": {
+                "expirationDate": "Date d'expiration"
+            },
+            "daysLabel": "{{count}} jours"
+        },
+        "renew": {
+            "title": "Renouveler l'abonnement #{{id}}…",
+            "breadcrumb": "Renouveler",
+            "modal": {
+                "title": "Renouveler l'abonnement"
+            },
+            "current": {
+                "title": "Abonnement actuel",
+                "organization": "Organisation",
+                "period": "Période actuelle",
+                "amount": "Montant actuel"
+            },
+            "alert": {
+                "title": "Renouvellement",
+                "description": "Définissez la nouvelle période et le montant. La nouvelle période doit commencer après la fin de l'abonnement actuel."
+            },
+            "form": {
+                "period": {
+                    "label": "Nouvelle période",
+                    "required": "La période est obligatoire"
+                },
+                "amount": {
+                    "label": "Nouveau montant (USD)",
+                    "required": "Le montant est obligatoire",
+                    "min": "Le montant doit être positif"
+                },
+                "submit": {
+                    "label": "Renouveler l'abonnement",
+                    "loading": "Renouvellement en cours..."
+                }
+            },
+            "messages": {
+                "success": "Abonnement renouvelé avec succès",
+                "error": "Échec du renouvellement. Vérifiez les dates et le montant."
+            }
+        },
+        "details": {
+            "title": "Détails de l'abonnement #{{id}}…",
+            "breadcrumb": "Détails",
+            "info": {
+                "title": "Informations de l'abonnement",
+                "id": "ID",
+                "organization": "Organisation",
+                "period": "Période",
+                "status": "Statut",
+                "amount": "Montant",
+                "createdAt": "Créé le",
+                "updatedAt": "Mis à jour le"
+            },
+            "payments": {
+                "title": "Historique des paiements",
+                "line": "{{amount}} {{currency}} via {{provider}}{{ref}}"
+            },
+            "actions": {
+                "title": "Actions",
+                "deleteForever": "Supprimer définitivement"
+            }
+        },
+        "edit": {
+            "title": "Modifier l'abonnement #{{id}}…",
+            "breadcrumb": "Modifier",
+            "current": {
+                "title": "Informations actuelles",
+                "organization": "Organisation",
+                "createdAt": "Créé le",
+                "status": "Statut"
+            },
+            "alert": {
+                "title": "Attention",
+                "description": "La modification des dates peut entraîner des chevauchements avec d'autres abonnements."
+            },
+            "form": {
+                "organization": {
+                    "label": "Organisation",
+                    "required": "L'organisation est obligatoire",
+                    "placeholder": "Sélectionner une organisation"
+                },
+                "period": {
+                    "label": "Période d'abonnement",
+                    "required": "La période est obligatoire"
+                },
+                "amount": {
+                    "label": "Montant (USD)",
+                    "required": "Le montant est obligatoire",
+                    "min": "Le montant doit être positif"
+                },
+                "submit": {
+                    "label": "Mettre à jour",
+                    "loading": "Mise à jour en cours..."
+                }
+            },
+            "messages": {
+                "success": "Abonnement mis à jour avec succès",
+                "error": "Échec de la mise à jour. Vérifiez les dates et le montant."
+            }
+        },
+        "create": {
+            "title": "Créer un nouvel abonnement",
+            "breadcrumb": "Nouvel abonnement",
+            "alert": {
+                "title": "Informations importantes",
+                "description": "Les dates ne doivent pas se chevaucher avec un abonnement existant pour la même organisation. Le montant doit être un nombre positif et l'organisation doit être active."
+            },
+            "form": {
+                "organization": {
+                    "label": "Organisation",
+                    "required": "L'organisation est obligatoire",
+                    "placeholder": "Sélectionner une organisation"
+                },
+                "period": {
+                    "label": "Période d'abonnement",
+                    "required": "La période est obligatoire"
+                },
+                "amount": {
+                    "label": "Montant (USD)",
+                    "required": "Le montant est obligatoire",
+                    "min": "Le montant doit être positif"
+                },
+                "submit": {
+                    "label": "Créer l'abonnement",
+                    "loading": "Création en cours..."
+                }
+            },
+            "messages": {
+                "success": "Abonnement créé avec succès",
+                "error": "Échec de la création de l'abonnement. Vérifiez les dates et le montant."
+            }
+        },
+        "modals": {
+            "archiveTitle": "Archiver cet abonnement ?",
+            "archiveContent": "Cette action est réversible. L'abonnement ne sera plus visible mais pourra être restauré.",
+            "archiveOk": "Archiver",
+            "archiveCancel": "Annuler",
+            "deleteTitle": "Supprimer définitivement cet abonnement ?",
+            "deleteContent": "Cette action est irréversible. Toutes les données seront perdues.",
+            "deleteOk": "Supprimer",
+            "deleteCancel": "Annuler"
+        }
+    },
+    "adminPayments": {
+        "title": "Paiements",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "payments": "Paiements"
+        },
+        "columns": {
+            "provider": "Provider",
+            "amount": "Montant",
+            "currency": "Devise",
+            "status": "Statut",
+            "type": "Type",
+            "createdAt": "Créé le",
+            "actions": "Actions",
+            "date": "Date",
+            "link": "Rattachement"
+        },
+        "filters": {
+            "search": "Rechercher...",
+            "provider": "Provider",
+            "status": "Statut",
+            "type": "Type",
+            "searchProvider": "Rechercher par fournisseur",
+            "searchStatus": "Filtrer par statut",
+            "searchAbonnementId": "Rechercher par ID abonnement",
+            "searchDemandeId": "Rechercher par ID demande",
+            "searchTransactionId": "Rechercher par ID transaction",
+            "demandePartageId": "DemandePartageId",
+            "abonnementId": "AbonnementId",
+            "transactionId": "TransactionId"
+        },
+        "actions": {
+            "details": "Détails",
+            "stats": "Statistiques",
+            "refresh": "Rafraîchir"
+        },
+        "status": {
+            "SUCCEEDED": "Réussi",
+            "CAPTURED": "Capturé",
+            "AUTHORIZED": "Autorisé",
+            "REQUIRES_ACTION": "Action requise",
+            "INITIATED": "Initiée",
+            "FAILED": "Échoué",
+            "CANCELED": "Annulé"
+        },
+        "types": {
+            "CARD": "Carte",
+            "STRIPE": "Stripe",
+            "PAYPAL": "PayPal",
+            "BANK_TRANSFER": "Virement",
+            "MOBILE_MONEY": "Mobile Money"
+        },
+        "messages": {
+            "loadError": "Échec de chargement des paiements",
+            "detailsError": "Impossible de récupérer le paiement"
+        },
+        "paymentTypes": {
+            "CARD": "Carte",
+            "STRIPE": "Stripe",
+            "PAYPAL": "PayPal",
+            "BANK_TRANSFER": "Virement",
+            "MOBILE_MONEY": "Mobile Money"
+        },
+        "common": {
+            "na": "—"
+        },
+        "stats": {
+            "totalPayments": "Total paiements",
+            "totalAmount": "Montant total",
+            "byStatus": "Par statut",
+            "linkTypes": "Rattachements",
+            "last": "Dernier"
+        },
+        "linkTypes": {
+            "ABONNEMENT": "ABONNEMENT",
+            "DEMANDE": "DEMANDE",
+            "SANS_LIEN": "SANS LIEN"
+        },
+        "drawer": {
+            "title": "Détails du paiement",
+            "loading": "Chargement..."
+        }
+    },
+    "adminContacts": {
+        "pageTitle": "Gestion des Contacts",
+        "title": "Gestion des Contacts",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "contacts": "Contacts"
+        },
+        "columns": {
+            "name": "Nom",
+            "email": "Email",
+            "subject": "Sujet",
+            "status": "Statut",
+            "date": "Date",
+            "actions": "Actions"
+        },
+        "filters": {
+            "statusPlaceholder": "Filtrer par statut"
+        },
+        "statuses": {
+            "PENDING": "En attente",
+            "IN_PROGRESS": "En cours",
+            "RESOLVED": "Résolu",
+            "CLOSED": "Fermé"
+        },
+        "fields": {
+            "name": "Nom",
+            "email": "Email",
+            "subject": "Sujet",
+            "message": "Message",
+            "status": "Statut",
+            "createdAt": "Date de création",
+            "response": "Réponse",
+            "respondedAt": "Répondu le"
+        },
+        "buttons": {
+            "refresh": "Actualiser"
+        },
+        "tooltips": {
+            "viewDetails": "Voir les détails",
+            "reply": "Répondre"
+        },
+        "pagination": {
+            "showTotal": "{{from}}-{{to}} sur {{total}} contacts"
+        },
+        "modals": {
+            "details": {
+                "title": "Détails du Contact",
+                "close": "Fermer"
+            },
+            "response": {
+                "title": "Répondre au Contact",
+                "contact": "Contact",
+                "subject": "Sujet",
+                "placeholder": "Saisissez votre réponse...",
+                "send": "Envoyer",
+                "cancel": "Annuler"
+            },
+            "deleteConfirm": {
+                "title": "Êtes-vous sûr de vouloir supprimer ce contact ?",
+                "okText": "Oui",
+                "cancelText": "Non"
+            }
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement des contacts",
+            "statusUpdated": "Statut mis à jour avec succès",
+            "statusUpdateError": "Erreur lors de la mise à jour du statut",
+            "responseRequired": "Veuillez saisir une réponse",
+            "responseSent": "Réponse envoyée avec succès",
+            "responseError": "Erreur lors de l'envoi de la réponse",
+            "deleteSuccess": "Contact supprimé avec succès",
+            "deleteError": "Erreur lors de la suppression"
+        }
+    },
+    "adminMailer": {
+        "pageTitle": "Envoi d'email",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "mailer": "Mailer"
+        },
+        "form": {
+            "title": "Composer un email",
+            "fields": {
+                "to": {
+                    "label": "Destinataires (séparés par virgules)",
+                    "placeholder": "ex: a@ex.com, b@ex.com"
+                },
+                "cc": {
+                    "label": "Cc (optionnel)",
+                    "placeholder": "ex: c@ex.com"
+                },
+                "bcc": {
+                    "label": "Bcc (optionnel)",
+                    "placeholder": "ex: d@ex.com"
+                },
+                "replyTo": {
+                    "label": "Reply-To (optionnel)",
+                    "placeholder": "ex: noreply@ex.com"
+                },
+                "notifyAdmins": {
+                    "label": "Notifier les admins",
+                    "tooltip": "Enverra aussi une copie aux admins (backend)",
+                    "placeholder": "admins (CSV) — optionnel"
+                },
+                "subject": {
+                    "label": "Sujet",
+                    "placeholder": "Sujet de l'email"
+                },
+                "message": {
+                    "label": "Message (format riche)",
+                    "charCount": "{{count}} caractères"
+                },
+                "attachments": {
+                    "label": "Pièces jointes",
+                    "tooltip": "Seront envoyées en base64 vers l'API"
+                }
+            },
+            "buttons": {
+                "preview": "Prévisualiser",
+                "addFile": "Ajouter un fichier",
+                "send": "Envoyer",
+                "clear": "Vider le formulaire"
+            }
+        },
+        "modals": {
+            "preview": {
+                "title": "Aperçu du message",
+                "close": "Fermer",
+                "empty": "(Vide)",
+                "textVersion": "Version texte (auto)"
+            }
+        },
+        "validation": {
+            "toRequired": "Au moins un destinataire (To) est requis.",
+            "invalidEmails": "Vérifie les adresses email (séparées par des virgules).",
+            "invalidReplyTo": "Reply-To invalide.",
+            "subjectRequired": "Le sujet est requis.",
+            "messageRequired": "Le message est requis.",
+            "invalidAdminEmails": "Vérifie les emails admin (séparés par des virgules)."
+        },
+        "messages": {
+            "sendSuccess": "Email envoyé !",
+            "sendError": "Échec de l'envoi"
+        }
+    },
+    "adminAuditLogs": {
+        "pageTitle": "Logs d'audit",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "auditLogs": "Logs d'audit"
+        },
+        "filters": {
+            "title": "Filtres",
+            "search": {
+                "label": "Recherche (action, ressource, détails…)",
+                "placeholder": "Ex: encrypt, order, 192.168…"
+            },
+            "action": {
+                "label": "Action",
+                "placeholder": "Choisir action(s)"
+            },
+            "resource": {
+                "label": "Ressource",
+                "placeholder": "Choisir ressource(s)"
+            },
+            "user": {
+                "label": "Utilisateur",
+                "placeholder": "Filtrer par utilisateur"
+            },
+            "ip": {
+                "label": "Adresse IP",
+                "placeholder": "Ex: 102.124.x.x"
+            },
+            "dateRange": {
+                "label": "Période"
+            },
+            "buttons": {
+                "reset": "Réinitialiser",
+                "apply": "Appliquer"
+            }
+        },
+        "table": {
+            "title": "Logs d'audit",
+            "na": "N/A",
+            "deletedUser": "Utilisateur supprimé",
+            "columns": {
+                "user": "Utilisateur",
+                "action": "Action",
+                "resource": "Ressource",
+                "resourceId": "ID Ressource",
+                "date": "Date",
+                "ip": "IP",
+                "actions": "Actions"
+            },
+            "buttons": {
+                "details": "Détails"
+            }
+        },
+        "modals": {
+            "details": {
+                "title": "Détails du log d'audit",
+                "close": "Fermer",
+                "generalInfo": "Informations générales",
+                "additionalDetails": "Détails supplémentaires",
+                "fields": {
+                    "id": "ID",
+                    "user": "Utilisateur",
+                    "action": "Action",
+                    "resource": "Ressource",
+                    "resourceId": "ID Ressource",
+                    "date": "Date",
+                    "ip": "Adresse IP",
+                    "userAgent": "Agent utilisateur"
+                }
+            }
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement des logs d'audit"
+        }
+    },
+    "adminTransactions": {
+        "title": "Transactions",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "transactions": "Transactions"
+        },
+        "columns": {
+            "date": "Date",
+            "demande": "Demande",
+            "amount": "Montant",
+            "paymentType": "Type paiement",
+            "transactionType": "Type transaction",
+            "status": "Statut",
+            "actions": "Actions"
+        },
+        "filters": {
+            "search": "Rechercher (code demande, …)",
+            "status": "Statut",
+            "dateRange": "Plage de dates"
+        },
+        "actions": {
+            "new": "Nouvelle",
+            "details": "Détails",
+            "archive": "Archiver",
+            "restore": "Restaurer",
+            "refresh": "Actualiser"
+        },
+        "status": {
+            "PENDING": "PENDING",
+            "COMPLETED": "COMPLETED",
+            "FAILED": "FAILED"
+        },
+        "messages": {
+            "loadError": "Erreur de chargement",
+            "archiveSuccess": "Transaction archivée",
+            "archiveError": "Échec archivage",
+            "restoreSuccess": "Transaction restaurée",
+            "restoreError": "Échec restauration"
+        },
+        "confirmArchive": "Archiver ?"
+    },
+    "traducteurUsers": {
+        "title": "Utilisateurs de mon institut",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "users": "Utilisateurs"
+        },
+        "columns": {
+            "fullName": "Nom complet",
+            "email": "Email",
+            "phone": "Téléphone",
+            "role": "Rôle",
+            "status": "Statut",
+            "actions": "Actions"
+        },
+        "filters": {
+            "search": "Rechercher…",
+            "status": "Statut",
+            "permission": "Permission"
+        },
+        "actions": {
+            "new": "Nouvel Utilisateur",
+            "details": "Détails",
+            "edit": "Modifier",
+            "reset": "Réinitialiser"
+        },
+        "status": {
+            "ACTIVE": "Actif",
+            "INACTIVE": "Inactif"
+        },
+        "messages": {
+            "loadError": "Erreur chargement utilisateurs"
+        },
+        "common": {
+            "na": "N/A"
+        }
+    },
+    "traducteurDemandes": {
+        "title": "Mes demandes",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "demandes": "Demandes"
+        },
+        "columns": {
+            "code": "Code",
+            "date": "Date",
+            "client": "Client",
+            "targetOrg": "Institut cible",
+            "docs": "Docs",
+            "status": "Statut",
+            "actions": "Options"
+        },
+        "filters": {
+            "search": "Rechercher...",
+            "status": "Statut",
+            "dateRange": "Plage de dates",
+            "onlyMine": "Mes demandes uniquement"
+        },
+        "actions": {
+            "view": "Voir",
+            "documents": "Document(s)",
+            "start": "Démarrer",
+            "continue": "Continuer",
+            "validate": "Valider",
+            "reject": "Rejeter"
+        },
+        "status": {
+            "PENDING": "En attente",
+            "IN_PROGRESS": "En cours",
+            "VALIDATED": "Validée",
+            "REJECTED": "Rejetée"
+        },
+        "messages": {
+            "loadError": "Échec chargement des demandes",
+            "statusUpdateSuccess": "Statut mis à jour: {{status}}",
+            "statusUpdateError": "Échec mise à jour du statut"
+        }
+    },
+    "adminDemandesList": {
+        "title": "Liste des demandes",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "demandes": "Demandes"
+        },
+        "columns": {
+            "code": "Code",
+            "date": "Date",
+            "demandeur": "Demandeur",
+            "targetOrg": "Org. cible",
+            "assignedOrg": "Org. assignée",
+            "docs": "Docs",
+            "status": "Statut",
+            "payment": "Paiement",
+            "actions": "Actions"
+        },
+        "filters": {
+            "search": "Rechercher...",
+            "status": "Statut",
+            "targetOrg": "Organisation cible",
+            "assignedOrg": "Organisation assignée",
+            "dateRange": "Plage de dates"
+        },
+        "status": {
+            "PENDING": "En attente",
+            "IN_PROGRESS": "En cours",
+            "VALIDATED": "Validée",
+            "REJECTED": "Rejetée"
+        },
+        "payment": {
+            "PAID": "Payé",
+            "PENDING": "En attente",
+            "FAILED": "Échoué"
+        },
+        "actions": {
+            "details": "Détails",
+            "refresh": "Actualiser",
+            "documents": "Documents"
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement",
+            "orgLoadError": "Erreur chargement organisations"
+        },
+        "pagination": {
+            "total": "Total {{total}} demandes"
+        },
+        "common": {
+            "na": "—"
+        }
+    },
+    "adminDemandeDetail": {
+        "title": "Demande — Détail",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "demandes": "Demandes",
+            "detail": "Détail"
+        },
+        "actions": {
+            "back": "Retour"
+        },
+        "sections": {
+            "mainInfo": "Informations principales",
+            "documents": "Documents associés",
+            "transaction": "Transaction",
+            "payment": "Paiement"
+        },
+        "fields": {
+            "code": "Code",
+            "date": "Date",
+            "status": "Statut",
+            "demandeur": "Demandeur",
+            "targetOrg": "Organisation cible",
+            "assignedOrg": "Organisation traductrice",
+            "periode": "Période",
+            "year": "Année",
+            "observation": "Observation"
+        },
+        "documents": {
+            "title": "Documents associés",
+            "empty": "Aucun document",
+            "open": "Ouvrir",
+            "download": "Télécharger",
+            "verify": "Vérifier l'intégrité",
+            "original": "Document (original)",
+            "translated": "Document (traduit)"
+        },
+        "verify": {
+            "title": "Vérification d'intégrité",
+            "original": "Original",
+            "translated": "Traduit",
+            "blockchain": "Blockchain",
+            "valid": "Valide",
+            "invalid": "Invalide",
+            "ok": "OK",
+            "notValid": "Non valide"
+        },
+        "messages": {
+            "loadError": "Erreur de chargement",
+            "openError": "Impossible d'ouvrir le document",
+            "downloadError": "Téléchargement impossible",
+            "verifyError": "Échec de vérification"
+        },
+        "common": {
+            "na": "—",
+            "yes": "Oui",
+            "no": "Non"
+        },
+        "tabs": {
+            "academic": "Académique",
+            "identity": "Identité",
+            "financial": "Financier & Visa",
+            "essays": "Essais"
+        },
+        "academicFields": {
+            "serie": "Série",
+            "niveau": "Niveau",
+            "mention": "Mention",
+            "annee": "Année (scol.)",
+            "countryOfSchool": "Pays de l'école",
+            "secondarySchoolName": "Établissement",
+            "graduationDate": "Diplôme obtenu le"
+        },
+        "identityFields": {
+            "dob": "Date de naissance",
+            "citizenship": "Nationalité",
+            "passport": "Passeport",
+            "isEnglishFirstLanguage": "Anglais langue maternelle",
+            "englishProficiencyTests": "Tests anglais (JSON)",
+            "testScores": "Scores"
+        },
+        "financialFields": {
+            "willApplyForFinancialAid": "Aide financière",
+            "hasExternalSponsorship": "Parrainage externe",
+            "visaType": "Type de visa",
+            "hasPreviouslyStudiedInUS": "A déjà étudié aux USA"
+        },
+        "essayFields": {
+            "personalStatement": "Personal statement",
+            "optionalEssay": "Optional essay",
+            "applicationRound": "Application round",
+            "howDidYouHearAboutUs": "Découverte"
+        }
+    },
+    "adminUserCreate": {
+        "title": "Nouvel utilisateur",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "users": "Utilisateurs",
+            "new": "Nouvel utilisateur"
+        },
+        "cardTitle": "Nouvel utilisateur",
+        "fields": {
+            "avatar": "Photo de profil",
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Email",
+            "phone": "Téléphone",
+            "role": "Rôle",
+            "permissions": "Permissions",
+            "password": "Mot de passe",
+            "confirmPassword": "Confirmer le mot de passe",
+            "organization": "Organisation"
+        },
+        "placeholders": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Email",
+            "phone": "Téléphone",
+            "role": "Sélectionner un rôle",
+            "organization": "Sélectionner une organisation"
+        },
+        "dividers": {
+            "permissions": "Permissions",
+            "password": "Mot de passe"
+        },
+        "upload": {
+            "upload": "Téléverser"
+        },
+        "roles": {
+            "ADMIN": "Administrateur",
+            "MEMBER": "Membre",
+            "GUEST": "Invité"
+        },
+        "validators": {
+            "firstNameRequired": "Prénom obligatoire",
+            "lastNameRequired": "Nom obligatoire",
+            "emailInvalid": "Email invalide",
+            "passwordRequired": "Mot de passe obligatoire",
+            "confirmRequired": "Confirmer le mot de passe obligatoire",
+            "passwordMismatch": "Les mots de passe ne correspondent pas",
+            "roleRequired": "Rôle obligatoire",
+            "organizationRequired": "L'organisation est obligatoire pour ce rôle"
+        },
+        "buttons": {
+            "submit": "Valider",
+            "submitting": "Validation..."
+        },
+        "messages": {
+            "success": "Utilisateur créé avec succès",
+            "error": "Erreur lors de l'envoi des données",
+            "orgFetchError": "Erreur lors de la récupération des organisations"
+        }
+    },
+    "adminUserDetails": {
+        "title": "Détails de l'utilisateur",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "users": "Liste des utilisateurs",
+            "detail": "Détails"
+        },
+        "actions": {
+            "edit": "Modifier"
+        },
+        "sections": {
+            "personalInfo": "Informations personnelles",
+            "permissions": "Permissions",
+            "organization": "Organisation"
+        },
+        "fields": {
+            "fullName": "Nom complet",
+            "email": "Email",
+            "phone": "Téléphone",
+            "role": "Rôle",
+            "status": "Statut",
+            "lastLogin": "Dernière connexion",
+            "createdAt": "Créé le"
+        },
+        "status": {
+            "active": "Actif",
+            "inactive": "Inactif"
+        },
+        "permissions": {
+            "none": "Aucune permission"
+        },
+        "org": {
+            "name": "Nom",
+            "type": "Type"
+        },
+        "messages": {
+            "notFound": "Utilisateur non trouvé.",
+            "loadError": "Erreur lors de la récupération de l'utilisateur"
+        },
+        "common": {
+            "na": "N/A",
+            "never": "Jamais"
+        }
+    },
+    "adminUserEdit": {
+        "title": "Modifier l'utilisateur",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "users": "Utilisateurs",
+            "edit": "Modifier l'utilisateur"
+        },
+        "cardTitle": "Modifier l'utilisateur",
+        "actions": {
+            "back": "Retour"
+        },
+        "fields": {
+            "avatar": "Photo de profil",
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Email",
+            "phone": "Téléphone",
+            "adress": "Adresse",
+            "country": "Pays de résidence",
+            "gender": "Genre",
+            "role": "Rôle",
+            "status": "Statut",
+            "permissions": "Permissions",
+            "organization": "Organisation"
+        },
+        "placeholders": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "phone": "Téléphone",
+            "adress": "Adresse",
+            "country": "Pays de résidence",
+            "gender": "Sélectionner un genre",
+            "role": "Sélectionner un rôle",
+            "organization": "Sélectionner une organisation"
+        },
+        "dividers": {
+            "permissions": "Permissions"
+        },
+        "upload": {
+            "upload": "Téléverser"
+        },
+        "validators": {
+            "firstNameRequired": "Prénom obligatoire",
+            "lastNameRequired": "Nom obligatoire",
+            "emailInvalid": "Email invalide",
+            "roleRequired": "Rôle obligatoire",
+            "gender": "Le genre est requis",
+            "organizationRequired": "L'organisation est obligatoire pour ce rôle"
+        },
+        "buttons": {
+            "save": "Enregistrer",
+            "saving": "Enregistrement..."
+        },
+        "messages": {
+            "loadError": "Erreur lors de la récupération de l'utilisateur",
+            "updated": "Utilisateur mis à jour avec succès",
+            "updateError": "Erreur lors de l'envoi des données",
+            "orgFetchError": "Erreur lors de la récupération des organisations"
+        },
+        "labels": {
+            "active": "Actif"
+        },
+        "roles": {
+            "ADMIN": "Administrateur",
+            "SUPER_ADMIN": "Super Administrateur",
+            "MALE": "Homme",
+            "FEMALE": "Femme",
+            "OTHER": "Autre"
+        }
+    },
+    "traducteurDemandesList": {
+        "title": "Mes demandes",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "demandes": "Demandes"
+        },
+        "columns": {
+            "code": "Code",
+            "date": "Date",
+            "demandeur": "Demandeur",
+            "targetOrg": "Org. cible",
+            "status": "Statut",
+            "actions": "Actions",
+            "client": "Client",
+            "docs": "Docs"
+        },
+        "filters": {
+            "search": "Rechercher...",
+            "status": "Statut",
+            "dateRange": "Plage de dates",
+            "onlyMine": "Mes demandes uniquement",
+            "title": "Filtres & options"
+        },
+        "status": {
+            "PENDING": "En attente",
+            "IN_PROGRESS": "En cours",
+            "VALIDATED": "Validée",
+            "REJECTED": "Rejetée"
+        },
+        "actions": {
+            "details": "Détails",
+            "start": "Démarrer",
+            "validate": "Valider",
+            "reject": "Rejeter",
+            "refresh": "Rafraîchir",
+            "view": "Voir",
+            "viewDocuments": "Voir les documents",
+            "documents": "Document(s)",
+            "translate": "Traduire",
+            "addTranslation": "Ajouter traduction",
+            "apply": "Appliquer"
+        },
+        "messages": {
+            "loadError": "Échec chargement des demandes",
+            "updateSuccess": "Statut mis à jour: {{status}}",
+            "updateError": "Échec mise à jour du statut",
+            "documentsError": "Erreur chargement des documents",
+            "translationAdded": "Traduction ajoutée",
+            "uploadError": "Échec upload traduction"
+        },
+        "pagination": {
+            "total": "Total {{total}} demandes"
+        },
+        "sortFields": {
+            "updatedAt": "Mise à jour",
+            "createdAt": "Création",
+            "code": "Code",
+            "dateDemande": "Date de demande"
+        },
+        "sortOrder": {
+            "desc": "Descendant",
+            "asc": "Ascendant"
+        },
+        "documents": {
+            "translated": "Traduit",
+            "notTranslated": "Non traduit",
+            "encrypted": "Chiffré",
+            "notEncrypted": "Non chiffré",
+            "blockchain": "Blockchain",
+            "original": "Original"
+        },
+        "table": {
+            "title": "Liste des demandes assignées"
+        },
+        "modal": {
+            "documentsTitle": "Documents de la demande",
+            "noDocuments": "Aucun document"
+        }
+    },
+    "institutAbonnementSouscription": {
+        "pageTitle": "Mes abonnements",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "abonnements": "Abonnements"
+        },
+        "activeCard": {
+            "title": "Abonnement actif",
+            "newButton": "Nouvel abonnement",
+            "period": "Période",
+            "amount": "Montant",
+            "active": "Actif",
+            "none": "Aucun abonnement actif.",
+            "createButton": "Créer un abonnement"
+        },
+        "filters": {
+            "title": "Filtres",
+            "all": "Tous",
+            "active": "Actifs",
+            "expired": "Expirés",
+            "apply": "Appliquer",
+            "reset": "Réinitialiser"
+        },
+        "history": {
+            "title": "Historique des abonnements"
+        },
+        "columns": {
+            "period": "Période",
+            "amount": "Montant",
+            "status": "Statut",
+            "createdAt": "Créé le",
+            "actions": "Actions",
+            "archived": "Archivé",
+            "active": "Actif",
+            "expired": "Expiré",
+            "upcoming": "À venir",
+            "archive": "Archiver",
+            "restore": "Restaurer",
+            "delete": "Supprimer"
+        },
+        "modals": {
+            "create": {
+                "step1Title": "Créer un abonnement",
+                "step2Title": "Procéder au paiement",
+                "cancel": "Annuler",
+                "continue": "Continuer vers le paiement",
+                "period": "Période",
+                "amount": "Montant",
+                "priceUnavailable": "Prix indisponible – merci de recharger la page.",
+                "paymentMethod": "Méthode de paiement",
+                "chooseMethod": "Choisir une méthode",
+                "choose": "Choisir…",
+                "amountToPay": "Montant à payer :",
+                "paymentConfirmed": "Paiement confirmé. Création & traçabilité du paiement en cours…",
+                "paymentFailed": "Échec du paiement.",
+                "initializingPayment": "Initialisation du paiement…",
+                "resetStripe": "Réinitialiser Stripe"
+            },
+            "renew": {
+                "title": "Renouveler l'abonnement",
+                "period": "Période",
+                "selectPeriod": "Sélectionnez la nouvelle période",
+                "amount": "Montant (USD)",
+                "amountRequired": "Montant requis",
+                "okText": "Renouveler",
+                "success": "Abonnement renouvelé avec succès !",
+                "error": "Échec du renouvellement"
+            },
+            "confirm": {
+                "archive": "Archiver l'abonnement ?",
+                "delete": "Supprimer définitivement ?"
+            }
+        },
+        "messages": {
+            "priceInvalid": "Montant d'abonnement invalide côté serveur.",
+            "priceError": "Impossible de récupérer le prix de l'abonnement.",
+            "stripeInitError": "Initialisation Stripe impossible (clé publique).",
+            "loadError": "Échec de chargement",
+            "archived": "Abonnement archivé",
+            "archiveError": "Échec archivage",
+            "restored": "Abonnement restauré",
+            "restoreError": "Échec restauration",
+            "deleted": "Abonnement supprimé définitivement",
+            "deleteError": "Échec suppression",
+            "archiveFirst": "Archive d'abord avant suppression définitive.",
+            "orgNotFound": "Organisation introuvable",
+            "priceUnavailable": "Prix d'abonnement indisponible.",
+            "choosePaymentMethod": "Choisissez un mode de paiement",
+            "invalidAmount": "Montant invalide (serveur).",
+            "stripeNotInitialized": "Stripe non initialisé (clé publique).",
+            "createPaymentIntentError": "Impossible de créer le PaymentIntent",
+            "overlap": "Chevauchement d'abonnement sur cette période.",
+            "invalidPeriod": "Période invalide : début doit être avant la fin.",
+            "finalizationError": "Échec finalisation après paiement",
+            "success": "Abonnement et paiement enregistrés !",
+            "paypalError": "Erreur PayPal",
+            "paymentCancelled": "Paiement annulé",
+            "stripeKeyInvalid": "Clé publique Stripe invalide/absente",
+            "stripeSecretInvalid": "Client secret Stripe invalide/absent",
+            "aboNoId": "Abonnement créé sans identifiant."
+        }
+    },
+    "adminDocuments": {
+        "title": "Documents",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "documents": "Documents"
+        },
+        "columns": {
+            "demande": "Demande",
+            "ownerOrg": "Ajouté par (org.)",
+            "createdAt": "Créé le",
+            "actions": "Actions"
+        },
+        "filters": {
+            "searchPlaceholder": "Recherche (code ADN…)",
+            "demandePlaceholder": "Par demande (ID)",
+            "orgPlaceholder": "Par org. (ID)",
+            "translatedPlaceholder": "Traduit ?",
+            "translatedYes": "Oui",
+            "translatedNo": "Non"
+        },
+        "actions": {
+            "viewOriginal": "Voir original",
+            "viewTranslated": "Voir traduit",
+            "details": "Détails",
+            "delete": "Supprimer",
+            "refresh": "Rafraîchir"
+        },
+        "drawer": {
+            "title": "Détails du document",
+            "demande": "Demande",
+            "owner": "Ajouté par",
+            "translationStatus": "Statut traduction",
+            "encrypted": "Chiffré",
+            "createdAt": "Créé le",
+            "encryptedAt": "Chiffré le",
+            "quickActions": "Actions rapides"
+        },
+        "translation": {
+            "translated": "Traduit",
+            "notTranslated": "Non"
+        },
+        "encryption": {
+            "yes": "Oui",
+            "no": "Non"
+        },
+        "preview": {
+            "title": "Document",
+            "loading": "Chargement…"
+        },
+        "messages": {
+            "loadError": "Erreur chargement des documents",
+            "urlUnavailable": "URL indisponible",
+            "deleted": "Document supprimé",
+            "deleteError": "Suppression impossible"
+        },
+        "modals": {
+            "delete": {
+                "title": "Supprimer ce document ?",
+                "content": "Cette action est irréversible.",
+                "okText": "Supprimer",
+                "cancelText": "Annuler"
+            }
+        }
+    },
+    "demandeurDemandeCreate": {
+        "pageTitle": "Candidature Étudiant International",
+        "steps": {
+            "targetIdentity": "Cible & identité",
+            "academic": "Académique",
+            "essays": "Essays & Divers",
+            "invitations": "Invitations + Récap",
+            "payment": "Paiement"
+        },
+        "stepCounter": "Étape {{current}} sur {{total}}",
+        "sections": {
+            "personalInfo": "1. Informations personnelles",
+            "intendedProgram": "4. Programme d'études souhaité",
+            "englishProficiency": "2. Maîtrise de l'anglais",
+            "academicBackground": "3. Parcours académique",
+            "activities": "5. Activités et réalisations",
+            "familyInfo": "6. Informations familiales",
+            "financialInfo": "7. Informations financières",
+            "visaInfo": "8. Informations visa",
+            "essays": "9. Essais",
+            "submission": "10. Soumission",
+            "inviteOrgs": "Inviter des organisations (invitation officielle)",
+            "notifyOrgs": "Notifier des organisations (simple information)",
+            "summary": "Résumé",
+            "choosePayment": "Choisissez votre méthode de paiement"
+        },
+        "fields": {
+            "targetOrg": "Organisation cible",
+            "translationOrg": "Organisation de traduction (optionnel)",
+            "dateOfBirth": "Date de naissance",
+            "countryOfCitizenship": "Pays de citoyenneté",
+            "passportNumber": "Numéro de passeport (optionnel)",
+            "preferredStartTerm": "Trimestre de début préféré",
+            "year": "Année",
+            "isEnglishFirstLanguage": "L'anglais est-il votre langue maternelle ?",
+            "yes": "Oui",
+            "englishProficiencyTest": "Test de maîtrise de l'anglais passé",
+            "testScores": "Score(s) du test",
+            "secondarySchoolName": "Nom de l'école secondaire",
+            "countryOfSchool": "Pays de l'école",
+            "graduationDate": "Date de diplôme",
+            "gradingScale": "Échelle de notation",
+            "gpa": "GPA ou moyenne",
+            "examsTaken": "Examens passés",
+            "intendedMajor": "Filière souhaitée",
+            "extracurricularActivities": "Activités extrascolaires",
+            "honorsOrAwards": "Honneurs ou récompenses",
+            "parentGuardianName": "Nom du parent/tuteur 1",
+            "occupation": "Profession",
+            "educationLevel": "Niveau d'éducation",
+            "willApplyForFinancialAid": "Demanderez-vous une aide financière ?",
+            "hasExternalSponsorship": "Avez-vous un parrainage externe ?",
+            "visaType": "Type de visa (si applicable)",
+            "hasPreviouslyStudiedInUS": "Avez-vous déjà étudié aux États-Unis ?",
+            "personalStatement": "Déclaration personnelle",
+            "optionalEssay": "Essai optionnel / Informations supplémentaires",
+            "applicationRound": "Tour de candidature",
+            "howDidYouHearAboutUs": "Comment avez-vous entendu parler de cette université ?"
+        },
+        "placeholders": {
+            "chooseOrganization": "Choisir une organisation",
+            "optional": "— optionnel —",
+            "selectCountry": "Sélectionner un pays",
+            "selectTerm": "Sélectionner un trimestre",
+            "selectYear": "Sélectionner une année",
+            "selectTests": "Sélectionner des tests",
+            "selectExams": "Sélectionner des examens",
+            "selectMajor": "Sélectionner une filière",
+            "chooseOrgFirst": "Choisir d'abord une organisation",
+            "selectLevel": "Sélectionner un niveau",
+            "selectVisaType": "Sélectionner un type de visa",
+            "selectRound": "Sélectionner un tour",
+            "selectResult": "Sélectionner un résultat",
+            "name": "Nom",
+            "email": "Email",
+            "phone": "Téléphone (opt.)",
+            "address": "Adresse (opt.)",
+            "role": "Rôle (opt.)"
+        },
+        "options": {
+            "periods": {
+                "FALL": "Automne / Fall",
+                "WINTER": "Hiver / Winter",
+                "SPRING": "Printemps / Spring",
+                "SUMMER": "Été / Summer"
+            },
+            "englishTests": {
+                "TOEFL": "TOEFL",
+                "IELTS": "IELTS",
+                "Duolingo English Test": "Duolingo English Test",
+                "PTE Academic": "PTE Academic",
+                "None": "Aucun"
+            },
+            "exams": {
+                "A-Levels": "A-Levels",
+                "IB Diploma": "IB Diploma",
+                "WAEC/NECO": "WAEC/NECO",
+                "French Baccalauréat": "Baccalauréat français",
+                "National Exams": "Examens nationaux"
+            },
+            "educationLevels": {
+                "No formal education": "Pas d'éducation formelle",
+                "Secondary": "Secondaire",
+                "Bachelor's": "Licence",
+                "Graduate": "Diplômé"
+            },
+            "visaTypes": {
+                "None": "Aucun",
+                "F-1 Student Visa": "Visa étudiant F-1",
+                "J-1 Exchange": "Échange J-1",
+                "Other": "Autre"
+            },
+            "applicationRounds": {
+                "Regular Decision": "Décision régulière",
+                "Early Action": "Action anticipée",
+                "Early Decision": "Décision anticipée"
+            },
+            "howDidYouHear": {
+                "FACEBOOK": "Facebook",
+                "TWITTER": "Twitter",
+                "INSTAGRAM": "Instagram",
+                "LINKEDIN": "LinkedIn",
+                "AUTRE": "Autre"
+            }
+        },
+        "buttons": {
+            "add": "Ajouter",
+            "remove": "Supprimer",
+            "previous": "Précédent",
+            "next": "Suivant",
+            "saveDraft": "Enregistrer le brouillon",
+            "reset": "Réinitialiser",
+            "completePayment": "Compléter le paiement",
+            "createApplication": "Créer la candidature et envoyer"
+        },
+        "invitations": {
+            "noOrgsInvited": "Aucune organisation invitée",
+            "nameRequired": "Nom requis (2+ caractères)",
+            "emailInvalid": "Email invalide",
+            "alreadyInList": "Déjà dans la liste"
+        },
+        "payment": {
+            "processingFee": "Frais de traitement",
+            "oneTimePayment": "Paiement unique pour votre candidature",
+            "stripe": "Stripe",
+            "secureCreditCard": "Carte de crédit sécurisée",
+            "recommended": "Recommandé",
+            "paypal": "PayPal",
+            "paypalAccount": "Compte PayPal",
+            "available": "Disponible",
+            "paymentConfirmed": "Paiement confirmé",
+            "canSubmitNow": "Vous pouvez maintenant soumettre votre candidature",
+            "modalTitleStripe": "Paiement Sécurisé - Stripe",
+            "modalTitlePaypal": "Paiement Sécurisé - PayPal",
+            "processingFeeLabel": "Frais de Traitement de Demande",
+            "securePaymentBy": "Paiement sécurisé par",
+            "initializing": "Initialisation du paiement…",
+            "resetStripe": "Réinitialiser Stripe",
+            "processing": "Traitement du paiement...",
+            "pleaseWait": "Veuillez patienter"
+        },
+        "summary": {
+            "target": "Cible",
+            "targetOrg": "Organisation cible",
+            "translationOrg": "Org. traduction",
+            "period": "Période",
+            "year": "Année",
+            "observation": "Observation",
+            "identity": "Identité",
+            "birthDate": "Naissance",
+            "citizenship": "Nationalité",
+            "passport": "Passeport",
+            "academic": "Académique",
+            "serieLevelMention": "Série / Niveau / Mention",
+            "schoolYear": "Année scol.",
+            "school": "École",
+            "country": "Pays",
+            "diploma": "Diplôme",
+            "intendedMajor": "Filière souhaitée",
+            "invitations": "Invitations"
+        },
+        "popconfirm": {
+            "resetDraft": "Réinitialiser le brouillon ?",
+            "description": "Cela effacera les données enregistrées localement pour ce formulaire.",
+            "yes": "Oui",
+            "no": "Non"
+        },
+        "messages": {
+            "draftSaveError": "Impossible d'enregistrer le brouillon",
+            "draftLoaded": "Brouillon chargé",
+            "draftReset": "Brouillon réinitialisé",
+            "draftResetError": "Impossible de réinitialiser le brouillon",
+            "orgLoadError": "Échec de chargement des organisations",
+            "priceInvalid": "Montant d'abonnement invalide côté serveur.",
+            "filieresLoadError": "Impossible de charger les filières de cette organisation",
+            "stripeInitError": "Impossible d'initialiser Stripe",
+            "stripeKeyMissing": "Clé publique Stripe manquante",
+            "stripeInvalidParams": "Paramètres Stripe invalides",
+            "stripeSecretInvalid": "Client secret Stripe invalide/absent",
+            "paymentIntentError": "Impossible de créer le PaymentIntent",
+            "stripeSuccess": "Paiement Stripe confirmé !",
+            "paypalSuccess": "Paiement PayPal confirmé !",
+            "paymentError": "Échec du paiement: {{error}}",
+            "paymentRequired": "Veuillez compléter le paiement avant de soumettre",
+            "demandeCreated": "Demande créée (invitations & notifications envoyées)",
+            "creationError": "Échec de création",
+            "paypalError": "Erreur PayPal: {{error}}",
+            "required": "Requis"
+        }
+    },
+    "demandeurDemandePayment": {
+        "pageTitle": "Paiement de la demande",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Mes demandes",
+            "detail": "Détail",
+            "payment": "Paiement"
+        },
+        "summary": {
+            "title": "Résumé de la demande",
+            "code": "Code",
+            "date": "Date",
+            "status": "Statut dossier",
+            "targetOrg": "Organisation cible",
+            "assignedOrg": "Organisation de traduction",
+            "paymentStatus": "Statut paiement"
+        },
+        "alerts": {
+            "totalAmount": "Montant total à régler :",
+            "pricingApplied": "Tarification appliquée :",
+            "source": "source :",
+            "amountFixed": "Le montant est défini côté serveur et ne peut pas être modifié côté client.",
+            "alreadyPaid": "Cette demande est déjà payée ✅",
+            "backToDetail": "Retour au détail"
+        },
+        "tabs": {
+            "stripe": "Carte (Stripe)",
+            "paypal": "PayPal"
+        },
+        "stripe": {
+            "amountToPay": "Montant à régler (carte) :",
+            "amountFixed": "Le montant est fixé côté serveur (non modifiable).",
+            "payNow": "Payer maintenant",
+            "initError": "Impossible d'initialiser Stripe (client_secret manquant)",
+            "notConfigured": "Stripe non configuré (VITE_STRIPE_PUBLISHABLE_KEY manquant)",
+            "secretMissing": "Stripe initialisé, mais client_secret absent"
+        },
+        "paypal": {
+            "amountToPay": "Montant à régler (PayPal) :",
+            "amountFixed": "Le montant est fixé côté serveur (non modifiable).",
+            "loading": "Chargement du SDK PayPal…",
+            "sdkError": "Impossible de charger le SDK PayPal",
+            "initError": "Échec init PayPal",
+            "captureError": "Échec capture PayPal",
+            "error": "Erreur PayPal",
+            "success": "Paiement PayPal réussi",
+            "notConfigured": "PayPal non configuré (VITE_PAYPAL_CLIENT_ID manquant)"
+        },
+        "messages": {
+            "loadError": "Erreur chargement paiement",
+            "paymentRefused": "Paiement refusé",
+            "stripeError": "Échec paiement Stripe"
+        },
+        "paymentStatus": {
+            "PAID": "Payé",
+            "UNPAID": "Non payé",
+            "PENDING": "En attente"
+        },
+        "common": {
+            "na": "—"
+        }
+    },
+    "demandeurOrganisationDetail": {
+        "pageTitle": "Détails de l'organisation",
+        "breadcrumbs": {
+            "dashboard": "Dashboard"
+        },
+        "sections": {
+            "generalInfo": "Informations générales",
+            "name": "Nom",
+            "type": "Type",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "website": "Site Web",
+            "country": "Pays"
+        },
+        "types": {
+            "ENTREPRISE": "Entreprise",
+            "TRADUCTEUR": "Agence de Traduction",
+            "BANQUE": "Banque",
+            "COLLEGE": "Collège",
+            "LYCEE": "Lycée",
+            "UNIVERSITE": "Université"
+        },
+        "countries": {
+            "SN": "Sénégal",
+            "FR": "France",
+            "US": "États-Unis",
+            "CA": "Canada"
+        },
+        "messages": {
+            "notFound": "Organisation non trouvée.",
+            "loadError": "Erreur lors de la récupération de l'organisation"
+        },
+        "common": {
+            "na": "—"
+        }
+    },
+    "institutDocuments": {
+        "create": {
+            "pageTitle": "Nouveau document",
+            "breadcrumbs": {
+                "dashboard": "Dashboard",
+                "demandes": "Demandes",
+                "add": "Ajouter un document"
+            },
+            "title": "Ajouter un document à la demande",
+            "titleWithCode": "Ajouter un document (rattachement par code de demande)",
+            "description": "Renseigne le type, la mention, la date d'obtention et dépose le fichier. Si tu n'es pas sur la fiche d'une demande, saisis le code de la demande pour le rattachement.",
+            "back": "Retour"
+        },
+        "details": {
+            "title": "Document #{{id}}",
+            "labels": {
+                "demande": "Demande",
+                "ownerOrg": "Owner Org",
+                "traduit": "Traduit",
+                "chiffre": "Chiffré"
+            },
+            "yes": "Oui",
+            "no": "Non",
+            "buttons": {
+                "viewOriginal": "Voir original",
+                "viewTranslated": "Voir traduit",
+                "viewEncrypted": "Voir chiffré",
+                "back": "Retour"
+            },
+            "messages": {
+                "openError": "Impossible d'ouvrir le contenu"
+            }
+        },
+        "upload": {
+            "title": "Joindre un document",
+            "labels": {
+                "demandeId": "Demande ID",
+                "ownerOrg": "Organisation propriétaire",
+                "file": "Fichier",
+                "urlOriginal": "URL du fichier original",
+                "codeAdn": "Code ADN",
+                "estTraduit": "Déjà traduit"
+            },
+            "uploadText": "Glissez ou cliquez pour téléverser",
+            "uploadHint": "PDF / images",
+            "urlPlaceholder": "ou colle une URL si déjà hébergé",
+            "buttons": {
+                "save": "Enregistrer",
+                "cancel": "Annuler"
+            },
+            "messages": {
+                "uploadSuccess": "Fichier uploadé",
+                "uploadFailed": "Upload échoué",
+                "saveSuccess": "Document enregistré"
+            }
+        },
+        "verify": {
+            "title": "Vérifier l'intégrité d'un document",
+            "placeholder": "Document ID",
+            "button": "Vérifier",
+            "messages": {
+                "ok": "OK",
+                "ko": "KO"
+            }
+        }
+    },
+    "institutUsers": {
+        "createSupervisor": {
+            "title": "Créer un superviseur",
+            "subtitle": "Organisation cible :",
+            "labels": {
+                "email": "Email",
+                "password": "Mot de passe (optionnel) ",
+                "firstName": "Prénom",
+                "lastName": "Nom",
+                "permissions": "Permissions"
+            },
+            "buttons": {
+                "create": "Créer",
+                "reset": "Réinitialiser"
+            },
+            "messages": {
+                "success": "Superviseur créé",
+                "error": "Échec création superviseur"
+            }
+        },
+        "editPermissions": {
+            "title": "Permissions utilisateur",
+            "buttons": {
+                "save": "Enregistrer",
+                "cancel": "Annuler"
+            },
+            "messages": {
+                "loadError": "Échec chargement utilisateur",
+                "updateSuccess": "Permissions mises à jour",
+                "updateError": "Échec mise à jour permissions"
+            }
+        },
+        "orgUsersList": {
+            "title": "Utilisateurs de l'organisation",
+            "subtitle": "Organisation ID :",
+            "messages": {
+                "loadError": "Échec chargement utilisateurs"
+            },
+            "filters": {
+                "title": "Filtres",
+                "searchPlaceholder": "Recherche (email, username, phone…)",
+                "rolePlaceholder": "Rôle",
+                "sortBy": {
+                    "createdAt": "Créé le",
+                    "updatedAt": "MAJ le",
+                    "email": "Email",
+                    "username": "Username"
+                },
+                "sortOrder": {
+                    "asc": "ASC",
+                    "desc": "DESC"
+                },
+                "buttons": {
+                    "apply": "Appliquer",
+                    "reset": "Réinitialiser",
+                    "addUser": "Ajouter un utilisateur",
+                    "createSupervisor": "Créer un superviseur"
+                }
+            },
+            "list": {
+                "title": "Liste des utilisateurs",
+                "columns": {
+                    "email": "Email",
+                    "username": "Username",
+                    "role": "Rôle",
+                    "enabled": "Activé",
+                    "actions": "Actions"
+                },
+                "enabled": {
+                    "yes": "Oui",
+                    "no": "Non"
+                },
+                "buttons": {
+                    "permissions": "Permissions",
+                    "resetPassword": "Reset MDP"
+                }
+            },
+            "createModal": {
+                "title": "Ajouter un utilisateur",
+                "labels": {
+                    "email": "Email",
+                    "password": "Mot de passe (optionnel)",
+                    "role": "Rôle",
+                    "firstName": "Prénom",
+                    "lastName": "Nom"
+                },
+                "buttons": {
+                    "create": "Créer",
+                    "cancel": "Annuler"
+                },
+                "messages": {
+                    "success": "Utilisateur créé",
+                    "error": "Échec création",
+                    "passwordReset": "Mot de passe réinitialisé",
+                    "passwordResetError": "Échec réinitialisation MDP",
+                    "newPassword": "Nouveau MDP: {{password}}"
+                }
+            }
+        }
+    },
+    "institutDossier": {
+        "title": "Dossiers à traiter",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Demandes"
+        },
+        "columns": {
+            "code": "Code",
+            "date": "Date",
+            "demandeur": "Demandeur",
+            "assigned": "Assignée à",
+            "docs": "Docs",
+            "status": "Statut",
+            "actions": "Actions"
+        },
+        "buttons": {
+            "details": "Détails",
+            "addDocument": "Ajouter doc",
+            "refresh": "Actualiser"
+        },
+        "filters": {
+            "title": "Filtres",
+            "searchPlaceholder": "Rechercher…",
+            "statusPlaceholder": "Statut",
+            "dateRangePlaceholder": [
+                "Date début",
+                "Date fin"
+            ],
+            "sortBy": {
+                "dateDemande": "Date demande",
+                "createdAt": "Créé le",
+                "updatedAt": "MAJ le",
+                "code": "Code"
+            },
+            "sortOrder": {
+                "asc": "ASC",
+                "desc": "DESC"
+            },
+            "buttons": {
+                "apply": "Appliquer",
+                "reset": "Réinitialiser"
+            }
+        },
+        "list": {
+            "title": "Liste des demandes"
+        },
+        "messages": {
+            "loadError": "Échec chargement des demandes"
+        }
+    },
+    "institutDemandeurDetail": {
+        "title": "Détails du demandeur",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Liste des demandes"
+        },
+        "sections": {
+            "personalInfo": "Informations personnelles",
+            "fullName": "Nom complet",
+            "email": "Email",
+            "phone": "Téléphone",
+            "country": "Pays",
+            "address": "Adresse",
+            "gender": "Genre"
+        },
+        "messages": {
+            "notFound": "demandeur non trouvé.",
+            "loadError": "Erreur lors de la récupération de l'utilisateur"
+        },
+        "common": {
+            "na": "N/A"
+        }
+    },
+    "traducteurDemandeDetails": {
+        "title": "Demandes à traiter",
+        "common": {
+            "yes": "Oui",
+            "no": "Non"
+        },
+        "breadcrumbs": {
+            "dashboard": "Tableau de bord",
+            "demandes": "Demandes à traiter",
+            "detail": "Demandes"
+        },
+        "pageTitle": "Détails de la demande",
+        "buttons": {
+            "back": "Retour",
+            "documents": "Documents & Traductions"
+        },
+        "sections": {
+            "generalInfo": "Informations générales",
+            "documentsPreview": "Documents (aperçu)"
+        },
+        "fields": {
+            "code": "Code",
+            "dateDemande": "Date de demande",
+            "status": "Statut",
+            "demandeur": "Demandeur",
+            "targetOrg": "Institut cible",
+            "assignedOrg": "Organisation assignée",
+            "periodeYear": "Période / Année",
+            "serieNiveauMention": "Série / Niveau / Mention",
+            "secondarySchool": "Établissement secondaire",
+            "graduationDate": "Date obtention diplôme",
+            "dob": "Date de naissance",
+            "citizenshipPassport": "Nationalité / Passeport",
+            "englishFirstLanguage": "Anglais langue maternelle",
+            "englishTests": "Tests d'anglais",
+            "scoresGpaScale": "Scores / GPA / Échelle",
+            "examsTaken": "Examens passés",
+            "intendedMajor": "Filière visée",
+            "activitiesAwards": "Activités & Distinctions",
+            "parentInfo": "Parent / Tuteur (Niveau/Profession)",
+            "financialAid": "Aide financière / Sponsoring",
+            "visa": "Visa / Études prév. aux USA",
+            "personalStatement": "Personal Statement",
+            "optionalEssay": "Essai optionnel",
+            "applicationRound": "Tour d'application / Découverte",
+            "observation": "Observation",
+            "createdAt": "Créé / Mis à jour",
+            "documents": "Documents"
+        },
+        "documents": {
+            "translated": "Traduit",
+            "notTranslated": "Non traduit",
+            "view": "Voir",
+            "viewTranslated": "Voir (traduit)",
+            "translate": "Traduire",
+            "delete": "Supprimer",
+            "none": "Aucun document"
+        },
+        "modals": {
+            "uploadTitle": "Uploader la traduction — Doc {{id}}",
+            "uploadTitleGeneric": "Uploader une traduction",
+            "uploadText": "Glissez le PDF traduit ici ou cliquez pour sélectionner",
+            "uploadHint": "Taille max. 5 Mo — PDF uniquement",
+            "deleteTitle": "Supprimer la traduction ?",
+            "deleteDescription": "Cette action retirera le fichier traduit et les métadonnées associées.",
+            "deleteButton": "Supprimer",
+            "cancel": "Annuler",
+            "save": "Enregistrer",
+            "previewTitle": "Aperçu du document",
+            "openInNewTab": "Ouvrir dans un nouvel onglet",
+            "close": "Fermer",
+            "noContent": "Aucun contenu à afficher."
+        },
+        "messages": {
+            "noData": "Aucune donnée de demande.",
+            "loadError": "Échec chargement",
+            "statusUpdated": "Statut mis à jour",
+            "statusUpdateError": "Échec MAJ statut",
+            "uploadWarning": "Sélectionne un PDF traduit.",
+            "uploadSuccess": "Traduction uploadée (chiffrement en place)",
+            "uploadError": "Échec upload de la traduction",
+            "deleteSuccess": "Traduction supprimée",
+            "deleteError": "Échec suppression",
+            "noFileAvailable": "Aucun fichier disponible à afficher.",
+            "noFileToDownload": "Aucun fichier à télécharger.",
+            "previewTitleOriginal": "PDF original — {{id}}",
+            "previewTitleTranslated": "PDF traduit — {{id}}"
+        },
+        "tooltips": {
+            "uploadTranslation": "Uploader le PDF traduit",
+            "deleteTranslation": "Supprimer la traduction"
+        }
+    },
+    "traducteurDemandeDocuments": {
+        "title": "Documents de la demande",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "demandes": "Demandes",
+            "documents": "Documents"
+        },
+        "buttons": {
+            "back": "Retour",
+            "refresh": "Rafraîchir"
+        },
+        "sections": {
+            "demandeInfo": "Informations demande",
+            "documents": "Documents"
+        },
+        "fields": {
+            "code": "Code",
+            "status": "Statut de la demande",
+            "demandeur": "Demandeur",
+            "targetOrg": "Institut cible"
+        },
+        "columns": {
+            "ownerOrg": "Institut (source)",
+            "demande": "Demande",
+            "type": "Type",
+            "original": "Original",
+            "translated": "Traduit"
+        },
+        "actions": {
+            "view": "Voir",
+            "translate": "Traduire",
+            "delete": "Supprimer",
+            "available": "Disponible"
+        },
+        "filters": {
+            "searchPlaceholder": "Recherche…",
+            "translatedPlaceholder": "Traduit ?",
+            "yes": "Oui",
+            "no": "Non"
+        },
+        "modals": {
+            "uploadTitle": "Uploader la traduction — Doc {{id}}",
+            "uploadTitleGeneric": "Uploader une traduction",
+            "uploadText": "Glissez le PDF traduit ici ou cliquez pour sélectionner",
+            "uploadHint": "Taille max. 5 Mo — PDF uniquement",
+            "deleteTitle": "Supprimer la traduction ?",
+            "deleteDescription": "Cette action retirera le fichier traduit et les métadonnées associées.",
+            "deleteButton": "Supprimer",
+            "cancel": "Annuler",
+            "save": "Enregistrer"
+        },
+        "messages": {
+            "loadDemandeError": "Échec chargement de la demande",
+            "loadDocsError": "Erreur chargement des documents",
+            "uploadWarning": "Sélectionne un PDF traduit.",
+            "uploadSuccess": "Traduction uploadée (chiffrement en place)",
+            "uploadError": "Échec upload de la traduction",
+            "deleteSuccess": "Traduction supprimée",
+            "deleteError": "Échec suppression",
+            "noFileAvailable": "Aucun fichier disponible pour cet affichage.",
+            "noFileToDownload": "Aucun fichier à télécharger.",
+            "verifySuccess": "Intégrité vérifiée",
+            "verifyError": "Problème d'intégrité détecté",
+            "verifyFailed": "Échec vérification d'intégrité",
+            "translatedNote": "Le PDF traduit sera chiffré et rattaché à ce document."
+        },
+        "tooltips": {
+            "uploadTranslation": "Uploader le PDF traduit",
+            "deleteTranslation": "Supprimer la traduction"
+        },
+        "pagination": {
+            "showTotal": "{{total}} document(s)"
+        }
+    },
+    "departmentFiliereCreate": {
+        "title": "Filières du département",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "departments": "Départements",
+            "detail": "Détail",
+            "filieres": "Filières",
+            "create": "Créer"
+        },
+        "cardTitle": "Nouvelle filière",
+        "form": {
+            "name": "Nom",
+            "nameRequired": "Nom requis",
+            "namePlaceholder": "Ex. Informatique",
+            "code": "Code",
+            "codePlaceholder": "Ex. INFO",
+            "level": "Niveau",
+            "levelPlaceholder": "Sélectionner un niveau",
+            "levels": {
+                "Licence": "Licence",
+                "Master": "Master",
+                "Doctorat": "Doctorat"
+            },
+            "description": "Description",
+            "descriptionPlaceholder": "Description (optionnel)"
+        },
+        "actions": {
+            "cancel": "Annuler",
+            "create": "Créer"
+        },
+        "messages": {
+            "success": "Filière créée",
+            "errorDuplicate": "Une filière avec ce nom existe déjà dans ce département",
+            "error": "Échec de création de la filière"
+        }
+    },
+    "organizationDemandeCreate": {
+        "title": "Nouvelle Demande",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organisations",
+            "newDemande": "Nouvelle Demande"
+        },
+        "cardTitle": "Nouvelle Demande",
+        "form": {
+            "title": "Titre de la demande",
+            "titleRequired": "Le titre est obligatoire",
+            "titlePlaceholder": "Titre de la demande",
+            "type": "Type de demande",
+            "typeRequired": "Le type est obligatoire",
+            "typePlaceholder": "Sélectionner un type",
+            "types": {
+                "TRADUCTION": "Traduction",
+                "VERIFICATION": "Vérification",
+                "AUTRE": "Autre"
+            },
+            "description": "Description",
+            "descriptionRequired": "La description est obligatoire",
+            "descriptionPlaceholder": "Description de la demande"
+        },
+        "actions": {
+            "back": "Retour",
+            "create": "Créer la demande",
+            "creating": "Création en cours..."
+        },
+        "messages": {
+            "success": "Demande créée avec succès",
+            "error": "Erreur lors de la création de la demande"
+        }
+    },
+    "organizationFiliereCreate": {
+        "title": "Nouvelle Filière",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organisations",
+            "newFiliere": "Nouvelle Filière"
+        },
+        "cardTitle": "Nouvelle Filière",
+        "form": {
+            "name": "Nom de la filière",
+            "nameRequired": "Le nom est obligatoire",
+            "namePlaceholder": "Nom de la filière",
+            "description": "Description",
+            "descriptionPlaceholder": "Description"
+        },
+        "actions": {
+            "back": "Retour",
+            "create": "Créer la filière",
+            "creating": "Création en cours..."
+        },
+        "messages": {
+            "success": "Filière créée avec succès",
+            "error": "Erreur lors de la création de la filière"
+        }
+    },
+    "adminTransactionCreate": {
+        "title": "Nouvelle transaction",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "transactions": "Transactions",
+            "create": "Créer"
+        },
+        "form": {
+            "demandePartageId": "DemandePartage ID",
+            "demandePartageIdRequired": "Requis",
+            "demandePartageIdPlaceholder": "ID de la demande (demandePartageId)",
+            "userId": "Utilisateur (optionnel)",
+            "userIdPlaceholder": "userId (optionnel)",
+            "montant": "Montant (XOF)",
+            "montantRequired": "Requis",
+            "typePaiement": "Type paiement",
+            "typePaiementRequired": "Requis",
+            "paymentTypes": {
+                "STRIPE": "STRIPE",
+                "PAYPAL": "PAYPAL",
+                "CASH": "CASH",
+                "WIRE": "VIREMENT"
+            },
+            "typeTransaction": "Type transaction",
+            "typeTransactionPlaceholder": "EX: ACOMPTE / SOLDE / FRAIS_DOSSIER…",
+            "statut": "Statut",
+            "statusTypes": {
+                "PENDING": "PENDING",
+                "COMPLETED": "COMPLETED",
+                "FAILED": "FAILED"
+            },
+            "dateTransaction": "Date (optionnel)"
+        },
+        "actions": {
+            "cancel": "Annuler",
+            "create": "Créer"
+        },
+        "messages": {
+            "success": "Transaction créée",
+            "error": "Échec de création"
+        }
+    },
+    "errorPage": {
+        "title": "Page Not Found?",
+        "message": "Whoops, this is embarassing. <br /> Looks like the page you were looking for wasn't found.",
+        "backToHome": "Retourner à l'accueil",
+        "error404": "404",
+        "pageNotFound": "La page que vous cherchez n'existe pas."
+    },
+    "monOrganisation": {
+        "title": "Mon Organisation",
+        "loading": "Chargement...",
+        "error": "Erreur lors du chargement de l'organisation"
+    },
+    "appsCalendar": {
+        "title": "Calendrier",
+        "breadcrumbs": {
+            "home": "Accueil",
+            "calendar": "Calendrier"
+        },
+        "events": {
+            "allEvents": "Tous les événements",
+            "meeting": "Réunion",
+            "operations": "Opérations",
+            "lunch": "Déjeuner",
+            "conference": "Conférence",
+            "businessMeeting": "Réunion d'affaires"
+        },
+        "options": {
+            "removeAfterDrop": "Supprimer après déplacement",
+            "addEvent": "Ajouter un événement"
+        }
+    },
+    "appsChat": {
+        "title": "Chat",
+        "breadcrumbs": {
+            "home": "Accueil",
+            "chatbox": "Chat"
+        },
+        "menu": {
+            "profile": "Profil",
+            "profileSettings": "Paramètres du profil",
+            "delete": "Supprimer"
+        },
+        "status": {
+            "online": "En ligne"
+        },
+        "typing": "{{name}} est en train d'écrire",
+        "placeholders": {
+            "message": "Entrez un message..."
+        }
+    },
+    "appsEmail": {
+        "title": "Emails / Messages",
+        "breadcrumbs": {
+            "home": "Accueil",
+            "emails": "Emails"
+        },
+        "composeButton": "Nouveau message",
+        "composeTitle": "Composer",
+        "menu": {
+            "inbox": "Boîte de réception",
+            "starred": "Favoris",
+            "spam": "Spam",
+            "sent": "Envoyés",
+            "drafts": "Brouillons",
+            "trash": "Corbeille",
+            "notes": "Notes"
+        },
+        "placeholders": {
+            "to": "À",
+            "cc": "Cc",
+            "bcc": "Cci"
+        },
+        "buttons": {
+            "sendNow": "Envoyer"
+        },
+        "table": {
+            "name": "Nom",
+            "subject": "Objet",
+            "dateTime": "Date et heure"
+        },
+        "pagination": {
+            "showing": "Affichage de {{from}} - {{to}} sur {{total}}"
+        },
+        "empty": {
+            "spam": "Hourra, pas de spam ici !",
+            "drafts": "Vous n'avez aucun brouillon enregistré. Enregistrer un brouillon vous permet de garder un message que vous n'êtes pas encore prêt à envoyer.",
+            "trash": "Aucune conversation dans la corbeille.",
+            "notes": "Aucune note pour le moment."
+        }
+    },
+    "miscComingSoon": {
+        "title": "Nous arrivons bientôt...",
+        "subtitle": "Commencez à travailler avec Applyons, qui fournit tout ce dont vous avez besoin pour générer de la visibilité, du trafic et de l'engagement.",
+        "countdown": {
+            "days": "Jours",
+            "hours": "Heures",
+            "minutes": "Minutes",
+            "seconds": "Secondes"
+        },
+        "footer": "© {{year}} applyons par"
+    },
+    "miscMaintenance": {
+        "title": "Nous serons bientôt de retour...",
+        "subtitle": "Commencez à travailler avec Applyons, qui fournit tout ce dont vous avez besoin pour générer de la visibilité, du trafic et de l'engagement.",
+        "minutesLabel": "Minutes",
+        "placeholders": {
+            "email": "Entrez votre email..."
+        },
+        "buttons": {
+            "subscribeNow": "S'abonner"
+        }
+    },
+    "miscThankyou": {
+        "title": "Merci",
+        "subtitle": "Lancez votre campagne et bénéficiez de notre expertise dans la conception et la gestion de pages optimisées pour la conversion.",
+        "backToHome": "Retour à l'accueil"
+    },
+    "dashboardIndex": {
+        "greeting": "Bonjour, {{name}}",
+        "welcome": "Bienvenue !",
+        "filters": {
+            "yearly": "Annuel",
+            "monthly": "Mensuel",
+            "weekly": "Hebdomadaire",
+            "today": "Aujourd'hui"
+        },
+        "export": "Exporter"
+    }
+}
