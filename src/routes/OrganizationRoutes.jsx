@@ -2,7 +2,7 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import InstitutDashboard from "../pages/Institut/Dashboard/InstitutDashboard.jsx";
-import DemandeDocumentsPage from "../pages/Institut/demandes/DocumentsPage.jsx";
+import DemandeDocumentsPage from "../pages/Institut/demandes/documentsPage.jsx";
 import UserListInstitut from "../pages/Institut/Users/UserListInstitut.jsx";
 import UserCreateInstitut from "../pages/Institut/Users/UserCreateInstitut.jsx";
 import UserDetailInstitut from "../pages/Institut/Users/UserDetailInstitut.jsx";
