@@ -134,24 +134,24 @@ export default defineConfig({
         open: true,
         proxy: {
             '/api': {
-                target: 'http://localhost:5000',
+                target: 'https://back.applyons.com',
                 changeOrigin: true,
                 secure: false,
                 rewrite: (path) => path.replace(/^\/api/, ''),
             },
             '/profiles': {
-                target: 'http://localhost:5000',
+                target: 'https://back.applyons.com',
                 changeOrigin: true,
                 secure: false,
             },
 
             '/settings': {
-                target: 'http://localhost:5000',
+                target: 'https://back.applyons.com',
                 changeOrigin: true,
                 secure: false,
             },
             '/documents': {
-                target: 'http://localhost:5000',
+                target: 'https://back.applyons.com',
                 changeOrigin: true,
                 secure: false,
             },
