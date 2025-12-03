@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState, useEffect, useMemo } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SimpleBarReact from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 
@@ -12,6 +12,7 @@ import { RiSettings4Line } from "react-icons/ri";
 import { FaRegHandshake, FaRegImages } from "react-icons/fa";
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import { LiaSignOutAltSolid } from "react-icons/lia";
 
 /* -------------------- Helpers permissions / rôles -------------------- */
 const getUserPermKeys = (user) =>
@@ -30,6 +31,8 @@ const hasRole = (user, roles = []) => {
 };
 
 const canSee = (user, item) => hasRole(user, item.roles) && hasAnyPerm(user, item.anyPerms);
+
+
 
 /* -------------------- Menus de base (Admin/Traducteur/Demandeur) -------------------- */
 /** NOTE: on utilise des clés i18n (i18nKey) — l’affichage passe par t('sidebar.<clé>') */
@@ -149,7 +152,7 @@ const MENU_DEMANDEUR = [
 ];
 
 /* -------------------- Menu Institut/Superviseur (dynamique avec orgId) -------------------- */
-function buildStaffMenu(orgId) {
+function buildStaffMenu(orgId, handleLogOut) {
   return [
     { i18nKey: "dashboard", icon: <AiOutlineLineChart />, to: "/organisations/dashboard" },
 
@@ -194,6 +197,7 @@ function buildStaffMenu(orgId) {
     },
 
     { i18nKey: "profile", icon: <AiOutlineUser />, to: "/organisations/profile" },
+    { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut },
   ];
 }
 
@@ -233,33 +237,44 @@ function buildStaffMenuSuperviseur(orgId) {
 }
 
 /* Map rôle -> menu (Staff construit dynamiquement) */
-const resolveMenuForUser = (user) => {
+const resolveMenuForUser = (user, handleLogOut) => {
   const roles = Array.isArray(user?.roles) ? user.roles : user?.role ? [user.role] : [];
-  if (!roles.length) return MENU_DEMANDEUR;
-  if (roles.includes("SUPER_ADMIN")) return MENU_ADMIN;
-  if (roles.includes("ADMIN")) return MENU_ADMIN;
+  if (!roles.length) return [...MENU_DEMANDEUR, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
+  if (roles.includes("SUPER_ADMIN")) return [...MENU_ADMIN, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
+  if (roles.includes("ADMIN")) return [...MENU_ADMIN, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
   if ((roles.includes("INSTITUT") || roles.includes("SUPERVISEUR")) && user?.organization?.type !== "TRADUCTEUR") {
-    return buildStaffMenu(user?.organization?.id);
+    return buildStaffMenu(user?.organization?.id, handleLogOut);
   }
   // if (roles.includes("SUPERVISEUR") && user?.organization?.type !== "TRADUCTEUR") {
   //   return buildStaffMenuSuperviseur(user?.organization?.id);
   // }
-  if (roles.includes("TRADUCTEUR")) return MENU_TRADUCTEUR;
-  if (roles.includes("DEMANDEUR")) return MENU_DEMANDEUR;
-  return MENU_DEMANDEUR;
+  if (roles.includes("TRADUCTEUR")) return [...MENU_TRADUCTEUR, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
+  if (roles.includes("DEMANDEUR")) return [...MENU_DEMANDEUR, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
+  return [...MENU_DEMANDEUR, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
 };
 
 /* -------------------- Sidebar -------------------- */
 export default function Sidebar() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { t } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
   const current = location.pathname;
 
   const [openKey, setOpenKey] = useState("");
 
+  // Fonction de déconnexion
+  const handleLogOut = async () => {
+    try {
+      await logout();
+      navigate("/auth/login");
+    } catch {
+      navigate("/auth/login");
+    }
+  };
+
   // Menu de base selon le rôle de l'utilisateur
-  const baseMenu = useMemo(() => resolveMenuForUser(user), [user]);
+  const baseMenu = useMemo(() => resolveMenuForUser(user, handleLogOut), [user, handleLogOut]);
 
   // ouvre automatiquement le parent du chemin courant
   useEffect(() => {
@@ -297,7 +312,18 @@ export default function Sidebar() {
               const itemLabel = labelOf(item.i18nKey);
 
               if (!item.children?.length) {
-                const active = current === item.to ? "active" : "";
+                const active = item.to && current === item.to ? "active" : "";
+                // Gérer les items avec onClick (comme logout)
+                if (item.onClick) {
+                  return (
+                    <li key={item.i18nKey} className={active}>
+                      <a href="#" onClick={(e) => { e.preventDefault(); item.onClick(); }}>
+                        <div className="icon me-3">{item.icon}</div>
+                        {itemLabel}
+                      </a>
+                    </li>
+                  );
+                }
                 return (
                   <li key={item.i18nKey} className={active}>
                     <Link to={item.to}>

@@ -15,7 +15,24 @@
         "edit": "Modifica",
         "notSpecified": "Non specificato",
         "noData": "Nessun dato",
-        "reset": "Reimposta"
+        "reset": "Reimposta",
+        "selectLanguage": "Seleziona lingua",
+        "notifications": "Notifiche"
+    },
+    "notifications": {
+        "newMessage": "Nuovo messaggio",
+        "messageReceived": "Hai ricevuto un nuovo messaggio",
+        "requestApproved": "Richiesta approvata",
+        "requestApprovedDesc": "La tua richiesta è stata approvata",
+        "actionRequired": "Azione richiesta",
+        "actionRequiredDesc": "È richiesta un'azione da parte tua",
+        "markAllRead": "Segna tutto come letto",
+        "viewAll": "Vedi tutte le notifiche",
+        "noNotifications": "Nessuna notifica",
+        "justNow": "Proprio ora",
+        "minutesAgo": "min",
+        "hoursAgo": "h",
+        "daysAgo": "g"
     },
     "roles": {
         "ADMIN": "ADMIN",
@@ -259,6 +276,8 @@
             "country": "Paese",
             "gender": "Genere",
             "fullName": "Nome completo",
+            "dateOfBirth": "Data di nascita",
+            "placeOfBirth": "Luogo di nascita",
             "createdAt": "Creato il",
             "updatedAt": "Aggiornato il",
             "type": "Tipo",
@@ -270,6 +289,8 @@
             "phone": "Telefono",
             "adress": "Indirizzo",
             "country": "Paese",
+            "dateOfBirth": "Data di nascita",
+            "placeOfBirth": "Luogo di nascita",
             "currentPwd": "Password attuale",
             "newPwd": "Nuova password",
             "confirmPwd": "Conferma nuova password"

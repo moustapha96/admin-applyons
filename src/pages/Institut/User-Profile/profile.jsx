@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {
   Card, Avatar, Typography, Row, Col, Tag, Descriptions, Spin, Alert, Badge, Space,
-  Button, Upload, Divider, Statistic, Form, Input, Modal, Select
+  Button, Upload, Divider, Statistic, Form, Input, Modal, Select, DatePicker
 } from "antd";
 import {
   UserOutlined, MailOutlined, PhoneOutlined, CalendarOutlined, CrownOutlined,
@@ -18,12 +18,26 @@ import { IoTransgender } from "react-icons/io5";
 import { getPermissionColor, getPermissionLabel, getRoleLabel } from "../../../auth/permissions";
 import { useTranslation } from "react-i18next";
 import { buildImageUrl } from "../../../utils/imageUtils";
+import { useNavigate } from "react-router-dom";
+import { LogoutOutlined } from "@ant-design/icons";
+import countries from "../../../assets/countries.json";
+import dayjs from "dayjs";
 
 const { Title, Text } = Typography;
 
+// Helper pour convertir les dates string en dayjs
+const isDay = (d) => dayjs.isDayjs(d);
+const reviveDate = (v) => {
+  if (!v) return null;
+  if (isDay(v)) return v;
+  const d = dayjs(v);
+  return d.isValid() ? d : null;
+};
+
 export default function InstitutUserProfile() {
-  const { user, refreshProfile } = useAuth();
+  const { user, refreshProfile, logout } = useAuth();
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -56,6 +70,8 @@ export default function InstitutUserProfile() {
         adress: response.user.adress || "",
         country: response.user.country || "",
         gender: response.user.gender || "MALE",
+        dateOfBirth: reviveDate(response.user.dateOfBirth),
+        placeOfBirth: response.user.placeOfBirth || "",
       });
       // preset form for org when editable
       if (response.user?.organization) {
@@ -88,6 +104,8 @@ export default function InstitutUserProfile() {
     formData.append("adress", userData.adress);
     formData.append("country", userData.country);
     formData.append("gender", userData.gender);
+    formData.append("dateOfBirth", userData.dateOfBirth || "");
+    formData.append("placeOfBirth", userData.placeOfBirth || "");
 
     try {
       await authService.updateProfile(formData);
@@ -105,7 +123,19 @@ export default function InstitutUserProfile() {
   const handleUpdateProfile = async (values) => {
     setLoading(true);
     try {
-      await authService.updateProfile(values);
+      // Convertir la date dayjs en ISO string
+      const payload = { ...values };
+      if (values.dateOfBirth) {
+        if (isDay(values.dateOfBirth)) {
+          payload.dateOfBirth = values.dateOfBirth.toISOString();
+        } else if (values.dateOfBirth instanceof Date) {
+          payload.dateOfBirth = values.dateOfBirth.toISOString();
+        } else {
+          const d = dayjs(values.dateOfBirth);
+          payload.dateOfBirth = d.isValid() ? d.toISOString() : null;
+        }
+      }
+      await authService.updateProfile(payload);
       toast.success(t("profilePage.toasts.profileUpdated"));
       await fetchUserData();
       setIsEditing(false);
@@ -121,6 +151,15 @@ export default function InstitutUserProfile() {
   const handlePasswordCancel = () => {
     setIsPasswordModalVisible(false);
     passwordForm.resetFields();
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/auth/login");
+    } catch {
+      navigate("/auth/login");
+    }
   };
 
   const handlePasswordUpdate = async (values) => {
@@ -280,6 +319,9 @@ export default function InstitutUserProfile() {
                         <Button type="default" ghost icon={<LockOutlined />} size="large" style={{ borderColor: "white", color: "white" }} onClick={showPasswordModal}>
                           {t("profilePage.header.password")}
                         </Button>
+                        <Button type="default" ghost danger icon={<LogoutOutlined />} size="large" style={{ borderColor: "white", color: "white" }} onClick={handleLogout}>
+                          {t("common.logout")}
+                        </Button>
                       </Space>
                     </Col>
                   </Row>
@@ -355,8 +397,34 @@ export default function InstitutUserProfile() {
                       <Form.Item name="adress" label={t("profilePage.fields.adress")}>
                         <Input placeholder={t("profilePage.placeholders.adress")} />
                       </Form.Item>
+                      <Form.Item name="placeOfBirth" label={t("profilePage.fields.placeOfBirth")}>
+                        <Input placeholder={t("profilePage.placeholders.placeOfBirth")} />
+                      </Form.Item>
+                      <Form.Item 
+                        name="dateOfBirth" 
+                        label={t("profilePage.fields.dateOfBirth")}
+                        getValueProps={(v) => ({ value: reviveDate(v) })}
+                      >
+                        <DatePicker 
+                          style={{ width: "100%" }}
+                          placeholder={t("profilePage.placeholders.dateOfBirth")}
+                          format="DD/MM/YYYY"
+                          disabledDate={(current) => current && current > dayjs().endOf('day')}
+                        />
+                      </Form.Item>
                       <Form.Item name="country" label={t("profilePage.fields.country")}>
-                        <Input placeholder={t("profilePage.placeholders.country")} />
+                        <Select
+                          showSearch
+                          allowClear
+                          placeholder={t("profilePage.placeholders.country")}
+                          filterOption={(input, option) =>
+                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                          }
+                          options={(countries || []).map((c) => ({ 
+                            value: c.name, 
+                            label: c.name 
+                          }))}
+                        />
                       </Form.Item>
                       <Form.Item name="gender" label={t("profilePage.fields.gender")}>
                         <Input disabled value={getGenderText(userData.gender)} />
@@ -383,6 +451,12 @@ export default function InstitutUserProfile() {
                       </Descriptions.Item>
                       <Descriptions.Item label={<Space><HomeOutlined /> <span>{t("profilePage.fields.adress")}</span></Space>}>
                         <Text>{userData.adress || t("profilePage.gender.UNSPECIFIED")}</Text>
+                      </Descriptions.Item>
+                      <Descriptions.Item label={<Space><GlobalOutlined /> <span>{t("profilePage.fields.placeOfBirth")}</span></Space>}>
+                        <Text>{userData.placeOfBirth || t("profilePage.gender.UNSPECIFIED")}</Text>
+                      </Descriptions.Item>
+                      <Descriptions.Item label={<Space><CalendarOutlined /> <span>{t("profilePage.fields.dateOfBirth")}</span></Space>}>
+                        <Text>{formatDate(userData.dateOfBirth)}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={<Space><GlobalOutlined /> <span>{t("profilePage.fields.country")}</span></Space>}>
                         <Text>{userData.country || t("profilePage.gender.UNSPECIFIED")}</Text>
@@ -455,7 +529,18 @@ export default function InstitutUserProfile() {
                         </Form.Item>
 
                         <Form.Item name="country" label={t("profilePage.orgEditor.country")}>
-                          <Input placeholder={t("profilePage.orgEditor.country")} />
+                          <Select
+                            showSearch
+                            allowClear
+                            placeholder={t("profilePage.orgEditor.country")}
+                            filterOption={(input, option) =>
+                              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={(countries || []).map((c) => ({ 
+                              value: c.name, 
+                              label: c.name 
+                            }))}
+                          />
                         </Form.Item>
 
                         <Form.Item>

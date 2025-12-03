@@ -190,7 +190,6 @@ export default function InstitutDemandeDetails() {
           <Tag>{t("institutDemandeDetails.tags.dash")}</Tag>
         ),
     },
-    { title: t("institutDemandeDetails.docs.isTranslated"), dataIndex: "estTraduit", width: 110, render: (v) => fmtBool(v) },
     { title: t("institutDemandeDetails.docs.addedAt"), dataIndex: "createdAt", width: 170, render: (v) => fmtDate(v, true) },
   ];
 

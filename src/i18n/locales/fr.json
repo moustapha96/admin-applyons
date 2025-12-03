@@ -15,7 +15,24 @@
         "edit": "Modifier",
         "notSpecified": "Non spécifié",
         "noData": "Aucune donnée",
-        "reset": "Réinitialiser"
+        "reset": "Réinitialiser",
+        "selectLanguage": "Sélectionner la langue",
+        "notifications": "Notifications"
+    },
+    "notifications": {
+        "newMessage": "Nouveau message",
+        "messageReceived": "Vous avez reçu un nouveau message",
+        "requestApproved": "Demande approuvée",
+        "requestApprovedDesc": "Votre demande a été approuvée",
+        "actionRequired": "Action requise",
+        "actionRequiredDesc": "Une action de votre part est requise",
+        "markAllRead": "Tout marquer comme lu",
+        "viewAll": "Voir toutes les notifications",
+        "noNotifications": "Aucune notification",
+        "justNow": "À l'instant",
+        "minutesAgo": "min",
+        "hoursAgo": "h",
+        "daysAgo": "j"
     },
     "roles": {
         "ADMIN": "ADMIN",
@@ -259,6 +276,8 @@
             "country": "Pays",
             "gender": "Genre",
             "fullName": "Nom Complet",
+            "dateOfBirth": "Date de naissance",
+            "placeOfBirth": "Lieu de naissance",
             "createdAt": "Créé le",
             "updatedAt": "Mis à jour le",
             "type": "Type",
@@ -270,6 +289,8 @@
             "phone": "Téléphone",
             "adress": "Adresse",
             "country": "Pays",
+            "dateOfBirth": "Date de naissance",
+            "placeOfBirth": "Lieu de naissance",
             "currentPwd": "Mot de passe actuel",
             "newPwd": "Nouveau mot de passe",
             "confirmPwd": "Confirmer le nouveau mot de passe"

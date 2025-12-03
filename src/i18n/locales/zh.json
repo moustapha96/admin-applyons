@@ -15,7 +15,24 @@
         "edit": "编辑",
         "notSpecified": "未指定",
         "noData": "无数据",
-        "reset": "重置"
+        "reset": "重置",
+        "selectLanguage": "选择语言",
+        "notifications": "通知"
+    },
+    "notifications": {
+        "newMessage": "新消息",
+        "messageReceived": "您收到了一条新消息",
+        "requestApproved": "请求已批准",
+        "requestApprovedDesc": "您的请求已被批准",
+        "actionRequired": "需要操作",
+        "actionRequiredDesc": "需要您执行操作",
+        "markAllRead": "全部标记为已读",
+        "viewAll": "查看所有通知",
+        "noNotifications": "无通知",
+        "justNow": "刚刚",
+        "minutesAgo": "分钟前",
+        "hoursAgo": "小时前",
+        "daysAgo": "天前"
     },
     "roles": {
         "ADMIN": "管理员",
@@ -259,6 +276,8 @@
             "country": "国家",
             "gender": "性别",
             "fullName": "全名",
+            "dateOfBirth": "出生日期",
+            "placeOfBirth": "出生地",
             "createdAt": "创建于",
             "updatedAt": "更新于",
             "type": "类型",
@@ -270,6 +289,8 @@
             "phone": "电话",
             "adress": "地址",
             "country": "国家",
+            "dateOfBirth": "出生日期",
+            "placeOfBirth": "出生地",
             "currentPwd": "当前密码",
             "newPwd": "新密码",
             "confirmPwd": "确认新密码"

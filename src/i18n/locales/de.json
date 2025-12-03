@@ -15,7 +15,24 @@
         "edit": "Bearbeiten",
         "notSpecified": "Nicht angegeben",
         "noData": "Keine Daten",
-        "reset": "Zurücksetzen"
+        "reset": "Zurücksetzen",
+        "selectLanguage": "Sprache auswählen",
+        "notifications": "Benachrichtigungen"
+    },
+    "notifications": {
+        "newMessage": "Neue Nachricht",
+        "messageReceived": "Sie haben eine neue Nachricht erhalten",
+        "requestApproved": "Anfrage genehmigt",
+        "requestApprovedDesc": "Ihre Anfrage wurde genehmigt",
+        "actionRequired": "Aktion erforderlich",
+        "actionRequiredDesc": "Eine Aktion von Ihnen ist erforderlich",
+        "markAllRead": "Alle als gelesen markieren",
+        "viewAll": "Alle Benachrichtigungen anzeigen",
+        "noNotifications": "Keine Benachrichtigungen",
+        "justNow": "Gerade jetzt",
+        "minutesAgo": "Min",
+        "hoursAgo": "Std",
+        "daysAgo": "T"
     },
     "roles": {
         "ADMIN": "ADMIN",
@@ -259,6 +276,8 @@
             "country": "Land",
             "gender": "Geschlecht",
             "fullName": "Vollständiger Name",
+            "dateOfBirth": "Geburtsdatum",
+            "placeOfBirth": "Geburtsort",
             "createdAt": "Erstellt am",
             "updatedAt": "Aktualisiert am",
             "type": "Typ",
@@ -270,6 +289,8 @@
             "phone": "Telefon",
             "adress": "Adresse",
             "country": "Land",
+            "dateOfBirth": "Geburtsdatum",
+            "placeOfBirth": "Geburtsort",
             "currentPwd": "Aktuelles Passwort",
             "newPwd": "Neues Passwort",
             "confirmPwd": "Neues Passwort bestätigen"

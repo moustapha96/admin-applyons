@@ -18,7 +18,8 @@ import {
     Statistic,
     Form,
     Input,
-    Modal
+    Modal,
+    Select
 } from "antd"
 import {
     UserOutlined,
@@ -45,6 +46,9 @@ import { IoTransgender } from "react-icons/io5"
 import { useTranslation } from "react-i18next"
 import { getPermissionColor, getPermissionLabel, getRoleLabel } from "../../../auth/permissions"
 import { buildImageUrl } from "../../../utils/imageUtils"
+import { useNavigate } from "react-router-dom"
+import { LogoutOutlined } from "@ant-design/icons"
+import countries from "../../../assets/countries.json"
 
 const { Title, Text } = Typography
 
@@ -58,7 +62,8 @@ export default function TraducteurUserProfile() {
     const [passwordForm] = Form.useForm()
     const [form] = Form.useForm()
     const [passwordLoading, setPasswordLoading] = useState(false)
-    const { refreshProfile } = useAuth()
+    const { refreshProfile, logout } = useAuth()
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetchUserData()
@@ -144,6 +149,15 @@ export default function TraducteurUserProfile() {
     const handlePasswordCancel = () => {
         setIsPasswordModalVisible(false)
         passwordForm.resetFields()
+    }
+
+    const handleLogout = async () => {
+        try {
+            await logout()
+            navigate("/auth/login")
+        } catch {
+            navigate("/auth/login")
+        }
     }
 
     const handlePasswordUpdate = async (values) => {
@@ -310,6 +324,17 @@ export default function TraducteurUserProfile() {
                                                 >
                                                     Mot de passe
                                                 </Button>
+                                                <Button
+                                                    type="default"
+                                                    ghost
+                                                    danger
+                                                    icon={<LogoutOutlined />}
+                                                    size="large"
+                                                    style={{ borderColor: "white", color: "white" }}
+                                                    onClick={handleLogout}
+                                                >
+                                                    {t("common.logout")}
+                                                </Button>
                                             </Space>
                                         </Col>
                                     </Row>
@@ -390,7 +415,18 @@ export default function TraducteurUserProfile() {
                                                 <Input placeholder="Adresse" />
                                             </Form.Item>
                                             <Form.Item name="country" label="Pays">
-                                                <Input placeholder="Pays" />
+                                                <Select
+                                                    showSearch
+                                                    allowClear
+                                                    placeholder="Pays"
+                                                    filterOption={(input, option) =>
+                                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                                    }
+                                                    options={(countries || []).map((c) => ({ 
+                                                        value: c.name, 
+                                                        label: c.name 
+                                                    }))}
+                                                />
                                             </Form.Item>
                                             <Form.Item name="gender" label="Genre">
                                                 <Input disabled value={getGenderText(userData.gender)} />
