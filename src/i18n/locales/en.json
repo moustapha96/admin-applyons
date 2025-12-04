@@ -13,11 +13,13 @@
         "save": "Save",
         "cancel": "Cancel",
         "edit": "Edit",
+        "no": "No",
         "notSpecified": "Not specified",
         "noData": "No data",
         "reset": "Reset",
         "selectLanguage": "Select language",
-        "notifications": "Notifications"
+        "notifications": "Notifications",
+        "required": "This field is required"
     },
     "notifications": {
         "newMessage": "New message",
@@ -118,8 +120,8 @@
         "organizationsList": "Organizations",
         "departments": "Departments",
         "filieres": "Programs",
-        "demandes": "Requests",
-        "allDemandes": "All requests",
+        "demandes": "Application",
+        "allDemandes": "Applications",
         "documents": "Documents",
         "myDocuments": "My documents",
         "payments": "Payments",
@@ -136,10 +138,12 @@
         "auditLogs": "Audit logs",
         "profile": "Profile",
         "monInstitut": "My institute",
-        "ajouteDocument": "Add a document",
+        "ajouteDocument": "Share a document",
+        "newApplication": "New application",
         "mesAbonnements": "My subscriptions",
         "souscrire": "Subscribe",
-        "dossiersTraiter": "Files to process"
+        "dossiersTraiter": "Files to process",
+        "logout": "Log out"
     },
     "profile": {
         "title": "User profile",
@@ -495,7 +499,7 @@
         },
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests",
+            "demandes": "Applications",
             "details": "Details",
             "docs": "Documents"
         },
@@ -1117,7 +1121,7 @@
         "pageTitle": "Our Requests",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests"
+            "demandes": "Applications"
         },
         "section": {
             "titleMyInstitute": "Requests – My institute",
@@ -1192,7 +1196,7 @@
     "institutDemandeDetails": {
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests",
+            "demandes": "Applications",
             "details": "Details"
         },
         "title": "Request details",
@@ -1288,18 +1292,18 @@
     "demandeDocAdd": {
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests",
+            "demandes": "Applications",
             "add": "Add document"
         },
-        "title": "Add a document to the request",
+        "title": "Add a document to the application",
         "buttons": {
             "back": "Back",
             "cancel": "Cancel",
             "save": "Save document"
         },
         "form": {
-            "code": "Request Code",
-            "codeRequired": "Request code is required",
+            "code": "Application Code",
+            "codeRequired": "Application code is required",
             "codePh": "Enter the code",
             "type": "Document type",
             "typeRequired": "Please select a document type",
@@ -1721,7 +1725,7 @@
         "title": "Create request",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "demandes": "Requests",
+            "demandes": "Applications",
             "create": "Create"
         },
         "steps": {
@@ -2420,7 +2424,7 @@
         "title": "My requests",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "demandes": "Requests"
+            "demandes": "Applications"
         },
         "columns": {
             "code": "Code",
@@ -2461,7 +2465,7 @@
         "title": "Requests List",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "demandes": "Requests"
+            "demandes": "Applications"
         },
         "columns": {
             "code": "Code",
@@ -2512,7 +2516,7 @@
         "title": "Request — Detail",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "demandes": "Requests",
+            "demandes": "Applications",
             "detail": "Detail"
         },
         "actions": {
@@ -2780,7 +2784,7 @@
         "title": "My requests",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "demandes": "Requests"
+            "demandes": "Applications"
         },
         "columns": {
             "code": "Code",
@@ -3024,6 +3028,9 @@
     "demandeurDemandeCreate": {
         "pageTitle": "International Student Application",
         "steps": {
+            "identity": "Identity",
+            "target": "Target",
+            "program": "Program",
             "targetIdentity": "Target & Identity",
             "academic": "Academic",
             "essays": "Essays & Miscellaneous",
@@ -3050,6 +3057,209 @@
             "paymentRequired": "Please complete payment before submitting",
             "demandeCreated": "Request created (invitations & notifications sent)",
             "creationError": "Creation failed"
+        },
+        "sections": {
+            "personalInfo": "1. Personal information",
+            "intendedProgram": "4. Intended study program",
+            "englishProficiency": "2. English proficiency",
+            "academicBackground": "3. Academic background",
+            "activities": "5. Activities and achievements",
+            "familyInfo": "6. Family information",
+            "financialInfo": "7. Financial information",
+            "visaInfo": "8. Visa information",
+            "essays": "9. Essays",
+            "submission": "10. Submission",
+            "inviteOrgs": "Invite organizations (formal invitation)",
+            "notifyOrgs": "Notify organizations (information only)",
+            "summary": "Summary",
+            "choosePayment": "Choose your payment method",
+            "target": "Target"
+        },
+        "summary": {
+            "target": "Target",
+            "targetOrg": "Target organization",
+            "translationOrg": "Translation org.",
+            "period": "Period",
+            "year": "Year",
+            "observation": "Observation",
+            "identity": "Identity",
+            "fullName": "Full name",
+            "email": "Email",
+            "birthDate": "Birth date",
+            "citizenship": "Citizenship",
+            "passport": "Passport",
+            "academic": "Academic",
+            "serieLevelMention": "Series / Level / Honors",
+            "schoolYear": "School year",
+            "school": "School",
+            "country": "Country",
+            "diploma": "Diploma",
+            "intendedMajor": "Intended major",
+            "invitations": "Invitations"
+        },
+        "buttons": {
+            "add": "Add",
+            "remove": "Remove",
+            "previous": "Previous",
+            "next": "Next",
+            "saveDraft": "Save draft",
+            "reset": "Reset",
+            "completePayment": "Complete payment",
+            "createApplication": "Create application and send",
+            "autoSaving": "Auto-saving..."
+        },
+        "fields": {
+            "targetOrg": "Target organization",
+            "translationOrg": "Translation organization",
+            "dateOfBirth": "Date of birth",
+            "countryOfCitizenship": "Country of citizenship",
+            "passportNumber": "Passport number",
+            "preferredStartTerm": "Preferred start term",
+            "year": "Year",
+            "isEnglishFirstLanguage": "Is English your first language?",
+            "yes": "Yes",
+            "englishProficiencyTest": "English proficiency test taken",
+            "testScores": "Test score(s)",
+            "secondarySchoolName": "Secondary school name",
+            "countryOfSchool": "School country",
+            "graduationDate": "Graduation date",
+            "gradingScale": "Grading scale",
+            "gpa": "GPA or average",
+            "examsTaken": "Exams taken",
+            "intendedMajor": "Intended major",
+            "extracurricularActivities": "Extracurricular activities",
+            "honorsOrAwards": "Honors or awards",
+            "parentGuardianName": "Parent/guardian name",
+            "occupation": "Occupation",
+            "educationLevel": "Education level",
+            "willApplyForFinancialAid": "Will you apply for financial aid?",
+            "hasExternalSponsorship": "Do you have external sponsorship?",
+            "visaType": "Visa type (if applicable)",
+            "hasPreviouslyStudiedInUS": "Have you previously studied in the US?",
+            "personalStatement": "Personal statement",
+            "optionalEssay": "Optional essay / Additional information",
+            "applicationRound": "Application round",
+            "howDidYouHearAboutUs": "How did you hear about this university?"
+        },
+        "placeholders": {
+            "chooseOrganization": "Choose an organization",
+            "optional": "",
+            "selectCountry": "Select a country",
+            "selectTerm": "Select a term",
+            "selectYear": "Select a year",
+            "selectTests": "Select tests",
+            "selectExams": "Select exams",
+            "selectMajor": "Select a major",
+            "chooseOrgFirst": "Choose an organization first",
+            "selectLevel": "Select a level",
+            "selectVisaType": "Select a visa type",
+            "selectRound": "Select a round",
+            "selectResult": "Select a result",
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone (opt.)",
+            "address": "Address (opt.)",
+            "role": "Role (opt.)"
+        },
+        "options": {
+            "periods": {
+                "FALL": "Fall",
+                "WINTER": "Winter",
+                "SPRING": "Spring",
+                "SUMMER": "Summer"
+            },
+            "englishTests": {
+                "TOEFL": "TOEFL",
+                "IELTS": "IELTS",
+                "Duolingo English Test": "Duolingo English Test",
+                "PTE Academic": "PTE Academic",
+                "None": "None"
+            },
+            "exams": {
+                "A-Levels": "A-Levels",
+                "IB Diploma": "IB Diploma",
+                "WAEC/NECO": "WAEC/NECO",
+                "French Baccalauréat": "French Baccalauréat",
+                "National Exams": "National Exams"
+            },
+            "educationLevels": {
+                "No formal education": "No formal education",
+                "Secondary": "Secondary",
+                "Bachelor's": "Bachelor's",
+                "Graduate": "Graduate"
+            },
+            "visaTypes": {
+                "None": "None",
+                "F-1 Student Visa": "F-1 Student Visa",
+                "J-1 Exchange": "J-1 Exchange",
+                "Other": "Other"
+            },
+            "applicationRounds": {
+                "Regular Decision": "Regular Decision",
+                "Early Action": "Early Action",
+                "Early Decision": "Early Decision"
+            },
+            "howDidYouHear": {
+                "FACEBOOK": "Facebook",
+                "TWITTER": "Twitter",
+                "INSTAGRAM": "Instagram",
+                "LINKEDIN": "LinkedIn",
+                "AUTRE": "Other"
+            }
+        },
+        "invitations": {
+            "noOrgsInvited": "No organizations invited",
+            "nameRequired": "Name required (2+ characters)",
+            "emailInvalid": "Invalid email",
+            "alreadyInList": "Already in list"
+        },
+        "payment": {
+            "processingFee": "Processing Fee",
+            "oneTimePayment": "One-time payment for your application",
+            "stripe": "Stripe",
+            "secureCreditCard": "Secure credit card",
+            "recommended": "Recommended",
+            "paypal": "PayPal",
+            "paypalAccount": "PayPal account",
+            "available": "Available",
+            "paymentConfirmed": "Payment confirmed",
+            "canSubmitNow": "You can now submit your application",
+            "modalTitleStripe": "Secure Payment - Stripe",
+            "modalTitlePaypal": "Secure Payment - PayPal",
+            "processingFeeLabel": "Application Processing Fee",
+            "securePaymentBy": "Secure payment by",
+            "initializing": "Initializing payment…",
+            "resetStripe": "Reset Stripe",
+            "processing": "Processing payment...",
+            "pleaseWait": "Please wait"
+        },
+        "popconfirm": {
+            "resetDraft": "Reset draft?",
+            "description": "This will clear locally saved data for this form.",
+            "yes": "Yes",
+            "no": "No"
+        },
+        "messages": {
+            "draftSaveError": "Unable to save draft",
+            "draftLoaded": "Draft loaded",
+            "draftReset": "Draft reset",
+            "draftResetError": "Unable to reset draft",
+            "orgLoadError": "Failed to load organizations",
+            "priceInvalid": "Invalid subscription amount on server.",
+            "filieresLoadError": "Unable to load filieres for this organization",
+            "stripeInitError": "Unable to initialize Stripe",
+            "stripeKeyMissing": "Stripe public key missing",
+            "stripeInvalidParams": "Invalid Stripe parameters",
+            "stripeSecretInvalid": "Invalid/absent Stripe client secret",
+            "paymentIntentError": "Unable to create PaymentIntent",
+            "stripeSuccess": "Stripe payment confirmed!",
+            "paypalSuccess": "PayPal payment confirmed!",
+            "paymentError": "Payment failed: {{error}}",
+            "paymentRequired": "Please complete payment before submitting",
+            "demandeCreated": "Request created (invitations & notifications sent)",
+            "creationError": "Creation failed",
+            "paypalError": "PayPal error: {{error}}",
+            "required": "Required"
         }
     },
     "demandeurDemandePayment": {
@@ -3156,18 +3366,18 @@
             "pageTitle": "New Document",
             "breadcrumbs": {
                 "dashboard": "Dashboard",
-                "demandes": "Requests",
+                "demandes": "Applications",
                 "add": "Add Document"
             },
-            "title": "Add document to request",
-            "titleWithCode": "Add document (attach by request code)",
-            "description": "Fill in the type, mention, date obtained and upload the file. If you are not on a request page, enter the request code for attachment.",
+            "title": "Add document to application",
+            "titleWithCode": "Add document (attach by application code)",
+            "description": "Fill in the type, mention, date obtained and upload the file. If you are not on an application page, enter the application code for attachment.",
             "back": "Back"
         },
         "details": {
             "title": "Document #{{id}}",
             "labels": {
-                "demande": "Request",
+                "demande": "Application",
                 "ownerOrg": "Owner Org",
                 "traduit": "Translated",
                 "chiffre": "Encrypted"
@@ -3318,7 +3528,7 @@
         "title": "Files to Process",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests"
+            "demandes": "Applications"
         },
         "columns": {
             "code": "Code",
@@ -3463,7 +3673,7 @@
         "title": "Request Documents",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests",
+            "demandes": "Applications",
             "documents": "Documents"
         },
         "buttons": {

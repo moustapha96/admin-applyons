@@ -84,10 +84,28 @@ export default function Signup() {
     const d = new Date(yyyyMmDd);
     const today = new Date();
     if (Number.isNaN(d.getTime())) return false;
-    // entre 1900-01-01 et aujourd’hui
+    // entre 1900-01-01 et aujourd'hui
     const min = new Date("1900-01-01");
     return d >= min && d <= today;
   };
+
+  // Validation en temps réel pour vérifier si tous les champs requis sont remplis
+  const isFormValid = useMemo(() => {
+    // Champs utilisateur requis
+    if (!formData.firstName || !formData.lastName || !formData.gender) return false;
+    if (!formData.birthPlace || !formData.birthDate || !isValidBirthDate(formData.birthDate)) return false;
+    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return false;
+    if (!formData.password || formData.password.length < 6) return false;
+    if (formData.password !== formData.confirmPassword) return false;
+
+    // Champs organisation si nécessaire
+    if (roleNeedsOrganization(formData.role)) {
+      if (!formData.orgName || !formData.orgType) return false;
+      if (!formData.orgEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.orgEmail)) return false;
+    }
+
+    return true;
+  }, [formData, roleNeedsOrganization]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -260,6 +278,24 @@ export default function Signup() {
                   </h6>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Rôle en premier */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium mb-1">{t('auth.signup.accountType')}</label>
+                      <select
+                        id="role"
+                        name="role"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]"
+                        value={formData.role}
+                        onChange={handleChange}
+                      >
+                        {roleOptions.map((opt) => (
+                          <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
                     <div>
                       <label className="block text-sm font-medium mb-1">{t('auth.signup.firstName')}</label>
                       <input
@@ -400,23 +436,6 @@ export default function Signup() {
                         value={formData.adress}
                         onChange={handleChange}
                       />
-                    </div>
-
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium mb-1">{t('auth.signup.accountType')}</label>
-                      <select
-                        id="role"
-                        name="role"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]"
-                        value={formData.role}
-                        onChange={handleChange}
-                      >
-                        {roleOptions.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
                     </div>
 
                     <div>
@@ -600,14 +619,14 @@ export default function Signup() {
 
                 <div className="flex justify-between ">
                   
-                  <div  className="flex justify-between" >
-                    <button
+                  <div  className="flex gap-3" >
+                    {/* <button
                       type="button"
                       className="py-2 px-4 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
                       onClick={() => navigate("/auth/login")}
                     >
                       {t('auth.signup.cancel')}
-                    </button>
+                    </button> */}
 
                     <button
                       type="button"
@@ -621,9 +640,14 @@ export default function Signup() {
 
                   <button
                     type="submit"
-                    disabled={isLoading}
-                    className={`py-2 px-4 bg-[var(--applyons-blue)] text-white rounded-md hover:bg-[var(--applyons-blue-dark)] ${isLoading ? "opacity-70 cursor-not-allowed" : ""
-                      }`}
+                    disabled={isLoading || !isFormValid}
+                    className={`py-2 px-4 rounded-md transition-all duration-300 ${
+                      isLoading
+                        ? "opacity-70 cursor-not-allowed bg-[var(--applyons-blue)] text-white"
+                        : isFormValid
+                        ? "bg-[var(--applyons-blue)] text-white hover:bg-green-600 shadow-lg shadow-green-400/50 border-2 border-green-400 font-semibold"
+                        : "bg-gray-400 text-white cursor-not-allowed opacity-60"
+                    }`}
                   >
                     {isLoading ? (
                       <>

@@ -13,11 +13,13 @@
         "save": "Speichern",
         "cancel": "Abbrechen",
         "edit": "Bearbeiten",
+        "no": "Nein",
         "notSpecified": "Nicht angegeben",
         "noData": "Keine Daten",
         "reset": "Zurücksetzen",
         "selectLanguage": "Sprache auswählen",
-        "notifications": "Benachrichtigungen"
+        "notifications": "Benachrichtigungen",
+        "required": "Dieses Feld ist erforderlich"
     },
     "notifications": {
         "newMessage": "Neue Nachricht",
@@ -118,8 +120,8 @@
         "organizationsList": "Organisationen",
         "departments": "Abteilungen",
         "filieres": "Programme",
-        "demandes": "Anfragen",
-        "allDemandes": "Alle Anfragen",
+        "demandes": "Bewerbung",
+        "allDemandes": "Bewerbungen",
         "documents": "Dokumente",
         "myDocuments": "Meine Dokumente",
         "payments": "Zahlungen",
@@ -136,10 +138,12 @@
         "auditLogs": "Audit-Logs",
         "profile": "Profil",
         "monInstitut": "Mein Institut",
-        "ajouteDocument": "Dokument hinzufügen",
+        "ajouteDocument": "Dokument teilen",
+        "newApplication": "Neue Bewerbung",
         "mesAbonnements": "Meine Abonnements",
         "souscrire": "Abonnieren",
-        "dossiersTraiter": "Zu bearbeitende Dossiers"
+        "dossiersTraiter": "Zu bearbeitende Dossiers",
+        "logout": "Abmelden"
     },
     "profile": {
         "title": "Benutzerprofil",
@@ -1291,15 +1295,15 @@
             "demandes": "Anfragen",
             "add": "Dokument hinzufügen"
         },
-        "title": "Dokument zur Anfrage hinzufügen",
+        "title": "Dokument zur Bewerbung hinzufügen",
         "buttons": {
             "back": "Zurück",
             "cancel": "Abbrechen",
             "save": "Dokument speichern"
         },
         "form": {
-            "code": "Anfrage-Code",
-            "codeRequired": "Der Anfrage-Code ist erforderlich",
+            "code": "Bewerbungs-Code",
+            "codeRequired": "Der Bewerbungs-Code ist erforderlich",
             "codePh": "Code eingeben",
             "type": "Dokumenttyp",
             "typeRequired": "Bitte einen Dokumenttyp auswählen",
@@ -2789,8 +2793,11 @@
         }
     },
     "demandeurDemandeCreate": {
-        "pageTitle": "Internationale Studentenanwendung",
+        "pageTitle": "Internationale Studentenbewerbung",
         "steps": {
+            "identity": "Identität",
+            "target": "Ziel",
+            "program": "Programm",
             "targetIdentity": "Ziel & Identität",
             "academic": "Akademisch",
             "essays": "Aufsätze & Verschiedenes",
@@ -2817,6 +2824,209 @@
             "paymentRequired": "Bitte Zahlung abschließen, bevor Sie absenden",
             "demandeCreated": "Anfrage erstellt (Einladungen & Benachrichtigungen gesendet)",
             "creationError": "Erstellung fehlgeschlagen"
+        },
+        "sections": {
+            "personalInfo": "1. Persönliche Angaben",
+            "intendedProgram": "4. Gewünschtes Studienprogramm",
+            "englishProficiency": "2. Englischkenntnisse",
+            "academicBackground": "3. Akademischer Werdegang",
+            "activities": "5. Aktivitäten und Auszeichnungen",
+            "familyInfo": "6. Familieninformationen",
+            "financialInfo": "7. Finanzielle Informationen",
+            "visaInfo": "8. Visuminformationen",
+            "essays": "9. Aufsätze",
+            "submission": "10. Einreichung",
+            "inviteOrgs": "Organisationen einladen (formelle Einladung)",
+            "notifyOrgs": "Organisationen benachrichtigen (nur Information)",
+            "summary": "Zusammenfassung",
+            "choosePayment": "Wählen Sie Ihre Zahlungsmethode",
+            "target": "Ziel"
+        },
+        "summary": {
+            "target": "Ziel",
+            "targetOrg": "Zielorganisation",
+            "translationOrg": "Übersetzungsorg.",
+            "period": "Zeitraum",
+            "year": "Jahr",
+            "observation": "Bemerkung",
+            "identity": "Identität",
+            "fullName": "Vollständiger Name",
+            "email": "E-Mail",
+            "birthDate": "Geburtsdatum",
+            "citizenship": "Staatsangehörigkeit",
+            "passport": "Reisepass",
+            "academic": "Akademisch",
+            "serieLevelMention": "Serie / Niveau / Auszeichnung",
+            "schoolYear": "Schuljahr",
+            "school": "Schule",
+            "country": "Land",
+            "diploma": "Diplom",
+            "intendedMajor": "Gewünschter Studiengang",
+            "invitations": "Einladungen"
+        },
+        "buttons": {
+            "add": "Hinzufügen",
+            "remove": "Entfernen",
+            "previous": "Zurück",
+            "next": "Weiter",
+            "saveDraft": "Entwurf speichern",
+            "reset": "Zurücksetzen",
+            "completePayment": "Zahlung abschließen",
+            "createApplication": "Bewerbung erstellen und senden",
+            "autoSaving": "Automatisches Speichern..."
+        },
+        "fields": {
+            "targetOrg": "Zielorganisation",
+            "translationOrg": "Übersetzungsorganisation",
+            "dateOfBirth": "Geburtsdatum",
+            "countryOfCitizenship": "Staatsangehörigkeit",
+            "passportNumber": "Reisepassnummer",
+            "preferredStartTerm": "Bevorzugtes Startsemester",
+            "year": "Jahr",
+            "isEnglishFirstLanguage": "Ist Englisch Ihre Muttersprache?",
+            "yes": "Ja",
+            "englishProficiencyTest": "Englischkenntnistest abgelegt",
+            "testScores": "Testergebnis(se)",
+            "secondarySchoolName": "Name der Sekundarschule",
+            "countryOfSchool": "Schulland",
+            "graduationDate": "Abschlussdatum",
+            "gradingScale": "Notenskala",
+            "gpa": "GPA oder Durchschnitt",
+            "examsTaken": "Abgelegte Prüfungen",
+            "intendedMajor": "Gewünschter Studiengang",
+            "extracurricularActivities": "Außerschulische Aktivitäten",
+            "honorsOrAwards": "Auszeichnungen oder Preise",
+            "parentGuardianName": "Name des Elternteils/Erziehungsberechtigten",
+            "occupation": "Beruf",
+            "educationLevel": "Bildungsstand",
+            "willApplyForFinancialAid": "Werden Sie finanzielle Unterstützung beantragen?",
+            "hasExternalSponsorship": "Haben Sie eine externe Finanzierung?",
+            "visaType": "Visumtyp (falls zutreffend)",
+            "hasPreviouslyStudiedInUS": "Haben Sie bereits in den USA studiert?",
+            "personalStatement": "Persönliche Erklärung",
+            "optionalEssay": "Optionaler Aufsatz / Zusätzliche Informationen",
+            "applicationRound": "Bewerbungsrunde",
+            "howDidYouHearAboutUs": "Wie haben Sie von dieser Universität erfahren?"
+        },
+        "placeholders": {
+            "chooseOrganization": "Wählen Sie eine Organisation",
+            "optional": "",
+            "selectCountry": "Wählen Sie ein Land",
+            "selectTerm": "Wählen Sie ein Semester",
+            "selectYear": "Wählen Sie ein Jahr",
+            "selectTests": "Wählen Sie Tests",
+            "selectExams": "Wählen Sie Prüfungen",
+            "selectMajor": "Wählen Sie einen Studiengang",
+            "chooseOrgFirst": "Wählen Sie zuerst eine Organisation",
+            "selectLevel": "Wählen Sie ein Niveau",
+            "selectVisaType": "Wählen Sie einen Visumtyp",
+            "selectRound": "Wählen Sie eine Runde",
+            "selectResult": "Wählen Sie ein Ergebnis",
+            "name": "Name",
+            "email": "E-Mail",
+            "phone": "Telefon (opt.)",
+            "address": "Adresse (opt.)",
+            "role": "Rolle (opt.)"
+        },
+        "options": {
+            "periods": {
+                "FALL": "Herbst",
+                "WINTER": "Winter",
+                "SPRING": "Frühling",
+                "SUMMER": "Sommer"
+            },
+            "englishTests": {
+                "TOEFL": "TOEFL",
+                "IELTS": "IELTS",
+                "Duolingo English Test": "Duolingo English Test",
+                "PTE Academic": "PTE Academic",
+                "None": "Keine"
+            },
+            "exams": {
+                "A-Levels": "A-Levels",
+                "IB Diploma": "IB Diploma",
+                "WAEC/NECO": "WAEC/NECO",
+                "French Baccalauréat": "Französisches Baccalauréat",
+                "National Exams": "Nationale Prüfungen"
+            },
+            "educationLevels": {
+                "No formal education": "Keine formale Bildung",
+                "Secondary": "Sekundarstufe",
+                "Bachelor's": "Bachelor",
+                "Graduate": "Absolvent"
+            },
+            "visaTypes": {
+                "None": "Keine",
+                "F-1 Student Visa": "F-1 Studentenvisum",
+                "J-1 Exchange": "J-1 Austausch",
+                "Other": "Andere"
+            },
+            "applicationRounds": {
+                "Regular Decision": "Reguläre Entscheidung",
+                "Early Action": "Frühe Aktion",
+                "Early Decision": "Frühe Entscheidung"
+            },
+            "howDidYouHear": {
+                "FACEBOOK": "Facebook",
+                "TWITTER": "Twitter",
+                "INSTAGRAM": "Instagram",
+                "LINKEDIN": "LinkedIn",
+                "AUTRE": "Andere"
+            }
+        },
+        "invitations": {
+            "noOrgsInvited": "Keine Organisationen eingeladen",
+            "nameRequired": "Name erforderlich (2+ Zeichen)",
+            "emailInvalid": "Ungültige E-Mail",
+            "alreadyInList": "Bereits in der Liste"
+        },
+        "payment": {
+            "processingFee": "Bearbeitungsgebühr",
+            "oneTimePayment": "Einmalige Zahlung für Ihre Bewerbung",
+            "stripe": "Stripe",
+            "secureCreditCard": "Sichere Kreditkarte",
+            "recommended": "Empfohlen",
+            "paypal": "PayPal",
+            "paypalAccount": "PayPal-Konto",
+            "available": "Verfügbar",
+            "paymentConfirmed": "Zahlung bestätigt",
+            "canSubmitNow": "Sie können jetzt Ihre Bewerbung einreichen",
+            "modalTitleStripe": "Sichere Zahlung - Stripe",
+            "modalTitlePaypal": "Sichere Zahlung - PayPal",
+            "processingFeeLabel": "Bearbeitungsgebühr für Bewerbung",
+            "securePaymentBy": "Sichere Zahlung über",
+            "initializing": "Zahlung wird initialisiert…",
+            "resetStripe": "Stripe zurücksetzen",
+            "processing": "Zahlung wird verarbeitet...",
+            "pleaseWait": "Bitte warten"
+        },
+        "popconfirm": {
+            "resetDraft": "Entwurf zurücksetzen?",
+            "description": "Dies löscht lokal gespeicherte Daten für dieses Formular.",
+            "yes": "Ja",
+            "no": "Nein"
+        },
+        "messages": {
+            "draftSaveError": "Entwurf kann nicht gespeichert werden",
+            "draftLoaded": "Entwurf geladen",
+            "draftReset": "Entwurf zurückgesetzt",
+            "draftResetError": "Entwurf kann nicht zurückgesetzt werden",
+            "orgLoadError": "Fehler beim Laden der Organisationen",
+            "priceInvalid": "Ungültiger Abonnementbetrag auf dem Server.",
+            "filieresLoadError": "Filieres für diese Organisation können nicht geladen werden",
+            "stripeInitError": "Stripe kann nicht initialisiert werden",
+            "stripeKeyMissing": "Stripe öffentlicher Schlüssel fehlt",
+            "stripeInvalidParams": "Ungültige Stripe-Parameter",
+            "stripeSecretInvalid": "Ungültiges/fehlendes Stripe-Client-Geheimnis",
+            "paymentIntentError": "PaymentIntent kann nicht erstellt werden",
+            "stripeSuccess": "Stripe-Zahlung bestätigt!",
+            "paypalSuccess": "PayPal-Zahlung bestätigt!",
+            "paymentError": "Zahlung fehlgeschlagen: {{error}}",
+            "paymentRequired": "Bitte schließen Sie die Zahlung ab, bevor Sie absenden",
+            "demandeCreated": "Anfrage erstellt (Einladungen und Benachrichtigungen gesendet)",
+            "creationError": "Erstellung fehlgeschlagen",
+            "paypalError": "PayPal-Fehler: {{error}}",
+            "required": "Erforderlich"
         }
     },
     "demandeurDemandePayment": {
@@ -2923,18 +3133,18 @@
             "pageTitle": "New Document",
             "breadcrumbs": {
                 "dashboard": "Dashboard",
-                "demandes": "Requests",
+                "demandes": "Bewerbungen",
                 "add": "Add Document"
             },
-            "title": "Add document to request",
-            "titleWithCode": "Add document (attach by request code)",
-            "description": "Fill in the type, mention, date obtained and upload the file. If you are not on a request page, enter the request code for attachment.",
+            "title": "Dokument zur Bewerbung hinzufügen",
+            "titleWithCode": "Dokument hinzufügen (anhängen mit Bewerbungscode)",
+            "description": "Füllen Sie den Typ, die Erwähnung, das Datum aus und laden Sie die Datei hoch. Wenn Sie sich nicht auf einer Bewerbungsseite befinden, geben Sie den Bewerbungscode zum Anhängen ein.",
             "back": "Back"
         },
         "details": {
             "title": "Document #{{id}}",
             "labels": {
-                "demande": "Request",
+                "demande": "Bewerbung",
                 "ownerOrg": "Owner Org",
                 "traduit": "Translated",
                 "chiffre": "Encrypted"
@@ -3085,7 +3295,7 @@
         "title": "Files to Process",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests"
+            "demandes": "Bewerbungen"
         },
         "columns": {
             "code": "Code",
@@ -3230,7 +3440,7 @@
         "title": "Request Documents",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests",
+            "demandes": "Bewerbungen",
             "documents": "Documents"
         },
         "buttons": {

@@ -145,7 +145,7 @@ const MENU_DEMANDEUR = [
     anyPerms: ["demandes.read", "demandes.manage"],
     children: [
       { i18nKey: "allDemandes", to: "/demandeur/mes-demandes", anyPerms: ["demandes.read"] },
-      { i18nKey: "userNew", to: "/demandeur/mes-demandes/create", anyPerms: ["demandes.manage"] },
+      { i18nKey: "newApplication", to: "/demandeur/mes-demandes/create", anyPerms: ["demandes.manage"] },
     ],
   },
   { i18nKey: "profile", icon: <AiOutlineUser />, to: "/profile" },

@@ -13,11 +13,13 @@
         "save": "Guardar",
         "cancel": "Cancelar",
         "edit": "Editar",
+        "no": "No",
         "notSpecified": "No especificado",
         "noData": "Sin datos",
         "reset": "Restablecer",
         "selectLanguage": "Seleccionar idioma",
-        "notifications": "Notificaciones"
+        "notifications": "Notificaciones",
+        "required": "Este campo es obligatorio"
     },
     "notifications": {
         "newMessage": "Nuevo mensaje",
@@ -118,8 +120,8 @@
         "organizationsList": "Organizaciones",
         "departments": "Departamentos",
         "filieres": "Programas",
-        "demandes": "Solicitudes",
-        "allDemandes": "Todas las solicitudes",
+        "demandes": "Aplicación",
+        "allDemandes": "Aplicaciones",
         "documents": "Documentos",
         "myDocuments": "Mis documentos",
         "payments": "Pagos",
@@ -136,10 +138,12 @@
         "auditLogs": "Registros de auditoría",
         "profile": "Perfil",
         "monInstitut": "Mi instituto",
-        "ajouteDocument": "Agregar documento",
+        "ajouteDocument": "Compartir un documento",
+        "newApplication": "Nueva solicitud",
         "mesAbonnements": "Mis suscripciones",
         "souscrire": "Suscribirse",
-        "dossiersTraiter": "Archivos para procesar"
+        "dossiersTraiter": "Archivos para procesar",
+        "logout": "Cerrar sesión"
     },
     "profile": {
         "title": "Perfil de usuario",
@@ -1291,15 +1295,15 @@
             "demandes": "Solicitudes",
             "add": "Agregar documento"
         },
-        "title": "Agregar un documento a la solicitud",
+        "title": "Agregar un documento a la aplicación",
         "buttons": {
             "back": "Volver",
             "cancel": "Cancelar",
             "save": "Guardar documento"
         },
         "form": {
-            "code": "Código de solicitud",
-            "codeRequired": "El código de la solicitud es obligatorio",
+            "code": "Código de aplicación",
+            "codeRequired": "El código de la aplicación es obligatorio",
             "codePh": "Introduzca el código",
             "type": "Tipo de documento",
             "typeRequired": "Seleccione el tipo de documento",
@@ -2944,6 +2948,9 @@
     "demandeurDemandeCreate": {
         "pageTitle": "Solicitud de Estudiante Internacional",
         "steps": {
+            "identity": "Identidad",
+            "target": "Objetivo",
+            "program": "Programa",
             "targetIdentity": "Objetivo e Identidad",
             "academic": "Académico",
             "essays": "Ensayos y Varios",
@@ -2970,6 +2977,209 @@
             "paymentRequired": "Complete el pago antes de enviar",
             "demandeCreated": "Solicitud creada (invitaciones y notificaciones enviadas)",
             "creationError": "Error al crear"
+        },
+        "sections": {
+            "personalInfo": "1. Información personal",
+            "intendedProgram": "4. Programa de estudios deseado",
+            "englishProficiency": "2. Dominio del inglés",
+            "academicBackground": "3. Trayectoria académica",
+            "activities": "5. Actividades y logros",
+            "familyInfo": "6. Información familiar",
+            "financialInfo": "7. Información financiera",
+            "visaInfo": "8. Información de visado",
+            "essays": "9. Ensayos",
+            "submission": "10. Envío",
+            "inviteOrgs": "Invitar organizaciones (invitación formal)",
+            "notifyOrgs": "Notificar organizaciones (solo información)",
+            "summary": "Resumen",
+            "choosePayment": "Elija su método de pago",
+            "target": "Objetivo"
+        },
+        "summary": {
+            "target": "Objetivo",
+            "targetOrg": "Organización objetivo",
+            "translationOrg": "Org. de traducción",
+            "period": "Período",
+            "year": "Año",
+            "observation": "Observación",
+            "identity": "Identidad",
+            "fullName": "Nombre completo",
+            "email": "Correo electrónico",
+            "birthDate": "Fecha de nacimiento",
+            "citizenship": "Nacionalidad",
+            "passport": "Pasaporte",
+            "academic": "Académico",
+            "serieLevelMention": "Serie / Nivel / Mención",
+            "schoolYear": "Año escolar",
+            "school": "Escuela",
+            "country": "País",
+            "diploma": "Diploma",
+            "intendedMajor": "Programa deseado",
+            "invitations": "Invitaciones"
+        },
+        "buttons": {
+            "add": "Añadir",
+            "remove": "Eliminar",
+            "previous": "Anterior",
+            "next": "Siguiente",
+            "saveDraft": "Guardar borrador",
+            "reset": "Restablecer",
+            "completePayment": "Completar pago",
+            "createApplication": "Crear solicitud y enviar",
+            "autoSaving": "Guardando automáticamente..."
+        },
+        "fields": {
+            "targetOrg": "Organización objetivo",
+            "translationOrg": "Organización de traducción",
+            "dateOfBirth": "Fecha de nacimiento",
+            "countryOfCitizenship": "País de ciudadanía",
+            "passportNumber": "Número de pasaporte",
+            "preferredStartTerm": "Trimestre de inicio preferido",
+            "year": "Año",
+            "isEnglishFirstLanguage": "¿Es el inglés su idioma materno?",
+            "yes": "Sí",
+            "englishProficiencyTest": "Prueba de dominio del inglés realizada",
+            "testScores": "Puntuación(es) de la prueba",
+            "secondarySchoolName": "Nombre de la escuela secundaria",
+            "countryOfSchool": "País de la escuela",
+            "graduationDate": "Fecha de graduación",
+            "gradingScale": "Escala de calificaciones",
+            "gpa": "GPA o promedio",
+            "examsTaken": "Exámenes realizados",
+            "intendedMajor": "Carrera deseada",
+            "extracurricularActivities": "Actividades extracurriculares",
+            "honorsOrAwards": "Honores o premios",
+            "parentGuardianName": "Nombre del padre/tutor",
+            "occupation": "Ocupación",
+            "educationLevel": "Nivel educativo",
+            "willApplyForFinancialAid": "¿Solicitará ayuda financiera?",
+            "hasExternalSponsorship": "¿Tiene patrocinio externo?",
+            "visaType": "Tipo de visa (si aplica)",
+            "hasPreviouslyStudiedInUS": "¿Ha estudiado previamente en EE.UU.?",
+            "personalStatement": "Declaración personal",
+            "optionalEssay": "Ensayo opcional / Información adicional",
+            "applicationRound": "Ronda de solicitud",
+            "howDidYouHearAboutUs": "¿Cómo se enteró de esta universidad?"
+        },
+        "placeholders": {
+            "chooseOrganization": "Elegir una organización",
+            "optional": "",
+            "selectCountry": "Seleccionar un país",
+            "selectTerm": "Seleccionar un trimestre",
+            "selectYear": "Seleccionar un año",
+            "selectTests": "Seleccionar pruebas",
+            "selectExams": "Seleccionar exámenes",
+            "selectMajor": "Seleccionar una carrera",
+            "chooseOrgFirst": "Elegir primero una organización",
+            "selectLevel": "Seleccionar un nivel",
+            "selectVisaType": "Seleccionar un tipo de visa",
+            "selectRound": "Seleccionar una ronda",
+            "selectResult": "Seleccionar un resultado",
+            "name": "Nombre",
+            "email": "Correo electrónico",
+            "phone": "Teléfono (opc.)",
+            "address": "Dirección (opc.)",
+            "role": "Rol (opc.)"
+        },
+        "options": {
+            "periods": {
+                "FALL": "Otoño",
+                "WINTER": "Invierno",
+                "SPRING": "Primavera",
+                "SUMMER": "Verano"
+            },
+            "englishTests": {
+                "TOEFL": "TOEFL",
+                "IELTS": "IELTS",
+                "Duolingo English Test": "Duolingo English Test",
+                "PTE Academic": "PTE Academic",
+                "None": "Ninguno"
+            },
+            "exams": {
+                "A-Levels": "A-Levels",
+                "IB Diploma": "IB Diploma",
+                "WAEC/NECO": "WAEC/NECO",
+                "French Baccalauréat": "Baccalauréat francés",
+                "National Exams": "Exámenes nacionales"
+            },
+            "educationLevels": {
+                "No formal education": "Sin educación formal",
+                "Secondary": "Secundaria",
+                "Bachelor's": "Licenciatura",
+                "Graduate": "Graduado"
+            },
+            "visaTypes": {
+                "None": "Ninguno",
+                "F-1 Student Visa": "Visa de estudiante F-1",
+                "J-1 Exchange": "Intercambio J-1",
+                "Other": "Otro"
+            },
+            "applicationRounds": {
+                "Regular Decision": "Decisión regular",
+                "Early Action": "Acción temprana",
+                "Early Decision": "Decisión temprana"
+            },
+            "howDidYouHear": {
+                "FACEBOOK": "Facebook",
+                "TWITTER": "Twitter",
+                "INSTAGRAM": "Instagram",
+                "LINKEDIN": "LinkedIn",
+                "AUTRE": "Otro"
+            }
+        },
+        "invitations": {
+            "noOrgsInvited": "Ninguna organización invitada",
+            "nameRequired": "Nombre requerido (2+ caracteres)",
+            "emailInvalid": "Correo electrónico inválido",
+            "alreadyInList": "Ya está en la lista"
+        },
+        "payment": {
+            "processingFee": "Tarifa de procesamiento",
+            "oneTimePayment": "Pago único para su solicitud",
+            "stripe": "Stripe",
+            "secureCreditCard": "Tarjeta de crédito segura",
+            "recommended": "Recomendado",
+            "paypal": "PayPal",
+            "paypalAccount": "Cuenta PayPal",
+            "available": "Disponible",
+            "paymentConfirmed": "Pago confirmado",
+            "canSubmitNow": "Ahora puede enviar su solicitud",
+            "modalTitleStripe": "Pago Seguro - Stripe",
+            "modalTitlePaypal": "Pago Seguro - PayPal",
+            "processingFeeLabel": "Tarifa de Procesamiento de Solicitud",
+            "securePaymentBy": "Pago seguro por",
+            "initializing": "Inicializando pago…",
+            "resetStripe": "Restablecer Stripe",
+            "processing": "Procesando pago...",
+            "pleaseWait": "Por favor espere"
+        },
+        "popconfirm": {
+            "resetDraft": "¿Restablecer borrador?",
+            "description": "Esto borrará los datos guardados localmente para este formulario.",
+            "yes": "Sí",
+            "no": "No"
+        },
+        "messages": {
+            "draftSaveError": "No se puede guardar el borrador",
+            "draftLoaded": "Borrador cargado",
+            "draftReset": "Borrador restablecido",
+            "draftResetError": "No se puede restablecer el borrador",
+            "orgLoadError": "Error al cargar organizaciones",
+            "priceInvalid": "Importe de suscripción inválido en el servidor.",
+            "filieresLoadError": "No se pueden cargar las filières de esta organización",
+            "stripeInitError": "No se puede inicializar Stripe",
+            "stripeKeyMissing": "Clave pública de Stripe faltante",
+            "stripeInvalidParams": "Parámetros de Stripe inválidos",
+            "stripeSecretInvalid": "Secreto de cliente de Stripe inválido/ausente",
+            "paymentIntentError": "No se puede crear PaymentIntent",
+            "stripeSuccess": "¡Pago de Stripe confirmado!",
+            "paypalSuccess": "¡Pago de PayPal confirmado!",
+            "paymentError": "Error en el pago: {{error}}",
+            "paymentRequired": "Complete el pago antes de enviar",
+            "demandeCreated": "Solicitud creada (invitaciones y notificaciones enviadas)",
+            "creationError": "Error al crear",
+            "paypalError": "Error de PayPal: {{error}}",
+            "required": "Requerido"
         }
     },
     "demandeurDemandePayment": {
@@ -3076,18 +3286,18 @@
             "pageTitle": "New Document",
             "breadcrumbs": {
                 "dashboard": "Dashboard",
-                "demandes": "Requests",
+                "demandes": "Aplicaciones",
                 "add": "Add Document"
             },
-            "title": "Add document to request",
-            "titleWithCode": "Add document (attach by request code)",
-            "description": "Fill in the type, mention, date obtained and upload the file. If you are not on a request page, enter the request code for attachment.",
+            "title": "Agregar documento a la aplicación",
+            "titleWithCode": "Agregar documento (adjuntar por código de aplicación)",
+            "description": "Complete el tipo, mención, fecha obtenida y cargue el archivo. Si no está en una página de aplicación, ingrese el código de aplicación para adjuntar.",
             "back": "Back"
         },
         "details": {
             "title": "Document #{{id}}",
             "labels": {
-                "demande": "Request",
+                "demande": "Aplicación",
                 "ownerOrg": "Owner Org",
                 "traduit": "Translated",
                 "chiffre": "Encrypted"
@@ -3238,7 +3448,7 @@
         "title": "Files to Process",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests"
+            "demandes": "Aplicaciones"
         },
         "columns": {
             "code": "Code",
@@ -3383,7 +3593,7 @@
         "title": "Request Documents",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests",
+            "demandes": "Aplicaciones",
             "documents": "Documents"
         },
         "buttons": {

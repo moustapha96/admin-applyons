@@ -38,7 +38,9 @@ export async function fetchNotifications(params = {}) {
 export async function markNotificationAsRead(id) {
   if (!id) return;
   try {
-    await axiosInstance.put(`/notifications/${id}/read`);
+    // ⚠️ Route plus standard REST : PUT /notifications/:id  (ou PATCH)
+    // On envoie simplement { read: true } au backend.
+    await axiosInstance.put(`/notifications/${id}`, { read: true });
   } catch (e) {
     // On ne bloque pas l'UI si l'appel échoue, mais on log pour debug.
     // eslint-disable-next-line no-console
@@ -51,6 +53,7 @@ export async function markNotificationAsRead(id) {
  */
 export async function markAllNotificationsAsRead() {
   try {
+    // Route plus générique pour tout marquer comme lu.
     await axiosInstance.put("/notifications/read-all");
   } catch (e) {
     // eslint-disable-next-line no-console

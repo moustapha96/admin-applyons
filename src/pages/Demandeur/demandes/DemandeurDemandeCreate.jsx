@@ -785,7 +785,7 @@
 //                         allowClear
 //                         showSearch
 //                         size="large"
-//                         placeholder={t("demandeurDemandeCreate.placeholders.optional")}
+//                         placeholder={t("demandeurDemandeCreate.placeholders.selectCountry")}
 //                         options={tradOrgs.map((o) => ({ value: o.id, label: `${o.name} — TRADUCTEUR` }))}
 //                         style={{ width: "100%", padding: 8, boxSizing: "border-box" }}
 //                       />
@@ -1441,6 +1441,14 @@ const toISO = (d) => {
 const nullIfEmpty = (v) => (v === "" || v === undefined ? null : v);
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || "").trim());
 
+// Helper pour ajouter l'astérisque rouge aux champs obligatoires
+const RequiredLabel = ({ children }) => (
+  <span>
+    {children}
+    <span style={{ color: "#ff4d4f", marginLeft: 4 }}>*</span>
+  </span>
+);
+
 export default function DemandeurDemandeCreate() {
   /** State */
   const { t } = useTranslation();
@@ -1469,7 +1477,7 @@ export default function DemandeurDemandeCreate() {
 
   // Invitations / notifications
   const [invites, setInvites] = useState([]);
-  const [invite, setInvite] = useState({ name: "", email: "", phone: "", address: "", roleKey: "" });
+  const [invite, setInvite] = useState({ name: "", email: "" });
   const [selectedNotifyOrgIds, setSelectedNotifyOrgIds] = useState([]);
 
   // Draft
@@ -1534,13 +1542,26 @@ export default function DemandeurDemandeCreate() {
     }
   };
 
-  /** Auto-save draft */
+  /** Auto-save draft - sauvegarde automatique après chaque modification */
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (!isSubmitting) saveDraft();
-    }, 1000);
+      if (!isSubmitting) {
+        saveDraft();
+      }
+    }, 500); // Sauvegarde plus fréquente (500ms au lieu de 1000ms)
     return () => clearTimeout(timer);
   }, [form, current, invites, selectedNotifyOrgIds, paymentMethod, paymentCompleted, saveDraft, isSubmitting]);
+
+  // Auto-save lors des changements de valeurs du formulaire
+  const formValues = Form.useWatch([], form);
+  useEffect(() => {
+    if (formValues && !isSubmitting) {
+      const timer = setTimeout(() => {
+        saveDraft();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [formValues, isSubmitting, saveDraft]);
 
   /** Load draft on mount */
   useEffect(() => {
@@ -1734,7 +1755,9 @@ export default function DemandeurDemandeCreate() {
   }, []);
 
   const steps = [
-    { title: t("demandeurDemandeCreate.steps.targetIdentity"), icon: <BankOutlined /> },
+    { title: t("demandeurDemandeCreate.steps.identity"), icon: <BankOutlined /> },
+    { title: t("demandeurDemandeCreate.steps.target"), icon: <FileTextOutlined /> },
+    { title: t("demandeurDemandeCreate.steps.program"), icon: <FileTextOutlined /> },
     { title: t("demandeurDemandeCreate.steps.academic"), icon: <BookOutlined /> },
     { title: t("demandeurDemandeCreate.steps.essays"), icon: <FileTextOutlined /> },
     { title: t("demandeurDemandeCreate.steps.invitations"), icon: <TeamOutlined /> },
@@ -1742,7 +1765,7 @@ export default function DemandeurDemandeCreate() {
   ];
 
   const next = async () => {
-    if (current === 0) await form.validateFields(["targetOrgId"]);
+    if (current === 1) await form.validateFields(["targetOrgId"]);
     setCurrent((c) => c + 1);
   };
   const prev = () => setCurrent((c) => c - 1);
@@ -1855,6 +1878,30 @@ export default function DemandeurDemandeCreate() {
       });
 
       message.success(t("demandeurDemandeCreate.messages.demandeCreated"));
+      
+      // Réinitialiser uniquement les champs "academic" et "program" après soumission réussie
+      const fieldsToReset = {
+        // Program (step 2)
+        intendedMajor: undefined,
+        periode: undefined,
+        year: undefined,
+        // Academic (step 3)
+        isEnglishFirstLanguage: undefined,
+        englishProficiencyTests: undefined,
+        testScores: undefined,
+        gradingScale: undefined,
+        gpa: undefined,
+        examsTaken: undefined,
+        countryOfSchool: undefined,
+        secondarySchoolName: undefined,
+        graduationDate: undefined,
+        serie: undefined,
+        niveau: undefined,
+        mention: undefined,
+        annee: undefined,
+      };
+      form.setFieldsValue(fieldsToReset);
+      
       try {
         localStorage.removeItem(DRAFT_KEY);
       } catch (e) {
@@ -1909,65 +1956,8 @@ export default function DemandeurDemandeCreate() {
             style={{ borderRadius: 0, boxShadow: "0 0 10px rgba(0,0,0,0.05)", overflow: "hidden", background: "white", border: "none" }}
           >
             <Form form={form} layout="vertical" preserve onFinish={onFinish}>
-              {/* STEP 0 */}
+              {/* STEP 0 - Identité */}
               <div style={{ display: current === 0 ? "block" : "none" }}>
-                {/* Cible */}
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
-                  Cible
-                </h2>
-                <Row gutter={16}>
-                  <Col xs={24} md={12}>
-                    <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.targetOrg")}</span>}
-                      name="targetOrgId"
-                      rules={[{ required: true, message: t("demandeurDemandeCreate.messages.required") }]}
-                    >
-                      <Select
-                        showSearch
-                        size="large"
-                        placeholder={t("demandeurDemandeCreate.placeholders.chooseOrganization")}
-                        options={orgs.map((o) => ({ value: o.id, label: `${o.name} — ${o.type}` }))}
-                        onChange={() => form.setFieldsValue({ intendedMajor: undefined })}
-                        style={{ width: "100%", padding: 8, boxSizing: "border-box" }}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={24} md={12}>
-                    <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.translationOrg")}</span>}
-                      name="assignedOrgId"
-                    >
-                      <Select
-                        allowClear
-                        showSearch
-                        size="large"
-                        placeholder={t("demandeurDemandeCreate.placeholders.optional")}
-                        options={tradOrgs.map((o) => ({ value: o.id, label: `${o.name} — TRADUCTEUR` }))}
-                        style={{ width: "100%", padding: 8, boxSizing: "border-box" }}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Row gutter={16}>
-                  <Col xs={24}>
-                    <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.intendedMajor")}</span>}
-                      name="intendedMajor"
-                    >
-                      <Select
-                        allowClear
-                        showSearch
-                        size="large"
-                        placeholder={targetOrgId ? t("demandeurDemandeCreate.placeholders.selectMajor") : t("demandeurDemandeCreate.placeholders.chooseOrgFirst")}
-                        loading={filieresLoading}
-                        disabled={!targetOrgId}
-                        options={(filieres || []).map((f) => ({ value: f.name, label: f.name }))}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-
-                {/* Identité */}
                 <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
                   {t("demandeurDemandeCreate.sections.personalInfo")}
                 </h2>
@@ -2004,24 +1994,103 @@ export default function DemandeurDemandeCreate() {
                     </Form.Item>
                   </Col>
                 </Row>
+              </div>
 
-                {/* Programme souhaité */}
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
-                  {t("demandeurDemandeCreate.sections.intendedProgram")}
+              {/* STEP 1 - Cible */}
+              <div style={{ display: current === 1 ? "block" : "none" }}>
+                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
+                  {t("demandeurDemandeCreate.sections.target") || "Cible"}
                 </h2>
                 <Row gutter={16}>
                   <Col xs={24} md={12}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.preferredStartTerm")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.targetOrg")}</RequiredLabel>
+                        </span>
+                      }
+                      name="targetOrgId"
+                      rules={[{ required: true, message: t("demandeurDemandeCreate.messages.required") }]}
+                    >
+                      <Select
+                        showSearch
+                        size="large"
+                        placeholder={t("demandeurDemandeCreate.placeholders.chooseOrganization")}
+                        options={orgs.map((o) => ({ value: o.id, label: `${o.name} — ${o.type}` }))}
+                        onChange={() => form.setFieldsValue({ intendedMajor: undefined })}
+                        style={{ width: "100%", padding: 8, boxSizing: "border-box" }}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.translationOrg")}</span>}
+                      name="assignedOrgId"
+                    >
+                      <Select
+                        allowClear
+                        showSearch
+                        size="large"
+                        placeholder={t("demandeurDemandeCreate.placeholders.chooseOrganization")}
+                        options={tradOrgs.map((o) => ({ value: o.id, label: `${o.name} — TRADUCTEUR` }))}
+                        style={{ width: "100%", padding: 8, boxSizing: "border-box" }}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </div>
+
+              {/* STEP 2 - Programme souhaité */}
+              <div style={{ display: current === 2 ? "block" : "none" }}>
+                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
+                  {t("demandeurDemandeCreate.sections.intendedProgram")}
+                </h2>
+                <Row gutter={16}>
+                  <Col xs={24}>
+                    <Form.Item
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.intendedMajor")}</RequiredLabel>
+                        </span>
+                      }
+                      name="intendedMajor"
+                      rules={[{ required: true, message: t("demandeurDemandeCreate.messages.required") }]}
+                    >
+                      <Select
+                        allowClear
+                        showSearch
+                        size="large"
+                        placeholder={targetOrgId ? t("demandeurDemandeCreate.placeholders.selectMajor") : t("demandeurDemandeCreate.placeholders.chooseOrgFirst")}
+                        loading={filieresLoading}
+                        disabled={!targetOrgId}
+                        options={(filieres || []).map((f) => ({ value: f.name, label: f.name }))}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.preferredStartTerm")}</RequiredLabel>
+                        </span>
+                      }
                       name="periode"
+                      rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Select allowClear size="large" placeholder={t("demandeurDemandeCreate.placeholders.selectTerm")} options={PERIODES} />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={12}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.year")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.year")}</RequiredLabel>
+                        </span>
+                      }
                       name="year"
+                      rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Select allowClear size="large" placeholder={t("demandeurDemandeCreate.placeholders.selectYear")} options={YEAR_OPTIONS} />
                     </Form.Item>
@@ -2029,8 +2098,8 @@ export default function DemandeurDemandeCreate() {
                 </Row>
               </div>
 
-              {/* STEP 1 */}
-              <div style={{ display: current === 1 ? "block" : "none" }}>
+              {/* STEP 3 - Anglais + académique */}
+              <div style={{ display: current === 3 ? "block" : "none" }}>
                 <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
                   {t("demandeurDemandeCreate.sections.englishProficiency")}
                 </h2>
@@ -2039,9 +2108,16 @@ export default function DemandeurDemandeCreate() {
                     <Form.Item
                       label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.isEnglishFirstLanguage")}</span>}
                       name="isEnglishFirstLanguage"
-                      valuePropName="checked"
                     >
-                      <Checkbox style={{ fontFamily: "Arial, sans-serif", fontWeight: 500 }}>{t("demandeurDemandeCreate.fields.yes")}</Checkbox>
+                      <Select
+                        allowClear
+                        size="large"
+                        placeholder={t("demandeurDemandeCreate.placeholders.selectLevel")}
+                        options={[
+                          { value: true, label: t("demandeurDemandeCreate.fields.yes") },
+                          { value: false, label: t("common.no") || "Non" }
+                        ]}
+                      />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={8}>
@@ -2080,7 +2156,12 @@ export default function DemandeurDemandeCreate() {
                 <Row gutter={16}>
                   <Col xs={24} md={12}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.secondarySchoolName")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.secondarySchoolName")}</RequiredLabel>
+                        </span>
+                      }
+                      rules={[{ required: true, message: t("common.required") }]}
                       name="secondarySchoolName"
                     >
                       <Input size="large" />
@@ -2088,7 +2169,12 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                   <Col xs={24} md={12}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.countryOfSchool")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.countryOfSchool")}</RequiredLabel>
+                        </span>
+                      }
+                      rules={[{ required: true, message: t("common.required") }]}
                       name="countryOfSchool"
                     >
                       <Select
@@ -2102,7 +2188,12 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                   <Col xs={24} md={8}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.graduationDate")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.graduationDate")}</RequiredLabel>
+                        </span>
+                      }
+                      rules={[{ required: true, message: t("common.required") }]}
                       name="graduationDate"
                       getValueProps={(v) => ({ value: reviveDate(v) })}
                     >
@@ -2111,7 +2202,12 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                   <Col xs={24} md={8}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.gradingScale")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.gradingScale")}</RequiredLabel>
+                        </span>
+                      }
+                      rules={[{ required: true, message: t("common.required") }]}
                       name="gradingScale"
                     >
                       <Input size="large" />
@@ -2119,7 +2215,12 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                   <Col xs={24} md={8}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.gpa")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.gpa")}</RequiredLabel>
+                        </span>
+                      }
+                      rules={[{ required: true, message: t("common.required") }]}
                       name="gpa"
                     >
                       <Input size="large" />
@@ -2148,8 +2249,8 @@ export default function DemandeurDemandeCreate() {
                 </Row>
               </div>
 
-              {/* STEP 2 */}
-              <div style={{ display: current === 2 ? "block" : "none" }}>
+              {/* STEP 4 - Activités, famille, finances, visa, essais, soumission */}
+              <div style={{ display: current === 4 ? "block" : "none" }}>
                 <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
                   {t("demandeurDemandeCreate.sections.activities")}
                 </h2>
@@ -2178,7 +2279,12 @@ export default function DemandeurDemandeCreate() {
                 <Row gutter={16}>
                   <Col xs={24} md={8}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.parentGuardianName")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.parentGuardianName")}</RequiredLabel>
+                        </span>
+                      }
+                      rules={[{ required: true, message: t("common.required") }]}
                       name="parentGuardianName"
                     >
                       <Input size="large" />
@@ -2186,7 +2292,12 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                   <Col xs={24} md={8}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.occupation")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.occupation")}</RequiredLabel>
+                        </span>
+                      }
+                      rules={[{ required: true, message: t("common.required") }]}
                       name="occupation"
                     >
                       <Input size="large" />
@@ -2194,7 +2305,12 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                   <Col xs={24} md={8}>
                     <Form.Item
-                      label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.educationLevel")}</span>}
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.educationLevel")}</RequiredLabel>
+                        </span>
+                      }
+                      rules={[{ required: true, message: t("common.required") }]}
                       name="educationLevel"
                     >
                       <Select
@@ -2220,18 +2336,32 @@ export default function DemandeurDemandeCreate() {
                     <Form.Item
                       label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.willApplyForFinancialAid")}</span>}
                       name="willApplyForFinancialAid"
-                      valuePropName="checked"
                     >
-                      <Checkbox style={{ fontFamily: "Arial, sans-serif", fontWeight: 500 }}>{t("demandeurDemandeCreate.fields.yes")}</Checkbox>
+                      <Select
+                        allowClear
+                        size="large"
+                        placeholder={t("demandeurDemandeCreate.placeholders.selectLevel")}
+                        options={[
+                          { value: true, label: t("demandeurDemandeCreate.fields.yes") },
+                          { value: false, label: t("common.no") || "Non" }
+                        ]}
+                      />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={12}>
                     <Form.Item
                       label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.hasExternalSponsorship")}</span>}
                       name="hasExternalSponsorship"
-                      valuePropName="checked"
                     >
-                      <Checkbox style={{ fontFamily: "Arial, sans-serif", fontWeight: 500 }}>{t("demandeurDemandeCreate.fields.yes")}</Checkbox>
+                      <Select
+                        allowClear
+                        size="large"
+                        placeholder={t("demandeurDemandeCreate.placeholders.selectLevel")}
+                        options={[
+                          { value: true, label: t("demandeurDemandeCreate.fields.yes") },
+                          { value: false, label: t("common.no") || "Non" }
+                        ]}
+                      />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -2262,9 +2392,16 @@ export default function DemandeurDemandeCreate() {
                     <Form.Item
                       label={<span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>{t("demandeurDemandeCreate.fields.hasPreviouslyStudiedInUS")}</span>}
                       name="hasPreviouslyStudiedInUS"
-                      valuePropName="checked"
                     >
-                      <Checkbox style={{ fontFamily: "Arial, sans-serif", fontWeight: 500 }}>{t("demandeurDemandeCreate.fields.yes")}</Checkbox>
+                      <Select
+                        allowClear
+                        size="large"
+                        placeholder={t("demandeurDemandeCreate.placeholders.selectLevel")}
+                        options={[
+                          { value: true, label: t("demandeurDemandeCreate.fields.yes") },
+                          { value: false, label: t("common.no") || "Non" }
+                        ]}
+                      />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -2334,14 +2471,14 @@ export default function DemandeurDemandeCreate() {
                 </Row>
               </div>
 
-              {/* STEP 3 — Invitations + Summary */}
-              <div style={{ display: current === 3 ? "block" : "none" }}>
+              {/* STEP 5 — Invitations + Summary */}
+              <div style={{ display: current === 5 ? "block" : "none" }}>
                 <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
                   {t("demandeurDemandeCreate.sections.inviteOrgs")}
                 </h2>
                 <Card style={{ background: "#fafafa", marginBottom: 16, border: "1px solid #e0e0e0" }}>
                   <Row gutter={12} className="mb-2">
-                    <Col xs={24} md={6}>
+                    <Col xs={24} md={12}>
                       <Input
                         placeholder={t("demandeurDemandeCreate.placeholders.name")}
                         size="large"
@@ -2349,36 +2486,12 @@ export default function DemandeurDemandeCreate() {
                         onChange={(e) => setInvite((s) => ({ ...s, name: e.target.value }))}
                       />
                     </Col>
-                    <Col xs={24} md={6}>
+                    <Col xs={24} md={12}>
                       <Input
                         placeholder={t("demandeurDemandeCreate.placeholders.email")}
                         size="large"
                         value={invite.email}
                         onChange={(e) => setInvite((s) => ({ ...s, email: e.target.value }))}
-                      />
-                    </Col>
-                    <Col xs={24} md={4}>
-                      <Input
-                        placeholder={t("demandeurDemandeCreate.placeholders.phone")}
-                        size="large"
-                        value={invite.phone}
-                        onChange={(e) => setInvite((s) => ({ ...s, phone: e.target.value }))}
-                      />
-                    </Col>
-                    <Col xs={24} md={4}>
-                      <Input
-                        placeholder={t("demandeurDemandeCreate.placeholders.address")}
-                        size="large"
-                        value={invite.address}
-                        onChange={(e) => setInvite((s) => ({ ...s, address: e.target.value }))}
-                      />
-                    </Col>
-                    <Col xs={24} md={4}>
-                      <Input
-                        placeholder={t("demandeurDemandeCreate.placeholders.role")}
-                        size="large"
-                        value={invite.roleKey}
-                        onChange={(e) => setInvite((s) => ({ ...s, roleKey: e.target.value }))}
                       />
                     </Col>
                   </Row>
@@ -2387,14 +2500,12 @@ export default function DemandeurDemandeCreate() {
                     onClick={() => {
                       const n = String(invite.name || "").trim();
                       const e = String(invite.email || "").trim().toLowerCase();
-                      const p = String(invite.phone || "").trim();
-                      const a = String(invite.address || "").trim();
-                      const r = String(invite.roleKey || "").trim();
                       if (n.length < 2) return message.warning(t("demandeurDemandeCreate.invitations.nameRequired"));
                       if (!isEmail(e)) return message.warning(t("demandeurDemandeCreate.invitations.emailInvalid"));
                       if (invites.some((x) => x.email === e)) return message.info(t("demandeurDemandeCreate.invitations.alreadyInList"));
-                      const next = [...invites, { name: n, email: e, phone: p || undefined, address: a || undefined, roleKey: r || undefined }];
+                      const next = [...invites, { name: n, email: e }];
                       setInvites(next);
+                      setInvite({ name: "", email: "" });
                     }}
                     size="large"
                   >
@@ -2412,6 +2523,16 @@ export default function DemandeurDemandeCreate() {
                       key={item.email}
                       actions={[
                         <Button
+                          key="edit"
+                          size="small"
+                          onClick={() => {
+                            setInvite({ name: item.name, email: item.email });
+                            setInvites((arr) => arr.filter((i) => i.email !== item.email));
+                          }}
+                        >
+                          {t("common.edit") || "Modifier"}
+                        </Button>,
+                        <Button
                           key="delete"
                           danger
                           size="small"
@@ -2423,13 +2544,11 @@ export default function DemandeurDemandeCreate() {
                     >
                       <Space direction="vertical" size={0}>
                         <Text strong>
-                          {item.name} {item.roleKey ? `(${item.roleKey})` : ""}
+                          {item.name}
                         </Text>
                         <Text type="secondary">
                           {item.email}
-                          {item.phone ? ` • ${item.phone}` : ""}
                         </Text>
-                        {item.address ? <Text type="secondary">{item.address}</Text> : null}
                       </Space>
                     </List.Item>
                   )}
@@ -2448,11 +2567,11 @@ export default function DemandeurDemandeCreate() {
                 <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
                   {t("demandeurDemandeCreate.sections.summary")}
                 </h2>
-                <Summary form={form} invites={invites} orgs={orgs} tradOrgs={tradOrgs} t={t} />
+                <Summary form={form} invites={invites} orgs={orgs} tradOrgs={tradOrgs} t={t} me={me} />
               </div>
 
-              {/* STEP 4 - Payment */}
-              <div style={{ display: current === 4 ? "block" : "none" }}>
+              {/* STEP 6 - Payment */}
+              <div style={{ display: current === 6 ? "block" : "none" }}>
                 <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
                   {t("demandeurDemandeCreate.sections.choosePayment")}
                 </h2>
@@ -2538,28 +2657,19 @@ export default function DemandeurDemandeCreate() {
                       {t("demandeurDemandeCreate.buttons.previous")}
                     </Button>
                   )}
-                  {current < 4 && (
+                  {current < 6 && (
                     <Button type="primary" onClick={next} size="large">
                       {t("demandeurDemandeCreate.buttons.next")}
                     </Button>
                   )}
                 </Space>
                 <Space>
-                  <Button onClick={saveDraft} loading={savingDraft} size="large">
-                    {t("demandeurDemandeCreate.buttons.saveDraft")}
-                  </Button>
-                  <Popconfirm
-                    title={t("demandeurDemandeCreate.popconfirm.resetDraft")}
-                    description={t("demandeurDemandeCreate.popconfirm.description")}
-                    onConfirm={resetDraft}
-                    okText={t("demandeurDemandeCreate.popconfirm.yes")}
-                    cancelText={t("demandeurDemandeCreate.popconfirm.no")}
-                  >
-                    <Button danger size="large">
-                      {t("demandeurDemandeCreate.buttons.reset")}
-                    </Button>
-                  </Popconfirm>
-                  {current === 4 && (
+                  {savingDraft && (
+                    <span style={{ color: "#8c8c8c", fontSize: 14 }}>
+                      {t("demandeurDemandeCreate.buttons.autoSaving")}
+                    </span>
+                  )}
+                  {current === 6 && (
                     <Button
                       type="primary"
                       htmlType="submit"
@@ -2710,7 +2820,7 @@ export default function DemandeurDemandeCreate() {
 }
 
 /** ---- Récap visuel ---- */
-function Summary({ form, invites, orgs, tradOrgs, t }) {
+function Summary({ form, invites, orgs, tradOrgs, t, me }) {
   const v = form.getFieldsValue(true);
   const Item = ({ label, value }) => (
     <div className="mb-1">
@@ -2718,28 +2828,28 @@ function Summary({ form, invites, orgs, tradOrgs, t }) {
     </div>
   );
 
-  // Helper pour obtenir le nom de l'organisation par ID
+  // Helper pour obtenir le nom de l'organisation par ID (sans afficher d'ID brut)
   const getOrgName = (orgId) => {
     if (!orgId) return "—";
     const org = [...orgs, ...tradOrgs].find((o) => o.id === orgId);
-    return org ? org.name : orgId;
+    return org ? org.name : "—";
   };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* 1) IDENTITÉ */}
+      {/* 1) IDENTITÉ (à partir de l'utilisateur connecté, pas des champs du formulaire) */}
       <Card size="small" title={t("demandeurDemandeCreate.summary.identity")} style={{ borderRadius: 8 }}>
         <Item
-          label={t("demandeurDemandeCreate.summary.birthDate")}
-          value={v.dob ? dayjs(v.dob).format("DD/MM/YYYY") : "—"}
+          label={t("demandeurDemandeCreate.summary.fullName")}
+          value={me ? `${me.firstName || ""} ${me.lastName || ""}`.trim() || me.email || "—" : "—"}
+        />
+        <Item
+          label={t("demandeurDemandeCreate.summary.email")}
+          value={me?.email || "—"}
         />
         <Item
           label={t("demandeurDemandeCreate.summary.citizenship")}
-          value={v.citizenship}
-        />
-        <Item
-          label={t("demandeurDemandeCreate.summary.passport")}
-          value={v.passport}
+          value={v.citizenship || me?.citizenship || "—"}
         />
       </Card>
 

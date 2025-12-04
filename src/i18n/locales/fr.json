@@ -13,11 +13,13 @@
         "save": "Enregistrer",
         "cancel": "Annuler",
         "edit": "Modifier",
+        "no": "Non",
         "notSpecified": "Non spécifié",
         "noData": "Aucune donnée",
         "reset": "Réinitialiser",
         "selectLanguage": "Sélectionner la langue",
-        "notifications": "Notifications"
+        "notifications": "Notifications",
+        "required": "Ce champ est obligatoire"
     },
     "notifications": {
         "newMessage": "Nouveau message",
@@ -118,8 +120,8 @@
         "organizationsList": "Organisations",
         "departments": "Départements",
         "filieres": "Filières",
-        "demandes": "Demandes",
-        "allDemandes": "Toutes les demandes",
+        "demandes": "Candidature",
+        "allDemandes": "Applications",
         "documents": "Documents",
         "myDocuments": "Mes documents",
         "payments": "Paiements",
@@ -136,10 +138,12 @@
         "auditLogs": "Audit logs",
         "profile": "Profil",
         "monInstitut": "Mon institut",
-        "ajouteDocument": "Ajouter un document",
+        "ajouteDocument": "Partager un document",
+        "newApplication": "Nouvelle candidature",
         "mesAbonnements": "Mes abonnements",
         "souscrire": "Souscrire",
-        "dossiersTraiter": "Dossier à traiter"
+        "dossiersTraiter": "Dossier à traiter",
+        "logout": "Déconnexion"
     },
     "profile": {
         "title": "Profil utilisateur",
@@ -495,14 +499,14 @@
         },
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Demandes",
+            "demandes": "Candidatures",
             "details": "Détails",
             "docs": "Documents"
         },
-        "title": "Documents de la demande",
+        "title": "Documents de la candidature",
         "tabs": {
             "documents": "Documents",
-            "info": "Informations de la demande"
+            "info": "Informations de la candidature"
         },
         "columns": {
             "ownerOrg": "Organisation propriétaire",
@@ -562,7 +566,7 @@
             "dash": "—"
         },
         "toasts": {
-            "loadDemandeError": "Erreur lors du chargement de la demande",
+            "loadDemandeError": "Erreur lors du chargement de la candidature",
             "loadDocsError": "Échec chargement des documents",
             "urlMissing": "URL indisponible"
         },
@@ -1120,7 +1124,7 @@
         "section": {
             "titleMyInstitute": "Demandes – Mon institut",
             "filters": "Filtres",
-            "list": "Liste des demandes"
+            "list": "Liste des candidatures"
         },
         "filters": {
             "searchPlaceholder": "Recherche (code, année, niveau, email…)",
@@ -1165,7 +1169,7 @@
         "paywall": {
             "checking": "Vérification de l’abonnement…",
             "requiredTitle": "Abonnement requis",
-            "requiredSub1": "Votre organisation n’a pas d’abonnement actif. Veuillez souscrire et payer pour accéder à la liste des demandes.",
+            "requiredSub1": "Votre organisation n'a pas d'abonnement actif. Veuillez souscrire et payer pour accéder à la liste des candidatures.",
             "hint": "Après paiement, cliquez sur « Re-vérifier » si les demandes ne s’affichent pas."
         },
         "paymentModal": {
@@ -1179,7 +1183,7 @@
             "amountTag": "Montant"
         },
         "toasts": {
-            "loadError": "Échec chargement des demandes",
+            "loadError": "Échec chargement des candidatures",
             "stripeInitError": "Initialisation Stripe impossible",
             "stripeSecretMissing": "Client secret Stripe manquant",
             "paypalCfgError": "Configuration PayPal indisponible",
@@ -1190,10 +1194,10 @@
     "institutDemandeDetails": {
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Demandes",
+            "demandes": "Candidatures",
             "details": "Détails"
         },
-        "title": "Détails de la demande",
+        "title": "Détails de la candidature",
         "buttons": {
             "back": "Retour",
             "updateStatus": "Mettre à jour le statut",
@@ -1286,7 +1290,7 @@
     "demandeDocAdd": {
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Demandes",
+            "demandes": "Candidatures",
             "add": "Ajouter un document"
         },
         "title": "Ajouter un document à la demande",
@@ -1296,8 +1300,8 @@
             "save": "Enregistrer le document"
         },
         "form": {
-            "code": "Code Demande",
-            "codeRequired": "Le code de la demande est requis",
+            "code": "Code Candidature",
+            "codeRequired": "Le code de la candidature est requis",
             "codePh": "Saisir le code",
             "type": "Type de document",
             "typeRequired": "Sélectionnez le type de document",
@@ -1595,7 +1599,7 @@
             "usersTotal": "Utilisateurs (total)",
             "usersActive": "Actifs: {{count}}",
             "organizationsTotal": "Organisations (total)",
-            "demandesTotal": "Demandes (total)",
+            "demandesTotal": "Candidatures (total)",
             "demandesBreakdown": "Voir la répartition ci-dessous",
             "demandesNone": "Aucune demande",
             "documentsTotal": "Documents (total)",
@@ -1611,7 +1615,7 @@
         "breakdowns": {
             "usersByRole": "Répartition des rôles utilisateurs",
             "orgsByType": "Répartition des types d'organisation",
-            "demandesByStatus": "Demandes par statut",
+            "demandesByStatus": "Candidatures par statut",
             "transactionsByStatus": "Transactions par statut",
             "paymentsByStatus": "Paiements par statut"
         },
@@ -1629,7 +1633,7 @@
             "usersTotal": "Utilisateurs (total)",
             "usersActive": "Actifs: {{count}}",
             "organizationsTotal": "Organisations (total)",
-            "demandesTotal": "Demandes (total)",
+            "demandesTotal": "Candidatures (total)",
             "demandesBreakdown": "Voir la répartition ci-dessous",
             "demandesNone": "Aucune demande",
             "documentsTotal": "Documents (total)",
@@ -1645,7 +1649,7 @@
         "breakdowns": {
             "usersByRole": "Répartition des rôles utilisateurs",
             "orgsByType": "Répartition des types d'organisation",
-            "demandesByStatus": "Demandes par statut",
+            "demandesByStatus": "Candidatures par statut",
             "transactionsByStatus": "Transactions par statut",
             "paymentsByStatus": "Paiements par statut"
         },
@@ -1760,7 +1764,7 @@
         "title": "Créer une demande",
         "breadcrumb": {
             "dashboard": "Tableau de bord",
-            "demandes": "Demandes",
+            "demandes": "Candidatures",
             "create": "Créer"
         },
         "steps": {
@@ -1822,7 +1826,7 @@
         "messages": {
             "orgLoadError": "Erreur lors de la récupération des organisations",
             "createSuccess": "Demande créée avec succès",
-            "createError": "Erreur lors de la création de la demande"
+            "createError": "Erreur lors de la création de la candidature"
         }
     },
     "adminAbonnements": {
@@ -2491,7 +2495,7 @@
             "REJECTED": "Rejetée"
         },
         "messages": {
-            "loadError": "Échec chargement des demandes",
+            "loadError": "Échec chargement des candidatures",
             "statusUpdateSuccess": "Statut mis à jour: {{status}}",
             "statusUpdateError": "Échec mise à jour du statut"
         }
@@ -2551,7 +2555,7 @@
         "title": "Demande — Détail",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "demandes": "Demandes",
+            "demandes": "Candidatures",
             "detail": "Détail"
         },
         "actions": {
@@ -2858,7 +2862,7 @@
             "apply": "Appliquer"
         },
         "messages": {
-            "loadError": "Échec chargement des demandes",
+            "loadError": "Échec chargement des candidatures",
             "updateSuccess": "Statut mis à jour: {{status}}",
             "updateError": "Échec mise à jour du statut",
             "documentsError": "Erreur chargement des documents",
@@ -2887,10 +2891,10 @@
             "original": "Original"
         },
         "table": {
-            "title": "Liste des demandes assignées"
+            "title": "Liste des candidatures assignées"
         },
         "modal": {
-            "documentsTitle": "Documents de la demande",
+            "documentsTitle": "Documents de la candidature",
             "noDocuments": "Aucun document"
         }
     },
@@ -3060,9 +3064,12 @@
             }
         }
     },
-    "demandeurDemandeCreate": {
+        "demandeurDemandeCreate": {
         "pageTitle": "Candidature Étudiant International",
         "steps": {
+            "identity": "Identité",
+            "target": "Cible",
+            "program": "Programme",
             "targetIdentity": "Cible & identité",
             "academic": "Académique",
             "essays": "Essays & Divers",
@@ -3084,14 +3091,15 @@
             "inviteOrgs": "Inviter des organisations (invitation officielle)",
             "notifyOrgs": "Notifier des organisations (simple information)",
             "summary": "Résumé",
-            "choosePayment": "Choisissez votre méthode de paiement"
+            "choosePayment": "Choisissez votre méthode de paiement",
+            "target": "Cible"
         },
         "fields": {
             "targetOrg": "Organisation cible",
-            "translationOrg": "Organisation de traduction (optionnel)",
+            "translationOrg": "Organisation de traduction",
             "dateOfBirth": "Date de naissance",
             "countryOfCitizenship": "Pays de citoyenneté",
-            "passportNumber": "Numéro de passeport (optionnel)",
+            "passportNumber": "Numéro de passeport",
             "preferredStartTerm": "Trimestre de début préféré",
             "year": "Année",
             "isEnglishFirstLanguage": "L'anglais est-il votre langue maternelle ?",
@@ -3121,7 +3129,7 @@
         },
         "placeholders": {
             "chooseOrganization": "Choisir une organisation",
-            "optional": "— optionnel —",
+            "optional": "",
             "selectCountry": "Sélectionner un pays",
             "selectTerm": "Sélectionner un trimestre",
             "selectYear": "Sélectionner une année",
@@ -3193,7 +3201,8 @@
             "saveDraft": "Enregistrer le brouillon",
             "reset": "Réinitialiser",
             "completePayment": "Compléter le paiement",
-            "createApplication": "Créer la candidature et envoyer"
+            "createApplication": "Créer la candidature et envoyer",
+            "autoSaving": "Sauvegarde automatique..."
         },
         "invitations": {
             "noOrgsInvited": "Aucune organisation invitée",
@@ -3229,6 +3238,8 @@
             "year": "Année",
             "observation": "Observation",
             "identity": "Identité",
+            "fullName": "Nom complet",
+            "email": "Email",
             "birthDate": "Naissance",
             "citizenship": "Nationalité",
             "passport": "Passeport",
@@ -3271,7 +3282,7 @@
         }
     },
     "demandeurDemandePayment": {
-        "pageTitle": "Paiement de la demande",
+        "pageTitle": "Paiement de la candidature",
         "breadcrumbs": {
             "dashboard": "Dashboard",
             "demandes": "Mes demandes",
@@ -3279,7 +3290,7 @@
             "payment": "Paiement"
         },
         "summary": {
-            "title": "Résumé de la demande",
+            "title": "Résumé de la candidature",
             "code": "Code",
             "date": "Date",
             "status": "Statut dossier",
@@ -3374,12 +3385,12 @@
             "pageTitle": "Nouveau document",
             "breadcrumbs": {
                 "dashboard": "Dashboard",
-                "demandes": "Demandes",
+                "demandes": "Candidatures",
                 "add": "Ajouter un document"
             },
-            "title": "Ajouter un document à la demande",
-            "titleWithCode": "Ajouter un document (rattachement par code de demande)",
-            "description": "Renseigne le type, la mention, la date d'obtention et dépose le fichier. Si tu n'es pas sur la fiche d'une demande, saisis le code de la demande pour le rattachement.",
+            "title": "Ajouter un document à la candidature",
+            "titleWithCode": "Ajouter un document (rattachement par code de candidature)",
+            "description": "Renseigne le type, la mention, la date d'obtention et dépose le fichier. Si tu n'es pas sur la fiche d'une candidature, saisis le code de la candidature pour le rattachement.",
             "back": "Retour"
         },
         "details": {
@@ -3589,7 +3600,7 @@
         "title": "Détails du demandeur",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Liste des demandes"
+            "demandes": "Liste des candidatures"
         },
         "sections": {
             "personalInfo": "Informations personnelles",
@@ -3616,7 +3627,7 @@
         },
         "breadcrumbs": {
             "dashboard": "Tableau de bord",
-            "demandes": "Demandes à traiter",
+            "demandes": "Candidatures à traiter",
             "detail": "Demandes"
         },
         "pageTitle": "Détails de la demande",
@@ -3702,10 +3713,10 @@
         }
     },
     "traducteurDemandeDocuments": {
-        "title": "Documents de la demande",
+        "title": "Documents de la candidature",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Demandes",
+            "demandes": "Candidatures",
             "documents": "Documents"
         },
         "buttons": {
@@ -3718,7 +3729,7 @@
         },
         "fields": {
             "code": "Code",
-            "status": "Statut de la demande",
+            "status": "Statut de la candidature",
             "demandeur": "Demandeur",
             "targetOrg": "Institut cible"
         },
@@ -3820,10 +3831,10 @@
         },
         "cardTitle": "Nouvelle Demande",
         "form": {
-            "title": "Titre de la demande",
+            "title": "Titre de la candidature",
             "titleRequired": "Le titre est obligatoire",
-            "titlePlaceholder": "Titre de la demande",
-            "type": "Type de demande",
+            "titlePlaceholder": "Titre de la candidature",
+            "type": "Type de candidature",
             "typeRequired": "Le type est obligatoire",
             "typePlaceholder": "Sélectionner un type",
             "types": {
@@ -3833,7 +3844,7 @@
             },
             "description": "Description",
             "descriptionRequired": "La description est obligatoire",
-            "descriptionPlaceholder": "Description de la demande"
+            "descriptionPlaceholder": "Description de la candidature"
         },
         "actions": {
             "back": "Retour",
@@ -3880,7 +3891,7 @@
         "form": {
             "demandePartageId": "DemandePartage ID",
             "demandePartageIdRequired": "Requis",
-            "demandePartageIdPlaceholder": "ID de la demande (demandePartageId)",
+            "demandePartageIdPlaceholder": "ID de la candidature (demandePartageId)",
             "userId": "Utilisateur (optionnel)",
             "userIdPlaceholder": "userId (optionnel)",
             "montant": "Montant (XOF)",

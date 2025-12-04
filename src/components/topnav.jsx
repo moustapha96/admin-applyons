@@ -90,6 +90,59 @@ export default function Topnav({ setToggle, toggle }) {
   const fullName = user ? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim() : t("common.user");
   const orgName = user?.organization?.name;
 
+  // Détermine vers quelle page aller quand on clique sur une notification.
+  // On suppose que le backend envoie des infos du type :
+  //  - notification.entityType: "DEMANDE" | "DOCUMENT" | "ORGANISATION" | ...
+  //  - notification.entityId   : l'id de la demande / document / organisation
+  //  - ou éventuellement notification.link : URL directe.
+  const handleNotificationClick = (notification) => {
+    // On marque comme lue immédiatement côté front + backend
+    markAsRead(notification.id);
+
+    // Si le backend fournit une URL directe, on l'utilise en priorité
+    if (notification.link) {
+      navigate(notification.link);
+      setShowNotifications(false);
+      return;
+    }
+
+    // Sinon on route en fonction du type d'entité + id
+    const entityType = (notification.entityType || notification.type || "").toUpperCase();
+    const entityId = notification.entityId || notification.demandeId || notification.documentId || notification.organisationId;
+
+    if (!entityType || !entityId) {
+      // Pas assez d'infos pour naviguer
+      return;
+    }
+
+    // DEMANDEUR : détail d'une demande
+    if (entityType === "DEMANDE") {
+      // ex: /demandeur/mes-demandes/:demandeId/details
+      navigate(`/demandeur/mes-demandes/${entityId}/details`);
+      setShowNotifications(false);
+      return;
+    }
+
+    // DEMANDEUR : documents d'une demande
+    if (entityType === "DOCUMENT" || entityType === "DOCUMENTS") {
+      // Si le backend envoie documentId + demandeId, on peut adapter ici.
+      // En attendant, on redirige vers la page documents de la demande.
+      const demandeId = notification.demandeId || entityId;
+      navigate(`/demandeur/mes-demandes/${demandeId}/documents`);
+      setShowNotifications(false);
+      return;
+    }
+
+    // DEMANDEUR : détail d'une organisation
+    if (entityType === "ORGANISATION" || entityType === "INSTITUT") {
+      navigate(`/demandeur/organisation/${entityId}/details`);
+      setShowNotifications(false);
+      return;
+    }
+
+    // Par défaut : on ne fait rien de spécial (ou on pourrait aller sur le dashboard)
+  };
+
   const handleLogOut = async () => {
     try {
       await logout();
@@ -309,7 +362,7 @@ export default function Topnav({ setToggle, toggle }) {
                           className={`px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-800 ${
                             !notification.read ? "bg-blue-50 dark:bg-blue-900/10" : ""
                           }`}
-                          onClick={() => markAsRead(notification.id)}
+                          onClick={() => handleNotificationClick(notification)}
                         >
                           <List.Item.Meta
                             avatar={
