@@ -12,12 +12,13 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 
-import { Avatar, Tag, Dropdown, Badge, List, Empty, Button, Divider } from "antd";
-import { UserOutlined, GlobalOutlined, BellOutlined, MessageOutlined, CheckCircleOutlined, InfoCircleOutlined, WarningOutlined } from "@ant-design/icons";
+import { Avatar, Tag, Dropdown, List, Empty, Button, Divider } from "antd";
+import { UserOutlined, GlobalOutlined, BellOutlined, MessageOutlined, CheckCircleOutlined, WarningOutlined } from "@ant-design/icons";
 
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { buildImageUrl } from "../utils/imageUtils";
+import { fetchNotifications, markNotificationAsRead, markAllNotificationsAsRead } from "../services/notificationService";
 
 const LANGS = [
   { key: "fr", label: "Français" },
@@ -38,39 +39,8 @@ export default function Topnav({ setToggle, toggle }) {
   const userMenuRef = useRef(null);
   const notificationRef = useRef(null);
   
-  // État pour les notifications (à remplacer par un vrai service)
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      type: "info",
-      titleKey: "notifications.newMessage",
-      messageKey: "notifications.messageReceived",
-      createdAt: new Date(Date.now() - 1000 * 60 * 15), // 15 min ago
-      read: false,
-      icon: <MessageOutlined />,
-      color: "#1e81b0",
-    },
-    {
-      id: 2,
-      type: "success",
-      titleKey: "notifications.requestApproved",
-      messageKey: "notifications.requestApprovedDesc",
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2h ago
-      read: false,
-      icon: <CheckCircleOutlined />,
-      color: "#52c41a",
-    },
-    {
-      id: 3,
-      type: "warning",
-      titleKey: "notifications.actionRequired",
-      messageKey: "notifications.actionRequiredDesc",
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-      read: true,
-      icon: <WarningOutlined />,
-      color: "#faad14",
-    },
-  ]);
+  // État pour les notifications récupérées depuis le backend
+  const [notifications, setNotifications] = useState([]);
   
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -141,17 +111,59 @@ export default function Topnav({ setToggle, toggle }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  
-  const markAsRead = (notificationId) => {
+
+  // Chargement des notifications depuis le backend,
+  // avec un filtrage possible selon le rôle (DEMANDEUR / INSTITUT / …)
+  useEffect(() => {
+    async function loadNotifications() {
+      if (!user) return;
+      try {
+        const roleParam =
+          role === "DEMANDEUR" || role === "INSTITUT" ? { role } : {};
+        const backendNotifications = await fetchNotifications(roleParam);
+
+        // On garde la possibilité d'associer une icône/couleur par type ici
+        const withUiProps = backendNotifications.map((n) => {
+          let icon = <MessageOutlined />;
+          let color = "#1e81b0";
+
+          if (n.type === "success") {
+            icon = <CheckCircleOutlined />;
+            color = "#52c41a";
+          } else if (n.type === "warning") {
+            icon = <WarningOutlined />;
+            color = "#faad14";
+          }
+
+          return { ...n, icon, color };
+        });
+
+        setNotifications(withUiProps);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("Erreur lors du chargement des notifications :", e);
+      }
+    }
+
+    loadNotifications();
+  }, [user, role]);
+
+  const markAsRead = async (notificationId) => {
     setNotifications((prev) =>
-      prev.map((notification) => 
+      prev.map((notification) =>
         notification.id === notificationId ? { ...notification, read: true } : notification
       )
     );
+
+    // On tente aussi la mise à jour côté backend (sans bloquer l'UI)
+    markNotificationAsRead(notificationId);
   };
-  
-  const markAllAsRead = () => {
+
+  const markAllAsRead = async () => {
     setNotifications((prev) => prev.map((notification) => ({ ...notification, read: true })));
+
+    // Mise à jour côté backend
+    markAllNotificationsAsRead();
   };
   
   const formatTimeAgo = (date) => {
