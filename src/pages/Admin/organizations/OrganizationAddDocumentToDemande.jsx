@@ -69,43 +69,17 @@ const OrganizationAddDocumentToDemande = () => {
     setUploadProgress(0);
 
     try {
-      // 1. Upload du fichier vers votre service de stockage
-      const formData = new FormData();
-      formData.append("file", file);
-
-      // Simuler un upload
-      const uploadResponse = await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            url: `https://storage.example.com/documents/${file.name}`,
-          });
-        }, 2000);
-      });
-
-      // Simuler la progression
-      const interval = setInterval(() => {
-        setUploadProgress((prev) => {
-          if (prev >= 90) {
-            clearInterval(interval);
-            return prev;
-          }
-          return prev + 10;
-        });
-      }, 300);
-
-      // 2. Mettre à jour l'état du formulaire avec l'URL du fichier
+      // Le fichier sera uploadé directement avec le formulaire via documentService.create
+      // On stocke juste le fichier pour l'envoyer plus tard
+      setFileList([file]);
       form.setFieldsValue({
-        urlOriginal: uploadResponse.url,
         codeAdn: file.name.replace(/\.[^/.]+$/, ""),
       });
-      setFileList([file]);
-
-      clearInterval(interval);
       setUploadProgress(100);
       onSuccess();
     } catch (error) {
-      console.error("Erreur lors du téléversement:", error);
-      message.error("Erreur lors du téléversement du document");
+      console.error("Erreur lors de la préparation du fichier:", error);
+      message.error("Erreur lors de la préparation du document");
       onError();
     } finally {
       setUploading(false);
@@ -116,21 +90,31 @@ const OrganizationAddDocumentToDemande = () => {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const payload = {
-        demandePartageId: demandeId,
-        ownerOrgId: values.ownerOrgId,
-        codeAdn: values.codeAdn,
-        urlOriginal: values.urlOriginal,
-        estTraduit: false,
-        aDocument: true,
-      };
+      // Récupérer le fichier depuis fileList
+      const file = fileList[0]?.originFileObj;
+      if (!file) {
+        message.error("Veuillez sélectionner un fichier");
+        setLoading(false);
+        return;
+      }
 
-      const response = await documentService.create(payload);
+      // Créer FormData avec le fichier et les autres données
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("demandePartageId", demandeId);
+      formData.append("ownerOrgId", values.ownerOrgId);
+      if (values.codeAdn) {
+        formData.append("codeAdn", values.codeAdn);
+      }
+      formData.append("estTraduit", "false");
+      formData.append("aDocument", "true");
+
+      const response = await documentService.create(formData);
       message.success("Document ajouté à la demande avec succès");
       navigate(`/demandes/${demandeId}/documents`);
     } catch (error) {
       console.error("Erreur lors de l'ajout du document:", error);
-      message.error("Erreur lors de l'ajout du document à la demande");
+      message.error(error?.response?.data?.message || error?.message || "Erreur lors de l'ajout du document à la demande");
     } finally {
       setLoading(false);
     }
@@ -206,8 +190,15 @@ const OrganizationAddDocumentToDemande = () => {
 
               <Col span={24}>
                 <Form.Item
-                  name="urlOriginal"
+                  name="file"
                   label="Document"
+                  valuePropName="fileList"
+                  getValueFromEvent={(e) => {
+                    if (Array.isArray(e)) {
+                      return e;
+                    }
+                    return e?.fileList;
+                  }}
                   rules={[{ required: true, message: "Un document est obligatoire" }]}
                 >
                   <Dragger
@@ -216,6 +207,7 @@ const OrganizationAddDocumentToDemande = () => {
                     maxCount={1}
                     accept=".pdf"
                     disabled={uploading}
+                    beforeUpload={() => false}
                   >
                     <p className="ant-upload-drag-icon">
                       <FilePdfOutlined style={{ fontSize: "48px", color: "#1890ff" }} />
@@ -224,7 +216,7 @@ const OrganizationAddDocumentToDemande = () => {
                     <p className="ant-upload-hint">
                       {uploading ? (
                         <>
-                          Téléchargement en cours... <Spin size="small" />
+                          Préparation en cours... <Spin size="small" />
                         </>
                       ) : (
                         "Seuls les fichiers PDF sont acceptés"

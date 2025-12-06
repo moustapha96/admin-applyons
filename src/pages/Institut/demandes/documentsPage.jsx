@@ -201,8 +201,10 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { Card, Table, Tag, Space, Typography, Button, message, Breadcrumb } from "antd";
 import dayjs from "dayjs";
 import demandeService from "@/services/demandeService";
+import documentService from "@/services/documentService";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { normalizeDocument } from "@/utils/documentUtils";
 
 const { Title, Text } = Typography;
 
@@ -238,12 +240,21 @@ export default function DemandeDocumentsPage() {
     // Supporte: tableau brut | {items: []} | {documents: []}
     const list = Array.isArray(res) ? res : (res?.items ?? res?.documents ?? []);
     if (!Array.isArray(list)) return [];
-    return list.map((doc) => ({
-      ...doc,
-      _urlOriginal: normalizeUrl(doc.urlOriginal),
-      _urlChiffre: normalizeUrl(doc.urlChiffre),
-      _filename: fileNameFromUrl(doc.urlOriginal),
-    }));
+    return list.map((doc) => {
+      // Normaliser le document pour utiliser la nouvelle structure
+      const normalized = normalizeDocument(doc);
+      return {
+        ...normalized,
+        // Garder les anciennes propriétés pour compatibilité
+        urlOriginal: doc.urlOriginal || normalized.original?.url,
+        urlChiffre: doc.urlChiffre || normalized.original?.urlChiffre,
+        urlTraduit: doc.urlTraduit || normalized.traduit?.url,
+        urlChiffreTraduit: doc.urlChiffreTraduit || normalized.traduit?.urlChiffre,
+        _urlOriginal: normalizeUrl(doc.urlOriginal || normalized.original?.url),
+        _urlChiffre: normalizeUrl(doc.urlChiffre || normalized.original?.urlChiffre),
+        _filename: fileNameFromUrl(doc.urlOriginal || normalized.original?.url),
+      };
+    });
   };
 
   const fetchDemande = async () => {
@@ -277,10 +288,27 @@ export default function DemandeDocumentsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const openUrl = (u) => {
-    const url = normalizeUrl(u);
-    if (!url) return message.warning(t("demandeDocuments.toasts.urlMissing"));
-    window.open(url, "_blank", "noopener,noreferrer");
+  const openUrl = async (doc, type = "original") => {
+    try {
+      if (!doc?.id) {
+        message.warning(t("demandeDocuments.toasts.urlMissing"));
+        return;
+      }
+      // Utiliser getContent pour obtenir le blob avec authentification
+      const blob = await documentService.getContent(doc.id, { type, display: true });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank", "noopener,noreferrer");
+      // Nettoyer l'URL après un délai
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        message.error(t("demandeDocuments.toasts.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error(t("demandeDocuments.toasts.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("demandeDocuments.toasts.openError"));
+      }
+    }
   };
 
   const columns = useMemo(() => ([
@@ -307,8 +335,8 @@ export default function DemandeDocumentsPage() {
       key: "openOriginal",
       width: 120,
       render: (_v, r) =>
-        r.urlOriginal ? (
-          <Button size="small" onClick={() => openUrl(r.urlOriginal)}>{t("demandeDocuments.buttons.open")}</Button>
+        r.id ? (
+          <Button size="small" onClick={() => openUrl(r, "original")}>{t("demandeDocuments.buttons.open")}</Button>
         ) : (
           <Tag>{t("demandeDocuments.table.dash")}</Tag>
         ),
@@ -318,8 +346,8 @@ export default function DemandeDocumentsPage() {
       key: "openTranslated",
       width: 120,
       render: (_v, r) =>
-        r.urlTraduit ? (
-          <Button size="small" onClick={() => openUrl(r.urlTraduit)}>{t("demandeDocuments.buttons.open")}</Button>
+        r.id && r.estTraduit ? (
+          <Button size="small" onClick={() => openUrl(r, "traduit")}>{t("demandeDocuments.buttons.open")}</Button>
         ) : (
           <Tag>{t("demandeDocuments.table.dash")}</Tag>
         ),

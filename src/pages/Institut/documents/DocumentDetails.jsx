@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Descriptions, Space, Button, message } from "antd";
-import http from "@/services/http";
+import documentService from "@/services/documentService";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "@/utils/imageUtils";
 
 export default function DocumentDetails() {
   const { t } = useTranslation();
@@ -13,21 +14,33 @@ export default function DocumentDetails() {
   const fetchOne = async () => {
     setLoading(true);
     try {
-      const { data } = await http.get(`/documents/${id}`);
+      const data = await documentService.getById(id);
       setDoc(data?.document || data);
-    } finally { setLoading(false); }
+    } catch (error) {
+      message.error(error?.response?.data?.message || error?.message || t("institutDocuments.details.messages.loadError"));
+    } finally { 
+      setLoading(false); 
+    }
   };
 
   useEffect(()=>{ fetchOne(); },[id]);
 
   const open = async (type) => {
     try {
-      const { data } = await http.get(`/documents/${id}/content`, {
-        params: { type, display: true },
-      });
-      window.open(data?.url || data, "_blank");
-    } catch {
-      message.error(t("institutDocuments.details.messages.openError"));
+      // Utiliser getContent pour obtenir le blob avec authentification
+      const blob = await documentService.getContent(id, { type, display: true });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+      // Nettoyer l'URL après un délai
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        message.error(t("institutDocuments.details.messages.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error(t("institutDocuments.details.messages.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("institutDocuments.details.messages.openError"));
+      }
     }
   };
 

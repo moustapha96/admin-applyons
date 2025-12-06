@@ -24,11 +24,49 @@ const documentService = {
     },
 
     // Contenu (PDF/Blob)
-    getContent: (id, { type = 'original', display = true } = {}) =>
-        axiosInstance.get(`/documents/${id}/content`, {
-            params: { type, display },
-            responseType: 'blob',
-        }),
+    getContent: async function getContent(id, { type = 'original', display = true, retries = 0 } = {}) {
+        // Le backend peut utiliser "traduit" ou "translated" selon la version
+        // Essayer d'abord avec le type fourni, puis avec les alternatives
+        let normalizedType = type;
+        
+        // Normaliser les variantes
+        if (type === 'translated') {
+            normalizedType = 'traduit';
+        } else if (type === 'traduit') {
+            normalizedType = 'traduit';
+        }
+        
+        try {
+            return await axiosInstance.get(`/documents/${id}/content`, {
+                params: { type: normalizedType, display },
+                responseType: 'blob',
+            });
+        } catch (error) {
+            // Si 404 avec "traduit", essayer avec "translated" (fallback)
+            if (error.response?.status === 404 && normalizedType === 'traduit') {
+                try {
+                    return await axiosInstance.get(`/documents/${id}/content`, {
+                        params: { type: 'translated', display },
+                        responseType: 'blob',
+                    });
+                } catch (fallbackError) {
+                    // Si toujours 404 et qu'on n'a pas encore fait de retry, attendre un peu et réessayer
+                    if (retries < 2) {
+                        await new Promise(resolve => setTimeout(resolve, 1000 * (retries + 1)));
+                        return this.getContent(id, { type, display, retries: retries + 1 });
+                    }
+                    // Si toujours 404 après retries, le fichier n'existe vraiment pas
+                    const errorMessage = fallbackError?.response?.data?.message || 
+                                       error?.response?.data?.message || 
+                                       'Document traduit non disponible. Le fichier peut ne pas être encore prêt après l\'upload.';
+                    const enhancedError = new Error(errorMessage);
+                    enhancedError.response = fallbackError?.response || error?.response;
+                    throw enhancedError;
+                }
+            }
+            throw error;
+        }
+    },
 
     // Info & vérification
     getInfo: (id) => axiosInstance.get(`/documents/${id}/info`),
@@ -45,7 +83,36 @@ const documentService = {
 
     addDocument: (id, payload) => axiosInstance.post(`/demandes/${id}/documents`, payload).then(r => r.data),
     getDocumentInfo: (documentId) => axiosInstance.get(`/demandes/documents/${documentId}/info`).then(r => r.data),
-    getDocumentContentUrl: (documentId, type = "original") => `/demandes/documents/${documentId}/content?type=${type}`,
+    // Obtenir l'URL d'affichage d'un document (utilise l'endpoint /content avec auth)
+    getDocumentContentUrl: (documentId, type = "original", display = true) => {
+        // Retourne le chemin relatif pour l'endpoint /content
+        // Cet endpoint nécessite authentification et sera appelé via axiosInstance
+        return `/documents/${documentId}/content?type=${type}&display=${display}`;
+    },
+
+    // Télécharger un document
+    downloadDocument: async (documentId, type = "original", filename = null) => {
+        try {
+            // getContent retourne déjà le blob (via l'interceptor qui retourne res.data)
+            const blob = await documentService.getContent(documentId, { type, display: false });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename || `document_${documentId}_${type}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            // Gérer les erreurs d'authentification
+            if (error.response?.status === 401) {
+                throw new Error('Session expirée. Veuillez vous reconnecter.');
+            } else if (error.response?.status === 403) {
+                throw new Error('Vous n\'avez pas accès à ce document.');
+            }
+            throw error;
+        }
+    },
 
     listByDemande: (demandeId, params = {}) =>
         axiosInstance.get(`/demandes/${demandeId}/documents`, { params }),

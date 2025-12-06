@@ -24,6 +24,7 @@ import {
 } from "@ant-design/icons";
 import documentService from "../../../services/documentService";
 import { useAuth } from "../../../hooks/useAuth";
+import { buildImageUrl } from "@/utils/imageUtils";
 
 const { confirm } = Modal;
 
@@ -57,26 +58,38 @@ const OrganizationDemandeDocuments = () => {
   };
 
 
-  const handlePreviewDocument = (documentId, type = "original") => {
-    const url = `/documents/${documentId}/preview?type=${type}`;
-    window.open(url, "_blank");
+  const handlePreviewDocument = async (documentId, type = "original") => {
+    try {
+      // Utiliser getContent pour obtenir le blob avec authentification
+      const blob = await documentService.getContent(documentId, { type, display: true });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+      // Nettoyer l'URL après un délai
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        message.error("Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error("Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || "Erreur lors de l'ouverture du document");
+      }
+    }
   };
 
   const handleDownloadDocument = async (documentId, type = "original") => {
     try {
-      const response = await documentService.getContent(documentId, { type, display: false });
-      const blob = new Blob([response.data], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `document_${documentId}_${type}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      // Utiliser downloadDocument pour télécharger avec authentification
+      await documentService.downloadDocument(documentId, type, `document_${documentId}_${type}.pdf`);
+      message.success("Téléchargement réussi");
     } catch (error) {
-      console.error("Erreur lors du téléchargement:", error);
-      message.error("Erreur lors du téléchargement du document");
+      if (error.response?.status === 401) {
+        message.error("Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error("Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || "Erreur lors du téléchargement du document");
+      }
     }
   };
 

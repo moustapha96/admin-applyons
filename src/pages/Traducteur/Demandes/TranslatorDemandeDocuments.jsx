@@ -34,6 +34,7 @@ import documentService from "@/services/documentService";
 import demandeService from "@/services/demandeService";
 import { useTranslation } from "react-i18next";
 import { buildImageUrl } from "@/utils/imageUtils";
+import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
 
 const { Dragger } = Upload;
 const { Text } = Typography;
@@ -98,8 +99,18 @@ export default function DemandeDocumentsPage() {
           from: f.from || undefined,
           to: f.to || undefined,
         });
-        console.log(documents)
-        setRows(documents || []);
+        console.log('Documents reçus:', documents);
+        // Normaliser les documents pour utiliser la nouvelle structure
+        const normalizedDocs = (documents || []).map(doc => {
+          const normalized = normalizeDocument(doc);
+          console.log('Document normalisé:', normalized.id, {
+            hasOriginal: normalized.original?.hasFile,
+            hasTranslated: normalized.traduit?.hasFile,
+            estTraduit: normalized.estTraduit
+          });
+          return normalized;
+        });
+        setRows(normalizedDocs);
         setPag({ current: page, pageSize, total: pagination?.total || 0 });
       } catch (e) {
         message.error(e?.response?.data?.message || e?.message || t("traducteurDemandeDocuments.messages.loadDocsError"));
@@ -118,22 +129,63 @@ export default function DemandeDocumentsPage() {
   }, [demandeId]);
 
   // Actions Documents
-  const viewDoc = (row, type = "original") => {
-    const url =
-      type === "traduit"
-        ? safeUrl(row.urlTraduit || row.urlChiffreTraduit)
-        : safeUrl(row.urlOriginal || row.urlChiffre);
-    if (!url) return message.warning(t("traducteurDemandeDocuments.messages.noFileAvailable"));
-    window.open(url, "_blank", "noopener,noreferrer");
+  const viewDoc = async (row, type = "original") => {
+    try {
+      // Pour les traductions, vérifier d'abord si le document a vraiment une traduction disponible
+      if (type === "traduit") {
+        // Vérifier via getInfo si le document a une traduction disponible
+        try {
+          const info = await documentService.getInfo(row.id);
+          const docInfo = info?.document || info;
+          const hasTranslated = docInfo?.traduit?.hasFile || docInfo?.estTraduit;
+          
+          if (!hasTranslated) {
+            message.warning(t("traducteurDemandeDocuments.messages.translationNotReady") || "La traduction n'est pas encore disponible. Veuillez rafraîchir la page.");
+            return;
+          }
+        } catch (infoError) {
+          console.warn("Impossible de vérifier les infos du document:", infoError);
+          // Continuer quand même, peut-être que le fichier existe
+        }
+      }
+      
+      // Utiliser getContent pour obtenir le blob avec authentification
+      const blob = await documentService.getContent(row.id, { type, display: true });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank", "noopener,noreferrer");
+      // Nettoyer l'URL après un délai
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        message.error(t("traducteurDemandeDocuments.messages.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error(t("traducteurDemandeDocuments.messages.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else if (error.response?.status === 404) {
+        if (type === "traduit") {
+          message.error(t("traducteurDemandeDocuments.messages.translationNotFound") || "Le fichier traduit n'est pas encore disponible. Le fichier peut être en cours de traitement. Veuillez rafraîchir la page dans quelques instants.");
+        } else {
+          message.error(t("traducteurDemandeDocuments.messages.noFileAvailable"));
+        }
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("traducteurDemandeDocuments.messages.noFileAvailable"));
+      }
+    }
   };
 
-  const downloadDoc = (row, type = "original") => {
-    const url =
-      type === "traduit"
-        ? safeUrl(row.urlTraduit || row.urlChiffreTraduit)
-        : safeUrl(row.urlOriginal || row.urlChiffre);
-    if (!url) return message.warning(t("traducteurDemandeDocuments.messages.noFileToDownload"));
-    window.open(url, "_blank", "noopener,noreferrer");
+  const downloadDoc = async (row, type = "original") => {
+    try {
+      // Utiliser downloadDocument pour télécharger avec authentification
+      await documentService.downloadDocument(row.id, type, `document_${row.id}_${type}.pdf`);
+      message.success(t("traducteurDemandeDocuments.messages.downloadSuccess") || "Téléchargement réussi");
+    } catch (error) {
+      if (error.response?.status === 401) {
+        message.error(t("traducteurDemandeDocuments.messages.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error(t("traducteurDemandeDocuments.messages.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("traducteurDemandeDocuments.messages.noFileToDownload"));
+      }
+    }
   };
 
   const verify = async (docId) => {
@@ -169,10 +221,17 @@ export default function DemandeDocumentsPage() {
       form.append("file", uploadFile);
       if (encryptionKeyTraduit) form.append("encryptionKeyTraduit", encryptionKeyTraduit);
 
-      await documentService.traduireUpload(currentDoc.id, form);
+      const response = await documentService.traduireUpload(currentDoc.id, form);
+      console.log('Réponse upload traduction:', response);
       message.success(t("traducteurDemandeDocuments.messages.uploadSuccess"));
       setOpenModal(false);
-      fetch(pag.current, pag.pageSize, filters);
+      
+      // Attendre un peu plus longtemps pour que le backend traite et sauvegarde le fichier
+      // Le backend peut avoir besoin de temps pour traiter le fichier (chiffrement, stockage, etc.)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Rafraîchir la liste des documents pour obtenir les données à jour
+      await fetch(pag.current, pag.pageSize, filters);
     } catch (e) {
       message.error(e?.response?.data?.message || e?.message || t("traducteurDemandeDocuments.messages.uploadError"));
     }
@@ -181,7 +240,7 @@ export default function DemandeDocumentsPage() {
   // Suppression de la traduction
   const deleteTranslation = async (docId) => {
     try {
-      await documentService.deleteTranslated(docId);
+      await documentService.deleteTranslation(docId);
       message.success(t("traducteurDemandeDocuments.messages.deleteSuccess"));
       fetch(pag.current, pag.pageSize, filters);
     } catch (e) {
@@ -251,7 +310,7 @@ export default function DemandeDocumentsPage() {
       title: t("traducteurDemandeDocuments.columns.translated"),
       key: "traduit",
       render: (_, r) =>
-        r.urlTraduit ? (
+        hasTranslation(r) ? (
           <Space direction="vertical">
             <Space>
               <Tag color="green">{t("traducteurDemandeDocuments.actions.available")}</Tag>

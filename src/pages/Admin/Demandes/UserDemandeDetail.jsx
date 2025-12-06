@@ -68,32 +68,39 @@ export default function AdminDemandeDetail() {
 
   const openDoc = async (docId, type = "original") => {
     try {
-      // Votre backend supporte /documents/:id/content?type=original|traduit&disposition=inline
-      const resp = await documentService.getContent(docId, { type, display: true });
-      const blob = new Blob([resp.data], { type: "application/pdf" });
+      // getContent retourne déjà le blob directement (via l'interceptor qui retourne res.data)
+      // Mais pour responseType: 'blob', axios retourne le blob dans res.data
+      // L'interceptor retourne res.data, donc on obtient directement le blob
+      const blob = await documentService.getContent(docId, { type, display: true });
       const url = URL.createObjectURL(blob);
       setPreviewUrl(url);
       setPreviewTitle(type === "traduit" ? t("adminDemandeDetail.documents.translated") : t("adminDemandeDetail.documents.original"));
       setPreviewVisible(true);
     } catch (e) {
       console.error(e);
-      message.error(t("adminDemandeDetail.messages.openError"));
+      if (e.response?.status === 401) {
+        message.error(t("adminDemandeDetail.messages.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (e.response?.status === 403) {
+        message.error(t("adminDemandeDetail.messages.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(t("adminDemandeDetail.messages.openError"));
+      }
     }
   };
 
   const downloadDoc = async (docId, type = "original") => {
     try {
-      const resp = await documentService.getContent(docId, { type, display: false });
-      const blob = new Blob([resp.data], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `document_${docId}_${type}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
+      await documentService.downloadDocument(docId, type, `document_${docId}_${type}.pdf`);
+      message.success(t("adminDemandeDetail.messages.downloadSuccess") || "Téléchargement réussi");
     } catch (e) {
       console.error(e);
-      message.error(t("adminDemandeDetail.messages.downloadError"));
+      if (e.response?.status === 401) {
+        message.error(t("adminDemandeDetail.messages.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (e.response?.status === 403) {
+        message.error(t("adminDemandeDetail.messages.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(t("adminDemandeDetail.messages.downloadError"));
+      }
     }
   };
 

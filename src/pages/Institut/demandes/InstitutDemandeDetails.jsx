@@ -22,7 +22,9 @@ import {
 import dayjs from "dayjs";
 import { ArrowLeftOutlined, FileTextOutlined } from "@ant-design/icons";
 import demandeService from "@/services/demandeService";
+import documentService from "@/services/documentService";
 import { useTranslation } from "react-i18next";
+import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -78,12 +80,13 @@ export default function InstitutDemandeDetails() {
       const d = res?.demande ?? res;
       setDemande(d);
       const list = Array.isArray(d?.documents) ? d.documents : [];
-      const norm = list.map((doc) => ({
+      // Normaliser les documents pour utiliser la nouvelle structure
+      const norm = list.map((doc) => normalizeDocument({
         ...doc,
-        urlOriginal: normalizeUrl(doc.urlOriginal),
-        urlChiffre: normalizeUrl(doc.urlChiffre),
-        urlTraduit: normalizeUrl(doc.urlTraduit),
-        urlChiffreTraduit: normalizeUrl(doc.urlChiffreTraduit),
+        urlOriginal: normalizeUrl(doc.urlOriginal || doc.original?.url),
+        urlChiffre: normalizeUrl(doc.urlChiffre || doc.original?.urlChiffre),
+        urlTraduit: normalizeUrl(doc.urlTraduit || doc.traduit?.url),
+        urlChiffreTraduit: normalizeUrl(doc.urlChiffreTraduit || doc.traduit?.urlChiffre),
       }));
       setDocs(norm);
     } catch (e) {
@@ -101,7 +104,30 @@ export default function InstitutDemandeDetails() {
     return <Tag color={STATUS_COLOR[s] || "default"}>{t(`institutDemandeDetails.statuses.${s}`)}</Tag>;
   }, [demande, t]);
 
-  const openUrl = (u) => {
+  const openUrl = async (doc, type = "original") => {
+    try {
+      if (!doc?.id) {
+        message.warning(t("institutDemandeDetails.toasts.urlMissing") || "Document non disponible");
+        return;
+      }
+      // Utiliser getContent pour obtenir le blob avec authentification
+      const blob = await documentService.getContent(doc.id, { type, display: true });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank", "noopener,noreferrer");
+      // Nettoyer l'URL après un délai
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        message.error(t("institutDemandeDetails.toasts.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error(t("institutDemandeDetails.toasts.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("institutDemandeDetails.toasts.openError") || "Erreur lors de l'ouverture du document");
+      }
+    }
+  };
+
+  const openUrlOld = (u) => {
     const url = normalizeUrl(u);
     if (!url) return message.warning(t("institutDemandeDetails.toasts.urlMissing"));
     window.open(url, "_blank", "noopener,noreferrer");
@@ -173,8 +199,8 @@ export default function InstitutDemandeDetails() {
       key: "openOriginal",
       width: 120,
       render: (_v, r) =>
-        r.urlOriginal ? (
-          <Button size="small" onClick={() => openUrl(r.urlOriginal)}>{t("institutDemandeDetails.buttons.open")}</Button>
+        r.id ? (
+          <Button size="small" onClick={() => openUrl(r, "original")}>{t("institutDemandeDetails.buttons.open")}</Button>
         ) : (
           <Tag>{t("institutDemandeDetails.tags.dash")}</Tag>
         ),
@@ -184,8 +210,8 @@ export default function InstitutDemandeDetails() {
       key: "openTranslated",
       width: 120,
       render: (_v, r) =>
-        r.urlTraduit ? (
-          <Button size="small" onClick={() => openUrl(r.urlTraduit)}>{t("institutDemandeDetails.buttons.open")}</Button>
+        r.id && r.estTraduit ? (
+          <Button size="small" onClick={() => openUrl(r, "traduit")}>{t("institutDemandeDetails.buttons.open")}</Button>
         ) : (
           <Tag>{t("institutDemandeDetails.tags.dash")}</Tag>
         ),

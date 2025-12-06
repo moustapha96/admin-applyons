@@ -1,42 +1,67 @@
+import { useState } from "react";
 import { Form, Input, Switch, Button, Card, Space, Upload, message } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { httpPost } from "../../utils/http";
 import { useTranslation } from "react-i18next";
+import documentService from "@/services/documentService";
 
 export default function DocumentUpload(){
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const [sp] = useSearchParams();
   const nav = useNavigate();
+  const [fileList, setFileList] = useState([]);
 
   const initialValues = {
     demandePartageId: sp.get("demandeId") || "",
     ownerOrgId: "",
     codeAdn: "",
-    urlOriginal: "",
     estTraduit: false
   };
 
   const customRequest = async ({ file, onSuccess, onError })=>{
     try{
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch("/api/upload", { method:"POST", body: fd, credentials:"include" });
-      const data = await res.json();
-      if(!res.ok) throw new Error(data?.message || t("institutDocuments.upload.messages.uploadFailed"));
-      form.setFieldValue("urlOriginal", data.url);
-      message.success(t("institutDocuments.upload.messages.uploadSuccess"));
-      onSuccess(data);
+      // On stocke juste le fichier, il sera envoyé avec le formulaire
+      setFileList([file]);
+      form.setFieldValue("codeAdn", file.name.replace(/\.[^/.]+$/, ""));
+      onSuccess();
     }catch(e){
       onError(e);
     }
   };
 
   const submit = async (values)=>{
-    const res = await httpPost("/api/documents", values);
-    message.success(t("institutDocuments.upload.messages.saveSuccess"));
-    nav(`/documents/${res?.document?.id}`);
+    try {
+      const file = fileList[0]?.originFileObj;
+      if (!file) {
+        message.error(t("institutDocuments.upload.messages.fileRequired"));
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", file);
+      if (values.demandePartageId) {
+        formData.append("demandePartageId", values.demandePartageId);
+      }
+      if (values.ownerOrgId) {
+        formData.append("ownerOrgId", values.ownerOrgId);
+      }
+      if (values.codeAdn) {
+        formData.append("codeAdn", values.codeAdn);
+      }
+      formData.append("estTraduit", values.estTraduit ? "true" : "false");
+
+      const res = await documentService.create(formData);
+      message.success(t("institutDocuments.upload.messages.saveSuccess"));
+      const docId = res?.document?.id || res?.id || res?.data?.document?.id;
+      if (docId) {
+        nav(`/documents/${docId}`);
+      } else {
+        nav(-1);
+      }
+    } catch (error) {
+      message.error(error?.response?.data?.message || error?.message || t("institutDocuments.upload.messages.saveError"));
+    }
   };
 
   return (
@@ -45,16 +70,29 @@ export default function DocumentUpload(){
         <Form.Item name="demandePartageId" label={t("institutDocuments.upload.labels.demandeId")} rules={[{ required:true }]}><Input /></Form.Item>
         <Form.Item name="ownerOrgId" label={t("institutDocuments.upload.labels.ownerOrg")} rules={[{ required:true }]}><Input /></Form.Item>
 
-        <Form.Item label={t("institutDocuments.upload.labels.file")}>
-          <Upload.Dragger name="file" customRequest={customRequest} multiple={false} accept=".pdf,.png,.jpg,.jpeg">
+        <Form.Item 
+          name="file" 
+          label={t("institutDocuments.upload.labels.file")}
+          valuePropName="fileList"
+          getValueFromEvent={(e) => {
+            if (Array.isArray(e)) {
+              return e;
+            }
+            return e?.fileList;
+          }}
+          rules={[{ required: true, message: t("institutDocuments.upload.messages.fileRequired") }]}
+        >
+          <Upload.Dragger 
+            customRequest={customRequest} 
+            fileList={fileList}
+            multiple={false} 
+            accept=".pdf,.png,.jpg,.jpeg"
+            beforeUpload={() => false}
+          >
             <p className="ant-upload-drag-icon"><InboxOutlined /></p>
             <p className="ant-upload-text">{t("institutDocuments.upload.uploadText")}</p>
             <p className="ant-upload-hint">{t("institutDocuments.upload.uploadHint")}</p>
           </Upload.Dragger>
-        </Form.Item>
-
-        <Form.Item name="urlOriginal" label={t("institutDocuments.upload.labels.urlOriginal")}>
-          <Input placeholder={t("institutDocuments.upload.urlPlaceholder")} />
         </Form.Item>
 
         <Form.Item name="codeAdn" label={t("institutDocuments.upload.labels.codeAdn")}><Input /></Form.Item>

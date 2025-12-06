@@ -28,6 +28,7 @@ import documentService from "@/services/documentService";
 import { CloudUploadOutlined, EyeOutlined, DownloadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { buildImageUrl } from "@/utils/imageUtils";
+import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
@@ -71,6 +72,15 @@ export default function TranslatorDemandeDetails() {
 
   // Modal preview PDF
   const [preview, setPreview] = useState({ open: false, url: "", title: "" });
+  
+  // Cleanup URL when preview closes
+  useEffect(() => {
+    return () => {
+      if (preview.url && preview.url.startsWith('blob:')) {
+        URL.revokeObjectURL(preview.url);
+      }
+    };
+  }, [preview.url]);
 
   const fetchDemande = useCallback(async () => {
     setLoading(true);
@@ -84,7 +94,9 @@ export default function TranslatorDemandeDetails() {
         return;
       }
       setDemande(d);
-      setDocuments(Array.isArray(d.documents) ? d.documents : []);
+      // Normaliser les documents pour utiliser la nouvelle structure
+      const docs = Array.isArray(d.documents) ? d.documents : [];
+      setDocuments(docs.map(doc => normalizeDocument(doc)));
     } catch (e) {
       message.error(e?.response?.data?.message || e?.message || t("traducteurDemandeDetails.messages.loadError"));
     } finally {
@@ -136,6 +148,11 @@ export default function TranslatorDemandeDetails() {
       await documentService.traduireUpload(currentDoc.id, form);
       message.success(t("traducteurDemandeDetails.messages.uploadSuccess"));
       setOpenModal(false);
+      
+      // Attendre un peu plus longtemps pour que le backend traite et sauvegarde le fichier
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Rafraîchir les données de la demande pour obtenir les données à jour
       await fetchDemande();
     } catch (e) {
       message.error(e?.response?.data?.message || e?.message || t("traducteurDemandeDetails.messages.uploadError"));
@@ -156,36 +173,66 @@ export default function TranslatorDemandeDetails() {
   };
 
   // Prévisualisation intégrée (in-app)
-  const openPreview = (doc, kind = "original") => {
-    const raw =
-      kind === "traduit"
-        ? (safeUrl(doc.urlTraduit) || safeUrl(doc.urlChiffreTraduit))
-        : (safeUrl(doc.urlOriginal) || safeUrl(doc.urlChiffre));
-
-    if (!raw) {
-      message.warning(t("traducteurDemandeDetails.messages.noFileAvailable"));
-      return;
+  const openPreview = async (doc, kind = "original") => {
+    try {
+      // Pour les traductions, vérifier d'abord si le document a vraiment une traduction disponible
+      if (kind === "traduit") {
+        try {
+          const info = await documentService.getInfo(doc.id);
+          const docInfo = info?.document || info;
+          const hasTranslated = docInfo?.traduit?.hasFile || docInfo?.estTraduit;
+          
+          if (!hasTranslated) {
+            message.warning(t("traducteurDemandeDetails.messages.translationNotReady") || "La traduction n'est pas encore disponible. Veuillez rafraîchir la page.");
+            return;
+          }
+        } catch (infoError) {
+          console.warn("Impossible de vérifier les infos du document:", infoError);
+          // Continuer quand même, peut-être que le fichier existe
+        }
+      }
+      
+      // Utiliser getContent pour obtenir le blob avec authentification
+      const blob = await documentService.getContent(doc.id, { type: kind, display: true });
+      const url = URL.createObjectURL(blob);
+      setPreview({
+        open: true,
+        url: url,
+        title: kind === "traduit" ? t("traducteurDemandeDetails.messages.previewTitleTranslated", { id: doc.id }) : t("traducteurDemandeDetails.messages.previewTitleOriginal", { id: doc.id }),
+      });
+      // Nettoyer l'URL quand le preview se ferme
+      // (géré dans le cleanup du composant)
+    } catch (error) {
+      if (error.response?.status === 401) {
+        message.error(t("traducteurDemandeDetails.messages.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error(t("traducteurDemandeDetails.messages.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else if (error.response?.status === 404) {
+        if (kind === "traduit") {
+          message.error(t("traducteurDemandeDetails.messages.translationNotFound") || "Le fichier traduit n'est pas encore disponible. Le fichier peut être en cours de traitement. Veuillez rafraîchir la page dans quelques instants.");
+        } else {
+          message.error(t("traducteurDemandeDetails.messages.noFileAvailable"));
+        }
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("traducteurDemandeDetails.messages.noFileAvailable"));
+      }
     }
-    // Option : si tu as un endpoint sécurisé de content streaming, utilise-le ici
-    // const url = documentService.getDocumentContentUrl(doc.id, kind, true);
-    const url = raw;
-    setPreview({
-      open: true,
-      url,
-      title: kind === "traduit" ? t("traducteurDemandeDetails.messages.previewTitleTranslated", { id: doc.id }) : t("traducteurDemandeDetails.messages.previewTitleOriginal", { id: doc.id }),
-    });
   };
 
-  const downloadDirect = (doc, kind = "original") => {
-    const raw =
-      kind === "traduit"
-        ? (safeUrl(doc.urlTraduit) || safeUrl(doc.urlChiffreTraduit))
-        : (safeUrl(doc.urlOriginal) || safeUrl(doc.urlChiffre));
-    if (!raw) {
-      message.warning(t("traducteurDemandeDetails.messages.noFileToDownload"));
-      return;
+  const downloadDirect = async (doc, kind = "original") => {
+    try {
+      // Utiliser downloadDocument pour télécharger avec authentification
+      await documentService.downloadDocument(doc.id, kind, `document_${doc.id}_${kind}.pdf`);
+      message.success(t("traducteurDemandeDetails.messages.downloadSuccess") || "Téléchargement réussi");
+    } catch (error) {
+      if (error.response?.status === 401) {
+        message.error(t("traducteurDemandeDetails.messages.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error(t("traducteurDemandeDetails.messages.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("traducteurDemandeDetails.messages.noFileToDownload"));
+      }
     }
-    window.open(raw, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -302,8 +349,7 @@ export default function TranslatorDemandeDetails() {
                 <Card loading={loading} title={t("traducteurDemandeDetails.sections.documentsPreview")}>
                   <Space direction="vertical" style={{ width: "100%" }}>
                     {documents.slice(0, 5).map((d) => {
-                      const uOrig = safeUrl(d.urlOriginal) || safeUrl(d.urlChiffre);
-                      const uTrad = safeUrl(d.urlTraduit) || safeUrl(d.urlChiffreTraduit);
+                      const hasTranslated = hasTranslation(d);
                       return (
                         <div
                           key={d.id}
@@ -318,43 +364,35 @@ export default function TranslatorDemandeDetails() {
                           <div style={{ minWidth: 0 }}>
                             <div>
                               <Tag style={{ marginTop: 4 }}>{d.ownerOrg?.name || "—"}</Tag>
-                              {d.estTraduit ? <Tag color="green">{t("traducteurDemandeDetails.documents.translated")}</Tag> : <Tag>{t("traducteurDemandeDetails.documents.notTranslated")}</Tag>}
+                              {hasTranslated ? <Tag color="green">{t("traducteurDemandeDetails.documents.translated")}</Tag> : <Tag>{t("traducteurDemandeDetails.documents.notTranslated")}</Tag>}
                             </div>
                           </div>
 
                           <Space wrap size="small">
+                            {/* Bouton pour voir l'original */}
+                            <Button
+                              size="small"
+                              icon={<EyeOutlined />}
+                              type="default"
+                              onClick={() => openPreview(d, "original")}
+                            >
+                              {t("traducteurDemandeDetails.documents.view")}
+                            </Button>
 
-
-                            {uOrig && (
-                              <a href={uOrig} target="_blank" rel="noreferrer">
-                                <Button
-                                  size="small"
-                                  icon={<EyeOutlined />}
-                                  type="default"
-                                  onClick={() => openPreview(d, "traduit")}
-                                >
-                                  {t("traducteurDemandeDetails.documents.view")}
-                                </Button>
-                              </a>
-                            )}
-
-                            {uTrad && (
-                              <>
-                                <a href={uTrad} target="_blank" rel="noreferrer">
-                                  <Button
-                                    size="small"
-                                    icon={<EyeOutlined />}
-                                    type="default"
-                                    onClick={() => openPreview(d, "traduit")}
-                                  >
-                                    {t("traducteurDemandeDetails.documents.viewTranslated")}
-                                  </Button>
-                                </a>
-                              </>
+                            {/* Bouton pour voir la traduction si disponible */}
+                            {hasTranslated && (
+                              <Button
+                                size="small"
+                                icon={<EyeOutlined />}
+                                type="default"
+                                onClick={() => openPreview(d, "traduit")}
+                              >
+                                {t("traducteurDemandeDetails.documents.viewTranslated")}
+                              </Button>
                             )}
 
                             {/* Uploader traduction si non traduit */}
-                            {!d.estTraduit && (
+                            {!hasTranslated && (
                               <Tooltip title={t("traducteurDemandeDetails.tooltips.uploadTranslation")}>
                                 <Button
                                   size="small"
@@ -368,7 +406,7 @@ export default function TranslatorDemandeDetails() {
                             )}
 
                             {/* Supprimer traduction si disponible */}
-                            {d.estTraduit && (
+                            {hasTranslated && (
                               <Tooltip title={t("traducteurDemandeDetails.tooltips.deleteTranslation")}>
                                 <Popconfirm
                                   title={t("traducteurDemandeDetails.modals.deleteTitle")}

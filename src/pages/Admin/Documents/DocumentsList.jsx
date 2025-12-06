@@ -41,6 +41,7 @@ import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import documentService from "@/services/documentService";
 import organizationService from "@/services/organizationService";
+import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
 
 const { RangePicker } = DatePicker;
 const { confirm } = Modal;
@@ -104,7 +105,9 @@ export default function DocumentsList() {
                 to: f.to || undefined,
             });
             console.log(documents);
-            setRows(documents || []);
+            // Normaliser les documents pour utiliser la nouvelle structure
+            const normalizedDocs = (documents || []).map(doc => normalizeDocument(doc));
+            setRows(normalizedDocs);
             setPag({ current: page, pageSize, total: pagination?.total || 0 });
             } catch (e) {
             message.error(e?.response?.data?.message || t("adminDocuments.messages.loadError"));
@@ -123,10 +126,27 @@ export default function DocumentsList() {
     }
 
 
-    const openUrl = (u) => {
-        const url = normalizeUrl(u);
-        if (!url) return message.warning(t("adminDocuments.messages.urlUnavailable"));
-        window.open(url, "_blank", "noopener,noreferrer");
+    const openUrl = async (doc, type = "original") => {
+        try {
+            if (!doc?.id) {
+                message.warning(t("adminDocuments.messages.urlUnavailable"));
+                return;
+            }
+            // Utiliser getContent pour obtenir le blob avec authentification
+            const blob = await documentService.getContent(doc.id, { type, display: true });
+            const url = URL.createObjectURL(blob);
+            window.open(url, "_blank", "noopener,noreferrer");
+            // Nettoyer l'URL après un délai
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+        } catch (error) {
+            if (error.response?.status === 401) {
+                message.error(t("adminDocuments.messages.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+            } else if (error.response?.status === 403) {
+                message.error(t("adminDocuments.messages.accessDenied") || "Vous n'avez pas accès à ce document.");
+            } else {
+                message.error(error?.response?.data?.message || error?.message || t("adminDocuments.messages.openError"));
+            }
+        }
     };
 
 
@@ -198,11 +218,11 @@ export default function DocumentsList() {
             render: (_, r) => (
                 <Space wrap>
                     <Tooltip title={t("adminDocuments.actions.viewOriginal")}>
-                        <Button icon={<EyeOutlined />} onClick={() => openUrl(r.urlOriginal)} />
+                        <Button icon={<EyeOutlined />} onClick={() => openUrl(r, "original")} />
                     </Tooltip>
 
-                    <Tooltip title={t("adminDocuments.actions.viewTranslated")} placement="top" disabled={!r.estTraduit || !r.urlTraduit}>
-                        <Button icon={<TranslationOutlined />} disabled={!r.estTraduit || !r.urlTraduit} onClick={() => openUrl(r.urlTraduit)} />
+                    <Tooltip title={t("adminDocuments.actions.viewTranslated")} placement="top" disabled={!hasTranslation(r)}>
+                        <Button icon={<TranslationOutlined />} disabled={!hasTranslation(r)} onClick={() => openUrl(r, "traduit")} />
                     </Tooltip>
                     <Tooltip title={t("adminDocuments.actions.details")}>
                         <Button icon={<InfoCircleOutlined />} onClick={() => { setDrawerDoc(r); setDrawerOpen(true); }} />
@@ -331,7 +351,7 @@ export default function DocumentsList() {
                                 )}
                             </Descriptions.Item>
                             <Descriptions.Item label={t("adminDocuments.drawer.translationStatus")}>
-                                {drawerDoc.estTraduit ? (
+                                {hasTranslation(drawerDoc) ? (
                                     <Tag color="green">{t("adminDocuments.translation.translated")}</Tag>
                                 ) : (
                                     <Tag>{t("adminDocuments.translation.notTranslated")}</Tag>
@@ -352,11 +372,11 @@ export default function DocumentsList() {
                             </Descriptions.Item>
                             <Descriptions.Item label={t("adminDocuments.drawer.quickActions")}>
                                 <Space wrap>
-                                    <Button icon={<EyeOutlined />} onClick={() => openUrl(drawerDoc.urlOriginal)}>
+                                    <Button icon={<EyeOutlined />} onClick={() => openUrl(drawerDoc, "original")}>
                                         {t("adminDocuments.actions.viewOriginal")}
                                     </Button>
-                                    <Button icon={<TranslationOutlined />} disabled={!drawerDoc.estTraduit || !drawerDoc.urlTraduit}
-                                        onClick={() => openUrl(drawerDoc.urlTraduit)}
+                                    <Button icon={<TranslationOutlined />} disabled={!hasTranslation(drawerDoc)}
+                                        onClick={() => openUrl(drawerDoc, "traduit")}
                                     >
                                         {t("adminDocuments.actions.viewTranslated")}
                                     </Button>

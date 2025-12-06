@@ -1501,8 +1501,10 @@ export default function DemandeurDemandeCreate() {
         current,
         invites,
         selectedNotifyOrgIds,
-        paymentMethod,
-        paymentCompleted,
+        // Sauvegarder les infos de paiement seulement si elles existent
+        // mais elles seront réinitialisées après création de demande
+        paymentMethod: paymentMethod || null,
+        paymentCompleted: paymentCompleted || false,
       };
       localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
       setSavingDraft(false);
@@ -1514,23 +1516,52 @@ export default function DemandeurDemandeCreate() {
 
   const loadDraft = useCallback(() => {
     try {
+      setIsLoadingDraft(true);
       const draft = localStorage.getItem(DRAFT_KEY);
-      if (!draft) return;
+      if (!draft) {
+        setIsLoadingDraft(false);
+        return;
+      }
       const parsed = JSON.parse(draft);
       const values = { ...(parsed.values || {}) };
       values.dob = reviveDate(values.dob);
       values.graduationDate = reviveDate(values.graduationDate);
-      form.setFieldsValue(values);
-      setCurrent(parsed.current ?? 0);
-      setInvites(parsed.invites ?? []);
-      setSelectedNotifyOrgIds(parsed.selectedNotifyOrgIds ?? []);
-      setPaymentMethod(parsed.paymentMethod ?? null);
-      setPaymentCompleted(parsed.paymentCompleted ?? false);
-      message.success(t("demandeurDemandeCreate.messages.draftLoaded"));
+      
+      // Charger d'abord targetOrgId pour que les filières soient disponibles
+      if (values.targetOrgId) {
+        form.setFieldsValue({ targetOrgId: values.targetOrgId });
+        // Attendre que les filières soient chargées avant de définir intendedMajor
+        let checkCount = 0;
+        const maxChecks = 30; // Maximum 3 secondes (30 * 100ms)
+        const checkFilieresLoaded = setInterval(() => {
+          checkCount++;
+          if (filieres.length > 0 || !filieresLoading || checkCount >= maxChecks) {
+            clearInterval(checkFilieresLoaded);
+            form.setFieldsValue(values);
+            setCurrent(parsed.current ?? 0);
+            setInvites(parsed.invites ?? []);
+            setSelectedNotifyOrgIds(parsed.selectedNotifyOrgIds ?? []);
+            setPaymentMethod(parsed.paymentMethod ?? null);
+            setPaymentCompleted(parsed.paymentCompleted ?? false);
+            setIsLoadingDraft(false);
+            message.success(t("demandeurDemandeCreate.messages.draftLoaded"));
+          }
+        }, 100);
+      } else {
+        form.setFieldsValue(values);
+        setCurrent(parsed.current ?? 0);
+        setInvites(parsed.invites ?? []);
+        setSelectedNotifyOrgIds(parsed.selectedNotifyOrgIds ?? []);
+        setPaymentMethod(parsed.paymentMethod ?? null);
+        setPaymentCompleted(parsed.paymentCompleted ?? false);
+        setIsLoadingDraft(false);
+        message.success(t("demandeurDemandeCreate.messages.draftLoaded"));
+      }
     } catch (e) {
       console.error("Échec chargement brouillon:", e);
+      setIsLoadingDraft(false);
     }
-  }, [form, t]);
+  }, [form, t, filieres, filieresLoading]);
 
   const resetDraft = () => {
     try {
@@ -1604,6 +1635,9 @@ export default function DemandeurDemandeCreate() {
 
   /** Load filieres by target org */
   const targetOrgId = Form.useWatch("targetOrgId", form);
+  const [isLoadingDraft, setIsLoadingDraft] = useState(false);
+  const [previousTargetOrgId, setPreviousTargetOrgId] = useState(null);
+  
   useEffect(() => {
     const loadFilieres = async () => {
       if (!targetOrgId) {
@@ -1627,8 +1661,12 @@ export default function DemandeurDemandeCreate() {
       }
     };
     loadFilieres();
-    form.setFieldsValue({ intendedMajor: undefined });
-  }, [targetOrgId, form, t]);
+    // Ne réinitialiser intendedMajor que si l'organisation a vraiment changé (pas lors du chargement initial ou du brouillon)
+    if (previousTargetOrgId !== null && previousTargetOrgId !== targetOrgId && !isLoadingDraft) {
+      form.setFieldsValue({ intendedMajor: undefined });
+    }
+    setPreviousTargetOrgId(targetOrgId);
+  }, [targetOrgId, form, t, isLoadingDraft, previousTargetOrgId]);
 
   /** ------- STRIPE INIT ------- */
   useEffect(() => {
@@ -1879,34 +1917,32 @@ export default function DemandeurDemandeCreate() {
 
       message.success(t("demandeurDemandeCreate.messages.demandeCreated"));
       
-      // Réinitialiser uniquement les champs "academic" et "program" après soumission réussie
-      const fieldsToReset = {
-        // Program (step 2)
-        intendedMajor: undefined,
-        periode: undefined,
-        year: undefined,
-        // Academic (step 3)
-        isEnglishFirstLanguage: undefined,
-        englishProficiencyTests: undefined,
-        testScores: undefined,
-        gradingScale: undefined,
-        gpa: undefined,
-        examsTaken: undefined,
-        countryOfSchool: undefined,
-        secondarySchoolName: undefined,
-        graduationDate: undefined,
-        serie: undefined,
-        niveau: undefined,
-        mention: undefined,
-        annee: undefined,
-      };
-      form.setFieldsValue(fieldsToReset);
-      
+      // Sauvegarder tous les champs du formulaire dans le localStorage (sauf paiement)
       try {
-        localStorage.removeItem(DRAFT_KEY);
+        const rawValues = form.getFieldsValue(true);
+        const values = serializeFormValues(rawValues);
+        
+        // Créer un nouveau brouillon avec tous les champs sauf ceux liés au paiement
+        const draft = {
+          values,
+          current: 0, // Réinitialiser à l'étape 0 pour une nouvelle demande
+          invites,
+          selectedNotifyOrgIds,
+          // Ne pas sauvegarder paymentMethod et paymentCompleted
+          paymentMethod: null,
+          paymentCompleted: false,
+        };
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+        
+        // Réinitialiser les états de paiement dans le composant
+        setPaymentMethod(null);
+        setPaymentCompleted(false);
+        setLastPaymentMeta(null);
+        setClientSecret("");
       } catch (e) {
-        console.error("Échec suppression brouillon:", e);
+        console.error("Échec sauvegarde brouillon après création:", e);
       }
+      
       navigate(`/demandeur/mes-demandes/${d.id}/details`);
     } catch (e) {
       console.error(e);
@@ -1955,7 +1991,38 @@ export default function DemandeurDemandeCreate() {
             }
             style={{ borderRadius: 0, boxShadow: "0 0 10px rgba(0,0,0,0.05)", overflow: "hidden", background: "white", border: "none" }}
           >
-            <Form form={form} layout="vertical" preserve onFinish={onFinish}>
+            <style>{`
+              .ant-form-item-label > label {
+                height: auto !important;
+                min-height: 22px;
+                line-height: 1.5;
+                display: block;
+                width: 100%;
+              }
+              .ant-form-item {
+                margin-bottom: 24px;
+              }
+              .ant-form-item-label {
+                padding-bottom: 4px;
+              }
+              .ant-input,
+              .ant-select-selector,
+              .ant-picker {
+                width: 100% !important;
+              }
+              .ant-col {
+                display: flex;
+                flex-direction: column;
+              }
+            `}</style>
+            <Form 
+              form={form} 
+              layout="vertical" 
+              preserve 
+              onFinish={onFinish}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
               {/* STEP 0 - Identité */}
               <div style={{ display: current === 0 ? "block" : "none" }}>
                 <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
@@ -2017,7 +2084,13 @@ export default function DemandeurDemandeCreate() {
                         size="large"
                         placeholder={t("demandeurDemandeCreate.placeholders.chooseOrganization")}
                         options={orgs.map((o) => ({ value: o.id, label: `${o.name} — ${o.type}` }))}
-                        onChange={() => form.setFieldsValue({ intendedMajor: undefined })}
+                        onChange={(value) => {
+                          // Ne réinitialiser intendedMajor que si on change vraiment d'organisation
+                          const currentTargetOrgId = form.getFieldValue("targetOrgId");
+                          if (currentTargetOrgId && currentTargetOrgId !== value) {
+                            form.setFieldsValue({ intendedMajor: undefined });
+                          }
+                        }}
                         style={{ width: "100%", padding: 8, boxSizing: "border-box" }}
                       />
                     </Form.Item>
@@ -2161,8 +2234,8 @@ export default function DemandeurDemandeCreate() {
                           <RequiredLabel>{t("demandeurDemandeCreate.fields.secondarySchoolName")}</RequiredLabel>
                         </span>
                       }
-                      rules={[{ required: true, message: t("common.required") }]}
                       name="secondarySchoolName"
+                      rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Input size="large" />
                     </Form.Item>
@@ -2174,8 +2247,8 @@ export default function DemandeurDemandeCreate() {
                           <RequiredLabel>{t("demandeurDemandeCreate.fields.countryOfSchool")}</RequiredLabel>
                         </span>
                       }
-                      rules={[{ required: true, message: t("common.required") }]}
                       name="countryOfSchool"
+                      rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Select
                         allowClear
@@ -2193,8 +2266,8 @@ export default function DemandeurDemandeCreate() {
                           <RequiredLabel>{t("demandeurDemandeCreate.fields.graduationDate")}</RequiredLabel>
                         </span>
                       }
-                      rules={[{ required: true, message: t("common.required") }]}
                       name="graduationDate"
+                      rules={[{ required: true, message: t("common.required") }]}
                       getValueProps={(v) => ({ value: reviveDate(v) })}
                     >
                       <DatePicker className="w-full" size="large" allowClear />
@@ -2207,8 +2280,8 @@ export default function DemandeurDemandeCreate() {
                           <RequiredLabel>{t("demandeurDemandeCreate.fields.gradingScale")}</RequiredLabel>
                         </span>
                       }
-                      rules={[{ required: true, message: t("common.required") }]}
                       name="gradingScale"
+                      rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Input size="large" />
                     </Form.Item>
@@ -2220,8 +2293,8 @@ export default function DemandeurDemandeCreate() {
                           <RequiredLabel>{t("demandeurDemandeCreate.fields.gpa")}</RequiredLabel>
                         </span>
                       }
-                      rules={[{ required: true, message: t("common.required") }]}
                       name="gpa"
+                      rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Input size="large" />
                     </Form.Item>
@@ -2284,8 +2357,8 @@ export default function DemandeurDemandeCreate() {
                           <RequiredLabel>{t("demandeurDemandeCreate.fields.parentGuardianName")}</RequiredLabel>
                         </span>
                       }
-                      rules={[{ required: true, message: t("common.required") }]}
                       name="parentGuardianName"
+                      rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Input size="large" />
                     </Form.Item>
@@ -2297,8 +2370,8 @@ export default function DemandeurDemandeCreate() {
                           <RequiredLabel>{t("demandeurDemandeCreate.fields.occupation")}</RequiredLabel>
                         </span>
                       }
-                      rules={[{ required: true, message: t("common.required") }]}
                       name="occupation"
+                      rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Input size="large" />
                     </Form.Item>
@@ -2310,8 +2383,8 @@ export default function DemandeurDemandeCreate() {
                           <RequiredLabel>{t("demandeurDemandeCreate.fields.educationLevel")}</RequiredLabel>
                         </span>
                       }
-                      rules={[{ required: true, message: t("common.required") }]}
                       name="educationLevel"
+                      rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Select
                         allowClear

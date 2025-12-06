@@ -10,6 +10,8 @@ import dayjs from "dayjs";
 import documentService from "@/services/documentService";
 import demandeService from "@/services/demandeService";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "@/utils/imageUtils";
+import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
 
 const { TabPane } = Tabs;
 
@@ -40,7 +42,9 @@ export default function DemandeurDemandeDocuments() {
     setLoading(true);
     try {
       const res = await documentService.listByDemande(demandeId);
-      setRows(res || []);
+      const docs = res || [];
+      // Normaliser les documents pour utiliser la nouvelle structure
+      setRows(docs.map(doc => normalizeDocument(doc)));
     } catch (e) {
       message.error(e?.message || t("demandeDocuments.toasts.loadDocsError"));
     } finally {
@@ -50,9 +54,23 @@ export default function DemandeurDemandeDocuments() {
 
   useEffect(() => { load(); }, [demandeId]);
 
-  const openDoc = (doc, type = "original") => {
-    const url = `/api/documents/${doc.id}/content?type=${type}&disposition=inline`;
-    window.open(url, "_blank");
+  const openDoc = async (doc, type = "original") => {
+    try {
+      // Utiliser getContent pour obtenir le blob avec authentification
+      const blob = await documentService.getContent(doc.id, { type, display: true });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+      // Nettoyer l'URL après un délai
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        message.error(t("demandeDocuments.toasts.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
+      } else if (error.response?.status === 403) {
+        message.error(t("demandeDocuments.toasts.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("demandeDocuments.toasts.openError"));
+      }
+    }
   };
 
   const fmtDateTime = (v) =>
@@ -97,7 +115,7 @@ export default function DemandeurDemandeDocuments() {
       title: t("demandeDocuments.columns.translated"),
       dataIndex: "urlTraduit",
       render: (v, r) =>
-        r.estTraduit && v ? (
+        hasTranslation(r) ? (
           <Button size="small" onClick={() => openDoc(r, "traduit")}>
             {t("demandeDocuments.actions.open")}
           </Button>
