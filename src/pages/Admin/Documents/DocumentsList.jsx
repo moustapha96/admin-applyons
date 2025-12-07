@@ -396,8 +396,9 @@ export default function DocumentsList() {
                         setPreviewUrl(null);
                     }}
                     footer={null}
-                    width="80%"
-                    bodyStyle={{ height: "70vh", overflow: "hidden" }}
+                    width="95vw"
+                    style={{ top: 20, paddingBottom: 0 }}
+                    bodyStyle={{ height: "calc(95vh - 110px)", padding: 0, overflow: "hidden" }}
                     destroyOnClose
                 >
                     {previewUrl ? (

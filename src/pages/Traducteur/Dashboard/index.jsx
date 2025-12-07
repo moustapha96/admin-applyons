@@ -47,10 +47,11 @@ export default function TraducteurDashboard() {
   const { user } = useAuth()
 
   useEffect(() => {
+    if (!user?.id) return
     const fetchStats = async () => {
       try {
         setLoading(true)
-        const res = await dashboardService.getStats()
+        const res = await dashboardService.getTraducteurStats(user.id)
         setStats(res?.data)
       } catch (error) {
         console.error("Error fetching stats:", error)
@@ -60,7 +61,7 @@ export default function TraducteurDashboard() {
       }
     }
     fetchStats()
-  }, [])
+  }, [user?.id, t])
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr")
@@ -69,56 +70,51 @@ export default function TraducteurDashboard() {
   }, [])
 
   const kpis = useMemo(() => {
-    const d = stats || {}
+    const widgets = stats?.widgets || {}
+    const translatedByMe = widgets.translatedByMe || {}
+    const toTranslate = widgets.toTranslate || {}
+    const performance = widgets.performance || {}
+    const demandes = widgets.demandes || {}
+    
+    // Calculer le total des demandes depuis le tableau
+    const demandesTotal = Array.isArray(demandes.total)
+      ? demandes.total.reduce((sum, item) => sum + (item._count?._all || 0), 0)
+      : 0
+    
+    // Calculer le total des documents à traduire
+    const toTranslateTotal = Array.isArray(toTranslate.total) ? toTranslate.total.length : 0
+    
+    // Calculer les traductions validées et en attente
+    const validated = translatedByMe.byStatus?.VALIDATED || 0
+    const pending = translatedByMe.byStatus?.PENDING || 0
+    
+    // Performance ce mois vs mois dernier
+    const thisMonthTotal = Array.isArray(performance.thisMonth)
+      ? performance.thisMonth.reduce((sum, item) => sum + (item._count?._all || 0), 0)
+      : 0
+    const lastMonthTotal = performance.lastMonth || 0
+    
     return [
       {
-        label: t("traducteurDashboard.kpis.usersTotal"),
-        value: d.users?.total ?? 0,
-        sub: t("traducteurDashboard.kpis.usersActive", { count: d.users?.enabled ?? 0 }),
+        label: t("traducteurDashboard.kpis.translatedTotal"),
+        value: translatedByMe.total ?? 0,
+        sub: t("traducteurDashboard.kpis.translatedBreakdown", { validated, pending }),
       },
       {
-        label: t("traducteurDashboard.kpis.organizationsTotal"),
-        value: d.organizations?.total ?? 0,
-        sub: undefined,
+        label: t("traducteurDashboard.kpis.toTranslateTotal"),
+        value: toTranslateTotal,
+        sub: t("traducteurDashboard.kpis.toTranslateSub"),
+      },
+      {
+        label: t("traducteurDashboard.kpis.performanceThisMonth"),
+        value: thisMonthTotal,
+        sub: t("traducteurDashboard.kpis.performanceComparison", { lastMonth: lastMonthTotal }),
       },
       {
         label: t("traducteurDashboard.kpis.demandesTotal"),
-        value: d.demandes?.total ?? 0,
-        sub: d.demandes?.byStatus && Object.keys(d.demandes.byStatus).length > 0
-          ? t("traducteurDashboard.kpis.demandesBreakdown")
-          : t("traducteurDashboard.kpis.demandesNone"),
+        value: demandesTotal,
+        sub: t("traducteurDashboard.kpis.demandesBreakdown"),
       },
-      {
-        label: t("traducteurDashboard.kpis.documentsTotal"),
-        value: d.documents?.total ?? 0,
-        sub: t("traducteurDashboard.kpis.documentsTranslated", { count: d.documents?.translated ?? 0 }),
-      },
-      {
-        label: t("traducteurDashboard.kpis.transactionsTotal"),
-        value: d.transactions?.total ?? 0,
-        sub: d.transactions?.byStatus && Object.keys(d.transactions.byStatus).length > 0
-          ? t("traducteurDashboard.kpis.transactionsBreakdown")
-          : t("traducteurDashboard.empty.noData"),
-      },
-      {
-        label: t("traducteurDashboard.kpis.paymentsTotal"),
-        value: d.payments?.total ?? 0,
-        sub: d.payments?.byStatus && Object.keys(d.payments.byStatus).length > 0
-          ? t("traducteurDashboard.kpis.paymentsBreakdown")
-          : t("traducteurDashboard.empty.noData"),
-      },
-      {
-        label: t("traducteurDashboard.kpis.abonnementsTotal"),
-        value: d.abonnements?.total ?? 0,
-        sub: t("traducteurDashboard.kpis.abonnementsActive", { active: d.abonnements?.active ?? 0, expiring: d.abonnements?.expiringSoon ?? 0 }),
-      },
-     
-      {
-        label: t("traducteurDashboard.kpis.contactsTotal"),
-        value: d.contacts?.total ?? 0,
-        sub: undefined,
-      },
-    
     ]
   }, [stats, t])
 
@@ -154,21 +150,37 @@ export default function TraducteurDashboard() {
 
             {/* Breakdowns */}
             <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-              <PillList title={t("traducteurDashboard.breakdowns.usersByRole")} itemsObj={stats?.users?.byRole} t={t} />
-              <PillList title={t("traducteurDashboard.breakdowns.orgsByType")} itemsObj={stats?.organizations?.byType} t={t} />
+              <PillList 
+                title={t("traducteurDashboard.breakdowns.translatedByType")} 
+                itemsObj={stats?.widgets?.translatedByMe?.byType} 
+                t={t} 
+              />
+              <PillList 
+                title={t("traducteurDashboard.breakdowns.translatedByStatus")} 
+                itemsObj={stats?.widgets?.translatedByMe?.byStatus} 
+                t={t} 
+              />
             </div>
 
             <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-              <PillList title={t("traducteurDashboard.breakdowns.demandesByStatus")} itemsObj={stats?.demandes?.byStatus} t={t} />
-              <PillList title={t("traducteurDashboard.breakdowns.transactionsByStatus")} itemsObj={stats?.transactions?.byStatus} t={t} />
-            </div>
-
-            <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-              <PillList title={t("traducteurDashboard.breakdowns.paymentsByStatus")} itemsObj={stats?.payments?.byStatus} t={t} />
-              {/* Slot libre si tu veux un autre détail plus tard */}
-              <div className="rounded-2xl border border-dashed border-slate-200 p-4 text-sm text-slate-400">
-                {t("traducteurDashboard.empty.freeSpace")}
-              </div>
+              <PillList 
+                title={t("traducteurDashboard.breakdowns.translationsByType")} 
+                itemsObj={stats?.charts?.translationsByType} 
+                t={t} 
+              />
+              <PillList 
+                title={t("traducteurDashboard.breakdowns.demandesByType")} 
+                itemsObj={(() => {
+                  const demandesTotal = stats?.widgets?.demandes?.total || []
+                  const result = {}
+                  demandesTotal.forEach(item => {
+                    const type = item.type || t("traducteurDashboard.common.other")
+                    result[type] = item._count?._all || 0
+                  })
+                  return result
+                })()} 
+                t={t} 
+              />
             </div>
           </>
         )}

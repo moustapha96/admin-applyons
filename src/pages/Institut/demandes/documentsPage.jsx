@@ -1,204 +1,10 @@
-// /* eslint-disable no-unused-vars */
-// "use client";
 
-// import { useEffect, useMemo, useState } from "react";
-// import { useParams, Link, useNavigate } from "react-router-dom";
-// import { Card, Table, Tag, Space, Typography, Button, message, Breadcrumb } from "antd";
-// import dayjs from "dayjs";
-// import demandeService from "@/services/demandeService";
-
-// import {
-//   ArrowLeftOutlined,
-// } from "@ant-design/icons";
-// const { Title } = Typography;
-
-// function fmtDate(v, withTime = false) {
-//   if (!v) return "—";
-//   console.log(v)
-//   const d = dayjs(v);
-//   return withTime ? d.format("DD/MM/YYYY HH:mm") : d.format("YYYY");
-// }
-
-// // Corrige les URLs sans "/" après le host
-// function normalizeUrl(u) {
-//   return u
-// }
-
-// function fileNameFromUrl(u) {
-//   try {
-//     const url = new URL(normalizeUrl(u));
-//     const last = url.pathname.split("/").filter(Boolean).pop();
-//     return last || "—";
-//   } catch {
-//     return "—";
-//   }
-// }
-
-// export default function DemandeDocumentsPage() {
-//   const { id } = useParams(); // demandePartageId
-//   const navigate = useNavigate();
-
-//   const [rows, setRows] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   const [demande, setDemande] = useState(null);
-
-//   const normalizeItems = (res) => {
-//     // Supporte: tableau brut | {items: []} | {documents: []}
-//     const list = Array.isArray(res) ? res : (res?.items ?? res?.documents ?? []);
-//     if (!Array.isArray(list)) return [];
-//     return list.map((doc) => ({
-//       ...doc,
-//       _urlOriginal: normalizeUrl(doc.urlOriginal),
-//       _urlChiffre: normalizeUrl(doc.urlChiffre),
-//       _filename: fileNameFromUrl(doc.urlOriginal),
-//     }));
-//   };
-
-//   const fetchDemande = async () => {
-//     setLoading(true);
-//     try {
-//       const res = await demandeService.getById(id);
-//       const d = res?.demande ?? res;
-//       console.log(d)
-//       setDemande(d);
-//     } catch (e) {
-//       message.error(e?.message || "Erreur lors du chargement de la demande");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-
-//   const load = async () => {
-//     setLoading(true);
-//     try {
-//       const res = await demandeService.listDocuments(id);
-//       console.log(res);
-//       setRows(normalizeItems(res));
-//     } catch (e) {
-//       message.error(e?.message || "Échec chargement des documents");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     load();
-//     fetchDemande();
-//   }, [id]);
-
-
-//   const openUrl = (u) => {
-//     const url = normalizeUrl(u);
-//     if (!url) return message.warning("URL indisponible");
-//     window.open(url, "_blank", "noopener,noreferrer");
-//   };
-
-
-//   const columns = useMemo(() => ([
-
-//     {
-//       title: "Institut",
-//       key: "owner",
-//       width: 260,
-//       render: (_v, r) => {
-//         const org = r.ownerOrg || {};
-//         return (
-//           <Space size={6} wrap>
-//             <span>{org.name || "—"}</span>
-//             {org.type ? <Tag>{org.type}</Tag> : null}
-//             {org.slug ? <Tag color="default">{org.slug}</Tag> : null}
-//           </Space>
-//         );
-//       },
-//     },
-//     { title: "Type", dataIndex: "type", width: 140, render: (v) => v || "—" },
-//     { title: "Mention", dataIndex: "mention", render: (v) => v || "—" },
-
-//     {
-//       title: "Date d’obtention", dataIndex: "dateObtention",
-//       width: 160, render: (v) => fmtDate(v)
-//     },
-//     {
-//       title: "Document",
-//       key: "openOriginal",
-//       width: 120,
-//       render: (_v, r) =>
-//         r.urlOriginal ? (
-//           <Button size="small" onClick={() => openUrl(r.urlOriginal)}>Ouvrir</Button>
-//         ) : (
-//           <Tag>—</Tag>
-//         ),
-//     },
-
-//     {
-//       title: "Traduit",
-//       key: "openTranslated",
-//       width: 120,
-//       render: (_v, r) =>
-//         r.urlTraduit ? (
-//           <Button size="small" onClick={() => openUrl(r.urlTraduit)}>Ouvrir</Button>
-//         ) : (
-//           <Tag>—</Tag>
-//         ),
-//     },
-
-//   ]), []);
-
-//   return (
-//     <div className="container-fluid relative px-3">
-//       <div className="layout-specing">
-//         <div className="md:flex justify-between items-center mb-6">
-//           <Space>
-//             <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)}>
-//               Retour
-//             </Button>
-//           </Space>
-
-//           <Breadcrumb
-//             items={[
-//               { title: <Link to="/organisations/dashboard">Dashboard</Link> },
-//               { title: <Link to="/organisations/demandes">Demandes</Link> },
-//               { title: <Link to={`/organisations/demandes/${id}/details`}>Détails</Link> },
-//               { title: "Documents" },
-//             ]}
-//           />
-//         </div>
-
-
-//         <div className="p-2 md:p-4">
-//           <Space align="center" className="mb-3" wrap>
-//             <Title level={3} className="!mb-0">
-//               Documents de la demande{" "}
-//               <Typography.Text copyable={{ text: demande?.code }}>
-//                 <Tag> {demande?.code}</Tag>
-//               </Typography.Text>
-//             </Title>
-//           </Space>
-
-
-//           <Card>
-//             <Table
-//               rowKey={(r) => r.id}
-//               loading={loading}
-//               columns={columns}
-//               dataSource={rows}
-//               scroll={{ x: true }}
-//               pagination={{ pageSize: 10, showSizeChanger: true }}
-//               locale={{ emptyText: "Aucun document" }}
-//             />
-//           </Card>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
 /* eslint-disable no-unused-vars */
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Card, Table, Tag, Space, Typography, Button, message, Breadcrumb } from "antd";
+import { Card, Table, Tag, Space, Typography, Button, message, Breadcrumb, Modal, Spin } from "antd";
 import dayjs from "dayjs";
 import demandeService from "@/services/demandeService";
 import documentService from "@/services/documentService";
@@ -235,6 +41,7 @@ export default function DemandeDocumentsPage() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const [demande, setDemande] = useState(null);
+  const [preview, setPreview] = useState({ open: false, url: "", title: "", loading: false });
 
   const normalizeItems = (res) => {
     // Supporte: tableau brut | {items: []} | {documents: []}
@@ -294,13 +101,19 @@ export default function DemandeDocumentsPage() {
         message.warning(t("demandeDocuments.toasts.urlMissing"));
         return;
       }
+      setPreview({ open: true, url: "", title: "", loading: true });
+      
       // Utiliser getContent pour obtenir le blob avec authentification
       const blob = await documentService.getContent(doc.id, { type, display: true });
       const url = URL.createObjectURL(blob);
-      window.open(url, "_blank", "noopener,noreferrer");
-      // Nettoyer l'URL après un délai
-      setTimeout(() => URL.revokeObjectURL(url), 100);
+      
+      const title = type === "original" 
+        ? t("demandeDocuments.preview.titleOriginal", { id: doc.id })
+        : t("demandeDocuments.preview.titleTranslated", { id: doc.id });
+      
+      setPreview({ open: true, url, title, loading: false });
     } catch (error) {
+      setPreview({ open: false, url: "", title: "", loading: false });
       if (error.response?.status === 401) {
         message.error(t("demandeDocuments.toasts.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
       } else if (error.response?.status === 403) {
@@ -309,6 +122,13 @@ export default function DemandeDocumentsPage() {
         message.error(error?.response?.data?.message || error?.message || t("demandeDocuments.toasts.openError"));
       }
     }
+  };
+
+  const handleClosePreview = () => {
+    if (preview.url) {
+      URL.revokeObjectURL(preview.url);
+    }
+    setPreview({ open: false, url: "", title: "", loading: false });
   };
 
   const columns = useMemo(() => ([
@@ -397,6 +217,45 @@ export default function DemandeDocumentsPage() {
           </Card>
         </div>
       </div>
+
+      {/* Modal Preview PDF */}
+      <Modal
+        open={preview.open}
+        title={preview.title || t("demandeDocuments.preview.title")}
+        onCancel={handleClosePreview}
+        footer={
+          <Space>
+            {preview.url && (
+              <a href={preview.url} target="_blank" rel="noreferrer">
+                <Button type="default">{t("demandeDocuments.preview.openInNewTab")}</Button>
+              </a>
+            )}
+            <Button type="primary" onClick={handleClosePreview}>
+              {t("demandeDocuments.preview.close")}
+            </Button>
+          </Space>
+        }
+        width="95vw"
+        style={{ top: 20, paddingBottom: 0 }}
+        bodyStyle={{ height: "calc(95vh - 110px)", padding: 0 }}
+        destroyOnClose
+      >
+        {preview.loading ? (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+            <Spin size="large" />
+          </div>
+        ) : preview.url ? (
+          <iframe
+            src={preview.url}
+            title="aperçu-pdf"
+            style={{ width: "100%", height: "100%", border: "none" }}
+          />
+        ) : (
+          <div style={{ padding: 16 }}>
+            <Text type="secondary">{t("demandeDocuments.preview.noContent")}</Text>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

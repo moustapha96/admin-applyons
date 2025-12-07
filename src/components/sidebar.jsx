@@ -276,9 +276,19 @@ export default function Sidebar() {
   // Menu de base selon le rôle de l'utilisateur
   const baseMenu = useMemo(() => resolveMenuForUser(user, handleLogOut), [user, handleLogOut]);
 
+  // Fonction pour vérifier si une route correspond (gère les routes paramétrées)
+  const isRouteActive = (route) => {
+    if (!route) return false;
+    if (current === route) return true;
+    // Pour les routes paramétrées, vérifier si le chemin commence par la route
+    return current.startsWith(route + "/") || current.startsWith(route + "?");
+  };
+
   // ouvre automatiquement le parent du chemin courant
   useEffect(() => {
-    const parentWithChild = baseMenu.find((m) => m.children?.some?.((c) => c.to === current));
+    const parentWithChild = baseMenu.find((m) => 
+      m.children?.some?.((c) => isRouteActive(c.to))
+    );
     if (parentWithChild) setOpenKey(parentWithChild.i18nKey);
   }, [current, baseMenu]);
 
@@ -312,12 +322,20 @@ export default function Sidebar() {
               const itemLabel = labelOf(item.i18nKey);
 
               if (!item.children?.length) {
-                const active = item.to && current === item.to ? "active" : "";
+                const active = item.to && isRouteActive(item.to) ? "active" : "";
                 // Gérer les items avec onClick (comme logout)
                 if (item.onClick) {
                   return (
                     <li key={item.i18nKey} className={active}>
-                      <a href="#" onClick={(e) => { e.preventDefault(); item.onClick(); }}>
+                      <a 
+                        href="#" 
+                        onClick={(e) => { 
+                          e.preventDefault(); 
+                          e.stopPropagation();
+                          item.onClick(); 
+                        }}
+                        className="sidebar-link"
+                      >
                         <div className="icon me-3">{item.icon}</div>
                         {itemLabel}
                       </a>
@@ -326,7 +344,7 @@ export default function Sidebar() {
                 }
                 return (
                   <li key={item.i18nKey} className={active}>
-                    <Link to={item.to}>
+                    <Link to={item.to} onClick={(e) => e.stopPropagation()}>
                       <div className="icon me-3">{item.icon}</div>
                       {itemLabel}
                     </Link>
@@ -335,22 +353,40 @@ export default function Sidebar() {
               }
 
               const isOpen = openKey === item.i18nKey;
-              const isActive = item.children.some((c) => c.to === current);
+              const isActive = item.children.some((c) => isRouteActive(c.to));
 
               return (
-                <li key={item.i18nKey} className={`sidebar-dropdown ${isActive ? "active" : ""}`}>
-                  <Link to="#" onClick={() => setOpenKey(isOpen ? "" : item.i18nKey)}>
+                <li key={item.i18nKey} className={`sidebar-dropdown ${isActive ? "active" : ""} ${isOpen ? "open" : ""}`}>
+                  <a 
+                    href="#" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setOpenKey(isOpen ? "" : item.i18nKey);
+                    }}
+                    className="sidebar-link"
+                  >
                     <div className="icon me-3">{item.icon}</div>
                     {itemLabel}
-                  </Link>
+                  </a>
 
-                  <div className={`sidebar-submenu ${isOpen ? "block" : ""}`}>
+                  <div className={`sidebar-submenu ${isOpen ? "block" : "hidden"}`}>
                     <ul>
                       {item.children.map((child) => {
                         const childLabel = labelOf(child.i18nKey);
+                        const childActive = isRouteActive(child.to);
                         return (
-                          <li key={child.i18nKey} className={`ms-0 ${current === child.to ? "active" : ""}`}>
-                            <Link to={child.to}>
+                          <li key={child.i18nKey} className={`ms-0 ${childActive ? "active" : ""}`}>
+                            <Link 
+                              to={child.to} 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                // Fermer le menu parent après navigation si nécessaire
+                                if (childActive) {
+                                  setTimeout(() => setOpenKey(item.i18nKey), 100);
+                                }
+                              }}
+                            >
                               {child.icon ? <span className="me-2">{child.icon}</span> : null}
                               {childLabel}
                             </Link>

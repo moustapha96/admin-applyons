@@ -568,7 +568,21 @@
         "toasts": {
             "loadDemandeError": "Impossibile caricare la richiesta",
             "loadDocsError": "Impossibile caricare i documenti",
-            "urlMissing": "URL non disponibile"
+            "urlMissing": "URL non disponibile",
+            "sessionExpired": "Sessione scaduta. Si prega di accedere nuovamente.",
+            "accessDenied": "Non si ha accesso a questo documento.",
+            "openError": "Errore nell'apertura del documento",
+            "translationNotReady": "La traduzione non è ancora disponibile. Si prega di aggiornare la pagina.",
+            "translationNotFound": "Il file tradotto non è ancora disponibile. Il file potrebbe essere in elaborazione. Si prega di aggiornare la pagina tra qualche istante.",
+            "noFileAvailable": "File non disponibile."
+        },
+        "preview": {
+            "title": "Anteprima documento",
+            "titleOriginal": "Documento originale {{id}}",
+            "titleTranslated": "Documento tradotto {{id}}",
+            "openInNewTab": "Apri in nuova scheda",
+            "close": "Chiudi",
+            "noContent": "Nessun contenuto disponibile"
         },
         "common": {
             "na": "—",
@@ -1273,7 +1287,22 @@
             "statusSaved": "Stato/Nota aggiornati",
             "statusSaveError": "Aggiornamento non riuscito",
             "urlMissing": "URL non disponibile",
-            "stripeSecretMissing": "Segreto client Stripe mancante"
+            "stripeSecretMissing": "Segreto client Stripe mancante",
+            "sessionExpired": "Sessione scaduta. Si prega di accedere nuovamente.",
+            "accessDenied": "Non si ha accesso a questo documento.",
+            "openError": "Errore nell'apertura del documento",
+            "translationNotReady": "La traduzione non è ancora disponibile. Si prega di aggiornare la pagina.",
+            "translationNotFound": "Il file tradotto non è ancora disponibile. Il file potrebbe essere in elaborazione. Si prega di aggiornare la pagina tra qualche istante.",
+            "noFileAvailable": "File non disponibile."
+        },
+        "preview": {
+            "title": "Anteprima documento",
+            "titleOriginal": "Documento originale {{id}}",
+            "titleTranslated": "Documento tradotto {{id}}",
+            "openInNewTab": "Apri in nuova scheda",
+            "close": "Chiudi",
+            "loading": "Caricamento...",
+            "noContent": "Nessun contenuto disponibile"
         },
         "sections": {
             "actionsWorkflow": "Azioni (workflow)"
@@ -1527,21 +1556,34 @@
             "paymentsBreakdown": "Vedi ripartizione qui sotto",
             "abonnementsTotal": "Abbonamenti",
             "abonnementsActive": "Attivi: {{active}} · In scadenza: {{expiring}}",
-            "contactsTotal": "Contatti (messaggi)"
+            "contactsTotal": "Contatti (messaggi)",
+            "translatedTotal": "Documenti tradotti",
+            "translatedBreakdown": "Convalidati: {{validated}} · In attesa: {{pending}}",
+            "toTranslateTotal": "Documenti da tradurre",
+            "toTranslateSub": "In attesa di traduzione",
+            "performanceThisMonth": "Questo mese",
+            "performanceComparison": "Mese scorso: {{lastMonth}}"
         },
         "breakdowns": {
             "usersByRole": "Ripartizione ruoli utenti",
             "orgsByType": "Ripartizione tipi di organizzazione",
             "demandesByStatus": "Richieste per stato",
             "transactionsByStatus": "Transazioni per stato",
-            "paymentsByStatus": "Pagamenti per stato"
+            "paymentsByStatus": "Pagamenti per stato",
+            "translatedByType": "Documenti tradotti per tipo",
+            "translatedByStatus": "Documenti tradotti per stato",
+            "translationsByType": "Traduzioni per tipo",
+            "demandesByType": "Richieste per tipo"
         },
         "empty": {
             "noItems": "— Nessun elemento —",
             "noData": "Nessun dato da visualizzare.",
             "freeSpace": "Spazio libero per un grafico/attività recente"
         },
-        "error": "Errore nel recupero delle statistiche"
+        "error": "Errore nel recupero delle statistiche",
+        "common": {
+            "other": "Altro"
+        }
     },
     "adminUsers": {
         "title": "Elenco utenti",
@@ -2869,6 +2911,7 @@
             "remove": "Rimuovi",
             "previous": "Precedente",
             "next": "Successivo",
+            "save": "Salva",
             "saveDraft": "Salva bozza",
             "reset": "Reimposta",
             "completePayment": "Completa pagamento",

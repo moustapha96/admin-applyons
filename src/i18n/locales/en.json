@@ -568,7 +568,21 @@
         "toasts": {
             "loadDemandeError": "Failed to load request",
             "loadDocsError": "Failed to load documents",
-            "urlMissing": "URL unavailable"
+            "urlMissing": "URL unavailable",
+            "sessionExpired": "Session expired. Please log in again.",
+            "accessDenied": "You do not have access to this document.",
+            "openError": "Error opening document",
+            "translationNotReady": "Translation is not yet available. Please refresh the page.",
+            "translationNotFound": "The translated file is not yet available. The file may be processing. Please refresh the page in a few moments.",
+            "noFileAvailable": "File not available."
+        },
+        "preview": {
+            "title": "Document preview",
+            "titleOriginal": "Original document {{id}}",
+            "titleTranslated": "Translated document {{id}}",
+            "openInNewTab": "Open in new tab",
+            "close": "Close",
+            "noContent": "No content available"
         },
         "common": {
             "na": "—",
@@ -1273,7 +1287,22 @@
             "statusSaved": "Status/Note updated",
             "statusSaveError": "Update failed",
             "urlMissing": "URL unavailable",
-            "stripeSecretMissing": "Stripe client secret missing"
+            "stripeSecretMissing": "Stripe client secret missing",
+            "sessionExpired": "Session expired. Please log in again.",
+            "accessDenied": "You do not have access to this document.",
+            "openError": "Error opening document",
+            "translationNotReady": "Translation is not yet available. Please refresh the page.",
+            "translationNotFound": "The translated file is not yet available. The file may be processing. Please refresh the page in a few moments.",
+            "noFileAvailable": "File not available."
+        },
+        "preview": {
+            "title": "Document preview",
+            "titleOriginal": "Original document {{id}}",
+            "titleTranslated": "Translated document {{id}}",
+            "openInNewTab": "Open in new tab",
+            "close": "Close",
+            "loading": "Loading...",
+            "noContent": "No content available"
         },
         "sections": {
             "actionsWorkflow": "Actions (workflow)"
@@ -1605,21 +1634,34 @@
             "paymentsBreakdown": "See breakdown below",
             "abonnementsTotal": "Subscriptions",
             "abonnementsActive": "Active: {{active}} · Expiring soon: {{expiring}}",
-            "contactsTotal": "Contacts (messages)"
+            "contactsTotal": "Contacts (messages)",
+            "translatedTotal": "Documents translated",
+            "translatedBreakdown": "Validated: {{validated}} · Pending: {{pending}}",
+            "toTranslateTotal": "Documents to translate",
+            "toTranslateSub": "Waiting for translation",
+            "performanceThisMonth": "This month",
+            "performanceComparison": "Last month: {{lastMonth}}"
         },
         "breakdowns": {
             "usersByRole": "User roles breakdown",
             "orgsByType": "Organization types breakdown",
             "demandesByStatus": "Requests by status",
             "transactionsByStatus": "Transactions by status",
-            "paymentsByStatus": "Payments by status"
+            "paymentsByStatus": "Payments by status",
+            "translatedByType": "Translated documents by type",
+            "translatedByStatus": "Translated documents by status",
+            "translationsByType": "Translations by type",
+            "demandesByType": "Requests by type"
         },
         "empty": {
             "noItems": "— No items —",
             "noData": "No data to display.",
             "freeSpace": "Free space for a chart/recent activity"
         },
-        "error": "Error fetching stats"
+        "error": "Error fetching stats",
+        "common": {
+            "other": "Other"
+        }
     },
     "adminUsers": {
         "title": "Users list",
@@ -3102,6 +3144,7 @@
             "remove": "Remove",
             "previous": "Previous",
             "next": "Next",
+            "save": "Save",
             "saveDraft": "Save draft",
             "reset": "Reset",
             "completePayment": "Complete payment",

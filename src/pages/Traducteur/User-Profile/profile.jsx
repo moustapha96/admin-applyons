@@ -19,7 +19,8 @@ import {
     Form,
     Input,
     Modal,
-    Select
+    Select,
+    DatePicker
 } from "antd"
 import {
     UserOutlined,
@@ -40,6 +41,7 @@ import {
     BankOutlined
 } from "@ant-design/icons"
 import authService from "../../../services/authService"
+import organizationService from "../../../services/organizationService"
 import { toast } from "sonner"
 import { useAuth } from "../../../hooks/useAuth"
 import { IoTransgender } from "react-icons/io5"
@@ -49,6 +51,7 @@ import { buildImageUrl } from "../../../utils/imageUtils"
 import { useNavigate } from "react-router-dom"
 import { LogoutOutlined } from "@ant-design/icons"
 import countries from "../../../assets/countries.json"
+import dayjs from "dayjs"
 
 const { Title, Text } = Typography
 
@@ -58,10 +61,13 @@ export default function TraducteurUserProfile() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
+    const [isEditingOrg, setIsEditingOrg] = useState(false)
     const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false)
     const [passwordForm] = Form.useForm()
+    const [orgForm] = Form.useForm()
     const [form] = Form.useForm()
     const [passwordLoading, setPasswordLoading] = useState(false)
+    const [orgLoading, setOrgLoading] = useState(false)
     const { refreshProfile, logout } = useAuth()
     const navigate = useNavigate()
 
@@ -73,18 +79,33 @@ export default function TraducteurUserProfile() {
         try {
             setLoading(true)
             const response = await authService.getProfile()
-            setUserData(response.user)
+            const user = response.user || response
+            setUserData(user)
             console.log(response)
             refreshProfile()
             form.setFieldsValue({
-                firstName: response.firstName || "",
-                lastName: response.lastName || "",
-                email: response.email,
-                phone: response.phone || "",
-                adress: response.adress || "",
-                country: response.country || "",
-                gender: response.gender || "MALE",
+                firstName: user.firstName || "",
+                lastName: user.lastName || "",
+                email: user.email,
+                phone: user.phone || "",
+                adress: user.adress || "",
+                country: user.country || "",
+                gender: user.gender || "MALE",
+                dateOfBirth: user.dateOfBirth ? dayjs(user.dateOfBirth) : null,
+                placeOfBirth: user.placeOfBirth || "",
             })
+            // Initialiser le formulaire d'organisation si disponible
+            if (user.organization) {
+                orgForm.setFieldsValue({
+                    name: user.organization.name || "",
+                    slug: user.organization.slug || "",
+                    address: user.organization.address || "",
+                    phone: user.organization.phone || "",
+                    country: user.organization.country || "",
+                    website: user.organization.website || "",
+                    email: user.organization.email || "",
+                })
+            }
             setError(null)
         } catch (error) {
             console.error("Error fetching user data:", error)
@@ -127,10 +148,62 @@ export default function TraducteurUserProfile() {
         setIsEditing(false)
     }
 
+    const handleOrgEdit = () => {
+        setIsEditingOrg(true)
+    }
+
+    const handleOrgCancel = () => {
+        setIsEditingOrg(false)
+        // Réinitialiser les valeurs du formulaire
+        if (userData?.organization) {
+            orgForm.setFieldsValue({
+                name: userData.organization.name || "",
+                slug: userData.organization.slug || "",
+                address: userData.organization.address || "",
+                phone: userData.organization.phone || "",
+                country: userData.organization.country || "",
+                website: userData.organization.website || "",
+                email: userData.organization.email || "",
+            })
+        }
+    }
+
+    const handleUpdateOrganization = async (values) => {
+        if (!userData?.organization?.id) {
+            toast.error("Aucune organisation à modifier")
+            return
+        }
+        setOrgLoading(true)
+        try {
+            await organizationService.update(userData.organization.id, values)
+            toast.success("Organisation mise à jour avec succès")
+            await fetchUserData()
+            setIsEditingOrg(false)
+        } catch (error) {
+            console.error("Error updating organization:", error)
+            toast.error(error?.response?.data?.message || error?.message || "Erreur lors de la mise à jour de l'organisation")
+        } finally {
+            setOrgLoading(false)
+        }
+    }
+
+    // Vérifier si l'utilisateur peut modifier l'organisation
+    const canEditOrganization = () => {
+        if (!userData?.permissions) return false
+        return userData.permissions.some(
+            (p) => p.key === "organizations.manage" || p.key === "organizations.write"
+        )
+    }
+
     const handleUpdateProfile = async (values) => {
         setLoading(true)
         try {
-            await authService.updateProfile(values)
+            // Convertir la date de naissance en format ISO si elle existe
+            const payload = {
+                ...values,
+                dateOfBirth: values.dateOfBirth ? values.dateOfBirth.toISOString() : null,
+            }
+            await authService.updateProfile(payload)
             toast.success("Profil mis à jour avec succès")
             await fetchUserData()
             setIsEditing(false)
@@ -428,6 +501,16 @@ export default function TraducteurUserProfile() {
                                                     }))}
                                                 />
                                             </Form.Item>
+                                            <Form.Item name="dateOfBirth" label="Date de naissance">
+                                                <DatePicker 
+                                                    placeholder="Sélectionner une date"
+                                                    style={{ width: "100%" }}
+                                                    format="DD/MM/YYYY"
+                                                />
+                                            </Form.Item>
+                                            <Form.Item name="placeOfBirth" label="Lieu de naissance">
+                                                <Input placeholder="Lieu de naissance" />
+                                            </Form.Item>
                                             <Form.Item name="gender" label="Genre">
                                                 <Input disabled value={getGenderText(userData.gender)} />
                                             </Form.Item>
@@ -502,6 +585,26 @@ export default function TraducteurUserProfile() {
                                             <Descriptions.Item
                                                 label={
                                                     <Space>
+                                                        <CalendarOutlined />
+                                                        <span>Date de naissance</span>
+                                                    </Space>
+                                                }
+                                            >
+                                                <Text>{userData.dateOfBirth ? dayjs(userData.dateOfBirth).format("DD/MM/YYYY") : "Non spécifié"}</Text>
+                                            </Descriptions.Item>
+                                            <Descriptions.Item
+                                                label={
+                                                    <Space>
+                                                        <HomeOutlined />
+                                                        <span>Lieu de naissance</span>
+                                                    </Space>
+                                                }
+                                            >
+                                                <Text>{userData.placeOfBirth || "Non spécifié"}</Text>
+                                            </Descriptions.Item>
+                                            <Descriptions.Item
+                                                label={
+                                                    <Space>
                                                         <IoTransgender />
                                                         <span>Genre</span>
                                                     </Space>
@@ -543,19 +646,104 @@ export default function TraducteurUserProfile() {
                                             <span>Organisation</span>
                                         </Space>
                                     }
+                                    extra={
+                                        userData?.organization && canEditOrganization() && (
+                                            <Button type="link" icon={<EditOutlined />} onClick={handleOrgEdit}>
+                                                Modifier
+                                            </Button>
+                                        )
+                                    }
                                     style={{ height: "100%", marginBottom: "24px" }}
                                 >
-                                    <Title level={5} style={{ marginBottom: "16px" }}>
-                                        {userData.organization?.name || "Aucune organisation"}
-                                    </Title>
-                                    <Descriptions column={1} size="small">
-                                        <Descriptions.Item label="Type">
-                                            <Tag color="blue">{userData.organization?.type || "Non spécifié"}</Tag>
-                                        </Descriptions.Item>
-                                        <Descriptions.Item label="Slug">
-                                            <Text copyable>{userData.organization?.slug || "Non spécifié"}</Text>
-                                        </Descriptions.Item>
-                                    </Descriptions>
+                                    {!userData?.organization ? (
+                                        <Text type="secondary">Aucune organisation associée</Text>
+                                    ) : isEditingOrg && canEditOrganization() ? (
+                                        <Form
+                                            form={orgForm}
+                                            layout="vertical"
+                                            onFinish={handleUpdateOrganization}
+                                        >
+                                            <Form.Item name="name" label="Nom">
+                                                <Input placeholder="Nom de l'organisation" />
+                                            </Form.Item>
+                                           
+                                            <Form.Item name="address" label="Adresse">
+                                                <Input placeholder="Adresse" />
+                                            </Form.Item>
+                                            <Form.Item name="phone" label="Téléphone">
+                                                <Input placeholder="Téléphone" />
+                                            </Form.Item>
+                                            <Form.Item name="country" label="Pays">
+                                                <Select
+                                                    showSearch
+                                                    allowClear
+                                                    placeholder="Pays"
+                                                    filterOption={(input, option) =>
+                                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                                    }
+                                                    options={(countries || []).map((c) => ({ 
+                                                        value: c.code, 
+                                                        label: c.name 
+                                                    }))}
+                                                />
+                                            </Form.Item>
+                                            <Form.Item name="website" label="Site web">
+                                                <Input placeholder="https://www.example.com" />
+                                            </Form.Item>
+                                            <Form.Item name="email" label="Email">
+                                                <Input type="email" placeholder="email@example.com" />
+                                            </Form.Item>
+                                            <Form.Item>
+                                                <Space>
+                                                    <Button
+                                                        type="primary"
+                                                        loading={orgLoading}
+                                                        htmlType="submit"
+                                                    >
+                                                        Enregistrer
+                                                    </Button>
+                                                    <Button onClick={handleOrgCancel}>
+                                                        Annuler
+                                                    </Button>
+                                                </Space>
+                                            </Form.Item>
+                                        </Form>
+                                    ) : (
+                                        <>
+                                            <Title level={5} style={{ marginBottom: "16px" }}>
+                                                {userData.organization?.name || "Aucune organisation"}
+                                            </Title>
+                                            <Descriptions column={1} size="small">
+                                                <Descriptions.Item label="Type">
+                                                    <Tag color="blue">{userData.organization?.type || "Non spécifié"}</Tag>
+                                                </Descriptions.Item>
+                                                <Descriptions.Item label="Slug">
+                                                    <Text copyable>{userData.organization?.slug || "Non spécifié"}</Text>
+                                                </Descriptions.Item>
+                                                <Descriptions.Item label="Adresse">
+                                                    <Text>{userData.organization?.address || "Non spécifié"}</Text>
+                                                </Descriptions.Item>
+                                                <Descriptions.Item label="Téléphone">
+                                                    <Text copyable>{userData.organization?.phone || "Non spécifié"}</Text>
+                                                </Descriptions.Item>
+                                                <Descriptions.Item label="Pays">
+                                                    <Text>{userData.organization?.country || "Non spécifié"}</Text>
+                                                </Descriptions.Item>
+                                                <Descriptions.Item label="Site web">
+                                                    {userData.organization?.website ? (
+                                                        <a href={userData.organization.website} target="_blank" rel="noreferrer">
+                                                            {userData.organization.website}
+                                                        </a>
+                                                    ) : (
+                                                        <Text>Non spécifié</Text>
+                                                    )}
+                                                </Descriptions.Item>
+                                                <Descriptions.Item label="Email">
+                                                    <Text copyable>{userData.organization?.email || "Non spécifié"}</Text>
+                                                </Descriptions.Item>
+                                            </Descriptions>
+                                        </>
+                                    )}
                                 </Card>
                             </Col>
 

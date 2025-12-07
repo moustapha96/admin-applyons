@@ -288,8 +288,9 @@ export default function AdminDemandeDetail() {
             setPreviewVisible(false);
           }}
           footer={null}
-          width="80%"
-          bodyStyle={{ height: "70vh", overflow: "hidden" }}
+          width="95vw"
+          style={{ top: 20, paddingBottom: 0 }}
+          bodyStyle={{ height: "calc(95vh - 110px)", padding: 0, overflow: "hidden" }}
         >
           {previewUrl ? (
             <iframe src={previewUrl} style={{ width: "100%", height: "100%", border: "none" }} title="Preview" />

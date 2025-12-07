@@ -484,8 +484,9 @@ export default function TranslatorDemandeDetails() {
             </Button>
           </Space>
         }
-        width="80vw"
-        style={{ height: "85vh", padding: 0 }}
+        width="95vw"
+        style={{ top: 20, paddingBottom: 0 }}
+        bodyStyle={{ height: "calc(95vh - 110px)", padding: 0 }}
         destroyOnHidden
       >
         {preview.url ? (

@@ -568,7 +568,21 @@
         "toasts": {
             "loadDemandeError": "Anfrage konnte nicht geladen werden",
             "loadDocsError": "Dokumente konnten nicht geladen werden",
-            "urlMissing": "URL nicht verfügbar"
+            "urlMissing": "URL nicht verfügbar",
+            "sessionExpired": "Sitzung abgelaufen. Bitte melden Sie sich erneut an.",
+            "accessDenied": "Sie haben keinen Zugriff auf dieses Dokument.",
+            "openError": "Fehler beim Öffnen des Dokuments",
+            "translationNotReady": "Die Übersetzung ist noch nicht verfügbar. Bitte aktualisieren Sie die Seite.",
+            "translationNotFound": "Die übersetzte Datei ist noch nicht verfügbar. Die Datei wird möglicherweise verarbeitet. Bitte aktualisieren Sie die Seite in wenigen Augenblicken.",
+            "noFileAvailable": "Datei nicht verfügbar."
+        },
+        "preview": {
+            "title": "Dokumentvorschau",
+            "titleOriginal": "Originaldokument {{id}}",
+            "titleTranslated": "Übersetztes Dokument {{id}}",
+            "openInNewTab": "In neuem Tab öffnen",
+            "close": "Schließen",
+            "noContent": "Kein Inhalt verfügbar"
         },
         "common": {
             "na": "—",
@@ -1273,7 +1287,22 @@
             "statusSaved": "Status/Hinweis aktualisiert",
             "statusSaveError": "Aktualisierung fehlgeschlagen",
             "urlMissing": "URL nicht verfügbar",
-            "stripeSecretMissing": "Stripe Client-Secret fehlt"
+            "stripeSecretMissing": "Stripe Client-Secret fehlt",
+            "sessionExpired": "Sitzung abgelaufen. Bitte melden Sie sich erneut an.",
+            "accessDenied": "Sie haben keinen Zugriff auf dieses Dokument.",
+            "openError": "Fehler beim Öffnen des Dokuments",
+            "translationNotReady": "Die Übersetzung ist noch nicht verfügbar. Bitte aktualisieren Sie die Seite.",
+            "translationNotFound": "Die übersetzte Datei ist noch nicht verfügbar. Die Datei wird möglicherweise verarbeitet. Bitte aktualisieren Sie die Seite in wenigen Augenblicken.",
+            "noFileAvailable": "Datei nicht verfügbar."
+        },
+        "preview": {
+            "title": "Dokumentvorschau",
+            "titleOriginal": "Originaldokument {{id}}",
+            "titleTranslated": "Übersetztes Dokument {{id}}",
+            "openInNewTab": "In neuem Tab öffnen",
+            "close": "Schließen",
+            "loading": "Laden...",
+            "noContent": "Kein Inhalt verfügbar"
         },
         "sections": {
             "actionsWorkflow": "Aktionen (Workflow)"
@@ -1527,21 +1556,34 @@
             "paymentsBreakdown": "Aufschlüsselung unten anzeigen",
             "abonnementsTotal": "Abonnements",
             "abonnementsActive": "Aktiv: {{active}} · Läuft bald ab: {{expiring}}",
-            "contactsTotal": "Kontakte (Nachrichten)"
+            "contactsTotal": "Kontakte (Nachrichten)",
+            "translatedTotal": "Übersetzte Dokumente",
+            "translatedBreakdown": "Validiert: {{validated}} · Ausstehend: {{pending}}",
+            "toTranslateTotal": "Zu übersetzende Dokumente",
+            "toTranslateSub": "Warten auf Übersetzung",
+            "performanceThisMonth": "Diesen Monat",
+            "performanceComparison": "Letzter Monat: {{lastMonth}}"
         },
         "breakdowns": {
             "usersByRole": "Aufschlüsselung nach Benutzerrollen",
             "orgsByType": "Aufschlüsselung nach Organisationstypen",
             "demandesByStatus": "Anfragen nach Status",
             "transactionsByStatus": "Transaktionen nach Status",
-            "paymentsByStatus": "Zahlungen nach Status"
+            "paymentsByStatus": "Zahlungen nach Status",
+            "translatedByType": "Übersetzte Dokumente nach Typ",
+            "translatedByStatus": "Übersetzte Dokumente nach Status",
+            "translationsByType": "Übersetzungen nach Typ",
+            "demandesByType": "Anfragen nach Typ"
         },
         "empty": {
             "noItems": "— Keine Elemente —",
             "noData": "Keine Daten anzuzeigen.",
             "freeSpace": "Freier Platz für ein Diagramm/aktuelle Aktivität"
         },
-        "error": "Fehler beim Abrufen der Statistiken"
+        "error": "Fehler beim Abrufen der Statistiken",
+        "common": {
+            "other": "Andere"
+        }
     },
     "adminUsers": {
         "title": "Benutzerliste",
@@ -2869,6 +2911,7 @@
             "remove": "Entfernen",
             "previous": "Zurück",
             "next": "Weiter",
+            "save": "Speichern",
             "saveDraft": "Entwurf speichern",
             "reset": "Zurücksetzen",
             "completePayment": "Zahlung abschließen",

@@ -18,6 +18,7 @@ import {
   Form,
   Select,
   Input,
+  Spin,
 } from "antd";
 import dayjs from "dayjs";
 import { ArrowLeftOutlined, FileTextOutlined } from "@ant-design/icons";
@@ -59,6 +60,18 @@ export default function InstitutDemandeDetails() {
 
   // Modal buyer (assignedOrg)
   const [buyerOpen, setBuyerOpen] = useState(false);
+
+  // Modal preview PDF
+  const [preview, setPreview] = useState({ open: false, url: "", title: "" });
+  
+  // Cleanup URL when preview closes
+  useEffect(() => {
+    return () => {
+      if (preview.url && preview.url.startsWith('blob:')) {
+        URL.revokeObjectURL(preview.url);
+      }
+    };
+  }, [preview.url]);
 
   const STATUS_OPTIONS = [
     { label: t("institutDemandeDetails.statuses.PENDING"), value: "PENDING" },
@@ -110,17 +123,43 @@ export default function InstitutDemandeDetails() {
         message.warning(t("institutDemandeDetails.toasts.urlMissing") || "Document non disponible");
         return;
       }
+      // Pour les traductions, vérifier d'abord si le document a vraiment une traduction disponible
+      if (type === "traduit") {
+        try {
+          const info = await documentService.getInfo(doc.id);
+          const docInfo = info?.document || info;
+          const hasTranslated = docInfo?.traduit?.hasFile || docInfo?.estTraduit;
+          
+          if (!hasTranslated) {
+            message.warning(t("institutDemandeDetails.toasts.translationNotReady") || "La traduction n'est pas encore disponible. Veuillez rafraîchir la page.");
+            return;
+          }
+        } catch (infoError) {
+          console.warn("Impossible de vérifier les infos du document:", infoError);
+          // Continuer quand même, peut-être que le fichier existe
+        }
+      }
       // Utiliser getContent pour obtenir le blob avec authentification
       const blob = await documentService.getContent(doc.id, { type, display: true });
       const url = URL.createObjectURL(blob);
-      window.open(url, "_blank", "noopener,noreferrer");
-      // Nettoyer l'URL après un délai
-      setTimeout(() => URL.revokeObjectURL(url), 100);
+      setPreview({
+        open: true,
+        url: url,
+        title: type === "traduit" 
+          ? t("institutDemandeDetails.preview.titleTranslated", { id: doc.id }) 
+          : t("institutDemandeDetails.preview.titleOriginal", { id: doc.id }),
+      });
     } catch (error) {
       if (error.response?.status === 401) {
         message.error(t("institutDemandeDetails.toasts.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
       } else if (error.response?.status === 403) {
         message.error(t("institutDemandeDetails.toasts.accessDenied") || "Vous n'avez pas accès à ce document.");
+      } else if (error.response?.status === 404) {
+        if (type === "traduit") {
+          message.error(t("institutDemandeDetails.toasts.translationNotFound") || "Le fichier traduit n'est pas encore disponible. Le fichier peut être en cours de traitement. Veuillez rafraîchir la page dans quelques instants.");
+        } else {
+          message.error(t("institutDemandeDetails.toasts.noFileAvailable") || "Le fichier n'est pas disponible.");
+        }
       } else {
         message.error(error?.response?.data?.message || error?.message || t("institutDemandeDetails.toasts.openError") || "Erreur lors de l'ouverture du document");
       }
@@ -473,6 +512,52 @@ export default function InstitutDemandeDetails() {
           </Descriptions>
         ) : (
           <Text type="secondary">{t("institutDemandeDetails.modals.noneBuyer")}</Text>
+        )}
+      </Modal>
+
+      {/* Modal Preview PDF */}
+      <Modal
+        open={preview.open}
+        title={preview.title || t("institutDemandeDetails.preview.title")}
+        onCancel={() => {
+          if (preview.url && preview.url.startsWith('blob:')) {
+            URL.revokeObjectURL(preview.url);
+          }
+          setPreview({ open: false, url: "", title: "" });
+        }}
+        footer={
+          <Space>
+            {preview.url && (
+              <a href={preview.url} target="_blank" rel="noreferrer">
+                <Button type="default">{t("institutDemandeDetails.preview.openInNewTab")}</Button>
+              </a>
+            )}
+            <Button type="primary" onClick={() => {
+              if (preview.url && preview.url.startsWith('blob:')) {
+                URL.revokeObjectURL(preview.url);
+              }
+              setPreview({ open: false, url: "", title: "" });
+            }}>
+              {t("institutDemandeDetails.preview.close")}
+            </Button>
+          </Space>
+        }
+        width="95vw"
+        style={{ top: 20, paddingBottom: 0 }}
+        bodyStyle={{ height: "calc(95vh - 110px)", padding: 0 }}
+        destroyOnClose
+      >
+        {preview.url ? (
+          <iframe
+            src={preview.url}
+            title="aperçu-pdf"
+            style={{ width: "100%", height: "100%", border: "none" }}
+          />
+        ) : (
+          <div style={{ padding: 16 }}>
+            <Spin />
+            <Text type="secondary" style={{ marginLeft: 16 }}>{t("institutDemandeDetails.preview.loading")}</Text>
+          </div>
         )}
       </Modal>
     </div>

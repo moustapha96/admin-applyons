@@ -568,7 +568,21 @@
         "toasts": {
             "loadDemandeError": "加载申请失败",
             "loadDocsError": "加载文档失败",
-            "urlMissing": "URL 不可用"
+            "urlMissing": "URL 不可用",
+            "sessionExpired": "会话已过期。请重新登录。",
+            "accessDenied": "您无权访问此文档。",
+            "openError": "打开文档时出错",
+            "translationNotReady": "翻译尚未可用。请刷新页面。",
+            "translationNotFound": "翻译文件尚不可用。文件可能正在处理中。请稍后刷新页面。",
+            "noFileAvailable": "文件不可用。"
+        },
+        "preview": {
+            "title": "文档预览",
+            "titleOriginal": "原始文档 {{id}}",
+            "titleTranslated": "翻译文档 {{id}}",
+            "openInNewTab": "在新标签页中打开",
+            "close": "关闭",
+            "noContent": "无可用内容"
         },
         "common": {
             "na": "—",
@@ -1273,7 +1287,22 @@
             "statusSaved": "状态/备注已更新",
             "statusSaveError": "更新失败",
             "urlMissing": "URL 不可用",
-            "stripeSecretMissing": "缺少 Stripe 客户端密钥"
+            "stripeSecretMissing": "缺少 Stripe 客户端密钥",
+            "sessionExpired": "会话已过期。请重新登录。",
+            "accessDenied": "您无权访问此文档。",
+            "openError": "打开文档时出错",
+            "translationNotReady": "翻译尚未可用。请刷新页面。",
+            "translationNotFound": "翻译文件尚不可用。文件可能正在处理中。请稍后刷新页面。",
+            "noFileAvailable": "文件不可用。"
+        },
+        "preview": {
+            "title": "文档预览",
+            "titleOriginal": "原始文档 {{id}}",
+            "titleTranslated": "翻译文档 {{id}}",
+            "openInNewTab": "在新标签页中打开",
+            "close": "关闭",
+            "loading": "加载中...",
+            "noContent": "无可用内容"
         },
         "sections": {
             "actionsWorkflow": "操作（工作流）"
@@ -1527,21 +1556,34 @@
             "paymentsBreakdown": "查看下面的分类",
             "abonnementsTotal": "订阅",
             "abonnementsActive": "活跃：{{active}} · 即将到期：{{expiring}}",
-            "contactsTotal": "联系人（消息）"
+            "contactsTotal": "联系人（消息）",
+            "translatedTotal": "已翻译文档",
+            "translatedBreakdown": "已验证：{{validated}} · 待处理：{{pending}}",
+            "toTranslateTotal": "待翻译文档",
+            "toTranslateSub": "等待翻译",
+            "performanceThisMonth": "本月",
+            "performanceComparison": "上月：{{lastMonth}}"
         },
         "breakdowns": {
             "usersByRole": "用户角色分类",
             "orgsByType": "组织类型分类",
             "demandesByStatus": "按状态的请求",
             "transactionsByStatus": "按状态的交易",
-            "paymentsByStatus": "按状态的付款"
+            "paymentsByStatus": "按状态的付款",
+            "translatedByType": "按类型的已翻译文档",
+            "translatedByStatus": "按状态的已翻译文档",
+            "translationsByType": "按类型的翻译",
+            "demandesByType": "按类型的请求"
         },
         "empty": {
             "noItems": "— 无项目 —",
             "noData": "没有要显示的数据。",
             "freeSpace": "图表/最近活动的自由空间"
         },
-        "error": "获取统计信息时出错"
+        "error": "获取统计信息时出错",
+        "common": {
+            "other": "其他"
+        }
     },
     "adminUsers": {
         "title": "用户列表",
@@ -2869,6 +2911,7 @@
             "remove": "删除",
             "previous": "上一步",
             "next": "下一步",
+            "save": "保存",
             "saveDraft": "保存草稿",
             "reset": "重置",
             "completePayment": "完成付款",

@@ -25,10 +25,11 @@ export const dashboardService = {
 
     /**
      * Stats TRADUCTEUR
+     * @param {string} userId - ID de l'utilisateur traducteur
      * @param {Object} params { recentDays }
      */
-    getTraducteurStats: (params = {}) =>
-        axiosInstance.get("/dashboard/traducteur/stats", { params }),
+    getTraducteurStats: (userId, params = {}) =>
+        axiosInstance.get(`/dashboard/${userId}/traducteur/stats`, { params }),
 
 
     /**
