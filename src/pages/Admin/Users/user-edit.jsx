@@ -187,7 +187,7 @@ const UserEdit = () => {
                                     >
                                         {imageUrl ? (
                                             <Avatar size={128} 
-                                            src={imageUrl ? imageUrl : user?.avatar ? buildImageUrl(user?.avatar) : undefined}
+                                            src={imageUrl ? buildImageUrl(imageUrl) : user?.avatar ? buildImageUrl(user?.avatar) : undefined}
                                             icon={<UserOutlined />} />
                                         ) : (
                                             <div>

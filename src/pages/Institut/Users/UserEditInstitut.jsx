@@ -322,7 +322,7 @@ export default function UserEditInstitut() {
                     }}
                   >
                     {imageUrl ? (
-                      <Avatar size={128} src={imageUrl ? imageUrl : user?.avatar ? buildImageUrl(user?.avatar) : undefined} icon={<UserOutlined />} />
+                      <Avatar size={128} src={imageUrl ? buildImageUrl( imageUrl) : user?.avatar ? buildImageUrl(user?.avatar) : undefined} icon={<UserOutlined />} />
 
                       
                     ) : (

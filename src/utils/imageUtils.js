@@ -19,15 +19,9 @@ export const buildImageUrl = (path) => {
     return path;
   }
   
-  // Sinon, on préfixe avec l'URL du backend
-  const baseUrl = import.meta.env.VITE_API_URL_SIMPLE || import.meta.env.VITE_API_URL || 'https://back.applyons.com';
-  
-  // Nettoyer l'URL de base (enlever le slash final s'il existe)
-  const cleanBaseUrl = baseUrl.replace(/\/+$/, '');
-  
-  // Nettoyer le chemin (s'assurer qu'il commence par un slash)
-  const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  
-  return `${cleanBaseUrl}${cleanPath}`;
-};
+  const baseUrl = import.meta.env.VITE_API_URL_SIMPLE || 'https://back.applyons.com';
+ 
+  return `${baseUrl}${path}`;
+
+ };
 
