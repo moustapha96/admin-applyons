@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SimpleBarReact from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
@@ -277,26 +277,20 @@ export default function Sidebar() {
   const baseMenu = useMemo(() => resolveMenuForUser(user, handleLogOut), [user, handleLogOut]);
 
   // Fonction pour vérifier si une route correspond (gère les routes paramétrées)
-  const isRouteActive = useCallback((route) => {
+  const isRouteActive = (route) => {
     if (!route) return false;
-    // Correspondance exacte
     if (current === route) return true;
-    // Pour les routes paramétrées, vérifier si le chemin commence par la route suivie d'un "/" ou "?"
-    // Éviter les faux positifs : /admin/users ne doit pas correspondre à /admin/user
-    const routeWithSlash = route.endsWith("/") ? route : route + "/";
-    const routeWithQuery = route + "?";
-    return current.startsWith(routeWithSlash) || current.startsWith(routeWithQuery);
-  }, [current]);
+    // Pour les routes paramétrées, vérifier si le chemin commence par la route
+    return current.startsWith(route + "/") || current.startsWith(route + "?");
+  };
 
   // ouvre automatiquement le parent du chemin courant
   useEffect(() => {
     const parentWithChild = baseMenu.find((m) => 
       m.children?.some?.((c) => isRouteActive(c.to))
     );
-    if (parentWithChild) {
-      setOpenKey(parentWithChild.i18nKey);
-    }
-  }, [current, baseMenu, isRouteActive]);
+    if (parentWithChild) setOpenKey(parentWithChild.i18nKey);
+  }, [current, baseMenu]);
 
   // Filtrage par permissions + rôles
   const filteredMenu = useMemo(() => {
@@ -324,28 +318,23 @@ export default function Sidebar() {
 
         <SimpleBarReact style={{ height: "calc(100% - 70px)" }}>
           <ul className="sidebar-menu border-t border-white/10">
-            {filteredMenu.map((item, itemIndex) => {
+            {filteredMenu.map((item) => {
               const itemLabel = labelOf(item.i18nKey);
-              // Clé unique pour l'item parent : combine i18nKey avec to ou index
-              const itemKey = `${item.i18nKey}-${item.to || (item.onClick ? 'action' : 'item')}-${itemIndex}`;
 
               if (!item.children?.length) {
                 const active = item.to && isRouteActive(item.to) ? "active" : "";
                 // Gérer les items avec onClick (comme logout)
                 if (item.onClick) {
                   return (
-                    <li key={itemKey} className={active}>
+                    <li key={item.i18nKey} className={active}>
                       <a 
                         href="#" 
                         onClick={(e) => { 
                           e.preventDefault(); 
                           e.stopPropagation();
-                          // Fermer tous les menus déroulants avant la déconnexion
-                          setOpenKey("");
                           item.onClick(); 
                         }}
                         className="sidebar-link"
-                        role="button"
                       >
                         <div className="icon me-3">{item.icon}</div>
                         {itemLabel}
@@ -354,15 +343,8 @@ export default function Sidebar() {
                   );
                 }
                 return (
-                  <li key={itemKey} className={active}>
-                    <Link 
-                      to={item.to} 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        // Fermer tous les menus déroulants lors de la navigation vers un item sans enfants
-                        setOpenKey("");
-                      }}
-                    >
+                  <li key={item.i18nKey} className={active}>
+                    <Link to={item.to} onClick={(e) => e.stopPropagation()}>
                       <div className="icon me-3">{item.icon}</div>
                       {itemLabel}
                     </Link>
@@ -374,7 +356,7 @@ export default function Sidebar() {
               const isActive = item.children.some((c) => isRouteActive(c.to));
 
               return (
-                <li key={itemKey} className={`sidebar-dropdown ${isActive ? "active" : ""} ${isOpen ? "open" : ""}`}>
+                <li key={item.i18nKey} className={`sidebar-dropdown ${isActive ? "active" : ""} ${isOpen ? "open" : ""}`}>
                   <a 
                     href="#" 
                     onClick={(e) => {
@@ -383,9 +365,6 @@ export default function Sidebar() {
                       setOpenKey(isOpen ? "" : item.i18nKey);
                     }}
                     className="sidebar-link"
-                    role="button"
-                    aria-expanded={isOpen}
-                    aria-haspopup="true"
                   >
                     <div className="icon me-3">{item.icon}</div>
                     {itemLabel}
@@ -393,21 +372,18 @@ export default function Sidebar() {
 
                   <div className={`sidebar-submenu ${isOpen ? "block" : "hidden"}`}>
                     <ul>
-                      {item.children.map((child, childIndex) => {
+                      {item.children.map((child) => {
                         const childLabel = labelOf(child.i18nKey);
                         const childActive = isRouteActive(child.to);
-                        // Clé unique pour l'enfant : combine parent i18nKey, child i18nKey, to et index
-                        const childKey = `${item.i18nKey}-${child.i18nKey}-${child.to || 'no-route'}-${childIndex}`;
                         return (
-                          <li key={childKey} className={`ms-0 ${childActive ? "active" : ""}`}>
+                          <li key={child.i18nKey} className={`ms-0 ${childActive ? "active" : ""}`}>
                             <Link 
                               to={child.to} 
                               onClick={(e) => {
                                 e.stopPropagation();
-                                // Garder le menu ouvert si on clique sur un sous-menu actif
-                                if (!childActive) {
-                                  // Si on navigue vers un autre sous-menu, garder le parent ouvert
-                                  setOpenKey(item.i18nKey);
+                                // Fermer le menu parent après navigation si nécessaire
+                                if (childActive) {
+                                  setTimeout(() => setOpenKey(item.i18nKey), 100);
                                 }
                               }}
                             >

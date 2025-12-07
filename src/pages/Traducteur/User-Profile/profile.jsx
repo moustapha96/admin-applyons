@@ -287,8 +287,9 @@ export default function TraducteurUserProfile() {
 
     if (loading) {
         return (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "400px" }}>
-                <Spin tip="Chargement du profil..." />
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "400px" }}>
+                <Spin size="large" />
+                <Text style={{ marginTop: 16 }}>Chargement du profil...</Text>
             </div>
         )
     }
