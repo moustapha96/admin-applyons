@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import organizationService from "../../../services/organizationService";
 import { getPermissionLabel } from "../../../auth/permissions";
 import { PERMS } from "../../../auth/permissions";
+import { buildImageUrl } from "../../../utils/imageUtils";
 const { Option } = Select;
 
 const UserEdit = () => {
@@ -185,7 +186,9 @@ const UserEdit = () => {
                                         onChange={({ file }) => setImageUrl(URL.createObjectURL(file))}
                                     >
                                         {imageUrl ? (
-                                            <Avatar size={128} src={imageUrl} icon={<UserOutlined />} />
+                                            <Avatar size={128} 
+                                            src={imageUrl ? imageUrl : user?.avatar ? buildImageUrl(user?.avatar) : undefined}
+                                            icon={<UserOutlined />} />
                                         ) : (
                                             <div>
                                                 <UploadOutlined />

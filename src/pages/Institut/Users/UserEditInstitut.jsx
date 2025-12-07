@@ -180,6 +180,7 @@ import userService from "@/services/userService";
 import { getPermissionLabel, PERMS_INSTITUT } from "@/auth/permissions";
 import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import { buildImageUrl } from "../../../utils/imageUtils";
 
 const { Option } = Select;
 
@@ -321,7 +322,9 @@ export default function UserEditInstitut() {
                     }}
                   >
                     {imageUrl ? (
-                      <Avatar size={128} src={imageUrl} icon={<UserOutlined />} />
+                      <Avatar size={128} src={imageUrl ? imageUrl : user?.avatar ? buildImageUrl(user?.avatar) : undefined} icon={<UserOutlined />} />
+
+                      
                     ) : (
                       <div>
                         <UploadOutlined />
