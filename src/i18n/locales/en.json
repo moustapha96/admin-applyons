@@ -24,8 +24,8 @@
     "notifications": {
         "newMessage": "New message",
         "messageReceived": "You have received a new message",
-        "requestApproved": "Request approved",
-        "requestApprovedDesc": "Your request has been approved",
+        "requestApproved": "Application approved",
+        "requestApprovedDesc": "Your application has been approved",
         "actionRequired": "Action required",
         "actionRequiredDesc": "An action is required from you",
         "markAllRead": "Mark all as read",
@@ -37,21 +37,21 @@
         "daysAgo": "d"
     },
     "roles": {
-        "ADMIN": "ADMIN",
-        "SUPER_ADMIN": "SUPER ADMIN",
-        "INSTITUT": "INSTITUTE",
+        "ADMIN": "ADMINISTRATOR",
+        "SUPER_ADMIN": "SYSTEM ADMINISTRATOR",
+        "INSTITUT": "INSTITUTION",
         "SUPERVISEUR": "SUPERVISOR",
         "TRADUCTEUR": "TRANSLATOR",
         "DEMANDEUR": "APPLICANT",
         "UTILISATEUR": "USER",
         "labels": {
             "ADMIN": "Administrator",
-            "SUPER_ADMIN": "Super Administrator",
+            "SUPER_ADMIN": "System Administrator",
             "INSTITUT": "Institution",
             "SUPERVISEUR": "Supervisor",
-            "TRADUCTEUR": "Translator",
-            "DEMANDEUR": "Applicant",
-            "UTILISATEUR": "User"
+            "TRADUCTEUR": "Document Translator",
+            "DEMANDEUR": "Student Applicant",
+            "UTILISATEUR": "Standard User"
         }
     },
     "permissions": {
@@ -65,8 +65,8 @@
         "departments.manage": "Manage departments",
         "filieres.read": "Read programs",
         "filieres.manage": "Manage programs",
-        "demandes.read": "Read requests",
-        "demandes.manage": "Manage requests",
+        "demandes.read": "View applications",
+        "demandes.manage": "Manage applications",
         "documents.read": "Read documents",
         "documents.create": "Create documents",
         "documents.update": "Update documents",
@@ -113,15 +113,15 @@
     },
     "sidebar": {
         "dashboard": "Dashboard",
-        "users": "Users",
-        "userList": "User list",
-        "userNew": "New",
+        "users": "User Management",
+        "userList": "User Directory",
+        "userNew": "Add New User",
         "organizations": "Organizations",
         "organizationsList": "Organizations",
         "departments": "Departments",
         "filieres": "Programs",
         "demandes": "Application",
-        "allDemandes": "Applications",
+        "allDemandes": "All Applications",
         "documents": "Documents",
         "myDocuments": "My documents",
         "payments": "Payments",
@@ -364,10 +364,10 @@
         "TRADUCTEUR": "Translator"
     },
     "demandeurDemandes": {
-        "title": "My requests",
+        "title": "My Applications",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "mine": "My requests"
+            "mine": "My Applications"
         },
         "filters": {
             "searchPlaceholder": "Search (code, org, …)",
@@ -376,7 +376,7 @@
             "yearPlaceholder": "Year",
             "statusPlaceholder": "Status",
             "reset": "Reset",
-            "new": "New request"
+            "new": "New application"
         },
         "columns": {
             "code": "Code",
@@ -413,10 +413,10 @@
         }
     },
     "demandeDetail": {
-        "title": "My request detail",
+        "title": "My application detail",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "mine": "My requests",
+            "mine": "My applications",
             "detail": "Detail"
         },
         "actions": {
@@ -494,8 +494,8 @@
     "demandeDocuments": {
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "detail": "Detail",
-            "documents": "Documents"
+            "detail": "Application Details",
+            "documents": "Application Documents"
         },
         "breadcrumbs": {
             "dashboard": "Dashboard",
@@ -503,10 +503,10 @@
             "details": "Details",
             "docs": "Documents"
         },
-        "title": "Request documents",
+        "title": "Application documents",
         "tabs": {
             "documents": "Documents",
-            "info": "Request Information"
+            "info": "Application Information"
         },
         "columns": {
             "ownerOrg": "Owner Organization",
@@ -566,7 +566,7 @@
             "dash": "—"
         },
         "toasts": {
-            "loadDemandeError": "Failed to load request",
+            "loadDemandeError": "Failed to load application",
             "loadDocsError": "Failed to load documents",
             "urlMissing": "URL unavailable",
             "sessionExpired": "Session expired. Please log in again.",
@@ -599,20 +599,20 @@
             "welcome": "Welcome!"
         },
         "kpis": {
-            "myRequests": "My requests",
+            "myApplications": "My applications",
             "myDocuments": "My documents",
             "myTransactions": "My transactions",
             "myPayments": "My payments",
             "seeBreakdown": "See breakdown below",
-            "none": "No requests",
+            "none": "No applications",
             "translatedCount": "Translated: {{count}}",
-            "myDemandes": "My requests",
+            "myDemandes": "My applications",
             "breakdown": "See breakdown below",
             "translated": "Translated: {{count}}"
         },
         "activity": {
             "title": "Recent activity",
-            "requestLine": "Request {{code}} — {{status}} — {{date}}",
+            "applicationLine": "Application {{code}} — {{status}} — {{date}}",
             "paymentLine": "Payment {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
             "none": "No recent activity"
         },
@@ -627,12 +627,12 @@
         "hello": "Hello, {{firstName}} {{lastName}}",
         "welcome": "Welcome!",
         "breakdowns": {
-            "demandesByStatus": "My requests by status",
+            "applicationsByStatus": "My applications by status",
             "transactionsByStatus": "My transactions by status",
             "paymentsByStatus": "My payments by status"
         },
         "tables": {
-            "recentDemandes": "Recent requests",
+            "recentApplications": "Recent applications",
             "recentTransactions": "Recent transactions",
             "recentPayments": "Recent payments"
         }
@@ -647,8 +647,8 @@
             "institute": "Institute"
         },
         "kpis": {
-            "targetRequests": "Target requests (total)",
-            "assignedRequests": "Assigned requests (total)",
+            "targetApplications": "Target applications (total)",
+            "assignedApplications": "Assigned applications (total)",
             "documents": "Documents (total/to translate/translated)",
             "subscriptions": "Subscriptions (active/total)",
             "expiringSoon": "Expiring soon: {{count}}",
@@ -656,7 +656,7 @@
         },
         "charts": {
             "targetVsAssigned": {
-                "title": "Target vs Assigned requests",
+                "title": "Target vs Assigned applications",
                 "format": "{{percent}}% assigned",
                 "target": "Target: {{n}}",
                 "assigned": "Assigned: {{n}}"
@@ -664,8 +664,8 @@
         },
         "tables": {
             "usersByRole": "Users by role",
-            "targetByStatus": "Target requests by status",
-            "assignedByStatus": "Assigned requests by status",
+            "targetByStatus": "Target applications by status",
+            "assignedByStatus": "Assigned applications by status",
             "paymentsByStatus": "Payments by status",
             "simpleCols": {
                 "name": "Status/Role",
@@ -685,7 +685,7 @@
             "noTrack": "No track"
         },
         "incoming": {
-            "title": "Incoming requests — statistics",
+            "title": "Incoming applications — statistics",
             "totalRecent": "Total (recent)",
             "otherStatuses": "Other statuses"
         },
@@ -1132,15 +1132,15 @@
         }
     },
     "institutDemandesList": {
-        "pageTitle": "Our Requests",
+        "pageTitle": "Our Applications",
         "breadcrumbs": {
             "dashboard": "Dashboard",
             "demandes": "Applications"
         },
         "section": {
-            "titleMyInstitute": "Requests – My institute",
+            "titleMyInstitute": "Applications – My institute",
             "filters": "Filters",
-            "list": "Requests list"
+            "list": "Applications list"
         },
         "filters": {
             "searchPlaceholder": "Search (code, year, level, email…)",
@@ -1152,7 +1152,7 @@
             "reset": "Reset"
         },
         "sortByOptions": {
-            "dateDemande": "Request date",
+            "dateDemande": "Application date",
             "createdAt": "Created at",
             "updatedAt": "Updated at",
             "code": "Code"
@@ -1164,7 +1164,7 @@
         "columns": {
             "code": "Code",
             "date": "Date",
-            "demandeur": "Requester",
+            "demandeur": "Applicant",
             "assigned": "Assigned to",
             "docs": "Docs",
             "status": "Status",
@@ -1185,8 +1185,8 @@
         "paywall": {
             "checking": "Checking subscription…",
             "requiredTitle": "Subscription required",
-            "requiredSub1": "Your organization has no active subscription. Please subscribe and pay to access the requests.",
-            "hint": "After payment, click “Re-check” if requests don’t appear."
+            "requiredSub1": "Your organization has no active subscription. Please subscribe and pay to access the applications.",
+            "hint": "After payment, click \"Re-check\" if applications don't appear."
         },
         "paymentModal": {
             "title": "Subscription payment",
@@ -1199,7 +1199,7 @@
             "amountTag": "Amount"
         },
         "toasts": {
-            "loadError": "Failed to load requests",
+            "loadError": "Failed to load applications",
             "stripeInitError": "Stripe initialization failed",
             "stripeSecretMissing": "Stripe client secret missing",
             "paypalCfgError": "PayPal configuration unavailable",
@@ -1213,7 +1213,7 @@
             "demandes": "Applications",
             "details": "Details"
         },
-        "title": "Request details",
+        "title": "Application details",
         "buttons": {
             "back": "Back",
             "updateStatus": "Update status",
@@ -1229,13 +1229,13 @@
         "fields": {
             "code": "Code",
             "status": "Status",
-            "requestDate": "Request date",
+            "requestDate": "Application date",
             "updatedAt": "Last update",
             "createdAt": "Created at",
             "deletedAt": "Deleted at",
             "targetOrg": "Target organization",
             "assignedOrg": "Assigned organization",
-            "requester": "Requester",
+            "requester": "Applicant",
             "serie": "Stream",
             "niveau": "Level",
             "mention": "Honors",
@@ -1264,7 +1264,7 @@
             "statusTitle": "Update status & note",
             "statusField": "Status",
             "statusPlaceholder": "Choose a status",
-            "observationField": "Note (visible on the request)",
+            "observationField": "Note (visible on the application)",
             "observationPlaceholder": "Add a helpful note (reason for approval/rejection, missing items, etc.)",
             "orgSourceTitle": "Institute that uploaded the document",
             "buyerTitle": "Buyer institute (assigned organization)",
@@ -1283,7 +1283,7 @@
             "dash": "—"
         },
         "toasts": {
-            "loadError": "Failed to load request",
+            "loadError": "Failed to load application",
             "statusSaved": "Status/Note updated",
             "statusSaveError": "Update failed",
             "urlMissing": "URL unavailable",
@@ -1589,9 +1589,9 @@
             "usersTotal": "Users (total)",
             "usersActive": "Active: {{count}}",
             "organizationsTotal": "Organizations (total)",
-            "demandesTotal": "Requests (total)",
+            "demandesTotal": "Applications (total)",
             "demandesBreakdown": "See breakdown below",
-            "demandesNone": "No requests",
+            "demandesNone": "No applications",
             "documentsTotal": "Documents (total)",
             "documentsTranslated": "Translated: {{count}}",
             "transactionsTotal": "Transactions (total)",
@@ -1605,7 +1605,7 @@
         "breakdowns": {
             "usersByRole": "User roles breakdown",
             "orgsByType": "Organization types breakdown",
-            "demandesByStatus": "Requests by status",
+            "demandesByStatus": "Applications by status",
             "transactionsByStatus": "Transactions by status",
             "paymentsByStatus": "Payments by status"
         },
@@ -1623,9 +1623,9 @@
             "usersTotal": "Users (total)",
             "usersActive": "Active: {{count}}",
             "organizationsTotal": "Organizations (total)",
-            "demandesTotal": "Requests (total)",
+            "demandesTotal": "Applications (total)",
             "demandesBreakdown": "See breakdown below",
-            "demandesNone": "No requests",
+            "demandesNone": "No applications",
             "documentsTotal": "Documents (total)",
             "documentsTranslated": "Translated: {{count}}",
             "transactionsTotal": "Transactions (total)",
@@ -1645,13 +1645,13 @@
         "breakdowns": {
             "usersByRole": "User roles breakdown",
             "orgsByType": "Organization types breakdown",
-            "demandesByStatus": "Requests by status",
+            "demandesByStatus": "Applications by status",
             "transactionsByStatus": "Transactions by status",
             "paymentsByStatus": "Payments by status",
             "translatedByType": "Translated documents by type",
             "translatedByStatus": "Translated documents by status",
             "translationsByType": "Translations by type",
-            "demandesByType": "Requests by type"
+            "demandesByType": "Applications by type"
         },
         "empty": {
             "noItems": "— No items —",
@@ -1764,7 +1764,7 @@
         }
     },
     "adminDemandeCreate": {
-        "title": "Create request",
+        "title": "Create application",
         "breadcrumb": {
             "dashboard": "Dashboard",
             "demandes": "Applications",
@@ -1778,7 +1778,7 @@
             "payment": "Payment"
         },
         "fields": {
-            "type": "Request type",
+            "type": "Application type",
             "typeRequired": "Type is required",
             "targetOrg": "Target organization",
             "targetOrgRequired": "Target organization is required",
@@ -1823,13 +1823,13 @@
         "buttons": {
             "next": "Next",
             "prev": "Previous",
-            "submit": "Create request",
+            "submit": "Create application",
             "cancel": "Cancel"
         },
         "messages": {
             "orgLoadError": "Error fetching organizations",
-            "createSuccess": "Request created successfully",
-            "createError": "Error creating request"
+            "createSuccess": "Application created successfully",
+            "createError": "Error creating application"
         }
     },
     "adminAbonnements": {
@@ -2087,7 +2087,7 @@
             "searchProvider": "Search by provider",
             "searchStatus": "Filter by status",
             "searchAbonnementId": "Search by subscription ID",
-            "searchDemandeId": "Search by request ID",
+            "searchDemandeId": "Search by application ID",
             "searchTransactionId": "Search by transaction ID",
             "demandePartageId": "DemandePartageId",
             "abonnementId": "AbonnementId",
@@ -2137,7 +2137,7 @@
         },
         "linkTypes": {
             "ABONNEMENT": "SUBSCRIPTION",
-            "DEMANDE": "REQUEST",
+            "DEMANDE": "APPLICATION",
             "SANS_LIEN": "NO LINK"
         },
         "drawer": {
@@ -2393,7 +2393,7 @@
         },
         "columns": {
             "date": "Date",
-            "demande": "Request",
+            "demande": "Application",
             "amount": "Amount",
             "paymentType": "Payment type",
             "transactionType": "Transaction type",
@@ -2401,7 +2401,7 @@
             "actions": "Actions"
         },
         "filters": {
-            "search": "Search (request code, …)",
+            "search": "Search (application code, …)",
             "status": "Status",
             "dateRange": "Date range"
         },
@@ -2463,7 +2463,7 @@
         }
     },
     "traducteurDemandes": {
-        "title": "My requests",
+        "title": "My applications",
         "breadcrumb": {
             "dashboard": "Dashboard",
             "demandes": "Applications"
@@ -2481,7 +2481,7 @@
             "search": "Search...",
             "status": "Status",
             "dateRange": "Date range",
-            "onlyMine": "My requests only"
+            "onlyMine": "My applications only"
         },
         "actions": {
             "view": "View",
@@ -2498,13 +2498,13 @@
             "REJECTED": "Rejected"
         },
         "messages": {
-            "loadError": "Failed to load requests",
+            "loadError": "Failed to load applications",
             "statusUpdateSuccess": "Status updated: {{status}}",
             "statusUpdateError": "Failed to update status"
         }
     },
     "adminDemandesList": {
-        "title": "Requests List",
+        "title": "Applications List",
         "breadcrumb": {
             "dashboard": "Dashboard",
             "demandes": "Applications"
@@ -2512,7 +2512,7 @@
         "columns": {
             "code": "Code",
             "date": "Date",
-            "demandeur": "Requester",
+            "demandeur": "Applicant",
             "targetOrg": "Target Org.",
             "assignedOrg": "Assigned Org.",
             "docs": "Docs",
@@ -2548,14 +2548,14 @@
             "orgLoadError": "Error loading organizations"
         },
         "pagination": {
-            "total": "Total {{total}} requests"
+            "total": "Total {{total}} applications"
         },
         "common": {
             "na": "—"
         }
     },
     "adminDemandeDetail": {
-        "title": "Request — Detail",
+        "title": "Application — Details",
         "breadcrumb": {
             "dashboard": "Dashboard",
             "demandes": "Applications",
@@ -2574,7 +2574,7 @@
             "code": "Code",
             "date": "Date",
             "status": "Status",
-            "demandeur": "Requester",
+            "demandeur": "Applicant",
             "targetOrg": "Target Organization",
             "assignedOrg": "Translator Organization",
             "periode": "Period",
@@ -2823,7 +2823,7 @@
         }
     },
     "traducteurDemandesList": {
-        "title": "My requests",
+        "title": "My applications",
         "breadcrumb": {
             "dashboard": "Dashboard",
             "demandes": "Applications"
@@ -2831,7 +2831,7 @@
         "columns": {
             "code": "Code",
             "date": "Date",
-            "demandeur": "Requester",
+            "demandeur": "Applicant",
             "targetOrg": "Target org",
             "status": "Status",
             "actions": "Actions",
@@ -2842,7 +2842,7 @@
             "search": "Search...",
             "status": "Status",
             "dateRange": "Date range",
-            "onlyMine": "My requests only",
+            "onlyMine": "My applications only",
             "title": "Filters & options"
         },
         "status": {
@@ -2865,7 +2865,7 @@
             "apply": "Apply"
         },
         "messages": {
-            "loadError": "Failed to load requests",
+            "loadError": "Failed to load applications",
             "updateSuccess": "Status updated: {{status}}",
             "updateError": "Failed to update status",
             "documentsError": "Error loading documents",
@@ -2873,13 +2873,13 @@
             "uploadError": "Upload failed"
         },
         "pagination": {
-            "total": "Total {{total}} requests"
+            "total": "Total {{total}} applications"
         },
         "sortFields": {
             "updatedAt": "Last update",
             "createdAt": "Creation",
             "code": "Code",
-            "dateDemande": "Request date"
+            "dateDemande": "Application date"
         },
         "sortOrder": {
             "desc": "Descending",
@@ -2894,10 +2894,10 @@
             "original": "Original"
         },
         "table": {
-            "title": "Assigned requests list"
+            "title": "Assigned applications list"
         },
         "modal": {
-            "documentsTitle": "Request documents",
+            "documentsTitle": "Application documents",
             "noDocuments": "No documents"
         }
     },
@@ -3010,14 +3010,14 @@
             "documents": "Documents"
         },
         "columns": {
-            "demande": "Request",
+            "demande": "Application",
             "ownerOrg": "Added by (org.)",
             "createdAt": "Created at",
             "actions": "Actions"
         },
         "filters": {
             "searchPlaceholder": "Search (DNA code…)",
-            "demandePlaceholder": "By request (ID)",
+            "demandePlaceholder": "By application (ID)",
             "orgPlaceholder": "By org. (ID)",
             "translatedPlaceholder": "Translated?",
             "translatedYes": "Yes",
@@ -3032,7 +3032,7 @@
         },
         "drawer": {
             "title": "Document details",
-            "demande": "Request",
+            "demande": "Application",
             "owner": "Added by",
             "translationStatus": "Translation status",
             "encrypted": "Encrypted",
@@ -3097,7 +3097,7 @@
             "paypalSuccess": "PayPal payment confirmed!",
             "paymentError": "Payment failed: {{error}}",
             "paymentRequired": "Please complete payment before submitting",
-            "demandeCreated": "Request created (invitations & notifications sent)",
+            "demandeCreated": "Application created (invitations & notifications sent)",
             "creationError": "Creation failed"
         },
         "sections": {
@@ -3277,44 +3277,30 @@
             "pleaseWait": "Please wait"
         },
         "popconfirm": {
-            "resetDraft": "Reset draft?",
-            "description": "This will clear locally saved data for this form.",
-            "yes": "Yes",
+                "yes": "Yes",
             "no": "No"
         },
-        "messages": {
-            "draftSaveError": "Unable to save draft",
-            "draftLoaded": "Draft loaded",
-            "draftReset": "Draft reset",
-            "draftResetError": "Unable to reset draft",
-            "orgLoadError": "Failed to load organizations",
-            "priceInvalid": "Invalid subscription amount on server.",
-            "filieresLoadError": "Unable to load filieres for this organization",
-            "stripeInitError": "Unable to initialize Stripe",
-            "stripeKeyMissing": "Stripe public key missing",
-            "stripeInvalidParams": "Invalid Stripe parameters",
-            "stripeSecretInvalid": "Invalid/absent Stripe client secret",
-            "paymentIntentError": "Unable to create PaymentIntent",
+        "formMessages": {
             "stripeSuccess": "Stripe payment confirmed!",
             "paypalSuccess": "PayPal payment confirmed!",
             "paymentError": "Payment failed: {{error}}",
             "paymentRequired": "Please complete payment before submitting",
-            "demandeCreated": "Request created (invitations & notifications sent)",
+            "demandeCreated": "Application created (invitations & notifications sent)",
             "creationError": "Creation failed",
             "paypalError": "PayPal error: {{error}}",
             "required": "Required"
         }
     },
     "demandeurDemandePayment": {
-        "pageTitle": "Request Payment",
+        "pageTitle": "Application Payment",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "My Requests",
+            "demandes": "My Applications",
             "detail": "Detail",
             "payment": "Payment"
         },
         "summary": {
-            "title": "Request Summary",
+            "title": "Application Summary",
             "code": "Code",
             "date": "Date",
             "status": "File Status",
@@ -3327,7 +3313,7 @@
             "pricingApplied": "Pricing applied:",
             "source": "source:",
             "amountFixed": "The amount is set on the server and cannot be modified on the client.",
-            "alreadyPaid": "This request is already paid ✅",
+            "alreadyPaid": "This application is already paid ✅",
             "backToDetail": "Back to detail"
         },
         "tabs": {
@@ -3406,7 +3392,7 @@
     },
     "institutDocuments": {
         "create": {
-            "pageTitle": "New Document",
+            "pageTitle": "Upload New Document",
             "breadcrumbs": {
                 "dashboard": "Dashboard",
                 "demandes": "Applications",
@@ -3440,7 +3426,7 @@
         "upload": {
             "title": "Attach Document",
             "labels": {
-                "demandeId": "Request ID",
+                "demandeId": "Application ID",
                 "ownerOrg": "Owner Organization",
                 "file": "File",
                 "urlOriginal": "Original File URL",
@@ -3472,7 +3458,7 @@
     },
     "institutUsers": {
         "createSupervisor": {
-            "title": "Create Supervisor",
+            "title": "Add New Supervisor",
             "subtitle": "Target Organization:",
             "labels": {
                 "email": "Email",
@@ -3600,14 +3586,14 @@
             }
         },
         "messages": {
-            "loadError": "Failed to load requests"
+            "loadError": "Failed to load applications"
         }
     },
     "institutDemandeurDetail": {
         "title": "Applicant Details",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Request List"
+            "demandes": "Application List"
         },
         "sections": {
             "personalInfo": "Personal Information",
@@ -3624,13 +3610,13 @@
         }
     },
     "traducteurDemandeDetails": {
-        "title": "Requests to Process",
+        "title": "Applications to Process",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests to Process",
-            "detail": "Requests"
+            "demandes": "Applications to Process",
+            "detail": "Applications"
         },
-        "pageTitle": "Request Details",
+        "pageTitle": "Application Details",
         "buttons": {
             "back": "Back",
             "documents": "Documents & Translations"
@@ -3641,7 +3627,7 @@
         },
         "fields": {
             "code": "Code",
-            "dateDemande": "Request Date",
+            "dateDemande": "Application Date",
             "status": "Status",
             "demandeur": "Applicant",
             "targetOrg": "Target Institute",
@@ -3693,7 +3679,7 @@
             "noContent": "No content to display."
         },
         "messages": {
-            "noData": "No request data.",
+            "noData": "No application data.",
             "loadError": "Load failed",
             "statusUpdated": "Status updated",
             "statusUpdateError": "Status update failed",
@@ -3713,7 +3699,7 @@
         }
     },
     "traducteurDemandeDocuments": {
-        "title": "Request Documents",
+        "title": "Application Documents",
         "breadcrumbs": {
             "dashboard": "Dashboard",
             "demandes": "Applications",
@@ -3724,11 +3710,11 @@
             "refresh": "Refresh"
         },
         "sections": {
-            "demandeInfo": "Request Information"
+            "demandeInfo": "Application Information"
         },
         "columns": {
             "ownerOrg": "Institute (source)",
-            "demande": "Request",
+            "demande": "Application",
             "type": "Type",
             "original": "Original",
             "translated": "Translated"
@@ -3757,7 +3743,7 @@
             "save": "Save"
         },
         "messages": {
-            "loadDemandeError": "Failed to load request",
+            "loadDemandeError": "Failed to load application",
             "loadDocsError": "Error loading documents",
             "uploadWarning": "Select a translated PDF.",
             "uploadSuccess": "Translation uploaded (encryption in place)",
@@ -3816,18 +3802,18 @@
         }
     },
     "organizationDemandeCreate": {
-        "title": "New Request",
+        "title": "New Application",
         "breadcrumb": {
             "dashboard": "Dashboard",
             "organizations": "Organizations",
-            "newDemande": "New Request"
+            "newDemande": "New Application"
         },
-        "cardTitle": "New Request",
+        "cardTitle": "New Application",
         "form": {
-            "title": "Request title",
+            "title": "Application title",
             "titleRequired": "Title is required",
-            "titlePlaceholder": "Request title",
-            "type": "Request type",
+            "titlePlaceholder": "Application title",
+            "type": "Application type",
             "typeRequired": "Type is required",
             "typePlaceholder": "Select a type",
             "types": {
@@ -3837,16 +3823,16 @@
             },
             "description": "Description",
             "descriptionRequired": "Description is required",
-            "descriptionPlaceholder": "Request description"
+            "descriptionPlaceholder": "Application description"
         },
         "actions": {
             "back": "Back",
-            "create": "Create request",
+            "create": "Create application",
             "creating": "Creating..."
         },
         "messages": {
-            "success": "Request created successfully",
-            "error": "Error creating request"
+            "success": "Application created successfully",
+            "error": "Error creating application"
         }
     },
     "organizationFiliereCreate": {
@@ -3884,7 +3870,7 @@
         "form": {
             "demandePartageId": "DemandePartage ID",
             "demandePartageIdRequired": "Required",
-            "demandePartageIdPlaceholder": "Request ID (demandePartageId)",
+            "demandePartageIdPlaceholder": "Application ID (demandePartageId)",
             "userId": "User (optional)",
             "userIdPlaceholder": "userId (optional)",
             "montant": "Amount (XOF)",
@@ -3948,10 +3934,10 @@
         }
     },
     "appsChat": {
-        "title": "Chatbox",
+        "title": "Messaging Center",
         "breadcrumbs": {
             "home": "Home",
-            "chatbox": "Chatbox"
+            "chatbox": "Messages"
         },
         "menu": {
             "profile": "Profile",
