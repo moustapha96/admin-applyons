@@ -53,7 +53,7 @@
             "SUPER_ADMIN": "System Administrator",
             "INSTITUT": "Institution",
             "SUPERVISEUR": "Supervisor",
-            "TRADUCTEUR": "Document Translator",
+            "TRADUCTEUR": "Translator",
             "DEMANDEUR": "Student Applicant",
             "UTILISATEUR": "Standard User"
         }
