@@ -51,6 +51,12 @@
     "tailwindcss": "^4.0.9",
     "tiny-slider-react": "^0.5.7",
     "topojson-client": "^3.1.0",
+    "workbox-core": "^7.4.0",
+    "workbox-expiration": "^7.4.0",
+    "workbox-precaching": "^7.4.0",
+    "workbox-routing": "^7.4.0",
+    "workbox-strategies": "^7.4.0",
+    "workbox-window": "^7.4.0",
     "yet-another-react-lightbox": "^1.1.1"
   },
   "devDependencies": {
