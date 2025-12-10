@@ -958,7 +958,7 @@ export default function DemandeurDemandeCreate() {
                         showSearch
                         size="large"
                         placeholder={t("demandeurDemandeCreate.placeholders.chooseOrganization")}
-                        options={orgs.map((o) => ({ value: o.id, label: `${o.name} — ${o.type}` }))}
+                        options={orgs.map((o) => ({ value: o.id, label: `${o.name}` }))}
                         onChange={(value) => {
                           // Ne réinitialiser intendedMajor que si on change vraiment d'organisation
                           const currentTargetOrgId = form.getFieldValue("targetOrgId");
