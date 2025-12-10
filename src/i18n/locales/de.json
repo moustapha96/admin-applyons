@@ -349,6 +349,8 @@
             "website": "Webseite",
             "country": "Land",
             "selectType": "Typ auswählen",
+            "noOrgAssociated": "Keine Organisation zugeordnet",
+            "noOrgToEdit": "Keine Organisation zum Bearbeiten",
             "validators": {
                 "nameRequired": "Bitte den Organisationsnamen eingeben",
                 "typeRequired": "Bitte den Organisationstyp auswählen"

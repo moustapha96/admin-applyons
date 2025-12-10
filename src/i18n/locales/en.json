@@ -1,9 +1,13 @@
 {
     "common": {
         "profile": "Profile",
+        "editProfile": "Edit Profile",
         "settings": "Settings",
         "dashboard": "My dashboard",
         "logout": "Log out",
+        "birthDate": "Date of Birth",
+        "birthPlace": "Place of Birth",
+        "translator": "Translator",
         "user": "User",
         "organizationMissing": "—",
         "toggleSidebar": "Toggle sidebar",
@@ -332,27 +336,37 @@
             "profileError": "Error updating profile",
             "passwordUpdated": "Password updated successfully",
             "passwordError": "Error updating password",
-            "orgUpdated": "Organización actualizada con éxito",
-            "orgUpdateError": "Error al actualizar la organización"
+            "orgUpdated": "Organization updated successfully",
+            "orgUpdateError": "Error updating organization"
         },
         "common": {
             "na": "N/A"
-        }
-    },
-    "orgEditor": {
-        "title": "Organization",
-        "edit": "Edit",
-        "name": "Organization name",
-        "type": "Organization type",
-        "email": "Email",
-        "phone": "Phone",
-        "address": "Address",
-        "website": "Website",
-        "country": "Country",
-        "selectType": "Select type",
-        "validators": {
-            "nameRequired": "Please enter the organization name",
-            "typeRequired": "Please select the organization type"
+        },
+        "orgEditor": {
+            "title": "Organization",
+            "edit": "Edit",
+            "name": "Organization name",
+            "type": "Organization type",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "website": "Website",
+            "country": "Country",
+            "selectType": "Select type",
+            "noOrgAssociated": "No organization associated",
+            "noOrgToEdit": "No organization to edit",
+            "validators": {
+                "nameRequired": "Please enter the organization name",
+                "typeRequired": "Please select the organization type"
+            }
+        },
+        "orgTypes": {
+            "COLLEGE": "College",
+            "BANQUE": "Bank",
+            "UNIVERSITE": "University",
+            "LYCEE": "High school",
+            "ENTREPRISE": "Company",
+            "TRADUCTEUR": "Translator"
         }
     },
     "orgTypes": {

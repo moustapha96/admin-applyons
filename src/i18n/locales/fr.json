@@ -1,9 +1,13 @@
 {
     "common": {
         "profile": "Profil",
+        "editProfile": "Modifier le profil",
         "settings": "Paramètres",
         "dashboard": "Tableau de bord",
         "logout": "Déconnexion",
+        "birthDate": "Date de naissance",
+        "birthPlace": "Lieu de naissance",
+        "translator": "Traducteur",
         "user": "Utilisateur",
         "organizationMissing": "—",
         "toggleSidebar": "Basculer le menu latéral",
@@ -349,6 +353,8 @@
             "website": "Site web",
             "country": "Pays",
             "selectType": "Sélectionnez le type",
+            "noOrgAssociated": "Aucune organisation associée",
+            "noOrgToEdit": "Aucune organisation à modifier",
             "validators": {
                 "nameRequired": "Veuillez entrer le nom de l'organisation",
                 "typeRequired": "Veuillez sélectionner le type d'organisation"

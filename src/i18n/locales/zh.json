@@ -349,6 +349,8 @@
             "website": "网站",
             "country": "国家",
             "selectType": "选择类型",
+            "noOrgAssociated": "未关联组织",
+            "noOrgToEdit": "没有可编辑的组织",
             "validators": {
                 "nameRequired": "请输入组织名称",
                 "typeRequired": "请选择组织类型"
