@@ -1,4 +1,5 @@
 import { Form, Select } from "antd";
+import { t } from "i18next";
 
 /**
  * Props:
@@ -13,12 +14,12 @@ export default function OrgNotifyPicker({ orgs = [], targetOrgId, value = [], on
     .map(o => ({ value: o.id, label: `${o.name} — ${o.type}` }));
 
   return (
-    <Form.Item label="Notifier des organisations existantes (hors cible et hors TRADUCTEUR)">
+    <Form.Item label={t("demandeurDemandeCreate.sections.notifyOrgs")}>
       <Select
         mode="multiple"
         allowClear
         showSearch
-        placeholder="Sélectionnez une ou plusieurs organisations à notifier"
+        placeholder={t("demandeurDemandeCreate.placeholders.notifyOrgs")}
         value={value}
         onChange={onChange}
         options={options}

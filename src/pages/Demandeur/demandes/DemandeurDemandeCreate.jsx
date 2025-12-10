@@ -169,7 +169,7 @@ export default function DemandeurDemandeCreate() {
       const values = { ...(parsed?.values || {}) };
       values.dob = reviveDate(values.dob);
       values.graduationDate = reviveDate(values.graduationDate);
-      
+
       // Si pas de date de naissance dans le brouillon, utiliser celle de l'utilisateur connecté
       if (!values.dob && me && (me.dateOfBirth || me.birthDate)) {
         const userDob = me.dateOfBirth || me.birthDate;
@@ -180,7 +180,7 @@ export default function DemandeurDemandeCreate() {
           }
         }
       }
-      
+
       if (!draft) {
         // Pas de brouillon, mais on peut quand même initialiser la date de naissance
         if (values.dob) {
@@ -189,7 +189,7 @@ export default function DemandeurDemandeCreate() {
         setIsLoadingDraft(false);
         return;
       }
-      
+
       // Charger d'abord targetOrgId pour que les filières soient filtrées
       if (values.targetOrgId) {
         form.setFieldsValue({ targetOrgId: values.targetOrgId });
@@ -351,16 +351,16 @@ export default function DemandeurDemandeCreate() {
   const targetOrgId = Form.useWatch("targetOrgId", form);
   const [isLoadingDraft, setIsLoadingDraft] = useState(false);
   const [previousTargetOrgId, setPreviousTargetOrgId] = useState(null);
-  
+
   // Filtrer les filières côté client selon targetOrgId
   const filieres = useMemo(() => {
     if (!targetOrgId) return [];
     return allFilieres.filter((f) => {
       // Vérifier différents chemins possibles pour l'organisation
-      const orgId = f?.department?.organization?.id || 
-                    f?.department?.organizationId || 
-                    f?.organizationId ||
-                    f?.organization?.id;
+      const orgId = f?.department?.organization?.id ||
+        f?.department?.organizationId ||
+        f?.organizationId ||
+        f?.organization?.id;
       return orgId === targetOrgId;
     });
   }, [allFilieres, targetOrgId]);
@@ -625,12 +625,12 @@ export default function DemandeurDemandeCreate() {
       });
 
       // Pas de message de succès
-      
+
       // Sauvegarder tous les champs du formulaire dans le localStorage (sauf paiement)
       try {
         const rawValues = form.getFieldsValue(true);
         const values = serializeFormValues(rawValues);
-        
+
         // Créer un nouveau brouillon avec tous les champs sauf ceux liés au paiement
         const draft = {
           values,
@@ -642,7 +642,7 @@ export default function DemandeurDemandeCreate() {
           paymentCompleted: false,
         };
         localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-        
+
         // Réinitialiser les états de paiement dans le composant
         setPaymentMethod(null);
         setPaymentCompleted(false);
@@ -651,7 +651,7 @@ export default function DemandeurDemandeCreate() {
       } catch (e) {
         console.error("Échec sauvegarde brouillon après création:", e);
       }
-      
+
       navigate(`/demandeur/mes-demandes/${d.id}/details`);
     } catch (e) {
       console.error(e);
@@ -724,10 +724,10 @@ export default function DemandeurDemandeCreate() {
                 flex-direction: column;
               }
             `}</style>
-            <Form 
-              form={form} 
-              layout="vertical" 
-              preserve 
+            <Form
+              form={form}
+              layout="vertical"
+              preserve
               onFinish={onFinish}
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
@@ -1271,6 +1271,19 @@ export default function DemandeurDemandeCreate() {
 
               {/* STEP 5 — Invitations + Summary */}
               <div style={{ display: current === 5 ? "block" : "none" }}>
+
+                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                  {t("demandeurDemandeCreate.sections.notifyOrgs")}
+                </h2>
+                <OrgNotifyPicker
+                  orgs={orgs}
+                  targetOrgId={form.getFieldValue("targetOrgId")}
+                  value={selectedNotifyOrgIds}
+                  onChange={(ids) => setSelectedNotifyOrgIds(ids)}
+                />
+
+                <Divider className="!mt-6" />
+
                 <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
                   {t("demandeurDemandeCreate.sections.inviteOrgs")}
                 </h2>
@@ -1351,17 +1364,7 @@ export default function DemandeurDemandeCreate() {
                     </List.Item>
                   )}
                 />
-
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
-                  {t("demandeurDemandeCreate.sections.notifyOrgs")}
-                </h2>
-                <OrgNotifyPicker
-                  orgs={orgs}
-                  targetOrgId={form.getFieldValue("targetOrgId")}
-                  value={selectedNotifyOrgIds}
-                  onChange={(ids) => setSelectedNotifyOrgIds(ids)}
-                />
-
+                
                 <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
                   {t("demandeurDemandeCreate.sections.summary")}
                 </h2>
@@ -1457,9 +1460,9 @@ export default function DemandeurDemandeCreate() {
                   )}
                   {/* Bouton de réinitialisation en mode dev */}
                   {process.env.NODE_ENV === 'development' && (
-                    <Button 
-                      danger 
-                      onClick={resetForm} 
+                    <Button
+                      danger
+                      onClick={resetForm}
                       size="large"
                       style={{ marginLeft: 8 }}
                     >
@@ -1468,8 +1471,8 @@ export default function DemandeurDemandeCreate() {
                   )}
                 </Space>
                 <Space>
-                  <Button 
-                    onClick={saveDraft} 
+                  <Button
+                    onClick={saveDraft}
                     size="large"
                     loading={savingDraft}
                   >
@@ -1633,7 +1636,7 @@ export default function DemandeurDemandeCreate() {
 /** ---- Récap visuel ---- */
 function Summary({ form, invites, orgs, tradOrgs, t, me }) {
   const v = form.getFieldsValue(true);
-  
+
   // Helper pour vérifier si une valeur est vide
   const isEmpty = (val) => {
     if (val === null || val === undefined || val === "") return true;
