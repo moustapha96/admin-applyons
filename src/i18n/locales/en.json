@@ -364,10 +364,10 @@
         "TRADUCTEUR": "Translator"
     },
     "demandeurDemandes": {
-        "title": "My Applications",
+        "title": "My applications",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "mine": "My Applications"
+            "mine": "My applications"
         },
         "filters": {
             "searchPlaceholder": "Search (code, org, …)",
@@ -449,7 +449,7 @@
             "niveau": "Level",
             "mention": "Mention",
             "schoolYear": "School year",
-            "countryOfSchool": "School country",
+            "countryOfSchool": "Country of School",
             "secondarySchoolName": "Institution",
             "graduationDate": "Graduation date",
             "dob": "Birth date",
@@ -536,7 +536,7 @@
             "niveau": "Level",
             "mention": "Honors",
             "schoolYear": "School Year",
-            "countryOfSchool": "School Country",
+            "countryOfSchool": "Country of School",
             "secondarySchoolName": "Institution",
             "graduationDate": "Graduation Date",
             "dob": "Date of Birth",
@@ -1242,7 +1242,7 @@
             "anneeTxt": "Year (text)",
             "periode": "Period",
             "year": "Year",
-            "countryOfSchool": "School country",
+            "countryOfSchool": "Country of School",
             "secondarySchoolName": "Institution",
             "graduationDate": "Graduation date",
             "observation": "Note"
@@ -1789,7 +1789,7 @@
             "niveau": "Level",
             "mention": "Mention",
             "annee": "Year",
-            "countryOfSchool": "School country",
+            "countryOfSchool": "Country of School",
             "secondarySchoolName": "School name",
             "graduationDate": "Graduation date",
             "dob": "Date of birth",
@@ -1813,7 +1813,7 @@
             "niveau": "Level (e.g., Bac, License, Master)",
             "mention": "Mention (e.g., Good, Very Good)",
             "annee": "Year (e.g., 2023)",
-            "countryOfSchool": "School country",
+            "countryOfSchool": "Country of School",
             "secondarySchoolName": "Secondary school name",
             "citizenship": "Citizenship",
             "passport": "Passport number",
@@ -2622,7 +2622,7 @@
             "niveau": "Level",
             "mention": "Mention",
             "annee": "Year (school)",
-            "countryOfSchool": "School Country",
+            "countryOfSchool": "Country of School",
             "secondarySchoolName": "Institution",
             "graduationDate": "Graduation Date"
         },
@@ -3169,7 +3169,7 @@
             "englishProficiencyTest": "English proficiency test taken",
             "testScores": "Test score(s)",
             "secondarySchoolName": "Secondary school name",
-            "countryOfSchool": "School country",
+            "countryOfSchool": "Country of School",
             "graduationDate": "Graduation date",
             "gradingScale": "Grading scale",
             "gpa": "GPA or average",
@@ -3300,7 +3300,7 @@
         "pageTitle": "Application Payment",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "My Applications",
+            "demandes": "My applications",
             "detail": "Detail",
             "payment": "Payment"
         },

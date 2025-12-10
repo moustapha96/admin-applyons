@@ -364,10 +364,10 @@
         }
     },
     "demandeurDemandes": {
-        "title": "Mes demandes",
+        "title": "Mes candidatures",
         "breadcrumb": {
             "dashboard": "Tableau de bord",
-            "mine": "Mes demandes"
+            "mine": "Mes candidatures"
         },
         "filters": {
             "searchPlaceholder": "Rechercher (code, org, …)",
@@ -416,7 +416,7 @@
         "title": "Détail de ma demande",
         "breadcrumb": {
             "dashboard": "Tableau de bord",
-            "mine": "Mes demandes",
+            "mine": "Mes candidatures",
             "detail": "Détail"
         },
         "actions": {
@@ -449,7 +449,7 @@
             "niveau": "Niveau",
             "mention": "Mention",
             "schoolYear": "Année scol.",
-            "countryOfSchool": "Pays école",
+            "countryOfSchool": "Pays de l'école",
             "secondarySchoolName": "Établissement",
             "graduationDate": "Date diplôme",
             "dob": "Naissance",
@@ -599,14 +599,14 @@
             "welcome": "Bienvenue!"
         },
         "kpis": {
-            "myRequests": "Mes demandes",
+            "myRequests": "Mes candidatures",
             "myDocuments": "Mes documents",
             "myTransactions": "Mes transactions",
             "myPayments": "Mes paiements",
             "seeBreakdown": "Voir la répartition ci-dessous",
             "none": "Aucune demande",
             "translatedCount": "Traduit: {{count}}",
-            "myDemandes": "Mes demandes",
+            "myDemandes": "Mes candidatures",
             "breakdown": "Voir la répartition ci-dessous",
             "translated": "Traduit: {{count}}"
         },
@@ -2502,10 +2502,10 @@
         }
     },
     "traducteurDemandes": {
-        "title": "Mes demandes",
+        "title": "Mes candidatures",
         "breadcrumb": {
             "dashboard": "Tableau de bord",
-            "demandes": "Demandes"
+            "demandes": "Candidatures"
         },
         "columns": {
             "code": "Code",
@@ -2867,10 +2867,10 @@
         }
     },
     "traducteurDemandesList": {
-        "title": "Mes demandes",
+        "title": "Mes candidatures",
         "breadcrumb": {
             "dashboard": "Dashboard",
-            "demandes": "Demandes"
+            "demandes": "Candidatures"
         },
         "columns": {
             "code": "Code",
@@ -3333,7 +3333,7 @@
         "pageTitle": "Paiement de la candidature",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Mes demandes",
+            "demandes": "Mes candidatures",
             "detail": "Détail",
             "payment": "Paiement"
         },
