@@ -2800,7 +2800,9 @@
         },
         "cardTitle": "Modifier l'utilisateur",
         "actions": {
-            "back": "Retour"
+            "back": "Retour",
+            "delete": "Supprimer",
+            "deleteConfirm": "Supprimer l'utilisateur ?"
         },
         "fields": {
             "avatar": "Photo de profil",
@@ -2848,7 +2850,10 @@
             "loadError": "Erreur lors de la récupération de l'utilisateur",
             "updated": "Utilisateur mis à jour avec succès",
             "updateError": "Erreur lors de l'envoi des données",
-            "orgFetchError": "Erreur lors de la récupération des organisations"
+            "orgFetchError": "Erreur lors de la récupération des organisations",
+            "deleteSuccess": "Utilisateur supprimé avec succès",
+            "deleteError": "Erreur lors de la suppression de l'utilisateur",
+            "deleteWarning": "Cette action est irréversible. L'utilisateur sera archivé."
         },
         "labels": {
             "active": "Actif"

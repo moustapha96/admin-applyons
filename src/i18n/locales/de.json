@@ -2526,7 +2526,9 @@
         },
         "cardTitle": "Benutzer bearbeiten",
         "actions": {
-            "back": "Zurück"
+            "back": "Zurück",
+            "delete": "Löschen",
+            "deleteConfirm": "Benutzer löschen?"
         },
         "fields": {
             "avatar": "Profilfoto",
@@ -2565,7 +2567,10 @@
         "messages": {
             "loadError": "Fehler beim Abrufen des Benutzers",
             "updated": "Benutzer erfolgreich aktualisiert",
-            "updateError": "Fehler beim Senden der Daten"
+            "updateError": "Fehler beim Senden der Daten",
+            "deleteSuccess": "Benutzer erfolgreich gelöscht",
+            "deleteError": "Fehler beim Löschen des Benutzers",
+            "deleteWarning": "Diese Aktion ist unwiderruflich. Der Benutzer wird archiviert."
         },
         "labels": {
             "active": "Aktiv"

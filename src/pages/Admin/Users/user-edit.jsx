@@ -15,9 +15,10 @@ import {
     Col,
     Divider,
     Select,
-    Spin
+    Spin,
+    Modal
 } from "antd";
-import { UserOutlined, UploadOutlined,  SaveFilled, ArrowLeftOutlined } from "@ant-design/icons";
+import { UserOutlined, UploadOutlined,  SaveFilled, ArrowLeftOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
 import userService from "../../../services/userService";
@@ -131,6 +132,28 @@ const UserEdit = () => {
         }
     };
 
+    const handleDeleteUser = async () => {
+        try {
+            await userService.archive(id);
+            toast.success(t("adminUserEdit.messages.deleteSuccess") || "Utilisateur supprimé avec succès");
+            navigate("/admin/users");
+        } catch (error) {
+            console.error("Erreur lors de la suppression:", error);
+            toast.error(error?.message || t("adminUserEdit.messages.deleteError") || "Erreur lors de la suppression");
+        }
+    };
+
+    const confirmDelete = () => {
+        Modal.confirm({
+            title: t("adminUserEdit.actions.deleteConfirm") || "Supprimer l'utilisateur ?",
+            content: t("adminUserEdit.messages.deleteWarning") || "Cette action est irréversible. L'utilisateur sera archivé.",
+            okText: t("adminUserEdit.actions.delete") || "Supprimer",
+            okType: "danger",
+            cancelText: t("common.cancel") || "Annuler",
+            onOk: handleDeleteUser,
+        });
+    };
+
       
     const normFile = (e) => {
         if (Array.isArray(e)) return e;
@@ -161,13 +184,23 @@ const UserEdit = () => {
                         ]}
                     />
                 </div>
-                <div className="md:flex md:justify-end justify-end items-center mb-6">
+                <div className="md:flex md:justify-end justify-end items-center mb-6 gap-2">
                     <Button
                         onClick={() => navigate(-1)}
                         icon={<ArrowLeftOutlined />}
                     >
                         {t("adminUserEdit.actions.back")}
                     </Button>
+                    {currentUser?.role === "ADMIN" && (
+                        <Button
+                            danger
+                            type="primary"
+                            icon={<DeleteOutlined />}
+                            onClick={confirmDelete}
+                        >
+                            {t("adminUserEdit.actions.delete") || "Supprimer"}
+                        </Button>
+                    )}
                 </div>
                 <Card title={t("adminUserEdit.cardTitle")} className="mt-4">
                     <Form

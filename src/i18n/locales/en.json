@@ -2761,7 +2761,9 @@
         },
         "cardTitle": "Edit User",
         "actions": {
-            "back": "Back"
+            "back": "Back",
+            "delete": "Delete",
+            "deleteConfirm": "Delete user?"
         },
         "fields": {
             "avatar": "Profile Photo",
@@ -2809,7 +2811,10 @@
             "loadError": "Error retrieving user",
             "updated": "User updated successfully",
             "updateError": "Error sending data",
-            "orgFetchError": "Error loading organizations"
+            "orgFetchError": "Error loading organizations",
+            "deleteSuccess": "User deleted successfully",
+            "deleteError": "Error deleting user",
+            "deleteWarning": "This action is irreversible. The user will be archived."
         },
         "labels": {
             "active": "Active"

@@ -2526,7 +2526,9 @@
         },
         "cardTitle": "Modifica utente",
         "actions": {
-            "back": "Indietro"
+            "back": "Indietro",
+            "delete": "Elimina",
+            "deleteConfirm": "Eliminare l'utente?"
         },
         "fields": {
             "avatar": "Foto profilo",
@@ -2565,7 +2567,10 @@
         "messages": {
             "loadError": "Errore nel recupero utente",
             "updated": "Utente aggiornato con successo",
-            "updateError": "Errore nell'invio dati"
+            "updateError": "Errore nell'invio dati",
+            "deleteSuccess": "Utente eliminato con successo",
+            "deleteError": "Errore nell'eliminazione dell'utente",
+            "deleteWarning": "Questa azione è irreversibile. L'utente sarà archiviato."
         },
         "labels": {
             "active": "Attivo"

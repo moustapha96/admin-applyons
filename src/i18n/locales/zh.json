@@ -2526,7 +2526,9 @@
         },
         "cardTitle": "编辑用户",
         "actions": {
-            "back": "返回"
+            "back": "返回",
+            "delete": "删除",
+            "deleteConfirm": "删除用户？"
         },
         "fields": {
             "avatar": "头像",
@@ -2565,7 +2567,10 @@
         "messages": {
             "loadError": "检索用户错误",
             "updated": "用户更新成功",
-            "updateError": "发送数据错误"
+            "updateError": "发送数据错误",
+            "deleteSuccess": "用户删除成功",
+            "deleteError": "删除用户时出错",
+            "deleteWarning": "此操作不可逆。用户将被归档。"
         },
         "labels": {
             "active": "活跃"
