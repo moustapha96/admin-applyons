@@ -14,79 +14,96 @@ const backendUrl = process.env.VITE_BACKEND_URL ||
 export default defineConfig({
     plugins: [
         react(),
-        // PWA désactivé pour éviter le cache
-        // VitePWA({
-        //     registerType: "autoUpdate",
-        //     devOptions: {
-        //         enabled: !isProd,
-        //     },
-        //     includeAssets: [
-        //         "favicon.svg",
-        //         "apple-touch-icon.png",
-        //         "robots.txt",
-        //         "logo-color.svg",
-        //         "logo.png"
-        //     ],
-        //     workbox: {
-        //         globPatterns: ["**/*.{js,css,html,ico,png,jpg,jpeg,svg,woff2}"],
-        //         runtimeCaching: [{
-        //                 urlPattern: /^https:\/\/www\.applyons\.org\/.*\.(png|jpg|jpeg|svg|webp|ico|woff2?)$/i,
-        //                 handler: "StaleWhileRevalidate",
-        //                 options: {
-        //                     cacheName: "applyons-image-assets",
-        //                     expiration: {
-        //                         maxEntries: 60,
-        //                         maxAgeSeconds: 30 * 24 * 60 * 60, // 30 jours
-        //                     },
-        //                 },
-        //             },
-        //             {
-        //                 urlPattern: /^https:\/\/fonts\.googleapis\.com/,
-        //                 handler: "StaleWhileRevalidate",
-        //                 options: {
-        //                     cacheName: "google-fonts-stylesheets",
-        //                 },
-        //             },
-        //             {
-        //                 urlPattern: /^https:\/\/fonts\.gstatic\.com/,
-        //                 handler: "CacheFirst",
-        //                 options: {
-        //                     cacheName: "google-fonts-webfonts",
-        //                     expiration: {
-        //                         maxEntries: 20,
-        //                         maxAgeSeconds: 365 * 24 * 60 * 60, // 1 an
-        //                     },
-        //                 },
-        //             },
-        //         ],
-        //         navigateFallback: "/index.html",
-        //         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
-        //     },
-        //     manifest: {
-        //         name: "applyons",
-        //         short_name: "applyons",
-        //         description: "Plateforme dynamique de applyons",
-        //         start_url: "/",
-        //         scope: "/",
-        //         display: "standalone",
-        //         orientation: "portrait",
-        //         background_color: "#ffffff",
-        //         theme_color: "#0A2642",
-        //         icons: [{
-        //                 src: "/logo-200x200.png",
-        //                 sizes: "200x200",
-        //                 type: "image/png",
-        //                 purpose: "any maskable"
-        //             },
-        //             {
-        //                 src: "/logo-500x500.png",
-        //                 sizes: "500x500",
-        //                 type: "image/png",
-        //                 purpose: "any maskable"
-        //             }
-        //         ]
-        //     }
-        // })
+        VitePWA({
+            registerType: "autoUpdate",
+            devOptions: {
+                enabled: true,
+                type: "module",
+            },
+            includeAssets: [
+                "favicon.svg",
+                "apple-touch-icon.png",
+                "robots.txt",
+                "logo-color.svg",
+                "logo.png"
+            ],
+            workbox: {
+                // Stratégie NetworkFirst pour éviter la rétention de cache
+                globPatterns: ["**/*.{js,css,html,ico,png,jpg,jpeg,svg,woff2}"],
+                // Désactiver le cache des fichiers statiques en production
+                skipWaiting: true,
+                clientsClaim: true,
+                // Utiliser NetworkFirst pour toujours vérifier les mises à jour
+                runtimeCaching: [
+                    {
+                        // Pour les images externes, utiliser NetworkFirst avec cache court
+                        urlPattern: /^https:\/\/www\.applyons\.org\/.*\.(png|jpg|jpeg|svg|webp|ico|woff2?)$/i,
+                        handler: "NetworkFirst",
+                        options: {
+                            cacheName: "applyons-image-assets",
+                            expiration: {
+                                maxEntries: 20,
+                                maxAgeSeconds: 24 * 60 * 60, // 1 jour seulement
+                            },
+                            networkTimeoutSeconds: 10,
+                        },
+                    },
+                    {
+                        // Fonts Google avec cache minimal
+                        urlPattern: /^https:\/\/fonts\.googleapis\.com/,
+                        handler: "NetworkFirst",
+                        options: {
+                            cacheName: "google-fonts-stylesheets",
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 7 * 24 * 60 * 60, // 7 jours
+                            },
+                        },
+                    },
+                    {
+                        urlPattern: /^https:\/\/fonts\.gstatic\.com/,
+                        handler: "NetworkFirst",
+                        options: {
+                            cacheName: "google-fonts-webfonts",
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 7 * 24 * 60 * 60, // 7 jours
+                            },
+                        },
+                    },
+                ],
+                navigateFallback: "/index.html",
+                navigateFallbackDenylist: [/^\/_/, /\/[^/?]+\.[^/]+$/],
+                // Limiter la taille du cache
+                maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB au lieu de 10MB
+                // Nettoyer les anciens caches
+                cleanupOutdatedCaches: true,
+            },
+            manifest: {
+                name: "applyons",
+                short_name: "applyons",
+                description: "Plateforme dynamique de applyons",
+                start_url: "/",
+                scope: "/",
+                display: "standalone",
+                orientation: "portrait",
+                background_color: "#ffffff",
+                theme_color: "#0A2642",
+                icons: [{
+                        src: "/logo-200x200.png",
+                        sizes: "200x200",
+                        type: "image/png",
+                        purpose: "any maskable"
+                    },
+                    {
+                        src: "/logo-500x500.png",
+                        sizes: "500x500",
+                        type: "image/png",
+                        purpose: "any maskable"
+                    }
+                ]
+            }
+        })
     ],
     define: {
         global: 'window'
@@ -123,10 +140,10 @@ export default defineConfig({
                     vendor: ["react", "react-dom", "react-router-dom"],
                     ui: ["antd"],
                 },
-                // Ajouter un hash pour éviter le cache du navigateur
-                entryFileNames: `assets/[name]-[hash].js`,
-                chunkFileNames: `assets/[name]-[hash].js`,
-                assetFileNames: `assets/[name]-[hash].[ext]`,
+                // Hash long pour forcer les mises à jour et éviter le cache
+                entryFileNames: `assets/[name]-[hash:8].js`,
+                chunkFileNames: `assets/[name]-[hash:8].js`,
+                assetFileNames: `assets/[name]-[hash:8].[ext]`,
             },
         },
         minify: "terser",
@@ -136,16 +153,19 @@ export default defineConfig({
             },
         },
         chunkSizeWarningLimit: 1000,
+        // Désactiver le cache du build
+        assetsInlineLimit: 0,
     },
     server: {
         host: true,
         port: 3000,
         open: true,
-        // Headers pour désactiver le cache en développement
+        // Headers pour désactiver complètement le cache
         headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
             'Pragma': 'no-cache',
             'Expires': '0',
+            'Last-Modified': new Date().toUTCString(),
         },
         proxy: {
             '/api': {
