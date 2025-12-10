@@ -1467,7 +1467,7 @@
             "birthDate": "Date of birth *",
             "email": "Email address *",
             "phone": "Phone",
-            "country": "Country *",
+            "country": "Country of Residence *",
             "address": "Address",
             "accountType": "Account type *",
             "password": "Password *",
