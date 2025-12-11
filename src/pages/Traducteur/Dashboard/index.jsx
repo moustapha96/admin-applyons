@@ -52,6 +52,7 @@ export default function TraducteurDashboard() {
       try {
         setLoading(true)
         const res = await dashboardService.getTraducteurStats(user.id)
+        console.log("res", res)
         setStats(res?.data)
       } catch (error) {
         console.error("Error fetching stats:", error)
@@ -74,12 +75,8 @@ export default function TraducteurDashboard() {
     const translatedByMe = widgets.translatedByMe || {}
     const toTranslate = widgets.toTranslate || {}
     const performance = widgets.performance || {}
-    const demandes = widgets.demandes || {}
-    
-    // Calculer le total des demandes depuis le tableau
-    const demandesTotal = Array.isArray(demandes.total)
-      ? demandes.total.reduce((sum, item) => sum + (item._count?._all || 0), 0)
-      : 0
+    const demandesAsTranslationOrg = widgets.demandesAsTranslationOrg || {}
+    const organization = widgets.organization || {}
     
     // Calculer le total des documents à traduire
     const toTranslateTotal = Array.isArray(toTranslate.total) ? toTranslate.total.length : 0
@@ -93,6 +90,12 @@ export default function TraducteurDashboard() {
       ? performance.thisMonth.reduce((sum, item) => sum + (item._count?._all || 0), 0)
       : 0
     const lastMonthTotal = performance.lastMonth || 0
+    
+    // Demandes assignées à l'organisation
+    const demandesAssigned = organization.demandesAssigned || {}
+    const demandesAssignedTotal = demandesAssigned.total || 0
+    const demandesAssignedPending = demandesAssigned.byStatus?.PENDING || 0
+    const demandesAssignedValidated = demandesAssigned.byStatus?.VALIDATED || 0
     
     return [
       {
@@ -111,9 +114,12 @@ export default function TraducteurDashboard() {
         sub: t("traducteurDashboard.kpis.performanceComparison", { lastMonth: lastMonthTotal }),
       },
       {
-        label: t("traducteurDashboard.kpis.demandesTotal"),
-        value: demandesTotal,
-        sub: t("traducteurDashboard.kpis.demandesBreakdown"),
+        label: t("traducteurDashboard.kpis.demandesAsTranslationOrg"),
+        value: demandesAsTranslationOrg.total ?? 0,
+        sub: t("traducteurDashboard.kpis.demandesAsTranslationOrgBreakdown", { 
+          pending: demandesAsTranslationOrg.byStatus?.PENDING || 0,
+          validated: demandesAsTranslationOrg.byStatus?.VALIDATED || 0 
+        }),
       },
     ]
   }, [stats, t])
@@ -169,16 +175,21 @@ export default function TraducteurDashboard() {
                 t={t} 
               />
               <PillList 
-                title={t("traducteurDashboard.breakdowns.demandesByType")} 
-                itemsObj={(() => {
-                  const demandesTotal = stats?.widgets?.demandes?.total || []
-                  const result = {}
-                  demandesTotal.forEach(item => {
-                    const type = item.type || t("traducteurDashboard.common.other")
-                    result[type] = item._count?._all || 0
-                  })
-                  return result
-                })()} 
+                title={t("traducteurDashboard.breakdowns.demandesAsTranslationOrgByStatus")} 
+                itemsObj={stats?.charts?.demandesAsTranslationOrgByStatus} 
+                t={t} 
+              />
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
+              <PillList 
+                title={t("traducteurDashboard.breakdowns.demandesByStatus")} 
+                itemsObj={stats?.charts?.demandesByStatus} 
+                t={t} 
+              />
+              <PillList 
+                title={t("traducteurDashboard.breakdowns.toTranslateByType")} 
+                itemsObj={stats?.widgets?.toTranslate?.byType} 
                 t={t} 
               />
             </div>

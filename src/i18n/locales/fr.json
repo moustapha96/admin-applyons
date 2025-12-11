@@ -1685,7 +1685,9 @@
             "toTranslateTotal": "Documents à traduire",
             "toTranslateSub": "En attente de traduction",
             "performanceThisMonth": "Ce mois-ci",
-            "performanceComparison": "Mois dernier: {{lastMonth}}"
+            "performanceComparison": "Mois dernier: {{lastMonth}}",
+            "demandesAsTranslationOrg": "Candidatures en tant qu'organisation de traduction",
+            "demandesAsTranslationOrgBreakdown": "En attente: {{pending}} · Validées: {{validated}}"
         },
         "breakdowns": {
             "usersByRole": "Répartition des rôles utilisateurs",
@@ -1696,7 +1698,9 @@
             "translatedByType": "Documents traduits par type",
             "translatedByStatus": "Documents traduits par statut",
             "translationsByType": "Traductions par type",
-            "demandesByType": "Candidatures par type"
+            "demandesByType": "Candidatures par type",
+            "demandesAsTranslationOrgByStatus": "Candidatures (org traduction) par statut",
+            "toTranslateByType": "Documents à traduire par type"
         },
         "empty": {
             "noItems": "— Aucun élément —",
@@ -3255,7 +3259,7 @@
             "saveDraft": "Enregistrer le brouillon",
             "reset": "Réinitialiser",
             "completePayment": "Compléter le paiement",
-            "createApplication": "Créer la candidature et envoyer",
+            "createApplication": "Soumettre",
             "autoSaving": "Sauvegarde automatique..."
         },
         "invitations": {

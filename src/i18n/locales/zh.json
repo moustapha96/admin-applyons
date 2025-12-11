@@ -1564,7 +1564,9 @@
             "toTranslateTotal": "待翻译文档",
             "toTranslateSub": "等待翻译",
             "performanceThisMonth": "本月",
-            "performanceComparison": "上月：{{lastMonth}}"
+            "performanceComparison": "上月：{{lastMonth}}",
+            "demandesAsTranslationOrg": "作为翻译组织的申请",
+            "demandesAsTranslationOrgBreakdown": "待处理：{{pending}} · 已验证：{{validated}}"
         },
         "breakdowns": {
             "usersByRole": "用户角色分类",
@@ -1575,7 +1577,9 @@
             "translatedByType": "按类型的已翻译文档",
             "translatedByStatus": "按状态的已翻译文档",
             "translationsByType": "按类型的翻译",
-            "demandesByType": "按类型的请求"
+            "demandesByType": "按类型的请求",
+            "demandesAsTranslationOrgByStatus": "申请（翻译组织）按状态",
+            "toTranslateByType": "待翻译文档按类型"
         },
         "empty": {
             "noItems": "— 无项目 —",
@@ -2922,7 +2926,7 @@
             "saveDraft": "保存草稿",
             "reset": "重置",
             "completePayment": "完成付款",
-            "createApplication": "创建申请并发送",
+            "createApplication": "提交",
             "autoSaving": "自动保存中..."
         },
         "fields": {

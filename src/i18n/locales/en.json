@@ -1654,7 +1654,9 @@
             "toTranslateTotal": "Documents to translate",
             "toTranslateSub": "Waiting for translation",
             "performanceThisMonth": "This month",
-            "performanceComparison": "Last month: {{lastMonth}}"
+            "performanceComparison": "Last month: {{lastMonth}}",
+            "demandesAsTranslationOrg": "Applications as translation organization",
+            "demandesAsTranslationOrgBreakdown": "Pending: {{pending}} · Validated: {{validated}}"
         },
         "breakdowns": {
             "usersByRole": "User roles breakdown",
@@ -1665,7 +1667,9 @@
             "translatedByType": "Translated documents by type",
             "translatedByStatus": "Translated documents by status",
             "translationsByType": "Translations by type",
-            "demandesByType": "Applications by type"
+            "demandesByType": "Applications by type",
+            "demandesAsTranslationOrgByStatus": "Applications (translation org) by status",
+            "toTranslateByType": "Documents to translate by type"
         },
         "empty": {
             "noItems": "— No items —",
@@ -3167,7 +3171,7 @@
             "saveDraft": "Save draft",
             "reset": "Reset",
             "completePayment": "Complete payment",
-            "createApplication": "Create application and send",
+            "createApplication": "Submit",
             "autoSaving": "Auto-saving..."
         },
         "fields": {

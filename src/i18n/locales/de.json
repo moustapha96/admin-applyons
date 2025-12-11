@@ -1564,7 +1564,9 @@
             "toTranslateTotal": "Zu übersetzende Dokumente",
             "toTranslateSub": "Warten auf Übersetzung",
             "performanceThisMonth": "Diesen Monat",
-            "performanceComparison": "Letzter Monat: {{lastMonth}}"
+            "performanceComparison": "Letzter Monat: {{lastMonth}}",
+            "demandesAsTranslationOrg": "Bewerbungen als Übersetzungsorganisation",
+            "demandesAsTranslationOrgBreakdown": "Ausstehend: {{pending}} · Validiert: {{validated}}"
         },
         "breakdowns": {
             "usersByRole": "Aufschlüsselung nach Benutzerrollen",
@@ -1575,7 +1577,9 @@
             "translatedByType": "Übersetzte Dokumente nach Typ",
             "translatedByStatus": "Übersetzte Dokumente nach Status",
             "translationsByType": "Übersetzungen nach Typ",
-            "demandesByType": "Anfragen nach Typ"
+            "demandesByType": "Anfragen nach Typ",
+            "demandesAsTranslationOrgByStatus": "Bewerbungen (Übersetzungsorg) nach Status",
+            "toTranslateByType": "Zu übersetzende Dokumente nach Typ"
         },
         "empty": {
             "noItems": "— Keine Elemente —",
@@ -2922,7 +2926,7 @@
             "saveDraft": "Entwurf speichern",
             "reset": "Zurücksetzen",
             "completePayment": "Zahlung abschließen",
-            "createApplication": "Bewerbung erstellen und senden",
+            "createApplication": "Einreichen",
             "autoSaving": "Automatisches Speichern..."
         },
         "fields": {
