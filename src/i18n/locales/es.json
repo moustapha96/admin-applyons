@@ -126,6 +126,7 @@
         "filieres": "Programas",
         "demandes": "Aplicación",
         "allDemandes": "Aplicaciones",
+        "invited": "Invitadas",
         "documents": "Documentos",
         "myDocuments": "Mis documentos",
         "payments": "Pagos",
@@ -140,6 +141,7 @@
         "settings": "Ajustes",
         "mailer": "Mailer",
         "auditLogs": "Registros de auditoría",
+        "permissions": "Permisos",
         "profile": "Perfil",
         "monInstitut": "Mi instituto",
         "ajouteDocument": "Compartir un documento",
@@ -147,6 +149,7 @@
         "mesAbonnements": "Mis suscripciones",
         "souscrire": "Suscribirse",
         "dossiersTraiter": "Archivos para procesar",
+        "notifications": "Notificaciones",
         "logout": "Cerrar sesión"
     },
     "profile": {
@@ -1002,6 +1005,343 @@
             "deleteError": "Error al eliminar"
         }
     },
+    "orgInviteList": {
+        "pageTitle": "Invitaciones de organizaciones",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "invites": "Invitaciones de organizaciones"
+        },
+        "searchPlaceholder": "Buscar por email o nombre",
+        "filters": {
+            "statusPlaceholder": "Filtrar por estado"
+        },
+        "stats": {
+            "total": "Total",
+            "pending": "Pendientes",
+            "accepted": "Aceptadas",
+            "rejected": "Rechazadas",
+            "expired": "Expiradas"
+        },
+        "buttons": {
+            "new": "Nueva invitación",
+            "delete": "Eliminar",
+            "refresh": "Actualizar",
+            "viewDemande": "Ver aplicación",
+            "viewUser": "Ver usuario"
+        },
+        "columns": {
+            "inviteeEmail": "Email",
+            "inviteeName": "Nombre",
+            "inviteeOrg": "Organización invitada",
+            "roleKey": "Rol",
+            "status": "Estado",
+            "expiresAt": "Expira el",
+            "createdAt": "Creada el",
+            "invitationLink": "Enlace de invitación",
+            "linkedDemande": "Aplicación vinculada",
+            "linkedUser": "Usuario vinculado",
+            "actions": "Acciones"
+        },
+        "status": {
+            "pending": "Pendiente",
+            "accepted": "Aceptada",
+            "rejected": "Rechazada",
+            "expired": "Expirada"
+        },
+        "pagination": {
+            "total": "Total: {{total}} invitaciones"
+        },
+        "messages": {
+            "loadError": "Error al cargar las invitaciones",
+            "deleteSuccess": "Invitación eliminada con éxito",
+            "deleteError": "Error al eliminar la invitación",
+            "linkCopied": "Enlace de invitación copiado al portapapeles",
+            "copyError": "No se pudo copiar el enlace"
+        },
+        "tooltips": {
+            "copy": "Copiar enlace",
+            "copied": "Enlace copiado"
+        },
+        "modals": {
+            "deleteTitle": "Eliminar invitación",
+            "deleteContent": "¿Estás seguro de que quieres eliminar esta invitación?",
+            "deleteOk": "Eliminar",
+            "deleteCancel": "Cancelar"
+        }
+    },
+    "orgNotifications": {
+        "pageTitle": "Notificaciones",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "notifications": "Notificaciones"
+        },
+        "stats": {
+            "total": "Total",
+            "unviewed": "No vistas",
+            "viewed": "Vistas"
+        },
+        "filters": {
+            "unviewedOnly": "Solo no vistas",
+            "all": "Todas",
+            "asTarget": "Como objetivo",
+            "asNotified": "Como notificado",
+            "allNotifications": "Todas las notificaciones"
+        },
+        "columns": {
+            "status": "Estado",
+            "type": "Tipo",
+            "message": "Mensaje",
+            "demande": "Aplicación",
+            "createdAt": "Creada el",
+            "actions": "Acciones"
+        },
+        "status": {
+            "viewed": "Vista",
+            "unviewed": "No vista"
+        },
+        "types": {
+            "DEMANDE_CREATED": "Aplicación creada",
+            "DEMANDE_UPDATED": "Aplicación actualizada",
+            "DEMANDE_ASSIGNED": "Aplicación asignada",
+            "DOCUMENT_ADDED": "Documento agregado",
+            "INVITATION_SENT": "Invitación enviada",
+            "DEFAULT": "Notificación"
+        },
+        "buttons": {
+            "refresh": "Actualizar",
+            "markAsViewed": "Marcar como vista",
+            "markAllAsViewed": "Marcar todas como vistas",
+            "viewDemande": "Ver aplicación"
+        },
+        "pagination": {
+            "total": "Total: {{total}} notificaciones"
+        },
+        "messages": {
+            "loadError": "Error al cargar notificaciones",
+            "markedAsViewed": "Notificación marcada como vista",
+            "allMarkedAsViewed": "Todas las notificaciones marcadas como vistas",
+            "markError": "Error al marcar la notificación",
+            "markAllError": "Error al marcar todas las notificaciones"
+        },
+        "errors": {
+            "noOrgId": "ID de organización no encontrado"
+        }
+    },
+    "adminOrgNotifications": {
+        "pageTitle": "Notificaciones de la organización",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizaciones",
+            "notifications": "Notificaciones"
+        },
+        "organization": {
+            "name": "Organización"
+        },
+        "stats": {
+            "total": "Total",
+            "unviewed": "No vistas",
+            "viewed": "Vistas"
+        },
+        "filters": {
+            "searchPlaceholder": "Buscar notificaciones",
+            "statusPlaceholder": "Filtrar por estado",
+            "all": "Todas",
+            "unviewedOnly": "Solo no vistas",
+            "asTarget": "Como objetivo",
+            "asNotified": "Como notificado",
+            "allNotifications": "Todas las notificaciones"
+        },
+        "columns": {
+            "status": "Estado",
+            "type": "Tipo",
+            "message": "Mensaje",
+            "demande": "Aplicación",
+            "user": "Usuario",
+            "createdAt": "Creada el",
+            "actions": "Acciones"
+        },
+        "status": {
+            "viewed": "Vista",
+            "unviewed": "No vista"
+        },
+        "types": {
+            "DEMANDE_CREATED": "Aplicación creada",
+            "DEMANDE_UPDATED": "Aplicación actualizada",
+            "DEMANDE_ASSIGNED": "Aplicación asignada",
+            "DOCUMENT_ADDED": "Documento agregado",
+            "INVITATION_SENT": "Invitación enviada",
+            "DEFAULT": "Notificación"
+        },
+        "buttons": {
+            "refresh": "Actualizar",
+            "markAsViewed": "Marcar como vista",
+            "markAllAsViewed": "Marcar todas como vistas",
+            "viewDetails": "Ver detalles",
+            "viewDemande": "Ver aplicación",
+            "viewUser": "Ver usuario"
+        },
+        "pagination": {
+            "total": "Total: {{total}} notificaciones"
+        },
+        "messages": {
+            "loadError": "Error al cargar notificaciones",
+            "markedAsViewed": "Notificación marcada como vista",
+            "allMarkedAsViewed": "Todas las notificaciones marcadas como vistas",
+            "markError": "Error al marcar la notificación",
+            "markAllError": "Error al marcar todas las notificaciones"
+        },
+        "errors": {
+            "noOrgId": "ID de organización no encontrado"
+        }
+    },
+    "adminOrgNotificationDetail": {
+        "pageTitle": "Detalles de la notificación",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "notifications": "Notificaciones"
+        },
+        "sections": {
+            "mainInfo": "Información principal",
+            "demande": "Aplicación vinculada",
+            "organizations": "Organizaciones",
+            "user": "Usuario",
+            "metadata": "Metadatos"
+        },
+        "fields": {
+            "id": "ID",
+            "status": "Estado",
+            "type": "Tipo",
+            "message": "Mensaje",
+            "createdAt": "Creada el",
+            "notifiedAt": "Notificada el",
+            "viewedAt": "Vista el",
+            "demandeCode": "Código de aplicación",
+            "demandeStatus": "Estado de aplicación",
+            "demandeDate": "Fecha de aplicación",
+            "targetOrg": "Organización objetivo",
+            "notifiedOrg": "Organización notificada",
+            "userEmail": "Email del usuario",
+            "userName": "Nombre del usuario",
+            "userRole": "Rol del usuario",
+            "createdBy": "Creada por",
+            "updatedAt": "Actualizada el"
+        },
+        "status": {
+            "viewed": "Vista",
+            "unviewed": "No vista"
+        },
+        "types": {
+            "DEMANDE_CREATED": "Aplicación creada",
+            "DEMANDE_UPDATED": "Aplicación actualizada",
+            "DEMANDE_ASSIGNED": "Aplicación asignada",
+            "DOCUMENT_ADDED": "Documento agregado",
+            "INVITATION_SENT": "Invitación enviada",
+            "DEFAULT": "Notificación"
+        },
+        "actions": {
+            "back": "Volver",
+            "backToList": "Volver a la lista",
+            "markAsViewed": "Marcar como vista",
+            "viewDemande": "Ver aplicación",
+            "viewOrg": "Ver organización",
+            "viewUser": "Ver usuario"
+        },
+        "messages": {
+            "loadError": "Error al cargar la notificación",
+            "markedAsViewed": "Notificación marcada como vista",
+            "markError": "Error al marcar la notificación"
+        },
+        "errors": {
+            "notFound": "Notificación no encontrada"
+        }
+    },
+    "adminPermissions": {
+        "pageTitle": "Gestión de permisos",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "permissions": "Permisos"
+        },
+        "searchPlaceholder": "Buscar por clave, nombre...",
+        "columns": {
+            "key": "Clave",
+            "name": "Nombre",
+            "description": "Descripción",
+            "createdAt": "Creada el",
+            "actions": "Acciones"
+        },
+        "actions": {
+            "create": "Crear permiso",
+            "edit": "Editar",
+            "delete": "Eliminar"
+        },
+        "modal": {
+            "createTitle": "Crear permiso",
+            "editTitle": "Editar permiso"
+        },
+        "form": {
+            "key": "Clave",
+            "keyRequired": "La clave es obligatoria",
+            "keyPattern": "La clave debe contener solo letras minúsculas, números y puntos (ej: users.read)",
+            "keyHelp": "Formato: recurso.acción (ej: users.read, demandes.manage)",
+            "name": "Nombre",
+            "nameRequired": "El nombre es obligatorio",
+            "namePlaceholder": "Ej: Leer usuarios",
+            "description": "Descripción",
+            "descriptionPlaceholder": "Descripción opcional del permiso"
+        },
+        "confirmDelete": "¿Eliminar este permiso?",
+        "confirmDeleteDescription": "Esta acción es irreversible. El permiso se eliminará de todos los usuarios que lo tengan.",
+        "pagination": {
+            "total": "Total: {{total}} permisos"
+        },
+        "messages": {
+            "loadError": "Error al cargar los permisos",
+            "createSuccess": "Permiso creado con éxito",
+            "updateSuccess": "Permiso actualizado con éxito",
+            "deleteSuccess": "Permiso eliminado con éxito",
+            "saveError": "Error al guardar",
+            "deleteError": "Error al eliminar"
+        }
+    },
+    "orgInviteCreate": {
+        "pageTitle": "Nueva invitación de organización",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "invites": "Invitaciones de organizaciones",
+            "create": "Crear"
+        },
+        "fields": {
+            "inviteeEmail": "Email del invitado",
+            "inviteeName": "Nombre del invitado",
+            "inviteePhone": "Teléfono",
+            "inviteeAddress": "Dirección",
+            "roleKey": "Clave de rol",
+            "inviteeOrgId": "Organización invitada (opcional)",
+            "expiresInDays": "Período de validez (días)"
+        },
+        "placeholders": {
+            "inviteeEmail": "email@ejemplo.com",
+            "inviteeName": "Nombre completo",
+            "inviteePhone": "+34 XXX XXX XXX",
+            "inviteeAddress": "Dirección completa",
+            "roleKey": "Rol a asignar",
+            "inviteeOrgId": "Seleccionar una organización",
+            "expiresInDays": "Número de días (1-365)"
+        },
+        "validators": {
+            "inviteeEmailRequired": "El email es obligatorio",
+            "inviteeEmailInvalid": "El email no es válido",
+            "expiresInDaysRange": "La duración debe estar entre 1 y 365 días"
+        },
+        "buttons": {
+            "save": "Crear invitación",
+            "cancel": "Cancelar"
+        },
+        "toasts": {
+            "created": "Invitación creada con éxito",
+            "createError": "Error al crear la invitación"
+        }
+    },
     "filiereCreateInstitut": {
         "pageTitle": "Nueva especialidad",
         "breadcrumbs": {
@@ -1211,6 +1551,63 @@
             "paypalCfgError": "Configuración de PayPal no disponible",
             "postPayError": "Fallo tras el pago",
             "aboActivated": "Suscripción activada ({{provider}}) 🎉"
+        }
+    },
+    "institutDemandesInviteesList": {
+        "pageTitle": "Aplicaciones Invitadas",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "invited": "Invitadas"
+        },
+        "section": {
+            "filters": "Filtros",
+            "list": "Lista de aplicaciones invitadas"
+        },
+        "filters": {
+            "searchPlaceholder": "Buscar (código, año, nivel, email…)",
+            "statusPlaceholder": "Estado",
+            "apply": "Aplicar",
+            "reset": "Restablecer"
+        },
+        "sortByOptions": {
+            "linkedAt": "Fecha de vinculación",
+            "dateDemande": "Fecha de solicitud",
+            "createdAt": "Creado en",
+            "code": "Código"
+        },
+        "sortOrderOptions": {
+            "asc": "ASC",
+            "desc": "DESC"
+        },
+        "columns": {
+            "code": "Código",
+            "dateDemande": "Fecha de solicitud",
+            "demandeur": "Solicitante",
+            "targetOrg": "Organización objetivo",
+            "assignedOrg": "Organización asignada",
+            "docs": "Docs",
+            "inviteeStatus": "Estado de invitación",
+            "linkedAt": "Vinculado en",
+            "actions": "Acciones"
+        },
+        "buttons": {
+            "details": "Detalles",
+            "respond": "Responder"
+        },
+        "inviteeStatuses": {
+            "PENDING": "Pendiente",
+            "IN_PROGRESS": "En progreso",
+            "COMPLETED": "Completado",
+            "CANCELLED": "Cancelado"
+        },
+        "organization": {
+            "name": "Organización"
+        },
+        "errors": {
+            "noOrgId": "ID de organización no encontrado"
+        },
+        "toasts": {
+            "loadError": "Error al cargar aplicaciones invitadas"
         }
     },
     "institutDemandeDetails": {
@@ -1508,6 +1905,36 @@
             },
             "error": "Error al restablecer la contraseña. Por favor, inténtalo de nuevo.",
             "footer": "© {{year}} applyons. Hecho con ❤️ por ADM."
+        },
+        "orgInviteAccept": {
+            "loading": "Cargando invitación...",
+            "tokenMissing": "Token faltante en la URL",
+            "inviteNotFound": "Invitación no encontrada o expirada",
+            "tokenMissingError": "Token faltante",
+            "pageTitle": "Invitación no encontrada",
+            "pageSubtitle": "Esta invitación no existe, ha expirado o ya ha sido utilizada.",
+            "backToLogin": "Volver al inicio de sesión",
+            "acceptTitle": "Aceptar invitación",
+            "invitedBy": "Has sido invitado por:",
+            "orgInfo": "Información de la organización",
+            "creating": "Creando...",
+            "createOrg": "Crear mi organización",
+            "successMessage": "¡Organización creada con éxito! Ahora puedes iniciar sesión.",
+            "createError": "Error al crear la organización",
+            "debugTitle": "Por favor, completa todos los campos requeridos:",
+            "debugFields": {
+                "firstName": "Nombre",
+                "lastName": "Apellido",
+                "gender": "Género",
+                "birthPlace": "Lugar de nacimiento",
+                "birthDate": "Fecha de nacimiento",
+                "email": "Email válido",
+                "password": "Contraseña (mín. 6 caracteres)",
+                "confirmPassword": "Confirmación de contraseña",
+                "orgName": "Nombre de la organización",
+                "orgType": "Tipo de organización",
+                "orgEmail": "Email de la organización"
+            }
         }
     },
     "adminDashboard": {

@@ -56,6 +56,7 @@ export default function UserProfile() {
     try {
       setLoading(true);
       const response = await authService.getProfile();
+    
       setUserData(response.user);
       refreshProfile();
       form.setFieldsValue({

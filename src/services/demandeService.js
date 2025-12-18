@@ -62,7 +62,16 @@ const demandeService = {
 
     getDemandesDemandeurSimple(idUser, params = {}) {
         return axiosInstance.get(`/demandes/users/${idUser}`, { params });
-    }
+    },
+
+    // GET /demandes/invitees/:inviteeOrgId
+    listInviteesByOrgId: (inviteeOrgId, params = {}) =>
+        axiosInstance.get(`/demandes/invitees/${inviteeOrgId}`, { params }),
+
+    // DELETE /demandes/invitees/:inviteeOrgId/:demandeCode
+    // Supprime l'invitation (DemandePartageInvitee) pour une demande spécifique
+    deleteInviteeByDemandeCode: (inviteeOrgId, demandeCode) =>
+        axiosInstance.delete(`/demandes/invitees/${inviteeOrgId}/${encodeURIComponent(demandeCode)}`),
 };
 
 export default demandeService;

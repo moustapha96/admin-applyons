@@ -7,6 +7,7 @@ import AuthNewPassword from "../pages/Authentication/auth-new-password";
 import AuthLockScreen from "../pages/Authentication/auth-lock-screen";
 import AuthNotAccess from "../pages/Authentication/auth-not-access";
 import AuthActivateAccount from "../pages/Authentication/auth-activated";
+import OrgInviteAccept from "../pages/Authentication/OrgInviteAccept";
 import ErrorPage from "../pages/error";
 
 export const publicRoutes = (
@@ -18,6 +19,7 @@ export const publicRoutes = (
     <Route path="/auth/lock-screen" element={<AuthLockScreen />} />
     <Route path="/auth/not-access" element={<AuthNotAccess />} />
     <Route path="/auth/activate" element={<AuthActivateAccount />} />
+    <Route path="/auth/invitations/accept" element={<OrgInviteAccept />} />
     <Route path="/error-page" element={<ErrorPage />} />
   </>
 );

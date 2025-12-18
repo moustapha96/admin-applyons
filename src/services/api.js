@@ -123,6 +123,8 @@ const publicRoutes = [
     "/auth/forgot-password",
     "/auth/reset-password",
     "/auth/refresh-token", // doit rester public pour le retry
+    "/invites/token/", // route publique pour récupérer une invitation par token
+    "/invites/accept/", // route publique pour accepter une invitation
 ];
 
 /** Injecte le Bearer token si non-public */

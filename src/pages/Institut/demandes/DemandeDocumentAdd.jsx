@@ -249,8 +249,8 @@
 /* eslint-disable no-unused-vars */
 "use client";
 
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   Breadcrumb, Button, Card, Col, DatePicker, Divider, Form, Input, Row,
   Select, Space, Typography, Upload, message
@@ -259,6 +259,7 @@ import { ArrowLeftOutlined, InboxOutlined, SaveOutlined } from "@ant-design/icon
 import dayjs from "dayjs";
 import { useAuth } from "../../../hooks/useAuth";
 import documentService from "@/services/documentService";
+import demandeService from "@/services/demandeService";
 import { useTranslation } from "react-i18next";
 
 const { Title, Text } = Typography;
@@ -295,10 +296,19 @@ export default function DemandeDocumentAdd() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [submitting, setSubmitting] = useState(false);
   const [form] = Form.useForm();
   const [fileOriginal, setFileOriginal] = useState(null);
+
+  // Pré-remplir le code depuis l'URL si présent
+  useEffect(() => {
+    const codeFromUrl = searchParams.get("code");
+    if (codeFromUrl) {
+      form.setFieldsValue({ code: codeFromUrl });
+    }
+  }, [searchParams, form]);
 
   // Types de document i18n
   const DOC_TYPES = [
@@ -341,10 +351,30 @@ export default function DemandeDocumentAdd() {
       }
 
       await documentService.create(formData);
+      
+      // Si on vient de la page "Invited", supprimer l'invitation après l'ajout réussi
+      const codeFromUrl = searchParams.get("code");
+      const fromInvited = searchParams.get("fromInvited") === "true";
+      
+      if (fromInvited && codeFromUrl && user?.organization?.id) {
+        try {
+          await demandeService.deleteInviteeByDemandeCode(user.organization.id, codeFromUrl);
+        } catch (e) {
+          // Ne pas bloquer si la suppression de l'invitation échoue
+          console.warn("Erreur lors de la suppression de l'invitation:", e);
+        }
+      }
+      
       message.success(t("demandeDocAdd.toasts.success"));
       form.resetFields();
       setFileOriginal(null);
-      navigate("/organisations/demandes");
+      
+      // Rediriger vers la page appropriée
+      if (fromInvited) {
+        navigate("/organisations/demandes/invited");
+      } else {
+        navigate("/organisations/demandes");
+      }
     } catch (e) {
       message.error(e?.response?.data?.message || e?.message || t("demandeDocAdd.toasts.error"));
     } finally {

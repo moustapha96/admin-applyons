@@ -35,6 +35,10 @@ export const PERMS = {
   DASHBOARD_READ: "dashboard.read",
   AUDIT_READ: "audit.read",
   AUDIT_MANAGE: "audit.manage",
+  ORGANIZATION_DEMANDE_NOTIFICATIONS_READ: "organizationDemandeNotifications.read",
+  ORGANIZATION_DEMANDE_NOTIFICATIONS_MANAGE: "organizationDemandeNotifications.manage",
+  PERMISSIONS_READ: "permissions.read",
+  PERMISSIONS_MANAGE: "permissions.manage",
 };
 
 export const PERMS_INSTITUT = {
@@ -64,6 +68,12 @@ export const PERMS_INSTITUT = {
   ABOS_MANAGE: "abonnements.manage",
   UPLOADS_CREATE: "uploads.create",
   DASHBOARD_READ: "dashboard.read",
+  INVITES_READ: "invites.read",
+  INVITES_MANAGE: "invites.manage",
+  ORGANIZATION_DEMANDE_NOTIFICATIONS_READ: "organizationDemandeNotifications.read",
+  ORGANIZATION_DEMANDE_NOTIFICATIONS_MANAGE: "organizationDemandeNotifications.manage",
+  PERMISSIONS_READ: "permissions.read",
+  PERMISSIONS_MANAGE: "permissions.manage",
 };
 
 export const PERMS_TRADUCTEUR = {
@@ -76,6 +86,10 @@ export const PERMS_TRADUCTEUR = {
   DOCS_DELETE: "documents.delete",
   DOCS_TRANSLATE: "documents.translate",
   DASHBOARD_READ: "dashboard.read",
+  ORGANIZATION_DEMANDE_NOTIFICATIONS_READ: "organizationDemandeNotifications.read",
+  ORGANIZATION_DEMANDE_NOTIFICATIONS_MANAGE: "organizationDemandeNotifications.manage",
+  PERMISSIONS_READ: "permissions.read",
+  PERMISSIONS_MANAGE: "permissions.manage",
 };
 // organizations.write
 // Fonction pour obtenir le label d'une permission à partir de sa clé
@@ -115,7 +129,11 @@ type PermissionKey =
   | "dashboard.read"
   | "organizations.write"
   | "audit.read"
-  | "audit.manage";
+  | "audit.manage"
+  | "organizationDemandeNotifications.read"
+  | "organizationDemandeNotifications.manage"
+  | "permissions.read"
+  | "permissions.manage";
 
 // Fallback labels en français (utilisés si i18n n'est pas disponible)
 const fallbackLabels: Record<PermissionKey, string> = {
@@ -155,6 +173,10 @@ const fallbackLabels: Record<PermissionKey, string> = {
   "dashboard.read": "Lire le tableau de bord",
   "audit.read": "Lire les logs d'audit",
   "audit.manage": "Gérer les logs d'audit",
+  "organizationDemandeNotifications.read": "Lire les notifications de demandes",
+  "organizationDemandeNotifications.manage": "Gérer les notifications de demandes",
+  "permissions.read": "Lire les permissions",
+  "permissions.manage": "Gérer les permissions",
 };
 
 export const getPermissionLabel = (key: string, t?: (key: string) => string) => {
@@ -210,7 +232,8 @@ export const getPermissionColor = (key: string): string => {
     "contacts" |
     "settings" |
     "config" |
-    "audit",
+    "audit" |
+    "permissions",
     string
   > = {
     "users": "blue",
@@ -227,6 +250,7 @@ export const getPermissionColor = (key: string): string => {
     "settings": "gray",
     "config": "darkgreen",
     "audit": "geekblue",
+    "permissions": "purple",
   };
   const category = key.split(".")[0] as keyof typeof colors;
   return colors[category] || "default";

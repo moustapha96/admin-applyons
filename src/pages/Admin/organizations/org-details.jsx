@@ -387,6 +387,22 @@ const OrganizationDetail = () => {
               />
             </Col>
           </Row>
+          <Divider />
+          <h3 className="text-lg font-semibold mb-4">Navigation rapide</h3>
+          <Space wrap>
+            <Button onClick={() => navigate(`/admin/organisations/${organization.id}/users`)}>
+              Voir les utilisateurs
+            </Button>
+            <Button onClick={() => navigate(`/admin/organisations/${organization.id}/demandes`)}>
+              Voir les demandes
+            </Button>
+            <Button onClick={() => navigate(`/admin/organisations/${organization.id}/abonnements`)}>
+              Voir les abonnements
+            </Button>
+            <Button onClick={() => navigate(`/admin/organisations/${organization.id}/notifications`)}>
+              Voir les notifications
+            </Button>
+          </Space>
         </Card>
 
         <Divider />
