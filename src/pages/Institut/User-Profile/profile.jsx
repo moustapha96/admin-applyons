@@ -60,6 +60,7 @@ export default function InstitutUserProfile() {
     try {
       setLoading(true);
       const response = await authService.getProfile();
+      console.log(response);
       setUserData(response.user);
       refreshProfile();
       form.setFieldsValue({
@@ -227,8 +228,11 @@ export default function InstitutUserProfile() {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 400 }}>
-        <Spin tip={t("profilePage.alerts.loading")} />
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: 400 }}>
+        <Spin size="large" />
+        <div style={{ marginTop: 16 }}>
+          <Text type="secondary">{t("profilePage.alerts.loading")}</Text>
+        </div>
       </div>
     );
   }
@@ -380,65 +384,64 @@ export default function InstitutUserProfile() {
                   }
                   style={{ height: "100%" }}
                 >
-                  {isEditing ? (
-                    <Form form={form} layout="vertical" onFinish={handleUpdateProfile}>
-                      <Form.Item name="firstName" label={t("profilePage.fields.firstName")}>
-                        <Input placeholder={t("profilePage.placeholders.firstName")} />
-                      </Form.Item>
-                      <Form.Item name="lastName" label={t("profilePage.fields.lastName")}>
-                        <Input placeholder={t("profilePage.placeholders.lastName")} />
-                      </Form.Item>
-                      <Form.Item name="email" label={t("profilePage.fields.email")}>
-                        <Input disabled />
-                      </Form.Item>
-                      <Form.Item name="phone" label={t("profilePage.fields.phone")}>
-                        <Input placeholder={t("profilePage.placeholders.phone")} />
-                      </Form.Item>
-                      <Form.Item name="adress" label={t("profilePage.fields.adress")}>
-                        <Input placeholder={t("profilePage.placeholders.adress")} />
-                      </Form.Item>
-                      <Form.Item name="placeOfBirth" label={t("profilePage.fields.placeOfBirth")}>
-                        <Input placeholder={t("profilePage.placeholders.placeOfBirth")} />
-                      </Form.Item>
-                      <Form.Item 
-                        name="dateOfBirth" 
-                        label={t("profilePage.fields.dateOfBirth")}
-                        getValueProps={(v) => ({ value: reviveDate(v) })}
-                      >
-                        <DatePicker 
-                          style={{ width: "100%" }}
-                          placeholder={t("profilePage.placeholders.dateOfBirth")}
-                          format="DD/MM/YYYY"
-                          disabledDate={(current) => current && current > dayjs().endOf('day')}
-                        />
-                      </Form.Item>
-                      <Form.Item name="country" label={t("profilePage.fields.country")}>
-                        <Select
-                          showSearch
-                          allowClear
-                          placeholder={t("profilePage.placeholders.country")}
-                          filterOption={(input, option) =>
-                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                          }
-                          options={(countries || []).map((c) => ({ 
-                            value: c.name, 
-                            label: c.name 
-                          }))}
-                        />
-                      </Form.Item>
-                      <Form.Item name="gender" label={t("profilePage.fields.gender")}>
-                        <Input disabled value={getGenderText(userData.gender)} />
-                      </Form.Item>
-                      <Form.Item>
-                        <Space>
-                          <Button type="primary" loading={loading} icon={!loading && <PlusCircleOutlined />} htmlType="submit">
-                            {t("profilePage.buttons.save")}
-                          </Button>
-                          <Button onClick={() => setIsEditing(false)}>{t("profilePage.buttons.cancel")}</Button>
-                        </Space>
-                      </Form.Item>
-                    </Form>
-                  ) : (
+                  <Form form={form} layout="vertical" onFinish={handleUpdateProfile} style={{ display: isEditing ? "block" : "none" }}>
+                    <Form.Item name="firstName" label={t("profilePage.fields.firstName")}>
+                      <Input placeholder={t("profilePage.placeholders.firstName")} />
+                    </Form.Item>
+                    <Form.Item name="lastName" label={t("profilePage.fields.lastName")}>
+                      <Input placeholder={t("profilePage.placeholders.lastName")} />
+                    </Form.Item>
+                    <Form.Item name="email" label={t("profilePage.fields.email")}>
+                      <Input disabled />
+                    </Form.Item>
+                    <Form.Item name="phone" label={t("profilePage.fields.phone")}>
+                      <Input placeholder={t("profilePage.placeholders.phone")} />
+                    </Form.Item>
+                    <Form.Item name="adress" label={t("profilePage.fields.adress")}>
+                      <Input placeholder={t("profilePage.placeholders.adress")} />
+                    </Form.Item>
+                    <Form.Item name="placeOfBirth" label={t("profilePage.fields.placeOfBirth")}>
+                      <Input placeholder={t("profilePage.placeholders.placeOfBirth")} />
+                    </Form.Item>
+                    <Form.Item 
+                      name="dateOfBirth" 
+                      label={t("profilePage.fields.dateOfBirth")}
+                      getValueProps={(v) => ({ value: reviveDate(v) })}
+                    >
+                      <DatePicker 
+                        style={{ width: "100%" }}
+                        placeholder={t("profilePage.placeholders.dateOfBirth")}
+                        format="DD/MM/YYYY"
+                        disabledDate={(current) => current && current > dayjs().endOf('day')}
+                      />
+                    </Form.Item>
+                    <Form.Item name="country" label={t("profilePage.fields.country")}>
+                      <Select
+                        showSearch
+                        allowClear
+                        placeholder={t("profilePage.placeholders.country")}
+                        filterOption={(input, option) =>
+                          (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                        }
+                        options={(countries || []).map((c) => ({ 
+                          value: c.name, 
+                          label: c.name 
+                        }))}
+                      />
+                    </Form.Item>
+                    <Form.Item name="gender" label={t("profilePage.fields.gender")}>
+                      <Input disabled value={getGenderText(userData.gender)} />
+                    </Form.Item>
+                    <Form.Item>
+                      <Space>
+                        <Button type="primary" loading={loading} icon={!loading && <PlusCircleOutlined />} htmlType="submit">
+                          {t("profilePage.buttons.save")}
+                        </Button>
+                        <Button onClick={() => setIsEditing(false)}>{t("profilePage.buttons.cancel")}</Button>
+                      </Space>
+                    </Form.Item>
+                  </Form>
+                  {!isEditing && (
                     <Descriptions column={1} size="middle">
                       <Descriptions.Item label={<Space><MailOutlined /> <span>{t("profilePage.fields.email")}</span></Space>}>
                         <Text copyable>{userData.email}</Text>
@@ -494,8 +497,7 @@ export default function InstitutUserProfile() {
                     }
                     style={{ height: "100%", marginBottom: 24 }}
                   >
-                    {isEditingOrg && canEditOrg ? (
-                      <Form form={orgForm} layout="vertical" onFinish={handleUpdateOrg}>
+                    <Form form={orgForm} layout="vertical" onFinish={handleUpdateOrg} style={{ display: (isEditingOrg && canEditOrg) ? "block" : "none" }}>
                         <Form.Item
                           name="name"
                           label={t("profilePage.orgEditor.name")}
@@ -556,8 +558,8 @@ export default function InstitutUserProfile() {
                             <Button onClick={handleCancelOrg}>{t("profilePage.buttons.cancel")}</Button>
                           </Space>
                         </Form.Item>
-                      </Form>
-                    ) : (
+                    </Form>
+                    {(!isEditingOrg || !canEditOrg) && (
                       <Descriptions column={1} size="small">
                         <Descriptions.Item label={t("profilePage.orgEditor.name")}>
                           <Text strong>{userData.organization?.name || t("profilePage.org.unspecified")}</Text>

@@ -23,7 +23,9 @@
         "reset": "Réinitialiser",
         "selectLanguage": "Sélectionner la langue",
         "notifications": "Notifications",
-        "required": "Ce champ est obligatoire"
+        "required": "Ce champ est obligatoire",
+        "yes": "Oui",
+        "no": "Non"
     },
     "notifications": {
         "newMessage": "Nouveau message",
@@ -126,6 +128,7 @@
         "filieres": "Filières",
         "demandes": "Candidature",
         "allDemandes": "Applications",
+        "invited": "Invitées",
         "documents": "Documents",
         "myDocuments": "Mes documents",
         "payments": "Paiements",
@@ -140,6 +143,7 @@
         "settings": "Paramètres",
         "mailer": "Mailer",
         "auditLogs": "Audit logs",
+        "permissions": "Permissions",
         "profile": "Profil",
         "monInstitut": "Mon institut",
         "ajouteDocument": "Partager un document",
@@ -147,6 +151,8 @@
         "mesAbonnements": "Mes abonnements",
         "souscrire": "Souscrire",
         "dossiersTraiter": "Dossier à traiter",
+        "organizationInvites": "Invitations d'organisations",
+        "notifications": "Notifications",
         "logout": "Déconnexion"
     },
     "profile": {
@@ -1000,6 +1006,343 @@
             "deleteError": "Erreur lors de la suppression"
         }
     },
+    "orgInviteList": {
+        "pageTitle": "Invitations d'organisations",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "invites": "Invitations d'organisations"
+        },
+        "searchPlaceholder": "Rechercher par email ou nom",
+        "filters": {
+            "statusPlaceholder": "Filtrer par statut"
+        },
+        "stats": {
+            "total": "Total",
+            "pending": "En attente",
+            "accepted": "Acceptées",
+            "rejected": "Refusées",
+            "expired": "Expirées"
+        },
+        "buttons": {
+            "new": "Nouvelle invitation",
+            "delete": "Supprimer",
+            "refresh": "Actualiser",
+            "viewDemande": "Voir candidature",
+            "viewUser": "Voir utilisateur"
+        },
+        "columns": {
+            "inviteeEmail": "Email",
+            "inviteeName": "Nom",
+            "inviteeOrg": "Organisation invitée",
+            "roleKey": "Rôle",
+            "status": "Statut",
+            "expiresAt": "Expire le",
+            "createdAt": "Créée le",
+            "invitationLink": "Lien d'invitation",
+            "linkedDemande": "Candidature liée",
+            "linkedUser": "Utilisateur lié",
+            "actions": "Actions"
+        },
+        "status": {
+            "pending": "En attente",
+            "accepted": "Acceptée",
+            "rejected": "Refusée",
+            "expired": "Expirée"
+        },
+        "pagination": {
+            "total": "Total: {{total}} invitations"
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement des invitations",
+            "deleteSuccess": "Invitation supprimée avec succès",
+            "deleteError": "Erreur lors de la suppression de l'invitation",
+            "linkCopied": "Lien d'invitation copié dans le presse-papiers",
+            "copyError": "Impossible de copier le lien"
+        },
+        "tooltips": {
+            "copy": "Copier le lien",
+            "copied": "Lien copié"
+        },
+        "modals": {
+            "deleteTitle": "Supprimer l'invitation",
+            "deleteContent": "Êtes-vous sûr de vouloir supprimer cette invitation ?",
+            "deleteOk": "Supprimer",
+            "deleteCancel": "Annuler"
+        }
+    },
+    "orgNotifications": {
+        "pageTitle": "Notifications",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "notifications": "Notifications"
+        },
+        "stats": {
+            "total": "Total",
+            "unviewed": "Non vues",
+            "viewed": "Vues"
+        },
+        "filters": {
+            "unviewedOnly": "Non vues uniquement",
+            "all": "Toutes",
+            "asTarget": "En tant que cible",
+            "asNotified": "En tant que notifié",
+            "allNotifications": "Toutes les notifications"
+        },
+        "columns": {
+            "status": "Statut",
+            "type": "Type",
+            "message": "Message",
+            "demande": "Candidature",
+            "createdAt": "Créée le",
+            "actions": "Actions"
+        },
+        "status": {
+            "viewed": "Vue",
+            "unviewed": "Non vue"
+        },
+        "types": {
+            "DEMANDE_CREATED": "Candidature créée",
+            "DEMANDE_UPDATED": "Candidature mise à jour",
+            "DEMANDE_ASSIGNED": "Candidature assignée",
+            "DOCUMENT_ADDED": "Document ajouté",
+            "INVITATION_SENT": "Invitation envoyée",
+            "DEFAULT": "Notification"
+        },
+        "buttons": {
+            "refresh": "Actualiser",
+            "markAsViewed": "Marquer comme vue",
+            "markAllAsViewed": "Tout marquer comme vu",
+            "viewDemande": "Voir candidature"
+        },
+        "pagination": {
+            "total": "Total: {{total}} notifications"
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement des notifications",
+            "markedAsViewed": "Notification marquée comme vue",
+            "allMarkedAsViewed": "Toutes les notifications marquées comme vues",
+            "markError": "Erreur lors du marquage de la notification",
+            "markAllError": "Erreur lors du marquage de toutes les notifications"
+        },
+        "errors": {
+            "noOrgId": "ID d'organisation introuvable"
+        }
+    },
+    "adminOrgNotifications": {
+        "pageTitle": "Notifications de l'organisation",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "organizations": "Organisations",
+            "notifications": "Notifications"
+        },
+        "organization": {
+            "name": "Organisation"
+        },
+        "stats": {
+            "total": "Total",
+            "unviewed": "Non vues",
+            "viewed": "Vues"
+        },
+        "filters": {
+            "searchPlaceholder": "Rechercher des notifications",
+            "statusPlaceholder": "Filtrer par statut",
+            "all": "Toutes",
+            "unviewedOnly": "Non vues uniquement",
+            "asTarget": "En tant que cible",
+            "asNotified": "En tant que notifié",
+            "allNotifications": "Toutes les notifications"
+        },
+        "columns": {
+            "status": "Statut",
+            "type": "Type",
+            "message": "Message",
+            "demande": "Candidature",
+            "user": "Utilisateur",
+            "createdAt": "Créée le",
+            "actions": "Actions"
+        },
+        "status": {
+            "viewed": "Vue",
+            "unviewed": "Non vue"
+        },
+        "types": {
+            "DEMANDE_CREATED": "Candidature créée",
+            "DEMANDE_UPDATED": "Candidature mise à jour",
+            "DEMANDE_ASSIGNED": "Candidature assignée",
+            "DOCUMENT_ADDED": "Document ajouté",
+            "INVITATION_SENT": "Invitation envoyée",
+            "DEFAULT": "Notification"
+        },
+        "buttons": {
+            "refresh": "Actualiser",
+            "markAsViewed": "Marquer comme vue",
+            "markAllAsViewed": "Tout marquer comme vu",
+            "viewDetails": "Voir détails",
+            "viewDemande": "Voir candidature",
+            "viewUser": "Voir utilisateur"
+        },
+        "pagination": {
+            "total": "Total: {{total}} notifications"
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement des notifications",
+            "markedAsViewed": "Notification marquée comme vue",
+            "allMarkedAsViewed": "Toutes les notifications marquées comme vues",
+            "markError": "Erreur lors du marquage de la notification",
+            "markAllError": "Erreur lors du marquage de toutes les notifications"
+        },
+        "errors": {
+            "noOrgId": "ID d'organisation introuvable"
+        }
+    },
+    "adminOrgNotificationDetail": {
+        "pageTitle": "Détails de la notification",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "notifications": "Notifications"
+        },
+        "sections": {
+            "mainInfo": "Informations principales",
+            "demande": "Candidature liée",
+            "organizations": "Organisations",
+            "user": "Utilisateur",
+            "metadata": "Métadonnées"
+        },
+        "fields": {
+            "id": "ID",
+            "status": "Statut",
+            "type": "Type",
+            "message": "Message",
+            "createdAt": "Créée le",
+            "notifiedAt": "Notifiée le",
+            "viewedAt": "Vue le",
+            "demandeCode": "Code candidature",
+            "demandeStatus": "Statut candidature",
+            "demandeDate": "Date candidature",
+            "targetOrg": "Organisation cible",
+            "notifiedOrg": "Organisation notifiée",
+            "userEmail": "Email utilisateur",
+            "userName": "Nom utilisateur",
+            "userRole": "Rôle utilisateur",
+            "createdBy": "Créée par",
+            "updatedAt": "Modifiée le"
+        },
+        "status": {
+            "viewed": "Vue",
+            "unviewed": "Non vue"
+        },
+        "types": {
+            "DEMANDE_CREATED": "Candidature créée",
+            "DEMANDE_UPDATED": "Candidature mise à jour",
+            "DEMANDE_ASSIGNED": "Candidature assignée",
+            "DOCUMENT_ADDED": "Document ajouté",
+            "INVITATION_SENT": "Invitation envoyée",
+            "DEFAULT": "Notification"
+        },
+        "actions": {
+            "back": "Retour",
+            "backToList": "Retour à la liste",
+            "markAsViewed": "Marquer comme vue",
+            "viewDemande": "Voir candidature",
+            "viewOrg": "Voir organisation",
+            "viewUser": "Voir utilisateur"
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement de la notification",
+            "markedAsViewed": "Notification marquée comme vue",
+            "markError": "Erreur lors du marquage de la notification"
+        },
+        "errors": {
+            "notFound": "Notification non trouvée"
+        }
+    },
+    "adminPermissions": {
+        "pageTitle": "Gestion des permissions",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "permissions": "Permissions"
+        },
+        "searchPlaceholder": "Rechercher par clé, nom...",
+        "columns": {
+            "key": "Clé",
+            "name": "Nom",
+            "description": "Description",
+            "createdAt": "Créée le",
+            "actions": "Actions"
+        },
+        "actions": {
+            "create": "Créer une permission",
+            "edit": "Modifier",
+            "delete": "Supprimer"
+        },
+        "modal": {
+            "createTitle": "Créer une permission",
+            "editTitle": "Modifier la permission"
+        },
+        "form": {
+            "key": "Clé",
+            "keyRequired": "La clé est obligatoire",
+            "keyPattern": "La clé doit contenir uniquement des lettres minuscules, chiffres et points (ex: users.read)",
+            "keyHelp": "Format: ressource.action (ex: users.read, demandes.manage)",
+            "name": "Nom",
+            "nameRequired": "Le nom est obligatoire",
+            "namePlaceholder": "Ex: Lire les utilisateurs",
+            "description": "Description",
+            "descriptionPlaceholder": "Description optionnelle de la permission"
+        },
+        "confirmDelete": "Supprimer cette permission ?",
+        "confirmDeleteDescription": "Cette action est irréversible. La permission sera supprimée de tous les utilisateurs qui l'ont.",
+        "pagination": {
+            "total": "Total: {{total}} permissions"
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement des permissions",
+            "createSuccess": "Permission créée avec succès",
+            "updateSuccess": "Permission mise à jour avec succès",
+            "deleteSuccess": "Permission supprimée avec succès",
+            "saveError": "Erreur lors de l'enregistrement",
+            "deleteError": "Erreur lors de la suppression"
+        }
+    },
+    "orgInviteCreate": {
+        "pageTitle": "Nouvelle invitation d'organisation",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "invites": "Invitations d'organisations",
+            "create": "Créer"
+        },
+        "fields": {
+            "inviteeEmail": "Email de l'invité",
+            "inviteeName": "Nom de l'invité",
+            "inviteePhone": "Téléphone",
+            "inviteeAddress": "Adresse",
+            "roleKey": "Clé de rôle",
+            "inviteeOrgId": "Organisation invitée (optionnel)",
+            "expiresInDays": "Durée de validité (jours)"
+        },
+        "placeholders": {
+            "inviteeEmail": "email@exemple.com",
+            "inviteeName": "Nom complet",
+            "inviteePhone": "+221 XX XXX XX XX",
+            "inviteeAddress": "Adresse complète",
+            "roleKey": "Rôle à attribuer",
+            "inviteeOrgId": "Sélectionner une organisation",
+            "expiresInDays": "Nombre de jours (1-365)"
+        },
+        "validators": {
+            "inviteeEmailRequired": "L'email est obligatoire",
+            "inviteeEmailInvalid": "L'email n'est pas valide",
+            "expiresInDaysRange": "La durée doit être entre 1 et 365 jours"
+        },
+        "buttons": {
+            "save": "Créer l'invitation",
+            "cancel": "Annuler"
+        },
+        "toasts": {
+            "created": "Invitation créée avec succès",
+            "createError": "Erreur lors de la création de l'invitation"
+        }
+    },
     "filiereCreateInstitut": {
         "pageTitle": "Nouvelle filière",
         "breadcrumbs": {
@@ -1209,6 +1552,63 @@
             "paypalCfgError": "Configuration PayPal indisponible",
             "postPayError": "Échec post-paiement",
             "aboActivated": "Abonnement activé ({{provider}}) 🎉"
+        }
+    },
+    "institutDemandesInviteesList": {
+        "pageTitle": "Candidatures Invitées",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "invited": "Invitées"
+        },
+        "section": {
+            "filters": "Filtres",
+            "list": "Liste des candidatures invitées"
+        },
+        "filters": {
+            "searchPlaceholder": "Recherche (code, année, niveau, email…)",
+            "statusPlaceholder": "Statut",
+            "apply": "Appliquer",
+            "reset": "Réinitialiser"
+        },
+        "sortByOptions": {
+            "linkedAt": "Date de liaison",
+            "dateDemande": "Date demande",
+            "createdAt": "Créé le",
+            "code": "Code"
+        },
+        "sortOrderOptions": {
+            "asc": "ASC",
+            "desc": "DESC"
+        },
+        "columns": {
+            "code": "Code",
+            "dateDemande": "Date demande",
+            "demandeur": "Demandeur",
+            "targetOrg": "Organisation cible",
+            "assignedOrg": "Organisation assignée",
+            "docs": "Docs",
+            "inviteeStatus": "Statut invitation",
+            "linkedAt": "Lié le",
+            "actions": "Actions"
+        },
+        "buttons": {
+            "details": "Détails",
+            "respond": "Répondre"
+        },
+        "inviteeStatuses": {
+            "PENDING": "En attente",
+            "IN_PROGRESS": "En cours",
+            "COMPLETED": "Terminé",
+            "CANCELLED": "Annulé"
+        },
+        "organization": {
+            "name": "Organisation"
+        },
+        "errors": {
+            "noOrgId": "ID d'organisation introuvable"
+        },
+        "toasts": {
+            "loadError": "Échec chargement des candidatures invitées"
         }
     },
     "institutDemandeDetails": {
@@ -1625,6 +2025,36 @@
             "message": "Votre compte a été créé avec succès. Profitez de votre parcours. Merci",
             "continue": "Continuer",
             "footer": "© {{year}} applyons by ADM."
+        },
+        "orgInviteAccept": {
+            "loading": "Chargement de l'invitation...",
+            "tokenMissing": "Token manquant dans l'URL",
+            "inviteNotFound": "Invitation introuvable ou expirée",
+            "tokenMissingError": "Token manquant",
+            "pageTitle": "Invitation introuvable",
+            "pageSubtitle": "Cette invitation n'existe pas, a expiré ou a déjà été utilisée.",
+            "backToLogin": "Retour à la connexion",
+            "acceptTitle": "Accepter l'invitation",
+            "invitedBy": "Vous avez été invité par :",
+            "orgInfo": "Informations de l'organisation",
+            "creating": "Création en cours...",
+            "createOrg": "Créer mon organisation",
+            "successMessage": "Organisation créée avec succès ! Vous pouvez maintenant vous connecter.",
+            "createError": "Erreur lors de la création de l'organisation",
+            "debugTitle": "Veuillez remplir tous les champs requis :",
+            "debugFields": {
+                "firstName": "Prénom",
+                "lastName": "Nom",
+                "gender": "Genre",
+                "birthPlace": "Lieu de naissance",
+                "birthDate": "Date de naissance",
+                "email": "Email valide",
+                "password": "Mot de passe (min 6 caractères)",
+                "confirmPassword": "Confirmation du mot de passe",
+                "orgName": "Nom de l'organisation",
+                "orgType": "Type d'organisation",
+                "orgEmail": "Email de l'organisation"
+            }
         }
     },
     "adminDashboard": {

@@ -980,7 +980,7 @@ export default function DemandeurDemandeCreate() {
                         showSearch
                         size="large"
                         placeholder={t("demandeurDemandeCreate.placeholders.chooseOrganization")}
-                        options={tradOrgs.map((o) => ({ value: o.id, label: `${o.name} — TRADUCTEUR` }))}
+                        options={tradOrgs.map((o) => ({ value: o.id, label: `${o.name}` }))}
                         style={{ width: "100%", padding: 8, boxSizing: "border-box" }}
                       />
                     </Form.Item>
@@ -1527,7 +1527,7 @@ export default function DemandeurDemandeCreate() {
             footer={null}
             width={600}
             centered
-            destroyOnClose
+            destroyOnHidden
           >
             <div style={{ padding: "24px 0" }}>
               <div

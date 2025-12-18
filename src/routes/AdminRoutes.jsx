@@ -81,6 +81,11 @@ import AdminContactList from "../pages/Admin/contacts/contact";
 import AuditLogManagement from "../pages/Settings/audit-log";
 import MailerManagement from "../pages/Settings/mailer";
 import SettingsPage from "../pages/Settings/settings";
+import OrganizationInviteList from "../pages/Admin/OrganizationInvites/OrganizationInviteList.jsx";
+import OrganizationInviteCreate from "../pages/Admin/OrganizationInvites/OrganizationInviteCreate.jsx";
+import AdminOrganizationNotificationsList from "../pages/Admin/OrganizationNotifications/AdminOrganizationNotificationsList.jsx";
+import AdminOrganizationNotificationDetail from "../pages/Admin/OrganizationNotifications/AdminOrganizationNotificationDetail.jsx";
+import PermissionsList from "../pages/Admin/Permissions/PermissionsList.jsx";
 
 export const adminRoutes = (
   <>
@@ -226,6 +231,32 @@ export const adminRoutes = (
       </Route>
       <Route element={<ProtectedRoute requiredPermissions={["users.manage"]} />}>
         <Route path="organisations/:id/users/add" element={<OrganizationUserAdd />} />
+      </Route>
+
+      {/* -------- Organizations - Invitations -------- */}
+      <Route element={<ProtectedRoute requiredPermissions={["invites.read"]} />}>
+        <Route path="organization-invites" element={<OrganizationInviteList />} />
+      </Route>
+      <Route element={<ProtectedRoute requiredPermissions={["invites.manage"]} />}>
+        <Route path="organization-invites/create" element={<OrganizationInviteCreate />} />
+      </Route>
+
+      {/* -------- Organizations - Notifications -------- */}
+      <Route element={<ProtectedRoute requiredPermissions={["notifications.read", "demandes.read"]} />}>
+        <Route path="organisations/notifications" element={<AdminOrganizationNotificationsList />} />
+        <Route path="organisations/notifications/:id/details" element={<AdminOrganizationNotificationDetail />} />
+      </Route>
+
+      {/* -------- Permissions -------- */}
+      <Route
+        element={
+          <ProtectedRoute
+            allowedRoles={["ADMIN", "SUPER_ADMIN"]}
+            requiredPermissions={["permissions.read", "permissions.manage"]}
+          />
+        }
+      >
+        <Route path="permissions" element={<PermissionsList />} />
       </Route>
 
       {/* -------- Demandes -------- */}

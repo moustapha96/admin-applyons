@@ -1,0 +1,482 @@
+/* eslint-disable no-unused-vars */
+import { useCallback, useEffect, useState, useMemo } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Breadcrumb,
+  Button,
+  Table,
+  Tag,
+  Space,
+  message,
+  Card,
+  Select,
+  Row,
+  Col,
+  Statistic,
+  Badge,
+  Input,
+  Switch,
+  Typography,
+} from "antd";
+import {
+  ReloadOutlined,
+  EyeOutlined,
+  CheckCircleOutlined,
+  BellOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
+import organizationDemandeNotificationService from "@/services/organizationDemandeNotificationService";
+import { useAuth } from "../../../hooks/useAuth";
+import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
+
+const { Text } = Typography;
+
+export default function AdminOrganizationNotificationsList() {
+  const { t } = useTranslation();
+  const { user: me } = useAuth();
+  const navigate = useNavigate();
+
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadingStats, setLoadingStats] = useState(false);
+
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+
+  const [filters, setFilters] = useState({
+    unviewedOnly: false,
+    asTarget: false,
+    asNotified: false,
+    search: "",
+  });
+
+  const [stats, setStats] = useState({
+    total: 0,
+    unviewed: 0,
+    viewed: 0,
+  });
+
+  const [organization, setOrganization] = useState(null);
+
+  const fetchData = useCallback(async () => {
+   
+
+    setLoading(true);
+    try {
+      const params = {
+        page: pagination.current,
+        limit: pagination.pageSize,
+        unviewedOnly: filters.unviewedOnly,
+        asTarget: filters.asTarget,
+        asNotified: filters.asNotified,
+        search: filters.search || undefined,
+      };
+
+      const res = await organizationDemandeNotificationService.list(params);
+
+      const data = res?.data || res;
+      const notifications = Array.isArray(data.notifications)
+        ? data.notifications
+        : Array.isArray(data)
+        ? data
+        : [];
+
+      setRows(notifications);
+      setOrganization(data.organization || null);
+
+      setPagination((p) => ({
+        ...p,
+        total: data.pagination?.total ?? notifications.length,
+      }));
+    } catch (e) {
+      message.error(
+        e?.response?.data?.message ||
+          e?.message ||
+          t("adminOrgNotifications.messages.loadError")
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, [
+    pagination.current,
+    pagination.pageSize,
+    filters.unviewedOnly,
+    filters.asTarget,
+    filters.asNotified,
+    filters.search,
+    t,
+  ]);
+
+  const fetchStats = useCallback(async () => {
+    
+
+    setLoadingStats(true);
+    try {
+      const res = await organizationDemandeNotificationService.statsGlobal();
+
+      const statsData = res?.data?.stats || {};
+
+      setStats({
+        total: statsData.total ?? 0,
+        unviewed: statsData.unviewed ?? 0,
+        viewed: statsData.viewed ?? 0,
+      });
+    } catch (e) {
+      console.error("Error loading stats:", e);
+      // message.error(e?.response?.data?.message || e?.message || "Erreur stats");
+    } finally {
+      setLoadingStats(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+    fetchStats();
+  }, [fetchData, fetchStats]);
+
+  const onTableChange = (pg) => {
+    setPagination((p) => ({
+      ...p,
+      current: pg.current,
+      pageSize: pg.pageSize,
+    }));
+  };
+
+  const handleMarkAsViewed = async (notificationId) => {
+    try {
+      await organizationDemandeNotificationService.markAsViewed(notificationId);
+      message.success(t("adminOrgNotifications.messages.markedAsViewed"));
+      await Promise.all([fetchData(), fetchStats()]);
+    } catch (e) {
+      message.error(
+        e?.response?.data?.message ||
+          e?.message ||
+          t("adminOrgNotifications.messages.markError")
+      );
+    }
+  };
+
+  const handleMarkAllAsViewed = async () => {
+    
+    try {
+      await organizationDemandeNotificationService.markAllAsViewedForGlobal();
+      message.success(t("adminOrgNotifications.messages.allMarkedAsViewed"));
+      await Promise.all([fetchData(), fetchStats()]);
+    } catch (e) {
+      message.error(
+        e?.response?.data?.message ||
+          e?.message ||
+          t("adminOrgNotifications.messages.markAllError")
+      );
+    }
+  };
+
+  const getNotificationTypeColor = (type) => {
+    const colors = {
+      DEMANDE_CREATED: "blue",
+      DEMANDE_UPDATED: "orange",
+      DEMANDE_ASSIGNED: "green",
+      DOCUMENT_ADDED: "purple",
+      INVITATION_SENT: "cyan",
+      DEFAULT: "default",
+    };
+    return colors[type] || colors.DEFAULT;
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        title: t("adminOrgNotifications.columns.status"),
+        key: "viewed",
+        width: 130,
+        render: (_, record) => (
+          <Badge
+            status={record.viewed ? "default" : "processing"}
+            text={
+              record.viewed
+                ? t("adminOrgNotifications.status.viewed")
+                : t("adminOrgNotifications.status.unviewed")
+            }
+          />
+        ),
+      },
+      {
+        title: t("adminOrgNotifications.columns.type"),
+        dataIndex: "type",
+        key: "type",
+        render: (type) => (
+          <Tag color={getNotificationTypeColor(type)}>
+            {t(`adminOrgNotifications.types.${type || "DEFAULT"}`)}
+          </Tag>
+        ),
+      },
+      {
+        title: t("adminOrgNotifications.columns.message"),
+        key: "message",
+        render: (_, record) => (
+          <Text strong={!record.viewed}>
+            {record.message || record.title || "—"}
+          </Text>
+        ),
+      },
+      {
+        title: t("adminOrgNotifications.columns.demande"),
+        key: "demande",
+        render: (_, record) => {
+          const demande = record.demandePartage || record.demande;
+          if (demande?.id) {
+            return (
+              <Link to={`/admin/demandes/${demande.id}/details`}>
+                {demande.code || demande.id}
+              </Link>
+            );
+          }
+          return "—";
+        },
+      },
+      {
+        title: t("adminOrgNotifications.columns.user"),
+        key: "user",
+        render: (_, record) => {
+          const user = record.user || record.createdBy;
+          if (user?.id) {
+            return (
+              <Link to={`/admin/users/${user.id}/details`}>
+                {user.email || user.username || "—"}
+              </Link>
+            );
+          }
+          return "—";
+        },
+      },
+      {
+        title: t("adminOrgNotifications.columns.createdAt"),
+        dataIndex: "createdAt",
+        key: "createdAt",
+        render: (v) => (v ? dayjs(v).format("DD/MM/YYYY HH:mm") : "—"),
+      },
+      {
+        title: t("adminOrgNotifications.columns.actions"),
+        key: "actions",
+        width: 280,
+        render: (_, record) => (
+          <Space size="small" wrap>
+            <Button
+              size="small"
+              icon={<EyeOutlined />}
+              onClick={() => navigate(`/admin/organisations/notifications/${record.id}/details`)}
+            >
+              {t("adminOrgNotifications.buttons.viewDetails")}
+            </Button>
+
+            {!record.viewed && (
+              <Button
+                size="small"
+                icon={<CheckCircleOutlined />}
+                onClick={() => handleMarkAsViewed(record.id)}
+              >
+                {t("adminOrgNotifications.buttons.markAsViewed")}
+              </Button>
+            )}
+
+            {(record.demandePartage?.id || record.demande?.id) && (
+              <Button
+                size="small"
+                icon={<EyeOutlined />}
+                onClick={() =>
+                  navigate(
+                    `/admin/demandes/${
+                      record.demandePartage?.id || record.demande?.id
+                    }/details`
+                  )
+                }
+              >
+                {t("adminOrgNotifications.buttons.viewDemande")}
+              </Button>
+            )}
+
+            {record.user?.id && (
+              <Button
+                size="small"
+                icon={<EyeOutlined />}
+                onClick={() => navigate(`/admin/users/${record.user.id}/details`)}
+              >
+                {t("adminOrgNotifications.buttons.viewUser")}
+              </Button>
+            )}
+          </Space>
+        ),
+      },
+    ],
+    [t, navigate]
+  );
+
+
+
+  return (
+    <div className="container-fluid relative px-3">
+      <div className="layout-specing">
+        <div className="md:flex justify-between items-center mb-6">
+          <h5 className="text-lg font-semibold">
+            {t("adminOrgNotifications.pageTitle")}
+          </h5>
+          <Breadcrumb
+            items={[
+              {
+                title: (
+                  <Link to="/admin/dashboard">
+                    {t("adminOrgNotifications.breadcrumbs.dashboard")}
+                  </Link>
+                ),
+              },
+              {
+                title: (
+                  <Link to="/admin/organisations">
+                    {t("adminOrgNotifications.breadcrumbs.organizations")}
+                  </Link>
+                ),
+              },
+              { title: organization?.name || "Global" },
+              { title: t("adminOrgNotifications.breadcrumbs.notifications") },
+            ]}
+          />
+        </div>
+
+
+
+        {/* Statistiques */}
+        <Row gutter={[16, 16]} className="mb-6">
+          <Col xs={24} sm={8}>
+            <Card loading={loadingStats}>
+              <Statistic
+                title={t("adminOrgNotifications.stats.total")}
+                value={stats.total}
+                prefix={<BellOutlined />}
+                valueStyle={{ color: "#1890ff" }}
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={8}>
+            <Card loading={loadingStats}>
+              <Statistic
+                title={t("adminOrgNotifications.stats.unviewed")}
+                value={stats.unviewed}
+                prefix={<Badge status="processing" />}
+                valueStyle={{ color: "#faad14" }}
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={8}>
+            <Card loading={loadingStats}>
+              <Statistic
+                title={t("adminOrgNotifications.stats.viewed")}
+                value={stats.viewed}
+                prefix={<CheckCircleOutlined />}
+                valueStyle={{ color: "#52c41a" }}
+              />
+            </Card>
+          </Col>
+        </Row>
+
+        {/* Filtres */}
+        <Card className="mb-6">
+          <Space wrap>
+            <Input.Search
+              placeholder={t("adminOrgNotifications.filters.searchPlaceholder")}
+              allowClear
+              value={filters.search}
+              onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
+              onSearch={() => {
+                setPagination((p) => ({ ...p, current: 1 }));
+                fetchData();
+              }}
+              style={{ width: 300 }}
+              prefix={<SearchOutlined />}
+            />
+            <Select
+              placeholder={t("adminOrgNotifications.filters.statusPlaceholder")}
+              allowClear
+              value={filters.unviewedOnly ? "unviewed" : undefined}
+              onChange={(v) => {
+                setFilters((f) => ({ ...f, unviewedOnly: v === "unviewed" }));
+                setPagination((p) => ({ ...p, current: 1 }));
+              }}
+              style={{ width: 200 }}
+              options={[
+                { label: t("adminOrgNotifications.filters.all"), value: undefined },
+                { label: t("adminOrgNotifications.filters.unviewedOnly"), value: "unviewed" },
+              ]}
+            />
+            <Switch
+              checked={filters.asTarget}
+              onChange={(checked) => {
+                setFilters((f) => ({
+                  ...f,
+                  asTarget: checked,
+                  asNotified: checked ? false : f.asNotified,
+                }));
+                setPagination((p) => ({ ...p, current: 1 }));
+              }}
+              checkedChildren={t("adminOrgNotifications.filters.asTarget")}
+              unCheckedChildren={t("adminOrgNotifications.filters.allNotifications")}
+            />
+            <Switch
+              checked={filters.asNotified}
+              onChange={(checked) => {
+                setFilters((f) => ({
+                  ...f,
+                  asNotified: checked,
+                  asTarget: checked ? false : f.asTarget,
+                }));
+                setPagination((p) => ({ ...p, current: 1 }));
+              }}
+              checkedChildren={t("adminOrgNotifications.filters.asNotified")}
+              unCheckedChildren={t("adminOrgNotifications.filters.allNotifications")}
+            />
+            <Button
+              icon={<ReloadOutlined />}
+              onClick={() => {
+                fetchData();
+                fetchStats();
+              }}
+            >
+              {t("adminOrgNotifications.buttons.refresh")}
+            </Button>
+            {stats.unviewed > 0 && (
+              <Button
+                type="primary"
+                icon={<CheckCircleOutlined />}
+                onClick={handleMarkAllAsViewed}
+              >
+                {t("adminOrgNotifications.buttons.markAllAsViewed")}
+              </Button>
+            )}
+          </Space>
+        </Card>
+
+        {/* Table */}
+        <Card>
+          <Table
+            rowKey="id"
+            loading={loading}
+            dataSource={rows}
+            columns={columns}
+            pagination={{
+              ...pagination,
+              showSizeChanger: true,
+              pageSizeOptions: ["5", "10", "20", "50"],
+              showTotal: (total) =>
+                t("adminOrgNotifications.pagination.total", { total }),
+            }}
+            onChange={onTableChange}
+            scroll={{ x: true }}
+          />
+        </Card>
+      </div>
+    </div>
+  );
+}

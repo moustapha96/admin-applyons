@@ -126,6 +126,7 @@
         "filieres": "Programs",
         "demandes": "Application",
         "allDemandes": "All Applications",
+        "invited": "Invited",
         "documents": "Documents",
         "myDocuments": "My documents",
         "payments": "Payments",
@@ -140,6 +141,7 @@
         "settings": "Settings",
         "mailer": "Mailer",
         "auditLogs": "Audit logs",
+        "permissions": "Permissions",
         "profile": "Profile",
         "monInstitut": "My institute",
         "ajouteDocument": "Share a document",
@@ -147,6 +149,7 @@
         "mesAbonnements": "My subscriptions",
         "souscrire": "Subscribe",
         "dossiersTraiter": "Files to process",
+        "notifications": "Notifications",
         "logout": "Log out"
     },
     "profile": {
@@ -1010,6 +1013,343 @@
             "deleteError": "Delete failed"
         }
     },
+    "orgInviteList": {
+        "pageTitle": "Organization invitations",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "invites": "Organization invitations"
+        },
+        "searchPlaceholder": "Search by email or name",
+        "filters": {
+            "statusPlaceholder": "Filter by status"
+        },
+        "stats": {
+            "total": "Total",
+            "pending": "Pending",
+            "accepted": "Accepted",
+            "rejected": "Rejected",
+            "expired": "Expired"
+        },
+        "buttons": {
+            "new": "New invitation",
+            "delete": "Delete",
+            "refresh": "Refresh",
+            "viewDemande": "View application",
+            "viewUser": "View user"
+        },
+        "columns": {
+            "inviteeEmail": "Email",
+            "inviteeName": "Name",
+            "inviteeOrg": "Invited organization",
+            "roleKey": "Role",
+            "status": "Status",
+            "expiresAt": "Expires on",
+            "createdAt": "Created on",
+            "invitationLink": "Invitation link",
+            "linkedDemande": "Linked application",
+            "linkedUser": "Linked user",
+            "actions": "Actions"
+        },
+        "status": {
+            "pending": "Pending",
+            "accepted": "Accepted",
+            "rejected": "Rejected",
+            "expired": "Expired"
+        },
+        "pagination": {
+            "total": "Total: {{total}} invitations"
+        },
+        "messages": {
+            "loadError": "Error loading invitations",
+            "deleteSuccess": "Invitation deleted successfully",
+            "deleteError": "Error deleting invitation",
+            "linkCopied": "Invitation link copied to clipboard",
+            "copyError": "Unable to copy link"
+        },
+        "tooltips": {
+            "copy": "Copy link",
+            "copied": "Link copied"
+        },
+        "modals": {
+            "deleteTitle": "Delete invitation",
+            "deleteContent": "Are you sure you want to delete this invitation?",
+            "deleteOk": "Delete",
+            "deleteCancel": "Cancel"
+        }
+    },
+    "orgNotifications": {
+        "pageTitle": "Notifications",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "notifications": "Notifications"
+        },
+        "stats": {
+            "total": "Total",
+            "unviewed": "Unviewed",
+            "viewed": "Viewed"
+        },
+        "filters": {
+            "unviewedOnly": "Unviewed only",
+            "all": "All",
+            "asTarget": "As target",
+            "asNotified": "As notified",
+            "allNotifications": "All notifications"
+        },
+        "columns": {
+            "status": "Status",
+            "type": "Type",
+            "message": "Message",
+            "demande": "Application",
+            "createdAt": "Created at",
+            "actions": "Actions"
+        },
+        "status": {
+            "viewed": "Viewed",
+            "unviewed": "Unviewed"
+        },
+        "types": {
+            "DEMANDE_CREATED": "Application created",
+            "DEMANDE_UPDATED": "Application updated",
+            "DEMANDE_ASSIGNED": "Application assigned",
+            "DOCUMENT_ADDED": "Document added",
+            "INVITATION_SENT": "Invitation sent",
+            "DEFAULT": "Notification"
+        },
+        "buttons": {
+            "refresh": "Refresh",
+            "markAsViewed": "Mark as viewed",
+            "markAllAsViewed": "Mark all as viewed",
+            "viewDemande": "View application"
+        },
+        "pagination": {
+            "total": "Total: {{total}} notifications"
+        },
+        "messages": {
+            "loadError": "Error loading notifications",
+            "markedAsViewed": "Notification marked as viewed",
+            "allMarkedAsViewed": "All notifications marked as viewed",
+            "markError": "Error marking notification as viewed",
+            "markAllError": "Error marking all notifications as viewed"
+        },
+        "errors": {
+            "noOrgId": "Organization ID not found"
+        }
+    },
+    "adminOrgNotifications": {
+        "pageTitle": "Organization Notifications",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizations",
+            "notifications": "Notifications"
+        },
+        "organization": {
+            "name": "Organization"
+        },
+        "stats": {
+            "total": "Total",
+            "unviewed": "Unviewed",
+            "viewed": "Viewed"
+        },
+        "filters": {
+            "searchPlaceholder": "Search notifications",
+            "statusPlaceholder": "Filter by status",
+            "all": "All",
+            "unviewedOnly": "Unviewed only",
+            "asTarget": "As target",
+            "asNotified": "As notified",
+            "allNotifications": "All notifications"
+        },
+        "columns": {
+            "status": "Status",
+            "type": "Type",
+            "message": "Message",
+            "demande": "Application",
+            "user": "User",
+            "createdAt": "Created at",
+            "actions": "Actions"
+        },
+        "status": {
+            "viewed": "Viewed",
+            "unviewed": "Unviewed"
+        },
+        "types": {
+            "DEMANDE_CREATED": "Application created",
+            "DEMANDE_UPDATED": "Application updated",
+            "DEMANDE_ASSIGNED": "Application assigned",
+            "DOCUMENT_ADDED": "Document added",
+            "INVITATION_SENT": "Invitation sent",
+            "DEFAULT": "Notification"
+        },
+        "buttons": {
+            "refresh": "Refresh",
+            "markAsViewed": "Mark as viewed",
+            "markAllAsViewed": "Mark all as viewed",
+            "viewDetails": "View details",
+            "viewDemande": "View application",
+            "viewUser": "View user"
+        },
+        "pagination": {
+            "total": "Total: {{total}} notifications"
+        },
+        "messages": {
+            "loadError": "Error loading notifications",
+            "markedAsViewed": "Notification marked as viewed",
+            "allMarkedAsViewed": "All notifications marked as viewed",
+            "markError": "Error marking notification as viewed",
+            "markAllError": "Error marking all notifications as viewed"
+        },
+        "errors": {
+            "noOrgId": "Organization ID not found"
+        }
+    },
+    "adminOrgNotificationDetail": {
+        "pageTitle": "Notification Details",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "notifications": "Notifications"
+        },
+        "sections": {
+            "mainInfo": "Main Information",
+            "demande": "Linked Application",
+            "organizations": "Organizations",
+            "user": "User",
+            "metadata": "Metadata"
+        },
+        "fields": {
+            "id": "ID",
+            "status": "Status",
+            "type": "Type",
+            "message": "Message",
+            "createdAt": "Created at",
+            "notifiedAt": "Notified at",
+            "viewedAt": "Viewed at",
+            "demandeCode": "Application code",
+            "demandeStatus": "Application status",
+            "demandeDate": "Application date",
+            "targetOrg": "Target organization",
+            "notifiedOrg": "Notified organization",
+            "userEmail": "User email",
+            "userName": "User name",
+            "userRole": "User role",
+            "createdBy": "Created by",
+            "updatedAt": "Updated at"
+        },
+        "status": {
+            "viewed": "Viewed",
+            "unviewed": "Unviewed"
+        },
+        "types": {
+            "DEMANDE_CREATED": "Application created",
+            "DEMANDE_UPDATED": "Application updated",
+            "DEMANDE_ASSIGNED": "Application assigned",
+            "DOCUMENT_ADDED": "Document added",
+            "INVITATION_SENT": "Invitation sent",
+            "DEFAULT": "Notification"
+        },
+        "actions": {
+            "back": "Back",
+            "backToList": "Back to list",
+            "markAsViewed": "Mark as viewed",
+            "viewDemande": "View application",
+            "viewOrg": "View organization",
+            "viewUser": "View user"
+        },
+        "messages": {
+            "loadError": "Error loading notification",
+            "markedAsViewed": "Notification marked as viewed",
+            "markError": "Error marking notification as viewed"
+        },
+        "errors": {
+            "notFound": "Notification not found"
+        }
+    },
+    "adminPermissions": {
+        "pageTitle": "Permissions Management",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "permissions": "Permissions"
+        },
+        "searchPlaceholder": "Search by key, name...",
+        "columns": {
+            "key": "Key",
+            "name": "Name",
+            "description": "Description",
+            "createdAt": "Created at",
+            "actions": "Actions"
+        },
+        "actions": {
+            "create": "Create permission",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "modal": {
+            "createTitle": "Create permission",
+            "editTitle": "Edit permission"
+        },
+        "form": {
+            "key": "Key",
+            "keyRequired": "Key is required",
+            "keyPattern": "Key must contain only lowercase letters, numbers and dots (e.g: users.read)",
+            "keyHelp": "Format: resource.action (e.g: users.read, demandes.manage)",
+            "name": "Name",
+            "nameRequired": "Name is required",
+            "namePlaceholder": "e.g: Read users",
+            "description": "Description",
+            "descriptionPlaceholder": "Optional permission description"
+        },
+        "confirmDelete": "Delete this permission?",
+        "confirmDeleteDescription": "This action is irreversible. The permission will be removed from all users who have it.",
+        "pagination": {
+            "total": "Total: {{total}} permissions"
+        },
+        "messages": {
+            "loadError": "Error loading permissions",
+            "createSuccess": "Permission created successfully",
+            "updateSuccess": "Permission updated successfully",
+            "deleteSuccess": "Permission deleted successfully",
+            "saveError": "Error saving",
+            "deleteError": "Error deleting"
+        }
+    },
+    "orgInviteCreate": {
+        "pageTitle": "New organization invitation",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "invites": "Organization invitations",
+            "create": "Create"
+        },
+        "fields": {
+            "inviteeEmail": "Invitee email",
+            "inviteeName": "Invitee name",
+            "inviteePhone": "Phone",
+            "inviteeAddress": "Address",
+            "roleKey": "Role key",
+            "inviteeOrgId": "Invited organization (optional)",
+            "expiresInDays": "Validity period (days)"
+        },
+        "placeholders": {
+            "inviteeEmail": "email@example.com",
+            "inviteeName": "Full name",
+            "inviteePhone": "+1 234 567 8900",
+            "inviteeAddress": "Full address",
+            "roleKey": "Role to assign",
+            "inviteeOrgId": "Select an organization",
+            "expiresInDays": "Number of days (1-365)"
+        },
+        "validators": {
+            "inviteeEmailRequired": "Email is required",
+            "inviteeEmailInvalid": "Email is not valid",
+            "expiresInDaysRange": "Duration must be between 1 and 365 days"
+        },
+        "buttons": {
+            "save": "Create invitation",
+            "cancel": "Cancel"
+        },
+        "toasts": {
+            "created": "Invitation created successfully",
+            "createError": "Error creating invitation"
+        }
+    },
     "filiereCreateInstitut": {
         "pageTitle": "New program",
         "breadcrumbs": {
@@ -1219,6 +1559,63 @@
             "paypalCfgError": "PayPal configuration unavailable",
             "postPayError": "Post-payment failed",
             "aboActivated": "Subscription activated ({{provider}}) 🎉"
+        }
+    },
+    "institutDemandesInviteesList": {
+        "pageTitle": "Invited Applications",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "invited": "Invited"
+        },
+        "section": {
+            "filters": "Filters",
+            "list": "Invited applications list"
+        },
+        "filters": {
+            "searchPlaceholder": "Search (code, year, level, email…)",
+            "statusPlaceholder": "Status",
+            "apply": "Apply",
+            "reset": "Reset"
+        },
+        "sortByOptions": {
+            "linkedAt": "Linked date",
+            "dateDemande": "Application date",
+            "createdAt": "Created at",
+            "code": "Code"
+        },
+        "sortOrderOptions": {
+            "asc": "ASC",
+            "desc": "DESC"
+        },
+        "columns": {
+            "code": "Code",
+            "dateDemande": "Application date",
+            "demandeur": "Applicant",
+            "targetOrg": "Target organization",
+            "assignedOrg": "Assigned organization",
+            "docs": "Docs",
+            "inviteeStatus": "Invitation status",
+            "linkedAt": "Linked at",
+            "actions": "Actions"
+        },
+        "buttons": {
+            "details": "Details",
+            "respond": "Respond"
+        },
+        "inviteeStatuses": {
+            "PENDING": "Pending",
+            "IN_PROGRESS": "In progress",
+            "COMPLETED": "Completed",
+            "CANCELLED": "Cancelled"
+        },
+        "organization": {
+            "name": "Organization"
+        },
+        "errors": {
+            "noOrgId": "Organization ID not found"
+        },
+        "toasts": {
+            "loadError": "Failed to load invited applications"
         }
     },
     "institutDemandeDetails": {
@@ -1594,6 +1991,36 @@
             },
             "error": "Error resetting password. Please try again.",
             "footer": "© {{year}} applyons. Made with ❤️ by ADM."
+        },
+        "orgInviteAccept": {
+            "loading": "Loading invitation...",
+            "tokenMissing": "Missing token in URL",
+            "inviteNotFound": "Invitation not found or expired",
+            "tokenMissingError": "Missing token",
+            "pageTitle": "Invitation not found",
+            "pageSubtitle": "This invitation does not exist, has expired, or has already been used.",
+            "backToLogin": "Back to login",
+            "acceptTitle": "Accept invitation",
+            "invitedBy": "You have been invited by:",
+            "orgInfo": "Organization information",
+            "creating": "Creating...",
+            "createOrg": "Create my organization",
+            "successMessage": "Organization created successfully! You can now log in.",
+            "createError": "Error creating organization",
+            "debugTitle": "Please fill in all required fields:",
+            "debugFields": {
+                "firstName": "First name",
+                "lastName": "Last name",
+                "gender": "Gender",
+                "birthPlace": "Place of birth",
+                "birthDate": "Date of birth",
+                "email": "Valid email",
+                "password": "Password (min 6 characters)",
+                "confirmPassword": "Password confirmation",
+                "orgName": "Organization name",
+                "orgType": "Organization type",
+                "orgEmail": "Organization email"
+            }
         }
     },
     "adminDashboard": {

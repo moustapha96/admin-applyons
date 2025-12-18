@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-f84911c5'], (function (workbox) { 'use strict';
+define(['./workbox-e7681877'], (function (workbox) { 'use strict';
 
   self.skipWaiting();
   workbox.clientsClaim();
@@ -82,28 +82,33 @@ define(['./workbox-f84911c5'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "/index.html",
-    "revision": "0.fn69064qou"
+    "revision": "0.mgj7mrbpg68"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("/index.html"), {
-    allowlist: [/^\/$/]
+    allowlist: [/^\/$/],
+    denylist: [/^\/_/, /\/[^/?]+\.[^/]+$/]
   }));
-  workbox.registerRoute(/^https:\/\/www\.applyons\.org\/.*\.(png|jpg|jpeg|svg|webp|ico|woff2?)$/i, new workbox.StaleWhileRevalidate({
+  workbox.registerRoute(/^https:\/\/www\.applyons\.org\/.*\.(png|jpg|jpeg|svg|webp|ico|woff2?)$/i, new workbox.NetworkFirst({
     "cacheName": "applyons-image-assets",
-    plugins: [new workbox.ExpirationPlugin({
-      maxEntries: 60,
-      maxAgeSeconds: 2592000
-    })]
-  }), 'GET');
-  workbox.registerRoute(/^https:\/\/fonts\.googleapis\.com/, new workbox.StaleWhileRevalidate({
-    "cacheName": "google-fonts-stylesheets",
-    plugins: []
-  }), 'GET');
-  workbox.registerRoute(/^https:\/\/fonts\.gstatic\.com/, new workbox.CacheFirst({
-    "cacheName": "google-fonts-webfonts",
+    "networkTimeoutSeconds": 10,
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 20,
-      maxAgeSeconds: 31536000
+      maxAgeSeconds: 86400
+    })]
+  }), 'GET');
+  workbox.registerRoute(/^https:\/\/fonts\.googleapis\.com/, new workbox.NetworkFirst({
+    "cacheName": "google-fonts-stylesheets",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 10,
+      maxAgeSeconds: 604800
+    })]
+  }), 'GET');
+  workbox.registerRoute(/^https:\/\/fonts\.gstatic\.com/, new workbox.NetworkFirst({
+    "cacheName": "google-fonts-webfonts",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 10,
+      maxAgeSeconds: 604800
     })]
   }), 'GET');
 

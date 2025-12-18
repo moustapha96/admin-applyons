@@ -10,6 +10,7 @@ import { MdOutlineEmail, MdOutlineEvent } from "react-icons/md";
 import { BiNews } from "react-icons/bi";
 import { RiSettings4Line } from "react-icons/ri";
 import { FaRegHandshake, FaRegImages } from "react-icons/fa";
+import { BellOutlined } from "@ant-design/icons";
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { LiaSignOutAltSolid } from "react-icons/lia";
@@ -57,6 +58,8 @@ const MENU_ADMIN = [
       { i18nKey: "organizationsList", to: "/admin/organisations", anyPerms: ["organizations.read"] },
       { i18nKey: "departments", to: "/admin/departments", anyPerms: ["departments.read"] },
       { i18nKey: "filieres", to: "/admin/filieres", anyPerms: ["filieres.read"] },
+      { i18nKey: "organizationInvites", to: "/admin/organization-invites", anyPerms: ["invites.read"] },
+      { i18nKey: "notifications", to: "/admin/organisations/notifications", anyPerms: ["notifications.read", "demandes.read"], icon: <BellOutlined /> },
     ],
   },
 
@@ -110,6 +113,7 @@ const MENU_ADMIN = [
       { i18nKey: "settings", to: "/admin/config", anyPerms: ["config.read", "config.manage"] },
       { i18nKey: "mailer", to: "/admin/mailer", anyPerms: ["config.read", "config.manage"] },
       { i18nKey: "auditLogs", to: "/admin/audit-logs", anyPerms: ["audit.read", "audit.manage"] },
+      { i18nKey: "permissions", to: "/admin/permissions", anyPerms: ["permissions.read", "permissions.manage"] },
     ],
   },
 
@@ -182,7 +186,9 @@ function buildStaffMenu(orgId, handleLogOut) {
       anyPerms: ["demandes.read"],
       children: [
         { i18nKey: "allDemandes", to: "/organisations/demandes", anyPerms: ["demandes.read"] },
+        { i18nKey: "invited", to: "/organisations/demandes/invited", anyPerms: ["invites.read", "invites.manage"] },
         { i18nKey: "ajouteDocument", to: "/organisations/demandes/ajoute-document", anyPerms: ["documents.create"] },
+        { i18nKey: "notifications", to: "/organisations/notifications", anyPerms: ["notifications.read", "demandes.read"], icon: <BellOutlined /> },
       ],
     },
 

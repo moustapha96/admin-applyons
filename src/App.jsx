@@ -24,6 +24,7 @@ function App() {
     "/auth/activate",
     "/auth/lock-screen",
     "/auth/not-access",
+    "/auth/invitations/accept",
     "/comingsoon",
     "/maintenance",
     "/error",

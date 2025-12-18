@@ -122,6 +122,7 @@
         "filieres": "课程",
         "demandes": "申请",
         "allDemandes": "申请",
+        "invited": "已邀请",
         "documents": "文件",
         "myDocuments": "我的文件",
         "payments": "付款",
@@ -136,6 +137,7 @@
         "settings": "设置",
         "mailer": "邮件服务",
         "auditLogs": "审计日志",
+        "permissions": "权限",
         "profile": "个人资料",
         "monInstitut": "我的学院",
         "ajouteDocument": "分享文件",
@@ -143,6 +145,7 @@
         "mesAbonnements": "我的订阅",
         "souscrire": "订阅",
         "dossiersTraiter": "待处理文件",
+        "notifications": "通知",
         "logout": "退出登录"
     },
     "profile": {
@@ -998,6 +1001,343 @@
             "deleteError": "删除失败"
         }
     },
+    "orgInviteList": {
+        "pageTitle": "组织邀请",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "invites": "组织邀请"
+        },
+        "searchPlaceholder": "按邮箱或姓名搜索",
+        "filters": {
+            "statusPlaceholder": "按状态筛选"
+        },
+        "stats": {
+            "total": "总计",
+            "pending": "待处理",
+            "accepted": "已接受",
+            "rejected": "已拒绝",
+            "expired": "已过期"
+        },
+        "buttons": {
+            "new": "新邀请",
+            "delete": "删除",
+            "refresh": "刷新",
+            "viewDemande": "查看申请",
+            "viewUser": "查看用户"
+        },
+        "columns": {
+            "inviteeEmail": "邮箱",
+            "inviteeName": "姓名",
+            "inviteeOrg": "被邀请组织",
+            "roleKey": "角色",
+            "status": "状态",
+            "expiresAt": "过期时间",
+            "createdAt": "创建时间",
+            "invitationLink": "邀请链接",
+            "linkedDemande": "关联申请",
+            "linkedUser": "关联用户",
+            "actions": "操作"
+        },
+        "status": {
+            "pending": "待处理",
+            "accepted": "已接受",
+            "rejected": "已拒绝",
+            "expired": "已过期"
+        },
+        "pagination": {
+            "total": "总计：{{total}} 个邀请"
+        },
+        "messages": {
+            "loadError": "加载邀请时出错",
+            "deleteSuccess": "邀请已成功删除",
+            "deleteError": "删除邀请时出错",
+            "linkCopied": "邀请链接已复制到剪贴板",
+            "copyError": "无法复制链接"
+        },
+        "tooltips": {
+            "copy": "复制链接",
+            "copied": "链接已复制"
+        },
+        "modals": {
+            "deleteTitle": "删除邀请",
+            "deleteContent": "您确定要删除此邀请吗？",
+            "deleteOk": "删除",
+            "deleteCancel": "取消"
+        }
+    },
+    "orgNotifications": {
+        "pageTitle": "通知",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "notifications": "通知"
+        },
+        "stats": {
+            "total": "总计",
+            "unviewed": "未查看",
+            "viewed": "已查看"
+        },
+        "filters": {
+            "unviewedOnly": "仅未查看",
+            "all": "全部",
+            "asTarget": "作为目标",
+            "asNotified": "作为已通知",
+            "allNotifications": "所有通知"
+        },
+        "columns": {
+            "status": "状态",
+            "type": "类型",
+            "message": "消息",
+            "demande": "申请",
+            "createdAt": "创建时间",
+            "actions": "操作"
+        },
+        "status": {
+            "viewed": "已查看",
+            "unviewed": "未查看"
+        },
+        "types": {
+            "DEMANDE_CREATED": "申请已创建",
+            "DEMANDE_UPDATED": "申请已更新",
+            "DEMANDE_ASSIGNED": "申请已分配",
+            "DOCUMENT_ADDED": "文档已添加",
+            "INVITATION_SENT": "邀请已发送",
+            "DEFAULT": "通知"
+        },
+        "buttons": {
+            "refresh": "刷新",
+            "markAsViewed": "标记为已查看",
+            "markAllAsViewed": "全部标记为已查看",
+            "viewDemande": "查看申请"
+        },
+        "pagination": {
+            "total": "总计: {{total}} 条通知"
+        },
+        "messages": {
+            "loadError": "加载通知失败",
+            "markedAsViewed": "通知已标记为已查看",
+            "allMarkedAsViewed": "所有通知已标记为已查看",
+            "markError": "标记通知失败",
+            "markAllError": "标记所有通知失败"
+        },
+        "errors": {
+            "noOrgId": "未找到组织ID"
+        }
+    },
+    "adminOrgNotifications": {
+        "pageTitle": "组织通知",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "organizations": "组织",
+            "notifications": "通知"
+        },
+        "organization": {
+            "name": "组织"
+        },
+        "stats": {
+            "total": "总计",
+            "unviewed": "未查看",
+            "viewed": "已查看"
+        },
+        "filters": {
+            "searchPlaceholder": "搜索通知",
+            "statusPlaceholder": "按状态筛选",
+            "all": "全部",
+            "unviewedOnly": "仅未查看",
+            "asTarget": "作为目标",
+            "asNotified": "作为已通知",
+            "allNotifications": "所有通知"
+        },
+        "columns": {
+            "status": "状态",
+            "type": "类型",
+            "message": "消息",
+            "demande": "申请",
+            "user": "用户",
+            "createdAt": "创建时间",
+            "actions": "操作"
+        },
+        "status": {
+            "viewed": "已查看",
+            "unviewed": "未查看"
+        },
+        "types": {
+            "DEMANDE_CREATED": "申请已创建",
+            "DEMANDE_UPDATED": "申请已更新",
+            "DEMANDE_ASSIGNED": "申请已分配",
+            "DOCUMENT_ADDED": "文档已添加",
+            "INVITATION_SENT": "邀请已发送",
+            "DEFAULT": "通知"
+        },
+        "buttons": {
+            "refresh": "刷新",
+            "markAsViewed": "标记为已查看",
+            "markAllAsViewed": "全部标记为已查看",
+            "viewDetails": "查看详情",
+            "viewDemande": "查看申请",
+            "viewUser": "查看用户"
+        },
+        "pagination": {
+            "total": "总计: {{total}} 条通知"
+        },
+        "messages": {
+            "loadError": "加载通知失败",
+            "markedAsViewed": "通知已标记为已查看",
+            "allMarkedAsViewed": "所有通知已标记为已查看",
+            "markError": "标记通知失败",
+            "markAllError": "标记所有通知失败"
+        },
+        "errors": {
+            "noOrgId": "未找到组织ID"
+        }
+    },
+    "adminOrgNotificationDetail": {
+        "pageTitle": "通知详情",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "notifications": "通知"
+        },
+        "sections": {
+            "mainInfo": "主要信息",
+            "demande": "关联申请",
+            "organizations": "组织",
+            "user": "用户",
+            "metadata": "元数据"
+        },
+        "fields": {
+            "id": "ID",
+            "status": "状态",
+            "type": "类型",
+            "message": "消息",
+            "createdAt": "创建时间",
+            "notifiedAt": "通知时间",
+            "viewedAt": "查看时间",
+            "demandeCode": "申请代码",
+            "demandeStatus": "申请状态",
+            "demandeDate": "申请日期",
+            "targetOrg": "目标组织",
+            "notifiedOrg": "已通知组织",
+            "userEmail": "用户邮箱",
+            "userName": "用户名",
+            "userRole": "用户角色",
+            "createdBy": "创建者",
+            "updatedAt": "更新时间"
+        },
+        "status": {
+            "viewed": "已查看",
+            "unviewed": "未查看"
+        },
+        "types": {
+            "DEMANDE_CREATED": "申请已创建",
+            "DEMANDE_UPDATED": "申请已更新",
+            "DEMANDE_ASSIGNED": "申请已分配",
+            "DOCUMENT_ADDED": "文档已添加",
+            "INVITATION_SENT": "邀请已发送",
+            "DEFAULT": "通知"
+        },
+        "actions": {
+            "back": "返回",
+            "backToList": "返回列表",
+            "markAsViewed": "标记为已查看",
+            "viewDemande": "查看申请",
+            "viewOrg": "查看组织",
+            "viewUser": "查看用户"
+        },
+        "messages": {
+            "loadError": "加载通知失败",
+            "markedAsViewed": "通知已标记为已查看",
+            "markError": "标记通知失败"
+        },
+        "errors": {
+            "notFound": "未找到通知"
+        }
+    },
+    "adminPermissions": {
+        "pageTitle": "权限管理",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "permissions": "权限"
+        },
+        "searchPlaceholder": "按键、名称搜索...",
+        "columns": {
+            "key": "键",
+            "name": "名称",
+            "description": "描述",
+            "createdAt": "创建时间",
+            "actions": "操作"
+        },
+        "actions": {
+            "create": "创建权限",
+            "edit": "编辑",
+            "delete": "删除"
+        },
+        "modal": {
+            "createTitle": "创建权限",
+            "editTitle": "编辑权限"
+        },
+        "form": {
+            "key": "键",
+            "keyRequired": "键是必填项",
+            "keyPattern": "键只能包含小写字母、数字和点（例如：users.read）",
+            "keyHelp": "格式：资源.操作（例如：users.read, demandes.manage）",
+            "name": "名称",
+            "nameRequired": "名称是必填项",
+            "namePlaceholder": "例如：读取用户",
+            "description": "描述",
+            "descriptionPlaceholder": "可选的权限描述"
+        },
+        "confirmDelete": "删除此权限？",
+        "confirmDeleteDescription": "此操作不可逆。该权限将从所有拥有它的用户中移除。",
+        "pagination": {
+            "total": "总计：{{total}} 个权限"
+        },
+        "messages": {
+            "loadError": "加载权限时出错",
+            "createSuccess": "权限创建成功",
+            "updateSuccess": "权限更新成功",
+            "deleteSuccess": "权限删除成功",
+            "saveError": "保存时出错",
+            "deleteError": "删除时出错"
+        }
+    },
+    "orgInviteCreate": {
+        "pageTitle": "新组织邀请",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "invites": "组织邀请",
+            "create": "创建"
+        },
+        "fields": {
+            "inviteeEmail": "被邀请人邮箱",
+            "inviteeName": "被邀请人姓名",
+            "inviteePhone": "电话",
+            "inviteeAddress": "地址",
+            "roleKey": "角色键",
+            "inviteeOrgId": "被邀请组织（可选）",
+            "expiresInDays": "有效期（天）"
+        },
+        "placeholders": {
+            "inviteeEmail": "email@example.com",
+            "inviteeName": "全名",
+            "inviteePhone": "+86 XXX XXXX XXXX",
+            "inviteeAddress": "完整地址",
+            "roleKey": "要分配的角色",
+            "inviteeOrgId": "选择一个组织",
+            "expiresInDays": "天数 (1-365)"
+        },
+        "validators": {
+            "inviteeEmailRequired": "邮箱是必填项",
+            "inviteeEmailInvalid": "邮箱无效",
+            "expiresInDaysRange": "有效期必须在1到365天之间"
+        },
+        "buttons": {
+            "save": "创建邀请",
+            "cancel": "取消"
+        },
+        "toasts": {
+            "created": "邀请创建成功",
+            "createError": "创建邀请时出错"
+        }
+    },
     "filiereCreateInstitut": {
         "pageTitle": "新建专业",
         "breadcrumbs": {
@@ -1207,6 +1547,63 @@
             "paypalCfgError": "PayPal 配置不可用",
             "postPayError": "付款后处理失败",
             "aboActivated": "订阅已激活（{{provider}}）🎉"
+        }
+    },
+    "institutDemandesInviteesList": {
+        "pageTitle": "已邀请的申请",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "invited": "已邀请"
+        },
+        "section": {
+            "filters": "筛选",
+            "list": "已邀请申请列表"
+        },
+        "filters": {
+            "searchPlaceholder": "搜索（代码、年份、层级、邮箱…）",
+            "statusPlaceholder": "状态",
+            "apply": "应用",
+            "reset": "重置"
+        },
+        "sortByOptions": {
+            "linkedAt": "链接日期",
+            "dateDemande": "申请日期",
+            "createdAt": "创建时间",
+            "code": "代码"
+        },
+        "sortOrderOptions": {
+            "asc": "升序",
+            "desc": "降序"
+        },
+        "columns": {
+            "code": "代码",
+            "dateDemande": "申请日期",
+            "demandeur": "申请人",
+            "targetOrg": "目标组织",
+            "assignedOrg": "分配的组织",
+            "docs": "文档",
+            "inviteeStatus": "邀请状态",
+            "linkedAt": "链接时间",
+            "actions": "操作"
+        },
+        "buttons": {
+            "details": "详情",
+            "respond": "回复"
+        },
+        "inviteeStatuses": {
+            "PENDING": "待处理",
+            "IN_PROGRESS": "进行中",
+            "COMPLETED": "已完成",
+            "CANCELLED": "已取消"
+        },
+        "organization": {
+            "name": "组织"
+        },
+        "errors": {
+            "noOrgId": "未找到组织ID"
+        },
+        "toasts": {
+            "loadError": "加载已邀请申请失败"
         }
     },
     "institutDemandeDetails": {
@@ -1504,6 +1901,36 @@
             },
             "error": "重置密码时出错。请重试。",
             "footer": "© {{year}} applyons. 由 ADM 用 ❤️ 制作。"
+        },
+        "orgInviteAccept": {
+            "loading": "正在加载邀请...",
+            "tokenMissing": "URL 中缺少令牌",
+            "inviteNotFound": "未找到邀请或已过期",
+            "tokenMissingError": "缺少令牌",
+            "pageTitle": "未找到邀请",
+            "pageSubtitle": "此邀请不存在、已过期或已被使用。",
+            "backToLogin": "返回登录",
+            "acceptTitle": "接受邀请",
+            "invitedBy": "您已被邀请：",
+            "orgInfo": "组织信息",
+            "creating": "正在创建...",
+            "createOrg": "创建我的组织",
+            "successMessage": "组织创建成功！您现在可以登录了。",
+            "createError": "创建组织时出错",
+            "debugTitle": "请填写所有必填字段：",
+            "debugFields": {
+                "firstName": "名字",
+                "lastName": "姓氏",
+                "gender": "性别",
+                "birthPlace": "出生地",
+                "birthDate": "出生日期",
+                "email": "有效邮箱",
+                "password": "密码（最少6个字符）",
+                "confirmPassword": "确认密码",
+                "orgName": "组织名称",
+                "orgType": "组织类型",
+                "orgEmail": "组织邮箱"
+            }
         }
     },
     "adminDashboard": {

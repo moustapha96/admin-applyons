@@ -24,6 +24,8 @@ import DemandeurDetails from "../pages/Institut/demandes/demandeurDetail.jsx";
 import AbonnementInstitutSouscription from "../pages/Institut/abonnement/InstitutAbonnementSouscription.jsx";
 import InstitutAbonnementsListe from "../pages/Institut/abonnement/InstitutAbonnementsListe.jsx";
 import DemandeDocumentAdd from "../pages/Institut/demandes/DemandeDocumentAdd.jsx";
+import InstitutDemandesInviteesList from "../pages/Institut/demandes/InstitutDemandesInviteesList.jsx";
+import OrganizationNotificationsList from "../pages/Institut/notifications/OrganizationNotificationsList.jsx";
 
 export const organizationRoutes = (
   <>
@@ -37,6 +39,7 @@ export const organizationRoutes = (
       <Route path="abonnements" element={<InstitutAbonnementsListe />} />
 
       <Route path="demandes" element={<InstitutDemandesList />} />
+      <Route path="demandes/invited" element={<InstitutDemandesInviteesList />} />
       <Route path="demandes/:id/details" element={<InstitutDemandeDetails />} />
       <Route path="demandes/:id/documents" element={<DemandeDocumentsPage />} />
       <Route path="demandes/:id/documents/add" element={<DemandeDocumentCreate />} />
@@ -60,10 +63,10 @@ export const organizationRoutes = (
       <Route path="filieres/:id" element={<FiliereDetailInstitut />} />
       <Route path="filieres/:id/edit" element={<FiliereEditInstitut />} />
 
-
       <Route path="demandeur/:id/details" element={<DemandeurDetails />} />
 
-
+      {/* Notifications */}
+      <Route path="notifications" element={<OrganizationNotificationsList />} />
       
     </Route>
   </>

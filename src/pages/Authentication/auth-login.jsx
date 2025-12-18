@@ -48,9 +48,6 @@ export default function AuthLogin() {
             const response = await authService.login({ email, password });
             console.log(response);
             if (response.token && response.user) {
-                localStorage.setItem("token", response.token);
-                localStorage.setItem("user", JSON.stringify(response.user));
-                
                 login({ ...response.user, token: response.token }, rememberMe);
             } else {
                 setError(t('auth.login.errorNoToken'));
@@ -111,7 +108,7 @@ export default function AuthLogin() {
                                             id="LoginEmail"
                                             type="email"
                                             className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-[var(--applyons-blue)] dark:border-gray-800 dark:focus:border-[var(--applyons-blue)] focus:ring-0"
-                                            placeholder="name@example.com"
+                                            placeholder="john.doe@exemple.com"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             required
