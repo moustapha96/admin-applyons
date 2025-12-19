@@ -146,8 +146,8 @@ import {
 } from "antd";
 import { UserOutlined, UploadOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../hooks/useAuth";
+import { usePermissions } from "../../../hooks/usePermissions";
 import userService from "@/services/userService";
-import { getPermissionLabel, PERMS_INSTITUT } from "@/auth/permissions";
 import { useTranslation } from "react-i18next";
 
 const { Option } = Select;
@@ -155,6 +155,7 @@ const { Option } = Select;
 export default function UserCreateInstitut() {
   const { t } = useTranslation();
   const { user: me } = useAuth();
+  const { permissions, getPermissionLabel, getPermissionsByRole, loading: permissionsLoading } = usePermissions();
   const orgId = me?.organization?.id;
 
   const [form] = Form.useForm();
@@ -162,10 +163,24 @@ export default function UserCreateInstitut() {
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
-  const permissionsOptions = Object.entries(PERMS_INSTITUT).map(([_, value]) => ({
-    label: getPermissionLabel(value, t),
-    value,
-  }));
+  // Rôle de l'utilisateur connecté (pour Institut, généralement INSTITUT ou SUPERVISEUR)
+  const userRole = me?.role || "INSTITUT";
+
+  // Filtrer les permissions selon le rôle de l'utilisateur connecté
+  const filteredPermissions = useMemo(() => {
+    if (!getPermissionsByRole || typeof getPermissionsByRole !== "function") {
+      return permissions;
+    }
+    return getPermissionsByRole(userRole);
+  }, [getPermissionsByRole, userRole, permissions]);
+
+  // Utiliser les permissions du backend filtrées par rôle
+  const permissionsOptions = useMemo(() => {
+    return filteredPermissions.map((perm) => ({
+      label: getPermissionLabel(perm.key) || perm.name || perm.key,
+      value: perm.key,
+    }));
+  }, [filteredPermissions, getPermissionLabel]);
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
@@ -326,15 +341,19 @@ export default function UserCreateInstitut() {
 
                 <Divider>{t("userCreateInstitut.dividers.permissions")}</Divider>
                 <Form.Item name="permissions" label={t("userCreateInstitut.fields.permissions")}>
-                  <Checkbox.Group>
-                    <Row gutter={[0, 16]}>
-                      {permissionsOptions.map((opt) => (
-                        <Col span={8} key={opt.value}>
-                          <Checkbox value={opt.value}>{opt.label}</Checkbox>
-                        </Col>
-                      ))}
-                    </Row>
-                  </Checkbox.Group>
+                  {permissionsLoading ? (
+                    <div>{t("userCreateInstitut.loadingPermissions")}</div>
+                  ) : (
+                    <Checkbox.Group>
+                      <Row gutter={[0, 16]}>
+                        {permissionsOptions.map((opt) => (
+                          <Col span={8} key={opt.value}>
+                            <Checkbox value={opt.value}>{opt.label}</Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    </Checkbox.Group>
+                  )}
                 </Form.Item>
 
                 <Divider>{t("userCreateInstitut.dividers.password")}</Divider>

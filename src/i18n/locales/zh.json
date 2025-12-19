@@ -55,7 +55,12 @@
         }
     },
     "permissions": {
+        "dashboard.read": "读取仪表板",
+        "dashboard.manage": "管理仪表板",
         "users.read": "读取用户",
+        "users.create": "创建用户",
+        "users.update": "更新用户",
+        "users.delete": "删除用户",
         "users.manage": "管理用户",
         "users.impersonate": "模拟用户",
         "organizations.read": "读取组织",
@@ -66,11 +71,15 @@
         "filieres.read": "读取专业",
         "filieres.manage": "管理专业",
         "demandes.read": "读取申请",
+        "demandes.create": "创建申请",
+        "demandes.update": "更新申请",
+        "demandes.delete": "删除申请",
         "demandes.manage": "管理申请",
         "documents.read": "读取文档",
         "documents.create": "创建文档",
         "documents.update": "更新文档",
         "documents.delete": "删除文档",
+        "documents.manage": "管理文档",
         "documents.translate": "翻译文档",
         "documents.verify": "验证文档",
         "payments.read": "读取付款",
@@ -88,9 +97,12 @@
         "config.read": "读取配置",
         "config.manage": "管理配置",
         "uploads.create": "创建上传",
-        "dashboard.read": "读取仪表板",
+        "permissions.read": "读取权限",
+        "permissions.manage": "管理权限",
         "audit.read": "读取审计日志",
-        "audit.manage": "管理审计日志"
+        "audit.manage": "管理审计日志",
+        "organizationDemandeNotifications.read": "读取组织通知",
+        "organizationDemandeNotifications.manage": "管理组织通知"
     },
     "routes": {
         "adminDashboard": "/admin/dashboard",
@@ -822,6 +834,7 @@
             "save": "保存",
             "saving": "保存中..."
         },
+        "loadingPermissions": "加载权限中...",
         "placeholders": {
             "firstName": "名",
             "lastName": "姓",
@@ -889,6 +902,7 @@
             "permissions": "权限",
             "password": "密码"
         },
+        "loadingPermissions": "加载权限中...",
         "validators": {
             "firstNameRequired": "名为必填项",
             "lastNameRequired": "姓为必填项",
@@ -1262,9 +1276,11 @@
             "key": "键",
             "name": "名称",
             "description": "描述",
+            "allowedRoles": "允许的角色",
             "createdAt": "创建时间",
             "actions": "操作"
         },
+        "allRoles": "所有角色",
         "actions": {
             "create": "创建权限",
             "edit": "编辑",
@@ -1279,11 +1295,15 @@
             "keyRequired": "键是必填项",
             "keyPattern": "键只能包含小写字母、数字和点（例如：users.read）",
             "keyHelp": "格式：资源.操作（例如：users.read, demandes.manage）",
+            "keyPlaceholder": "例如：users.read",
             "name": "名称",
             "nameRequired": "名称是必填项",
             "namePlaceholder": "例如：读取用户",
             "description": "描述",
-            "descriptionPlaceholder": "可选的权限描述"
+            "descriptionPlaceholder": "可选的权限描述",
+            "allowedRoles": "允许的角色",
+            "allowedRolesPlaceholder": "选择角色（留空表示所有角色）",
+            "allowedRolesHelp": "如果未选择任何角色，该权限将对所有角色开放"
         },
         "confirmDelete": "删除此权限？",
         "confirmDeleteDescription": "此操作不可逆。该权限将从所有拥有它的用户中移除。",
@@ -1297,7 +1317,9 @@
             "deleteSuccess": "权限删除成功",
             "saveError": "保存时出错",
             "deleteError": "删除时出错"
-        }
+        },
+        "loading": "加载权限中...",
+        "noData": "—"
     },
     "orgInviteCreate": {
         "pageTitle": "新组织邀请",
@@ -2868,6 +2890,7 @@
             "password": "密码",
             "confirmPassword": "确认密码"
         },
+        "loadingPermissions": "加载权限中...",
         "placeholders": {
             "firstName": "名字",
             "lastName": "姓氏",
@@ -2974,6 +2997,7 @@
             "status": "状态",
             "permissions": "权限"
         },
+        "loadingPermissions": "加载权限中...",
         "placeholders": {
             "firstName": "名字",
             "lastName": "姓氏",
@@ -3407,7 +3431,8 @@
             "email": "电子邮件",
             "phone": "电话（可选）",
             "address": "地址（可选）",
-            "role": "角色（可选）"
+            "role": "角色（可选）",
+            "notifyOrgs": "选择要通知的组织"
         },
         "options": {
             "periods": {

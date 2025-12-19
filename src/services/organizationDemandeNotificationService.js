@@ -56,9 +56,10 @@ const organizationDemandeNotificationService = {
 
   /**
    * GET /api/organization-demande-notifications/:id
+   * http://localhost:5000/api/organization-demande-notifications/org/cmjbhfsln00109v7881cboqew
    */
   getById(id) {
-    return axiosInstance.get(`${BASE}/${id}`);
+    return axiosInstance.get(`${BASE}/org/${id}`);
   },
 
   /**

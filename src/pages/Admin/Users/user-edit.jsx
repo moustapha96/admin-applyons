@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
     Form,
@@ -21,17 +21,17 @@ import {
 import { UserOutlined, UploadOutlined,  SaveFilled, ArrowLeftOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
+import { usePermissions } from "../../../hooks/usePermissions";
 import userService from "../../../services/userService";
 import { toast } from "sonner";
 import organizationService from "../../../services/organizationService";
-import { getPermissionLabel } from "../../../auth/permissions";
-import { PERMS } from "../../../auth/permissions";
 import { buildImageUrl } from "../../../utils/imageUtils";
 const { Option } = Select;
 
 const UserEdit = () => {
     const { t } = useTranslation();
     const { user: currentUser } = useAuth();
+    const { permissions, getPermissionLabel, getPermissionsByRole, loading: permissionsLoading } = usePermissions();
     const { id } = useParams();
     const [form] = Form.useForm();
     const [user, setUser] = useState(null);
@@ -41,10 +41,25 @@ const UserEdit = () => {
     const [fetchingOrgs, setFetchingOrgs] = useState(false);
     const navigate = useNavigate();
 
-    const permissionsOptions = Object.entries(PERMS).map(([key, value]) => ({
-        label: getPermissionLabel(value, t),
-        value: value,
-    }));
+    // Rôle sélectionné dans le formulaire
+    const selectedRole = Form.useWatch("role", form);
+
+    // Filtrer les permissions selon le rôle sélectionné
+    const filteredPermissions = useMemo(() => {
+        if (!selectedRole) return permissions;
+        if (!getPermissionsByRole || typeof getPermissionsByRole !== "function") {
+            return permissions;
+        }
+        return getPermissionsByRole(selectedRole);
+    }, [selectedRole, getPermissionsByRole, permissions]);
+
+    // Utiliser les permissions du backend filtrées par rôle
+    const permissionsOptions = useMemo(() => {
+        return filteredPermissions.map((perm) => ({
+            label: getPermissionLabel(perm.key) || perm.name || perm.key,
+            value: perm.key,
+        }));
+    }, [filteredPermissions, getPermissionLabel]);
 
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr");
@@ -123,6 +138,10 @@ const UserEdit = () => {
             });
             await userService.update(id, formData);
             toast.success(t("adminUserEdit.messages.updated"));
+            // Si on modifie l'utilisateur connecté, rafraîchir le profil
+            if (id === currentUser?.id) {
+              // Le contexte se mettra à jour automatiquement via user?.permissions
+            }
             navigate("/admin/users");
         } catch (error) {
             console.error("Erreur lors de l'envoi des données:", error);
@@ -160,7 +179,6 @@ const UserEdit = () => {
         return e?.fileList;
     };
 
-    const selectedRole = Form.useWatch("role", form);
     const needsOrganization = ["INSTITUT", "TRADUCTEUR", "SUPERVISEUR"].includes(selectedRole);
 
     if (loading && !user) {
@@ -332,15 +350,19 @@ const UserEdit = () => {
                                 </Form.Item>
                                 <Divider>{t("adminUserEdit.dividers.permissions")}</Divider>
                                 <Form.Item name="permissions" label={t("adminUserEdit.fields.permissions")}>
-                                    <Checkbox.Group>
-                                        <Row gutter={[0, 16]}>
-                                            {permissionsOptions.map((option) => (
-                                                <Col span={8} key={option.value}>
-                                                    <Checkbox value={option.value}>{option.label}</Checkbox>
-                                                </Col>
-                                            ))}
-                                        </Row>
-                                    </Checkbox.Group>
+                                    {permissionsLoading ? (
+                                        <div>{t("adminUserEdit.loadingPermissions")}</div>
+                                    ) : (
+                                        <Checkbox.Group>
+                                            <Row gutter={[0, 16]}>
+                                                {permissionsOptions.map((option) => (
+                                                    <Col span={8} key={option.value}>
+                                                        <Checkbox value={option.value}>{option.label}</Checkbox>
+                                                    </Col>
+                                                ))}
+                                            </Row>
+                                        </Checkbox.Group>
+                                    )}
                                 </Form.Item>
                                 <Form.Item>
                                     <Button

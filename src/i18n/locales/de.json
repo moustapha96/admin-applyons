@@ -55,7 +55,12 @@
         }
     },
     "permissions": {
+        "dashboard.read": "Dashboard lesen",
+        "dashboard.manage": "Dashboard verwalten",
         "users.read": "Benutzer lesen",
+        "users.create": "Benutzer erstellen",
+        "users.update": "Benutzer aktualisieren",
+        "users.delete": "Benutzer löschen",
         "users.manage": "Benutzer verwalten",
         "users.impersonate": "Benutzer imitieren",
         "organizations.read": "Organisationen lesen",
@@ -66,11 +71,15 @@
         "filieres.read": "Programme lesen",
         "filieres.manage": "Programme verwalten",
         "demandes.read": "Anfragen lesen",
+        "demandes.create": "Anfragen erstellen",
+        "demandes.update": "Anfragen aktualisieren",
+        "demandes.delete": "Anfragen löschen",
         "demandes.manage": "Anfragen verwalten",
         "documents.read": "Dokumente lesen",
         "documents.create": "Dokumente erstellen",
         "documents.update": "Dokumente aktualisieren",
         "documents.delete": "Dokumente löschen",
+        "documents.manage": "Dokumente verwalten",
         "documents.translate": "Dokumente übersetzen",
         "documents.verify": "Dokumente überprüfen",
         "payments.read": "Zahlungen lesen",
@@ -88,9 +97,12 @@
         "config.read": "Konfiguration lesen",
         "config.manage": "Konfiguration verwalten",
         "uploads.create": "Uploads erstellen",
-        "dashboard.read": "Dashboard lesen",
+        "permissions.read": "Berechtigungen lesen",
+        "permissions.manage": "Berechtigungen verwalten",
         "audit.read": "Audit-Protokolle lesen",
-        "audit.manage": "Audit-Protokolle verwalten"
+        "audit.manage": "Audit-Protokolle verwalten",
+        "organizationDemandeNotifications.read": "Organisationsbenachrichtigungen lesen",
+        "organizationDemandeNotifications.manage": "Organisationsbenachrichtigungen verwalten"
     },
     "routes": {
         "adminDashboard": "/admin/dashboard",
@@ -822,6 +834,7 @@
             "save": "Speichern",
             "saving": "Speichern..."
         },
+        "loadingPermissions": "Berechtigungen werden geladen...",
         "placeholders": {
             "firstName": "Vorname",
             "lastName": "Nachname",
@@ -1262,9 +1275,11 @@
             "key": "Schlüssel",
             "name": "Name",
             "description": "Beschreibung",
+            "allowedRoles": "Erlaubte Rollen",
             "createdAt": "Erstellt am",
             "actions": "Aktionen"
         },
+        "allRoles": "Alle Rollen",
         "actions": {
             "create": "Berechtigung erstellen",
             "edit": "Bearbeiten",
@@ -1279,11 +1294,15 @@
             "keyRequired": "Schlüssel ist erforderlich",
             "keyPattern": "Schlüssel darf nur Kleinbuchstaben, Zahlen und Punkte enthalten (z.B: users.read)",
             "keyHelp": "Format: Ressource.Aktion (z.B: users.read, demandes.manage)",
+            "keyPlaceholder": "z.B: users.read",
             "name": "Name",
             "nameRequired": "Name ist erforderlich",
             "namePlaceholder": "z.B: Benutzer lesen",
             "description": "Beschreibung",
-            "descriptionPlaceholder": "Optionale Berechtigungsbeschreibung"
+            "descriptionPlaceholder": "Optionale Berechtigungsbeschreibung",
+            "allowedRoles": "Erlaubte Rollen",
+            "allowedRolesPlaceholder": "Rollen auswählen (leer lassen für alle Rollen)",
+            "allowedRolesHelp": "Wenn keine Rolle ausgewählt ist, ist die Berechtigung für alle Rollen zugänglich"
         },
         "confirmDelete": "Diese Berechtigung löschen?",
         "confirmDeleteDescription": "Diese Aktion ist irreversibel. Die Berechtigung wird von allen Benutzern entfernt, die sie haben.",
@@ -1297,7 +1316,9 @@
             "deleteSuccess": "Berechtigung erfolgreich gelöscht",
             "saveError": "Fehler beim Speichern",
             "deleteError": "Fehler beim Löschen"
-        }
+        },
+        "loading": "Berechtigungen werden geladen...",
+        "noData": "—"
     },
     "orgInviteCreate": {
         "pageTitle": "Neue Organisationseinladung",
@@ -2868,6 +2889,7 @@
             "password": "Passwort",
             "confirmPassword": "Passwort bestätigen"
         },
+        "loadingPermissions": "Berechtigungen werden geladen...",
         "placeholders": {
             "firstName": "Vorname",
             "lastName": "Nachname",
@@ -2974,6 +2996,7 @@
             "status": "Status",
             "permissions": "Berechtigungen"
         },
+        "loadingPermissions": "Berechtigungen werden geladen...",
         "placeholders": {
             "firstName": "Vorname",
             "lastName": "Nachname",
@@ -3407,7 +3430,8 @@
             "email": "E-Mail",
             "phone": "Telefon (opt.)",
             "address": "Adresse (opt.)",
-            "role": "Rolle (opt.)"
+            "role": "Rolle (opt.)",
+            "notifyOrgs": "Organisationen zum Benachrichtigen auswählen"
         },
         "options": {
             "periods": {

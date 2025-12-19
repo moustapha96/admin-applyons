@@ -12,6 +12,7 @@ import { RiSettings4Line } from "react-icons/ri";
 import { FaRegHandshake, FaRegImages } from "react-icons/fa";
 import { BellOutlined } from "@ant-design/icons";
 import { useAuth } from "../hooks/useAuth";
+import { usePermissions } from "../hooks/usePermissions";
 import { useTranslation } from "react-i18next";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 
@@ -262,6 +263,7 @@ const resolveMenuForUser = (user, handleLogOut) => {
 /* -------------------- Sidebar -------------------- */
 export default function Sidebar() {
   const { user, logout } = useAuth();
+  const { hasAnyPermission } = usePermissions();
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
@@ -307,17 +309,17 @@ export default function Sidebar() {
   // Filtrage par permissions + rôles
   const filteredMenu = useMemo(() => {
     return baseMenu
-      .filter((item) => canSee(user, item))
+      .filter((item) => canSee(user, item, hasAnyPermission))
       .map((item) => {
         if (item.children?.length) {
-          const children = item.children.filter((child) => canSee(user, child));
+          const children = item.children.filter((child) => canSee(user, child, hasAnyPermission));
           if (!children.length) return null;
           return { ...item, children };
         }
         return item;
       })
       .filter(Boolean);
-  }, [user, baseMenu]);
+  }, [user, baseMenu, hasAnyPermission]);
 
   const labelOf = (key) => t(`sidebar.${key}`);
 
