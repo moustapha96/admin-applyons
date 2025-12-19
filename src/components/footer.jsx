@@ -5,7 +5,8 @@ export default function Footer(){
                 <div className="container-fluid">
                      <div className="grid grid-cols-1">
                         <div className="sm:text-start text-center mx-md-2">
-                            <p className="mb-0  text-sm text-[var(--applyons-orange)]">© {(new Date().getFullYear())} applyons</p>
+                            {/* <p className="mb-0  text-sm text-[var(--applyons-orange)]">© {(new Date().getFullYear())} applyons</p> */}
+                            <p className="mb-0  text-sm text-[var(--applyons-orange)]">© 2026 Applyons</p>
                         </div>
                      </div>
                     

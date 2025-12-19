@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
     Form,
@@ -19,13 +19,13 @@ import { UserOutlined, UploadOutlined, PlusCircleOutlined } from "@ant-design/ic
 import { useTranslation } from "react-i18next";
 import userService from "../../../services/userService";
 import organizationService from "../../../services/organizationService";
-import { getPermissionLabel } from "../../../auth/permissions";
-import { PERMS } from "../../../auth/permissions";
+import { usePermissions } from "../../../hooks/usePermissions";
 
 const { Option } = Select;
 
 const UserCreate = () => {
     const { t } = useTranslation();
+    const { permissions, getPermissionLabel, getPermissionsByRole, loading: permissionsLoading } = usePermissions();
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
@@ -33,9 +33,18 @@ const UserCreate = () => {
     const [fetchingOrgs, setFetchingOrgs] = useState(false);
     const navigate = useNavigate();
 
-    const permissionsOptions = Object.entries(PERMS).map(([key, value]) => ({
-        label: getPermissionLabel(value, t),
-        value: value,
+    // Rôle sélectionné dans le formulaire
+    const selectedRole = Form.useWatch("role", form);
+
+    // Filtrer les permissions selon le rôle sélectionné
+    const filteredPermissions = selectedRole 
+        ? getPermissionsByRole(selectedRole)
+        : permissions;
+
+    // Utiliser les permissions du backend filtrées par rôle
+    const permissionsOptions = filteredPermissions.map((perm) => ({
+        label: getPermissionLabel(perm.key) || perm.name || perm.key,
+        value: perm.key,
     }));
 
     useEffect(() => {
@@ -99,7 +108,6 @@ const UserCreate = () => {
         return e?.fileList;
     };
 
-    const selectedRole = Form.useWatch("role", form);
     const needsOrganization = ["INSTITUT", "TRADUCTEUR", "SUPERVISEUR"].includes(selectedRole);
 
     return (
@@ -228,15 +236,19 @@ const UserCreate = () => {
 
                                 <Divider>{t("adminUserCreate.dividers.permissions")}</Divider>
                                 <Form.Item name="permissions" label={t("adminUserCreate.fields.permissions")}>
-                                    <Checkbox.Group>
-                                        <Row gutter={[0, 16]}>
-                                            {permissionsOptions.map((option) => (
-                                                <Col span={8} key={option.value}>
-                                                    <Checkbox value={option.value}>{option.label}</Checkbox>
-                                                </Col>
-                                            ))}
-                                        </Row>
-                                    </Checkbox.Group>
+                                    {permissionsLoading ? (
+                                        <div>{t("adminUserCreate.loadingPermissions")}</div>
+                                    ) : (
+                                        <Checkbox.Group>
+                                            <Row gutter={[0, 16]}>
+                                                {permissionsOptions.map((option) => (
+                                                    <Col span={8} key={option.value}>
+                                                        <Checkbox value={option.value}>{option.label}</Checkbox>
+                                                    </Col>
+                                                ))}
+                                            </Row>
+                                        </Checkbox.Group>
+                                    )}
                                 </Form.Item>
                                 <Divider>{t("adminUserCreate.dividers.password")}</Divider>
                                 <Form.Item

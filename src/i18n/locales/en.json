@@ -59,7 +59,12 @@
         }
     },
     "permissions": {
+        "dashboard.read": "Read dashboard",
+        "dashboard.manage": "Manage dashboard",
         "users.read": "Read users",
+        "users.create": "Create users",
+        "users.update": "Update users",
+        "users.delete": "Delete users",
         "users.manage": "Manage users",
         "users.impersonate": "Impersonate users",
         "organizations.read": "Read organizations",
@@ -70,6 +75,9 @@
         "filieres.read": "Read programs",
         "filieres.manage": "Manage programs",
         "demandes.read": "View applications",
+        "demandes.create": "Create applications",
+        "demandes.update": "Update applications",
+        "demandes.delete": "Delete applications",
         "demandes.manage": "Manage applications",
         "documents.read": "Read documents",
         "documents.create": "Create documents",
@@ -92,9 +100,12 @@
         "config.read": "Read configuration",
         "config.manage": "Manage configuration",
         "uploads.create": "Create uploads",
-        "dashboard.read": "Read dashboard",
+        "permissions.read": "Read permissions",
+        "permissions.manage": "Manage permissions",
         "audit.read": "Read audit logs",
-        "audit.manage": "Manage audit logs"
+        "audit.manage": "Manage audit logs",
+        "organizationDemandeNotifications.read": "Read organization notifications",
+        "organizationDemandeNotifications.manage": "Manage organization notifications"
     },
     "routes": {
         "adminDashboard": "/admin/dashboard",
@@ -888,6 +899,7 @@
             "confirmPassword": "Confirm password",
             "permissions": "Permissions"
         },
+        "loadingPermissions": "Loading permissions...",
         "placeholders": {
             "firstName": "First name",
             "lastName": "Last name",
@@ -901,6 +913,7 @@
             "permissions": "Permissions",
             "password": "Password"
         },
+        "loadingPermissions": "Loading permissions...",
         "validators": {
             "firstNameRequired": "First name is required",
             "lastNameRequired": "Last name is required",
@@ -1274,9 +1287,11 @@
             "key": "Key",
             "name": "Name",
             "description": "Description",
+            "allowedRoles": "Allowed roles",
             "createdAt": "Created at",
             "actions": "Actions"
         },
+        "allRoles": "All roles",
         "actions": {
             "create": "Create permission",
             "edit": "Edit",
@@ -1291,11 +1306,15 @@
             "keyRequired": "Key is required",
             "keyPattern": "Key must contain only lowercase letters, numbers and dots (e.g: users.read)",
             "keyHelp": "Format: resource.action (e.g: users.read, demandes.manage)",
+            "keyPlaceholder": "e.g: users.read",
             "name": "Name",
             "nameRequired": "Name is required",
             "namePlaceholder": "e.g: Read users",
             "description": "Description",
-            "descriptionPlaceholder": "Optional permission description"
+            "descriptionPlaceholder": "Optional permission description",
+            "allowedRoles": "Allowed roles",
+            "allowedRolesPlaceholder": "Select roles (leave empty for all roles)",
+            "allowedRolesHelp": "If no role is selected, the permission will be accessible to all roles"
         },
         "confirmDelete": "Delete this permission?",
         "confirmDeleteDescription": "This action is irreversible. The permission will be removed from all users who have it.",
@@ -1309,7 +1328,9 @@
             "deleteSuccess": "Permission deleted successfully",
             "saveError": "Error saving",
             "deleteError": "Error deleting"
-        }
+        },
+        "loading": "Loading permissions...",
+        "noData": "—"
     },
     "orgInviteCreate": {
         "pageTitle": "New organization invitation",
@@ -1866,7 +1887,7 @@
             "errorLogin": "Incorrect email or password. Please try again.",
             "showPassword": "Show password",
             "hidePassword": "Hide password",
-            "footer": "© {{year}} applyons. Made with by AuthenticPage."
+            "footer": "© {{year}} applyons. All rights reserved."
         },
         "signup": {
             "title": "Create an account",
@@ -1963,7 +1984,7 @@
             "login": "Sign in",
             "success": "A password reset email has been sent.",
             "error": "Error sending password reset email.",
-            "footer": "© {{year}} applyons. Made by AuthenticPage."
+            "footer": "© {{year}} applyons. All rights reserved."
         },
         "newPassword": {
             "title": "New password",
@@ -1990,7 +2011,7 @@
                 "confirmPassword": "Confirm your new password"
             },
             "error": "Error resetting password. Please try again.",
-            "footer": "© {{year}} applyons. Made with ❤️ by ADM."
+            "footer": "© {{year}} applyons. All rights reserved."
         },
         "orgInviteAccept": {
             "loading": "Loading invitation...",
@@ -3224,6 +3245,7 @@
             "permissions": "Permissions",
             "organization": "Organization"
         },
+        "loadingPermissions": "Loading permissions...",
         "placeholders": {
             "firstName": "First Name",
             "lastName": "Last Name",
@@ -3652,7 +3674,8 @@
             "email": "Email",
             "phone": "Phone (opt.)",
             "address": "Address (opt.)",
-            "role": "Role (opt.)"
+            "role": "Role (opt.)",
+            "notifyOrgs": "Select organizations to notify"
         },
         "options": {
             "periods": {
