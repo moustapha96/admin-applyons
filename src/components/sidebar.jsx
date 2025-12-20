@@ -5,15 +5,16 @@ import SimpleBarReact from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 
 import LogoLight from "../assets/logo.png";
-import { AiOutlineHistory, AiOutlineLineChart, AiOutlineUser } from "react-icons/ai";
-import { MdOutlineEmail, MdOutlineEvent } from "react-icons/md";
-import { BiNews } from "react-icons/bi";
-import { RiSettings4Line } from "react-icons/ri";
-import { FaRegHandshake, FaRegImages } from "react-icons/fa";
+import { AiOutlineHistory, AiOutlineLineChart, AiOutlineUser, AiOutlineUserAdd, AiOutlineFileText } from "react-icons/ai";
+import { MdOutlineEmail, MdOutlineEvent, MdOutlineGroups, MdOutlineBusiness, MdOutlineSchool, MdOutlineSend, MdOutlinePayment, MdOutlineBarChart } from "react-icons/md";
+import { BiNews, BiListCheck } from "react-icons/bi";
+import { RiSettings4Line, RiMailSettingsLine, RiFileList3Line, RiShieldUserLine } from "react-icons/ri";
+import { FaRegHandshake, FaRegImages, FaRegFileAlt } from "react-icons/fa";
 import { BellOutlined } from "@ant-design/icons";
 import { useAuth } from "../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { LiaSignOutAltSolid } from "react-icons/lia";
+import { HiOutlineDocumentAdd } from "react-icons/hi";
 
 /* -------------------- Helpers permissions / rôles -------------------- */
 const getUserPermKeys = (user) =>
@@ -45,8 +46,8 @@ const MENU_ADMIN = [
     icon: <AiOutlineUser />,
     anyPerms: ["users.read", "users.manage"],
     children: [
-      { i18nKey: "userList", to: "/admin/users", anyPerms: ["users.read", "users.manage"] },
-      { i18nKey: "userNew", to: "/admin/users/create", anyPerms: ["users.manage"] },
+      { i18nKey: "userList", to: "/admin/users", anyPerms: ["users.read", "users.manage"], icon: <MdOutlineGroups /> },
+      { i18nKey: "userNew", to: "/admin/users/create", anyPerms: ["users.manage"], icon: <AiOutlineUserAdd /> },
     ],
   },
 
@@ -55,10 +56,10 @@ const MENU_ADMIN = [
     icon: <FaRegHandshake />,
     anyPerms: ["organizations.read", "organizations.manage"],
     children: [
-      { i18nKey: "organizationsList", to: "/admin/organisations", anyPerms: ["organizations.read"] },
-      { i18nKey: "departments", to: "/admin/departments", anyPerms: ["departments.read"] },
-      { i18nKey: "filieres", to: "/admin/filieres", anyPerms: ["filieres.read"] },
-      { i18nKey: "organizationInvites", to: "/admin/organization-invites", anyPerms: ["invites.read"] },
+      { i18nKey: "organizationsList", to: "/admin/organisations", anyPerms: ["organizations.read"], icon: <MdOutlineBusiness /> },
+      { i18nKey: "departments", to: "/admin/departments", anyPerms: ["departments.read"], icon: <MdOutlineSchool /> },
+      { i18nKey: "filieres", to: "/admin/filieres", anyPerms: ["filieres.read"], icon: <MdOutlineSchool /> },
+      { i18nKey: "organizationInvites", to: "/admin/organization-invites", anyPerms: ["invites.read"], icon: <MdOutlineSend /> },
       { i18nKey: "notifications", to: "/admin/organisations/notifications", anyPerms: ["notifications.read", "demandes.read"], icon: <BellOutlined /> },
     ],
   },
@@ -67,14 +68,14 @@ const MENU_ADMIN = [
     i18nKey: "demandes",
     icon: <AiOutlineHistory />,
     anyPerms: ["demandes.read", "demandes.manage"],
-    children: [{ i18nKey: "allDemandes", to: "/admin/demandes", anyPerms: ["demandes.read"] }],
+    children: [{ i18nKey: "allDemandes", to: "/admin/demandes", anyPerms: ["demandes.read"], icon: <BiListCheck /> }],
   },
 
   {
     i18nKey: "documents",
     icon: <FaRegImages />,
     anyPerms: ["documents.read", "documents.create", "documents.update"],
-    children: [{ i18nKey: "myDocuments", to: "/admin/documents", anyPerms: ["documents.read"] }],
+    children: [{ i18nKey: "myDocuments", to: "/admin/documents", anyPerms: ["documents.read"], icon: <FaRegFileAlt /> }],
   },
 
   {
@@ -82,8 +83,8 @@ const MENU_ADMIN = [
     icon: <MdOutlineEvent />,
     anyPerms: ["payments.read", "payments.manage"],
     children: [
-      { i18nKey: "paymentList", to: "/admin/payments", anyPerms: ["payments.read"] },
-      { i18nKey: "paymentStats", to: "/admin/payments/stats", anyPerms: ["payments.read"] },
+      { i18nKey: "paymentList", to: "/admin/payments", anyPerms: ["payments.read"], icon: <MdOutlinePayment /> },
+      { i18nKey: "paymentStats", to: "/admin/payments/stats", anyPerms: ["payments.read"], icon: <MdOutlineBarChart /> },
     ],
   },
 
@@ -92,8 +93,8 @@ const MENU_ADMIN = [
     icon: <BiNews />,
     anyPerms: ["abonnements.read", "abonnements.manage"],
     children: [
-      { i18nKey: "abonnementList", to: "/admin/abonnements", anyPerms: ["abonnements.read"] },
-      { i18nKey: "abonnementStats", to: "/admin/abonnements/stats", anyPerms: ["abonnements.read"] },
+      { i18nKey: "abonnementList", to: "/admin/abonnements", anyPerms: ["abonnements.read"], icon: <BiListCheck /> },
+      { i18nKey: "abonnementStats", to: "/admin/abonnements/stats", anyPerms: ["abonnements.read"], icon: <MdOutlineBarChart /> },
     ],
   },
 
@@ -101,7 +102,7 @@ const MENU_ADMIN = [
     i18nKey: "contacts",
     icon: <MdOutlineEmail />,
     anyPerms: ["contacts.read", "contacts.manage"],
-    children: [{ i18nKey: "messages", to: "/admin/contacts", anyPerms: ["contacts.read", "contacts.manage"] }],
+    children: [{ i18nKey: "messages", to: "/admin/contacts", anyPerms: ["contacts.read", "contacts.manage"], icon: <MdOutlineEmail /> }],
   },
 
   {
@@ -110,10 +111,10 @@ const MENU_ADMIN = [
     roles: ["ADMIN", "SUPER_ADMIN"],
     anyPerms: ["settings.read", "config.read", "permissions.manage"],
     children: [
-      { i18nKey: "settings", to: "/admin/config", anyPerms: ["config.read", "config.manage"] },
-      { i18nKey: "mailer", to: "/admin/mailer", anyPerms: ["config.read", "config.manage"] },
-      { i18nKey: "auditLogs", to: "/admin/audit-logs", anyPerms: ["audit.read", "audit.manage"] },
-      { i18nKey: "permissions", to: "/admin/permissions", anyPerms: ["permissions.read", "permissions.manage"] },
+      { i18nKey: "settings", to: "/admin/config", anyPerms: ["config.read", "config.manage"], icon: <RiSettings4Line /> },
+      { i18nKey: "mailer", to: "/admin/mailer", anyPerms: ["config.read", "config.manage"], icon: <RiMailSettingsLine /> },
+      { i18nKey: "auditLogs", to: "/admin/audit-logs", anyPerms: ["audit.read", "audit.manage"], icon: <RiFileList3Line /> },
+      { i18nKey: "permissions", to: "/admin/permissions", anyPerms: ["permissions.read", "permissions.manage"], icon: <RiShieldUserLine /> },
     ],
   },
 
@@ -128,15 +129,15 @@ const MENU_TRADUCTEUR = [
     icon: <AiOutlineUser />,
     anyPerms: ["users.read", "users.manage"],
     children: [
-      { i18nKey: "userList", to: "/traducteur/users", anyPerms: ["users.read", "users.manage"] },
-      { i18nKey: "userNew", to: "/traducteur/users/create", anyPerms: ["users.manage"] },
+      { i18nKey: "userList", to: "/traducteur/users", anyPerms: ["users.read", "users.manage"], icon: <MdOutlineGroups /> },
+      { i18nKey: "userNew", to: "/traducteur/users/create", anyPerms: ["users.manage"], icon: <AiOutlineUserAdd /> },
     ],
   },
   {
     i18nKey: "demandes",
     icon: <AiOutlineHistory />,
     anyPerms: ["demandes.read"],
-    children: [{ i18nKey: "allDemandes", to: "/traducteur/demandes", anyPerms: ["demandes.read"] }],
+    children: [{ i18nKey: "allDemandes", to: "/traducteur/demandes", anyPerms: ["demandes.read"], icon: <BiListCheck /> }],
   },
   { i18nKey: "profile", icon: <AiOutlineUser />, to: "/profile" },
 ];
@@ -148,8 +149,8 @@ const MENU_DEMANDEUR = [
     icon: <AiOutlineHistory />,
     anyPerms: ["demandes.read", "demandes.manage"],
     children: [
-      { i18nKey: "allDemandes", to: "/demandeur/mes-demandes", anyPerms: ["demandes.read"] },
-      { i18nKey: "newApplication", to: "/demandeur/mes-demandes/create", anyPerms: ["demandes.manage"] },
+      { i18nKey: "allDemandes", to: "/demandeur/mes-demandes", anyPerms: ["demandes.read"], icon: <BiListCheck /> },
+      { i18nKey: "newApplication", to: "/demandeur/mes-demandes/create", anyPerms: ["demandes.manage"], icon: <HiOutlineDocumentAdd /> },
     ],
   },
   { i18nKey: "profile", icon: <AiOutlineUser />, to: "/profile" },
@@ -165,8 +166,8 @@ function buildStaffMenu(orgId, handleLogOut) {
       icon: <AiOutlineUser />,
       anyPerms: ["users.read", "users.manage"],
       children: [
-        { i18nKey: "userList", to: "/organisations/users", anyPerms: ["users.read", "users.manage"] },
-        { i18nKey: "userNew", to: "/organisations/users/create", anyPerms: ["users.manage"] },
+        { i18nKey: "userList", to: "/organisations/users", anyPerms: ["users.read", "users.manage"], icon: <MdOutlineGroups /> },
+        { i18nKey: "userNew", to: "/organisations/users/create", anyPerms: ["users.manage"], icon: <AiOutlineUserAdd /> },
       ],
     },
 
@@ -175,8 +176,8 @@ function buildStaffMenu(orgId, handleLogOut) {
       icon: <FaRegHandshake />,
       anyPerms: ["organizations.read"],
       children: [
-        { i18nKey: "departments", to: "/organisations/departements", anyPerms: ["departments.read"] },
-        { i18nKey: "filieres", to: "/organisations/filieres", anyPerms: ["filieres.read"] },
+        { i18nKey: "departments", to: "/organisations/departements", anyPerms: ["departments.read"], icon: <MdOutlineSchool /> },
+        { i18nKey: "filieres", to: "/organisations/filieres", anyPerms: ["filieres.read"], icon: <MdOutlineSchool /> },
       ],
     },
 
@@ -185,9 +186,9 @@ function buildStaffMenu(orgId, handleLogOut) {
       icon: <AiOutlineHistory />,
       anyPerms: ["demandes.read"],
       children: [
-        { i18nKey: "allDemandes", to: "/organisations/demandes", anyPerms: ["demandes.read"] },
-        { i18nKey: "invited", to: "/organisations/demandes/invited", anyPerms: ["invites.read", "invites.manage"] },
-        { i18nKey: "ajouteDocument", to: "/organisations/demandes/ajoute-document", anyPerms: ["documents.create"] },
+        { i18nKey: "allDemandes", to: "/organisations/demandes", anyPerms: ["demandes.read"], icon: <BiListCheck /> },
+        { i18nKey: "invited", to: "/organisations/demandes/invited", anyPerms: ["invites.read", "invites.manage"], icon: <MdOutlineSend /> },
+        { i18nKey: "ajouteDocument", to: "/organisations/demandes/ajoute-document", anyPerms: ["documents.create"], icon: <HiOutlineDocumentAdd /> },
         { i18nKey: "notifications", to: "/organisations/notifications", anyPerms: ["notifications.read", "demandes.read"], icon: <BellOutlined /> },
       ],
     },
@@ -197,8 +198,8 @@ function buildStaffMenu(orgId, handleLogOut) {
       icon: <BiNews />,
       anyPerms: ["abonnements.read", "abonnements.manage"],
       children: [
-        { i18nKey: "mesAbonnements", to: "/organisations/abonnements", anyPerms: ["abonnements.read"] },
-        orgId ? { i18nKey: "souscrire", to: `/organisations/${orgId}/abonnement`, anyPerms: ["abonnements.manage"] } : null,
+        { i18nKey: "mesAbonnements", to: "/organisations/abonnements", anyPerms: ["abonnements.read"], icon: <BiListCheck /> },
+        orgId ? { i18nKey: "souscrire", to: `/organisations/${orgId}/abonnement`, anyPerms: ["abonnements.manage"], icon: <BiNews /> } : null,
       ].filter(Boolean),
     },
 
@@ -216,8 +217,8 @@ function buildStaffMenuSuperviseur(orgId) {
       icon: <AiOutlineUser />,
       anyPerms: ["users.read", "users.manage"],
       children: [
-        { i18nKey: "userList", to: "/organisations/users", anyPerms: ["users.read", "users.manage"] },
-        { i18nKey: "userNew", to: "/organisations/users/create", anyPerms: ["users.manage"] },
+        { i18nKey: "userList", to: "/organisations/users", anyPerms: ["users.read", "users.manage"], icon: <MdOutlineGroups /> },
+        { i18nKey: "userNew", to: "/organisations/users/create", anyPerms: ["users.manage"], icon: <AiOutlineUserAdd /> },
       ],
     },
 
@@ -226,8 +227,8 @@ function buildStaffMenuSuperviseur(orgId) {
       icon: <FaRegHandshake />,
       anyPerms: ["organizations.read"],
       children: [
-        { i18nKey: "departments", to: "/organisations/departements", anyPerms: ["departments.read"] },
-        { i18nKey: "filieres", to: "/organisations/filieres", anyPerms: ["filieres.read"] },
+        { i18nKey: "departments", to: "/organisations/departements", anyPerms: ["departments.read"], icon: <MdOutlineSchool /> },
+        { i18nKey: "filieres", to: "/organisations/filieres", anyPerms: ["filieres.read"], icon: <MdOutlineSchool /> },
       ],
     },
 
@@ -235,7 +236,7 @@ function buildStaffMenuSuperviseur(orgId) {
       i18nKey: "demandes",
       icon: <AiOutlineHistory />,
       anyPerms: ["demandes.read"],
-      children: [{ i18nKey: "dossiersTraiter", to: "/organisations/dossiers-a-traiter", anyPerms: ["demandes.read"] }],
+      children: [{ i18nKey: "dossiersTraiter", to: "/organisations/dossiers-a-traiter", anyPerms: ["demandes.read"], icon: <BiListCheck /> }],
     },
 
     { i18nKey: "profile", icon: <AiOutlineUser />, to: "/organisations/profile" },
@@ -260,7 +261,7 @@ const resolveMenuForUser = (user, handleLogOut) => {
 };
 
 /* -------------------- Sidebar -------------------- */
-export default function Sidebar() {
+export default function Sidebar({ isCollapsed = false }) {
   const { user, logout } = useAuth();
   const { t } = useTranslation();
   const location = useLocation();
@@ -268,6 +269,7 @@ export default function Sidebar() {
   const current = location.pathname;
 
   const [openKey, setOpenKey] = useState("");
+  const [isManualToggle, setIsManualToggle] = useState(false);
 
   // Fonction de déconnexion
   const handleLogOut = async () => {
@@ -294,15 +296,17 @@ export default function Sidebar() {
     return current.startsWith(routeWithSlash) || current.startsWith(routeWithQuery);
   }, [current]);
 
-  // ouvre automatiquement le parent du chemin courant
+  // ouvre automatiquement le parent du chemin courant (seulement si pas de toggle manuel récent)
   useEffect(() => {
-    const parentWithChild = baseMenu.find((m) => 
-      m.children?.some?.((c) => isRouteActive(c.to))
-    );
-    if (parentWithChild) {
-      setOpenKey(parentWithChild.i18nKey);
+    if (!isManualToggle) {
+      const parentWithChild = baseMenu.find((m) => 
+        m.children?.some?.((c) => isRouteActive(c.to))
+      );
+      if (parentWithChild) {
+        setOpenKey(parentWithChild.i18nKey);
+      }
     }
-  }, [current, baseMenu, isRouteActive]);
+  }, [current, baseMenu, isRouteActive, isManualToggle]);
 
   // Filtrage par permissions + rôles
   const filteredMenu = useMemo(() => {
@@ -322,7 +326,7 @@ export default function Sidebar() {
   const labelOf = (key) => t(`sidebar.${key}`);
 
   return (
-    <nav className="sidebar-wrapper sidebar-dark">
+    <nav className={`sidebar-wrapper sidebar-dark ${isCollapsed ? "collapsed" : ""}`}>
       <div className="sidebar-content">
         <div className="sidebar-brand">
           <Link to="/"><img src={LogoLight} height="24" alt="" /></Link>
@@ -354,7 +358,7 @@ export default function Sidebar() {
                         role="button"
                       >
                         <div className="icon me-3">{item.icon}</div>
-                        {itemLabel}
+                        <span className="sidebar-label">{itemLabel}</span>
                       </a>
                     </li>
                   );
@@ -370,7 +374,7 @@ export default function Sidebar() {
                       }}
                     >
                       <div className="icon me-3">{item.icon}</div>
-                      {itemLabel}
+                      <span className="sidebar-label">{itemLabel}</span>
                     </Link>
                   </li>
                 );
@@ -386,7 +390,10 @@ export default function Sidebar() {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
+                      setIsManualToggle(true);
                       setOpenKey(isOpen ? "" : item.i18nKey);
+                      // Réinitialiser le flag après un court délai pour permettre l'auto-ouverture future
+                      setTimeout(() => setIsManualToggle(false), 100);
                     }}
                     className="sidebar-link"
                     role="button"
@@ -394,7 +401,7 @@ export default function Sidebar() {
                     aria-haspopup="true"
                   >
                     <div className="icon me-3">{item.icon}</div>
-                    {itemLabel}
+                    <span className="sidebar-label">{itemLabel}</span>
                   </a>
 
                   <div className={`sidebar-submenu ${isOpen ? "block" : "hidden"}`}>
@@ -418,7 +425,7 @@ export default function Sidebar() {
                               }}
                             >
                               {child.icon ? <span className="me-2">{child.icon}</span> : null}
-                              {childLabel}
+                              <span className="sidebar-label">{childLabel}</span>
                             </Link>
                           </li>
                         );

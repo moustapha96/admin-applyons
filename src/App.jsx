@@ -50,7 +50,7 @@ function App() {
       <Toaster richColors position="top-right" /> 
       {shouldShowLayout ? (
         <div className={`page-wrapper ${toggle ? "toggled" : ""}`}>
-          <Sidebar />
+          <Sidebar isCollapsed={!toggle} />
           <main className="page-content bg-gray-50 dark:bg-slate-800">
             <Topnav toggle={toggle} setToggle={setToggle} />
             <AppRoutes />
