@@ -57,7 +57,12 @@
         }
     },
     "permissions": {
+        "dashboard.read": "Leggere dashboard",
+        "dashboard.manage": "Gestire dashboard",
         "users.read": "Leggere utenti",
+        "users.create": "Creare utenti",
+        "users.update": "Aggiornare utenti",
+        "users.delete": "Eliminare utenti",
         "users.manage": "Gestire utenti",
         "users.impersonate": "Impersonare utenti",
         "organizations.read": "Leggere organizzazioni",
@@ -68,6 +73,9 @@
         "filieres.read": "Leggere programmi",
         "filieres.manage": "Gestire programmi",
         "demandes.read": "Leggere richieste",
+        "demandes.create": "Creare richieste",
+        "demandes.update": "Aggiornare richieste",
+        "demandes.delete": "Eliminare richieste",
         "demandes.manage": "Gestire richieste",
         "documents.read": "Leggere documenti",
         "documents.create": "Creare documenti",
@@ -90,9 +98,12 @@
         "config.read": "Leggere configurazione",
         "config.manage": "Gestire configurazione",
         "uploads.create": "Creare caricamenti",
-        "dashboard.read": "Leggere dashboard",
+        "permissions.read": "Leggere permessi",
+        "permissions.manage": "Gestire permessi",
         "audit.read": "Leggere log di audit",
-        "audit.manage": "Gestire log di audit"
+        "audit.manage": "Gestire log di audit",
+        "organizationDemandeNotifications.read": "Leggere notifiche organizzazioni",
+        "organizationDemandeNotifications.manage": "Gestire notifiche organizzazioni"
     },
     "routes": {
         "adminDashboard": "/admin/dashboard",
@@ -823,6 +834,7 @@
             "save": "Salva",
             "saving": "Salvataggio..."
         },
+        "loadingPermissions": "Caricamento permessi...",
         "placeholders": {
             "firstName": "Nome",
             "lastName": "Cognome",
@@ -1263,9 +1275,11 @@
             "key": "Chiave",
             "name": "Nome",
             "description": "Descrizione",
+            "allowedRoles": "Ruoli consentiti",
             "createdAt": "Creata il",
             "actions": "Azioni"
         },
+        "allRoles": "Tutti i ruoli",
         "actions": {
             "create": "Crea permesso",
             "edit": "Modifica",
@@ -1280,11 +1294,15 @@
             "keyRequired": "La chiave è obbligatoria",
             "keyPattern": "La chiave deve contenere solo lettere minuscole, numeri e punti (es: users.read)",
             "keyHelp": "Formato: risorsa.azione (es: users.read, demandes.manage)",
+            "keyPlaceholder": "es: users.read",
             "name": "Nome",
             "nameRequired": "Il nome è obbligatorio",
             "namePlaceholder": "Es: Leggi utenti",
             "description": "Descrizione",
-            "descriptionPlaceholder": "Descrizione opzionale del permesso"
+            "descriptionPlaceholder": "Descrizione opzionale del permesso",
+            "allowedRoles": "Ruoli consentiti",
+            "allowedRolesPlaceholder": "Selezionare i ruoli (lasciare vuoto per tutti i ruoli)",
+            "allowedRolesHelp": "Se nessun ruolo è selezionato, il permesso sarà accessibile a tutti i ruoli"
         },
         "confirmDelete": "Eliminare questo permesso?",
         "confirmDeleteDescription": "Questa azione è irreversibile. Il permesso verrà rimosso da tutti gli utenti che lo hanno.",
@@ -1298,7 +1316,9 @@
             "deleteSuccess": "Permesso eliminato con successo",
             "saveError": "Errore nel salvataggio",
             "deleteError": "Errore nell'eliminazione"
-        }
+        },
+        "loading": "Caricamento permessi...",
+        "noData": "—"
     },
     "orgInviteCreate": {
         "pageTitle": "Nuovo invito organizzazione",
@@ -2869,6 +2889,7 @@
             "password": "Password",
             "confirmPassword": "Conferma password"
         },
+        "loadingPermissions": "Caricamento permessi...",
         "placeholders": {
             "firstName": "Nome",
             "lastName": "Cognome",
@@ -3408,7 +3429,8 @@
             "email": "Email",
             "phone": "Telefono (opz.)",
             "address": "Indirizzo (opz.)",
-            "role": "Ruolo (opz.)"
+            "role": "Ruolo (opz.)",
+            "notifyOrgs": "Selezionare le organizzazioni da notificare"
         },
         "options": {
             "periods": {

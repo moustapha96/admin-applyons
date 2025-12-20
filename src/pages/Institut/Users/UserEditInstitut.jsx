@@ -152,7 +152,7 @@
 /* eslint-disable no-unused-vars */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   Form,
@@ -177,8 +177,8 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import userService from "@/services/userService";
-import { getPermissionLabel, PERMS_INSTITUT } from "@/auth/permissions";
 import { useAuth } from "../../../hooks/useAuth";
+import { usePermissions } from "../../../hooks/usePermissions";
 import { useTranslation } from "react-i18next";
 import { buildImageUrl } from "../../../utils/imageUtils";
 
@@ -189,16 +189,31 @@ export default function UserEditInstitut() {
   const { t } = useTranslation();
   const { id } = useParams();
   const { user: me } = useAuth();
+  const { permissions, getPermissionLabel, getPermissionsByRole, loading: permissionsLoading } = usePermissions();
   const [form] = Form.useForm();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
-  const permissionsOptions = Object.entries(PERMS_INSTITUT).map(([_, value]) => ({
-    label: getPermissionLabel(value, t),
-    value,
-  }));
+  // Rôle de l'utilisateur connecté (pour Institut, généralement INSTITUT ou SUPERVISEUR)
+  const userRole = me?.role || "INSTITUT";
+
+  // Filtrer les permissions selon le rôle de l'utilisateur connecté
+  const filteredPermissions = useMemo(() => {
+    if (!getPermissionsByRole || typeof getPermissionsByRole !== "function") {
+      return permissions;
+    }
+    return getPermissionsByRole(userRole);
+  }, [getPermissionsByRole, userRole, permissions]);
+
+  // Utiliser les permissions du backend filtrées par rôle
+  const permissionsOptions = useMemo(() => {
+    return filteredPermissions.map((perm) => ({
+      label: getPermissionLabel(perm.key) || perm.name || perm.key,
+      value: perm.key,
+    }));
+  }, [filteredPermissions, getPermissionLabel]);
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
@@ -403,15 +418,19 @@ export default function UserEditInstitut() {
 
                 <Divider>{t("userEditInstitut.sections.permissions")}</Divider>
                 <Form.Item name="permissions" label={t("userEditInstitut.fields.permissions")}>
-                  <Checkbox.Group>
-                    <Row gutter={[0, 16]}>
-                      {permissionsOptions.map((opt) => (
-                        <Col span={8} key={opt.value}>
-                          <Checkbox value={opt.value}>{opt.label}</Checkbox>
-                        </Col>
-                      ))}
-                    </Row>
-                  </Checkbox.Group>
+                  {permissionsLoading ? (
+                    <div>{t("userEditInstitut.loadingPermissions")}</div>
+                  ) : (
+                    <Checkbox.Group>
+                      <Row gutter={[0, 16]}>
+                        {permissionsOptions.map((opt) => (
+                          <Col span={8} key={opt.value}>
+                            <Checkbox value={opt.value}>{opt.label}</Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    </Checkbox.Group>
+                  )}
                 </Form.Item>
 
                 <Form.Item>

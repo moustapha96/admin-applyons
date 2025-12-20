@@ -24,6 +24,7 @@ import {
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
+import { usePermissions } from "../../../hooks/usePermissions";
 import permissionService from "../../../services/permissionService";
 
 const { Search } = Input;
@@ -105,15 +106,26 @@ export default function PermissionsList() {
   const openCreate = () => {
     setEditing(null);
     form.resetFields();
+    form.setFieldsValue({ allowedRoles: [] });
     setModalOpen(true);
   };
 
   const openEdit = (record) => {
     setEditing(record);
+    // Parser allowedRoles si c'est une string JSON
+    let allowedRoles = record.allowedRoles;
+    if (typeof allowedRoles === "string") {
+      try {
+        allowedRoles = JSON.parse(allowedRoles);
+      } catch {
+        allowedRoles = null;
+      }
+    }
     form.setFieldsValue({
       key: record.key,
       name: record.name,
       description: record.description || "",
+      allowedRoles: allowedRoles || [],
     });
     setModalOpen(true);
   };
@@ -122,16 +134,26 @@ export default function PermissionsList() {
     try {
       const values = await form.validateFields();
       setLoading(true);
+      
+      // Normaliser allowedRoles : si vide, envoyer null, sinon garder le tableau
+      const submitValues = {
+        ...values,
+        allowedRoles: values.allowedRoles && values.allowedRoles.length > 0 
+          ? values.allowedRoles 
+          : null,
+      };
+      
       if (editing) {
-        await permissionService.update(editing.id, values);
+        await permissionService.update(editing.id, submitValues);
         message.success(t("adminPermissions.messages.updateSuccess"));
       } else {
-        await permissionService.create(values);
+        await permissionService.create(submitValues);
         message.success(t("adminPermissions.messages.createSuccess"));
       }
       setModalOpen(false);
       form.resetFields();
-      fetchData();
+      await fetchData();
+      await refreshPermissions(); // Rafraîchir le contexte des permissions
     } catch (e) {
       if (e.errorFields) {
         // Validation errors
@@ -151,7 +173,8 @@ export default function PermissionsList() {
     try {
       await permissionService.remove(id);
       message.success(t("adminPermissions.messages.deleteSuccess"));
-      fetchData();
+      await fetchData();
+      await refreshPermissions(); // Rafraîchir le contexte des permissions
     } catch (e) {
       message.error(
         e?.response?.data?.message ||
@@ -193,8 +216,39 @@ export default function PermissionsList() {
         title: t("adminPermissions.columns.description"),
         dataIndex: "description",
         key: "description",
-        render: (desc) => desc || "—",
+        render: (desc) => desc || t("adminPermissions.noData"),
         ellipsis: true,
+      },
+      {
+        title: t("adminPermissions.columns.allowedRoles"),
+        dataIndex: "allowedRoles",
+        key: "allowedRoles",
+        width: 200,
+        render: (allowedRoles) => {
+          if (!allowedRoles || allowedRoles === null) {
+            return <Tag color="default">{t("adminPermissions.allRoles")}</Tag>;
+          }
+          let roles = allowedRoles;
+          if (typeof allowedRoles === "string") {
+            try {
+              roles = JSON.parse(allowedRoles);
+            } catch {
+              return t("adminPermissions.noData");
+            }
+          }
+          if (Array.isArray(roles) && roles.length > 0) {
+            return (
+              <Space size="small" wrap>
+                {roles.map((role) => (
+                  <Tag key={role} color="blue">
+                    {role}
+                  </Tag>
+                ))}
+              </Space>
+            );
+          }
+          return "—";
+        },
       },
       {
         title: t("adminPermissions.columns.createdAt"),
@@ -338,6 +392,7 @@ export default function PermissionsList() {
               key: "",
               name: "",
               description: "",
+              allowedRoles: [],
             }}
           >
             <Form.Item
@@ -356,7 +411,7 @@ export default function PermissionsList() {
               help={t("adminPermissions.form.keyHelp")}
             >
               <Input
-                placeholder="ex: users.read"
+                placeholder={t("adminPermissions.form.keyPlaceholder")}
                 disabled={!!editing}
                 style={{ fontFamily: "monospace" }}
               />
@@ -382,6 +437,26 @@ export default function PermissionsList() {
               <Input.TextArea
                 rows={3}
                 placeholder={t("adminPermissions.form.descriptionPlaceholder")}
+              />
+            </Form.Item>
+
+            <Form.Item
+              name="allowedRoles"
+              label={t("adminPermissions.form.allowedRoles")}
+              help={t("adminPermissions.form.allowedRolesHelp")}
+            >
+              <Select
+                mode="multiple"
+                placeholder={t("adminPermissions.form.allowedRolesPlaceholder")}
+                allowClear
+                options={[
+                  { label: t("roles.ADMIN"), value: "ADMIN" },
+                  { label: t("roles.SUPER_ADMIN"), value: "SUPER_ADMIN" },
+                  { label: t("roles.INSTITUT"), value: "INSTITUT" },
+                  { label: t("roles.SUPERVISEUR"), value: "SUPERVISEUR" },
+                  { label: t("roles.TRADUCTEUR"), value: "TRADUCTEUR" },
+                  { label: t("roles.DEMANDEUR"), value: "DEMANDEUR" },
+                ]}
               />
             </Form.Item>
           </Form>

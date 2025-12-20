@@ -59,7 +59,12 @@
         }
     },
     "permissions": {
+        "dashboard.read": "Leer panel de control",
+        "dashboard.manage": "Gestionar panel de control",
         "users.read": "Leer usuarios",
+        "users.create": "Crear usuarios",
+        "users.update": "Actualizar usuarios",
+        "users.delete": "Eliminar usuarios",
         "users.manage": "Gestionar usuarios",
         "users.impersonate": "Suplantar usuarios",
         "organizations.read": "Leer organizaciones",
@@ -70,11 +75,15 @@
         "filieres.read": "Leer programas",
         "filieres.manage": "Gestionar programas",
         "demandes.read": "Leer solicitudes",
+        "demandes.create": "Crear solicitudes",
+        "demandes.update": "Actualizar solicitudes",
+        "demandes.delete": "Eliminar solicitudes",
         "demandes.manage": "Gestionar solicitudes",
         "documents.read": "Leer documentos",
         "documents.create": "Crear documentos",
         "documents.update": "Actualizar documentos",
         "documents.delete": "Eliminar documentos",
+        "documents.manage": "Gestionar documentos",
         "documents.translate": "Traducir documentos",
         "documents.verify": "Verificar documentos",
         "payments.read": "Leer pagos",
@@ -92,9 +101,12 @@
         "config.read": "Leer configuración",
         "config.manage": "Gestionar configuración",
         "uploads.create": "Crear cargas",
-        "dashboard.read": "Leer panel",
+        "permissions.read": "Leer permisos",
+        "permissions.manage": "Gestionar permisos",
         "audit.read": "Leer registros de auditoría",
-        "audit.manage": "Gestionar registros de auditoría"
+        "audit.manage": "Gestionar registros de auditoría",
+        "organizationDemandeNotifications.read": "Leer notificaciones de organizaciones",
+        "organizationDemandeNotifications.manage": "Gestionar notificaciones de organizaciones"
     },
     "routes": {
         "adminDashboard": "/admin/dashboard",
@@ -893,6 +905,7 @@
             "permissions": "Permisos",
             "password": "Contraseña"
         },
+        "loadingPermissions": "Cargando permisos...",
         "validators": {
             "firstNameRequired": "Nombre obligatorio",
             "lastNameRequired": "Apellido obligatorio",
@@ -1266,9 +1279,11 @@
             "key": "Clave",
             "name": "Nombre",
             "description": "Descripción",
+            "allowedRoles": "Roles permitidos",
             "createdAt": "Creada el",
             "actions": "Acciones"
         },
+        "allRoles": "Todos los roles",
         "actions": {
             "create": "Crear permiso",
             "edit": "Editar",
@@ -1283,11 +1298,15 @@
             "keyRequired": "La clave es obligatoria",
             "keyPattern": "La clave debe contener solo letras minúsculas, números y puntos (ej: users.read)",
             "keyHelp": "Formato: recurso.acción (ej: users.read, demandes.manage)",
+            "keyPlaceholder": "ej: users.read",
             "name": "Nombre",
             "nameRequired": "El nombre es obligatorio",
             "namePlaceholder": "Ej: Leer usuarios",
             "description": "Descripción",
-            "descriptionPlaceholder": "Descripción opcional del permiso"
+            "descriptionPlaceholder": "Descripción opcional del permiso",
+            "allowedRoles": "Roles permitidos",
+            "allowedRolesPlaceholder": "Seleccionar roles (dejar vacío para todos los roles)",
+            "allowedRolesHelp": "Si no se selecciona ningún rol, el permiso será accesible para todos los roles"
         },
         "confirmDelete": "¿Eliminar este permiso?",
         "confirmDeleteDescription": "Esta acción es irreversible. El permiso se eliminará de todos los usuarios que lo tengan.",
@@ -1301,7 +1320,9 @@
             "deleteSuccess": "Permiso eliminado con éxito",
             "saveError": "Error al guardar",
             "deleteError": "Error al eliminar"
-        }
+        },
+        "loading": "Cargando permisos...",
+        "noData": "—"
     },
     "orgInviteCreate": {
         "pageTitle": "Nueva invitación de organización",
@@ -3025,6 +3046,7 @@
             "password": "Contraseña",
             "confirmPassword": "Confirmar contraseña"
         },
+        "loadingPermissions": "Cargando permisos...",
         "placeholders": {
             "firstName": "Nombre",
             "lastName": "Apellido",
@@ -3131,6 +3153,7 @@
             "status": "Estado",
             "permissions": "Permisos"
         },
+        "loadingPermissions": "Cargando permisos...",
         "placeholders": {
             "firstName": "Nombre",
             "lastName": "Apellido",
@@ -3564,7 +3587,8 @@
             "email": "Correo electrónico",
             "phone": "Teléfono (opc.)",
             "address": "Dirección (opc.)",
-            "role": "Rol (opc.)"
+            "role": "Rol (opc.)",
+            "notifyOrgs": "Seleccionar organizaciones para notificar"
         },
         "options": {
             "periods": {

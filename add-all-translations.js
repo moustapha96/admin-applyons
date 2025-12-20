@@ -144,7 +144,7 @@ const newTranslations = {
                 confirmPassword: "Confirmez votre nouveau mot de passe"
             },
             error: "Erreur lors de la réinitialisation du mot de passe. Veuillez réessayer.",
-            footer: "© {{year}} applyons. Réalisé avec ❤️ par ADM."
+            footer: "© {{year}} applyons. Tous droits réservés."
         }
     },
     adminDashboard: {
@@ -236,8 +236,8 @@ const translations = {
                 errorLogin: "Incorrect email or password. Please try again.",
                 showPassword: "Show password",
                 hidePassword: "Hide password",
-                footer: "© {{year}} applyons. Made with by AuthenticPage."
-            },
+                footer: "© {{year}} applyons. All rights reserved."
+            },  
             signup: {
                 title: "Create an account",
                 personalInfo: "Personal information",
@@ -333,9 +333,9 @@ const translations = {
                 login: "Sign in",
                 success: "A password reset email has been sent.",
                 error: "Error sending password reset email.",
-                footer: "© {{year}} applyons. Made by AuthenticPage."
+                footer: "© {{year}} applyons. All rights reserved."
             },
-            newPassword: {
+            newPassword: {  
                 title: "New password",
                 subtitle: "Please enter your new password",
                 newPassword: "New password",
@@ -360,7 +360,7 @@ const translations = {
                     confirmPassword: "Confirm your new password"
                 },
                 error: "Error resetting password. Please try again.",
-                footer: "© {{year}} applyons. Made with ❤️ by ADM."
+                footer: "© {{year}} applyons. All rights reserved."
             }
         },
         adminDashboard: {
