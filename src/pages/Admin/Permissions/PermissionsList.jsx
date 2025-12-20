@@ -13,6 +13,7 @@ import {
   Modal,
   Form,
   Popconfirm,
+  Select,
 } from "antd";
 import {
   PlusOutlined,
@@ -32,6 +33,7 @@ const { Search } = Input;
 export default function PermissionsList() {
   const { t } = useTranslation();
   const { user: currentUser } = useAuth();
+  const { refreshPermissions } = usePermissions();
   const navigate = useNavigate();
   const [form] = Form.useForm();
 

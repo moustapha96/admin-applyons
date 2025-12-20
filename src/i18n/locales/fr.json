@@ -108,8 +108,6 @@
         "audit.read": "Lire les logs d'audit",
         "audit.manage": "Gérer les logs d'audit",
         "organizationDemandeNotifications.read": "Lire les notifications d'organisations",
-        "organizationDemandeNotifications.manage": "Gérer les notifications d'organisations",
-        "organizationDemandeNotifications.read": "Lire les notifications d'organisations",
         "organizationDemandeNotifications.manage": "Gérer les notifications d'organisations"
     },
     "routes": {
