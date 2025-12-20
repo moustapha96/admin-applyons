@@ -221,7 +221,7 @@
             "types": {
                 "college": "College",
                 "banque": "Bank",
-                "universite": "University",
+                "universite": "University / Institute",
                 "lycee": "High School",
                 "entreprise": "Company",
                 "traducteur": "Translator"
@@ -378,7 +378,7 @@
         "orgTypes": {
             "COLLEGE": "College",
             "BANQUE": "Bank",
-            "UNIVERSITE": "University",
+            "UNIVERSITE": "University / Institute",
             "LYCEE": "High school",
             "ENTREPRISE": "Company",
             "TRADUCTEUR": "Translator"
@@ -387,7 +387,7 @@
     "orgTypes": {
         "COLLEGE": "College",
         "BANQUE": "Bank",
-        "UNIVERSITE": "University",
+        "UNIVERSITE": "University / Institute",
         "LYCEE": "High school",
         "ENTREPRISE": "Company",
         "TRADUCTEUR": "Translator"
@@ -2010,7 +2010,7 @@
                 "BANQUE": "Bank/Financial institution"
             },
             "orgTypes": {
-                "UNIVERSITE": "University",
+                "UNIVERSITE": "University / Institute",
                 "COLLEGE": "College",
                 "LYCEE": "High School",
                 "ENTREPRISE": "Company",
@@ -2275,7 +2275,7 @@
             "BANQUE": "Bank",
             "COLLEGE": "College",
             "LYCEE": "High School",
-            "UNIVERSITE": "University"
+            "UNIVERSITE": "University / Institute"
         },
         "countries": {
             "SN": "Senegal",
@@ -3910,7 +3910,7 @@
             "BANQUE": "Bank",
             "COLLEGE": "College",
             "LYCEE": "High School",
-            "UNIVERSITE": "University"
+            "UNIVERSITE": "University / Institute"
         },
         "countries": {
             "SN": "Senegal",

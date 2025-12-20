@@ -225,7 +225,7 @@
             "types": {
                 "college": "Collège",
                 "banque": "Banque",
-                "universite": "Université",
+                "universite": "Université / Institut",
                 "lycee": "Lycée",
                 "entreprise": "Entreprise",
                 "traducteur": "Traducteur"
@@ -382,7 +382,7 @@
         "orgTypes": {
             "COLLEGE": "Collège",
             "BANQUE": "Banque",
-            "UNIVERSITE": "Université",
+            "UNIVERSITE": "Université / Institut",
             "LYCEE": "Lycée",
             "ENTREPRISE": "Entreprise",
             "TRADUCTEUR": "Traducteur"
@@ -2004,7 +2004,7 @@
                 "BANQUE": "Banque/Institution financière"
             },
             "orgTypes": {
-                "UNIVERSITE": "Université",
+                "UNIVERSITE": "Université / Institut",
                 "COLLEGE": "Collège",
                 "LYCEE": "Lycée",
                 "ENTREPRISE": "Entreprise",
@@ -2309,7 +2309,7 @@
             "BANQUE": "Banque",
             "COLLEGE": "Collège",
             "LYCEE": "Lycée",
-            "UNIVERSITE": "Université"
+            "UNIVERSITE": "Université / Institut"
         },
         "countries": {
             "SN": "Sénégal",
@@ -3940,7 +3940,7 @@
             "BANQUE": "Banque",
             "COLLEGE": "Collège",
             "LYCEE": "Lycée",
-            "UNIVERSITE": "Université"
+            "UNIVERSITE": "Université / Institut"
         },
         "countries": {
             "SN": "Sénégal",

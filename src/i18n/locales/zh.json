@@ -218,7 +218,7 @@
             "types": {
                 "college": "学院",
                 "banque": "银行",
-                "universite": "大学",
+                "universite": "大学 / 学院",
                 "lycee": "高中",
                 "entreprise": "企业",
                 "traducteur": "翻译"
@@ -375,7 +375,7 @@
         "orgTypes": {
             "COLLEGE": "学院",
             "BANQUE": "银行",
-            "UNIVERSITE": "大学",
+            "UNIVERSITE": "大学 / 学院",
             "LYCEE": "中学",
             "ENTREPRISE": "公司",
             "TRADUCTEUR": "翻译机构"
@@ -1921,7 +1921,7 @@
                 "BANQUE": "银行/金融机构"
             },
             "orgTypes": {
-                "UNIVERSITE": "大学",
+                "UNIVERSITE": "大学 / 学院",
                 "COLLEGE": "学院",
                 "LYCEE": "高中",
                 "ENTREPRISE": "公司",
@@ -2186,7 +2186,7 @@
             "BANQUE": "银行",
             "COLLEGE": "学院",
             "LYCEE": "高中",
-            "UNIVERSITE": "大学"
+            "UNIVERSITE": "大学 / 学院"
         },
         "countries": {
             "SN": "塞内加尔",
@@ -3681,7 +3681,7 @@
             "BANQUE": "银行",
             "COLLEGE": "学院",
             "LYCEE": "高中",
-            "UNIVERSITE": "大学"
+            "UNIVERSITE": "大学 / 学院"
         },
         "countries": {
             "SN": "塞内加尔",
