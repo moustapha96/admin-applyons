@@ -20,7 +20,7 @@ const newTranslations = {
             errorLogin: "Email ou mot de passe incorrect. Veuillez réessayer.",
             showPassword: "Afficher le mot de passe",
             hidePassword: "Masquer le mot de passe",
-            footer: "© {{year}} applyons. Réalisé avec par AuthenticPage."
+            footer: "© 2026 Applyons. Tous droits réservés."
         },
         signup: {
             title: "Créer un compte",
@@ -117,7 +117,8 @@ const newTranslations = {
             login: "Se connecter",
             success: "Un email de réinitialisation a été envoyé.",
             error: "Erreur lors de l'envoi de l'email de réinitialisation.",
-            footer: "© {{year}} applyons. Réaliser par AuthenticPage."
+            // footer: "© 2026 applyons. Réaliser par AuthenticPage."
+            footer: "© 2026 Applyons. Tous droits réservés."
         },
         newPassword: {
             title: "Nouveau mot de passe",
@@ -144,7 +145,8 @@ const newTranslations = {
                 confirmPassword: "Confirmez votre nouveau mot de passe"
             },
             error: "Erreur lors de la réinitialisation du mot de passe. Veuillez réessayer.",
-            footer: "© {{year}} applyons. Tous droits réservés."
+            // footer: "© 2026 applyons. Tous droits réservés."
+            footer: "© 2026 Applyons. Tous droits réservés."
         }
     },
     adminDashboard: {
@@ -236,7 +238,8 @@ const translations = {
                 errorLogin: "Incorrect email or password. Please try again.",
                 showPassword: "Show password",
                 hidePassword: "Hide password",
-                footer: "© {{year}} applyons. All rights reserved."
+                // footer: "© 2026 applyons. All rights reserved."
+                footer: "© 2026 Applyons. All rights reserved."
             },  
             signup: {
                 title: "Create an account",
@@ -333,7 +336,8 @@ const translations = {
                 login: "Sign in",
                 success: "A password reset email has been sent.",
                 error: "Error sending password reset email.",
-                footer: "© {{year}} applyons. All rights reserved."
+                // footer: "© 2026 applyons. All rights reserved."
+                footer: "© 2026 Applyons. All rights reserved."
             },
             newPassword: {  
                 title: "New password",
@@ -360,7 +364,8 @@ const translations = {
                     confirmPassword: "Confirm your new password"
                 },
                 error: "Error resetting password. Please try again.",
-                footer: "© {{year}} applyons. All rights reserved."
+                // footer: "© 2026 applyons. All rights reserved."
+                footer: "© 2026 Applyons. All rights reserved."
             }
         },
         adminDashboard: {
@@ -448,7 +453,8 @@ const translations = {
                 errorLogin: "Correo o contraseña incorrectos. Por favor, inténtalo de nuevo.",
                 showPassword: "Mostrar contraseña",
                 hidePassword: "Ocultar contraseña",
-                footer: "© {{year}} applyons. Hecho con por AuthenticPage."
+                // footer: "© 2026 applyons. Hecho con por AuthenticPage."
+                footer: "© 2026 Applyons. Todos los derechos reservados."
             },
             signup: {
                 title: "Crear una cuenta",
@@ -545,7 +551,7 @@ const translations = {
                 login: "Iniciar sesión",
                 success: "Se ha enviado un correo de restablecimiento de contraseña.",
                 error: "Error al enviar el correo de restablecimiento de contraseña.",
-                footer: "© {{year}} applyons. Hecho por AuthenticPage."
+                footer: "© 2026 applyons. Hecho por AuthenticPage."
             },
             newPassword: {
                 title: "Nueva contraseña",
@@ -572,7 +578,7 @@ const translations = {
                     confirmPassword: "Confirma tu nueva contraseña"
                 },
                 error: "Error al restablecer la contraseña. Por favor, inténtalo de nuevo.",
-                footer: "© {{year}} applyons. Hecho con ❤️ por ADM."
+                footer: "© 2026 applyons. Hecho con ❤️ por ADM."
             }
         },
         adminDashboard: {
@@ -660,7 +666,7 @@ const translations = {
                 errorLogin: "Email o password errati. Riprova.",
                 showPassword: "Mostra password",
                 hidePassword: "Nascondi password",
-                footer: "© {{year}} applyons. Realizzato con da AuthenticPage."
+                footer: "© 2026 applyons. Realizzato con da AuthenticPage."
             },
             signup: {
                 title: "Crea un account",
@@ -757,7 +763,7 @@ const translations = {
                 login: "Accedi",
                 success: "È stata inviata un'email di reimpostazione password.",
                 error: "Errore nell'invio dell'email di reimpostazione password.",
-                footer: "© {{year}} applyons. Realizzato da AuthenticPage."
+                footer: "© 2026 applyons. Realizzato da AuthenticPage."
             },
             newPassword: {
                 title: "Nuova password",
@@ -784,7 +790,7 @@ const translations = {
                     confirmPassword: "Conferma la tua nuova password"
                 },
                 error: "Errore nella reimpostazione della password. Riprova.",
-                footer: "© {{year}} applyons. Realizzato con ❤️ da ADM."
+                footer: "© 2026 applyons. Realizzato con ❤️ da ADM."
             }
         },
         adminDashboard: {
@@ -872,7 +878,7 @@ const translations = {
                 errorLogin: "Falsche E-Mail oder Passwort. Bitte versuchen Sie es erneut.",
                 showPassword: "Passwort anzeigen",
                 hidePassword: "Passwort ausblenden",
-                footer: "© {{year}} applyons. Erstellt mit von AuthenticPage."
+                footer: "© 2026 applyons. Erstellt mit von AuthenticPage."
             },
             signup: {
                 title: "Konto erstellen",
@@ -969,7 +975,7 @@ const translations = {
                 login: "Anmelden",
                 success: "Eine E-Mail zum Zurücksetzen des Passworts wurde gesendet.",
                 error: "Fehler beim Senden der E-Mail zum Zurücksetzen des Passworts.",
-                footer: "© {{year}} applyons. Erstellt von AuthenticPage."
+                footer: "© 2026 applyons. Erstellt von AuthenticPage."
             },
             newPassword: {
                 title: "Neues Passwort",
@@ -996,7 +1002,7 @@ const translations = {
                     confirmPassword: "Bestätigen Sie Ihr neues Passwort"
                 },
                 error: "Fehler beim Zurücksetzen des Passworts. Bitte versuchen Sie es erneut.",
-                footer: "© {{year}} applyons. Erstellt mit ❤️ von ADM."
+                footer: "© 2026 applyons. Erstellt mit ❤️ von ADM."
             }
         },
         adminDashboard: {
@@ -1084,7 +1090,7 @@ const translations = {
                 errorLogin: "电子邮件或密码不正确。请重试。",
                 showPassword: "显示密码",
                 hidePassword: "隐藏密码",
-                footer: "© {{year}} applyons. 由 AuthenticPage 制作。"
+                footer: "© 2026 applyons. 由 AuthenticPage 制作。"
             },
             signup: {
                 title: "创建账户",
@@ -1181,7 +1187,7 @@ const translations = {
                 login: "登录",
                 success: "已发送密码重置电子邮件。",
                 error: "发送密码重置电子邮件时出错。",
-                footer: "© {{year}} applyons. 由 AuthenticPage 制作。"
+                footer: "© 2026 applyons. 由 AuthenticPage 制作。"
             },
             newPassword: {
                 title: "新密码",
@@ -1208,7 +1214,7 @@ const translations = {
                     confirmPassword: "确认您的新密码"
                 },
                 error: "重置密码时出错。请重试。",
-                footer: "© {{year}} applyons. 由 ADM 用 ❤️ 制作。"
+                footer: "© 2026 applyons. 由 ADM 用 ❤️ 制作。"
             }
         },
         adminDashboard: {

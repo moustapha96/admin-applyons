@@ -150,6 +150,7 @@
         "mailer": "邮件服务",
         "auditLogs": "审计日志",
         "permissions": "权限",
+        "apiRoutes": "API路由",
         "profile": "个人资料",
         "monInstitut": "我的学院",
         "ajouteDocument": "分享文件",
@@ -1321,6 +1322,68 @@
         "loading": "加载权限中...",
         "noData": "—"
     },
+    "adminApiRoutes": {
+        "pageTitle": "API路由管理",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "apiRoutes": "API路由"
+        },
+        "searchPlaceholder": "按路径、描述、标签搜索...",
+        "filters": {
+            "method": "方法",
+            "prefix": "前缀",
+            "status": "状态"
+        },
+        "columns": {
+            "method": "方法",
+            "path": "路径",
+            "prefix": "前缀",
+            "description": "描述",
+            "tags": "标签",
+            "requiresAuth": "需要认证",
+            "requiredPermissions": "所需权限",
+            "isActive": "状态",
+            "createdAt": "创建时间",
+            "actions": "操作"
+        },
+        "active": "激活",
+        "inactive": "未激活",
+        "stats": {
+            "total": "总计",
+            "active": "激活",
+            "inactive": "未激活",
+            "byMethod": "方法"
+        },
+        "actions": {
+            "edit": "编辑",
+            "sync": "同步"
+        },
+        "modal": {
+            "editTitle": "编辑API路由"
+        },
+        "form": {
+            "isActive": "路由激活",
+            "description": "描述",
+            "descriptionPlaceholder": "路由描述",
+            "tags": "标签",
+            "tagsPlaceholder": "例如：Users,Authentication（逗号分隔）",
+            "tagsHelp": "逗号分隔的标签，用于对路由进行分类",
+            "requiredPermissions": "所需权限",
+            "requiredPermissionsPlaceholder": "例如：users.read,users.manage（逗号分隔）",
+            "requiredPermissionsHelp": "访问此路由所需的权限（逗号分隔）"
+        },
+        "pagination": {
+            "total": "总计：{{total}} 条路由"
+        },
+        "messages": {
+            "loadError": "加载路由时出错",
+            "updateSuccess": "路由更新成功",
+            "updateError": "更新路由时出错",
+            "syncSuccess": "同步成功：{{created}} 条已创建，{{updated}} 条已更新，共 {{total}} 条",
+            "syncError": "同步时出错"
+        },
+        "noData": "—"
+    },
     "orgInviteCreate": {
         "pageTitle": "新组织邀请",
         "breadcrumbs": {
@@ -1798,7 +1861,7 @@
             "errorLogin": "电子邮件或密码不正确。请重试。",
             "showPassword": "显示密码",
             "hidePassword": "隐藏密码",
-            "footer": "© {{year}} applyons. 由 AuthenticPage 制作。"
+            "footer": "© 2026 applyons. 由 AuthenticPage 制作。"
         },
         "signup": {
             "title": "创建账户",
@@ -1895,7 +1958,7 @@
             "login": "登录",
             "success": "已发送密码重置电子邮件。",
             "error": "发送密码重置电子邮件时出错。",
-            "footer": "© {{year}} applyons. 由 AuthenticPage 制作。"
+            "footer": "© 2026 applyons. 由 AuthenticPage 制作。"
         },
         "newPassword": {
             "title": "新密码",
@@ -1922,7 +1985,7 @@
                 "confirmPassword": "确认您的新密码"
             },
             "error": "重置密码时出错。请重试。",
-            "footer": "© {{year}} applyons. 由 ADM 用 ❤️ 制作。"
+            "footer": "© 2026 applyons. 由 ADM 用 ❤️ 制作。"
         },
         "orgInviteAccept": {
             "loading": "正在加载邀请...",

@@ -156,6 +156,7 @@
         "mailer": "Mailer",
         "auditLogs": "Audit logs",
         "permissions": "Permissions",
+        "apiRoutes": "Routes API",
         "profile": "Profil",
         "monInstitut": "Mon institut",
         "ajouteDocument": "Partager un document",
@@ -1325,6 +1326,68 @@
         "loading": "Chargement des permissions...",
         "noData": "—"
     },
+    "adminApiRoutes": {
+        "pageTitle": "Gestion des routes API",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "apiRoutes": "Routes API"
+        },
+        "searchPlaceholder": "Rechercher par chemin, description, tags...",
+        "filters": {
+            "method": "Méthode",
+            "prefix": "Préfixe",
+            "status": "Statut"
+        },
+        "columns": {
+            "method": "Méthode",
+            "path": "Chemin",
+            "prefix": "Préfixe",
+            "description": "Description",
+            "tags": "Tags",
+            "requiresAuth": "Auth requise",
+            "requiredPermissions": "Permissions requises",
+            "isActive": "Statut",
+            "createdAt": "Créée le",
+            "actions": "Actions"
+        },
+        "active": "Active",
+        "inactive": "Inactive",
+        "stats": {
+            "total": "Total",
+            "active": "Actives",
+            "inactive": "Inactives",
+            "byMethod": "Méthodes"
+        },
+        "actions": {
+            "edit": "Modifier",
+            "sync": "Synchroniser"
+        },
+        "modal": {
+            "editTitle": "Modifier la route API"
+        },
+        "form": {
+            "isActive": "Route active",
+            "description": "Description",
+            "descriptionPlaceholder": "Description de la route",
+            "tags": "Tags",
+            "tagsPlaceholder": "Ex: Users,Authentication (séparés par des virgules)",
+            "tagsHelp": "Tags séparés par des virgules pour catégoriser la route",
+            "requiredPermissions": "Permissions requises",
+            "requiredPermissionsPlaceholder": "Ex: users.read,users.manage (séparés par des virgules)",
+            "requiredPermissionsHelp": "Permissions nécessaires pour accéder à cette route (séparées par des virgules)"
+        },
+        "pagination": {
+            "total": "Total: {{total}} routes"
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement des routes",
+            "updateSuccess": "Route mise à jour avec succès",
+            "updateError": "Erreur lors de la mise à jour",
+            "syncSuccess": "Synchronisation réussie: {{created}} créées, {{updated}} mises à jour, {{total}} au total",
+            "syncError": "Erreur lors de la synchronisation"
+        },
+        "noData": "—"
+    },
     "orgInviteCreate": {
         "pageTitle": "Nouvelle invitation d'organisation",
         "breadcrumbs": {
@@ -1880,7 +1943,7 @@
             "errorLogin": "Email ou mot de passe incorrect. Veuillez réessayer.",
             "showPassword": "Afficher le mot de passe",
             "hidePassword": "Masquer le mot de passe",
-            "footer": "© {{year}} applyons. Réalisé avec par AuthenticPage."
+            "footer": "© 2026 Applyons. Tous droits réservés."
         },
         "signup": {
             "title": "Créer un compte",
@@ -1978,7 +2041,7 @@
             "login": "Se connecter",
             "success": "Un email de réinitialisation a été envoyé.",
             "error": "Erreur lors de l'envoi de l'email de réinitialisation.",
-            "footer": "© {{year}} applyons. Réaliser par AuthenticPage."
+            "footer": "© 2026 applyons. Réaliser par AuthenticPage."
         },
         "newPassword": {
             "title": "Nouveau mot de passe",
@@ -2005,7 +2068,7 @@
                 "confirmPassword": "Confirmez votre nouveau mot de passe"
             },
             "error": "Erreur lors de la réinitialisation du mot de passe. Veuillez réessayer.",
-            "footer": "© {{year}} applyons. Tous droits réservés."
+            "footer": "© 2026 applyons. Tous droits réservés."
         },
         "lockScreen": {
             "title": "Compte inactif",
@@ -2014,7 +2077,7 @@
             "contactSupport": "Contacter le support",
             "login": "Se connecter",
             "logout": "Se déconnecter / Changer de compte",
-            "footer": "© {{year}} applyons by ADM."
+            "footer": "© 2026 applyons by ADM."
         },
         "notAccess": {
             "title": "Accès refusé",
@@ -2022,7 +2085,7 @@
             "message": "Si vous pensez qu'il s'agit d'une erreur, veuillez contacter l'administrateur.",
             "back": "Retour",
             "home": "Aller à l'accueil",
-            "footer": "© {{year}} applyons by applyons."
+            "footer": "© 2026 applyons by applyons."
         },
         "activate": {
             "title": "Activation du compte",
@@ -2038,14 +2101,14 @@
             "resendSuccess": "Lien d'activation renvoyé.",
             "resendError": "Impossible de renvoyer le lien d'activation.",
             "emailNotFound": "Adresse e-mail introuvable. Veuillez vous reconnecter.",
-            "footer": "© {{year}} applyons. Réalisé avec par AuthenticPage."
+            "footer": "© 2026 Applyons. Tous droits réservés."
         },
         "signupSuccess": {
             "title": "Succès",
             "congratulations": "Félicitations ! 🎉",
             "message": "Votre compte a été créé avec succès. Profitez de votre parcours. Merci",
             "continue": "Continuer",
-            "footer": "© {{year}} applyons by ADM."
+            "footer": "© 2026 Applyons. Tous droits réservés."
         },
         "orgInviteAccept": {
             "loading": "Chargement de l'invitation...",
@@ -4535,7 +4598,7 @@
             "minutes": "Minutes",
             "seconds": "Secondes"
         },
-        "footer": "© {{year}} applyons par"
+        "footer": "© 2026 applyons par"
     },
     "miscMaintenance": {
         "title": "Nous serons bientôt de retour...",

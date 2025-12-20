@@ -86,6 +86,7 @@ import OrganizationInviteCreate from "../pages/Admin/OrganizationInvites/Organiz
 import AdminOrganizationNotificationsList from "../pages/Admin/OrganizationNotifications/AdminOrganizationNotificationsList.jsx";
 import AdminOrganizationNotificationDetail from "../pages/Admin/OrganizationNotifications/AdminOrganizationNotificationDetail.jsx";
 import PermissionsList from "../pages/Admin/Permissions/PermissionsList.jsx";
+import ApiRoutesList from "../pages/Admin/ApiRoutes/ApiRoutesList.jsx";
 
 export const adminRoutes = (
   <>
@@ -311,6 +312,7 @@ export const adminRoutes = (
         <Route path="config" element={<SettingsPage />} />
         <Route path="audit-logs" element={<AuditLogManagement />} />
         <Route path="mailer" element={<MailerManagement />} />
+        <Route path="api-routes" element={<ApiRoutesList />} />
       </Route>
 
 

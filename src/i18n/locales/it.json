@@ -150,6 +150,8 @@
         "settings": "Impostazioni",
         "mailer": "Mailer",
         "auditLogs": "Registri di audit",
+        "permissions": "Permessi",
+        "apiRoutes": "Route API",
         "profile": "Profilo",
         "monInstitut": "Il mio istituto",
         "ajouteDocument": "Condividi un documento",
@@ -1320,6 +1322,68 @@
         "loading": "Caricamento permessi...",
         "noData": "—"
     },
+    "adminApiRoutes": {
+        "pageTitle": "Gestione route API",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "apiRoutes": "Route API"
+        },
+        "searchPlaceholder": "Cerca per percorso, descrizione, tag...",
+        "filters": {
+            "method": "Metodo",
+            "prefix": "Prefisso",
+            "status": "Stato"
+        },
+        "columns": {
+            "method": "Metodo",
+            "path": "Percorso",
+            "prefix": "Prefisso",
+            "description": "Descrizione",
+            "tags": "Tag",
+            "requiresAuth": "Auth richiesta",
+            "requiredPermissions": "Permessi richiesti",
+            "isActive": "Stato",
+            "createdAt": "Creata il",
+            "actions": "Azioni"
+        },
+        "active": "Attiva",
+        "inactive": "Inattiva",
+        "stats": {
+            "total": "Totale",
+            "active": "Attive",
+            "inactive": "Inattive",
+            "byMethod": "Metodi"
+        },
+        "actions": {
+            "edit": "Modifica",
+            "sync": "Sincronizza"
+        },
+        "modal": {
+            "editTitle": "Modifica route API"
+        },
+        "form": {
+            "isActive": "Route attiva",
+            "description": "Descrizione",
+            "descriptionPlaceholder": "Descrizione della route",
+            "tags": "Tag",
+            "tagsPlaceholder": "Es: Users,Authentication (separati da virgole)",
+            "tagsHelp": "Tag separati da virgole per categorizzare la route",
+            "requiredPermissions": "Permessi richiesti",
+            "requiredPermissionsPlaceholder": "Es: users.read,users.manage (separati da virgole)",
+            "requiredPermissionsHelp": "Permessi necessari per accedere a questa route (separati da virgole)"
+        },
+        "pagination": {
+            "total": "Totale: {{total}} route"
+        },
+        "messages": {
+            "loadError": "Errore nel caricamento delle route",
+            "updateSuccess": "Route aggiornata con successo",
+            "updateError": "Errore nell'aggiornamento della route",
+            "syncSuccess": "Sincronizzazione riuscita: {{created}} create, {{updated}} aggiornate, {{total}} in totale",
+            "syncError": "Errore durante la sincronizzazione"
+        },
+        "noData": "—"
+    },
     "orgInviteCreate": {
         "pageTitle": "Nuovo invito organizzazione",
         "breadcrumbs": {
@@ -1797,7 +1861,7 @@
             "errorLogin": "Email o password errati. Riprova.",
             "showPassword": "Mostra password",
             "hidePassword": "Nascondi password",
-            "footer": "© {{year}} applyons. Realizzato con da AuthenticPage."
+            "footer": "© 2026 applyons. Realizzato con da AuthenticPage."
         },
         "signup": {
             "title": "Crea un account",
@@ -1894,7 +1958,7 @@
             "login": "Accedi",
             "success": "È stata inviata un'email di reimpostazione password.",
             "error": "Errore nell'invio dell'email di reimpostazione password.",
-            "footer": "© {{year}} applyons. Realizzato da AuthenticPage."
+            "footer": "© 2026 applyons. Realizzato da AuthenticPage."
         },
         "newPassword": {
             "title": "Nuova password",
@@ -1921,7 +1985,7 @@
                 "confirmPassword": "Conferma la tua nuova password"
             },
             "error": "Errore nella reimpostazione della password. Riprova.",
-            "footer": "© {{year}} applyons. Realizzato con ❤️ da ADM."
+            "footer": "© 2026 applyons. Realizzato con ❤️ da ADM."
         },
         "orgInviteAccept": {
             "loading": "Caricamento invito...",

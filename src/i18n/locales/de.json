@@ -150,6 +150,7 @@
         "mailer": "Mailer",
         "auditLogs": "Audit-Logs",
         "permissions": "Berechtigungen",
+        "apiRoutes": "API-Routen",
         "profile": "Profil",
         "monInstitut": "Mein Institut",
         "ajouteDocument": "Dokument teilen",
@@ -1320,6 +1321,68 @@
         "loading": "Berechtigungen werden geladen...",
         "noData": "—"
     },
+    "adminApiRoutes": {
+        "pageTitle": "API-Routen-Verwaltung",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "apiRoutes": "API-Routen"
+        },
+        "searchPlaceholder": "Suche nach Pfad, Beschreibung, Tags...",
+        "filters": {
+            "method": "Methode",
+            "prefix": "Präfix",
+            "status": "Status"
+        },
+        "columns": {
+            "method": "Methode",
+            "path": "Pfad",
+            "prefix": "Präfix",
+            "description": "Beschreibung",
+            "tags": "Tags",
+            "requiresAuth": "Auth erforderlich",
+            "requiredPermissions": "Erforderliche Berechtigungen",
+            "isActive": "Status",
+            "createdAt": "Erstellt am",
+            "actions": "Aktionen"
+        },
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "stats": {
+            "total": "Gesamt",
+            "active": "Aktiv",
+            "inactive": "Inaktiv",
+            "byMethod": "Methoden"
+        },
+        "actions": {
+            "edit": "Bearbeiten",
+            "sync": "Synchronisieren"
+        },
+        "modal": {
+            "editTitle": "API-Route bearbeiten"
+        },
+        "form": {
+            "isActive": "Route aktiv",
+            "description": "Beschreibung",
+            "descriptionPlaceholder": "Route-Beschreibung",
+            "tags": "Tags",
+            "tagsPlaceholder": "z.B: Users,Authentication (durch Kommas getrennt)",
+            "tagsHelp": "Durch Kommas getrennte Tags zur Kategorisierung der Route",
+            "requiredPermissions": "Erforderliche Berechtigungen",
+            "requiredPermissionsPlaceholder": "z.B: users.read,users.manage (durch Kommas getrennt)",
+            "requiredPermissionsHelp": "Berechtigungen, die für den Zugriff auf diese Route erforderlich sind (durch Kommas getrennt)"
+        },
+        "pagination": {
+            "total": "Gesamt: {{total}} Routen"
+        },
+        "messages": {
+            "loadError": "Fehler beim Laden der Routen",
+            "updateSuccess": "Route erfolgreich aktualisiert",
+            "updateError": "Fehler beim Aktualisieren der Route",
+            "syncSuccess": "Synchronisierung erfolgreich: {{created}} erstellt, {{updated}} aktualisiert, {{total}} insgesamt",
+            "syncError": "Fehler bei der Synchronisierung"
+        },
+        "noData": "—"
+    },
     "orgInviteCreate": {
         "pageTitle": "Neue Organisationseinladung",
         "breadcrumbs": {
@@ -1797,7 +1860,7 @@
             "errorLogin": "Falsche E-Mail oder Passwort. Bitte versuchen Sie es erneut.",
             "showPassword": "Passwort anzeigen",
             "hidePassword": "Passwort ausblenden",
-            "footer": "© {{year}} applyons. Erstellt mit von AuthenticPage."
+            "footer": "© 2026 applyons. Erstellt mit von AuthenticPage."
         },
         "signup": {
             "title": "Konto erstellen",
@@ -1894,7 +1957,7 @@
             "login": "Anmelden",
             "success": "Eine E-Mail zum Zurücksetzen des Passworts wurde gesendet.",
             "error": "Fehler beim Senden der E-Mail zum Zurücksetzen des Passworts.",
-            "footer": "© {{year}} applyons. Erstellt von AuthenticPage."
+            "footer": "© 2026 applyons. Erstellt von AuthenticPage."
         },
         "newPassword": {
             "title": "Neues Passwort",
@@ -1921,7 +1984,7 @@
                 "confirmPassword": "Bestätigen Sie Ihr neues Passwort"
             },
             "error": "Fehler beim Zurücksetzen des Passworts. Bitte versuchen Sie es erneut.",
-            "footer": "© {{year}} applyons. Erstellt mit ❤️ von ADM."
+            "footer": "© 2026 applyons. Erstellt mit ❤️ von ADM."
         },
         "orgInviteAccept": {
             "loading": "Einladung wird geladen...",

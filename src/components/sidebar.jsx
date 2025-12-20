@@ -8,7 +8,7 @@ import LogoLight from "../assets/logo.png";
 import { AiOutlineHistory, AiOutlineLineChart, AiOutlineUser, AiOutlineUserAdd, AiOutlineFileText } from "react-icons/ai";
 import { MdOutlineEmail, MdOutlineEvent, MdOutlineGroups, MdOutlineBusiness, MdOutlineSchool, MdOutlineSend, MdOutlinePayment, MdOutlineBarChart } from "react-icons/md";
 import { BiNews, BiListCheck } from "react-icons/bi";
-import { RiSettings4Line, RiMailSettingsLine, RiFileList3Line, RiShieldUserLine } from "react-icons/ri";
+import { RiSettings4Line, RiMailSettingsLine, RiFileList3Line, RiShieldUserLine, RiRouteLine } from "react-icons/ri";
 import { FaRegHandshake, FaRegImages, FaRegFileAlt } from "react-icons/fa";
 import { BellOutlined } from "@ant-design/icons";
 import { useAuth } from "../hooks/useAuth";
@@ -33,7 +33,13 @@ const hasRole = (user, roles = []) => {
   return roles.some((r) => userRoles.includes(r));
 };
 
-const canSee = (user, item) => hasRole(user, item.roles) && hasAnyPerm(user, item.anyPerms);
+const canSee = (user, item, hasAnyPermission) => {
+  if (!hasAnyPermission) {
+    // Fallback si hasAnyPermission n'est pas fourni
+    return hasRole(user, item.roles) && hasAnyPerm(user, item.anyPerms);
+  }
+  return hasRole(user, item.roles) && (item.anyPerms?.length ? hasAnyPermission(item.anyPerms) : true);
+};
 
 
 
@@ -116,6 +122,7 @@ const MENU_ADMIN = [
       { i18nKey: "mailer", to: "/admin/mailer", anyPerms: ["config.read", "config.manage"], icon: <RiMailSettingsLine /> },
       { i18nKey: "auditLogs", to: "/admin/audit-logs", anyPerms: ["audit.read", "audit.manage"], icon: <RiFileList3Line /> },
       { i18nKey: "permissions", to: "/admin/permissions", anyPerms: ["permissions.read", "permissions.manage"], icon: <RiShieldUserLine /> },
+      { i18nKey: "apiRoutes", to: "/admin/api-routes", anyPerms: ["config.read", "config.manage"], icon: <RiRouteLine /> },
     ],
   },
 

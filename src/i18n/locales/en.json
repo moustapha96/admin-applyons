@@ -153,6 +153,7 @@
         "mailer": "Mailer",
         "auditLogs": "Audit logs",
         "permissions": "Permissions",
+        "apiRoutes": "API Routes",
         "profile": "Profile",
         "monInstitut": "My institute",
         "ajouteDocument": "Share a document",
@@ -1332,6 +1333,68 @@
         "loading": "Loading permissions...",
         "noData": "—"
     },
+    "adminApiRoutes": {
+        "pageTitle": "API Routes Management",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "apiRoutes": "API Routes"
+        },
+        "searchPlaceholder": "Search by path, description, tags...",
+        "filters": {
+            "method": "Method",
+            "prefix": "Prefix",
+            "status": "Status"
+        },
+        "columns": {
+            "method": "Method",
+            "path": "Path",
+            "prefix": "Prefix",
+            "description": "Description",
+            "tags": "Tags",
+            "requiresAuth": "Auth required",
+            "requiredPermissions": "Required permissions",
+            "isActive": "Status",
+            "createdAt": "Created at",
+            "actions": "Actions"
+        },
+        "active": "Active",
+        "inactive": "Inactive",
+        "stats": {
+            "total": "Total",
+            "active": "Active",
+            "inactive": "Inactive",
+            "byMethod": "Methods"
+        },
+        "actions": {
+            "edit": "Edit",
+            "sync": "Synchronize"
+        },
+        "modal": {
+            "editTitle": "Edit API Route"
+        },
+        "form": {
+            "isActive": "Route active",
+            "description": "Description",
+            "descriptionPlaceholder": "Route description",
+            "tags": "Tags",
+            "tagsPlaceholder": "e.g: Users,Authentication (comma-separated)",
+            "tagsHelp": "Comma-separated tags to categorize the route",
+            "requiredPermissions": "Required permissions",
+            "requiredPermissionsPlaceholder": "e.g: users.read,users.manage (comma-separated)",
+            "requiredPermissionsHelp": "Permissions required to access this route (comma-separated)"
+        },
+        "pagination": {
+            "total": "Total: {{total}} routes"
+        },
+        "messages": {
+            "loadError": "Error loading routes",
+            "updateSuccess": "Route updated successfully",
+            "updateError": "Error updating route",
+            "syncSuccess": "Synchronization successful: {{created}} created, {{updated}} updated, {{total}} total",
+            "syncError": "Error during synchronization"
+        },
+        "noData": "—"
+    },
     "orgInviteCreate": {
         "pageTitle": "New organization invitation",
         "breadcrumbs": {
@@ -1887,7 +1950,7 @@
             "errorLogin": "Incorrect email or password. Please try again.",
             "showPassword": "Show password",
             "hidePassword": "Hide password",
-            "footer": "© {{year}} applyons. All rights reserved."
+            "footer": "© 2026 Applyons. All rights reserved."
         },
         "signup": {
             "title": "Create an account",
@@ -1984,7 +2047,7 @@
             "login": "Sign in",
             "success": "A password reset email has been sent.",
             "error": "Error sending password reset email.",
-            "footer": "© {{year}} applyons. All rights reserved."
+            "footer": "© 2026 applyons. All rights reserved."
         },
         "newPassword": {
             "title": "New password",
@@ -2011,7 +2074,7 @@
                 "confirmPassword": "Confirm your new password"
             },
             "error": "Error resetting password. Please try again.",
-            "footer": "© {{year}} applyons. All rights reserved."
+            "footer": "© 2026 applyons. All rights reserved."
         },
         "orgInviteAccept": {
             "loading": "Loading invitation...",
@@ -4474,7 +4537,7 @@
             "minutes": "Mins",
             "seconds": "Secs"
         },
-        "footer": "© {{year}} applyons by"
+        "footer": "© 2026 applyons by"
     },
     "miscMaintenance": {
         "title": "We Are Back Soon...",
