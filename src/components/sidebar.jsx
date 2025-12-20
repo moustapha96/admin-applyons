@@ -277,7 +277,7 @@ export default function Sidebar({ isCollapsed = false }) {
   const navigate = useNavigate();
   const current = location.pathname;
 
-  const [openKey, setOpenKey] = useState("");
+  const [openKeys, setOpenKeys] = useState(new Set());
   const [isManualToggle, setIsManualToggle] = useState(false);
 
   // Fonction de déconnexion
@@ -312,7 +312,7 @@ export default function Sidebar({ isCollapsed = false }) {
         m.children?.some?.((c) => isRouteActive(c.to))
       );
       if (parentWithChild) {
-        setOpenKey(parentWithChild.i18nKey);
+        setOpenKeys((prev) => new Set([...prev, parentWithChild.i18nKey]));
       }
     }
   }, [current, baseMenu, isRouteActive, isManualToggle]);
@@ -360,7 +360,7 @@ export default function Sidebar({ isCollapsed = false }) {
                           e.preventDefault(); 
                           e.stopPropagation();
                           // Fermer tous les menus déroulants avant la déconnexion
-                          setOpenKey("");
+                          setOpenKeys(new Set());
                           item.onClick(); 
                         }}
                         className="sidebar-link"
@@ -378,8 +378,8 @@ export default function Sidebar({ isCollapsed = false }) {
                       to={item.to} 
                       onClick={(e) => {
                         e.stopPropagation();
-                        // Fermer tous les menus déroulants lors de la navigation vers un item sans enfants
-                        setOpenKey("");
+                        // On ne ferme pas les menus déroulants lors de la navigation vers un item sans enfants
+                        // Les menus restent ouverts pour permettre la navigation
                       }}
                     >
                       <div className="icon me-3">{item.icon}</div>
@@ -389,7 +389,7 @@ export default function Sidebar({ isCollapsed = false }) {
                 );
               }
 
-              const isOpen = openKey === item.i18nKey;
+              const isOpen = openKeys.has(item.i18nKey);
               const isActive = item.children.some((c) => isRouteActive(c.to));
 
               return (
@@ -400,7 +400,15 @@ export default function Sidebar({ isCollapsed = false }) {
                       e.preventDefault();
                       e.stopPropagation();
                       setIsManualToggle(true);
-                      setOpenKey(isOpen ? "" : item.i18nKey);
+                      setOpenKeys((prev) => {
+                        const newSet = new Set(prev);
+                        if (isOpen) {
+                          newSet.delete(item.i18nKey);
+                        } else {
+                          newSet.add(item.i18nKey);
+                        }
+                        return newSet;
+                      });
                       // Réinitialiser le flag après un court délai pour permettre l'auto-ouverture future
                       setTimeout(() => setIsManualToggle(false), 100);
                     }}
@@ -426,11 +434,12 @@ export default function Sidebar({ isCollapsed = false }) {
                               to={child.to} 
                               onClick={(e) => {
                                 e.stopPropagation();
-                                // Garder le menu ouvert si on clique sur un sous-menu actif
-                                if (!childActive) {
-                                  // Si on navigue vers un autre sous-menu, garder le parent ouvert
-                                  setOpenKey(item.i18nKey);
-                                }
+                                // Garder le menu parent ouvert quand on navigue vers un sous-menu
+                                setOpenKeys((prev) => {
+                                  const newSet = new Set(prev);
+                                  newSet.add(item.i18nKey);
+                                  return newSet;
+                                });
                               }}
                             >
                               {child.icon ? <span className="me-2">{child.icon}</span> : null}
