@@ -1217,6 +1217,59 @@
             "noOrgId": "未找到组织ID"
         }
     },
+    "adminOrgAbonnements": {
+        "pageTitle": "组织订阅",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "organizations": "组织",
+            "abonnements": "订阅"
+        },
+        "columns": {
+            "title": "标题",
+            "type": "类型",
+            "status": "状态",
+            "price": "价格",
+            "startDate": "开始日期",
+            "endDate": "结束日期",
+            "actions": "操作"
+        },
+        "status": {
+            "ACTIVE": "活跃",
+            "EXPIRED": "已过期",
+            "CANCELLED": "已取消"
+        },
+        "type": {
+            "MENSUEL": "月度",
+            "ANNUEL": "年度",
+            "PONCTUEL": "一次性"
+        },
+        "filters": {
+            "statusPlaceholder": "按状态筛选",
+            "typePlaceholder": "按类型筛选"
+        },
+        "actions": {
+            "create": "新建订阅",
+            "delete": "删除",
+            "reset": "重置"
+        },
+        "searchPlaceholder": "搜索订阅...",
+        "common": {
+            "currency": "USD"
+        },
+        "messages": {
+            "loadError": "加载订阅失败",
+            "deleteSuccess": "订阅已成功删除",
+            "deleteError": "删除失败"
+        },
+        "modal": {
+            "deleteTitle": "删除此订阅？",
+            "deleteContent": "此操作不可逆。",
+            "deleteOk": "删除"
+        },
+        "pagination": {
+            "total": "总计 {{total}} 个订阅"
+        }
+    },
     "adminOrgNotificationDetail": {
         "pageTitle": "通知详情",
         "breadcrumbs": {

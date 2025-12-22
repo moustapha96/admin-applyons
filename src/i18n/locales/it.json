@@ -1217,6 +1217,59 @@
             "noOrgId": "ID organizzazione non trovato"
         }
     },
+    "adminOrgAbonnements": {
+        "pageTitle": "Abbonamenti dell'organizzazione",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizzazioni",
+            "abonnements": "Abbonamenti"
+        },
+        "columns": {
+            "title": "Titolo",
+            "type": "Tipo",
+            "status": "Stato",
+            "price": "Prezzo",
+            "startDate": "Data di inizio",
+            "endDate": "Data di fine",
+            "actions": "Azioni"
+        },
+        "status": {
+            "ACTIVE": "Attivo",
+            "EXPIRED": "Scaduto",
+            "CANCELLED": "Annullato"
+        },
+        "type": {
+            "MENSUEL": "Mensile",
+            "ANNUEL": "Annuale",
+            "PONCTUEL": "Puntuale"
+        },
+        "filters": {
+            "statusPlaceholder": "Filtra per stato",
+            "typePlaceholder": "Filtra per tipo"
+        },
+        "actions": {
+            "create": "Nuovo Abbonamento",
+            "delete": "Elimina",
+            "reset": "Reimposta"
+        },
+        "searchPlaceholder": "Cerca abbonamento...",
+        "common": {
+            "currency": "USD"
+        },
+        "messages": {
+            "loadError": "Errore nel caricamento degli abbonamenti",
+            "deleteSuccess": "Abbonamento eliminato con successo",
+            "deleteError": "Eliminazione fallita"
+        },
+        "modal": {
+            "deleteTitle": "Eliminare questo abbonamento?",
+            "deleteContent": "Questa azione è irreversibile.",
+            "deleteOk": "Elimina"
+        },
+        "pagination": {
+            "total": "Totale {{total}} abbonamenti"
+        }
+    },
     "adminOrgNotificationDetail": {
         "pageTitle": "Dettagli della notifica",
         "breadcrumbs": {

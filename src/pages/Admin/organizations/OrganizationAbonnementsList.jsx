@@ -1,25 +1,15 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Table, Tag, Space, Breadcrumb, Button, Input, Select, message, Modal, Badge } from "antd";
 import { SearchOutlined, PlusOutlined, CreditCardOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import organizationService from "../../../services/organizationService";
 import { useAuth } from "../../../hooks/useAuth";
 
 const { Search } = Input;
 
-const statusOptions = [
-  { value: "ACTIVE", label: "Actif" },
-  { value: "EXPIRED", label: "Expiré" },
-  { value: "CANCELLED", label: "Annulé" },
-];
-
-const typeOptions = [
-  { value: "MENSUEL", label: "Mensuel" },
-  { value: "ANNUEL", label: "Annuel" },
-  { value: "PONCTUEL", label: "Ponctuel" },
-];
-
 const OrganizationAbonnementsList = () => {
+  const { t } = useTranslation();
   const { id: orgId } = useParams();
   const { user: currentUser } = useAuth();
   const [abonnements, setAbonnements] = useState([]);
@@ -39,6 +29,18 @@ const OrganizationAbonnementsList = () => {
     order: "descend",
   });
   const navigate = useNavigate();
+
+  const statusOptions = useMemo(() => [
+    { value: "ACTIVE", label: t("adminOrgAbonnements.status.ACTIVE") },
+    { value: "EXPIRED", label: t("adminOrgAbonnements.status.EXPIRED") },
+    { value: "CANCELLED", label: t("adminOrgAbonnements.status.CANCELLED") },
+  ], [t]);
+
+  const typeOptions = useMemo(() => [
+    { value: "MENSUEL", label: t("adminOrgAbonnements.type.MENSUEL") },
+    { value: "ANNUEL", label: t("adminOrgAbonnements.type.ANNUEL") },
+    { value: "PONCTUEL", label: t("adminOrgAbonnements.type.PONCTUEL") },
+  ], [t]);
 
   const fetchAbonnements = useCallback(async () => {
     setLoading(true);
@@ -60,7 +62,7 @@ const OrganizationAbonnementsList = () => {
       }));
     } catch (error) {
       console.error("Erreur lors de la récupération des abonnements:", error);
-      message.error("Erreur lors de la récupération des abonnements");
+      message.error(t("adminOrgAbonnements.messages.loadError"));
     } finally {
       setLoading(false);
     }
@@ -108,16 +110,16 @@ const OrganizationAbonnementsList = () => {
     setPagination(prev => ({ ...prev, current: 1 }));
   };
 
-  const handleDeleteAbonnement = async (abonnementId) => {
+  const handleDeleteAbonnement = useCallback(async (abonnementId) => {
     try {
       // Logique pour supprimer un abonnement
-      message.success("Abonnement supprimé avec succès");
+      message.success(t("adminOrgAbonnements.messages.deleteSuccess"));
       fetchAbonnements();
     } catch (error) {
-      message.error("Échec de la suppression");
+      message.error(t("adminOrgAbonnements.messages.deleteError"));
       console.error(error);
     }
-  };
+  }, [t, fetchAbonnements]);
 
   const getStatusColor = (status) => {
     const colors = {
@@ -128,9 +130,9 @@ const OrganizationAbonnementsList = () => {
     return colors[status] || "default";
   };
 
-  const columns = [
+  const columns = useMemo(() => [
     {
-      title: "Titre",
+      title: t("adminOrgAbonnements.columns.title"),
       dataIndex: "title",
       key: "title",
       sorter: true,
@@ -144,7 +146,7 @@ const OrganizationAbonnementsList = () => {
       ),
     },
     {
-      title: "Type",
+      title: t("adminOrgAbonnements.columns.type"),
       dataIndex: "type",
       key: "type",
       filters: typeOptions,
@@ -157,7 +159,7 @@ const OrganizationAbonnementsList = () => {
       ),
     },
     {
-      title: "Statut",
+      title: t("adminOrgAbonnements.columns.status"),
       dataIndex: "status",
       key: "status",
       filters: statusOptions,
@@ -170,67 +172,65 @@ const OrganizationAbonnementsList = () => {
       ),
     },
     {
-      title: "Prix",
+      title: t("adminOrgAbonnements.columns.price"),
       dataIndex: "price",
       key: "price",
       sorter: true,
-      render: (price) => `${price} USD`,
+      render: (price) => `${price} ${t("adminOrgAbonnements.common.currency")}`,
     },
     {
-      title: "Date de début",
+      title: t("adminOrgAbonnements.columns.startDate"),
       dataIndex: "startDate",
       key: "startDate",
       sorter: true,
       render: (startDate) => new Date(startDate).toLocaleDateString(),
     },
     {
-      title: "Date de fin",
+      title: t("adminOrgAbonnements.columns.endDate"),
       dataIndex: "endDate",
       key: "endDate",
       sorter: true,
       render: (endDate) => new Date(endDate).toLocaleDateString(),
     },
     {
-      title: "Actions",
+      title: t("adminOrgAbonnements.columns.actions"),
       key: "actions",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="link">
-            <Link to={`/admin/organisations/${orgId}/abonnements/${record.id}/details`}>Détails</Link>
-          </Button>
+         
           {currentUser?.role === "SUPER_ADMIN" && (
             <Button
               type="link"
               danger
               onClick={() => {
                 Modal.confirm({
-                  title: "Supprimer cet abonnement ?",
-                  content: "Cette action est irréversible.",
-                  okText: "Supprimer",
+                  title: t("adminOrgAbonnements.modal.deleteTitle"),
+                  content: t("adminOrgAbonnements.modal.deleteContent"),
+                  okText: t("adminOrgAbonnements.modal.deleteOk"),
                   okType: "danger",
-                  cancelText: "Annuler",
+                  cancelText: t("common.cancel"),
                   onOk: () => handleDeleteAbonnement(record.id),
                 });
               }}
             >
-              Supprimer
+              {t("adminOrgAbonnements.actions.delete")}
             </Button>
           )}
         </Space>
       ),
     },
-  ];
+  ], [t, orgId, typeOptions, statusOptions, currentUser?.role, handleDeleteAbonnement]);
 
   return (
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
         <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Abonnements de l'organisation</h5>
+          <h5 className="text-lg font-semibold">{t("adminOrgAbonnements.pageTitle")}</h5>
           <Breadcrumb
             items={[
-              { title: <Link to="/admin/dashboard">Dashboard</Link> },
-              { title: <Link to="/admin/organisations">Organisations</Link> },
-              { title: "Abonnements" },
+              { title: <Link to="/admin/dashboard">{t("adminOrgAbonnements.breadcrumbs.dashboard")}</Link> },
+              { title: <Link to="/admin/organisations">{t("adminOrgAbonnements.breadcrumbs.organizations")}</Link> },
+              { title: t("adminOrgAbonnements.breadcrumbs.abonnements") },
             ]}
           />
         </div>
@@ -238,7 +238,7 @@ const OrganizationAbonnementsList = () => {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 w-full">
             <div className="w-full md:flex-1">
               <Search
-                placeholder="Rechercher un abonnement..."
+                placeholder={t("adminOrgAbonnements.searchPlaceholder")}
                 allowClear
                 enterButton={<SearchOutlined />}
                 size="large"
@@ -248,21 +248,21 @@ const OrganizationAbonnementsList = () => {
             </div>
             <div className="flex flex-wrap gap-4 w-full md:w-auto justify-start sm:justify-center md:justify-end">
               <Select
-                placeholder="Filtrer par statut"
+                placeholder={t("adminOrgAbonnements.filters.statusPlaceholder")}
                 allowClear
                 className="w-full sm:w-44"
                 onChange={(value) => handleFilterChange("status", value)}
                 options={statusOptions}
               />
               <Select
-                placeholder="Filtrer par type"
+                placeholder={t("adminOrgAbonnements.filters.typePlaceholder")}
                 allowClear
                 className="w-full sm:w-44"
                 onChange={(value) => handleFilterChange("type", value)}
                 options={typeOptions}
               />
               <Button className="w-full sm:w-auto" onClick={clearFilters}>
-                Réinitialiser
+                {t("adminOrgAbonnements.actions.reset")}
               </Button>
             </div>
             <div className="w-full md:w-auto flex justify-start md:justify-end">
@@ -272,7 +272,7 @@ const OrganizationAbonnementsList = () => {
                 icon={<PlusOutlined />}
                 className="w-full sm:w-auto"
               >
-                Nouvel Abonnement
+                {t("adminOrgAbonnements.actions.create")}
               </Button>
             </div>
           </div>
@@ -286,7 +286,7 @@ const OrganizationAbonnementsList = () => {
             ...pagination,
             showSizeChanger: true,
             pageSizeOptions: ["5", "10", "20", "50"],
-            showTotal: (total) => `Total ${total} abonnements`,
+            showTotal: (total) => t("adminOrgAbonnements.pagination.total", { total }),
           }}
           onChange={handleTableChange}
           scroll={{ x: true }}

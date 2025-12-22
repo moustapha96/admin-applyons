@@ -1221,6 +1221,59 @@
             "noOrgId": "ID d'organisation introuvable"
         }
     },
+    "adminOrgAbonnements": {
+        "pageTitle": "Abonnements de l'organisation",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "organizations": "Organisations",
+            "abonnements": "Abonnements"
+        },
+        "columns": {
+            "title": "Titre",
+            "type": "Type",
+            "status": "Statut",
+            "price": "Prix",
+            "startDate": "Date de début",
+            "endDate": "Date de fin",
+            "actions": "Actions"
+        },
+        "status": {
+            "ACTIVE": "Actif",
+            "EXPIRED": "Expiré",
+            "CANCELLED": "Annulé"
+        },
+        "type": {
+            "MENSUEL": "Mensuel",
+            "ANNUEL": "Annuel",
+            "PONCTUEL": "Ponctuel"
+        },
+        "filters": {
+            "statusPlaceholder": "Filtrer par statut",
+            "typePlaceholder": "Filtrer par type"
+        },
+        "actions": {
+            "create": "Nouvel Abonnement",
+            "delete": "Supprimer",
+            "reset": "Réinitialiser"
+        },
+        "searchPlaceholder": "Rechercher un abonnement...",
+        "common": {
+            "currency": "USD"
+        },
+        "messages": {
+            "loadError": "Erreur lors de la récupération des abonnements",
+            "deleteSuccess": "Abonnement supprimé avec succès",
+            "deleteError": "Échec de la suppression"
+        },
+        "modal": {
+            "deleteTitle": "Supprimer cet abonnement ?",
+            "deleteContent": "Cette action est irréversible.",
+            "deleteOk": "Supprimer"
+        },
+        "pagination": {
+            "total": "Total {{total}} abonnements"
+        }
+    },
     "adminOrgNotificationDetail": {
         "pageTitle": "Détails de la notification",
         "breadcrumbs": {

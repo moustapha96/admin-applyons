@@ -1220,6 +1220,59 @@
             "noOrgId": "ID de organización no encontrado"
         }
     },
+    "adminOrgAbonnements": {
+        "pageTitle": "Suscripciones de la organización",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizaciones",
+            "abonnements": "Suscripciones"
+        },
+        "columns": {
+            "title": "Título",
+            "type": "Tipo",
+            "status": "Estado",
+            "price": "Precio",
+            "startDate": "Fecha de inicio",
+            "endDate": "Fecha de fin",
+            "actions": "Acciones"
+        },
+        "status": {
+            "ACTIVE": "Activo",
+            "EXPIRED": "Expirado",
+            "CANCELLED": "Cancelado"
+        },
+        "type": {
+            "MENSUEL": "Mensual",
+            "ANNUEL": "Anual",
+            "PONCTUEL": "Puntual"
+        },
+        "filters": {
+            "statusPlaceholder": "Filtrar por estado",
+            "typePlaceholder": "Filtrar por tipo"
+        },
+        "actions": {
+            "create": "Nueva Suscripción",
+            "delete": "Eliminar",
+            "reset": "Restablecer"
+        },
+        "searchPlaceholder": "Buscar suscripción...",
+        "common": {
+            "currency": "USD"
+        },
+        "messages": {
+            "loadError": "Error al cargar las suscripciones",
+            "deleteSuccess": "Suscripción eliminada con éxito",
+            "deleteError": "Error al eliminar"
+        },
+        "modal": {
+            "deleteTitle": "¿Eliminar esta suscripción?",
+            "deleteContent": "Esta acción es irreversible.",
+            "deleteOk": "Eliminar"
+        },
+        "pagination": {
+            "total": "Total {{total}} suscripciones"
+        }
+    },
     "adminOrgNotificationDetail": {
         "pageTitle": "Detalles de la notificación",
         "breadcrumbs": {

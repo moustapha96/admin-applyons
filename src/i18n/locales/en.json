@@ -1228,6 +1228,59 @@
             "noOrgId": "Organization ID not found"
         }
     },
+    "adminOrgAbonnements": {
+        "pageTitle": "Organization Subscriptions",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizations",
+            "abonnements": "Subscriptions"
+        },
+        "columns": {
+            "title": "Title",
+            "type": "Type",
+            "status": "Status",
+            "price": "Price",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "actions": "Actions"
+        },
+        "status": {
+            "ACTIVE": "Active",
+            "EXPIRED": "Expired",
+            "CANCELLED": "Cancelled"
+        },
+        "type": {
+            "MENSUEL": "Monthly",
+            "ANNUEL": "Annual",
+            "PONCTUEL": "One-time"
+        },
+        "filters": {
+            "statusPlaceholder": "Filter by status",
+            "typePlaceholder": "Filter by type"
+        },
+        "actions": {
+            "create": "New Subscription",
+            "delete": "Delete",
+            "reset": "Reset"
+        },
+        "searchPlaceholder": "Search subscription...",
+        "common": {
+            "currency": "USD"
+        },
+        "messages": {
+            "loadError": "Error loading subscriptions",
+            "deleteSuccess": "Subscription deleted successfully",
+            "deleteError": "Delete failed"
+        },
+        "modal": {
+            "deleteTitle": "Delete this subscription?",
+            "deleteContent": "This action is irreversible.",
+            "deleteOk": "Delete"
+        },
+        "pagination": {
+            "total": "Total {{total}} subscriptions"
+        }
+    },
     "adminOrgNotificationDetail": {
         "pageTitle": "Notification Details",
         "breadcrumbs": {

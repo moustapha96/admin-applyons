@@ -1216,6 +1216,59 @@
             "noOrgId": "Organisations-ID nicht gefunden"
         }
     },
+    "adminOrgAbonnements": {
+        "pageTitle": "Abonnements der Organisation",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "organizations": "Organisationen",
+            "abonnements": "Abonnements"
+        },
+        "columns": {
+            "title": "Titel",
+            "type": "Typ",
+            "status": "Status",
+            "price": "Preis",
+            "startDate": "Startdatum",
+            "endDate": "Enddatum",
+            "actions": "Aktionen"
+        },
+        "status": {
+            "ACTIVE": "Aktiv",
+            "EXPIRED": "Abgelaufen",
+            "CANCELLED": "Storniert"
+        },
+        "type": {
+            "MENSUEL": "Monatlich",
+            "ANNUEL": "Jährlich",
+            "PONCTUEL": "Einmalig"
+        },
+        "filters": {
+            "statusPlaceholder": "Nach Status filtern",
+            "typePlaceholder": "Nach Typ filtern"
+        },
+        "actions": {
+            "create": "Neues Abonnement",
+            "delete": "Löschen",
+            "reset": "Zurücksetzen"
+        },
+        "searchPlaceholder": "Abonnement suchen...",
+        "common": {
+            "currency": "USD"
+        },
+        "messages": {
+            "loadError": "Fehler beim Laden der Abonnements",
+            "deleteSuccess": "Abonnement erfolgreich gelöscht",
+            "deleteError": "Löschen fehlgeschlagen"
+        },
+        "modal": {
+            "deleteTitle": "Dieses Abonnement löschen?",
+            "deleteContent": "Diese Aktion ist irreversibel.",
+            "deleteOk": "Löschen"
+        },
+        "pagination": {
+            "total": "Gesamt {{total}} Abonnements"
+        }
+    },
     "adminOrgNotificationDetail": {
         "pageTitle": "Benachrichtigungsdetails",
         "breadcrumbs": {
