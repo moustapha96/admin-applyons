@@ -237,7 +237,7 @@ export default function DemandeDocumentsPage() {
         }
         width="95vw"
         style={{ top: 20, paddingBottom: 0 }}
-        bodyStyle={{ height: "calc(95vh - 110px)", padding: 0 }}
+        styles={{ body: { height: "calc(95vh - 110px)", padding: 0 } }}
         destroyOnClose
       >
         {preview.loading ? (

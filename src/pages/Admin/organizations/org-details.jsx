@@ -42,7 +42,7 @@ const typeOptions = [
   { value: "BANQUE", label: "Banque" },
   { value: "COLLEGE", label: "Collège" },
   { value: "LYCEE", label: "Lycée" },
-  { value: "UNIVERSITE", label: "Université" },
+  { value: "UNIVERSITE", label: "Université / Institut" },
 ];
 
 const countryOptions = [
@@ -297,45 +297,45 @@ const OrganizationDetail = () => {
         </div>
 
         <Card>
-          <Descriptions title="Informations générales" bordered>
+          <Descriptions title="Informations générales" bordered column={3}>
             <Descriptions.Item label="Nom" span={2}>
               <Space>
                 <Avatar shape="square" size="large" icon={<BiBuilding />} />
                 <span className="ml-3">{organization.name}</span>
               </Space>
             </Descriptions.Item>
-            <Descriptions.Item label="Type">
+            <Descriptions.Item label="Type" span={1}>
               <Tag color={getTypeColor(organization.type)}>
                 {typeOptions.find((opt) => opt.value === organization.type)?.label || organization.type}
               </Tag>
             </Descriptions.Item>
 
-            <Descriptions.Item label="Slug">
+            <Descriptions.Item label="Slug" span={1}>
               <Tag icon={<GlobalOutlined />}>{organization.slug}</Tag>
             </Descriptions.Item>
 
-            <Descriptions.Item label="Email">
+            <Descriptions.Item label="Email" span={1}>
               <Space>
                 <MailOutlined />
                 <a href={`mailto:${organization.email}`}>{organization.email}</a>
               </Space>
             </Descriptions.Item>
 
-            <Descriptions.Item label="Téléphone">
+            <Descriptions.Item label="Téléphone" span={1}>
               <Space>
                 <PhoneOutlined />
                 <a href={`tel:${organization.phone}`}>{organization.phone}</a>
               </Space>
             </Descriptions.Item>
 
-            <Descriptions.Item label="Adresse">
+            <Descriptions.Item label="Adresse" span={1}>
               <Space>
                 <EnvironmentOutlined />
                 <span>{organization.address || "—"}</span>
               </Space>
             </Descriptions.Item>
 
-            <Descriptions.Item label="Site Web">
+            <Descriptions.Item label="Site Web" span={1}>
               <Space>
                 <GlobalOutlined />
                 {organization.website ? (
@@ -348,16 +348,16 @@ const OrganizationDetail = () => {
               </Space>
             </Descriptions.Item>
 
-            <Descriptions.Item label="Pays">
+            <Descriptions.Item label="Pays" span={1}>
               <Tag color="blue">
                 {countryOptions.find((opt) => opt.value === organization.country)?.label || organization.country}
               </Tag>
             </Descriptions.Item>
 
-            <Descriptions.Item label="Créé le">
+            <Descriptions.Item label="Créé le" span={1}>
               {new Date(organization.createdAt).toLocaleString()}
             </Descriptions.Item>
-            <Descriptions.Item label="Mis à jour le">
+            <Descriptions.Item label="Mis à jour le" span={2}>
               {new Date(organization.updatedAt).toLocaleString()}
             </Descriptions.Item>
           </Descriptions>

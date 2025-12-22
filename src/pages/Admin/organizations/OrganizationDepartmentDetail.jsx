@@ -67,20 +67,20 @@ const OrganizationDepartmentDetail = () => {
           </Button>
         </div>
         <Card>
-          <Descriptions title="Informations du Département" bordered>
+          <Descriptions title="Informations du Département" bordered column={3}>
             <Descriptions.Item label="Nom" span={2}>
               <Space>
                 <BankOutlined />
                 <span className="ml-3">{department.name}</span>
               </Space>
             </Descriptions.Item>
-            <Descriptions.Item label="Description" span={2}>
+            <Descriptions.Item label="Description" span={3}>
               {department.description || "N/A"}
             </Descriptions.Item>
-            <Descriptions.Item label="Créé le">
+            <Descriptions.Item label="Créé le" span={1}>
               {new Date(department.createdAt).toLocaleString()}
             </Descriptions.Item>
-            <Descriptions.Item label="Mis à jour le">
+            <Descriptions.Item label="Mis à jour le" span={2}>
               {new Date(department.updatedAt).toLocaleString()}
             </Descriptions.Item>
           </Descriptions>

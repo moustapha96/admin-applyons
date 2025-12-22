@@ -138,14 +138,14 @@ export default function AdminAbonnementEdit() {
         </div>
 
         <Card className="mb-6">
-          <Descriptions title={t("adminAbonnements.edit.current.title")} bordered>
+          <Descriptions title={t("adminAbonnements.edit.current.title")} bordered column={3}>
             <Descriptions.Item label={t("adminAbonnements.edit.current.organization")} span={2}>
               <Text strong>{abonnement.organization?.name}</Text>
             </Descriptions.Item>
-            <Descriptions.Item label={t("adminAbonnements.edit.current.createdAt")}>
+            <Descriptions.Item label={t("adminAbonnements.edit.current.createdAt")} span={1}>
               {dayjs(abonnement.createdAt).format("DD/MM/YYYY HH:mm")}
             </Descriptions.Item>
-            <Descriptions.Item label={t("adminAbonnements.edit.current.status")}>
+            <Descriptions.Item label={t("adminAbonnements.edit.current.status")} span={3}>
               {isExpired ? (
                 <Tag color="red">{t("adminAbonnements.status.expired")}</Tag>
               ) : (

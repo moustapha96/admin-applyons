@@ -56,20 +56,20 @@ export default function UserDetailTraducteur() {
         </div>
 
         <Card>
-          <Descriptions title="Informations personnelles" bordered>
+          <Descriptions title="Informations personnelles" bordered column={3}>
             <Descriptions.Item label="Nom complet" span={2}>
               <Avatar size="large" icon={<UserOutlined />} src={user.avatar ? buildImageUrl(user.avatar) : undefined} />
               <span className="ml-3">{user.firstName || ""} {user.lastName || ""}</span>
             </Descriptions.Item>
-            <Descriptions.Item label="Email">
+            <Descriptions.Item label="Email" span={1}>
               <Link to={`mailto:${user.email}`}><MailOutlined /> {user.email}</Link>
             </Descriptions.Item>
-            <Descriptions.Item label="Téléphone">
+            <Descriptions.Item label="Téléphone" span={1}>
               {user.phone ? <Link to={`tel:${user.phone}`}><PhoneOutlined /> {user.phone}</Link> : "N/A"}
             </Descriptions.Item>
-            <Descriptions.Item label="Statut"><Tag color={user.enabled ? "green" : "red"}>{user.enabled ? "Actif" : "Inactif"}</Tag></Descriptions.Item>
-            <Descriptions.Item label="Dernière MAJ">{user.updatedAt ? new Date(user.updatedAt).toLocaleString() : "Jamais"}</Descriptions.Item>
-            <Descriptions.Item label="Créé le">{new Date(user.createdAt).toLocaleString()}</Descriptions.Item>
+            <Descriptions.Item label="Statut" span={1}><Tag color={user.enabled ? "green" : "red"}>{user.enabled ? "Actif" : "Inactif"}</Tag></Descriptions.Item>
+            <Descriptions.Item label="Dernière MAJ" span={1}>{user.updatedAt ? new Date(user.updatedAt).toLocaleString() : "Jamais"}</Descriptions.Item>
+            <Descriptions.Item label="Créé le" span={2}>{new Date(user.createdAt).toLocaleString()}</Descriptions.Item>
           </Descriptions>
 
           <h3 className="text-lg font-semibold mb-4">Permissions</h3>

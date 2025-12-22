@@ -390,7 +390,7 @@
         },
         "filters": {
             "searchPlaceholder": "Cerca (codice, org, …)",
-            "orgPlaceholder": "Organizzazione di destinazione",
+            "orgPlaceholder": "Istituto",
             "periodePlaceholder": "Periodo",
             "yearPlaceholder": "Anno",
             "statusPlaceholder": "Stato",
@@ -400,7 +400,7 @@
         "columns": {
             "code": "Codice",
             "date": "Data",
-            "targetOrg": "Organizzazione di destinazione",
+            "targetOrg": "Istituto",
             "periode": "Periodo",
             "year": "Anno",
             "docs": "Doc",
@@ -458,7 +458,7 @@
         "fields": {
             "code": "Codice",
             "status": "Stato",
-            "targetOrg": "Organizzazione di destinazione",
+            "targetOrg": "Istituto",
             "assignedOrg": "Traduttore",
             "createdAt": "Creato il",
             "periode": "Periodo",
@@ -567,8 +567,8 @@
             "hasExternalSponsorship": "Sponsorizzazione Esterna",
             "visaType": "Tipo di Visto",
             "hasPreviouslyStudiedInUS": "Ha Studiato Precedentemente negli USA",
-            "targetOrg": "Organizzazione Obiettivo",
-            "assignedOrg": "Organizzazione di Traduzione"
+            "targetOrg": "Istituto",
+            "assignedOrg": "Istituto di Traduzione"
         },
         "buttons": {
             "back": "Indietro",
@@ -1043,7 +1043,7 @@
         "columns": {
             "inviteeEmail": "Email",
             "inviteeName": "Nome",
-            "inviteeOrg": "Organizzazione invitata",
+            "inviteeOrg": "Istituto invitato",
             "roleKey": "Ruolo",
             "status": "Stato",
             "expiresAt": "Scade il",
@@ -1160,14 +1160,19 @@
             "unviewedOnly": "Solo non visualizzate",
             "asTarget": "Come obiettivo",
             "asNotified": "Come notificato",
-            "allNotifications": "Tutte le notifiche"
+            "allNotifications": "Tutte le notifiche",
+            "role": "Ruolo"
         },
+        "searchPlaceholder": "Cerca...",
         "columns": {
             "status": "Stato",
             "type": "Tipo",
             "message": "Messaggio",
             "demande": "Richiesta",
+            "targetOrg": "Istituto obiettivo",
+            "notifiedOrg": "Istituto notificato",
             "user": "Utente",
+            "viewed": "Stato",
             "createdAt": "Creata il",
             "actions": "Azioni"
         },
@@ -1191,11 +1196,18 @@
             "viewDemande": "Visualizza richiesta",
             "viewUser": "Visualizza utente"
         },
+        "actions": {
+            "markAsViewed": "Segna come visualizzata",
+            "details": "Dettagli",
+            "markAllAsViewed": "Segna tutte come visualizzate"
+        },
         "pagination": {
             "total": "Totale: {{total}} notifiche"
         },
         "messages": {
             "loadError": "Errore nel caricamento delle notifiche",
+            "orgLoadError": "Errore nel caricamento dell'organizzazione",
+            "orgNotFound": "Organizzazione non trovata",
             "markedAsViewed": "Notifica segnata come visualizzata",
             "allMarkedAsViewed": "Tutte le notifiche segnate come visualizzate",
             "markError": "Errore nel segnare la notifica",
@@ -1229,7 +1241,7 @@
             "demandeCode": "Codice richiesta",
             "demandeStatus": "Stato richiesta",
             "demandeDate": "Data richiesta",
-            "targetOrg": "Organizzazione obiettivo",
+            "targetOrg": "Istituto",
             "notifiedOrg": "Organizzazione notificata",
             "userEmail": "Email utente",
             "userName": "Nome utente",
@@ -1592,7 +1604,7 @@
             "code": "Codice",
             "date": "Data",
             "demandeur": "Richiedente",
-            "assigned": "Assegnata a",
+            "assigned": "Istituto Traduttore",
             "docs": "Doc.",
             "status": "Stato",
             "actions": "Azioni"
@@ -1664,8 +1676,8 @@
             "code": "Codice",
             "dateDemande": "Data richiesta",
             "demandeur": "Richiedente",
-            "targetOrg": "Organizzazione obiettivo",
-            "assignedOrg": "Organizzazione assegnata",
+            "targetOrg": "Istituto",
+            "assignedOrg": "Istituto traduttore",
             "docs": "Doc.",
             "inviteeStatus": "Stato invito",
             "linkedAt": "Collegato il",
@@ -1717,8 +1729,8 @@
             "updatedAt": "Ultimo aggiornamento",
             "createdAt": "Creato il",
             "deletedAt": "Eliminato il",
-            "targetOrg": "Organizzazione target",
-            "assignedOrg": "Organizzazione assegnata",
+            "targetOrg": "Istituto",
+            "assignedOrg": "Istituto traduttore",
             "requester": "Richiedente",
             "serie": "Indirizzo",
             "niveau": "Livello",
@@ -2220,10 +2232,10 @@
         "fields": {
             "type": "Tipo di richiesta",
             "typeRequired": "Il tipo è obbligatorio",
-            "targetOrg": "Organizzazione obiettivo",
-            "targetOrgRequired": "L'organizzazione obiettivo è obbligatoria",
-            "assignedOrg": "Organizzazione di traduzione",
-            "assignedOrgRequired": "L'organizzazione di traduzione è obbligatoria",
+            "targetOrg": "Istituto",
+            "targetOrgRequired": "L'istituto è obbligatorio",
+            "assignedOrg": "Istituto di traduzione",
+            "assignedOrgRequired": "L'istituto di traduzione è obbligatorio",
             "observation": "Osservazioni",
             "serie": "Serie",
             "niveau": "Livello",
@@ -2759,7 +2771,7 @@
             "code": "Codice",
             "date": "Data",
             "client": "Cliente",
-            "targetOrg": "Istituto obiettivo",
+            "targetOrg": "Istituto",
             "docs": "Docs",
             "status": "Stato",
             "actions": "Opzioni"
@@ -2800,8 +2812,8 @@
             "code": "Codice",
             "date": "Data",
             "demandeur": "Richiedente",
-            "targetOrg": "Org. obiettivo",
-            "assignedOrg": "Org. assegnata",
+            "targetOrg": "Istituto",
+            "assignedOrg": "Istituto traduttore",
             "docs": "Docs",
             "status": "Stato",
             "payment": "Pagamento",
@@ -2810,8 +2822,8 @@
         "filters": {
             "search": "Cerca...",
             "status": "Stato",
-            "targetOrg": "Organizzazione obiettivo",
-            "assignedOrg": "Organizzazione assegnata",
+            "targetOrg": "Istituto",
+            "assignedOrg": "Istituto traduttore",
             "dateRange": "Intervallo date"
         },
         "status": {
@@ -2862,8 +2874,8 @@
             "date": "Data",
             "status": "Stato",
             "demandeur": "Richiedente",
-            "targetOrg": "Organizzazione obiettivo",
-            "assignedOrg": "Organizzazione traduttrice",
+            "targetOrg": "Istituto",
+            "assignedOrg": "Istituto di traduzione",
             "periode": "Periodo",
             "year": "Anno",
             "observation": "Osservazione"
@@ -3109,7 +3121,7 @@
             "code": "Codice",
             "date": "Data",
             "demandeur": "Richiedente",
-            "targetOrg": "Org. obiettivo",
+            "targetOrg": "Istituto",
             "status": "Stato",
             "actions": "Azioni",
             "client": "Cliente",
@@ -3410,8 +3422,8 @@
         },
         "summary": {
             "target": "Obiettivo",
-            "targetOrg": "Organizzazione obiettivo",
-            "translationOrg": "Org. traduzione",
+            "targetOrg": "Istituto",
+            "translationOrg": "Istituto di traduzione",
             "period": "Periodo",
             "year": "Anno",
             "observation": "Osservazione",
@@ -3443,8 +3455,8 @@
             "autoSaving": "Salvataggio automatico..."
         },
         "fields": {
-            "targetOrg": "Organizzazione obiettivo",
-            "translationOrg": "Organizzazione di traduzione",
+            "targetOrg": "Istituto",
+            "translationOrg": "Istituto di traduzione",
             "dateOfBirth": "Data di nascita",
             "countryOfCitizenship": "Paese di cittadinanza",
             "passportNumber": "Numero di passaporto",
@@ -3610,8 +3622,8 @@
             "code": "Codice",
             "date": "Data",
             "status": "Stato del Fascicolo",
-            "targetOrg": "Organizzazione Obiettivo",
-            "assignedOrg": "Organizzazione di Traduzione",
+            "targetOrg": "Istituto",
+            "assignedOrg": "Istituto di Traduzione",
             "paymentStatus": "Stato del Pagamento"
         },
         "alerts": {
@@ -3869,7 +3881,7 @@
             "code": "Code",
             "date": "Date",
             "demandeur": "Applicant",
-            "assigned": "Assigned to",
+            "assigned": "Istituto Traduttore",
             "docs": "Docs",
             "status": "Status",
             "actions": "Actions"
@@ -3936,7 +3948,7 @@
             "dateDemande": "Request Date",
             "status": "Status",
             "demandeur": "Applicant",
-            "targetOrg": "Target Institute",
+            "targetOrg": "Istituto",
             "assignedOrg": "Assigned Organization",
             "periodeYear": "Period / Year",
             "serieNiveauMention": "Series / Level / Mention",

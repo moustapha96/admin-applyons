@@ -389,7 +389,7 @@
         },
         "filters": {
             "searchPlaceholder": "Suchen (Code, Org, …)",
-            "orgPlaceholder": "Zielorganisation",
+            "orgPlaceholder": "Institut",
             "periodePlaceholder": "Periode",
             "yearPlaceholder": "Jahr",
             "statusPlaceholder": "Status",
@@ -399,7 +399,7 @@
         "columns": {
             "code": "Code",
             "date": "Datum",
-            "targetOrg": "Zielorganisation",
+            "targetOrg": "Institut",
             "periode": "Periode",
             "year": "Jahr",
             "docs": "Dok.",
@@ -457,7 +457,7 @@
         "fields": {
             "code": "Code",
             "status": "Status",
-            "targetOrg": "Zielorganisation",
+            "targetOrg": "Institut",
             "assignedOrg": "Übersetzer",
             "createdAt": "Erstellt am",
             "periode": "Periode",
@@ -566,8 +566,8 @@
             "hasExternalSponsorship": "Externe Förderung",
             "visaType": "Visumstyp",
             "hasPreviouslyStudiedInUS": "Hat zuvor in den USA studiert",
-            "targetOrg": "Zielorganisation",
-            "assignedOrg": "Übersetzungsorganisation"
+            "targetOrg": "Institut",
+            "assignedOrg": "Übersetzungsinstitut"
         },
         "buttons": {
             "back": "Zurück",
@@ -1042,7 +1042,7 @@
         "columns": {
             "inviteeEmail": "E-Mail",
             "inviteeName": "Name",
-            "inviteeOrg": "Eingeladene Organisation",
+            "inviteeOrg": "Eingeladenes Institut",
             "roleKey": "Rolle",
             "status": "Status",
             "expiresAt": "Läuft ab am",
@@ -1159,14 +1159,19 @@
             "unviewedOnly": "Nur ungesehen",
             "asTarget": "Als Ziel",
             "asNotified": "Als benachrichtigt",
-            "allNotifications": "Alle Benachrichtigungen"
+            "allNotifications": "Alle Benachrichtigungen",
+            "role": "Rolle"
         },
+        "searchPlaceholder": "Suchen...",
         "columns": {
             "status": "Status",
             "type": "Typ",
             "message": "Nachricht",
             "demande": "Bewerbung",
+            "targetOrg": "Zielinstitut",
+            "notifiedOrg": "Benachrichtigtes Institut",
             "user": "Benutzer",
+            "viewed": "Status",
             "createdAt": "Erstellt am",
             "actions": "Aktionen"
         },
@@ -1190,11 +1195,18 @@
             "viewDemande": "Bewerbung anzeigen",
             "viewUser": "Benutzer anzeigen"
         },
+        "actions": {
+            "markAsViewed": "Als gesehen markieren",
+            "details": "Details",
+            "markAllAsViewed": "Alle als gesehen markieren"
+        },
         "pagination": {
             "total": "Gesamt: {{total}} Benachrichtigungen"
         },
         "messages": {
             "loadError": "Fehler beim Laden der Benachrichtigungen",
+            "orgLoadError": "Fehler beim Laden der Organisation",
+            "orgNotFound": "Organisation nicht gefunden",
             "markedAsViewed": "Benachrichtigung als gesehen markiert",
             "allMarkedAsViewed": "Alle Benachrichtigungen als gesehen markiert",
             "markError": "Fehler beim Markieren der Benachrichtigung",
@@ -1228,7 +1240,7 @@
             "demandeCode": "Bewerbungscode",
             "demandeStatus": "Bewerbungsstatus",
             "demandeDate": "Bewerbungsdatum",
-            "targetOrg": "Zielorganisation",
+            "targetOrg": "Institut",
             "notifiedOrg": "Benachrichtigte Organisation",
             "userEmail": "Benutzer-E-Mail",
             "userName": "Benutzername",
@@ -1591,7 +1603,7 @@
             "code": "Code",
             "date": "Datum",
             "demandeur": "Antragsteller",
-            "assigned": "Zugewiesen an",
+            "assigned": "Übersetzungsinstitut",
             "docs": "Dok.",
             "status": "Status",
             "actions": "Aktionen"
@@ -1663,8 +1675,8 @@
             "code": "Code",
             "dateDemande": "Bewerbungsdatum",
             "demandeur": "Antragsteller",
-            "targetOrg": "Zielorganisation",
-            "assignedOrg": "Zugewiesene Organisation",
+            "targetOrg": "Institut",
+            "assignedOrg": "Übersetzungsinstitut",
             "docs": "Dok.",
             "inviteeStatus": "Einladungsstatus",
             "linkedAt": "Verknüpft am",
@@ -1716,8 +1728,8 @@
             "updatedAt": "Zuletzt aktualisiert",
             "createdAt": "Erstellt am",
             "deletedAt": "Gelöscht am",
-            "targetOrg": "Zielorganisation",
-            "assignedOrg": "Zugewiesene Organisation",
+            "targetOrg": "Institut",
+            "assignedOrg": "Übersetzungsinstitut",
             "requester": "Antragsteller",
             "serie": "Zweig",
             "niveau": "Niveau",
@@ -2219,10 +2231,10 @@
         "fields": {
             "type": "Anfragetyp",
             "typeRequired": "Typ ist erforderlich",
-            "targetOrg": "Zielorganisation",
-            "targetOrgRequired": "Zielorganisation ist erforderlich",
-            "assignedOrg": "Übersetzungsorganisation",
-            "assignedOrgRequired": "Übersetzungsorganisation ist erforderlich",
+            "targetOrg": "Institut",
+            "targetOrgRequired": "Institut ist erforderlich",
+            "assignedOrg": "Übersetzungsinstitut",
+            "assignedOrgRequired": "Übersetzungsinstitut ist erforderlich",
             "observation": "Beobachtungen",
             "serie": "Serie",
             "niveau": "Niveau",
@@ -2758,7 +2770,7 @@
             "code": "Code",
             "date": "Datum",
             "client": "Kunde",
-            "targetOrg": "Zielinstitut",
+            "targetOrg": "Institut",
             "docs": "Docs",
             "status": "Status",
             "actions": "Optionen"
@@ -2799,8 +2811,8 @@
             "code": "Code",
             "date": "Datum",
             "demandeur": "Antragsteller",
-            "targetOrg": "Ziel-Org.",
-            "assignedOrg": "Zugewiesene Org.",
+            "targetOrg": "Institut",
+            "assignedOrg": "Übersetzungsinstitut",
             "docs": "Docs",
             "status": "Status",
             "payment": "Zahlung",
@@ -2809,8 +2821,8 @@
         "filters": {
             "search": "Suchen...",
             "status": "Status",
-            "targetOrg": "Zielorganisation",
-            "assignedOrg": "Zugewiesene Organisation",
+            "targetOrg": "Institut",
+            "assignedOrg": "Übersetzungsinstitut",
             "dateRange": "Datumsbereich"
         },
         "status": {
@@ -2861,8 +2873,8 @@
             "date": "Datum",
             "status": "Status",
             "demandeur": "Antragsteller",
-            "targetOrg": "Zielorganisation",
-            "assignedOrg": "Übersetzungsorganisation",
+            "targetOrg": "Institut",
+            "assignedOrg": "Übersetzungsinstitut",
             "periode": "Periode",
             "year": "Jahr",
             "observation": "Beobachtung"
@@ -3109,7 +3121,7 @@
             "code": "Code",
             "date": "Datum",
             "demandeur": "Antragsteller",
-            "targetOrg": "Ziel-Org",
+            "targetOrg": "Institut",
             "status": "Status",
             "actions": "Aktionen",
             "client": "Kunde",
@@ -3410,8 +3422,8 @@
         },
         "summary": {
             "target": "Ziel",
-            "targetOrg": "Zielorganisation",
-            "translationOrg": "Übersetzungsorg.",
+            "targetOrg": "Institut",
+            "translationOrg": "Übersetzungsinstitut",
             "period": "Zeitraum",
             "year": "Jahr",
             "observation": "Bemerkung",
@@ -3443,8 +3455,8 @@
             "autoSaving": "Automatisches Speichern..."
         },
         "fields": {
-            "targetOrg": "Zielorganisation",
-            "translationOrg": "Übersetzungsorganisation",
+            "targetOrg": "Institut",
+            "translationOrg": "Übersetzungsinstitut",
             "dateOfBirth": "Geburtsdatum",
             "countryOfCitizenship": "Staatsangehörigkeit",
             "passportNumber": "Reisepassnummer",
@@ -3610,8 +3622,8 @@
             "code": "Code",
             "date": "Datum",
             "status": "Aktenstatus",
-            "targetOrg": "Zielorganisation",
-            "assignedOrg": "Übersetzungsorganisation",
+            "targetOrg": "Institut",
+            "assignedOrg": "Übersetzungsinstitut",
             "paymentStatus": "Zahlungsstatus"
         },
         "alerts": {
@@ -3869,7 +3881,7 @@
             "code": "Code",
             "date": "Date",
             "demandeur": "Applicant",
-            "assigned": "Assigned to",
+            "assigned": "Übersetzungsinstitut",
             "docs": "Docs",
             "status": "Status",
             "actions": "Actions"
@@ -3936,7 +3948,7 @@
             "dateDemande": "Request Date",
             "status": "Status",
             "demandeur": "Applicant",
-            "targetOrg": "Target Institute",
+            "targetOrg": "Institut",
             "assignedOrg": "Assigned Organization",
             "periodeYear": "Period / Year",
             "serieNiveauMention": "Series / Level / Mention",

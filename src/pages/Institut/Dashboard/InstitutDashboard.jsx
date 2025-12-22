@@ -723,14 +723,14 @@ export default function InstitutDashboard() {
             <Card title={t("institutDashboard.incoming.title")} loading={loading}>
               <Row gutter={[16, 16]}>
                 <Col xs={24} sm={12} md={6}>
-                  <Card bordered className="rounded-2xl">
+                  <Card variant="outlined" className="rounded-2xl">
                     <Statistic title={t("institutDashboard.incoming.totalRecent")} value={totalRecent} />
                   </Card>
                 </Col>
 
                 {statusEntries.slice(0, 3).map(([status, count]) => (
                   <Col key={status} xs={24} sm={12} md={6}>
-                    <Card bordered className="rounded-2xl">
+                    <Card variant="outlined" className="rounded-2xl">
                       <div className="flex items-center justify-between">
                         <Space>
                           <Tag color={statusColor(status)}>{status}</Tag>

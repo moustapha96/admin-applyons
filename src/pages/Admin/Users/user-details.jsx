@@ -62,38 +62,38 @@ const UserDetail = () => {
                     </Button>
                 </div>
                 <Card>
-                    <Descriptions title={t("adminUserDetails.sections.personalInfo")} bordered>
+                    <Descriptions title={t("adminUserDetails.sections.personalInfo")} bordered column={3}>
                         <Descriptions.Item label={t("adminUserDetails.fields.fullName")} span={2}>
                             <Avatar size="large" icon={<UserOutlined />} src={user.avatar ? buildImageUrl(user.avatar) : undefined} />
                             <span className="ml-3">{user.firstName || ""} {user.lastName || ""}</span>
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("adminUserDetails.fields.email")}>
+                        <Descriptions.Item label={t("adminUserDetails.fields.email")} span={1}>
                             <Link to={`mailto:${user.email}`}>
                                 <MailOutlined /> {user.email}
                             </Link>
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("adminUserDetails.fields.phone")}>
+                        <Descriptions.Item label={t("adminUserDetails.fields.phone")} span={1}>
                             {user.phone ? <Link to={`tel:${user.phone}`}><PhoneOutlined /> {user.phone}</Link> : t("adminUserDetails.common.na")}
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("adminUserDetails.fields.role")}>
+                        <Descriptions.Item label={t("adminUserDetails.fields.role")} span={1}>
                             <Tag color={user.role === "ADMIN" ? "red" : user.role === "INSTITUT" ? "blue" : "green"}>
                                 {getRoleLabel(user.role, t)}
                             </Tag>
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("adminUserDetails.fields.status")}>
+                        <Descriptions.Item label={t("adminUserDetails.fields.status")} span={1}>
                             <Tag color={user.enabled ? "green" : "red"}>
                                 {user.enabled ? t("adminUserDetails.status.active") : t("adminUserDetails.status.inactive")}
                             </Tag>
                         </Descriptions.Item>
 
-                        <Descriptions.Item label={t("adminUserDetails.fields.address")}>
+                        <Descriptions.Item label={t("adminUserDetails.fields.address")} span={1}>
                             {user.adress ? user.adress : t("adminUserDetails.common.na")}
                         </Descriptions.Item>
 
-                        <Descriptions.Item label={t("adminUserDetails.fields.lastLogin")}>
+                        <Descriptions.Item label={t("adminUserDetails.fields.lastLogin")} span={1}>
                             {user.updatedAt ? new Date(user.updatedAt).toLocaleString() : t("adminUserDetails.common.never")}
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("adminUserDetails.fields.createdAt")}>
+                        <Descriptions.Item label={t("adminUserDetails.fields.createdAt")} span={1}>
                             {new Date(user.createdAt).toLocaleString()}
                         </Descriptions.Item>
                     </Descriptions>
@@ -113,9 +113,9 @@ const UserDetail = () => {
                     {user.organization && (
                         <>
                             <h3 className="text-lg font-semibold mb-4">{t("adminUserDetails.sections.organization")}</h3>
-                            <Descriptions bordered>
+                            <Descriptions bordered column={3}>
                                 <Descriptions.Item label={t("adminUserDetails.org.name")} span={2}>{user.organization.name}</Descriptions.Item>
-                                <Descriptions.Item label={t("adminUserDetails.org.type")}>{user.organization.type}</Descriptions.Item>
+                                <Descriptions.Item label={t("adminUserDetails.org.type")} span={1}>{user.organization.type}</Descriptions.Item>
                                 
                             </Descriptions>
                         </>

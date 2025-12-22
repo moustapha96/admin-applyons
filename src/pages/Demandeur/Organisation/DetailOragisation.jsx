@@ -133,42 +133,42 @@ const DemandeurOrganisationDetail = () => {
 
        
         <Card>
-          <Descriptions title={t("demandeurOrganisationDetail.sections.generalInfo")} bordered>
+          <Descriptions title={t("demandeurOrganisationDetail.sections.generalInfo")} bordered column={3}>
             <Descriptions.Item label={t("demandeurOrganisationDetail.sections.name")} span={2}>
               <Space>
                 <Avatar shape="square" size="large" icon={<BiBuilding />} />
                 <span className="ml-3">{organization.name}</span>
               </Space>
             </Descriptions.Item>
-            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.type")}>
+            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.type")} span={1}>
               <Tag color={getTypeColor(organization.type)}>
                 {typeOptions.find((opt) => opt.value === organization.type)?.label || organization.type}
               </Tag>
             </Descriptions.Item>
 
         
-            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.email")}>
+            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.email")} span={1}>
               <Space>
                 <MailOutlined />
                 <a href={`mailto:${organization.email}`}>{organization.email}</a>
               </Space>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.phone")}>
+            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.phone")} span={1}>
               <Space>
                 <PhoneOutlined />
                 <a href={`tel:${organization.phone}`}>{organization.phone}</a>
               </Space>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.address")}>
+            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.address")} span={1}>
               <Space>
                 <EnvironmentOutlined />
                 <span>{organization.address || t("demandeurOrganisationDetail.common.na")}</span>
               </Space>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.website")}>
+            <Descriptions.Item label={t("demandeurOrganisationDetail.sections.website")} span={3}>
               <Space>
                 <GlobalOutlined />
                 {organization.website ? (

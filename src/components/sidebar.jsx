@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SimpleBarReact from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
@@ -279,16 +279,17 @@ export default function Sidebar({ isCollapsed = false }) {
 
   const [openKeys, setOpenKeys] = useState(new Set());
   const [isManualToggle, setIsManualToggle] = useState(false);
+  const lastPathRef = useRef(current);
 
   // Fonction de déconnexion
-  const handleLogOut = async () => {
+  const handleLogOut = useCallback(async () => {
     try {
       await logout();
       navigate("/auth/login");
     } catch {
       navigate("/auth/login");
     }
-  };
+  }, [logout, navigate]);
 
   // Menu de base selon le rôle de l'utilisateur
   const baseMenu = useMemo(() => resolveMenuForUser(user, handleLogOut), [user, handleLogOut]);
@@ -305,17 +306,36 @@ export default function Sidebar({ isCollapsed = false }) {
     return current.startsWith(routeWithSlash) || current.startsWith(routeWithQuery);
   }, [current]);
 
-  // ouvre automatiquement le parent du chemin courant (seulement si pas de toggle manuel récent)
+  // ouvre automatiquement le parent du chemin courant (seulement si pas de toggle manuel récent et si le chemin a changé)
   useEffect(() => {
+    // Ne traiter que si le chemin a réellement changé
+    if (current === lastPathRef.current) {
+      return;
+    }
+    
+    lastPathRef.current = current;
+    
     if (!isManualToggle) {
       const parentWithChild = baseMenu.find((m) => 
-        m.children?.some?.((c) => isRouteActive(c.to))
+        m.children?.some?.((c) => {
+          if (!c.to) return false;
+          if (current === c.to) return true;
+          const routeWithSlash = c.to.endsWith("/") ? c.to : c.to + "/";
+          const routeWithQuery = c.to + "?";
+          return current.startsWith(routeWithSlash) || current.startsWith(routeWithQuery);
+        })
       );
       if (parentWithChild) {
-        setOpenKeys((prev) => new Set([...prev, parentWithChild.i18nKey]));
+        setOpenKeys((prev) => {
+          // Vérifier si la clé est déjà dans le Set pour éviter les re-renders inutiles
+          if (prev.has(parentWithChild.i18nKey)) {
+            return prev; // Retourner la même référence si la clé existe déjà
+          }
+          return new Set([...prev, parentWithChild.i18nKey]);
+        });
       }
     }
-  }, [current, baseMenu, isRouteActive, isManualToggle]);
+  }, [current, baseMenu, isManualToggle]);
 
   // Filtrage par permissions + rôles
   const filteredMenu = useMemo(() => {

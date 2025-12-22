@@ -131,27 +131,27 @@ const DemandeurDetails = () => {
                 </div>
 
                 <Card>
-                    <Descriptions title={t("institutDemandeurDetail.sections.personalInfo")} bordered>
+                    <Descriptions title={t("institutDemandeurDetail.sections.personalInfo")} bordered column={3}>
                         <Descriptions.Item label={t("institutDemandeurDetail.sections.fullName")} span={2}>
                             <Avatar size="large" icon={<UserOutlined />} src={user.avatar} />
                             <span className="ml-3">{user.firstName || ""} {user.lastName || ""}</span>
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("institutDemandeurDetail.sections.email")}>
+                        <Descriptions.Item label={t("institutDemandeurDetail.sections.email")} span={1}>
                             <Link to={`mailto:${user.email}`}>
                                 <MailOutlined /> {user.email}
                             </Link>
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("institutDemandeurDetail.sections.phone")}>
+                        <Descriptions.Item label={t("institutDemandeurDetail.sections.phone")} span={1}>
                             {user.phone ? <Link to={`tel:${user.phone}`}><PhoneOutlined /> {user.phone}</Link> : t("institutDemandeurDetail.common.na")}
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("institutDemandeurDetail.sections.country")}>
+                        <Descriptions.Item label={t("institutDemandeurDetail.sections.country")} span={1}>
                             {user.country || t("institutDemandeurDetail.common.na")}
                         </Descriptions.Item>
-                        <Descriptions.Item label={t("institutDemandeurDetail.sections.address")}>
+                        <Descriptions.Item label={t("institutDemandeurDetail.sections.address")} span={1}>
                             {user.adress || t("institutDemandeurDetail.common.na")}
                         </Descriptions.Item>
 
-                        <Descriptions.Item label={t("institutDemandeurDetail.sections.gender")}>
+                        <Descriptions.Item label={t("institutDemandeurDetail.sections.gender")} span={1}>
                             {user.gender || t("institutDemandeurDetail.common.na")}
                         </Descriptions.Item>
                        

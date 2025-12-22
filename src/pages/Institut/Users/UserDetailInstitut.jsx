@@ -182,19 +182,19 @@ export default function UserDetailInstitut() {
         </div>
 
         <Card>
-          <Descriptions title={t("userDetailInstitut.sections.personal")} bordered>
+          <Descriptions title={t("userDetailInstitut.sections.personal")} bordered column={3}>
             <Descriptions.Item label={t("userDetailInstitut.fields.fullName")} span={2}>
               <Avatar size="large" icon={<UserOutlined />} src={user.avatar ? buildImageUrl(user.avatar) : undefined} />
               <span className="ml-3">{user.firstName || ""} {user.lastName || ""}</span>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("userDetailInstitut.fields.email")}>
+            <Descriptions.Item label={t("userDetailInstitut.fields.email")} span={1}>
               <Link to={`mailto:${user.email}`}>
                 <MailOutlined /> {user.email}
               </Link>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("userDetailInstitut.fields.phone")}>
+            <Descriptions.Item label={t("userDetailInstitut.fields.phone")} span={1}>
               {user.phone ? (
                 <Link to={`tel:${user.phone}`}>
                   <PhoneOutlined /> {user.phone}
@@ -202,11 +202,11 @@ export default function UserDetailInstitut() {
               ) : t("userDetailInstitut.common.na")}
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("userDetailInstitut.fields.role")}>
+            <Descriptions.Item label={t("userDetailInstitut.fields.role")} span={1}>
               <Tag>{t(`usersInstitutList.filters.roles.${user.role}`, { defaultValue: user.role })}</Tag>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("userDetailInstitut.fields.status")}>
+            <Descriptions.Item label={t("userDetailInstitut.fields.status")} span={1}>
               <Tag color={user.enabled ? "green" : "red"}>
                 {user.enabled
                   ? t("usersInstitutList.filters.status.ACTIVE")
@@ -214,10 +214,10 @@ export default function UserDetailInstitut() {
               </Tag>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("userDetailInstitut.fields.updatedAt")}>
+            <Descriptions.Item label={t("userDetailInstitut.fields.updatedAt")} span={1}>
               {fmtDateTime(user.updatedAt)}
             </Descriptions.Item>
-            <Descriptions.Item label={t("userDetailInstitut.fields.createdAt")}>
+            <Descriptions.Item label={t("userDetailInstitut.fields.createdAt")} span={2}>
               {fmtDateTime(user.createdAt)}
             </Descriptions.Item>
           </Descriptions>
@@ -239,14 +239,14 @@ export default function UserDetailInstitut() {
             <>
               <div className="mt-4" />
               <h3 className="text-lg font-semibold mb-4">{t("userDetailInstitut.sections.organization")}</h3>
-              <Descriptions bordered>
+              <Descriptions bordered column={3}>
                 <Descriptions.Item label={t("userDetailInstitut.org.name")} span={2}>
                   {user.organization.name}
                 </Descriptions.Item>
-                <Descriptions.Item label={t("userDetailInstitut.org.type")}>
+                <Descriptions.Item label={t("userDetailInstitut.org.type")} span={1}>
                   {user.organization.type}
                 </Descriptions.Item>
-                <Descriptions.Item label={t("userDetailInstitut.org.slug")}>
+                <Descriptions.Item label={t("userDetailInstitut.org.slug")} span={3}>
                   {user.organization.slug}
                 </Descriptions.Item>
               </Descriptions>

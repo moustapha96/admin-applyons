@@ -15,7 +15,6 @@ import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
 
 const { Text } = Typography;
 
-const { TabPane } = Tabs;
 
 const statusColor = (s) =>
   s === "VALIDATED" ? "green" :
@@ -248,23 +247,31 @@ export default function DemandeurDemandeDocuments() {
           />
         </div>
 
-        <Tabs defaultActiveKey="1">
-          <TabPane tab={t("demandeDocuments.tabs.documents")} key="1">
-            <Card>
-              <Table
-                rowKey={(r) => r.id}
-                loading={loading}
-                columns={columns}
-                dataSource={rows}
-                scroll={{ x: true }}
-              />
-            </Card>
-          </TabPane>
-
-          <TabPane tab={t("demandeDocuments.tabs.info")} key="2">
-            {renderDemandeInfo()}
-          </TabPane>
-        </Tabs>
+        <Tabs 
+          defaultActiveKey="1"
+          items={[
+            {
+              key: "1",
+              label: t("demandeDocuments.tabs.documents"),
+              children: (
+                <Card>
+                  <Table
+                    rowKey={(r) => r.id}
+                    loading={loading}
+                    columns={columns}
+                    dataSource={rows}
+                    scroll={{ x: true }}
+                  />
+                </Card>
+              ),
+            },
+            {
+              key: "2",
+              label: t("demandeDocuments.tabs.info"),
+              children: renderDemandeInfo(),
+            },
+          ]}
+        />
       </div>
 
       {/* Modal Preview PDF */}
@@ -296,7 +303,7 @@ export default function DemandeurDemandeDocuments() {
         }
         width="95vw"
         style={{ top: 20, paddingBottom: 0 }}
-        bodyStyle={{ height: "calc(95vh - 110px)", padding: 0 }}
+        styles={{ body: { height: "calc(95vh - 110px)", padding: 0 } }}
         destroyOnClose
       >
         {preview.url ? (

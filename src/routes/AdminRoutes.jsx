@@ -85,6 +85,7 @@ import OrganizationInviteList from "../pages/Admin/OrganizationInvites/Organizat
 import OrganizationInviteCreate from "../pages/Admin/OrganizationInvites/OrganizationInviteCreate.jsx";
 import AdminOrganizationNotificationsList from "../pages/Admin/OrganizationNotifications/AdminOrganizationNotificationsList.jsx";
 import AdminOrganizationNotificationDetail from "../pages/Admin/OrganizationNotifications/AdminOrganizationNotificationDetail.jsx";
+import OrganizationNotificationsList from "../pages/Admin/organizations/OrganizationNotificationsList.jsx";
 import PermissionsList from "../pages/Admin/Permissions/PermissionsList.jsx";
 import ApiRoutesList from "../pages/Admin/ApiRoutes/ApiRoutesList.jsx";
 
@@ -141,8 +142,8 @@ export const adminRoutes = (
       <Route element={<ProtectedRoute />}>
         <Route path="organisations" element={<OrganizationList />} />
         <Route path="organisations/create" element={<OrganizationCreate />} />
-        <Route path="organisations/:id/details" element={<OrganizationDetail />} />
         <Route path="organisations/:id/edit" element={<OrganizationEdit />} />
+        <Route path="organisations/:id/details" element={<OrganizationDetail />} />
       </Route>
 
 
@@ -246,6 +247,12 @@ export const adminRoutes = (
       <Route element={<ProtectedRoute requiredPermissions={["notifications.read", "demandes.read"]} />}>
         <Route path="organisations/notifications" element={<AdminOrganizationNotificationsList />} />
         <Route path="organisations/notifications/:id/details" element={<AdminOrganizationNotificationDetail />} />
+        <Route path="organisations/:id/notifications" element={<OrganizationNotificationsList />} />
+      </Route>
+
+      {/* Route générique pour les détails d'organisation (doit être en dernier) */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="organisations/:id" element={<OrganizationDetail />} />
       </Route>
 
       {/* -------- Permissions -------- */}

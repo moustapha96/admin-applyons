@@ -27,7 +27,6 @@ import { useTranslation } from "react-i18next";
 import demandeService from "@/services/demandeService";
 import documentService from "@/services/documentService";
 
-const { TabPane } = Tabs;
 
 const statusTagColor = (s) => {
   switch (s) {
@@ -216,66 +215,78 @@ export default function AdminDemandeDetail() {
 
           <Divider />
 
-          <Tabs defaultActiveKey="acad">
-            
-
-            <TabPane tab={t("adminDemandeDetail.tabs.academic")} key="acad">
-              <Descriptions bordered column={2}>
-                <Descriptions.Item label={t("adminDemandeDetail.academicFields.serie")}>{d.serie || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.academicFields.niveau")}>{d.niveau || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.academicFields.mention")}>{d.mention || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.academicFields.annee")}>{d.annee || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.academicFields.countryOfSchool")}>{d.countryOfSchool || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.academicFields.secondarySchoolName")}>{d.secondarySchoolName || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.academicFields.graduationDate")} span={2}>
-                  {d.graduationDate ? dayjs(d.graduationDate).format("DD/MM/YYYY") : t("adminDemandeDetail.common.na")}
-                </Descriptions.Item>
-              </Descriptions>
-            </TabPane>
-
-            <TabPane tab={t("adminDemandeDetail.tabs.identity")} key="identite">
-              <Descriptions bordered column={2}>
-                <Descriptions.Item label={t("adminDemandeDetail.identityFields.dob")}>
-                  {d.dob ? dayjs(d.dob).format("DD/MM/YYYY") : t("adminDemandeDetail.common.na")}
-                </Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.identityFields.citizenship")}>{d.citizenship || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.identityFields.passport")} span={2}>{d.passport || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.identityFields.isEnglishFirstLanguage")}>
-                  {d.isEnglishFirstLanguage ? t("adminDemandeDetail.common.yes") : t("adminDemandeDetail.common.no")}
-                </Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.identityFields.englishProficiencyTests")}>
-                  {d.englishProficiencyTests ? JSON.stringify(d.englishProficiencyTests) : t("adminDemandeDetail.common.na")}
-                </Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.identityFields.testScores")}>{d.testScores || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-              </Descriptions>
-            </TabPane>
-
-            <TabPane tab={t("adminDemandeDetail.tabs.financial")} key="fin">
-              <Descriptions bordered column={2}>
-                <Descriptions.Item label={t("adminDemandeDetail.financialFields.willApplyForFinancialAid")}>
-                  {d.willApplyForFinancialAid ? t("adminDemandeDetail.common.yes") : t("adminDemandeDetail.common.no")}
-                </Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.financialFields.hasExternalSponsorship")}>
-                  {d.hasExternalSponsorship ? t("adminDemandeDetail.common.yes") : t("adminDemandeDetail.common.no")}
-                </Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.financialFields.visaType")}>{d.visaType || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.financialFields.hasPreviouslyStudiedInUS")}>
-                  {d.hasPreviouslyStudiedInUS ? t("adminDemandeDetail.common.yes") : t("adminDemandeDetail.common.no")}
-                </Descriptions.Item>
-              </Descriptions>
-            </TabPane>
-
-            <TabPane tab={t("adminDemandeDetail.tabs.essays")} key="essais">
-              <Descriptions bordered column={1}>
-                <Descriptions.Item label={t("adminDemandeDetail.essayFields.personalStatement")}>{d.personalStatement || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.essayFields.optionalEssay")}>{d.optionalEssay || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.essayFields.applicationRound")}>{d.applicationRound || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-                <Descriptions.Item label={t("adminDemandeDetail.essayFields.howDidYouHearAboutUs")}>{d.howDidYouHearAboutUs || t("adminDemandeDetail.common.na")}</Descriptions.Item>
-              </Descriptions>
-            </TabPane>
-
-            
-          </Tabs>
+          <Tabs 
+            defaultActiveKey="acad"
+            items={[
+              {
+                key: "acad",
+                label: t("adminDemandeDetail.tabs.academic"),
+                children: (
+                  <Descriptions bordered column={2}>
+                    <Descriptions.Item label={t("adminDemandeDetail.academicFields.serie")}>{d.serie || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.academicFields.niveau")}>{d.niveau || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.academicFields.mention")}>{d.mention || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.academicFields.annee")}>{d.annee || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.academicFields.countryOfSchool")}>{d.countryOfSchool || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.academicFields.secondarySchoolName")}>{d.secondarySchoolName || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.academicFields.graduationDate")} span={2}>
+                      {d.graduationDate ? dayjs(d.graduationDate).format("DD/MM/YYYY") : t("adminDemandeDetail.common.na")}
+                    </Descriptions.Item>
+                  </Descriptions>
+                ),
+              },
+              {
+                key: "identite",
+                label: t("adminDemandeDetail.tabs.identity"),
+                children: (
+                  <Descriptions bordered column={2}>
+                    <Descriptions.Item label={t("adminDemandeDetail.identityFields.dob")}>
+                      {d.dob ? dayjs(d.dob).format("DD/MM/YYYY") : t("adminDemandeDetail.common.na")}
+                    </Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.identityFields.citizenship")}>{d.citizenship || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.identityFields.passport")} span={2}>{d.passport || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.identityFields.isEnglishFirstLanguage")}>
+                      {d.isEnglishFirstLanguage ? t("adminDemandeDetail.common.yes") : t("adminDemandeDetail.common.no")}
+                    </Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.identityFields.englishProficiencyTests")}>
+                      {d.englishProficiencyTests ? JSON.stringify(d.englishProficiencyTests) : t("adminDemandeDetail.common.na")}
+                    </Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.identityFields.testScores")}>{d.testScores || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                  </Descriptions>
+                ),
+              },
+              {
+                key: "fin",
+                label: t("adminDemandeDetail.tabs.financial"),
+                children: (
+                  <Descriptions bordered column={2}>
+                    <Descriptions.Item label={t("adminDemandeDetail.financialFields.willApplyForFinancialAid")}>
+                      {d.willApplyForFinancialAid ? t("adminDemandeDetail.common.yes") : t("adminDemandeDetail.common.no")}
+                    </Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.financialFields.hasExternalSponsorship")}>
+                      {d.hasExternalSponsorship ? t("adminDemandeDetail.common.yes") : t("adminDemandeDetail.common.no")}
+                    </Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.financialFields.visaType")}>{d.visaType || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.financialFields.hasPreviouslyStudiedInUS")}>
+                      {d.hasPreviouslyStudiedInUS ? t("adminDemandeDetail.common.yes") : t("adminDemandeDetail.common.no")}
+                    </Descriptions.Item>
+                  </Descriptions>
+                ),
+              },
+              {
+                key: "essais",
+                label: t("adminDemandeDetail.tabs.essays"),
+                children: (
+                  <Descriptions bordered column={1}>
+                    <Descriptions.Item label={t("adminDemandeDetail.essayFields.personalStatement")}>{d.personalStatement || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.essayFields.optionalEssay")}>{d.optionalEssay || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.essayFields.applicationRound")}>{d.applicationRound || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                    <Descriptions.Item label={t("adminDemandeDetail.essayFields.howDidYouHearAboutUs")}>{d.howDidYouHearAboutUs || t("adminDemandeDetail.common.na")}</Descriptions.Item>
+                  </Descriptions>
+                ),
+              },
+            ]}
+          />
         </Card>
 
         {/* Preview modal */}
@@ -290,7 +301,7 @@ export default function AdminDemandeDetail() {
           footer={null}
           width="95vw"
           style={{ top: 20, paddingBottom: 0 }}
-          bodyStyle={{ height: "calc(95vh - 110px)", padding: 0, overflow: "hidden" }}
+          styles={{ body: { height: "calc(95vh - 110px)", padding: 0, overflow: "hidden" } }}
         >
           {previewUrl ? (
             <iframe src={previewUrl} style={{ width: "100%", height: "100%", border: "none" }} title="Preview" />

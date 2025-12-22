@@ -90,30 +90,30 @@ const OrganizationDemandeDetail = () => {
           </Button>
         </div>
         <Card>
-          <Descriptions title="Informations de la Demande" bordered>
+          <Descriptions title="Informations de la Demande" bordered column={3}>
             <Descriptions.Item label="Titre" span={2}>
               <Space>
                 <FileTextOutlined />
                 <span className="ml-3">{demande.title}</span>
               </Space>
             </Descriptions.Item>
-            <Descriptions.Item label="Type">
+            <Descriptions.Item label="Type" span={1}>
               <Tag color="blue">
                 {typeOptions.find(opt => opt.value === demande.type)?.label || demande.type}
               </Tag>
             </Descriptions.Item>
-            <Descriptions.Item label="Statut">
+            <Descriptions.Item label="Statut" span={1}>
               <Tag color={getStatusColor(demande.status)}>
                 {statusOptions.find(opt => opt.value === demande.status)?.label || demande.status}
               </Tag>
             </Descriptions.Item>
-            <Descriptions.Item label="Description" span={2}>
+            <Descriptions.Item label="Description" span={3}>
               {demande.description}
             </Descriptions.Item>
-            <Descriptions.Item label="Créé le">
+            <Descriptions.Item label="Créé le" span={1}>
               {new Date(demande.createdAt).toLocaleString()}
             </Descriptions.Item>
-            <Descriptions.Item label="Mis à jour le">
+            <Descriptions.Item label="Mis à jour le" span={2}>
               {new Date(demande.updatedAt).toLocaleString()}
             </Descriptions.Item>
           </Descriptions>

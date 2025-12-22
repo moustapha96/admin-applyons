@@ -28,7 +28,6 @@ import { toast } from "sonner";
 import settingsService from "../../services/settingsService";
 
 const { Title, Text } = Typography;
-const { TabPane } = Tabs;
 const { Dragger } = Upload;
 
 const SettingsPage = () => {
@@ -187,177 +186,182 @@ const SettingsPage = () => {
                             <Text type="secondary">Gérez les paramètres généraux de votre site</Text>
                         </div>
                         <Card>
-                            <Tabs activeKey={activeTab} onChange={setActiveTab}>
-                                <TabPane
-                                    tab={
-                                        <span>
-                                            <GlobalOutlined />
-                                            Paramètres généraux
-                                        </span>
-                                    }
-                                    key="general"
-                                >
-                                    <Form
-                                        form={generalForm}
-                                        layout="vertical"
-                                        onFinish={handleSaveGeneral}
-                                        style={{ maxWidth: "800px" }}
-                                    >
-                                        <Title level={4}>Informations du site</Title>
-                                        <Form.Item
-                                            label="Nom du site"
-                                            name="siteName"
-                                            rules={[{ required: true, message: "Le nom du site est requis" }]}
-                                        >
-                                            <Input placeholder="RIAFCO - Réseau International..." />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label="Email de contact"
-                                            name="contactEmail"
-                                            rules={[
-                                                { required: true, message: "L'email de contact est requis" },
-                                                { type: "email", message: "Format d'email invalide" },
-                                            ]}
-                                        >
-                                            <Input placeholder="contact@riafco.org" />
-                                        </Form.Item>
-                                        <Form.Item label="Adresse de contact" name="contactAddress">
-                                            <Input placeholder="Dakar, Sénégal" />
-                                        </Form.Item>
-                                        <Form.Item label="Numéro de téléphone (fixe)" name="contactPhone">
-                                            <Input placeholder="+221 33 800 90 90" />
-                                        </Form.Item>
-                                        <Form.Item label="Numéro de téléphone (mobile)" name="contactMobile">
-                                            <Input placeholder="+221 77 000 00 00" />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label="URL du site web"
-                                            name="urlSite"
-                                            rules={[{ type: "url", message: "Format d'URL invalide" }]}
-                                        >
-                                            <Input placeholder="https://riafco.org" />
-                                        </Form.Item>
-                                        <Form.Item label="Texte du footer" name="footer">
-                                            <Input placeholder="RIAFCO © 2024 - Tous droits réservés" />
-                                        </Form.Item>
-                                        <Divider />
-                                        <Title level={4}>Logo et Favicon</Title>
-                                        <Space direction="vertical" style={{ width: "100%" }} size="large">
-                                            <div>
-                                                <Text strong>Logo du site</Text>
-                                                <div style={{ fontSize: 12, color: "#888" }}>
-                                                    PNG/SVG/JPG ≤ 2 Mo — recommandé ~ <em>180×60</em> (fond transparent si possible)
-                                                </div>
-                                                <Dragger
-                                                    accept="image/png,image/jpeg,image/svg+xml"
-                                                    maxCount={1}
-                                                    multiple={false}
-                                                    beforeUpload={(file) =>
-                                                        validateFile(file, {
-                                                            maxMB: 2,
-                                                            types: ["image/png", "image/jpeg", "image/svg+xml"],
-                                                        })
-                                                    }
-                                                    fileList={logoFileList}
-                                                    listType="picture"
-                                                    onChange={({ fileList }) => setLogoFileList(fileList.slice(-1))}
-                                                    className="mt-2"
-                                                >
-                                                    <p className="ant-upload-drag-icon">Glissez-déposez ou cliquez pour sélectionner</p>
-                                                    <p className="ant-upload-hint">Remplace le logo actuel.</p>
-                                                </Dragger>
-                                            </div>
-                                            <div>
-                                                <Text strong>Favicon</Text>
-                                                <div style={{ fontSize: 12, color: "#888" }}>
-                                                    ICO/PNG ≤ 1 Mo — recommandé <em>32×32</em> ou <em>48×48</em>
-                                                </div>
-                                                <Dragger
-                                                    accept="image/png,image/x-icon,.ico"
-                                                    maxCount={1}
-                                                    multiple={false}
-                                                    beforeUpload={(file) =>
-                                                        validateFile(file, {
-                                                            maxMB: 1,
-                                                            types: ["image/png", "image/x-icon", ".ico"],
-                                                        })
-                                                    }
-                                                    fileList={faviconFileList}
-                                                    listType="picture"
-                                                    onChange={({ fileList }) => setFaviconFileList(fileList.slice(-1))}
-                                                    className="mt-2"
-                                                >
-                                                    <p className="ant-upload-drag-icon">Glissez-déposez ou cliquez pour sélectionner</p>
-                                                    <p className="ant-upload-hint">Remplace le favicon actuel.</p>
-                                                </Dragger>
-                                            </div>
-                                        </Space>
-                                        <Divider />
-                                        <Title level={4}>Réseaux sociaux</Title>
-                                        <Form.Item
-                                            label={
-                                                <span>
-                                                    <TwitterOutlined /> Twitter
-                                                </span>
-                                            }
-                                            name="twitter"
-                                        >
-                                            <Input placeholder="https://twitter.com/riafco" />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label={
-                                                <span>
-                                                    <FacebookOutlined /> Facebook
-                                                </span>
-                                            }
-                                            name="facebook"
-                                        >
-                                            <Input placeholder="https://facebook.com/riafco" />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label={
-                                                <span>
-                                                    <LinkedinOutlined /> LinkedIn
-                                                </span>
-                                            }
-                                            name="linkedin"
-                                        >
-                                            <Input placeholder="https://linkedin.com/company/riafco" />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label={
-                                                <span>
-                                                    <InstagramOutlined /> Instagram
-                                                </span>
-                                            }
-                                            name="instagram"
-                                        >
-                                            <Input placeholder="https://instagram.com/riafco" />
-                                        </Form.Item>
-                                        <Form.Item
-                                            label={
-                                                <span>
-                                                    <YoutubeOutlined /> YouTube
-                                                </span>
-                                            }
-                                            name="youtube"
-                                        >
-                                            <Input placeholder="https://youtube.com/@riafco" />
-                                        </Form.Item>
-                                        <Form.Item>
-                                            <Button
-                                                type="primary"
-                                                htmlType="submit"
-                                                icon={<SaveOutlined />}
-                                                loading={loading}
-                                                size="large"
+                            <Tabs 
+                                activeKey={activeTab} 
+                                onChange={setActiveTab}
+                                items={[
+                                    {
+                                        key: "general",
+                                        label: (
+                                            <span>
+                                                <GlobalOutlined />
+                                                Paramètres généraux
+                                            </span>
+                                        ),
+                                        children: (
+                                            <Form
+                                                form={generalForm}
+                                                layout="vertical"
+                                                onFinish={handleSaveGeneral}
+                                                style={{ maxWidth: "800px" }}
                                             >
-                                                Sauvegarder les paramètres
-                                            </Button>
-                                        </Form.Item>
-                                    </Form>
-                                </TabPane>
-                            </Tabs>
+                                                <Title level={4}>Informations du site</Title>
+                                                <Form.Item
+                                                    label="Nom du site"
+                                                    name="siteName"
+                                                    rules={[{ required: true, message: "Le nom du site est requis" }]}
+                                                >
+                                                    <Input placeholder="RIAFCO - Réseau International..." />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    label="Email de contact"
+                                                    name="contactEmail"
+                                                    rules={[
+                                                        { required: true, message: "L'email de contact est requis" },
+                                                        { type: "email", message: "Format d'email invalide" },
+                                                    ]}
+                                                >
+                                                    <Input placeholder="contact@riafco.org" />
+                                                </Form.Item>
+                                                <Form.Item label="Adresse de contact" name="contactAddress">
+                                                    <Input placeholder="Dakar, Sénégal" />
+                                                </Form.Item>
+                                                <Form.Item label="Numéro de téléphone (fixe)" name="contactPhone">
+                                                    <Input placeholder="+221 33 800 90 90" />
+                                                </Form.Item>
+                                                <Form.Item label="Numéro de téléphone (mobile)" name="contactMobile">
+                                                    <Input placeholder="+221 77 000 00 00" />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    label="URL du site web"
+                                                    name="urlSite"
+                                                    rules={[{ type: "url", message: "Format d'URL invalide" }]}
+                                                >
+                                                    <Input placeholder="https://riafco.org" />
+                                                </Form.Item>
+                                                <Form.Item label="Texte du footer" name="footer">
+                                                    <Input placeholder="RIAFCO © 2024 - Tous droits réservés" />
+                                                </Form.Item>
+                                                <Divider />
+                                                <Title level={4}>Logo et Favicon</Title>
+                                                <Space direction="vertical" style={{ width: "100%" }} size="large">
+                                                    <div>
+                                                        <Text strong>Logo du site</Text>
+                                                        <div style={{ fontSize: 12, color: "#888" }}>
+                                                            PNG/SVG/JPG ≤ 2 Mo — recommandé ~ <em>180×60</em> (fond transparent si possible)
+                                                        </div>
+                                                        <Dragger
+                                                            accept="image/png,image/jpeg,image/svg+xml"
+                                                            maxCount={1}
+                                                            multiple={false}
+                                                            beforeUpload={(file) =>
+                                                                validateFile(file, {
+                                                                    maxMB: 2,
+                                                                    types: ["image/png", "image/jpeg", "image/svg+xml"],
+                                                                })
+                                                            }
+                                                            fileList={logoFileList}
+                                                            listType="picture"
+                                                            onChange={({ fileList }) => setLogoFileList(fileList.slice(-1))}
+                                                            className="mt-2"
+                                                        >
+                                                            <p className="ant-upload-drag-icon">Glissez-déposez ou cliquez pour sélectionner</p>
+                                                            <p className="ant-upload-hint">Remplace le logo actuel.</p>
+                                                        </Dragger>
+                                                    </div>
+                                                    <div>
+                                                        <Text strong>Favicon</Text>
+                                                        <div style={{ fontSize: 12, color: "#888" }}>
+                                                            ICO/PNG ≤ 1 Mo — recommandé <em>32×32</em> ou <em>48×48</em>
+                                                        </div>
+                                                        <Dragger
+                                                            accept="image/png,image/x-icon,.ico"
+                                                            maxCount={1}
+                                                            multiple={false}
+                                                            beforeUpload={(file) =>
+                                                                validateFile(file, {
+                                                                    maxMB: 1,
+                                                                    types: ["image/png", "image/x-icon", ".ico"],
+                                                                })
+                                                            }
+                                                            fileList={faviconFileList}
+                                                            listType="picture"
+                                                            onChange={({ fileList }) => setFaviconFileList(fileList.slice(-1))}
+                                                            className="mt-2"
+                                                        >
+                                                            <p className="ant-upload-drag-icon">Glissez-déposez ou cliquez pour sélectionner</p>
+                                                            <p className="ant-upload-hint">Remplace le favicon actuel.</p>
+                                                        </Dragger>
+                                                    </div>
+                                                </Space>
+                                                <Divider />
+                                                <Title level={4}>Réseaux sociaux</Title>
+                                                <Form.Item
+                                                    label={
+                                                        <span>
+                                                            <TwitterOutlined /> Twitter
+                                                        </span>
+                                                    }
+                                                    name="twitter"
+                                                >
+                                                    <Input placeholder="https://twitter.com/riafco" />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    label={
+                                                        <span>
+                                                            <FacebookOutlined /> Facebook
+                                                        </span>
+                                                    }
+                                                    name="facebook"
+                                                >
+                                                    <Input placeholder="https://facebook.com/riafco" />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    label={
+                                                        <span>
+                                                            <LinkedinOutlined /> LinkedIn
+                                                        </span>
+                                                    }
+                                                    name="linkedin"
+                                                >
+                                                    <Input placeholder="https://linkedin.com/company/riafco" />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    label={
+                                                        <span>
+                                                            <InstagramOutlined /> Instagram
+                                                        </span>
+                                                    }
+                                                    name="instagram"
+                                                >
+                                                    <Input placeholder="https://instagram.com/riafco" />
+                                                </Form.Item>
+                                                <Form.Item
+                                                    label={
+                                                        <span>
+                                                            <YoutubeOutlined /> YouTube
+                                                        </span>
+                                                    }
+                                                    name="youtube"
+                                                >
+                                                    <Input placeholder="https://youtube.com/@riafco" />
+                                                </Form.Item>
+                                                <Form.Item>
+                                                    <Button
+                                                        type="primary"
+                                                        htmlType="submit"
+                                                        icon={<SaveOutlined />}
+                                                        loading={loading}
+                                                        size="large"
+                                                    >
+                                                        Sauvegarder les paramètres
+                                                    </Button>
+                                                </Form.Item>
+                                            </Form>
+                                        ),
+                                    },
+                                ]}
+                            />
                         </Card>
                     </div>
                 </div>

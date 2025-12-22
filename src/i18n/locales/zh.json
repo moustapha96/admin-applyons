@@ -389,7 +389,7 @@
         },
         "filters": {
             "searchPlaceholder": "搜索（代码、机构…）",
-            "orgPlaceholder": "目标机构",
+            "orgPlaceholder": "学院",
             "periodePlaceholder": "学期/阶段",
             "yearPlaceholder": "年份",
             "statusPlaceholder": "状态",
@@ -399,7 +399,7 @@
         "columns": {
             "code": "编码",
             "date": "日期",
-            "targetOrg": "目标机构",
+            "targetOrg": "学院",
             "periode": "学期/阶段",
             "year": "年份",
             "docs": "文件数",
@@ -457,8 +457,8 @@
         "fields": {
             "code": "编码",
             "status": "状态",
-            "targetOrg": "目标机构",
-            "assignedOrg": "翻译机构",
+            "targetOrg": "学院",
+            "assignedOrg": "翻译学院",
             "createdAt": "创建于",
             "periode": "学期/阶段",
             "year": "年份",
@@ -566,8 +566,8 @@
             "hasExternalSponsorship": "外部赞助",
             "visaType": "签证类型",
             "hasPreviouslyStudiedInUS": "曾在美国学习",
-            "targetOrg": "目标组织",
-            "assignedOrg": "翻译组织"
+            "targetOrg": "学院",
+            "assignedOrg": "翻译学院"
         },
         "buttons": {
             "back": "返回",
@@ -1043,7 +1043,7 @@
         "columns": {
             "inviteeEmail": "邮箱",
             "inviteeName": "姓名",
-            "inviteeOrg": "被邀请组织",
+            "inviteeOrg": "被邀请学院",
             "roleKey": "角色",
             "status": "状态",
             "expiresAt": "过期时间",
@@ -1160,14 +1160,19 @@
             "unviewedOnly": "仅未查看",
             "asTarget": "作为目标",
             "asNotified": "作为已通知",
-            "allNotifications": "所有通知"
+            "allNotifications": "所有通知",
+            "role": "角色"
         },
+        "searchPlaceholder": "搜索...",
         "columns": {
             "status": "状态",
             "type": "类型",
             "message": "消息",
             "demande": "申请",
+            "targetOrg": "目标机构",
+            "notifiedOrg": "已通知机构",
             "user": "用户",
+            "viewed": "状态",
             "createdAt": "创建时间",
             "actions": "操作"
         },
@@ -1191,11 +1196,18 @@
             "viewDemande": "查看申请",
             "viewUser": "查看用户"
         },
+        "actions": {
+            "markAsViewed": "标记为已查看",
+            "details": "详情",
+            "markAllAsViewed": "全部标记为已查看"
+        },
         "pagination": {
             "total": "总计: {{total}} 条通知"
         },
         "messages": {
             "loadError": "加载通知失败",
+            "orgLoadError": "加载组织失败",
+            "orgNotFound": "未找到组织",
             "markedAsViewed": "通知已标记为已查看",
             "allMarkedAsViewed": "所有通知已标记为已查看",
             "markError": "标记通知失败",
@@ -1229,7 +1241,7 @@
             "demandeCode": "申请代码",
             "demandeStatus": "申请状态",
             "demandeDate": "申请日期",
-            "targetOrg": "目标组织",
+            "targetOrg": "学院",
             "notifiedOrg": "已通知组织",
             "userEmail": "用户邮箱",
             "userName": "用户名",
@@ -1592,7 +1604,7 @@
             "code": "代码",
             "date": "日期",
             "demandeur": "申请人",
-            "assigned": "指派给",
+            "assigned": "翻译学院",
             "docs": "文档",
             "status": "状态",
             "actions": "操作"
@@ -1664,8 +1676,8 @@
             "code": "代码",
             "dateDemande": "申请日期",
             "demandeur": "申请人",
-            "targetOrg": "目标组织",
-            "assignedOrg": "分配的组织",
+            "targetOrg": "学院",
+            "assignedOrg": "翻译学院",
             "docs": "文档",
             "inviteeStatus": "邀请状态",
             "linkedAt": "链接时间",
@@ -1717,8 +1729,8 @@
             "updatedAt": "最后更新",
             "createdAt": "创建时间",
             "deletedAt": "删除时间",
-            "targetOrg": "目标机构",
-            "assignedOrg": "指派机构",
+            "targetOrg": "学院",
+            "assignedOrg": "翻译学院",
             "requester": "申请人",
             "serie": "科类",
             "niveau": "层级",
@@ -2220,10 +2232,10 @@
         "fields": {
             "type": "请求类型",
             "typeRequired": "类型是必需的",
-            "targetOrg": "目标组织",
-            "targetOrgRequired": "目标组织是必需的",
-            "assignedOrg": "翻译组织",
-            "assignedOrgRequired": "翻译组织是必需的",
+            "targetOrg": "学院",
+            "targetOrgRequired": "学院是必需的",
+            "assignedOrg": "翻译学院",
+            "assignedOrgRequired": "翻译学院是必需的",
             "observation": "观察",
             "serie": "系列",
             "niveau": "级别",
@@ -2759,7 +2771,7 @@
             "code": "代码",
             "date": "日期",
             "client": "客户",
-            "targetOrg": "目标机构",
+            "targetOrg": "学院",
             "docs": "文档",
             "status": "状态",
             "actions": "选项"
@@ -2800,7 +2812,7 @@
             "code": "代码",
             "date": "日期",
             "demandeur": "请求者",
-            "targetOrg": "目标组织",
+            "targetOrg": "学院",
             "assignedOrg": "分配组织",
             "docs": "文档",
             "status": "状态",
@@ -2810,7 +2822,7 @@
         "filters": {
             "search": "搜索...",
             "status": "状态",
-            "targetOrg": "目标组织",
+            "targetOrg": "学院",
             "assignedOrg": "分配组织",
             "dateRange": "日期范围"
         },
@@ -2862,8 +2874,8 @@
             "date": "日期",
             "status": "状态",
             "demandeur": "请求者",
-            "targetOrg": "目标组织",
-            "assignedOrg": "翻译组织",
+            "targetOrg": "学院",
+            "assignedOrg": "翻译学院",
             "periode": "期间",
             "year": "年份",
             "observation": "观察"
@@ -3110,7 +3122,7 @@
             "code": "代码",
             "date": "日期",
             "demandeur": "请求者",
-            "targetOrg": "目标组织",
+            "targetOrg": "学院",
             "status": "状态",
             "actions": "操作",
             "client": "客户",
@@ -3411,8 +3423,8 @@
         },
         "summary": {
             "target": "目标",
-            "targetOrg": "目标机构",
-            "translationOrg": "翻译机构",
+            "targetOrg": "学院",
+            "translationOrg": "翻译学院",
             "period": "阶段",
             "year": "年份",
             "observation": "备注",
@@ -3444,8 +3456,8 @@
             "autoSaving": "自动保存中..."
         },
         "fields": {
-            "targetOrg": "目标组织",
-            "translationOrg": "翻译组织",
+            "targetOrg": "学院",
+            "translationOrg": "翻译学院",
             "dateOfBirth": "出生日期",
             "countryOfCitizenship": "国籍",
             "passportNumber": "护照号码",
@@ -3611,8 +3623,8 @@
             "code": "代码",
             "date": "日期",
             "status": "文件状态",
-            "targetOrg": "目标组织",
-            "assignedOrg": "翻译组织",
+            "targetOrg": "学院",
+            "assignedOrg": "翻译学院",
             "paymentStatus": "支付状态"
         },
         "alerts": {
@@ -3870,7 +3882,7 @@
             "code": "Code",
             "date": "Date",
             "demandeur": "Applicant",
-            "assigned": "Assigned to",
+            "assigned": "翻译学院",
             "docs": "Docs",
             "status": "Status",
             "actions": "Actions"
@@ -3937,8 +3949,8 @@
             "dateDemande": "Request Date",
             "status": "Status",
             "demandeur": "Applicant",
-            "targetOrg": "Target Institute",
-            "assignedOrg": "Assigned Organization",
+            "targetOrg": "学院",
+            "assignedOrg": "翻译学院",
             "periodeYear": "Period / Year",
             "serieNiveauMention": "Series / Level / Mention",
             "secondarySchool": "Secondary School",

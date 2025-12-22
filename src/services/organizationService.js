@@ -35,6 +35,9 @@ const organizationService = {
     listDepartments: (id, params = {}) => axiosInstance.get(`/organizations/${id}/departments`, { params }),
 
     listDemandes: (id, params = {}) => axiosInstance.get(`/organizations/${id}/demandes`, { params }),
+
+    // GET /organizations/:id/abonnements
+    listAbonnements: (id, params = {}) => axiosInstance.get(`/organizations/${id}/abonnements`, { params }),
 };
 
 export default organizationService;

@@ -111,15 +111,15 @@ export default function AdminAbonnementRenew() {
         </div>
 
         <Card className="mb-6">
-          <Descriptions title={t("adminAbonnements.renew.current.title")} bordered>
+          <Descriptions title={t("adminAbonnements.renew.current.title")} bordered column={3}>
             <Descriptions.Item label={t("adminAbonnements.renew.current.organization")} span={2}>
               <Text>{abonnement.organization?.name}</Text>
             </Descriptions.Item>
-            <Descriptions.Item label={t("adminAbonnements.renew.current.period")}>
+            <Descriptions.Item label={t("adminAbonnements.renew.current.period")} span={1}>
               {dayjs(abonnement.dateDebut).format("DD/MM/YYYY")} →
               {dayjs(abonnement.dateExpiration).format("DD/MM/YYYY")}
             </Descriptions.Item>
-            <Descriptions.Item label={t("adminAbonnements.renew.current.amount")}>
+            <Descriptions.Item label={t("adminAbonnements.renew.current.amount")} span={3}>
               {Number(abonnement.montant).toLocaleString()} {t("adminAbonnements.common.currency")}
             </Descriptions.Item>
           </Descriptions>

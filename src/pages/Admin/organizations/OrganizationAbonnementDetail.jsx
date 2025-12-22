@@ -88,33 +88,33 @@ const OrganizationAbonnementDetail = () => {
           </Button>
         </div>
         <Card>
-          <Descriptions title="Informations de l'Abonnement" bordered>
+          <Descriptions title="Informations de l'Abonnement" bordered column={3}>
             <Descriptions.Item label="Titre" span={2}>
               <Space>
                 <CreditCardOutlined />
                 <span className="ml-3">{abonnement.title}</span>
               </Space>
             </Descriptions.Item>
-            <Descriptions.Item label="Type">
+            <Descriptions.Item label="Type" span={1}>
               <Tag color="blue">
                 {typeOptions.find(opt => opt.value === abonnement.type)?.label || abonnement.type}
               </Tag>
             </Descriptions.Item>
-            <Descriptions.Item label="Statut">
+            <Descriptions.Item label="Statut" span={1}>
               <Tag color={getStatusColor(abonnement.status)}>
                 {statusOptions.find(opt => opt.value === abonnement.status)?.label || abonnement.status}
               </Tag>
             </Descriptions.Item>
-            <Descriptions.Item label="Prix">
+            <Descriptions.Item label="Prix" span={1}>
               {abonnement.price} USD
             </Descriptions.Item>
-            <Descriptions.Item label="Date de début">
+            <Descriptions.Item label="Date de début" span={1}>
               {new Date(abonnement.startDate).toLocaleDateString()}
             </Descriptions.Item>
-            <Descriptions.Item label="Date de fin">
+            <Descriptions.Item label="Date de fin" span={1}>
               {new Date(abonnement.endDate).toLocaleDateString()}
             </Descriptions.Item>
-            <Descriptions.Item label="Description" span={2}>
+            <Descriptions.Item label="Description" span={3}>
               {abonnement.description || "N/A"}
             </Descriptions.Item>
             <Descriptions.Item label="Créé le">
