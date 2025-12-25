@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 "use client";
 import { createContext, useState, useEffect, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../hooks/useAuth";
 import permissionService from "../services/permissionService";
 
@@ -11,6 +12,7 @@ export const PermissionsContext = createContext(undefined);
  * Charge les permissions depuis l'API et les synchronise avec l'utilisateur connecté
  */
 export const PermissionsProvider = ({ children }) => {
+  const { t } = useTranslation();
   const { user, isAuthenticated } = useAuth();
   const [permissions, setPermissions] = useState([]);
   const [permissionKeys, setPermissionKeys] = useState([]);
@@ -37,7 +39,7 @@ export const PermissionsProvider = ({ children }) => {
         : Array.isArray(data)
         ? data
         : [];
-
+      console.log(permsList);
       setPermissions(permsList);
 
       // Créer un map pour accès rapide par clé
@@ -123,14 +125,22 @@ export const PermissionsProvider = ({ children }) => {
   );
 
   /**
-   * Récupère le label d'une permission
+   * Récupère le label d'une permission avec traduction i18n
    */
   const getPermissionLabel = useCallback(
     (key) => {
+      if (!key) return key;
+      // Essayer d'abord la traduction i18n
+      const translationKey = `permissions.${key}`;
+      const translated = t(translationKey);
+      if (translated && translated !== translationKey) {
+        return translated;
+      }
+      // Sinon, utiliser le nom de la permission depuis le backend
       const perm = getPermissionByKey(key);
       return perm?.name || key;
     },
-    [getPermissionByKey]
+    [getPermissionByKey, t]
   );
 
   /**

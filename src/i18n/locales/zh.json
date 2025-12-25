@@ -24,8 +24,8 @@
     "notifications": {
         "newMessage": "新消息",
         "messageReceived": "您收到了一条新消息",
-        "requestApproved": "请求已批准",
-        "requestApprovedDesc": "您的请求已被批准",
+        "requestApproved": "申请已批准",
+        "requestApprovedDesc": "您的申请已被批准",
         "actionRequired": "需要操作",
         "actionRequiredDesc": "需要您执行操作",
         "markAllRead": "全部标记为已读",
@@ -102,7 +102,9 @@
         "audit.read": "读取审计日志",
         "audit.manage": "管理审计日志",
         "organizationDemandeNotifications.read": "读取组织通知",
-        "organizationDemandeNotifications.manage": "管理组织通知"
+        "organizationDemandeNotifications.manage": "管理组织通知",
+        "messages_contact.read": "读取联系消息",
+        "messages_contact.manage": "管理联系消息"
     },
     "routes": {
         "adminDashboard": "/admin/dashboard",
@@ -617,7 +619,7 @@
             "welcome": "欢迎！"
         },
         "kpis": {
-            "myRequests": "我的请求",
+            "myRequests": "我的申请",
             "myDocuments": "我的文档",
             "myTransactions": "我的交易",
             "myPayments": "我的付款",
@@ -630,7 +632,7 @@
         },
         "activity": {
             "title": "最近活动",
-            "requestLine": "请求 {{code}} — {{status}} — {{date}}",
+            "requestLine": "申请 {{code}} — {{status}} — {{date}}",
             "paymentLine": "付款 {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
             "none": "无最近活动"
         },
@@ -665,7 +667,7 @@
             "institute": "学院"
         },
         "kpis": {
-            "targetRequests": "目标申请（总数）",
+            "targetRequests": "申请（总数）",
             "assignedRequests": "已分配申请（总数）",
             "documents": "文件（总数/待翻译/已翻译）",
             "subscriptions": "订阅（有效/总数）",
@@ -674,15 +676,15 @@
         },
         "charts": {
             "targetVsAssigned": {
-                "title": "目标 vs 已分配",
+                "title": "申请 vs 已分配",
                 "format": "已分配 {{percent}}%",
-                "target": "目标：{{n}}",
+                "target": "申请：{{n}}",
                 "assigned": "已分配：{{n}}"
             }
         },
         "tables": {
             "usersByRole": "按角色统计用户",
-            "targetByStatus": "按状态统计目标申请",
+            "targetByStatus": "按状态统计申请",
             "assignedByStatus": "按状态统计已分配申请",
             "paymentsByStatus": "按状态统计付款",
             "simpleCols": {
@@ -923,6 +925,107 @@
             "submit": "提交",
             "submitting": "提交中…"
         },
+        "toasts": {
+            "success": "用户创建成功",
+            "error": "发送数据时出错"
+        }
+    },
+    "userEditTraducteur": {
+        "title": "编辑用户",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "users": "用户",
+            "edit": "编辑"
+        },
+        "cardTitle": "编辑用户",
+        "sections": {
+            "permissions": "权限"
+        },
+        "fields": {
+            "avatar": "头像",
+            "firstName": "名",
+            "lastName": "姓",
+            "email": "邮箱",
+            "phone": "电话",
+            "country": "居住国家",
+            "status": "状态",
+            "permissions": "权限"
+        },
+        "labels": {
+            "active": "启用"
+        },
+        "actions": {
+            "back": "返回",
+            "upload": "上传",
+            "save": "保存",
+            "saving": "保存中..."
+        },
+        "loadingPermissions": "加载权限中...",
+        "placeholders": {
+            "firstName": "名",
+            "lastName": "姓",
+            "email": "name@example.com",
+            "phone": "电话号码",
+            "country": "选择国家"
+        },
+        "validations": {
+            "firstName": "名为必填项",
+            "lastName": "姓为必填项",
+            "email": "邮箱格式不正确"
+        },
+        "toasts": {
+            "loadError": "加载用户失败",
+            "updated": "用户已更新",
+            "updateError": "更新失败"
+        }
+    },
+    "userCreateTraducteur": {
+        "pageTitle": "新用户（我的组织）",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "users": "用户",
+            "new": "新建"
+        },
+        "cardTitle": "新用户",
+        "photo": {
+            "label": "头像",
+            "upload": "上传"
+        },
+        "fields": {
+            "firstName": "名",
+            "lastName": "姓",
+            "email": "邮箱",
+            "phone": "电话",
+            "country": "居住国家",
+            "password": "密码",
+            "confirmPassword": "确认密码",
+            "permissions": "权限"
+        },
+        "placeholders": {
+            "firstName": "名",
+            "lastName": "姓",
+            "email": "name@example.com",
+            "phone": "电话号码",
+            "country": "选择国家"
+        },
+        "dividers": {
+            "permissions": "权限",
+            "password": "密码"
+        },
+        "validators": {
+            "firstNameRequired": "名为必填项",
+            "lastNameRequired": "姓为必填项",
+            "emailRequired": "邮箱为必填项",
+            "emailInvalid": "邮箱格式不正确",
+            "passwordRequired": "密码为必填项",
+            "confirmRequired": "请确认密码",
+            "confirmMismatch": "密码不匹配"
+        },
+        "buttons": {
+            "submit": "提交",
+            "submitting": "提交中..."
+        },
+        "loadingPermissions": "加载权限中...",
         "toasts": {
             "success": "用户创建成功",
             "error": "发送数据时出错"
@@ -3798,7 +3901,7 @@
         "upload": {
             "title": "Attach Document",
             "labels": {
-                "demandeId": "Request ID",
+                "demandeId": "Application ID",
                 "ownerOrg": "Owner Organization",
                 "file": "File",
                 "urlOriginal": "Original File URL",
@@ -3958,14 +4061,14 @@
             }
         },
         "messages": {
-            "loadError": "Failed to load requests"
+            "loadError": "Failed to load applications"
         }
     },
     "institutDemandeurDetail": {
         "title": "Applicant Details",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Request List"
+            "demandes": "Application List"
         },
         "sections": {
             "personalInfo": "Personal Information",
@@ -3982,13 +4085,13 @@
         }
     },
     "traducteurDemandeDetails": {
-        "title": "Requests to Process",
+        "title": "Applications to Process",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests to Process",
-            "detail": "Requests"
+            "demandes": "Applications to Process",
+            "detail": "Applications"
         },
-        "pageTitle": "Request Details",
+        "pageTitle": "Application Details",
         "buttons": {
             "back": "Back",
             "documents": "Documents & Translations"
@@ -3999,7 +4102,7 @@
         },
         "fields": {
             "code": "Code",
-            "dateDemande": "Request Date",
+            "dateDemande": "Application Date",
             "status": "Status",
             "demandeur": "Applicant",
             "targetOrg": "学院",
@@ -4051,7 +4154,7 @@
             "noContent": "No content to display."
         },
         "messages": {
-            "noData": "No request data.",
+            "noData": "No application data.",
             "loadError": "Load failed",
             "statusUpdated": "Status updated",
             "statusUpdateError": "Status update failed",
@@ -4071,7 +4174,7 @@
         }
     },
     "traducteurDemandeDocuments": {
-        "title": "Request Documents",
+        "title": "Application Documents",
         "breadcrumbs": {
             "dashboard": "Dashboard",
             "demandes": "申请",
@@ -4082,11 +4185,11 @@
             "refresh": "Refresh"
         },
         "sections": {
-            "demandeInfo": "Request Information"
+            "demandeInfo": "Application Information"
         },
         "columns": {
             "ownerOrg": "Institute (source)",
-            "demande": "Request",
+            "demande": "Application",
             "type": "Type",
             "original": "Original",
             "translated": "Translated"
@@ -4115,7 +4218,7 @@
             "save": "Save"
         },
         "messages": {
-            "loadDemandeError": "Failed to load request",
+            "loadDemandeError": "Failed to load application",
             "loadDocsError": "Error loading documents",
             "uploadWarning": "Select a translated PDF.",
             "uploadSuccess": "Translation uploaded (encryption in place)",

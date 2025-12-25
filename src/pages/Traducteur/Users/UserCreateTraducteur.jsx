@@ -4,32 +4,48 @@
 /* eslint-disable no-unused-vars */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Input, Button, Checkbox, Upload, message, Breadcrumb, Card, Avatar, Row, Col, Divider, Select } from "antd";
 import { UserOutlined, UploadOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { useAuth } from "../../../hooks/useAuth";
+import { usePermissions } from "../../../hooks/usePermissions";
+import { useTranslation } from "react-i18next";
 import userService from "@/services/userService";
-import { getPermissionLabel, PERMS_TRADUCTEUR } from "@/auth/permissions";
 import countries from "@/assets/countries.json"
 
 
 const { Option } = Select;
 
-/** Création user dans MON org (institut) + avatar + permissions (FormData) */
+/** Création user dans MON org (traducteur) + avatar + permissions (FormData) */
 export default function UserCreateTraducteur() {
+  const { t } = useTranslation();
   const { user: me } = useAuth();
+  const { permissions, getPermissionLabel, getPermissionsByRole, loading: permissionsLoading } = usePermissions();
   const orgId = me?.organization?.id;
-  console.log(me)
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
-  const permissionsOptions = Object.entries(PERMS_TRADUCTEUR).map(([_, value]) => ({
-    label: getPermissionLabel(value, t),
-    value,
-  }));
+  // Rôle de l'utilisateur connecté (pour Traducteur)
+  const userRole = me?.role || "TRADUCTEUR";
+
+  // Filtrer les permissions selon le rôle de l'utilisateur connecté
+  const filteredPermissions = useMemo(() => {
+    if (!getPermissionsByRole || typeof getPermissionsByRole !== "function") {
+      return permissions;
+    }
+    return getPermissionsByRole(userRole);
+  }, [getPermissionsByRole, userRole, permissions]);
+
+  // Utiliser les permissions du backend filtrées par rôle
+  const permissionsOptions = useMemo(() => {
+    return filteredPermissions.map((perm) => ({
+      label: getPermissionLabel(perm.key) || perm.name || perm.key,
+      value: perm.key,
+    }));
+  }, [filteredPermissions, getPermissionLabel]);
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
@@ -58,10 +74,10 @@ export default function UserCreateTraducteur() {
       values.permissions?.forEach((p) => fd.append("permissions[]", p)); // backend accepte les keys
 
       await userService.create(fd);
-      message.success("Utilisateur créé avec succès");
+      message.success(t("userCreateTraducteur.toasts.success"));
       navigate("/traducteur/users");
     } catch (error) {
-      message.error(error?.message || "Erreur lors de l'envoi des données");
+      message.error(error?.message || t("userCreateTraducteur.toasts.error"));
     } finally {
       setLoading(false);
     }
@@ -71,72 +87,103 @@ export default function UserCreateTraducteur() {
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
         <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Nouvel utilisateur (mon institut)</h5>
+          <h5 className="text-lg font-semibold">{t("userCreateTraducteur.pageTitle")}</h5>
           <Breadcrumb items={[
-            { title: <Link to="/traducteur/dashboard">Tableau de bord</Link> },
-            { title: <Link to="/traducteur/users">Utilisateurs</Link> },
-            { title: "Nouveau" },
+            { title: <Link to="/traducteur/dashboard">{t("userCreateTraducteur.breadcrumbs.dashboard")}</Link> },
+            { title: <Link to="/traducteur/users">{t("userCreateTraducteur.breadcrumbs.users")}</Link> },
+            { title: t("userCreateTraducteur.breadcrumbs.new") },
           ]} />
         </div>
 
-        <Card title="Nouvel utilisateur" className="mt-4">
+        <Card title={t("userCreateTraducteur.cardTitle")} className="mt-4">
           <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={{ enabled: true, role: "DEMANDEUR" }}>
             <Row gutter={16}>
               <Col span={6}>
-                <Form.Item label="Photo de profil" name="upload" valuePropName="fileList" getValueFromEvent={normFile}>
+                <Form.Item label={t("userCreateTraducteur.photo.label")} name="upload" valuePropName="fileList" getValueFromEvent={normFile}>
                   <Upload name="avatar" listType="picture-card" showUploadList={false} beforeUpload={() => false}
-                    onChange={({ file }) => setImageUrl(URL.createObjectURL(file))}>
+                    onChange={({ file }) => {
+                      if (file?.originFileObj) {
+                        setImageUrl(URL.createObjectURL(file.originFileObj));
+                      } else if (file) {
+                        setImageUrl(URL.createObjectURL(file));
+                      }
+                    }}>
                     {imageUrl ? (
                       <Avatar size={128} src={imageUrl} icon={<UserOutlined />} />
                     ) : (
-                      <div><UploadOutlined /><div style={{ marginTop: 8 }}>Téléverser</div></div>
+                      <div><UploadOutlined /><div style={{ marginTop: 8 }}>{t("userCreateTraducteur.photo.upload")}</div></div>
                     )}
                   </Upload>
                 </Form.Item>
               </Col>
               <Col span={18}>
-                <Form.Item name="firstName" label="Prénom" rules={[{ required: true, message: "Prénom obligatoire" }]}><Input /></Form.Item>
-                <Form.Item name="lastName" label="Nom" rules={[{ required: true, message: "Nom obligatoire" }]}><Input /></Form.Item>
-                <Form.Item name="email" label="Email" rules={[{ required: true, type: "email", message: "Email invalide" }]}><Input /></Form.Item>
-                <Form.Item name="phone" label="Téléphone"><Input /></Form.Item>
-
+                <Form.Item name="firstName" label={t("userCreateTraducteur.fields.firstName")} rules={[{ required: true, message: t("userCreateTraducteur.validators.firstNameRequired") }]}>
+                  <Input placeholder={t("userCreateTraducteur.placeholders.firstName")} />
+                </Form.Item>
+                <Form.Item name="lastName" label={t("userCreateTraducteur.fields.lastName")} rules={[{ required: true, message: t("userCreateTraducteur.validators.lastNameRequired") }]}>
+                  <Input placeholder={t("userCreateTraducteur.placeholders.lastName")} />
+                </Form.Item>
+                <Form.Item name="email" label={t("userCreateTraducteur.fields.email")} rules={[
+                  { required: true, message: t("userCreateTraducteur.validators.emailRequired") },
+                  { type: "email", message: t("userCreateTraducteur.validators.emailInvalid") },
+                ]}>
+                  <Input placeholder={t("userCreateTraducteur.placeholders.email")} />
+                </Form.Item>
+                <Form.Item name="phone" label={t("userCreateTraducteur.fields.phone")}>
+                  <Input placeholder={t("userCreateTraducteur.placeholders.phone")} />
+                </Form.Item>
 
                 <Form.Item
-                  label="Pays de résidence"
+                  label={t("userCreateTraducteur.fields.country")}
                   name="country"
                 >
                   <Select
                     allowClear
                     showSearch
                     size="large"
-                    placeholder="Select country"
+                    placeholder={t("userCreateTraducteur.placeholders.country")}
                     options={(countries || []).map((f) => ({ value: f.name, label: f.name }))}
                   />
                 </Form.Item>
 
-
-                <Divider>Permissions</Divider>
-                <Form.Item name="permissions" label="Permissions">
-                  <Checkbox.Group>
-                    <Row gutter={[0, 16]}>
-                      {permissionsOptions.map((opt) => (
-                        <Col span={8} key={opt.value}><Checkbox value={opt.value}>{opt.label}</Checkbox></Col>
-                      ))}
-                    </Row>
-                  </Checkbox.Group>
+                <Divider>{t("userCreateTraducteur.dividers.permissions")}</Divider>
+                <Form.Item name="permissions" label={t("userCreateTraducteur.fields.permissions")}>
+                  {permissionsLoading ? (
+                    <div>{t("userCreateTraducteur.loadingPermissions")}</div>
+                  ) : (
+                    <Checkbox.Group>
+                      <Row gutter={[0, 16]}>
+                        {permissionsOptions.map((opt) => (
+                          <Col span={8} key={opt.value}>
+                            <Checkbox value={opt.value}>{opt.label}</Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    </Checkbox.Group>
+                  )}
                 </Form.Item>
 
-                <Divider>Mot de passe</Divider>
-                <Form.Item name="password" label="Mot de passe" rules={[{ required: true, message: "Mot de passe obligatoire" }]}><Input.Password /></Form.Item>
-                <Form.Item name="confirmPassword" label="Confirmer le mot de passe" dependencies={["password"]}
+                <Divider>{t("userCreateTraducteur.dividers.password")}</Divider>
+                <Form.Item name="password" label={t("userCreateTraducteur.fields.password")} rules={[{ required: true, message: t("userCreateTraducteur.validators.passwordRequired") }]}>
+                  <Input.Password placeholder={t("userCreateTraducteur.fields.password")} />
+                </Form.Item>
+                <Form.Item name="confirmPassword" label={t("userCreateTraducteur.fields.confirmPassword")} dependencies={["password"]}
                   rules={[
-                    { required: true, message: "Confirmer le mot de passe obligatoire" },
-                    ({ getFieldValue }) => ({ validator(_, v) { return !v || getFieldValue("password") === v ? Promise.resolve() : Promise.reject(new Error("Les mots de passe ne correspondent pas")); } }),
-                  ]}><Input.Password /></Form.Item>
+                    { required: true, message: t("userCreateTraducteur.validators.confirmRequired") },
+                    ({ getFieldValue }) => ({
+                      validator(_, v) {
+                        return !v || getFieldValue("password") === v
+                          ? Promise.resolve()
+                          : Promise.reject(new Error(t("userCreateTraducteur.validators.confirmMismatch")));
+                      },
+                    }),
+                  ]}>
+                  <Input.Password placeholder={t("userCreateTraducteur.fields.confirmPassword")} />
+                </Form.Item>
 
                 <Form.Item>
                   <Button htmlType="submit" type="primary" loading={loading} icon={!loading && <PlusCircleOutlined className="mr-1 h-4 w-4" />}>
-                    {loading ? "Validation..." : "Valider"}
+                    {loading ? t("userCreateTraducteur.buttons.submitting") : t("userCreateTraducteur.buttons.submit")}
                   </Button>
                 </Form.Item>
               </Col>

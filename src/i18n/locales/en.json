@@ -105,7 +105,9 @@
         "audit.read": "Read audit logs",
         "audit.manage": "Manage audit logs",
         "organizationDemandeNotifications.read": "Read organization notifications",
-        "organizationDemandeNotifications.manage": "Manage organization notifications"
+        "organizationDemandeNotifications.manage": "Manage organization notifications",
+        "messages_contact.read": "Read contact messages",
+        "messages_contact.manage": "Manage contact messages"
     },
     "routes": {
         "adminDashboard": "/admin/dashboard",
@@ -135,7 +137,7 @@
         "organizationsList": "Organizations",
         "departments": "Departments",
         "filieres": "Programs",
-        "demandes": "Application",
+        "demandes": "Applications",
         "allDemandes": "All Applications",
         "invited": "Invited",
         "documents": "Documents",
@@ -676,8 +678,8 @@
             "institute": "Institute"
         },
         "kpis": {
-            "targetApplications": "Target applications (total)",
-            "assignedApplications": "Assigned applications (total)",
+            "targetRequests": "Applications (total)",
+            "assignedRequests": "Assigned applications (total)",
             "documents": "Documents (total/to translate/translated)",
             "subscriptions": "Subscriptions (active/total)",
             "expiringSoon": "Expiring soon: {{count}}",
@@ -685,15 +687,15 @@
         },
         "charts": {
             "targetVsAssigned": {
-                "title": "Target vs Assigned applications",
+                "title": "Applications vs Assigned",
                 "format": "{{percent}}% assigned",
-                "target": "Target: {{n}}",
+                "target": "Applications: {{n}}",
                 "assigned": "Assigned: {{n}}"
             }
         },
         "tables": {
             "usersByRole": "Users by role",
-            "targetByStatus": "Target applications by status",
+            "targetByStatus": "Applications by status",
             "assignedByStatus": "Assigned applications by status",
             "paymentsByStatus": "Payments by status",
             "simpleCols": {
@@ -937,6 +939,107 @@
         "toasts": {
             "success": "User created successfully",
             "error": "Error while sending data"
+        }
+    },
+    "userEditTraducteur": {
+        "title": "Edit user",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "users": "Users",
+            "edit": "Edit"
+        },
+        "cardTitle": "Edit user",
+        "sections": {
+            "permissions": "Permissions"
+        },
+        "fields": {
+            "avatar": "Profile photo",
+            "firstName": "First name",
+            "lastName": "Last name",
+            "email": "Email",
+            "phone": "Phone",
+            "country": "Country of residence",
+            "status": "Status",
+            "permissions": "Permissions"
+        },
+        "labels": {
+            "active": "Active"
+        },
+        "actions": {
+            "back": "Back",
+            "upload": "Upload",
+            "save": "Save",
+            "saving": "Saving..."
+        },
+        "loadingPermissions": "Loading permissions...",
+        "placeholders": {
+            "firstName": "First name",
+            "lastName": "Last name",
+            "email": "name@example.com",
+            "phone": "Phone number",
+            "country": "Select a country"
+        },
+        "validations": {
+            "firstName": "First name is required",
+            "lastName": "Last name is required",
+            "email": "Invalid email address"
+        },
+        "toasts": {
+            "loadError": "Failed to load user",
+            "updated": "User updated",
+            "updateError": "Update failed"
+        }
+    },
+    "userCreateTraducteur": {
+        "pageTitle": "New user (my organization)",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "users": "Users",
+            "new": "New"
+        },
+        "cardTitle": "New user",
+        "photo": {
+            "label": "Profile photo",
+            "upload": "Upload"
+        },
+        "fields": {
+            "firstName": "First name",
+            "lastName": "Last name",
+            "email": "Email",
+            "phone": "Phone",
+            "country": "Country of residence",
+            "password": "Password",
+            "confirmPassword": "Confirm password",
+            "permissions": "Permissions"
+        },
+        "placeholders": {
+            "firstName": "First name",
+            "lastName": "Last name",
+            "email": "name@example.com",
+            "phone": "Phone number",
+            "country": "Select a country"
+        },
+        "dividers": {
+            "permissions": "Permissions",
+            "password": "Password"
+        },
+        "validators": {
+            "firstNameRequired": "First name is required",
+            "lastNameRequired": "Last name is required",
+            "emailRequired": "Email is required",
+            "emailInvalid": "Invalid email",
+            "passwordRequired": "Password is required",
+            "confirmRequired": "Please confirm password",
+            "confirmMismatch": "Passwords do not match"
+        },
+        "buttons": {
+            "submit": "Submit",
+            "submitting": "Submitting..."
+        },
+        "loadingPermissions": "Loading permissions...",
+        "toasts": {
+            "success": "User created successfully",
+            "error": "Error sending data"
         }
     },
     "departmentListInstitut": {

@@ -154,45 +154,9 @@ export default function TraducteurDashboard() {
               ))}
             </div>
 
-            {/* Breakdowns */}
-            <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-              <PillList 
-                title={t("traducteurDashboard.breakdowns.translatedByType")} 
-                itemsObj={stats?.widgets?.translatedByMe?.byType} 
-                t={t} 
-              />
-              <PillList 
-                title={t("traducteurDashboard.breakdowns.translatedByStatus")} 
-                itemsObj={stats?.widgets?.translatedByMe?.byStatus} 
-                t={t} 
-              />
-            </div>
-
-            <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-              <PillList 
-                title={t("traducteurDashboard.breakdowns.translationsByType")} 
-                itemsObj={stats?.charts?.translationsByType} 
-                t={t} 
-              />
-              <PillList 
-                title={t("traducteurDashboard.breakdowns.demandesAsTranslationOrgByStatus")} 
-                itemsObj={stats?.charts?.demandesAsTranslationOrgByStatus} 
-                t={t} 
-              />
-            </div>
-
-            <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-              <PillList 
-                title={t("traducteurDashboard.breakdowns.demandesByStatus")} 
-                itemsObj={stats?.charts?.demandesByStatus} 
-                t={t} 
-              />
-              <PillList 
-                title={t("traducteurDashboard.breakdowns.toTranslateByType")} 
-                itemsObj={stats?.widgets?.toTranslate?.byType} 
-                t={t} 
-              />
-            </div>
+           
+          
+           
           </>
         )}
 

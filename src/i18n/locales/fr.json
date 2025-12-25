@@ -30,8 +30,8 @@
     "notifications": {
         "newMessage": "Nouveau message",
         "messageReceived": "Vous avez reçu un nouveau message",
-        "requestApproved": "Demande approuvée",
-        "requestApprovedDesc": "Votre demande a été approuvée",
+        "requestApproved": "Candidature approuvée",
+        "requestApprovedDesc": "Votre candidature a été approuvée",
         "actionRequired": "Action requise",
         "actionRequiredDesc": "Une action de votre part est requise",
         "markAllRead": "Tout marquer comme lu",
@@ -108,7 +108,9 @@
         "audit.read": "Lire les logs d'audit",
         "audit.manage": "Gérer les logs d'audit",
         "organizationDemandeNotifications.read": "Lire les notifications d'organisations",
-        "organizationDemandeNotifications.manage": "Gérer les notifications d'organisations"
+        "organizationDemandeNotifications.manage": "Gérer les notifications d'organisations",
+        "messages_contact.read": "Lire les messages de contact",
+        "messages_contact.manage": "Gérer les messages de contact"
     },
     "routes": {
         "adminDashboard": "/admin/dashboard",
@@ -138,7 +140,7 @@
         "organizationsList": "Organisations",
         "departments": "Départements",
         "filieres": "Filières",
-        "demandes": "Candidature",
+        "demandes": "Candidatures",
         "allDemandes": "Applications",
         "invited": "Invitées",
         "documents": "Documents",
@@ -637,7 +639,7 @@
         },
         "activity": {
             "title": "Activité récente",
-            "requestLine": "Demande {{code}} — {{status}} — {{date}}",
+            "requestLine": "Candidature {{code}} — {{status}} — {{date}}",
             "paymentLine": "Paiement {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
             "none": "Aucune activité récente"
         },
@@ -672,7 +674,7 @@
             "institute": "Institut"
         },
         "kpis": {
-            "targetRequests": "Demandes cibles (total)",
+            "targetRequests": "Candidatures (total)",
             "assignedRequests": "Demandes assignées (total)",
             "documents": "Documents (total/à traduire/traduit)",
             "subscriptions": "Abonnements (actifs/total)",
@@ -681,15 +683,15 @@
         },
         "charts": {
             "targetVsAssigned": {
-                "title": "Demandes cibles vs assignées",
+                "title": "Candidatures vs assignées",
                 "format": "{{percent}}% assignées",
-                "target": "Cibles : {{n}}",
+                "target": "Candidatures : {{n}}",
                 "assigned": "Assignées : {{n}}"
             }
         },
         "tables": {
             "usersByRole": "Utilisateurs par rôle",
-            "targetByStatus": "Demandes cibles par statut",
+            "targetByStatus": "Candidatures par statut",
             "assignedByStatus": "Demandes assignées par statut",
             "paymentsByStatus": "Paiements par statut",
             "simpleCols": {
@@ -927,6 +929,107 @@
             "submit": "Valider",
             "submitting": "Validation…"
         },
+        "toasts": {
+            "success": "Utilisateur créé avec succès",
+            "error": "Erreur lors de l'envoi des données"
+        }
+    },
+    "userEditTraducteur": {
+        "title": "Modifier l'utilisateur",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "users": "Utilisateurs",
+            "edit": "Modifier"
+        },
+        "cardTitle": "Modifier l'utilisateur",
+        "sections": {
+            "permissions": "Permissions"
+        },
+        "fields": {
+            "avatar": "Photo de profil",
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Email",
+            "phone": "Téléphone",
+            "country": "Pays de résidence",
+            "status": "Statut",
+            "permissions": "Permissions"
+        },
+        "labels": {
+            "active": "Actif"
+        },
+        "actions": {
+            "back": "Retour",
+            "upload": "Téléverser",
+            "save": "Enregistrer",
+            "saving": "Enregistrement..."
+        },
+        "loadingPermissions": "Chargement des permissions...",
+        "placeholders": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "exemple@domaine.com",
+            "phone": "Numéro de téléphone",
+            "country": "Sélectionner un pays"
+        },
+        "validations": {
+            "firstName": "Le prénom est requis",
+            "lastName": "Le nom est requis",
+            "email": "Adresse email invalide"
+        },
+        "toasts": {
+            "loadError": "Erreur lors du chargement de l'utilisateur",
+            "updated": "Utilisateur mis à jour",
+            "updateError": "Échec de la mise à jour"
+        }
+    },
+    "userCreateTraducteur": {
+        "pageTitle": "Nouvel utilisateur (mon organisation)",
+        "breadcrumbs": {
+            "dashboard": "Tableau de bord",
+            "users": "Utilisateurs",
+            "new": "Nouveau"
+        },
+        "cardTitle": "Nouvel utilisateur",
+        "photo": {
+            "label": "Photo de profil",
+            "upload": "Téléverser"
+        },
+        "fields": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Email",
+            "phone": "Téléphone",
+            "country": "Pays de résidence",
+            "password": "Mot de passe",
+            "confirmPassword": "Confirmer le mot de passe",
+            "permissions": "Permissions"
+        },
+        "placeholders": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "exemple@domaine.com",
+            "phone": "Numéro de téléphone",
+            "country": "Sélectionner un pays"
+        },
+        "dividers": {
+            "permissions": "Permissions",
+            "password": "Mot de passe"
+        },
+        "validators": {
+            "firstNameRequired": "Prénom obligatoire",
+            "lastNameRequired": "Nom obligatoire",
+            "emailRequired": "Email obligatoire",
+            "emailInvalid": "Email invalide",
+            "passwordRequired": "Mot de passe obligatoire",
+            "confirmRequired": "Confirmer le mot de passe obligatoire",
+            "confirmMismatch": "Les mots de passe ne correspondent pas"
+        },
+        "buttons": {
+            "submit": "Valider",
+            "submitting": "Validation..."
+        },
+        "loadingPermissions": "Chargement des permissions...",
         "toasts": {
             "success": "Utilisateur créé avec succès",
             "error": "Erreur lors de l'envoi des données"
@@ -1782,13 +1885,13 @@
         "fields": {
             "code": "Code",
             "status": "Statut",
-            "requestDate": "Date de demande",
+            "requestDate": "Date de candidature",
             "updatedAt": "Dernière mise à jour",
             "createdAt": "Créée le",
             "deletedAt": "Supprimée le",
             "targetOrg": "Institut",
             "assignedOrg": "Institut traducteur",
-            "requester": "Demandeur",
+            "requester": "Candidat",
             "serie": "Série",
             "niveau": "Niveau",
             "mention": "Mention",

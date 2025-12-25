@@ -26,8 +26,8 @@
     "notifications": {
         "newMessage": "Nuovo messaggio",
         "messageReceived": "Hai ricevuto un nuovo messaggio",
-        "requestApproved": "Richiesta approvata",
-        "requestApprovedDesc": "La tua richiesta è stata approvata",
+        "requestApproved": "Candidatura approvata",
+        "requestApprovedDesc": "La tua candidatura è stata approvata",
         "actionRequired": "Azione richiesta",
         "actionRequiredDesc": "È richiesta un'azione da parte tua",
         "markAllRead": "Segna tutto come letto",
@@ -103,7 +103,9 @@
         "audit.read": "Leggere log di audit",
         "audit.manage": "Gestire log di audit",
         "organizationDemandeNotifications.read": "Leggere notifiche organizzazioni",
-        "organizationDemandeNotifications.manage": "Gestire notifiche organizzazioni"
+        "organizationDemandeNotifications.manage": "Gestire notifiche organizzazioni",
+        "messages_contact.read": "Leggere messaggi di contatto",
+        "messages_contact.manage": "Gestire messaggi di contatto"
     },
     "routes": {
         "adminDashboard": "/admin/dashboard",
@@ -133,7 +135,7 @@
         "organizationsList": "Organizzazioni",
         "departments": "Dipartimenti",
         "filieres": "Corsi",
-        "demandes": "Applicazione",
+        "demandes": "Applicazioni",
         "allDemandes": "Applicazioni",
         "invited": "Invitate",
         "documents": "Documenti",
@@ -618,7 +620,7 @@
             "welcome": "Benvenuto!"
         },
         "kpis": {
-            "myRequests": "Le mie richieste",
+            "myRequests": "Le mie candidature",
             "myDocuments": "I miei documenti",
             "myTransactions": "Le mie transazioni",
             "myPayments": "I miei pagamenti",
@@ -631,7 +633,7 @@
         },
         "activity": {
             "title": "Attività recente",
-            "requestLine": "Richiesta {{code}} — {{status}} — {{date}}",
+            "requestLine": "Candidatura {{code}} — {{status}} — {{date}}",
             "paymentLine": "Pagamento {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
             "none": "Nessuna attività recente"
         },
@@ -666,7 +668,7 @@
             "institute": "Istituto"
         },
         "kpis": {
-            "targetRequests": "Richieste target (totale)",
+            "targetRequests": "Candidature (totale)",
             "assignedRequests": "Richieste assegnate (totale)",
             "documents": "Documenti (totale/da tradurre/tradotti)",
             "subscriptions": "Abbonamenti (attivi/totale)",
@@ -675,15 +677,15 @@
         },
         "charts": {
             "targetVsAssigned": {
-                "title": "Richieste target vs assegnate",
+                "title": "Candidature vs assegnate",
                 "format": "{{percent}}% assegnate",
-                "target": "Target: {{n}}",
+                "target": "Candidature: {{n}}",
                 "assigned": "Assegnate: {{n}}"
             }
         },
         "tables": {
             "usersByRole": "Utenti per ruolo",
-            "targetByStatus": "Richieste target per stato",
+            "targetByStatus": "Candidature per stato",
             "assignedByStatus": "Richieste assegnate per stato",
             "paymentsByStatus": "Pagamenti per stato",
             "simpleCols": {
@@ -923,6 +925,107 @@
             "submit": "Conferma",
             "submitting": "Conferma in corso…"
         },
+        "toasts": {
+            "success": "Utente creato con successo",
+            "error": "Errore durante l'invio dei dati"
+        }
+    },
+    "userEditTraducteur": {
+        "title": "Modifica utente",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "users": "Utenti",
+            "edit": "Modifica"
+        },
+        "cardTitle": "Modifica utente",
+        "sections": {
+            "permissions": "Permessi"
+        },
+        "fields": {
+            "avatar": "Foto profilo",
+            "firstName": "Nome",
+            "lastName": "Cognome",
+            "email": "Email",
+            "phone": "Telefono",
+            "country": "Paese di residenza",
+            "status": "Stato",
+            "permissions": "Permessi"
+        },
+        "labels": {
+            "active": "Attivo"
+        },
+        "actions": {
+            "back": "Indietro",
+            "upload": "Carica",
+            "save": "Salva",
+            "saving": "Salvataggio..."
+        },
+        "loadingPermissions": "Caricamento permessi...",
+        "placeholders": {
+            "firstName": "Nome",
+            "lastName": "Cognome",
+            "email": "nome@esempio.com",
+            "phone": "Numero di telefono",
+            "country": "Seleziona un paese"
+        },
+        "validations": {
+            "firstName": "Il nome è obbligatorio",
+            "lastName": "Il cognome è obbligatorio",
+            "email": "Indirizzo email non valido"
+        },
+        "toasts": {
+            "loadError": "Impossibile caricare l'utente",
+            "updated": "Utente aggiornato",
+            "updateError": "Aggiornamento non riuscito"
+        }
+    },
+    "userCreateTraducteur": {
+        "pageTitle": "Nuovo utente (la mia organizzazione)",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "users": "Utenti",
+            "new": "Nuovo"
+        },
+        "cardTitle": "Nuovo utente",
+        "photo": {
+            "label": "Foto profilo",
+            "upload": "Carica"
+        },
+        "fields": {
+            "firstName": "Nome",
+            "lastName": "Cognome",
+            "email": "Email",
+            "phone": "Telefono",
+            "country": "Paese di residenza",
+            "password": "Password",
+            "confirmPassword": "Conferma password",
+            "permissions": "Permessi"
+        },
+        "placeholders": {
+            "firstName": "Nome",
+            "lastName": "Cognome",
+            "email": "nome@esempio.com",
+            "phone": "Numero di telefono",
+            "country": "Seleziona un paese"
+        },
+        "dividers": {
+            "permissions": "Permessi",
+            "password": "Password"
+        },
+        "validators": {
+            "firstNameRequired": "Il nome è obbligatorio",
+            "lastNameRequired": "Il cognome è obbligatorio",
+            "emailRequired": "L'email è obbligatoria",
+            "emailInvalid": "Email non valida",
+            "passwordRequired": "La password è obbligatoria",
+            "confirmRequired": "Conferma la password",
+            "confirmMismatch": "Le password non corrispondono"
+        },
+        "buttons": {
+            "submit": "Invia",
+            "submitting": "Invio..."
+        },
+        "loadingPermissions": "Caricamento permessi...",
         "toasts": {
             "success": "Utente creato con successo",
             "error": "Errore durante l'invio dei dati"
@@ -1778,13 +1881,13 @@
         "fields": {
             "code": "Codice",
             "status": "Stato",
-            "requestDate": "Data richiesta",
+            "requestDate": "Data candidatura",
             "updatedAt": "Ultimo aggiornamento",
             "createdAt": "Creato il",
             "deletedAt": "Eliminato il",
             "targetOrg": "Istituto",
             "assignedOrg": "Istituto traduttore",
-            "requester": "Richiedente",
+            "requester": "Candidato",
             "serie": "Indirizzo",
             "niveau": "Livello",
             "mention": "Menzione",
@@ -3797,7 +3900,7 @@
         "upload": {
             "title": "Attach Document",
             "labels": {
-                "demandeId": "Request ID",
+                "demandeId": "Application ID",
                 "ownerOrg": "Owner Organization",
                 "file": "File",
                 "urlOriginal": "Original File URL",
@@ -3957,14 +4060,14 @@
             }
         },
         "messages": {
-            "loadError": "Failed to load requests"
+            "loadError": "Failed to load applications"
         }
     },
     "institutDemandeurDetail": {
         "title": "Applicant Details",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Request List"
+            "demandes": "Application List"
         },
         "sections": {
             "personalInfo": "Personal Information",
@@ -3981,13 +4084,13 @@
         }
     },
     "traducteurDemandeDetails": {
-        "title": "Requests to Process",
+        "title": "Applications to Process",
         "breadcrumbs": {
             "dashboard": "Dashboard",
-            "demandes": "Requests to Process",
-            "detail": "Requests"
+            "demandes": "Applications to Process",
+            "detail": "Applications"
         },
-        "pageTitle": "Request Details",
+        "pageTitle": "Application Details",
         "buttons": {
             "back": "Back",
             "documents": "Documents & Translations"
@@ -3998,7 +4101,7 @@
         },
         "fields": {
             "code": "Code",
-            "dateDemande": "Request Date",
+            "dateDemande": "Application Date",
             "status": "Status",
             "demandeur": "Applicant",
             "targetOrg": "Istituto",
@@ -4050,7 +4153,7 @@
             "noContent": "No content to display."
         },
         "messages": {
-            "noData": "No request data.",
+            "noData": "No application data.",
             "loadError": "Load failed",
             "statusUpdated": "Status updated",
             "statusUpdateError": "Status update failed",
@@ -4070,7 +4173,7 @@
         }
     },
     "traducteurDemandeDocuments": {
-        "title": "Request Documents",
+        "title": "Application Documents",
         "breadcrumbs": {
             "dashboard": "Dashboard",
             "demandes": "Applicazioni",
@@ -4081,11 +4184,11 @@
             "refresh": "Refresh"
         },
         "sections": {
-            "demandeInfo": "Request Information"
+            "demandeInfo": "Application Information"
         },
         "columns": {
             "ownerOrg": "Institute (source)",
-            "demande": "Request",
+            "demande": "Application",
             "type": "Type",
             "original": "Original",
             "translated": "Translated"
@@ -4114,7 +4217,7 @@
             "save": "Save"
         },
         "messages": {
-            "loadDemandeError": "Failed to load request",
+            "loadDemandeError": "Failed to load application",
             "loadDocsError": "Error loading documents",
             "uploadWarning": "Select a translated PDF.",
             "uploadSuccess": "Translation uploaded (encryption in place)",

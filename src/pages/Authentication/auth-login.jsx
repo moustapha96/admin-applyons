@@ -82,9 +82,9 @@ export default function AuthLogin() {
                         {/* Carte centrale */}
                         <div className="max-w-[420px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md">
                             <div className="text-center">
-                                <Link to="/">
+                                <a href="https://www.applyons.com" >
                                     <img src={logoImg} className="mx-auto h-20" alt="applyons" />
-                                </Link>
+                                </a>
                             </div>
 
                             <h5 className="my-6 text-xl font-semibold text-slate-800 dark:text-white text-center">
