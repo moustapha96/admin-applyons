@@ -520,9 +520,9 @@ export default function UserProfile() {
                     <Descriptions.Item label={t("profilePage.fields.type")}>
                       <Tag color="blue">{userData.organization?.type || t("profilePage.org.unspecified")}</Tag>
                     </Descriptions.Item>
-                    <Descriptions.Item label={t("profilePage.fields.slug")}>
+                    {/* <Descriptions.Item label={t("profilePage.fields.slug")}>
                       <Text copyable>{userData.organization?.slug || t("profilePage.org.unspecified")}</Text>
-                    </Descriptions.Item>
+                    </Descriptions.Item> */}
                   </Descriptions>
                 </Card>
               </Col>

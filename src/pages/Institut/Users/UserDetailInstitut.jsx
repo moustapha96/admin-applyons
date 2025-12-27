@@ -246,9 +246,9 @@ export default function UserDetailInstitut() {
                 <Descriptions.Item label={t("userDetailInstitut.org.type")} span={1}>
                   {user.organization.type}
                 </Descriptions.Item>
-                <Descriptions.Item label={t("userDetailInstitut.org.slug")} span={3}>
+                {/* <Descriptions.Item label={t("userDetailInstitut.org.slug")} span={3}>
                   {user.organization.slug}
-                </Descriptions.Item>
+                </Descriptions.Item> */}
               </Descriptions>
             </>
           )}

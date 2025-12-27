@@ -446,9 +446,9 @@ export default function InstitutDemandeDetails() {
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.name")}>
               {orgDoc.ownerOrg?.name || t("institutDemandeDetails.tags.dash")}
             </Descriptions.Item>
-            <Descriptions.Item label={t("institutDemandeDetails.orgFields.slug")}>
+            {/* <Descriptions.Item label={t("institutDemandeDetails.orgFields.slug")}>
               <Tag>{orgDoc.ownerOrg?.slug || t("institutDemandeDetails.tags.dash")}</Tag>
-            </Descriptions.Item>
+            </Descriptions.Item> */}
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.type")}>
               <Tag color="blue">{orgDoc.ownerOrg?.type || t("institutDemandeDetails.tags.dash")}</Tag>
             </Descriptions.Item>
@@ -487,9 +487,9 @@ export default function InstitutDemandeDetails() {
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.nameShort")}>
               {demande.assignedOrg.name || t("institutDemandeDetails.tags.dash")}
             </Descriptions.Item>
-            <Descriptions.Item label={t("institutDemandeDetails.orgFields.slug")}>
+            {/* <Descriptions.Item label={t("institutDemandeDetails.orgFields.slug")}>
               <Tag>{demande.assignedOrg.slug || t("institutDemandeDetails.tags.dash")}</Tag>
-            </Descriptions.Item>
+            </Descriptions.Item> */}
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.type")}>
               <Tag color="purple">{demande.assignedOrg.type || t("institutDemandeDetails.tags.dash")}</Tag>
             </Descriptions.Item>

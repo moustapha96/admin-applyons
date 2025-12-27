@@ -195,9 +195,9 @@ export default function DocumentsList() {
                 r.ownerOrg ? (
                     <Space direction="vertical" size={0}>
                         <div>{r.ownerOrg.name}</div>
-                        <div style={{ fontSize: 12, color: "#666" }}>
+                        {/* <div style={{ fontSize: 12, color: "#666" }}>
                             {r.ownerOrg.type} {r.ownerOrg.slug ? `• ${r.ownerOrg.slug}` : ""}
-                        </div>
+                        </div> */}
                     </Space>
                 ) : (
                     <Tag>{r.ownerOrgId || "—"}</Tag>
@@ -342,9 +342,9 @@ export default function DocumentsList() {
                                 {drawerDoc.ownerOrg ? (
                                     <Space direction="vertical" size={0}>
                                         <span>{drawerDoc.ownerOrg.name}</span>
-                                        <span style={{ fontSize: 12, color: "#666" }}>
+                                        {/* <span style={{ fontSize: 12, color: "#666" }}>
                                             {drawerDoc.ownerOrg.type} {drawerDoc.ownerOrg.slug ? `• ${drawerDoc.ownerOrg.slug}` : ""}
-                                        </span>
+                                        </span> */}
                                     </Space>
                                 ) : (
                                     drawerDoc.ownerOrgId || "—"

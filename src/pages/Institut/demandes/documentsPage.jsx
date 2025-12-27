@@ -142,7 +142,7 @@ export default function DemandeDocumentsPage() {
           <Space size={6} wrap>
             <span>{org.name || t("demandeDocuments.table.dash")}</span>
             {org.type ? <Tag>{org.type}</Tag> : null}
-            {org.slug ? <Tag color="default">{org.slug}</Tag> : null}
+            {/* {org.slug ? <Tag color="default">{org.slug}</Tag> : null} */}
           </Space>
         );
       },
