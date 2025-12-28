@@ -74,12 +74,25 @@ export const PermissionsProvider = ({ children }) => {
   }, [user]);
 
   /**
+   * Vérifie si l'utilisateur est SUPER_ADMIN
+   */
+  const isSuperAdmin = useMemo(() => {
+    if (!user) return false;
+    const roles = Array.isArray(user.roles) ? user.roles : user.role ? [user.role] : [];
+    return roles.includes("SUPER_ADMIN");
+  }, [user]);
+
+  /**
    * Récupère les clés de permissions de l'utilisateur
    */
   const getUserPermissionKeys = useMemo(() => {
+    // Si SUPER_ADMIN, retourner toutes les clés de permissions disponibles
+    if (isSuperAdmin) {
+      return permissionKeys;
+    }
     const userPerms = getUserPermissions;
     return userPerms.map((p) => (typeof p === "string" ? p : p.key)).filter(Boolean);
-  }, [getUserPermissions]);
+  }, [getUserPermissions, isSuperAdmin, permissionKeys]);
 
   /**
    * Vérifie si l'utilisateur a une permission spécifique
@@ -87,9 +100,11 @@ export const PermissionsProvider = ({ children }) => {
   const hasPermission = useCallback(
     (permissionKey) => {
       if (!permissionKey) return false;
+      // SUPER_ADMIN a accès à tout
+      if (isSuperAdmin) return true;
       return getUserPermissionKeys.includes(permissionKey);
     },
-    [getUserPermissionKeys]
+    [getUserPermissionKeys, isSuperAdmin]
   );
 
   /**
@@ -98,9 +113,11 @@ export const PermissionsProvider = ({ children }) => {
   const hasAnyPermission = useCallback(
     (permissionKeys = []) => {
       if (!permissionKeys?.length) return true;
+      // SUPER_ADMIN a accès à tout
+      if (isSuperAdmin) return true;
       return permissionKeys.some((key) => hasPermission(key));
     },
-    [hasPermission]
+    [hasPermission, isSuperAdmin]
   );
 
   /**
@@ -109,9 +126,11 @@ export const PermissionsProvider = ({ children }) => {
   const hasAllPermissions = useCallback(
     (permissionKeys = []) => {
       if (!permissionKeys?.length) return true;
+      // SUPER_ADMIN a accès à tout
+      if (isSuperAdmin) return true;
       return permissionKeys.every((key) => hasPermission(key));
     },
-    [hasPermission]
+    [hasPermission, isSuperAdmin]
   );
 
   /**
@@ -147,10 +166,13 @@ export const PermissionsProvider = ({ children }) => {
    * Filtre les permissions selon un rôle spécifique
    * Si allowedRoles est null/undefined, la permission est accessible à tous les rôles
    * Si allowedRoles est un tableau, vérifie si le rôle est inclus
+   * SUPER_ADMIN a accès à toutes les permissions
    */
   const getPermissionsByRole = useCallback(
     (role) => {
       if (!role) return permissions;
+      // SUPER_ADMIN a accès à toutes les permissions
+      if (role === "SUPER_ADMIN") return permissions;
       return permissions.filter((perm) => {
         // Si allowedRoles est null/undefined, accessible à tous
         if (!perm.allowedRoles || perm.allowedRoles === null) return true;
