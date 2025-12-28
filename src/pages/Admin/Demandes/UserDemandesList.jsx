@@ -184,9 +184,9 @@ export default function AdminDemandesList() {
         r.assignedOrg ? (
           <div>
             <div>{r.assignedOrg.name}</div>
-            {r.assignedOrg.slug ? (
+            {/* {r.assignedOrg.slug ? (
               <div style={{ fontSize: 12, color: "#888" }}>{r.assignedOrg.slug}</div>
-            ) : null}
+            ) : null} */}
           </div>
         ) : (
           <Tag>{t("adminDemandesList.common.na")}</Tag>

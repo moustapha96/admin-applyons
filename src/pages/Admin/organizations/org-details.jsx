@@ -310,9 +310,9 @@ const OrganizationDetail = () => {
               </Tag>
             </Descriptions.Item>
 
-            <Descriptions.Item label="Slug" span={1}>
+            {/* <Descriptions.Item label="Slug" span={1}>
               <Tag icon={<GlobalOutlined />}>{organization.slug}</Tag>
-            </Descriptions.Item>
+            </Descriptions.Item> */}
 
             <Descriptions.Item label="Email" span={1}>
               <Space>

@@ -115,7 +115,7 @@ const OrganizationCreate = () => {
                     { required: true, message: "Le slug est obligatoire" },
                     { validator: handleSlugCheck },
                   ]}
-                >
+                > 
                   <Input prefix={<GlobalOutlined />} placeholder="Slug unique" />
                 </Form.Item>
               </Col>
