@@ -4,7 +4,7 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import path from 'path';
 
 const isProd = process.env.NODE_ENV === "production";
-const BACKEND_URL = process.env.VITE_BACKEND_URL || 
+const BACKEND_URL = process.env.VITE_BACKEND_URL ||
     (isProd ? 'https://back.applyons.com' : 'http://localhost:5000');
 
 export default defineConfig({
@@ -54,19 +54,66 @@ export default defineConfig({
                 drop_debugger: isProd
             }
         },
+        // rollupOptions: {
+        //     output: {
+        //         manualChunks: {
+        //             vendor: ['react', 'react-dom', 'react-router-dom'],
+        //             ui: ['antd', '@ant-design/icons'],
+        //             utils: ['lodash', 'moment', 'axios']
+        //         },
+        //         // En développement, pas de hash pour éviter le cache
+        //         entryFileNames: isProd ? `static/js/[name].[hash].js` : `static/js/[name].js`,
+        //         chunkFileNames: isProd ? `static/js/[name].[hash].js` : `static/js/[name].js`,
+        //         assetFileNames: isProd ? `static/[ext]/[name].[hash].[ext]` : `static/[ext]/[name].[ext]`
+        //     }
+        // },
         rollupOptions: {
             output: {
-                manualChunks: {
-                    vendor: ['react', 'react-dom', 'react-router-dom'],
-                    ui: ['antd', '@ant-design/icons'],
-                    utils: ['lodash', 'moment', 'axios']
+                manualChunks(id) {
+                    // 1) Tout ce qui vient de node_modules : on découpe intelligemment
+                    if (id.includes("node_modules")) {
+
+                        // React + routing
+                        if (id.includes("/react/") || id.includes("/react-dom/")) return "vendor_react";
+                        if (id.includes("react-router") || id.includes("react-router-dom")) return "vendor_router";
+
+                        // Ant Design (souvent très lourd)
+                        if (id.includes("antd") || id.includes("@ant-design")) return "vendor_antd";
+
+                        // Dates (moment est lourd, dayjs aussi selon plugins)
+                        if (id.includes("moment") || id.includes("dayjs")) return "vendor_dates";
+
+                        // Utils / HTTP
+                        if (id.includes("lodash")) return "vendor_lodash";
+                        if (id.includes("axios")) return "vendor_http";
+
+                        // Charts (si tu en as)
+                        if (id.includes("recharts") || id.includes("chart.js") || id.includes("echarts") || id.includes("apexcharts"))
+                            return "vendor_charts";
+
+                        // Editors (si tu en as)
+                        if (id.includes("quill") || id.includes("draft-js") || id.includes("slate") || id.includes("ckeditor") || id.includes("tinymce"))
+                            return "vendor_editor";
+
+                        // PDF / docs (si tu en as)
+                        if (id.includes("pdfjs-dist") || id.includes("jspdf") || id.includes("pdf-lib") || id.includes("docx"))
+                            return "vendor_docs";
+
+                        // Firebase (si tu en as)
+                        if (id.includes("firebase")) return "vendor_firebase";
+
+                        // Fallback : tout le reste des dépendances
+                        return "vendor_misc";
+                    }
                 },
-                // En développement, pas de hash pour éviter le cache
+
+                // Tes noms de fichiers (inchangés)
                 entryFileNames: isProd ? `static/js/[name].[hash].js` : `static/js/[name].js`,
                 chunkFileNames: isProd ? `static/js/[name].[hash].js` : `static/js/[name].js`,
-                assetFileNames: isProd ? `static/[ext]/[name].[hash].[ext]` : `static/[ext]/[name].[ext]`
+                assetFileNames: isProd ? `static/[ext]/[name].[hash].[ext]` : `static/[ext]/[name].[ext]`,
             }
         },
+
         chunkSizeWarningLimit: 1000,
         assetsInlineLimit: 4096,
         cssCodeSplit: true,
