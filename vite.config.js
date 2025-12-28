@@ -12,7 +12,7 @@ export default defineConfig({
         react()
     ],
     define: {
-        'process.env': process.env,
+        // 'process.env': process.env,
         'import.meta.env.VITE_BACKEND_URL': JSON.stringify(BACKEND_URL)
     },
     optimizeDeps: {
