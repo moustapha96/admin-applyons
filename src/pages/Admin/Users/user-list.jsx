@@ -46,11 +46,12 @@ const UserList = () => {
                 sortOrder: sortConfig.order === "ascend" ? "asc" : "desc",
             };
             const response = await userService.list(params);
-            setUsers(
-                currentUser?.role === "SUPER_ADMIN"
-                    ? response.users
-                    : response.users.filter(user => user.role !== "SUPER_ADMIN")
-            );
+            setUsers(response.users);
+            // setUsers(
+            //     currentUser?.role === "SUPER_ADMIN"
+            //         ? response.users
+            //         : response.users.filter(user => user.role !== "SUPER_ADMIN")
+            // );
             setPagination(prev => ({
                 ...prev,
                 total: response.pagination.total,
