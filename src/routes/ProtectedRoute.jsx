@@ -94,6 +94,7 @@ export const ROLES = {
   TRADUCTEUR: "TRADUCTEUR",
   SUPERVISEUR: "SUPERVISEUR",
   ADMIN: "ADMIN",
+  SUPER_ADMIN: "SUPER_ADMIN",
 };
 
 export const ProtectedRoute = ({
@@ -125,16 +126,22 @@ export const ProtectedRoute = ({
     return <Navigate to="/auth/lock-screen" replace />;
   }
 
-  // 4) Admin = accès total
-  if (user.role === ROLES.ADMIN) {
+  // 4) SUPER_ADMIN = accès total à tout (vérifier user.role et user.roles)
+  const userRoles = Array.isArray(user?.roles) ? user.roles : user?.role ? [user.role] : [];
+  if (userRoles.includes(ROLES.SUPER_ADMIN) || user.role === ROLES.SUPER_ADMIN) {
     return children ? <>{children}</> : <Outlet />;
   }
 
-  // 5) Rôles
+  // 5) Admin = accès total
+  if (user.role === ROLES.ADMIN || userRoles.includes(ROLES.ADMIN)) {
+    return children ? <>{children}</> : <Outlet />;
+  }
+
+  // 6) Rôles
   const hasAllowedRole =
     allowedRoles.length === 0 || allowedRoles.includes(user.role);
 
-  // 6) Permissions (on préfère .key, fallback .name ou string)
+  // 7) Permissions (on préfère .key, fallback .name ou string)
   const userPermissionKeys = Array.isArray(user.permissions)
     ? user.permissions.map((p) =>
         typeof p === "object" ? (p.key ?? p.name ?? "") : String(p)

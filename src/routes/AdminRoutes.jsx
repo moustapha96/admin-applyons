@@ -102,7 +102,7 @@ export const adminRoutes = (
       <Route
         element={
           <ProtectedRoute
-            allowedRoles={["ADMIN", "SUPERVISEUR"]}
+            allowedRoles={["ADMIN", "SUPER_ADMIN"]}
             requiredPermissions={["users.read"]}
           />
         }
@@ -113,7 +113,7 @@ export const adminRoutes = (
       <Route
         element={
           <ProtectedRoute
-            allowedRoles={["ADMIN", "SUPERVISEUR"]}
+              allowedRoles={["ADMIN", "SUPER_ADMIN"]}
             requiredPermissions={["users.manage", "users.create"]}
           />
         }

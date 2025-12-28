@@ -18,22 +18,35 @@ import { LiaSignOutAltSolid } from "react-icons/lia";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 
 /* -------------------- Helpers permissions / rôles -------------------- */
+const isSuperAdmin = (user) => {
+  if (!user) return false;
+  const userRoles = Array.isArray(user?.roles) ? user.roles : user?.role ? [user.role] : [];
+  return userRoles.includes("SUPER_ADMIN");
+};
+
 const getUserPermKeys = (user) =>
   Array.isArray(user?.permissions) ? user.permissions.map((p) => p.key) : [];
 
 const hasAnyPerm = (user, perms = []) => {
   if (!perms?.length) return true;
+  // SUPER_ADMIN a accès à tout
+  if (isSuperAdmin(user)) return true;
   const keys = getUserPermKeys(user);
   return perms.some((p) => keys.includes(p));
 };
 
 const hasRole = (user, roles = []) => {
   if (!roles?.length) return true;
+  // SUPER_ADMIN a accès à tout
+  if (isSuperAdmin(user)) return true;
   const userRoles = Array.isArray(user?.roles) ? user.roles : user?.role ? [user.role] : [];
   return roles.some((r) => userRoles.includes(r));
 };
 
 const canSee = (user, item, hasAnyPermission) => {
+  // SUPER_ADMIN a accès à tout
+  if (isSuperAdmin(user)) return true;
+  
   if (!hasAnyPermission) {
     // Fallback si hasAnyPermission n'est pas fourni
     return hasRole(user, item.roles) && hasAnyPerm(user, item.anyPerms);
@@ -128,6 +141,91 @@ const MENU_ADMIN = [
 
   { i18nKey: "profile", icon: <AiOutlineUser />, to: "/profile" },
 ];
+
+const MENU_SUPER_ADMIN = [
+  { i18nKey: "dashboard", icon: <AiOutlineLineChart />, to: "/admin/dashboard" },
+
+  {
+    i18nKey: "users",
+    icon: <AiOutlineUser />,
+    anyPerms: [],
+    children: [
+      { i18nKey: "userList", to: "/admin/users", anyPerms: [], icon: <MdOutlineGroups /> },
+      { i18nKey: "userNew", to: "/admin/users/create", anyPerms: [], icon: <AiOutlineUserAdd /> },
+    ],
+  },
+
+  {
+    i18nKey: "organizations",
+    icon: <FaRegHandshake />,
+    anyPerms: [],
+    children: [
+      { i18nKey: "organizationsList", to: "/admin/organisations", anyPerms: [], icon: <MdOutlineBusiness /> },
+      { i18nKey: "departments", to: "/admin/departments", anyPerms: [], icon: <MdOutlineSchool /> },
+      { i18nKey: "filieres", to: "/admin/filieres", anyPerms: [], icon: <MdOutlineSchool /> },
+      { i18nKey: "organizationInvites", to: "/admin/organization-invites", anyPerms: [], icon: <MdOutlineSend /> },
+      { i18nKey: "notifications", to: "/admin/organisations/notifications", anyPerms: [], icon: <BellOutlined /> },
+    ],
+  },
+
+  {
+    i18nKey: "demandes",
+    icon: <AiOutlineHistory />,
+    anyPerms: [],
+    children: [{ i18nKey: "allDemandes", to: "/admin/demandes", anyPerms: [], icon: <BiListCheck /> }],
+  },
+
+  {
+    i18nKey: "documents",
+    icon: <FaRegImages />,
+    anyPerms: [],
+    children: [{ i18nKey: "myDocuments", to: "/admin/documents", anyPerms: [], icon: <FaRegFileAlt /> }],
+  },
+
+  {
+    i18nKey: "payments",
+    icon: <MdOutlineEvent />,
+    anyPerms: [],
+    children: [
+      { i18nKey: "paymentList", to: "/admin/payments", anyPerms: [], icon: <MdOutlinePayment /> },
+      { i18nKey: "paymentStats", to: "/admin/payments/stats", anyPerms: [], icon: <MdOutlineBarChart /> },
+    ],
+  },
+
+  {
+    i18nKey: "abonnements",
+    icon: <BiNews />,
+    anyPerms: [],
+    children: [
+      { i18nKey: "abonnementList", to: "/admin/abonnements", anyPerms: [], icon: <BiListCheck /> },
+      { i18nKey: "abonnementStats", to: "/admin/abonnements/stats", anyPerms: [], icon: <MdOutlineBarChart /> },
+    ],
+  },
+
+  {
+    i18nKey: "contacts",
+    icon: <MdOutlineEmail />,
+    anyPerms: [],
+    children: [{ i18nKey: "messages", to: "/admin/contacts", anyPerms: [], icon: <MdOutlineEmail /> }],
+  },
+
+  {
+    i18nKey: "configurations",
+    icon: <RiSettings4Line />,
+    roles: ["ADMIN", "SUPER_ADMIN"],
+    anyPerms: [],
+    children: [
+      { i18nKey: "settings", to: "/admin/config", anyPerms: [], icon: <RiSettings4Line /> },
+      { i18nKey: "mailer", to: "/admin/mailer", anyPerms: [], icon: <RiMailSettingsLine /> },
+      { i18nKey: "auditLogs", to: "/admin/audit-logs", anyPerms: [], icon: <RiFileList3Line /> },
+      { i18nKey: "permissions", to: "/admin/permissions", anyPerms: [], icon: <RiShieldUserLine /> },
+      { i18nKey: "apiRoutes", to: "/admin/api-routes", anyPerms: [], icon: <RiRouteLine /> },
+    ],
+  },
+
+  { i18nKey: "profile", icon: <AiOutlineUser />, to: "/profile" },
+];
+
 
 const MENU_TRADUCTEUR = [
   { i18nKey: "dashboard", icon: <AiOutlineLineChart />, to: "/traducteur/dashboard" },
@@ -255,7 +353,7 @@ function buildStaffMenuSuperviseur(orgId) {
 const resolveMenuForUser = (user, handleLogOut) => {
   const roles = Array.isArray(user?.roles) ? user.roles : user?.role ? [user.role] : [];
   if (!roles.length) return [...MENU_DEMANDEUR, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
-  if (roles.includes("SUPER_ADMIN")) return [...MENU_ADMIN, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
+  if (roles.includes("SUPER_ADMIN")) return [...MENU_SUPER_ADMIN, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
   if (roles.includes("ADMIN")) return [...MENU_ADMIN, { i18nKey: "logout", icon: <LiaSignOutAltSolid />, onClick: handleLogOut }];
   if ((roles.includes("INSTITUT") || roles.includes("SUPERVISEUR")) && user?.organization?.type !== "TRADUCTEUR") {
     return buildStaffMenu(user?.organization?.id, handleLogOut);
@@ -271,6 +369,7 @@ const resolveMenuForUser = (user, handleLogOut) => {
 /* -------------------- Sidebar -------------------- */
 export default function Sidebar({ isCollapsed = false }) {
   const { user, logout } = useAuth();
+  console.log(user);
   const { hasAnyPermission } = usePermissions();
   const { t } = useTranslation();
   const location = useLocation();
