@@ -2084,16 +2084,17 @@
             },
             "roles": {
                 "DEMANDEUR": "申请人",
-                "INSTITUT": "学院/学校/公司",
+                "INSTITUT": "大学/学院/研究所",
                 "TRADUCTEUR": "翻译员/代理机构",
                 "BANQUE": "银行/金融机构"
             },
             "orgTypes": {
                 "UNIVERSITE": "大学 / 学院",
+                "INSTITUT": "研究所",
                 "COLLEGE": "学院",
                 "LYCEE": "高中",
                 "ENTREPRISE": "公司",
-                "TRADUCTEUR": "翻译代理机构",
+                "TRADUCTEUR": "翻译机构",
                 "BANQUE": "银行"
             },
             "genders": {
@@ -2112,7 +2113,7 @@
                 "orgNameBanque": "您的银行名称",
                 "orgEmail": "contact@organization.com",
                 "orgPhone": "+86 123 4567 8900",
-                "orgWebsite": "https://organization.com",
+                "orgWebsite": "www.organization.com",
                 "orgAddress": "完整组织地址",
                 "selectType": "选择类型"
             }

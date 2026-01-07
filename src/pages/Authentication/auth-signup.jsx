@@ -23,7 +23,7 @@ export default function Signup() {
     lastName: "",
     phone: "",
     adress: "",
-    country: "SN",
+    country: "SN", // Code ISO du pays (ex: "SN" pour Sénégal)
     gender: "MALE",
     role: "DEMANDEUR",
     birthPlace: "",         // NEW
@@ -54,9 +54,10 @@ export default function Signup() {
   const orgTypeOptions = {
     INSTITUT: [
       { value: "UNIVERSITE", label: t('auth.signup.orgTypes.UNIVERSITE') },
+      { value: "INSTITUT", label: t('auth.signup.orgTypes.INSTITUT') },
       { value: "COLLEGE", label: t('auth.signup.orgTypes.COLLEGE') },
       { value: "LYCEE", label: t('auth.signup.orgTypes.LYCEE') },
-      { value: "ENTREPRISE", label: t('auth.signup.orgTypes.ENTREPRISE') },
+      // { value: "ENTREPRISE", label: t('auth.signup.orgTypes.ENTREPRISE') },
     ],
     TRADUCTEUR: [{ value: "TRADUCTEUR", label: t('auth.signup.orgTypes.TRADUCTEUR') }],
     BANQUE: [{ value: "BANQUE", label: t('auth.signup.orgTypes.BANQUE') }],
@@ -79,13 +80,19 @@ export default function Signup() {
   const roleNeedsOrganization = (role) => ["INSTITUT", "TRADUCTEUR", "BANQUE"].includes(role);
   const visibleOrgTypes = useMemo(() => orgTypeOptions[formData.role] || [], [formData.role]);
 
+  // Fonction pour obtenir le dial_code du pays sélectionné
+  const getDialCode = useMemo(() => {
+    const selectedCountry = countries.find(c => c.code === formData.country || c.name === formData.country);
+    return selectedCountry?.dial_code || "+221"; // +221 est le code par défaut pour le Sénégal
+  }, [formData.country]);
+
   const isValidBirthDate = (yyyyMmDd) => {
     if (!yyyyMmDd) return false;
     const d = new Date(yyyyMmDd);
     const today = new Date();
     if (Number.isNaN(d.getTime())) return false;
     // entre 1900-01-01 et aujourd'hui
-    const min = new Date("1900-01-01");
+    const min = new Date("1980-01-01");
     return d >= min && d <= today;
   };
 
@@ -166,6 +173,18 @@ export default function Signup() {
       .replace(/-+/g, "-")
       .trim();
 
+  // Fonction pour formater le numéro de téléphone avec le dial_code
+  const formatPhoneWithDialCode = (phoneNumber) => {
+    if (!phoneNumber) return "";
+    const phone = phoneNumber.trim();
+    // Si le numéro commence déjà par le dial_code, on ne l'ajoute pas
+    if (phone.startsWith(getDialCode)) {
+      return phone;
+    }
+    // Sinon, on ajoute le dial_code
+    return `${getDialCode}${phone}`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -187,7 +206,7 @@ export default function Signup() {
           role: "DEMANDEUR",
           firstName: formData.firstName,
           lastName: formData.lastName,
-          phone: formData.phone,
+          phone: formatPhoneWithDialCode(formData.phone),
           country: formData.country,
           adress: formData.adress,
           gender: formData.gender,
@@ -208,7 +227,7 @@ export default function Signup() {
             role: formData.role,
             firstName: formData.firstName,
             lastName: formData.lastName,
-            phone: formData.phone,
+            phone: formatPhoneWithDialCode(formData.phone),
             country: formData.country,
             adress: formData.adress,
             gender: formData.gender,
@@ -266,16 +285,16 @@ export default function Signup() {
                 </Link>
               </div>
 
-              <h5 className="mb-6 text-xl font-bold text-slate-800 dark:text-white text-center">
+              <h3 className="mb-6 font-bold !important text-2xl text-slate-800 dark:text-white text-center">
                 {t('auth.signup.title')}
-              </h5>
+              </h3>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Bloc Infos personnelles + rôle */}
                 <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-lg">
-                  <h6 className="mb-4 text-lg font-bold text-slate-700 dark:text-slate-200">
+                  <h3 className="mb-4 font-bold !important text-2xl text-slate-700 dark:text-slate-200">
                     {t('auth.signup.personalInfo')}
-                  </h6>
+                  </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Rôle en premier */}
@@ -397,15 +416,20 @@ export default function Signup() {
 
                     <div>
                       <label className="block text-sm font-medium mb-1">{t('auth.signup.phone')}</label>
-                      <input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]"
-                        placeholder={t('auth.signup.placeholders.phone')}
-                        value={formData.phone}
-                        onChange={handleChange}
-                      />
+                      <div className="flex">
+                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                          {getDialCode}
+                        </span>
+                        <input
+                          id="phone"
+                          name="phone"
+                          type="tel"
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]"
+                          placeholder={t('auth.signup.placeholders.phone')}
+                          value={formData.phone}
+                          onChange={handleChange}
+                        />
+                      </div>
                     </div>
 
                     <div>
@@ -418,7 +442,7 @@ export default function Signup() {
                         onChange={handleChange}
                       >
                         {countries.map((opt) => (
-                          <option key={opt.name} value={opt.name}>
+                          <option key={opt.code} value={opt.code}>
                             {opt.name}
                           </option>
                         ))}
@@ -504,13 +528,13 @@ export default function Signup() {
                 {/* Bloc Organisation (affiché uniquement si le rôle le requiert) */}
                 {roleNeedsOrganization(formData.role) && (
                   <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-lg">
-                    <h6 className="mb-4 text-lg font-medium text-slate-700 dark:text-slate-200">
+                    <h3 className="mb-4 font-medium !important text-2xl text-slate-700 dark:text-slate-200">
                       {formData.role === "INSTITUT"
                         ? t('auth.signup.orgInfo.institut')
                         : formData.role === "TRADUCTEUR"
                           ? t('auth.signup.orgInfo.traducteur')
                           : t('auth.signup.orgInfo.banque')}
-                    </h6>
+                    </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
@@ -587,7 +611,7 @@ export default function Signup() {
                         <input
                           id="orgWebsite"
                           name="orgWebsite"
-                          type="url"
+                          type="text"
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]"
                           placeholder={t('auth.signup.placeholders.orgWebsite')}
                           value={formData.orgWebsite}

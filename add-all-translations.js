@@ -103,7 +103,7 @@ const newTranslations = {
                 orgNameBanque: "Nom de votre banque",
                 orgEmail: "contact@organisation.com",
                 orgPhone: "+221 77 000 00 00",
-                orgWebsite: "https://organisation.com",
+                orgWebsite: "www.organisation.com",
                 orgAddress: "Adresse complète de l'organisation",
                 selectType: "Sélectionnez un type"
             }
@@ -294,7 +294,7 @@ const translations = {
                 },
                 roles: {
                     DEMANDEUR: "Applicant",
-                    INSTITUT: "Institute/School/Company",
+                    INSTITUT: "University/College/Institute",
                     TRADUCTEUR: "Translator/Agency",
                     BANQUE: "Bank/Financial institution"
                 },
@@ -322,7 +322,7 @@ const translations = {
                     orgNameBanque: "Your bank name",
                     orgEmail: "contact@organization.com",
                     orgPhone: "+1 234 567 8900",
-                    orgWebsite: "https://organization.com",
+                    orgWebsite: "www.organization.com",
                     orgAddress: "Full organization address",
                     selectType: "Select a type"
                 }
@@ -537,7 +537,7 @@ const translations = {
                     orgNameBanque: "Nombre de tu banco",
                     orgEmail: "contacto@organizacion.com",
                     orgPhone: "+34 123 456 789",
-                    orgWebsite: "https://organizacion.com",
+                    orgWebsite: "www.organizacion.com",
                     orgAddress: "Dirección completa de la organización",
                     selectType: "Selecciona un tipo"
                 }
@@ -749,7 +749,7 @@ const translations = {
                     orgNameBanque: "Nome della tua banca",
                     orgEmail: "contatto@organizzazione.com",
                     orgPhone: "+39 123 456 7890",
-                    orgWebsite: "https://organizzazione.com",
+                    orgWebsite: "www.organizzazione.com",
                     orgAddress: "Indirizzo completo dell'organizzazione",
                     selectType: "Seleziona un tipo"
                 }
@@ -961,7 +961,7 @@ const translations = {
                     orgNameBanque: "Ihr Bankname",
                     orgEmail: "kontakt@organisation.com",
                     orgPhone: "+49 123 456 7890",
-                    orgWebsite: "https://organisation.com",
+                    orgWebsite: "www.organisation.com",
                     orgAddress: "Vollständige Organisationsadresse",
                     selectType: "Typ auswählen"
                 }
@@ -1173,7 +1173,7 @@ const translations = {
                     orgNameBanque: "您的银行名称",
                     orgEmail: "contact@organization.com",
                     orgPhone: "+86 123 4567 8900",
-                    orgWebsite: "https://organization.com",
+                    orgWebsite: "www.organization.com",
                     orgAddress: "完整组织地址",
                     selectType: "选择类型"
                 }

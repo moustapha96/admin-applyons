@@ -2083,16 +2083,17 @@
             },
             "roles": {
                 "DEMANDEUR": "Antragsteller",
-                "INSTITUT": "Institut/Schule/Unternehmen",
+                "INSTITUT": "Universität/College/Institut",
                 "TRADUCTEUR": "Übersetzer/Agentur",
                 "BANQUE": "Bank/Finanzinstitut"
             },
             "orgTypes": {
                 "UNIVERSITE": "Universität / Institut",
+                "INSTITUT": "Institut",
                 "COLLEGE": "College",
                 "LYCEE": "Gymnasium",
                 "ENTREPRISE": "Unternehmen",
-                "TRADUCTEUR": "Übersetzungsagentur",
+                "TRADUCTEUR": "Übersetzungs-Agentur",
                 "BANQUE": "Bank"
             },
             "genders": {

@@ -2173,16 +2173,17 @@
             },
             "roles": {
                 "DEMANDEUR": "Applicant",
-                "INSTITUT": "Institute/School/Company",
+                "INSTITUT": "University/College/Institute",
                 "TRADUCTEUR": "Translator/Agency",
                 "BANQUE": "Bank/Financial institution"
             },
             "orgTypes": {
                 "UNIVERSITE": "University / Institute",
+                "INSTITUT": "Institute",
                 "COLLEGE": "College",
                 "LYCEE": "High School",
                 "ENTREPRISE": "Company",
-                "TRADUCTEUR": "Translation agency",
+                "TRADUCTEUR": "Translation Agency",
                 "BANQUE": "Bank"
             },
             "genders": {
@@ -2194,14 +2195,14 @@
                 "firstName": "John",
                 "lastName": "Doe",
                 "email": "johndoe@example.com",
-                "phone": "+1 234 567 8900",
+                "phone": "77 000 00 00",
                 "address": "123 Main St, City",
                 "orgNameInstitut": "Your institution name",
                 "orgNameTraducteur": "Your agency name",
                 "orgNameBanque": "Your bank name",
                 "orgEmail": "contact@organization.com",
                 "orgPhone": "+1 234 567 8900",
-                "orgWebsite": "https://organization.com",
+                "orgWebsite": "www.organization.com",
                 "orgAddress": "Full organization address",
                 "selectType": "Select a type"
             }

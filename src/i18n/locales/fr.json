@@ -2167,16 +2167,17 @@
             },
             "roles": {
                 "DEMANDEUR": "Demandeur",
-                "INSTITUT": "Institut/École/Entreprise",
+                "INSTITUT": "Université/Collège/Institut",
                 "TRADUCTEUR": "Traducteur/Agence",
                 "BANQUE": "Banque/Institution financière"
             },
             "orgTypes": {
                 "UNIVERSITE": "Université / Institut",
+                "INSTITUT": "Institut",
                 "COLLEGE": "Collège",
                 "LYCEE": "Lycée",
                 "ENTREPRISE": "Entreprise",
-                "TRADUCTEUR": "Agence de traduction",
+                "TRADUCTEUR": "Agence de Traductions",
                 "BANQUE": "Banque"
             },
             "genders": {
