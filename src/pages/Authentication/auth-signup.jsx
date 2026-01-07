@@ -56,7 +56,7 @@ export default function Signup() {
       { value: "UNIVERSITE", label: t('auth.signup.orgTypes.UNIVERSITE') },
       { value: "INSTITUT", label: t('auth.signup.orgTypes.INSTITUT') },
       { value: "COLLEGE", label: t('auth.signup.orgTypes.COLLEGE') },
-      { value: "LYCEE", label: t('auth.signup.orgTypes.LYCEE') },
+      // { value: "LYCEE", label: t('auth.signup.orgTypes.LYCEE') },
       // { value: "ENTREPRISE", label: t('auth.signup.orgTypes.ENTREPRISE') },
     ],
     TRADUCTEUR: [{ value: "TRADUCTEUR", label: t('auth.signup.orgTypes.TRADUCTEUR') }],

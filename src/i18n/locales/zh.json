@@ -377,7 +377,8 @@
         "orgTypes": {
             "COLLEGE": "学院",
             "BANQUE": "银行",
-            "UNIVERSITE": "大学 / 学院",
+            "UNIVERSITE": "大学",
+            "INSTITUT":  "学院",
             "LYCEE": "中学",
             "ENTREPRISE": "公司",
             "TRADUCTEUR": "翻译机构"

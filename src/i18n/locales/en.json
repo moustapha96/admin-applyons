@@ -223,9 +223,10 @@
             "types": {
                 "college": "College",
                 "banque": "Bank",
-                "universite": "University / Institute",
+                "universite": "University",
                 "lycee": "High School",
                 "entreprise": "Company",
+                "institut": "Institute",
                 "traducteur": "Translator"
             },
             "placeholders": {
@@ -380,8 +381,9 @@
         "orgTypes": {
             "COLLEGE": "College",
             "BANQUE": "Bank",
-            "UNIVERSITE": "University / Institute",
-            "LYCEE": "High school",
+            "UNIVERSITE": "University",
+            "INSTITUT": "Institute",
+            "LYCEE": "High School",
             "ENTREPRISE": "Company",
             "TRADUCTEUR": "Translator"
         }
@@ -389,8 +391,9 @@
     "orgTypes": {
         "COLLEGE": "College",
         "BANQUE": "Bank",
-        "UNIVERSITE": "University / Institute",
-        "LYCEE": "High school",
+        "UNIVERSITE": "University",
+        "INSTITUT": "Institute",
+        "LYCEE": "High School",
         "ENTREPRISE": "Company",
         "TRADUCTEUR": "Translator"
     },
@@ -2178,7 +2181,7 @@
                 "BANQUE": "Bank/Financial institution"
             },
             "orgTypes": {
-                "UNIVERSITE": "University / Institute",
+                "UNIVERSITE": "University",
                 "INSTITUT": "Institute",
                 "COLLEGE": "College",
                 "LYCEE": "High School",
@@ -2447,7 +2450,8 @@
             "BANQUE": "Bank",
             "COLLEGE": "College",
             "LYCEE": "High School",
-            "UNIVERSITE": "University / Institute"
+            "UNIVERSITE": "University",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "Senegal",
@@ -4082,7 +4086,8 @@
             "BANQUE": "Bank",
             "COLLEGE": "College",
             "LYCEE": "High School",
-            "UNIVERSITE": "University / Institute"
+            "UNIVERSITE": "University",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "Senegal",

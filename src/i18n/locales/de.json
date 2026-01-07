@@ -377,7 +377,8 @@
         "orgTypes": {
             "COLLEGE": "College",
             "BANQUE": "Bank",
-            "UNIVERSITE": "Universität / Institut",
+            "UNIVERSITE": "Universität",
+            "INSTITUT": "Institut",
             "LYCEE": "Gymnasium",
             "ENTREPRISE": "Unternehmen",
             "TRADUCTEUR": "Übersetzer"

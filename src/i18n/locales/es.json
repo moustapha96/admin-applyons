@@ -381,8 +381,9 @@
         "orgTypes": {
             "COLLEGE": "Colegio",
             "BANQUE": "Banco",
-            "UNIVERSITE": "Universidad / Instituto",
-            "LYCEE": "Instituto",
+            "UNIVERSITE": "Universidad",
+            "INSTITUT": "Instituto",
+            "LYCEE": "Liceo",
             "ENTREPRISE": "Empresa",
             "TRADUCTEUR": "Traductor"
         }
@@ -2092,7 +2093,7 @@
                 "BANQUE": "Banco/Institución financiera"
             },
             "orgTypes": {
-                "UNIVERSITE": "Universidad / Instituto",
+                "UNIVERSITE": "Universidad",
                 "INSTITUT": "Instituto",
                 "COLLEGE": "Colegio",
                 "LYCEE": "Liceo",
