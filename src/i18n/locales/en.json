@@ -2384,7 +2384,7 @@
             "new": "New user",
             "details": "Details",
             "edit": "Edit",
-            "delete": "Archive"
+            "delete": "Delete"
         },
         "roles": {
             "ADMIN": "Administrator",
@@ -2403,7 +2403,10 @@
         "messages": {
             "archiveSuccess": "User archived successfully",
             "archiveError": "Archive failed",
-            "loadError": "Error fetching users"
+            "loadError": "Error fetching users",
+            "deleteSuccess": "User deleted successfully",
+            "deleteError": "Error deleting user",
+            "deleteWarning": "This action is irreversible. The user will be archived."
         },
         "common": {
             "na": "N/A"

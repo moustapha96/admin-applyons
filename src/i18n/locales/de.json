@@ -2294,7 +2294,7 @@
             "new": "Neuer Benutzer",
             "details": "Details",
             "edit": "Bearbeiten",
-            "delete": "Archivieren"
+            "delete": "Löschen"
         },
         "roles": {
             "ADMIN": "Administrator",
@@ -2313,7 +2313,10 @@
         "messages": {
             "archiveSuccess": "Benutzer erfolgreich archiviert",
             "archiveError": "Archivierung fehlgeschlagen",
-            "loadError": "Fehler beim Abrufen der Benutzer"
+            "loadError": "Fehler beim Abrufen der Benutzer",
+            "deleteSuccess": "Benutzer erfolgreich gelöscht",
+            "deleteError": "Fehler beim Löschen des Benutzers",
+            "deleteWarning": "Diese Aktion ist unwiderruflich. Der Benutzer wird archiviert."
         },
         "common": {
             "na": "N/A"

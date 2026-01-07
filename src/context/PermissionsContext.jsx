@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 "use client";
-import { createContext, useState, useEffect, useCallback, useMemo } from "react";
+import { createContext, useState, useEffect, useCallback, useMemo, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../hooks/useAuth";
+import { AuthContext } from "./AuthContext";
 import permissionService from "../services/permissionService";
 
 export const PermissionsContext = createContext(undefined);
@@ -13,7 +13,14 @@ export const PermissionsContext = createContext(undefined);
  */
 export const PermissionsProvider = ({ children }) => {
   const { t } = useTranslation();
-  const { user, isAuthenticated } = useAuth();
+  
+  // Utiliser useContext directement pour éviter l'erreur si AuthProvider n'est pas encore monté
+  const authContext = useContext(AuthContext);
+  
+  // Si le contexte n'est pas disponible, utiliser des valeurs par défaut
+  const user = authContext?.user || null;
+  const isAuthenticated = authContext?.isAuthenticated || false;
+  
   const [permissions, setPermissions] = useState([]);
   const [permissionKeys, setPermissionKeys] = useState([]);
   const [loading, setLoading] = useState(false);

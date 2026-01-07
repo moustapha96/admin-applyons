@@ -32,6 +32,8 @@ const authService = {
         axiosInstance.post("/auth/admin/set-enabled", { userId, enabled }),
     impersonate: (targetUserId) =>
         axiosInstance.post("/auth/admin/impersonate", { targetUserId }),
+    adminDeleteUser: (userId) =>
+        axiosInstance.delete("/auth/admin/delete-user", { data: { userId } }),
 };
 
 export default authService;

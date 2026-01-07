@@ -5,6 +5,7 @@ import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import { PiPlusDuotone } from "react-icons/pi";
 import { useAuth } from "../../../hooks/useAuth";
 import userService from "../../../services/userService";
+import authService from "../../../services/authService";
 import { getPermissionLabel } from "../../../auth/permissions"
 import { PERMS } from "../../../auth/permissions";
 import { useTranslation } from "react-i18next";
@@ -15,6 +16,7 @@ const { Search } = Input;
 const UserList = () => {
     const { t } = useTranslation();
     const { user: currentUser } = useAuth();
+    console.log(currentUser);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [pagination, setPagination] = useState({
@@ -107,11 +109,12 @@ const UserList = () => {
 
     const handleDeleteUser = async (userId) => {
         try {
-            await userService.archive(userId);
-            message.success(t("adminUsers.messages.archiveSuccess"));
+            await authService.adminDeleteUser(userId);
+            message.success(t("adminUsers.messages.deleteSuccess") || t("adminUsers.messages.archiveSuccess"));
             fetchUsers();
         } catch (error) {
-            message.error(t("adminUsers.messages.archiveError"));
+            const errorMessage = error?.response?.data?.message || error?.message || t("adminUsers.messages.deleteError") || t("adminUsers.messages.archiveError");
+            message.error(errorMessage);
             console.error(error);
         }
     };
@@ -226,14 +229,16 @@ const UserList = () => {
                     <Button type="link">
                         <Link to={`/admin/users/${record.id}/edit`}>{t("adminUsers.actions.edit")}</Link>
                     </Button>
-                    {currentUser?.role === "SUPER_ADMIN" && record.role !== "SUPER_ADMIN" && (
+                    {((currentUser?.role === "SUPER_ADMIN" || currentUser?.role === "ADMIN") && 
+                      record.role !== "SUPER_ADMIN" && 
+                      record.id !== currentUser?.id) && (
                         <Button
                             type="link"
                             danger
                             onClick={() => {
                                 Modal.confirm({
                                     title: t("adminUsers.actions.delete") + " ?",
-                                    content: "Cette action est irréversible.",
+                                    content: t("adminUsers.messages.deleteWarning") || "Cette action est irréversible. L'utilisateur sera archivé.",
                                     okText: t("adminUsers.actions.delete"),
                                     okType: "danger",
                                     cancelText: t("common.cancel"),

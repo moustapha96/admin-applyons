@@ -2295,7 +2295,7 @@
             "new": "Nuovo utente",
             "details": "Dettagli",
             "edit": "Modifica",
-            "delete": "Archivia"
+            "delete": "Elimina"
         },
         "roles": {
             "ADMIN": "Amministratore",
@@ -2314,7 +2314,10 @@
         "messages": {
             "archiveSuccess": "Utente archiviato con successo",
             "archiveError": "Archiviazione fallita",
-            "loadError": "Errore nel recupero degli utenti"
+            "loadError": "Errore nel recupero degli utenti",
+            "deleteSuccess": "Utente eliminato con successo",
+            "deleteError": "Errore nell'eliminazione dell'utente",
+            "deleteWarning": "Questa azione è irreversibile. L'utente sarà archiviato."
         },
         "common": {
             "na": "N/A"

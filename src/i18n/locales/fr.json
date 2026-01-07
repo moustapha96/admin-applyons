@@ -2418,7 +2418,7 @@
             "new": "Nouvel utilisateur",
             "details": "Détails",
             "edit": "Modifier",
-            "delete": "Archiver"
+            "delete": "Supprimer"
         },
         "roles": {
             "ADMIN": "Administrateur",
@@ -2437,7 +2437,10 @@
         "messages": {
             "archiveSuccess": "Utilisateur archivé avec succès",
             "archiveError": "Échec de l'archivage",
-            "loadError": "Erreur lors de la récupération des utilisateurs"
+            "loadError": "Erreur lors de la récupération des utilisateurs",
+            "deleteSuccess": "Utilisateur supprimé avec succès",
+            "deleteError": "Erreur lors de la suppression de l'utilisateur",
+            "deleteWarning": "Cette action est irréversible. L'utilisateur sera archivé."
         },
         "common": {
             "na": "N/A"

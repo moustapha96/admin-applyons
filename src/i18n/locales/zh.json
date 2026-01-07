@@ -2295,7 +2295,7 @@
             "new": "新用户",
             "details": "详情",
             "edit": "编辑",
-            "delete": "归档"
+            "delete": "删除"
         },
         "roles": {
             "ADMIN": "管理员",
@@ -2314,7 +2314,10 @@
         "messages": {
             "archiveSuccess": "用户已成功归档",
             "archiveError": "归档失败",
-            "loadError": "获取用户时出错"
+            "loadError": "获取用户时出错",
+            "deleteSuccess": "用户已成功删除",
+            "deleteError": "删除用户时出错",
+            "deleteWarning": "此操作不可逆。用户将被归档。"
         },
         "common": {
             "na": "N/A"
