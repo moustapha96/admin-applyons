@@ -9,14 +9,17 @@ const BACKEND_URL = process.env.VITE_BACKEND_URL ||
 
 export default defineConfig({
     plugins: [
-        react()
+        react({
+            jsxRuntime: 'automatic',
+            jsxImportSource: 'react'
+        })
     ],
     define: {
         // 'process.env': process.env,
         'import.meta.env.VITE_BACKEND_URL': JSON.stringify(BACKEND_URL)
     },
     optimizeDeps: {
-        include: ['react', 'react-dom', 'react-router-dom'],
+        include: ['react', 'react-dom', 'react/jsx-runtime', 'react-router-dom', 'antd'],
         exclude: [
             '@fullcalendar/core',
             '@fullcalendar/daygrid',
@@ -73,12 +76,38 @@ export default defineConfig({
                     // 1) Tout ce qui vient de node_modules : on découpe intelligemment
                     if (id.includes("node_modules")) {
 
-                        // React + routing
-                        if (id.includes("/react/") || id.includes("/react-dom/")) return "vendor_react";
-                        if (id.includes("react-router") || id.includes("react-router-dom")) return "vendor_router";
-
-                        // Ant Design (souvent très lourd)
-                        if (id.includes("antd") || id.includes("@ant-design")) return "vendor_antd";
+                        // SOLUTION DÉFINITIVE: Mettre TOUS les packages React dans le même chunk
+                        // Cela garantit que React est toujours disponible avant qu'ils ne soient utilisés
+                        
+                        // React core (doit être en premier)
+                        if (id.includes("/react/") || id.includes("/react-dom/") || id.includes("react/jsx-runtime")) {
+                            return "vendor_react";
+                        }
+                        
+                        // Tous les packages qui dépendent de React (doivent être dans vendor_react)
+                        if (
+                            id.includes("react-router") || 
+                            id.includes("react-router-dom") ||
+                            id.includes("react-i18next") ||
+                            id.includes("react-quill") ||
+                            id.includes("react-icons") ||
+                            id.includes("react-feather") ||
+                            id.includes("react-apexcharts") ||
+                            id.includes("react-countup") ||
+                            id.includes("react-simple-maps") ||
+                            id.includes("react-icons") ||
+                            id.includes("@fullcalendar/react") ||
+                            id.includes("simplebar-react") ||
+                            id.includes("tiny-slider-react") ||
+                            id.includes("yet-another-react-lightbox") ||
+                            id.includes("@paypal/react-paypal-js") ||
+                            id.includes("@stripe/react-stripe-js") ||
+                            id.includes("@uiw/react-md-editor") ||
+                            id.includes("antd") || 
+                            id.includes("@ant-design")
+                        ) {
+                            return "vendor_react";
+                        }
 
                         // Dates (moment est lourd, dayjs aussi selon plugins)
                         if (id.includes("moment") || id.includes("dayjs")) return "vendor_dates";
