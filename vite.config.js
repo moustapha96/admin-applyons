@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-const BACKEND_URL = process.env.VITE_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = process.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
 export default defineConfig({
     plugins: [react()],
@@ -43,6 +43,6 @@ export default defineConfig({
         },
     },
     build: {
-        outDir: '../build-admin',
+        outDir: '../admin.applyons.com',
     },
 });
