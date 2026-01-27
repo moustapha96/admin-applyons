@@ -399,7 +399,7 @@ export default function DocumentsList() {
                     width="95vw"
                     style={{ top: 20, paddingBottom: 0 }}
                     styles={{ body: { height: "calc(95vh - 110px)", padding: 0, overflow: "hidden" } }}
-                    destroyOnClose
+                    destroyOnHidden
                 >
                     {previewUrl ? (
                         <iframe src={previewUrl} style={{ width: "100%", height: "100%", border: "none" }} title="preview" />

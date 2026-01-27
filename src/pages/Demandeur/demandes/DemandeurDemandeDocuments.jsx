@@ -304,7 +304,7 @@ export default function DemandeurDemandeDocuments() {
         width="95vw"
         style={{ top: 20, paddingBottom: 0 }}
         styles={{ body: { height: "calc(95vh - 110px)", padding: 0 } }}
-        destroyOnClose
+        destroyOnHidden
       >
         {preview.url ? (
           <iframe

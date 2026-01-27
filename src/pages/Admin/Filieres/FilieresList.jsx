@@ -318,7 +318,7 @@ export default function FilieresList() {
           placement="right"
           onClose={() => setDetailOpen(false)}
           open={detailOpen}
-          destroyOnClose
+          destroyOnHidden
         >
           {detailRow ? (
             <>

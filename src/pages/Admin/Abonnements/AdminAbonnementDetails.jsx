@@ -304,7 +304,7 @@ export default function AdminAbonnementDetails() {
           onCancel={() => setRenewModalVisible(false)}
           footer={null}
           width={600}
-          destroyOnClose
+          destroyOnHidden
         >
           <Form
             form={renewForm}

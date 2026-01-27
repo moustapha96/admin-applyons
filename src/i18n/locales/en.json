@@ -83,6 +83,7 @@
         "documents.create": "Create documents",
         "documents.update": "Update documents",
         "documents.delete": "Delete documents",
+        "documents.manage": "Manage documents",
         "documents.translate": "Translate documents",
         "documents.verify": "Verify documents",
         "payments.read": "Read payments",

@@ -488,7 +488,7 @@
 //             }
 //             width={720}
 //             centered
-//             destroyOnClose
+//             destroyOnHidden
 //           >
 //             {modalStep === 1 && (
 //               <Form form={form} layout="vertical">
@@ -1199,7 +1199,7 @@ export default function AbonnementInstitutSouscription() {
             }
             width={720}
             centered
-            destroyOnClose
+            destroyOnHidden
           >
             {modalStep === 1 && (
               <Form form={form} layout="vertical">

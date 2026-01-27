@@ -238,7 +238,7 @@ export default function DemandeDocumentsPage() {
         width="95vw"
         style={{ top: 20, paddingBottom: 0 }}
         styles={{ body: { height: "calc(95vh - 110px)", padding: 0 } }}
-        destroyOnClose
+        destroyOnHidden
       >
         {preview.loading ? (
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>

@@ -493,7 +493,7 @@ function PaymentDrawer({ open, onClose, data, loading }) {
   }, [data]);
 
   return (
-    <Drawer open={open} onClose={onClose} width={680} title={t("adminPayments.drawer.title")} destroyOnClose>
+    <Drawer open={open} onClose={onClose} width={680} title={t("adminPayments.drawer.title")} destroyOnHidden>
       <Card loading={loading} bordered={false} style={{ background: "transparent" }}>
         {data ? (
           <>

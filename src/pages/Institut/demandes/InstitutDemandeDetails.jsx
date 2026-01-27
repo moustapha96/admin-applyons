@@ -401,7 +401,7 @@ export default function InstitutDemandeDetails() {
         okText={t("institutDemandeDetails.buttons.save")}
         confirmLoading={wfSubmitting}
         title={t("institutDemandeDetails.modals.statusTitle")}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form
           form={wfForm}
@@ -439,7 +439,7 @@ export default function InstitutDemandeDetails() {
         onCancel={() => setOrgOpen(false)}
         footer={<Button onClick={() => setOrgOpen(false)}>{t("institutDemandeDetails.buttons.close")}</Button>}
         title={t("institutDemandeDetails.modals.orgSourceTitle")}
-        destroyOnClose
+        destroyOnHidden
       >
         {orgDoc ? (
           <Descriptions bordered column={1} size="small">
@@ -480,7 +480,7 @@ export default function InstitutDemandeDetails() {
         onCancel={() => setBuyerOpen(false)}
         footer={<Button onClick={() => setBuyerOpen(false)}>{t("institutDemandeDetails.buttons.close")}</Button>}
         title={t("institutDemandeDetails.modals.buyerTitle")}
-        destroyOnClose
+        destroyOnHidden
       >
         {demande?.assignedOrg ? (
           <Descriptions bordered column={1} size="small">
@@ -545,7 +545,7 @@ export default function InstitutDemandeDetails() {
         width="95vw"
         style={{ top: 20, paddingBottom: 0 }}
         styles={{ body: { height: "calc(95vh - 110px)", padding: 0 } }}
-        destroyOnClose
+        destroyOnHidden
       >
         {preview.url ? (
           <iframe
