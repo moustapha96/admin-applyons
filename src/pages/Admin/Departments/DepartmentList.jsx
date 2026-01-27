@@ -77,13 +77,13 @@ export default function DepartmentList() {
         title: "Nom",
         dataIndex: "name",
         sorter: true,
-        render: (v, r) => <Link to={`${BASE_PATH}/${r.id}`}>{v}</Link>,
+        render: (v, r) => r?.id ? <Link to={`${BASE_PATH}/${r.id}`}>{v}</Link> : v,
       },
       { title: "Code", dataIndex: "code", sorter: true, width: 140, render: (v) => v || "—" },
       {
         title: "Organisation",
         dataIndex: ["organization", "name"],
-        render: (_, r) => r.organization?.name || "—",
+        render: (_, r) => r?.organization?.name || "—",
       },
       {
         title: "Filières",
@@ -96,19 +96,22 @@ export default function DepartmentList() {
         title: "Actions",
         key: "actions",
         width: 280,
-        render: (_, r) => (
-          <Space wrap>
-            <Link to={`${BASE_PATH}/${r.id}`}>
-              <Button size="small">Détails</Button>
-            </Link>
-            <Link to={`${BASE_PATH}/${r.id}/edit`}>
-              <Button size="small">Modifier</Button>
-            </Link>
-            <Link to={`${BASE_PATH}/${r.id}/filieres`}>
-              <Button size="small">Filières</Button>
-            </Link>
-          </Space>
-        ),
+        render: (_, r) => {
+          if (!r?.id) return "—";
+          return (
+            <Space wrap>
+              <Link to={`${BASE_PATH}/${r.id}`}>
+                <Button size="small">Détails</Button>
+              </Link>
+              <Link to={`${BASE_PATH}/${r.id}/edit`}>
+                <Button size="small">Modifier</Button>
+              </Link>
+              <Link to={`${BASE_PATH}/${r.id}/filieres`}>
+                <Button size="small">Filières</Button>
+              </Link>
+            </Space>
+          );
+        },
       },
     ],
     []
@@ -159,7 +162,7 @@ export default function DepartmentList() {
               style={{ width: 280 }}
               value={filters.organizationId}
               onChange={(v) => setFilters((s) => ({ ...s, organizationId: v || undefined }))}
-              options={orgs.map((o) => ({ value: o.id, label: `${o.name} — ${o.type}` }))}
+              options={orgs.filter(o => o?.id).map((o) => ({ value: o.id, label: `${o.name} — ${o.type}` }))}
             />
           )}
           <Button icon={<ReloadOutlined />} onClick={() => fetch()} />
@@ -168,8 +171,8 @@ export default function DepartmentList() {
       </Space>
 
       <Table
-        rowKey="id"
-        dataSource={rows}
+        rowKey={(record) => record?.id || Math.random()}
+        dataSource={rows.filter(r => r != null)}
         loading={loading}
         columns={columns}
         pagination={{ current: pag.current, pageSize: pag.pageSize, total: pag.total, showSizeChanger: true }}
