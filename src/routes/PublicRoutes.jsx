@@ -14,6 +14,7 @@ export const publicRoutes = (
   <>
     <Route path="/auth/login" element={<AuthLogin />} />
     <Route path="/auth/signup" element={<Signup />} />
+    <Route path="/registration" element={<Signup />} />
     <Route path="/auth/re-password" element={<AuthResetPassword />} />
     <Route path="/auth/new-password" element={<AuthNewPassword />} />
     <Route path="/auth/lock-screen" element={<AuthLockScreen />} />

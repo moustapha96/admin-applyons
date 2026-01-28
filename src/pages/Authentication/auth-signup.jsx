@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState, useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logoImg from "../../assets/logo.png";
 import Switcher from "../../components/switcher";
@@ -12,8 +12,25 @@ import { message } from "antd";
 import countries from "@/assets/countries.json";
 
 
+// Map URL type (registration?type=xxx) vers rôle et orgType par défaut
+const TYPE_TO_ROLE = {
+  demandeur: "DEMANDEUR",
+  institut: "INSTITUT",
+  traducteur: "TRADUCTEUR",
+  banque: "BANQUE",
+};
+
+const DEFAULT_ORG_TYPE_BY_ROLE = {
+  INSTITUT: "UNIVERSITE",
+  TRADUCTEUR: "TRADUCTEUR",
+  BANQUE: "BANQUE",
+};
+
 export default function Signup() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const typeFromUrl = searchParams.get("type")?.toLowerCase();
+
   const [formData, setFormData] = useState({
     // Données utilisateur
     email: "",
@@ -43,6 +60,18 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+
+  // Pré-sélection du type de compte depuis l'URL (ex: /registration?type=institut ou ?type=demandeur)
+  useEffect(() => {
+    const role = TYPE_TO_ROLE[typeFromUrl];
+    if (!role) return;
+    const orgType = DEFAULT_ORG_TYPE_BY_ROLE[role];
+    setFormData((prev) => ({
+      ...prev,
+      role,
+      orgType: orgType ?? prev.orgType,
+    }));
+  }, [typeFromUrl]);
 
   const roleOptions = [
     { value: "DEMANDEUR", label: t('auth.signup.roles.DEMANDEUR') },

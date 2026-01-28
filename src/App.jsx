@@ -19,6 +19,7 @@ function App() {
     "/auth/login",
     "/auth/signup",
     "/auth/signup-success",
+    "/registration",
     "/auth/re-password",
     "/auth/new-password",
     "/auth/activate",
