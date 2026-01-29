@@ -76,7 +76,7 @@ export default function Signup() {
     { value: "DEMANDEUR", label: t('auth.signup.roles.DEMANDEUR') },
     { value: "INSTITUT", label: t('auth.signup.roles.INSTITUT') },
     { value: "TRADUCTEUR", label: t('auth.signup.roles.TRADUCTEUR') },
-    { value: "BANQUE", label: t('auth.signup.roles.BANQUE') },
+    { value: "INSTITUT", label: t('auth.signup.roles.BANQUE') },
   ];
 
   const orgTypeOptions = {
