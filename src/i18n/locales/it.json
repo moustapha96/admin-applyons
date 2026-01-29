@@ -2159,6 +2159,22 @@
             "error": "Errore nella reimpostazione della password. Riprova.",
             "footer": "© 2026 applyons. Realizzato con ❤️ da ADM."
         },
+        "activate": {
+            "title": "Attivazione account",
+            "activating": "Attivazione account in corso…",
+            "success": "Il tuo account è stato attivato! Reindirizzamento al login…",
+            "error": "Link di attivazione non valido o scaduto.",
+            "resendLink": "Invia di nuovo il link di attivazione",
+            "resending": "Invio in corso…",
+            "goToLogin": "Vai al login",
+            "errorMissing": "Link di attivazione mancante o non valido.",
+            "errorExpired": "Link di attivazione non valido o scaduto.",
+            "successMessage": "Account attivato con successo!",
+            "resendSuccess": "Link di attivazione inviato di nuovo.",
+            "resendError": "Impossibile inviare di nuovo il link di attivazione.",
+            "emailNotFound": "Indirizzo email non trovato. Effettua nuovamente l'accesso.",
+            "footer": "© {{year}} Applyons. Tutti i diritti riservati."
+        },
         "orgInviteAccept": {
             "loading": "Caricamento invito...",
             "tokenMissing": "Token mancante nell'URL",

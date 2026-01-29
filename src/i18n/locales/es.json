@@ -2160,6 +2160,22 @@
             "error": "Error al restablecer la contraseña. Por favor, inténtalo de nuevo.",
             "footer": "© 2026 applyons. Hecho con ❤️ por ADM."
         },
+        "activate": {
+            "title": "Activación de cuenta",
+            "activating": "Activando su cuenta…",
+            "success": "¡Su cuenta ha sido activada! Redirigiendo al inicio de sesión…",
+            "error": "Enlace de activación inválido o expirado.",
+            "resendLink": "Reenviar enlace de activación",
+            "resending": "Enviando…",
+            "goToLogin": "Ir al inicio de sesión",
+            "errorMissing": "Enlace de activación faltante o inválido.",
+            "errorExpired": "Enlace de activación inválido o expirado.",
+            "successMessage": "¡Cuenta activada con éxito!",
+            "resendSuccess": "Se ha reenviado el enlace de activación.",
+            "resendError": "No se pudo reenviar el enlace de activación.",
+            "emailNotFound": "Dirección de correo no encontrada. Por favor, inicie sesión de nuevo.",
+            "footer": "© {{year}} Applyons. Todos los derechos reservados."
+        },
         "orgInviteAccept": {
             "loading": "Cargando invitación...",
             "tokenMissing": "Token faltante en la URL",

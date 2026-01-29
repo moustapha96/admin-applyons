@@ -2156,6 +2156,22 @@
             "error": "Fehler beim Zurücksetzen des Passworts. Bitte versuchen Sie es erneut.",
             "footer": "© 2026 applyons. Erstellt mit ❤️ von ADM."
         },
+        "activate": {
+            "title": "Kontoaktivierung",
+            "activating": "Ihr Konto wird aktiviert…",
+            "success": "Ihr Konto wurde aktiviert! Weiterleitung zur Anmeldung…",
+            "error": "Aktivierungslink ungültig oder abgelaufen.",
+            "resendLink": "Aktivierungslink erneut senden",
+            "resending": "Wird gesendet…",
+            "goToLogin": "Zur Anmeldung",
+            "errorMissing": "Aktivierungslink fehlt oder ist ungültig.",
+            "errorExpired": "Aktivierungslink ungültig oder abgelaufen.",
+            "successMessage": "Konto erfolgreich aktiviert!",
+            "resendSuccess": "Aktivierungslink wurde erneut gesendet.",
+            "resendError": "Aktivierungslink konnte nicht erneut gesendet werden.",
+            "emailNotFound": "E-Mail-Adresse nicht gefunden. Bitte melden Sie sich erneut an.",
+            "footer": "© {{year}} Applyons. Alle Rechte vorbehalten."
+        },
         "orgInviteAccept": {
             "loading": "Einladung wird geladen...",
             "tokenMissing": "Token fehlt in der URL",

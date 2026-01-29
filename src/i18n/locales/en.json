@@ -2249,6 +2249,22 @@
             "error": "Error resetting password. Please try again.",
             "footer": "© 2026 applyons. All rights reserved."
         },
+        "activate": {
+            "title": "Account activation",
+            "activating": "Activating your account…",
+            "success": "Your account has been activated! Redirecting to login…",
+            "error": "Activation link invalid or expired.",
+            "resendLink": "Resend activation link",
+            "resending": "Sending…",
+            "goToLogin": "Go to login",
+            "errorMissing": "Activation link missing or invalid.",
+            "errorExpired": "Activation link invalid or expired.",
+            "successMessage": "Account activated successfully!",
+            "resendSuccess": "Activation link has been resent.",
+            "resendError": "Unable to resend activation link.",
+            "emailNotFound": "Email address not found. Please log in again.",
+            "footer": "© {{year}} Applyons. All rights reserved."
+        },
         "orgInviteAccept": {
             "loading": "Loading invitation...",
             "tokenMissing": "Missing token in URL",

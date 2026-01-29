@@ -2271,7 +2271,7 @@
             "resendSuccess": "Lien d'activation renvoyé.",
             "resendError": "Impossible de renvoyer le lien d'activation.",
             "emailNotFound": "Adresse e-mail introuvable. Veuillez vous reconnecter.",
-            "footer": "© 2026 Applyons. Tous droits réservés."
+            "footer": "© {{year}} Applyons. Tous droits réservés."
         },
         "signupSuccess": {
             "title": "Succès",

@@ -2157,6 +2157,22 @@
             "error": "重置密码时出错。请重试。",
             "footer": "© 2026 applyons. 由 ADM 用 ❤️ 制作。"
         },
+        "activate": {
+            "title": "账户激活",
+            "activating": "正在激活您的账户…",
+            "success": "您的账户已激活！正在跳转到登录页…",
+            "error": "激活链接无效或已过期。",
+            "resendLink": "重新发送激活链接",
+            "resending": "正在发送…",
+            "goToLogin": "前往登录",
+            "errorMissing": "激活链接缺失或无效。",
+            "errorExpired": "激活链接无效或已过期。",
+            "successMessage": "账户激活成功！",
+            "resendSuccess": "已重新发送激活链接。",
+            "resendError": "无法重新发送激活链接。",
+            "emailNotFound": "未找到电子邮件地址。请重新登录。",
+            "footer": "© {{year}} Applyons. 保留所有权利。"
+        },
         "orgInviteAccept": {
             "loading": "正在加载邀请...",
             "tokenMissing": "URL 中缺少令牌",
