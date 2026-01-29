@@ -8,7 +8,6 @@ import BackButton from "../../components/backButton";
 import authService from "../../services/authService";
 import { toast } from "sonner";
 import applyonsAbout1 from "../../assets/logo.png";
-import { message } from "antd";
 import countries from "@/assets/countries.json";
 
 
@@ -180,7 +179,6 @@ export default function Signup() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value)
     if (name === "role") {
       const firstType = (orgTypeOptions[value] && orgTypeOptions[value][0]?.value) || "";
       setFormData((prev) => ({
@@ -188,9 +186,10 @@ export default function Signup() {
         role: value,
         orgType: firstType,
       }));
+      setErrors((prev) => ({ ...prev, orgName: undefined, orgType: undefined, orgEmail: undefined }));
       return;
     }
-
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -214,8 +213,22 @@ export default function Signup() {
     return `${getDialCode}${phone}`;
   };
 
+  // Mappe les chemins d'erreur backend vers les noms de champs du formulaire
+  const mapBackendErrorPath = (path) => {
+    if (!path) return null;
+    const p = String(path);
+    if (p.startsWith("user.")) return p.replace("user.", "");
+    if (p.startsWith("organization.")) {
+      const field = p.replace("organization.", "");
+      const map = { name: "orgName", type: "orgType", email: "orgEmail", phone: "orgPhone", address: "orgAddress", website: "orgWebsite", country: "orgCountry" };
+      return map[field] || `org_${field}`;
+    }
+    return p;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
     if (!validateForm()) return;
 
     setIsLoading(true);
@@ -228,70 +241,70 @@ export default function Signup() {
 
     try {
       if (formData.role === "DEMANDEUR") {
-        // ➜ User seul
         const userPayload = {
-          email: formData.email,
+          email: formData.email.trim(),
           password: formData.password,
           role: "DEMANDEUR",
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          phone: formatPhoneWithDialCode(formData.phone),
+          firstName: formData.firstName.trim(),
+          lastName: formData.lastName.trim(),
+          phone: formatPhoneWithDialCode(formData.phone) || undefined,
           country: formData.country,
-          adress: formData.adress,
+          adress: formData.adress?.trim() || undefined,
           gender: formData.gender,
           username,
-          birthPlace: formData.birthPlace,                // NEW
-          birthDate: formData.birthDate,                  // NEW (YYYY-MM-DD)
+          birthPlace: formData.birthPlace || undefined,
+          birthDate: formData.birthDate || undefined,
         };
 
         await authService.register(userPayload);
-        message.success(t('auth.signup.success'));
-        navigate("/auth/login");
+        toast.success(t('auth.signup.success'));
+        navigate("/auth/login", { replace: true });
       } else {
-        // ➜ User + Organization
         const payload = {
           user: {
-            email: formData.email,
+            email: formData.email.trim(),
             password: formData.password,
             role: formData.role,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            phone: formatPhoneWithDialCode(formData.phone),
+            firstName: formData.firstName.trim(),
+            lastName: formData.lastName.trim(),
+            phone: formatPhoneWithDialCode(formData.phone) || undefined,
             country: formData.country,
-            adress: formData.adress,
+            adress: formData.adress?.trim() || undefined,
             gender: formData.gender,
             username,
-            birthPlace: formData.birthPlace,              // NEW
-            birthDate: formData.birthDate,                // NEW
+            birthPlace: formData.birthPlace || undefined,
+            birthDate: formData.birthDate || undefined,
           },
           organization: {
-            name: formData.orgName,
+            name: formData.orgName.trim(),
             slug: generateSlug(formData.orgName),
             type: formData.orgType,
-            email: formData.orgEmail,
-            phone: formData.orgPhone,
-            address: formData.orgAddress,
-            website: formData.orgWebsite,
+            email: formData.orgEmail.trim(),
+            phone: (formData.orgPhone && formData.orgPhone.trim()) || undefined,
+            address: formData.orgAddress?.trim() || undefined,
+            website: formData.orgWebsite?.trim() || undefined,
             country: formData.country,
           },
         };
 
         await authService.createWithOrganization(payload);
         toast.success(t('auth.signup.success'));
-        navigate("/auth/login");
+        navigate("/auth/login", { replace: true });
       }
     } catch (err) {
-      console.error(err);
-      const errorMessage =
-        err?.response?.data?.message || err?.message || t('auth.signup.errors.general');
+      const data = err?.response?.data ?? err;
+      const errorMessage = data?.message || err?.message || t('auth.signup.errors.general');
       toast.error(errorMessage);
-      if (err?.response?.data?.errors) {
-        setErrors(
-          err.response.data.errors.reduce((acc, error) => {
-            acc[error.path] = error.msg;
-            return acc;
-          }, {})
-        );
+      const backendErrors = data?.errors || data?.error?.details;
+      if (Array.isArray(backendErrors) && backendErrors.length > 0) {
+        const mapped = backendErrors.reduce((acc, item) => {
+          const path = item.path ?? item.field;
+          const msg = item.msg ?? item.message ?? item;
+          const field = mapBackendErrorPath(path);
+          if (field) acc[field] = typeof msg === "string" ? msg : msg?.message || JSON.stringify(msg);
+          return acc;
+        }, {});
+        setErrors(mapped);
       }
     } finally {
       setIsLoading(false);

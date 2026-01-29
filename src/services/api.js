@@ -120,6 +120,7 @@ const axiosInstance = axios.create({
 const publicRoutes = [
     "/auth/login",
     "/auth/register",
+    "/auth/create-with-organization",
     "/auth/forgot-password",
     "/auth/reset-password",
     "/auth/refresh-token", // doit rester public pour le retry
