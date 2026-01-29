@@ -39,7 +39,7 @@ export default function Signup() {
     lastName: "",
     phone: "",
     adress: "",
-    country: "SN", // Code ISO du pays (ex: "SN" pour Sénégal)
+    country: "Senegal", // Code ISO du pays (ex: "SN" pour Sénégal)
     gender: "MALE",
     role: "DEMANDEUR",
     birthPlace: "",         // NEW
@@ -482,7 +482,7 @@ export default function Signup() {
                         onChange={handleChange}
                       >
                         {countries.map((opt) => (
-                          <option key={opt.code} value={opt.code}>
+                          <option key={opt.code} value={opt.name}>
                             {opt.name}
                           </option>
                         ))}
