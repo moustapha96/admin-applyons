@@ -76,7 +76,7 @@ export default function Signup() {
     { value: "DEMANDEUR", label: t('auth.signup.roles.DEMANDEUR') },
     { value: "INSTITUT", label: t('auth.signup.roles.INSTITUT') },
     { value: "TRADUCTEUR", label: t('auth.signup.roles.TRADUCTEUR') },
-    { value: "INSTITUT", label: t('auth.signup.roles.BANQUE') },
+    { value: "BANQUE", label: t('auth.signup.roles.BANQUE') },
   ];
 
   const orgTypeOptions = {
@@ -262,7 +262,7 @@ export default function Signup() {
           user: {
             email: formData.email.trim(),
             password: formData.password,
-            role: formData.role,
+            role: formData.role === "BANQUE" ? "INSTITUT" : formData.role,
             firstName: formData.firstName.trim(),
             lastName: formData.lastName.trim(),
             phone: formatPhoneWithDialCode(formData.phone) || undefined,
