@@ -284,7 +284,7 @@ export default function Signup() {
             country: formData.country,
           },
         };
-
+        console.log(payload);
         await authService.createWithOrganization(payload);
         toast.success(t('auth.signup.success'));
         navigate("/auth/login", { replace: true });
