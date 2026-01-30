@@ -4,6 +4,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 
 import DemandeurDemandesList from "../pages/Demandeur/demandes/DemandeurDemandesList";
 import DemandeurDemandeDetail from "../pages/Demandeur/demandes/DemandeurDemandeDetail";
+import DemandeurDemandeEdit from "../pages/Demandeur/demandes/DemandeurDemandeEdit";
 import DemandeurDemandeCreate from "../pages/Demandeur/demandes/DemandeurDemandeCreate";
 import DemandeurDemandePaymentPage from "../pages/Demandeur/demandes/DemandeurDemandePaymentPage";
 import DemandeurDemandeDocuments from "../pages/Demandeur/demandes/DemandeurDemandeDocuments";
@@ -26,6 +27,7 @@ export const demandeurRoutes = (
       <Route path="mes-demandes" element={<DemandeurDemandesList />} />
       <Route path="mes-demandes/create" element={<DemandeurDemandeCreate />} />
       <Route path="mes-demandes/:demandeId/details" element={<DemandeurDemandeDetail />} />
+      <Route path="mes-demandes/:demandeId/edit" element={<DemandeurDemandeEdit />} />
       <Route path="mes-demandes/:demandeId/documents" element={<DemandeurDemandeDocuments />} />
 
       <Route path="mes-demandes/:demandeId/payer" element={<DemandeurDemandePaymentPage />} />

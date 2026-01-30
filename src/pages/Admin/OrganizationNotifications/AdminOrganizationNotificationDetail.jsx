@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -11,13 +10,11 @@ import {
   Spin,
   Badge,
   message,
-  Divider,
 } from "antd";
 import {
   ArrowLeftOutlined,
   EyeOutlined,
   CheckCircleOutlined,
-  BellOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
@@ -47,8 +44,8 @@ export default function AdminOrganizationNotificationDetail() {
     setLoading(true);
     try {
       const res = await organizationDemandeNotificationService.getById(id);
-      const data = res?.data || res;
-      setNotification(data);
+      const data = res?.data ?? res;
+      setNotification(data?.notification ?? data);
     } catch (e) {
       message.error(
         e?.response?.data?.message ||
@@ -85,10 +82,10 @@ export default function AdminOrganizationNotificationDetail() {
 
   if (loading) {
     return (
-      <div className="container-fluid relative px-3">
-        <div className="layout-specing">
-          <div className="flex items-center justify-center min-h-screen">
-            <Spin size="large" />
+      <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+        <div className="layout-specing py-4 sm:py-6">
+          <div className="flex items-center justify-center min-h-[50vh] sm:min-h-screen p-4">
+            <Spin size="large" tip={t("common.loading")} />
           </div>
         </div>
       </div>
@@ -97,11 +94,11 @@ export default function AdminOrganizationNotificationDetail() {
 
   if (!notification) {
     return (
-      <div className="container-fluid relative px-3">
-        <div className="layout-specing">
-          <Card>
-            <p>{t("adminOrgNotificationDetail.errors.notFound")}</p>
-            <Button onClick={() => navigate("/admin/organisations/notifications")}>
+      <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+        <div className="layout-specing py-4 sm:py-6">
+          <Card className="overflow-hidden">
+            <p className="break-words">{t("adminOrgNotificationDetail.errors.notFound")}</p>
+            <Button onClick={() => navigate("/admin/organisations/notifications")} className="w-full sm:w-auto">
               {t("adminOrgNotificationDetail.actions.backToList")}
             </Button>
           </Card>
@@ -116,13 +113,14 @@ export default function AdminOrganizationNotificationDetail() {
   const notifiedOrg = notification.notifiedOrg;
 
   return (
-    <div className="container-fluid relative px-3">
-      <div className="layout-specing">
-        <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">
+    <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+      <div className="layout-specing py-4 sm:py-6">
+        <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+          <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1 break-words">
             {t("adminOrgNotificationDetail.pageTitle")}
           </h5>
           <Breadcrumb
+            className="order-1 sm:order-2"
             items={[
               {
                 title: (
@@ -138,14 +136,14 @@ export default function AdminOrganizationNotificationDetail() {
                   </Link>
                 ),
               },
-              { title: notification.id || id },
+              { title: <span className="break-words">{notification.id || id}</span> },
             ]}
           />
         </div>
 
-        <div className="mb-4">
-          <Space>
-            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)}>
+        <div className="mb-4 sm:mb-6">
+          <Space wrap size="small">
+            <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} className="w-full sm:w-auto">
               {t("adminOrgNotificationDetail.actions.back")}
             </Button>
             {!notification.viewed && (
@@ -153,6 +151,7 @@ export default function AdminOrganizationNotificationDetail() {
                 type="primary"
                 icon={<CheckCircleOutlined />}
                 onClick={handleMarkAsViewed}
+                className="w-full sm:w-auto"
               >
                 {t("adminOrgNotificationDetail.actions.markAsViewed")}
               </Button>
@@ -161,8 +160,8 @@ export default function AdminOrganizationNotificationDetail() {
         </div>
 
         {/* Informations principales */}
-        <Card className="mb-6" title={t("adminOrgNotificationDetail.sections.mainInfo")}>
-          <Descriptions bordered column={2}>
+        <Card className="mb-4 sm:mb-6 overflow-hidden" title={t("adminOrgNotificationDetail.sections.mainInfo")}>
+          <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
             <Descriptions.Item label={t("adminOrgNotificationDetail.fields.id")} span={2}>
               <Tag color="blue">{notification.id}</Tag>
             </Descriptions.Item>
@@ -187,7 +186,7 @@ export default function AdminOrganizationNotificationDetail() {
             </Descriptions.Item>
 
             <Descriptions.Item label={t("adminOrgNotificationDetail.fields.message")} span={2}>
-              <div style={{ whiteSpace: "pre-wrap" }}>
+              <div className="break-words whitespace-pre-wrap">
                 {notification.message || notification.title || "—"}
               </div>
             </Descriptions.Item>
@@ -214,15 +213,16 @@ export default function AdminOrganizationNotificationDetail() {
 
         {/* Demande liée */}
         {demande && (
-          <Card className="mb-6" title={t("adminOrgNotificationDetail.sections.demande")}>
-            <Descriptions bordered column={2}>
+          <Card className="mb-4 sm:mb-6 overflow-hidden" title={t("adminOrgNotificationDetail.sections.demande")}>
+            <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
               <Descriptions.Item label={t("adminOrgNotificationDetail.fields.demandeCode")}>
-                <Space>
+                <Space wrap size="small">
                   <Tag color="blue">{demande.code || demande.id}</Tag>
                   <Button
                     size="small"
                     icon={<EyeOutlined />}
                     onClick={() => navigate(`/admin/demandes/${demande.id}/details`)}
+                    className="w-full sm:w-auto"
                   >
                     {t("adminOrgNotificationDetail.actions.viewDemande")}
                   </Button>
@@ -246,19 +246,18 @@ export default function AdminOrganizationNotificationDetail() {
 
         {/* Organisations */}
         {(targetOrg || notifiedOrg) && (
-          <Card className="mb-6" title={t("adminOrgNotificationDetail.sections.organizations")}>
-            <Descriptions bordered column={2}>
+          <Card className="mb-4 sm:mb-6 overflow-hidden" title={t("adminOrgNotificationDetail.sections.organizations")}>
+            <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
               {targetOrg && (
                 <Descriptions.Item label={t("adminOrgNotificationDetail.fields.targetOrg")}>
-                  <Space>
-                    <span>{targetOrg.name}</span>
+                  <Space wrap size="small">
+                    <span className="break-words">{targetOrg.name}</span>
                     {targetOrg.id && (
                       <Button
                         size="small"
                         icon={<EyeOutlined />}
-                        onClick={() =>
-                          navigate(`/admin/organisations/${targetOrg.id}/details`)
-                        }
+                        onClick={() => navigate(`/admin/organisations/${targetOrg.id}`)}
+                        className="w-full sm:w-auto"
                       >
                         {t("adminOrgNotificationDetail.actions.viewOrg")}
                       </Button>
@@ -269,15 +268,14 @@ export default function AdminOrganizationNotificationDetail() {
 
               {notifiedOrg && (
                 <Descriptions.Item label={t("adminOrgNotificationDetail.fields.notifiedOrg")}>
-                  <Space>
-                    <span>{notifiedOrg.name}</span>
+                  <Space wrap size="small">
+                    <span className="break-words">{notifiedOrg.name}</span>
                     {notifiedOrg.id && (
                       <Button
                         size="small"
                         icon={<EyeOutlined />}
-                        onClick={() =>
-                          navigate(`/admin/organisations/${notifiedOrg.id}/details`)
-                        }
+                        onClick={() => navigate(`/admin/organisations/${notifiedOrg.id}`)}
+                        className="w-full sm:w-auto"
                       >
                         {t("adminOrgNotificationDetail.actions.viewOrg")}
                       </Button>
@@ -291,16 +289,17 @@ export default function AdminOrganizationNotificationDetail() {
 
         {/* Utilisateur */}
         {user && (
-          <Card className="mb-6" title={t("adminOrgNotificationDetail.sections.user")}>
-            <Descriptions bordered column={2}>
+          <Card className="mb-4 sm:mb-6 overflow-hidden" title={t("adminOrgNotificationDetail.sections.user")}>
+            <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
               <Descriptions.Item label={t("adminOrgNotificationDetail.fields.userEmail")}>
-                <Space>
-                  <span>{user.email || user.username || "—"}</span>
+                <Space wrap size="small">
+                  <span className="break-all">{user.email || user.username || "—"}</span>
                   {user.id && (
                     <Button
                       size="small"
                       icon={<EyeOutlined />}
                       onClick={() => navigate(`/admin/users/${user.id}/details`)}
+                      className="w-full sm:w-auto"
                     >
                       {t("adminOrgNotificationDetail.actions.viewUser")}
                     </Button>
@@ -324,11 +323,15 @@ export default function AdminOrganizationNotificationDetail() {
         )}
 
         {/* Métadonnées */}
-        <Card title={t("adminOrgNotificationDetail.sections.metadata")}>
-          <Descriptions bordered column={2} size="small">
+        <Card className="overflow-hidden" title={t("adminOrgNotificationDetail.sections.metadata")}>
+          <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
             {notification.createdBy && (
               <Descriptions.Item label={t("adminOrgNotificationDetail.fields.createdBy")}>
-                {notification.createdBy.email || notification.createdBy.id || "—"}
+                <span className="break-all">
+                  {typeof notification.createdBy === "object"
+                    ? (notification.createdBy.email || notification.createdBy.id || "—")
+                    : String(notification.createdBy)}
+                </span>
               </Descriptions.Item>
             )}
 

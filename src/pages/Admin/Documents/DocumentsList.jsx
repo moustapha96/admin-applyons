@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
-// src/pages/Documents/DocumentsList.jsx
-/* eslint-disable react/jsx-key */
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -12,10 +8,13 @@ import {
     DatePicker,
     Descriptions,
     Drawer,
+    Grid,
     Input,
     List,
     Modal,
     Progress,
+    Row,
+    Col,
     Space,
     Table,
     Tag,
@@ -26,12 +25,9 @@ import {
 import {
     SearchOutlined,
     EyeOutlined,
-    DownloadOutlined,
-    CheckCircleOutlined,
     ExclamationCircleOutlined,
     DeleteOutlined,
     FileTextOutlined,
-    FilePdfOutlined,
     LockOutlined,
     TranslationOutlined,
     InfoCircleOutlined,
@@ -41,15 +37,14 @@ import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import documentService from "@/services/documentService";
 import organizationService from "@/services/organizationService";
-import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
+import { hasTranslation, hasOriginal, normalizeDocument } from "@/utils/documentUtils";
 
 const { RangePicker } = DatePicker;
 const { confirm } = Modal;
 
-function payColor(b) { return b ? "purple" : undefined; }
-
 export default function DocumentsList() {
     const { t } = useTranslation();
+    const breakpoint = Grid.useBreakpoint();
     const [searchParams] = useSearchParams();
     // Optionnel: pré-filtrer par demande si on arrive depuis “Détail demande”
     const demandeFromUrl = searchParams.get("demandeId") || undefined;
@@ -83,8 +78,8 @@ export default function DocumentsList() {
         (async () => {
             try {
                 const res = await organizationService.list({ page: 1, limit: 500 });
-                console.log(res);
-                setOrgs(res?.organizations || []);
+                const data = res?.data ?? res;
+                setOrgs(data?.organizations ?? []);
             } catch {
                 // silencieux
             }
@@ -94,7 +89,7 @@ export default function DocumentsList() {
     const fetch = useCallback(async (page = pag.current, pageSize = pag.pageSize, f = filters) => {
         setLoading(true);
         try {
-            const { documents, pagination } = await documentService.list({
+            const res = await documentService.list({
                 page,
                 limit: pageSize,
                 search: f.search || undefined,
@@ -104,26 +99,22 @@ export default function DocumentsList() {
                 from: f.from || undefined,
                 to: f.to || undefined,
             });
-            console.log(documents);
-            // Normaliser les documents pour utiliser la nouvelle structure
-            const normalizedDocs = (documents || []).map(doc => normalizeDocument(doc));
+            const data = res?.data ?? res;
+            const documents = data?.documents ?? data?.data ?? [];
+            const pagination = data?.pagination ?? {};
+            const normalizedDocs = (Array.isArray(documents) ? documents : []).map((doc) => normalizeDocument(doc));
             setRows(normalizedDocs);
-            setPag({ current: page, pageSize, total: pagination?.total || 0 });
-            } catch (e) {
+            setPag({ current: page, pageSize, total: pagination?.total ?? normalizedDocs.length });
+        } catch (e) {
             message.error(e?.response?.data?.message || t("adminDocuments.messages.loadError"));
         } finally {
             setLoading(false);
         }
-    }, [pag.current, pag.pageSize, filters]);
+    }, [pag.current, pag.pageSize, filters, t]);
 
-    useEffect(() => { fetch(1, pag.pageSize, filters); /* eslint-disable-next-line */ }, [
-        filters.search, filters.demandePartageId, filters.ownerOrgId, filters.translated, filters.from, filters.to,
-    ]);
-
-
-    function normalizeUrl(u) {
-        return u;
-    }
+    useEffect(() => {
+        fetch(1, pag.pageSize, filters);
+    }, [filters.search, filters.demandePartageId, filters.ownerOrgId, filters.translated, filters.from, filters.to]);
 
 
     const openUrl = async (doc, type = "original") => {
@@ -173,62 +164,89 @@ export default function DocumentsList() {
         });
     };
 
+    const getTypeLabel = (type) => t(`adminDocuments.types.${type || "OTHER"}`);
+
     const columns = [
         {
             title: t("adminDocuments.columns.demande"),
-            dataIndex: "demandePartageId",
+            key: "demande",
             width: 140,
-            render: (v) =>
-                v ? (
-                    <Button type="link" size="small" onClick={() => navigate(`/admin/demandes/${v}`)}>
-                        {v}
-                    </Button>
+            render: (_, r) => {
+                const id = r.demandePartageId;
+                const code = r.demandePartage?.code;
+                if (!id) return "—";
+                return (
+                    <Link to={`/admin/demandes/${id}/details`} className="break-all">
+                        {code || id}
+                    </Link>
+                );
+            },
+        },
+        {
+            title: t("adminDocuments.columns.type"),
+            dataIndex: "type",
+            key: "type",
+            width: 120,
+            render: (v) => (v ? <Tag color="blue">{getTypeLabel(v)}</Tag> : "—"),
+        },
+        {
+            title: t("adminDocuments.columns.mention"),
+            dataIndex: "mention",
+            key: "mention",
+            width: 120,
+            render: (v) => <span className="break-words">{v || "—"}</span>,
+        },
+        {
+            title: t("adminDocuments.columns.dateObtention"),
+            dataIndex: "dateObtention",
+            key: "dateObtention",
+            width: 120,
+            render: (v) => (v ? dayjs(v).format("DD/MM/YYYY") : "—"),
+        },
+        {
+            title: t("adminDocuments.columns.translated"),
+            key: "estTraduit",
+            width: 100,
+            render: (_, r) =>
+                hasTranslation(r) ? (
+                    <Tag color="green">{t("adminDocuments.translation.translated")}</Tag>
                 ) : (
-                    "—"
+                    <Tag>{t("adminDocuments.translation.notTranslated")}</Tag>
                 ),
         },
         {
             title: t("adminDocuments.columns.ownerOrg"),
-            dataIndex: ["ownerOrg", "name"],
-            width: 280,
-            render: (_, r) =>
-                r.ownerOrg ? (
-                    <Space direction="vertical" size={0}>
-                        <div>{r.ownerOrg.name}</div>
-                        {/* <div style={{ fontSize: 12, color: "#666" }}>
-                            {r.ownerOrg.type} {r.ownerOrg.slug ? `• ${r.ownerOrg.slug}` : ""}
-                        </div> */}
-                    </Space>
-                ) : (
-                    <Tag>{r.ownerOrgId || "—"}</Tag>
-                ),
+            key: "ownerOrg",
+            width: 180,
+            render: (_, r) => (
+                <span className="break-words">{r.ownerOrg?.name ?? r.ownerOrgId ?? "—"}</span>
+            ),
         },
         {
             title: t("adminDocuments.columns.createdAt"),
             dataIndex: "createdAt",
-            width: 160,
+            key: "createdAt",
+            width: 140,
             render: (v) => (v ? dayjs(v).format("DD/MM/YYYY HH:mm") : "—"),
         },
-
         {
             title: t("adminDocuments.columns.actions"),
             key: "actions",
             fixed: "right",
-            width: 320,
+            width: 200,
             render: (_, r) => (
-                <Space wrap>
+                <Space size="small" wrap>
                     <Tooltip title={t("adminDocuments.actions.viewOriginal")}>
-                        <Button icon={<EyeOutlined />} onClick={() => openUrl(r, "original")} />
+                        <Button size="small" icon={<EyeOutlined />} disabled={!hasOriginal(r)} onClick={() => openUrl(r, "original")} />
                     </Tooltip>
-
                     <Tooltip title={t("adminDocuments.actions.viewTranslated")} placement="top" disabled={!hasTranslation(r)}>
-                        <Button icon={<TranslationOutlined />} disabled={!hasTranslation(r)} onClick={() => openUrl(r, "traduit")} />
+                        <Button size="small" icon={<TranslationOutlined />} disabled={!hasTranslation(r)} onClick={() => openUrl(r, "traduit")} />
                     </Tooltip>
                     <Tooltip title={t("adminDocuments.actions.details")}>
-                        <Button icon={<InfoCircleOutlined />} onClick={() => { setDrawerDoc(r); setDrawerOpen(true); }} />
+                        <Button size="small" icon={<InfoCircleOutlined />} onClick={() => { setDrawerDoc(r); setDrawerOpen(true); }} />
                     </Tooltip>
                     <Tooltip title={t("adminDocuments.actions.delete")}>
-                        <Button danger icon={<DeleteOutlined />} onClick={() => removeDoc(r)} />
+                        <Button size="small" danger icon={<DeleteOutlined />} onClick={() => removeDoc(r)} />
                     </Tooltip>
                 </Space>
             ),
@@ -236,11 +254,14 @@ export default function DocumentsList() {
     ];
 
     return (
-        <div className="container-fluid relative px-3">
-            <div className="layout-specing">
-                <div className="md:flex justify-between items-center mb-6">
-                    <h5 className="text-lg font-semibold">{t("adminDocuments.title")}</h5>
+        <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+            <div className="layout-specing py-4 sm:py-6">
+                <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+                    <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1 break-words">
+                        {t("adminDocuments.title")}
+                    </h5>
                     <Breadcrumb
+                        className="order-1 sm:order-2"
                         items={[
                             { title: <Link to="/admin/dashboard">{t("adminDocuments.breadcrumb.dashboard")}</Link> },
                             { title: t("adminDocuments.breadcrumb.documents") },
@@ -248,141 +269,165 @@ export default function DocumentsList() {
                     />
                 </div>
 
-                <Card className="mb-4">
-                    <Space wrap style={{ width: "100%", justifyContent: "space-between" }}>
-                        <Space wrap>
+                <Card className="mb-4 sm:mb-6 overflow-hidden">
+                    <Row gutter={[16, 16]} align="middle">
+                        <Col xs={24} sm={24} md={8} lg={6}>
                             <Input
                                 allowClear
                                 placeholder={t("adminDocuments.filters.searchPlaceholder")}
-                                style={{ width: 260 }}
                                 value={filters.search}
                                 onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
                                 onPressEnter={() => fetch()}
-                                suffix={<SearchOutlined onClick={() => fetch()} style={{ color: "#aaa" }} />}
+                                suffix={<SearchOutlined onClick={() => fetch()} style={{ color: "#aaa", cursor: "pointer" }} />}
+                                className="w-full"
                             />
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={6}>
                             <Input
                                 allowClear
                                 placeholder={t("adminDocuments.filters.demandePlaceholder")}
-                                style={{ width: 240 }}
                                 value={filters.demandePartageId}
                                 onChange={(e) => setFilters((f) => ({ ...f, demandePartageId: e.target.value || undefined }))}
+                                className="w-full"
                             />
-                            <Input
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={6}>
+                            <Select
                                 allowClear
                                 placeholder={t("adminDocuments.filters.orgPlaceholder")}
-                                style={{ width: 200 }}
                                 value={filters.ownerOrgId}
-                                onChange={(e) => setFilters((f) => ({ ...f, ownerOrgId: e.target.value || undefined }))}
+                                onChange={(v) => setFilters((f) => ({ ...f, ownerOrgId: v }))}
+                                className="w-full"
+                                showSearch
+                                optionFilterProp="label"
+                                options={(orgs || []).map((o) => ({ value: o.id, label: o.name || o.slug || o.id }))}
                             />
+                        </Col>
+                        <Col xs={24} sm={12} md={8} lg={4}>
                             <Select
                                 allowClear
                                 placeholder={t("adminDocuments.filters.translatedPlaceholder")}
-                                style={{ width: 140 }}
                                 value={filters.translated}
                                 onChange={(v) => setFilters((f) => ({ ...f, translated: v }))}
+                                className="w-full"
                                 options={[
                                     { value: true, label: t("adminDocuments.filters.translatedYes") },
                                     { value: false, label: t("adminDocuments.filters.translatedNo") },
                                 ]}
                             />
-                            <RangePicker
-                                allowClear
-                                onChange={(vals) => {
-                                    const from = vals?.[0] ? vals[0].startOf("day").toISOString() : undefined;
-                                    const to = vals?.[1] ? vals[1].endOf("day").toISOString() : undefined;
-                                    setFilters((f) => ({ ...f, from, to }));
-                                }}
-                            />
-                        </Space>
-
-                        <Space>
-                            <Button icon={<ReloadOutlined />} onClick={() => fetch()}>
-                                {t("adminDocuments.actions.refresh")}
-                            </Button>
-                        </Space>
-                    </Space>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={6}>
+                            <Space wrap size="small">
+                                <RangePicker
+                                    allowClear
+                                    className="w-full sm:w-auto"
+                                    onChange={(vals) => {
+                                        const from = vals?.[0] ? vals[0].startOf("day").toISOString() : undefined;
+                                        const to = vals?.[1] ? vals[1].endOf("day").toISOString() : undefined;
+                                        setFilters((f) => ({ ...f, from, to }));
+                                    }}
+                                />
+                                <Button icon={<ReloadOutlined />} onClick={() => fetch()} className="w-full sm:w-auto">
+                                    {t("adminDocuments.actions.refresh")}
+                                </Button>
+                            </Space>
+                        </Col>
+                    </Row>
                 </Card>
 
-                <Table
-                    rowKey="id"
-                    dataSource={rows}
-                    loading={loading}
-                    columns={columns}
-                    pagination={{
-                        current: pag.current,
-                        pageSize: pag.pageSize,
-                        total: pag.total,
-                        onChange: (p, ps) => fetch(p, ps, filters),
-                        showSizeChanger: true,
-                        pageSizeOptions: ["5", "10", "20", "50"],
-                    }}
-                    scroll={{ x: 1200 }}
-                />
+                <Card className="overflow-hidden">
+                    <Table
+                        rowKey="id"
+                        dataSource={rows}
+                        loading={loading}
+                        columns={columns}
+                        pagination={{
+                            current: pag.current,
+                            pageSize: pag.pageSize,
+                            total: pag.total,
+                            onChange: (p, ps) => fetch(p, ps, filters),
+                            showSizeChanger: true,
+                            pageSizeOptions: ["5", "10", "20", "50"],
+                            showTotal: (total) => `${total}`,
+                        }}
+                        scroll={{ x: "max-content" }}
+                    />
+                </Card>
 
-                {/* Drawer détail document */}
+                {/* Drawer détail document — responsive */}
                 <Drawer
                     title={t("adminDocuments.drawer.title")}
-                    width={560}
+                    width={breakpoint.xs && !breakpoint.sm ? "100%" : breakpoint.sm && !breakpoint.md ? 400 : 560}
                     open={drawerOpen}
                     onClose={() => setDrawerOpen(false)}
-                    destroyOnHidden
+                    destroyOnClose
+                    styles={{
+                        body: { padding: "16px 12px 24px", overflowX: "hidden" },
+                        header: { padding: "12px 16px" },
+                    }}
+                    classNames={{ content: "!max-w-[100vw]" }}
                 >
                     {drawerDoc ? (
-                        <Descriptions bordered column={1} size="small">
-                            <Descriptions.Item label={t("adminDocuments.drawer.demande")}>
-                                {drawerDoc.demandePartageId ? (
-                                    <Button type="link" onClick={() => navigate(`/admin/demandes/${drawerDoc.demandePartageId}`)}>
-                                        {drawerDoc.demandePartageId}
-                                    </Button>
-                                ) : (
-                                    "—"
-                                )}
-                            </Descriptions.Item>
-                            <Descriptions.Item label={t("adminDocuments.drawer.owner")}>
-                                {drawerDoc.ownerOrg ? (
-                                    <Space direction="vertical" size={0}>
-                                        <span>{drawerDoc.ownerOrg.name}</span>
-                                        {/* <span style={{ fontSize: 12, color: "#666" }}>
-                                            {drawerDoc.ownerOrg.type} {drawerDoc.ownerOrg.slug ? `• ${drawerDoc.ownerOrg.slug}` : ""}
-                                        </span> */}
+                        <div className="min-w-0 overflow-hidden">
+                            <Descriptions
+                                bordered
+                                column={1}
+                                size="small"
+                                className="break-words [&_.ant-descriptions-item-label]:min-w-[120px] [&_.ant-descriptions-item-content]:break-words"
+                            >
+                                <Descriptions.Item label={t("adminDocuments.drawer.demande")}>
+                                    {drawerDoc.demandePartageId ? (
+                                        <Link to={`/admin/demandes/${drawerDoc.demandePartageId}/details`} className="break-all">
+                                            {drawerDoc.demandePartage?.code || drawerDoc.demandePartageId}
+                                        </Link>
+                                    ) : (
+                                        "—"
+                                    )}
+                                </Descriptions.Item>
+                                <Descriptions.Item label={t("adminDocuments.drawer.type")}>
+                                    {drawerDoc.type ? getTypeLabel(drawerDoc.type) : "—"}
+                                </Descriptions.Item>
+                                <Descriptions.Item label={t("adminDocuments.drawer.mention")}>
+                                    {drawerDoc.mention || "—"}
+                                </Descriptions.Item>
+                                <Descriptions.Item label={t("adminDocuments.drawer.dateObtention")}>
+                                    {drawerDoc.dateObtention ? dayjs(drawerDoc.dateObtention).format("DD/MM/YYYY") : "—"}
+                                </Descriptions.Item>
+                                <Descriptions.Item label={t("adminDocuments.drawer.owner")}>
+                                    <span className="break-words">{drawerDoc.ownerOrg?.name ?? drawerDoc.ownerOrgId ?? "—"}</span>
+                                </Descriptions.Item>
+                                <Descriptions.Item label={t("adminDocuments.drawer.translationStatus")}>
+                                    {hasTranslation(drawerDoc) ? (
+                                        <Tag color="green">{t("adminDocuments.translation.translated")}</Tag>
+                                    ) : (
+                                        <Tag>{t("adminDocuments.translation.notTranslated")}</Tag>
+                                    )}
+                                </Descriptions.Item>
+                                <Descriptions.Item label={t("adminDocuments.drawer.encrypted")}>
+                                    {drawerDoc.encryptedAt || drawerDoc.urlChiffre || drawerDoc.original?.isEncrypted ? (
+                                        <Tag color="purple" icon={<LockOutlined />}>{t("adminDocuments.encryption.yes")}</Tag>
+                                    ) : (
+                                        <Tag>{t("adminDocuments.encryption.no")}</Tag>
+                                    )}
+                                </Descriptions.Item>
+                                <Descriptions.Item label={t("adminDocuments.drawer.createdAt")}>
+                                    {drawerDoc.createdAt ? dayjs(drawerDoc.createdAt).format("DD/MM/YYYY HH:mm") : "—"}
+                                </Descriptions.Item>
+                                <Descriptions.Item label={t("adminDocuments.drawer.encryptedAt")}>
+                                    {drawerDoc.encryptedAt ? dayjs(drawerDoc.encryptedAt).format("DD/MM/YYYY HH:mm") : "—"}
+                                </Descriptions.Item>
+                                <Descriptions.Item label={t("adminDocuments.drawer.quickActions")}>
+                                    <Space wrap size="small" className="w-full">
+                                        <Button size="small" icon={<EyeOutlined />} disabled={!hasOriginal(drawerDoc)} onClick={() => openUrl(drawerDoc, "original")} className="w-full sm:w-auto min-w-0">
+                                            {t("adminDocuments.actions.viewOriginal")}
+                                        </Button>
+                                        <Button size="small" icon={<TranslationOutlined />} disabled={!hasTranslation(drawerDoc)} onClick={() => openUrl(drawerDoc, "traduit")} className="w-full sm:w-auto min-w-0">
+                                            {t("adminDocuments.actions.viewTranslated")}
+                                        </Button>
                                     </Space>
-                                ) : (
-                                    drawerDoc.ownerOrgId || "—"
-                                )}
-                            </Descriptions.Item>
-                            <Descriptions.Item label={t("adminDocuments.drawer.translationStatus")}>
-                                {hasTranslation(drawerDoc) ? (
-                                    <Tag color="green">{t("adminDocuments.translation.translated")}</Tag>
-                                ) : (
-                                    <Tag>{t("adminDocuments.translation.notTranslated")}</Tag>
-                                )}
-                            </Descriptions.Item>
-                            <Descriptions.Item label={t("adminDocuments.drawer.encrypted")}>
-                                {drawerDoc.encryptedAt || drawerDoc.urlChiffre ? (
-                                    <Tag color="purple" icon={<LockOutlined />}>{t("adminDocuments.encryption.yes")}</Tag>
-                                ) : (
-                                    <Tag>{t("adminDocuments.encryption.no")}</Tag>
-                                )}
-                            </Descriptions.Item>
-                            <Descriptions.Item label={t("adminDocuments.drawer.createdAt")}>
-                                {drawerDoc.createdAt ? dayjs(drawerDoc.createdAt).format("DD/MM/YYYY HH:mm") : "—"}
-                            </Descriptions.Item>
-                            <Descriptions.Item label={t("adminDocuments.drawer.encryptedAt")}>
-                                {drawerDoc.encryptedAt ? dayjs(drawerDoc.encryptedAt).format("DD/MM/YYYY HH:mm") : "—"}
-                            </Descriptions.Item>
-                            <Descriptions.Item label={t("adminDocuments.drawer.quickActions")}>
-                                <Space wrap>
-                                    <Button icon={<EyeOutlined />} onClick={() => openUrl(drawerDoc, "original")}>
-                                        {t("adminDocuments.actions.viewOriginal")}
-                                    </Button>
-                                    <Button icon={<TranslationOutlined />} disabled={!hasTranslation(drawerDoc)}
-                                        onClick={() => openUrl(drawerDoc, "traduit")}
-                                    >
-                                        {t("adminDocuments.actions.viewTranslated")}
-                                    </Button>
-                                   </Space>
-                            </Descriptions.Item>
-                        </Descriptions>
+                                </Descriptions.Item>
+                            </Descriptions>
+                        </div>
                     ) : null}
                 </Drawer>
 
@@ -397,9 +442,9 @@ export default function DocumentsList() {
                     }}
                     footer={null}
                     width="95vw"
-                    style={{ top: 20, paddingBottom: 0 }}
+                    style={{ top: 20, paddingBottom: 0, maxWidth: 1200 }}
                     styles={{ body: { height: "calc(95vh - 110px)", padding: 0, overflow: "hidden" } }}
-                    destroyOnHidden
+                    destroyOnClose
                 >
                     {previewUrl ? (
                         <iframe src={previewUrl} style={{ width: "100%", height: "100%", border: "none" }} title="preview" />

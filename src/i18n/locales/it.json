@@ -2070,20 +2070,25 @@
             "success": "Registrazione riuscita! Controlla la tua email per attivare l'account.",
             "errors": {
                 "firstNameRequired": "Il nome è obbligatorio.",
+                "firstNameMinLength": "Il nome deve contenere almeno 2 caratteri.",
                 "lastNameRequired": "Il cognome è obbligatorio.",
-                "genderRequired": "Il genere è obbligatorio.",
-                "birthPlaceRequired": "Il paese di nascita è obbligatorio.",
-                "birthDateRequired": "La data di nascita è obbligatoria.",
-                "birthDateInvalid": "Data di nascita non valida.",
-                "emailRequired": "L'email è obbligatoria.",
-                "emailInvalid": "Email non valida.",
+                "lastNameMinLength": "Il cognome deve contenere almeno 2 caratteri.",
+                "genderRequired": "Seleziona il tuo genere.",
+                "birthPlaceRequired": "Seleziona il tuo paese di nascita.",
+                "birthDateRequired": "Inserisci la tua data di nascita.",
+                "birthDateInvalid": "Data di nascita non valida (verifica il formato).",
+                "emailRequired": "L'indirizzo email è obbligatorio.",
+                "emailInvalid": "Inserisci un indirizzo email valido (es. nome@dominio.com).",
                 "passwordRequired": "La password è obbligatoria.",
-                "passwordMin": "Almeno 6 caratteri.",
-                "passwordMismatch": "Le password non corrispondono.",
+                "passwordMin": "La password deve contenere almeno 6 caratteri.",
+                "confirmRequired": "Conferma la tua password.",
+                "passwordMismatch": "Le due password non corrispondono.",
                 "orgNameRequired": "Il nome dell'organizzazione è obbligatorio.",
-                "orgTypeRequired": "Il tipo di organizzazione è obbligatorio.",
+                "orgTypeRequired": "Seleziona il tipo di organizzazione.",
                 "orgEmailRequired": "L'email dell'organizzazione è obbligatoria.",
-                "orgEmailInvalid": "Email dell'organizzazione non valida."
+                "orgEmailInvalid": "Inserisci un indirizzo email valido per l'organizzazione.",
+                "formSummary": "Correggi gli errori nei campi evidenziati in rosso di seguito.",
+                "general": "Si è verificato un errore durante la registrazione."
             },
             "roles": {
                 "DEMANDEUR": "Richiedente",
@@ -2393,6 +2398,122 @@
         },
         "pagination": {
             "total": "Totale {{total}} organizzazioni"
+        }
+    },
+    "adminOrgCreate": {
+        "title": "Nuova Organizzazione",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizzazioni",
+            "new": "Nuova Organizzazione"
+        },
+        "cardTitle": "Nuova Organizzazione",
+        "actions": {
+            "back": "Indietro"
+        },
+        "fields": {
+            "name": "Nome dell'organizzazione",
+            "type": "Tipo",
+            "email": "Email",
+            "phone": "Telefono",
+            "address": "Indirizzo",
+            "website": "Sito web",
+            "country": "Paese"
+        },
+        "placeholders": {
+            "name": "Nome dell'organizzazione",
+            "selectType": "Seleziona un tipo",
+            "email": "Email",
+            "phone": "Telefono",
+            "address": "Indirizzo",
+            "website": "Sito web",
+            "selectCountry": "Seleziona un paese"
+        },
+        "types": {
+            "ENTREPRISE": "Azienda",
+            "TRADUCTEUR": "Agenzia di Traduzione",
+            "BANQUE": "Banca",
+            "COLLEGE": "Collegio",
+            "LYCEE": "Liceo",
+            "UNIVERSITE": "Università"
+        },
+        "validators": {
+            "nameRequired": "Il nome è obbligatorio",
+            "typeRequired": "Il tipo è obbligatorio",
+            "emailRequired": "L'email è obbligatoria",
+            "emailInvalid": "Email non valida",
+            "phoneRequired": "Il telefono è obbligatorio",
+            "addressRequired": "L'indirizzo è obbligatorio",
+            "urlInvalid": "URL non valida",
+            "countryRequired": "Il paese è obbligatorio"
+        },
+        "buttons": {
+            "submit": "Crea organizzazione",
+            "submitting": "Creazione in corso..."
+        },
+        "messages": {
+            "success": "Organizzazione creata con successo",
+            "error": "Errore durante la creazione dell'organizzazione"
+        }
+    },
+    "adminOrgEdit": {
+        "title": "Modifica organizzazione",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizzazioni",
+            "edit": "Modifica organizzazione"
+        },
+        "cardTitle": "Modifica organizzazione",
+        "actions": {
+            "back": "Indietro"
+        },
+        "fields": {
+            "name": "Nome dell'organizzazione",
+            "slug": "Slug",
+            "type": "Tipo",
+            "email": "Email",
+            "phone": "Telefono",
+            "address": "Indirizzo",
+            "website": "Sito web",
+            "country": "Paese"
+        },
+        "placeholders": {
+            "name": "Nome dell'organizzazione",
+            "slug": "Slug univoco",
+            "selectType": "Seleziona un tipo",
+            "email": "Email",
+            "phone": "Telefono",
+            "address": "Indirizzo",
+            "website": "Sito web",
+            "selectCountry": "Seleziona un paese"
+        },
+        "types": {
+            "ENTREPRISE": "Azienda",
+            "TRADUCTEUR": "Agenzia di Traduzione",
+            "BANQUE": "Banca",
+            "COLLEGE": "Collegio",
+            "LYCEE": "Liceo",
+            "UNIVERSITE": "Università"
+        },
+        "validators": {
+            "nameRequired": "Il nome è obbligatorio",
+            "slugRequired": "Lo slug è obbligatorio",
+            "typeRequired": "Il tipo è obbligatorio",
+            "emailRequired": "L'email è obbligatoria",
+            "emailInvalid": "Email non valida",
+            "phoneRequired": "Il telefono è obbligatorio",
+            "addressRequired": "L'indirizzo è obbligatorio",
+            "urlInvalid": "URL non valida",
+            "countryRequired": "Il paese è obbligatorio"
+        },
+        "buttons": {
+            "submit": "Aggiorna",
+            "submitting": "Aggiornamento in corso..."
+        },
+        "messages": {
+            "success": "Organizzazione aggiornata con successo",
+            "error": "Errore durante l'aggiornamento dell'organizzazione",
+            "loadError": "Errore nel recupero dell'organizzazione"
         }
     },
     "adminDemandeCreate": {

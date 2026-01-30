@@ -43,7 +43,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../../../components/payment/CheckoutForm";
 import paymentService, { getPayPalConfig } from "../../../services/paymentService";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import countries from "@/assets/countries.json";
 import { useTranslation } from "react-i18next";
 
@@ -99,11 +99,13 @@ export default function DemandeurDemandeCreate() {
   /** State */
   const { t } = useTranslation();
   const { user: me } = useAuth();
-  console.log("ME:", me);
   const navigate = useNavigate();
+  const location = useLocation();
+  const editDemandeId = location.state?.editDemandeId ?? null;
   const [form] = Form.useForm();
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [editDataLoaded, setEditDataLoaded] = useState(false);
   const [lastPaymentMeta, setLastPaymentMeta] = useState(null);
   // Paiement
   const [paymentMethod, setPaymentMethod] = useState(null); // "stripe" | "paypal"
@@ -269,10 +271,72 @@ export default function DemandeurDemandeCreate() {
 
   // Suppression de l'auto-save automatique - l'utilisateur enregistrera manuellement
 
-  /** Load draft on mount */
+  /** Load draft on mount (sauf en mode édition) */
   useEffect(() => {
+    if (editDemandeId) return;
     loadDraft();
-  }, [loadDraft]);
+  }, [loadDraft, editDemandeId]);
+
+  /** Mode édition : charger la demande et préremplir le formulaire */
+  useEffect(() => {
+    if (!editDemandeId) return;
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      try {
+        const res = await demandeService.getById(editDemandeId);
+        const d = res?.demande;
+        if (!d || cancelled) return;
+        const values = {
+          targetOrgId: d.targetOrg?.id ?? undefined,
+          assignedOrgId: d.assignedOrg?.id ?? undefined,
+          observation: d.observation ?? undefined,
+          periode: d.periode ?? undefined,
+          year: d.year ?? undefined,
+          serie: d.serie ?? undefined,
+          niveau: d.niveau ?? undefined,
+          mention: d.mention ?? undefined,
+          annee: d.annee ?? undefined,
+          countryOfSchool: d.countryOfSchool ?? undefined,
+          secondarySchoolName: d.secondarySchoolName ?? undefined,
+          graduationDate: d.graduationDate ? reviveDate(d.graduationDate) : undefined,
+          dob: d.dob ? reviveDate(d.dob) : undefined,
+          citizenship: d.citizenship ?? undefined,
+          passport: d.passport ?? undefined,
+          isEnglishFirstLanguage: !!d.isEnglishFirstLanguage,
+          englishProficiencyTests: d.englishProficiencyTests ?? undefined,
+          testScores: d.testScores ?? undefined,
+          gradingScale: d.gradingScale ?? undefined,
+          gpa: d.gpa ?? undefined,
+          examsTaken: d.examsTaken ?? undefined,
+          intendedMajor: d.intendedMajor ?? undefined,
+          extracurricularActivities: d.extracurricularActivities ?? undefined,
+          honorsOrAwards: d.honorsOrAwards ?? undefined,
+          parentGuardianName: d.parentGuardianName ?? undefined,
+          occupation: d.occupation ?? undefined,
+          educationLevel: d.educationLevel ?? undefined,
+          willApplyForFinancialAid: !!d.willApplyForFinancialAid,
+          hasExternalSponsorship: !!d.hasExternalSponsorship,
+          visaType: d.visaType ?? undefined,
+          hasPreviouslyStudiedInUS: !!d.hasPreviouslyStudiedInUS,
+          personalStatement: d.personalStatement ?? undefined,
+          optionalEssay: d.optionalEssay ?? undefined,
+          applicationRound: d.applicationRound ?? undefined,
+          howDidYouHearAboutUs: d.howDidYouHearAboutUs ?? undefined,
+        };
+        form.setFieldsValue(values);
+        setPaymentCompleted(true);
+        setCurrent(0);
+        setEditDataLoaded(true);
+      } catch (e) {
+        console.error("Erreur chargement demande pour édition:", e);
+        message.error(t("demandeurDemandeCreate.messages.loadError", "Erreur lors du chargement de la demande"));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [editDemandeId, form, t]);
 
   /** Initialize date of birth from user profile if not already set */
   useEffect(() => {
@@ -519,7 +583,8 @@ export default function DemandeurDemandeCreate() {
 
   /** ------- Submit ------- */
   const onFinish = async (values) => {
-    if (!paymentCompleted) {
+    const isEditMode = !!editDemandeId;
+    if (!isEditMode && !paymentCompleted) {
       message.warning(t("demandeurDemandeCreate.messages.paymentRequired"));
       return;
     }
@@ -587,12 +652,19 @@ export default function DemandeurDemandeCreate() {
         // Invitations
         invitedOrganizations: invites,
 
-        // Paiement
-        paymentMethod,
-        paymentCompleted,
+        // Paiement (ignoré en mode édition)
+        paymentMethod: isEditMode ? null : paymentMethod,
+        paymentCompleted: isEditMode ? true : paymentCompleted,
         pricePaid: Number(price.amount),
         currency: String(price.currency || DEFAULT_CURRENCY),
       };
+
+      if (isEditMode) {
+        await demandeService.update(editDemandeId, payload);
+        message.success(t("demandeurDemandeCreate.messages.updateSuccess", "Candidature mise à jour avec succès"));
+        navigate(`/demandeur/mes-demandes/${editDemandeId}/details`, { replace: true });
+        return;
+      }
 
       const created = await demandeService.create(payload);
       const d = created?.demande || created;
@@ -609,7 +681,6 @@ export default function DemandeurDemandeCreate() {
         paymentType: lastPaymentMeta.paymentType,   // "card" | "paypal"
         paymentInfo: lastPaymentMeta.paymentInfo || null,
       };
-      console.log(data);
       await paymentService.create({
         demandePartageId: d.id,
         provider: lastPaymentMeta.provider,
@@ -623,8 +694,6 @@ export default function DemandeurDemandeCreate() {
         paymentType: lastPaymentMeta.paymentType,   // "card" | "paypal"
         paymentInfo: lastPaymentMeta.paymentInfo || null,
       });
-
-      // Pas de message de succès
 
       // Sauvegarder tous les champs du formulaire dans le localStorage (sauf paiement)
       try {

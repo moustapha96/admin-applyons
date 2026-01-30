@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Form,
   Input,
@@ -10,122 +11,109 @@ import {
   Row,
   Col,
   message,
-  Spin,
 } from "antd";
 import {
   SaveOutlined,
   ArrowLeftOutlined,
-  GlobalOutlined,
   PhoneOutlined,
   MailOutlined,
 } from "@ant-design/icons";
 import organizationService from "../../../services/organizationService";
 import { HiBuildingOffice } from "react-icons/hi2";
+import countries from "@/assets/countries.json";
 
 const { Option } = Select;
 
-const typeOptions = [
-  { value: "ENTREPRISE", label: "Entreprise" },
-  { value: "TRADUCTEUR", label: "Agence de Traduction" },
-  { value: "BANQUE", label: "Banque" },
-  { value: "COLLEGE", label: "Collège" },
-  { value: "LYCEE", label: "Lycée" },
-  { value: "UNIVERSITE", label: "Université" },
-];
+/** Génère un slug à partir du nom : minuscules, espaces → tirets, sans accents. */
+const nameToSlug = (name) => {
+  if (!name || typeof name !== "string") return "";
+  return name
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s-]/gi, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .toLowerCase();
+};
 
-const countryOptions = [
-  { value: "SN", label: "Sénégal" },
-  { value: "FR", label: "France" },
-  { value: "US", label: "États-Unis" },
-  { value: "CA", label: "Canada" },
-];
+const TYPE_KEYS = ["ENTREPRISE", "TRADUCTEUR", "BANQUE", "COLLEGE", "LYCEE", "UNIVERSITE"];
 
 const OrganizationCreate = () => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const typeOptions = useMemo(
+    () =>
+      TYPE_KEYS.map((value) => ({
+        value,
+        label: t(`adminOrgCreate.types.${value}`),
+      })),
+    [t]
+  );
+
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      await organizationService.create(values);
-      message.success("Organisation créée avec succès");
+      const slug = nameToSlug(values.name);
+      await organizationService.create({ ...values, slug });
+      message.success(t("adminOrgCreate.messages.success"));
       navigate("/admin/organisations");
     } catch (error) {
       console.error("Erreur lors de la création:", error);
-      message.error(error?.message || "Erreur lors de la création de l'organisation");
+      message.error(error?.message || t("adminOrgCreate.messages.error"));
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSlugCheck = async (_, value) => {
-    if (!value) return Promise.reject("Le slug est obligatoire");
-    try {
-      const response = await organizationService.checkSlug({ slug: value, name: form.getFieldValue("name") });
-      if (!response.available) {
-        return Promise.reject("Ce slug est déjà utilisé");
-      }
-      return Promise.resolve();
-    } catch (error) {
-      return Promise.reject("Erreur lors de la vérification du slug");
-    }
-  };
-
   return (
-    <div className="container-fluid relative px-3">
-      <div className="layout-specing">
-        <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Nouvelle Organisation</h5>
+    <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+      <div className="layout-specing py-4 sm:py-6">
+        <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+          <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">
+            {t("adminOrgCreate.title")}
+          </h5>
           <Breadcrumb
+            className="order-1 sm:order-2"
             items={[
-              { title: <Link to="/admin/dashboard">Dashboard</Link> },
-              { title: <Link to="/admin/organisations">Organisations</Link> },
-              { title: "Nouvelle Organisation" },
+              { title: <Link to="/admin/dashboard">{t("adminOrgCreate.breadcrumb.dashboard")}</Link> },
+              { title: <Link to="/admin/organisations">{t("adminOrgCreate.breadcrumb.organizations")}</Link> },
+              { title: t("adminOrgCreate.breadcrumb.new") },
             ]}
           />
         </div>
-        <div className="md:flex md:justify-end justify-end items-center mb-6">
-          <Button onClick={() => navigate(-1)} icon={<ArrowLeftOutlined />}>
-            Retour
+        <div className="flex flex-wrap justify-end items-center gap-2 mb-4 sm:mb-6">
+          <Button onClick={() => navigate(-1)} icon={<ArrowLeftOutlined />} className="w-full sm:w-auto">
+            {t("adminOrgCreate.actions.back")}
           </Button>
         </div>
-        <Card title="Nouvelle Organisation" className="mt-4">
+        <Card title={t("adminOrgCreate.cardTitle")} className="overflow-hidden">
           <Form
             form={form}
             layout="vertical"
             onFinish={handleSubmit}
             initialValues={{ type: "ENTREPRISE", country: "SN" }}
           >
-            <Row gutter={16}>
-              <Col span={24}>
+            <Row gutter={[16, 24]}>
+              <Col xs={24}>
                 <Form.Item
                   name="name"
-                  label="Nom de l'organisation"
-                  rules={[{ required: true, message: "Le nom est obligatoire" }]}
+                  label={t("adminOrgCreate.fields.name")}
+                  rules={[{ required: true, message: t("adminOrgCreate.validators.nameRequired") }]}
                 >
-                  <Input prefix={<HiBuildingOffice />} placeholder="Nom de l'organisation" />
+                  <Input prefix={<HiBuildingOffice />} placeholder={t("adminOrgCreate.placeholders.name")} />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="slug"
-                  label="Slug"
-                  rules={[
-                    { required: true, message: "Le slug est obligatoire" },
-                    { validator: handleSlugCheck },
-                  ]}
-                > 
-                  <Input prefix={<GlobalOutlined />} placeholder="Slug unique" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12}>
                 <Form.Item
                   name="type"
-                  label="Type"
-                  rules={[{ required: true, message: "Le type est obligatoire" }]}
+                  label={t("adminOrgCreate.fields.type")}
+                  rules={[{ required: true, message: t("adminOrgCreate.validators.typeRequired") }]}
                 >
-                  <Select placeholder="Sélectionner un type">
+                  <Select placeholder={t("adminOrgCreate.placeholders.selectType")}>
                     {typeOptions.map((option) => (
                       <Option key={option.value} value={option.value}>
                         {option.label}
@@ -134,71 +122,72 @@ const OrganizationCreate = () => {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12}>
                 <Form.Item
                   name="email"
-                  label="Email"
+                  label={t("adminOrgCreate.fields.email")}
                   rules={[
-                    { required: true, message: "L'email est obligatoire" },
-                    { type: "email", message: "Email invalide" },
+                    { required: true, message: t("adminOrgCreate.validators.emailRequired") },
+                    { type: "email", message: t("adminOrgCreate.validators.emailInvalid") },
                   ]}
                 >
-                  <Input prefix={<MailOutlined />} placeholder="Email" />
+                  <Input prefix={<MailOutlined />} placeholder={t("adminOrgCreate.placeholders.email")} />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12}>
                 <Form.Item
                   name="phone"
-                  label="Téléphone"
-                  rules={[{ required: true, message: "Le téléphone est obligatoire" }]}
+                  label={t("adminOrgCreate.fields.phone")}
+                  rules={[{ required: true, message: t("adminOrgCreate.validators.phoneRequired") }]}
                 >
-                  <Input prefix={<PhoneOutlined />} placeholder="Téléphone" />
+                  <Input prefix={<PhoneOutlined />} placeholder={t("adminOrgCreate.placeholders.phone")} />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12}>
                 <Form.Item
                   name="address"
-                  label="Adresse"
-                  rules={[{ required: true, message: "L'adresse est obligatoire" }]}
+                  label={t("adminOrgCreate.fields.address")}
+                  rules={[{ required: true, message: t("adminOrgCreate.validators.addressRequired") }]}
                 >
-                  <Input placeholder="Adresse" />
+                  <Input placeholder={t("adminOrgCreate.placeholders.address")} />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12}>
                 <Form.Item
                   name="website"
-                  label="Site Web"
-                  rules={[
-                    { type: "url", message: "URL invalide" },
-                  ]}
+                  label={t("adminOrgCreate.fields.website")}
+                  rules={[{ type: "url", message: t("adminOrgCreate.validators.urlInvalid") }]}
                 >
-                  <Input placeholder="Site Web" />
+                  <Input placeholder={t("adminOrgCreate.placeholders.website")} />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12}>
                 <Form.Item
                   name="country"
-                  label="Pays"
-                  rules={[{ required: true, message: "Le pays est obligatoire" }]}
+                  label={t("adminOrgCreate.fields.country")}
+                  rules={[{ required: true, message: t("adminOrgCreate.validators.countryRequired") }]}
                 >
-                  <Select placeholder="Sélectionner un pays">
-                    {countryOptions.map((option) => (
-                      <Option key={option.value} value={option.value}>
-                        {option.label}
-                      </Option>
-                    ))}
-                  </Select>
+                  <Select
+                    placeholder={t("adminOrgCreate.placeholders.selectCountry")}
+                    showSearch
+                    optionFilterProp="label"
+                    filterOption={(input, option) =>
+                      (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+                    }
+                    options={countries.map((c) => ({ value: c.code, label: c.name }))}
+                  />
                 </Form.Item>
               </Col>
-              <Col span={24}>
+              <Col xs={24}>
                 <Form.Item>
                   <Button
                     type="primary"
                     htmlType="submit"
                     loading={loading}
                     icon={<SaveOutlined />}
+                    className="w-full sm:w-auto"
                   >
-                    {loading ? "Création en cours..." : "Créer l'organisation"}
+                    {loading ? t("adminOrgCreate.buttons.submitting") : t("adminOrgCreate.buttons.submit")}
                   </Button>
                 </Form.Item>
               </Col>

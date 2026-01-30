@@ -455,7 +455,9 @@
             "detail": "Detail"
         },
         "actions": {
-            "documents": "Documents"
+            "documents": "Documents",
+            "edit": "Edit application",
+            "editRedirect": "Redirecting to edit form..."
         },
         "sections": {
             "case": "Case",
@@ -2160,20 +2162,27 @@
             "success": "Registration successful! Check your email to activate your account.",
             "errors": {
                 "firstNameRequired": "First name is required.",
+                "firstNameMinLength": "First name must be at least 2 characters.",
                 "lastNameRequired": "Last name is required.",
-                "genderRequired": "Gender is required.",
-                "birthPlaceRequired": "Country of birth is required.",
-                "birthDateRequired": "Date of birth is required.",
-                "birthDateInvalid": "Invalid date of birth.",
-                "emailRequired": "Email is required.",
-                "emailInvalid": "Invalid email.",
+                "lastNameMinLength": "Last name must be at least 2 characters.",
+                "genderRequired": "Please select your gender.",
+                "birthPlaceRequired": "Please select your country of birth.",
+                "birthDateRequired": "Please enter your date of birth.",
+                "birthDateInvalid": "Invalid date of birth (check the format).",
+                "emailRequired": "Email address is required.",
+                "emailInvalid": "Please enter a valid email address (e.g. name@domain.com).",
                 "passwordRequired": "Password is required.",
-                "passwordMin": "At least 6 characters.",
-                "passwordMismatch": "Passwords do not match.",
+                "passwordMin": "Password must be at least 6 characters.",
+                "confirmRequired": "Please confirm your password.",
+                "passwordMismatch": "The two passwords do not match.",
                 "orgNameRequired": "Organization name is required.",
-                "orgTypeRequired": "Organization type is required.",
+                "orgTypeRequired": "Please select the organization type.",
                 "orgEmailRequired": "Organization email is required.",
-                "orgEmailInvalid": "Invalid organization email."
+                "orgEmailInvalid": "Please enter a valid email address for the organization.",
+                "formSummary": "Please correct the errors in the fields marked in red below.",
+                "formSummaryRequired": "Required fields missing or invalid (according to your profile and organization type):",
+                "general": "An error occurred during registration.",
+                "unknownField": "Error on this field"
             },
             "roles": {
                 "DEMANDEUR": "Applicant",
@@ -2483,6 +2492,122 @@
         },
         "pagination": {
             "total": "Total {{total}} organizations"
+        }
+    },
+    "adminOrgCreate": {
+        "title": "New Organization",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizations",
+            "new": "New Organization"
+        },
+        "cardTitle": "New Organization",
+        "actions": {
+            "back": "Back"
+        },
+        "fields": {
+            "name": "Organization name",
+            "type": "Type",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "website": "Website",
+            "country": "Country"
+        },
+        "placeholders": {
+            "name": "Organization name",
+            "selectType": "Select a type",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "website": "Website",
+            "selectCountry": "Select a country"
+        },
+        "types": {
+            "ENTREPRISE": "Company",
+            "TRADUCTEUR": "Translation Agency",
+            "BANQUE": "Bank",
+            "COLLEGE": "College",
+            "LYCEE": "High School",
+            "UNIVERSITE": "University"
+        },
+        "validators": {
+            "nameRequired": "Name is required",
+            "typeRequired": "Type is required",
+            "emailRequired": "Email is required",
+            "emailInvalid": "Invalid email",
+            "phoneRequired": "Phone is required",
+            "addressRequired": "Address is required",
+            "urlInvalid": "Invalid URL",
+            "countryRequired": "Country is required"
+        },
+        "buttons": {
+            "submit": "Create organization",
+            "submitting": "Creating..."
+        },
+        "messages": {
+            "success": "Organization created successfully",
+            "error": "Error creating organization"
+        }
+    },
+    "adminOrgEdit": {
+        "title": "Edit organization",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizations",
+            "edit": "Edit organization"
+        },
+        "cardTitle": "Edit organization",
+        "actions": {
+            "back": "Back"
+        },
+        "fields": {
+            "name": "Organization name",
+            "slug": "Slug",
+            "type": "Type",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "website": "Website",
+            "country": "Country"
+        },
+        "placeholders": {
+            "name": "Organization name",
+            "slug": "Unique slug",
+            "selectType": "Select a type",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "website": "Website",
+            "selectCountry": "Select a country"
+        },
+        "types": {
+            "ENTREPRISE": "Company",
+            "TRADUCTEUR": "Translation Agency",
+            "BANQUE": "Bank",
+            "COLLEGE": "College",
+            "LYCEE": "High School",
+            "UNIVERSITE": "University"
+        },
+        "validators": {
+            "nameRequired": "Name is required",
+            "slugRequired": "Slug is required",
+            "typeRequired": "Type is required",
+            "emailRequired": "Email is required",
+            "emailInvalid": "Invalid email",
+            "phoneRequired": "Phone is required",
+            "addressRequired": "Address is required",
+            "urlInvalid": "Invalid URL",
+            "countryRequired": "Country is required"
+        },
+        "buttons": {
+            "submit": "Update",
+            "submitting": "Updating..."
+        },
+        "messages": {
+            "success": "Organization updated successfully",
+            "error": "Error updating organization",
+            "loadError": "Error fetching organization"
         }
     },
     "adminDemandeCreate": {
@@ -3739,9 +3864,19 @@
         },
         "columns": {
             "demande": "Application",
-            "ownerOrg": "Added by (org.)",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtained",
+            "translated": "Translated",
+            "ownerOrg": "Organization",
             "createdAt": "Created at",
             "actions": "Actions"
+        },
+        "types": {
+            "ATTESTATION": "Attestation",
+            "RELEVE": "Transcript",
+            "DIPLOME": "Diploma",
+            "OTHER": "Other"
         },
         "filters": {
             "searchPlaceholder": "Search (DNA code…)",
@@ -3761,8 +3896,11 @@
         "drawer": {
             "title": "Document details",
             "demande": "Application",
-            "owner": "Added by",
-            "translationStatus": "Translation status",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtained",
+            "owner": "Organization",
+            "translationStatus": "Translated",
             "encrypted": "Encrypted",
             "createdAt": "Created at",
             "encryptedAt": "Encrypted at",
@@ -3783,6 +3921,9 @@
         "messages": {
             "loadError": "Error loading documents",
             "urlUnavailable": "URL unavailable",
+            "openError": "Unable to open document",
+            "sessionExpired": "Session expired. Please log in again.",
+            "accessDenied": "You do not have access to this document.",
             "deleted": "Document deleted",
             "deleteError": "Deletion failed"
         },

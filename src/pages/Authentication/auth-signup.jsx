@@ -39,7 +39,7 @@ export default function Signup() {
     lastName: "",
     phone: "",
     adress: "",
-    country: "Senegal", // Code ISO du pays (ex: "SN" pour Sénégal)
+    country: "SN", // Code ISO du pays (ex: "SN" pour Sénégal)
     gender: "MALE",
     role: "DEMANDEUR",
     birthPlace: "",         // NEW
@@ -118,7 +118,7 @@ export default function Signup() {
     const today = new Date();
     if (Number.isNaN(d.getTime())) return false;
     // entre 1900-01-01 et aujourd'hui
-    const min = new Date("1980-01-01");
+    const min = new Date("1900-01-01");
     return d >= min && d <= today;
   };
 
@@ -140,34 +140,98 @@ export default function Signup() {
     return true;
   }, [formData, roleNeedsOrganization]);
 
+  // Quand le formulaire devient valide, on efface toutes les erreurs affichées
+  useEffect(() => {
+    if (isFormValid && Object.keys(errors).length > 0) {
+      setErrors({});
+    }
+  }, [isFormValid]);
+
+  // Champs obligatoires selon type de profil et type d'organisation (affichage des erreurs uniquement sur ces champs)
+  const requiredFieldKeys = useMemo(() => {
+    const base = ["firstName", "lastName", "gender", "birthPlace", "birthDate", "email", "password", "confirmPassword"];
+    if (roleNeedsOrganization(formData.role)) {
+      return [...base, "orgName", "orgType", "orgEmail"];
+    }
+    return base;
+  }, [formData.role, formData.orgType]);
+
+  const isRequiredField = (fieldKey) => fieldKey === "_form" || requiredFieldKeys.includes(fieldKey);
+
+  // Libellé du champ pour le récapitulatif d'erreurs (clé → nom affiché)
+  const getFieldLabel = (fieldKey) => {
+    if (!fieldKey || fieldKey === "_form") return null;
+    const labelMap = {
+      firstName: "auth.signup.firstName",
+      lastName: "auth.signup.lastName",
+      gender: "auth.signup.gender",
+      birthPlace: "auth.signup.birthPlace",
+      birthDate: "auth.signup.birthDate",
+      email: "auth.signup.email",
+      phone: "auth.signup.phone",
+      country: "auth.signup.country",
+      adress: "auth.signup.address",
+      address: "auth.signup.address",
+      password: "auth.signup.password",
+      confirmPassword: "auth.signup.confirmPassword",
+      role: "auth.signup.accountType",
+      orgName: "auth.signup.orgName",
+      orgType: "auth.signup.orgType",
+      orgEmail: "auth.signup.orgEmail",
+      orgPhone: "auth.signup.orgPhone",
+      orgWebsite: "auth.signup.orgWebsite",
+      orgAddress: "auth.signup.orgAddress",
+    };
+    const key = labelMap[fieldKey] ?? `auth.signup.${fieldKey}`;
+    const label = t(key);
+    return label && label !== key ? label.replace(/\s*\*$/, "").trim() : fieldKey;
+  };
+
   const validateForm = () => {
     const newErrors = {};
 
-    // User
-    if (!formData.firstName) newErrors.firstName = t('auth.signup.errors.firstNameRequired');
-    if (!formData.lastName) newErrors.lastName = t('auth.signup.errors.lastNameRequired');
+    const firstName = (formData.firstName || "").trim();
+    const lastName = (formData.lastName || "").trim();
+    const email = (formData.email || "").trim();
+    const orgEmail = (formData.orgEmail || "").trim();
+
+    // Prénom
+    if (!firstName) newErrors.firstName = t('auth.signup.errors.firstNameRequired');
+    else if (firstName.length < 2) newErrors.firstName = t('auth.signup.errors.firstNameMinLength');
+
+    // Nom
+    if (!lastName) newErrors.lastName = t('auth.signup.errors.lastNameRequired');
+    else if (lastName.length < 2) newErrors.lastName = t('auth.signup.errors.lastNameMinLength');
+
+    // Genre
     if (!formData.gender) newErrors.gender = t('auth.signup.errors.genderRequired');
 
-    if (!formData.birthPlace) newErrors.birthPlace = t('auth.signup.errors.birthPlaceRequired'); // NEW
-    if (!formData.birthDate) newErrors.birthDate = t('auth.signup.errors.birthDateRequired'); // NEW
+    // Lieu de naissance
+    if (!formData.birthPlace) newErrors.birthPlace = t('auth.signup.errors.birthPlaceRequired');
+    // Date de naissance
+    if (!formData.birthDate) newErrors.birthDate = t('auth.signup.errors.birthDateRequired');
     else if (!isValidBirthDate(formData.birthDate))
       newErrors.birthDate = t('auth.signup.errors.birthDateInvalid');
 
-    if (!formData.email) newErrors.email = t('auth.signup.errors.emailRequired');
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = t('auth.signup.errors.emailInvalid');
+    // Email
+    if (!email) newErrors.email = t('auth.signup.errors.emailRequired');
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = t('auth.signup.errors.emailInvalid');
 
+    // Mot de passe
     if (!formData.password) newErrors.password = t('auth.signup.errors.passwordRequired');
     else if (formData.password.length < 6) newErrors.password = t('auth.signup.errors.passwordMin');
 
-    if (formData.password !== formData.confirmPassword)
+    // Confirmation mot de passe
+    if (!formData.confirmPassword) newErrors.confirmPassword = t('auth.signup.errors.confirmRequired');
+    else if (formData.password !== formData.confirmPassword)
       newErrors.confirmPassword = t('auth.signup.errors.passwordMismatch');
 
-    // Organization si nécessaire
+    // Organisation (si nécessaire)
     if (roleNeedsOrganization(formData.role)) {
-      if (!formData.orgName) newErrors.orgName = t('auth.signup.errors.orgNameRequired');
+      if (!(formData.orgName || "").trim()) newErrors.orgName = t('auth.signup.errors.orgNameRequired');
       if (!formData.orgType) newErrors.orgType = t('auth.signup.errors.orgTypeRequired');
-      if (!formData.orgEmail) newErrors.orgEmail = t('auth.signup.errors.orgEmailRequired');
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.orgEmail))
+      if (!orgEmail) newErrors.orgEmail = t('auth.signup.errors.orgEmailRequired');
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(orgEmail))
         newErrors.orgEmail = t('auth.signup.errors.orgEmailInvalid');
     }
 
@@ -222,6 +286,30 @@ export default function Signup() {
       return map[field] || `org_${field}`;
     }
     return p;
+  };
+
+  // Extraire un message lisible depuis un item d'erreur backend (objet ou string)
+  const extractMessageFromItem = (item) => {
+    if (item == null) return "";
+    if (typeof item === "string") return item.trim();
+    const str =
+      item.msg ??
+      item.message ??
+      item.error ??
+      item.detail ??
+      item.description ??
+      (Array.isArray(item.details) ? item.details[0]?.message ?? item.details[0]?.msg : null) ??
+      item.context?.message ??
+      item.context?.label;
+    if (typeof str === "string" && str.trim()) return str.trim();
+    return "";
+  };
+
+  // Toujours retourner un message d'erreur non vide (pour toast et champs)
+  const normalizeErrorMessage = (msg) => {
+    const extracted = extractMessageFromItem(msg);
+    if (extracted) return extracted;
+    return t("auth.signup.errors.general");
   };
 
   const handleSubmit = async (e) => {
@@ -284,25 +372,63 @@ export default function Signup() {
             country: formData.country,
           },
         };
-        console.log(payload);
         await authService.createWithOrganization(payload);
         toast.success(t('auth.signup.success'));
         navigate("/auth/login", { replace: true });
       }
     } catch (err) {
       const data = err?.response?.data ?? err;
-      const errorMessage = data?.message || err?.message || t('auth.signup.errors.general');
+      const rawMessage =
+        (typeof data === "object" && data?.message) ||
+        (typeof data === "string" ? data : null) ||
+        err?.message;
+      const errorMessage = normalizeErrorMessage(rawMessage);
       toast.error(errorMessage);
-      const backendErrors = data?.errors || data?.error?.details;
+
+      // Erreurs par champ : tableau ou objet (support path en array ex. ["body","email"])
+      const backendErrors = data?.errors ?? data?.error?.details ?? data?.validationErrors ?? data?.details;
+      const mapped = {};
+
+      const resolvePath = (path) => {
+        if (path == null) return null;
+        if (Array.isArray(path)) return path.filter(Boolean).join(".").replace(/^body\./, "").replace(/^user\./, "") || null;
+        return String(path);
+      };
+
       if (Array.isArray(backendErrors) && backendErrors.length > 0) {
-        const mapped = backendErrors.reduce((acc, item) => {
-          const path = item.path ?? item.field;
-          const msg = item.msg ?? item.message ?? item;
-          const field = mapBackendErrorPath(path);
-          if (field) acc[field] = typeof msg === "string" ? msg : msg?.message || JSON.stringify(msg);
-          return acc;
-        }, {});
-        setErrors(mapped);
+        backendErrors.forEach((item) => {
+          const rawPath = item.path ?? item.field ?? item.param ?? item.context?.key;
+          const pathStr = resolvePath(rawPath);
+          const field = pathStr ? mapBackendErrorPath(pathStr) ?? pathStr : "_form";
+          const text = extractMessageFromItem(item) || normalizeErrorMessage(item);
+          if (!field) return;
+          if (text && text !== t("auth.signup.errors.unknownField")) {
+            mapped[field] = text;
+          } else if (!mapped[field]) {
+            mapped[field] = t("auth.signup.errors.unknownField");
+          }
+        });
+      } else if (backendErrors && typeof backendErrors === "object" && !Array.isArray(backendErrors)) {
+        Object.entries(backendErrors).forEach(([key, value]) => {
+          const field = mapBackendErrorPath(key) ?? key;
+          const text = extractMessageFromItem(value) || t("auth.signup.errors.unknownField");
+          if (field && text) mapped[field] = text;
+        });
+      }
+
+      const unknownLabel = t("auth.signup.errors.unknownField");
+      const allUnknown = Object.keys(mapped).length > 0 && Object.values(mapped).every((v) => v === unknownLabel);
+      const filtered = Object.fromEntries(
+        Object.entries(mapped).filter(([key]) => isRequiredField(key))
+      );
+      if (allUnknown && Object.keys(mapped).length > 1) {
+        setErrors({ _form: errorMessage });
+      } else if (Object.keys(filtered).length > 0) {
+        setErrors(filtered);
+      } else if (Object.keys(mapped).length > 0) {
+        setErrors({ _form: errorMessage });
+      } else {
+        setErrors({ _form: errorMessage });
       }
     } finally {
       setIsLoading(false);
@@ -328,6 +454,33 @@ export default function Signup() {
               <h3 className="mb-6 font-bold !important text-2xl text-slate-800 dark:text-white text-center">
                 {t('auth.signup.title')}
               </h3>
+
+              {/* Message récapitulatif : champs obligatoires non remplis ou invalides (selon profil et org) */}
+              {/* {Object.keys(errors).length > 0 && (() => {
+                const entriesToShow = Object.entries(errors).filter(([key]) => isRequiredField(key));
+                if (entriesToShow.length === 0) return null;
+                return (
+                  <div
+                    className="mb-4 p-4 rounded-lg border-2 border-red-300 bg-red-50 dark:bg-red-900/20 dark:border-red-600"
+                    role="alert"
+                  >
+                    <p className="text-sm font-semibold text-red-800 dark:text-red-200 mb-2">
+                      {t("auth.signup.errors.formSummaryRequired")}
+                    </p>
+                    <ul className="list-disc list-inside text-sm text-red-700 dark:text-red-300 space-y-1">
+                      {entriesToShow.map(([fieldKey, message]) => {
+                        const text = (message && String(message).trim()) || t("auth.signup.errors.unknownField");
+                        const label = getFieldLabel(fieldKey);
+                        return (
+                          <li key={fieldKey}>
+                            {fieldKey === "_form" ? text : label ? `${label} : ${text}` : text}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                );
+              })()} */}
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Bloc Infos personnelles + rôle */}
@@ -367,7 +520,7 @@ export default function Signup() {
                         value={formData.firstName}
                         onChange={handleChange}
                       />
-                      {errors.firstName && <p className="mt-1 text-xs text-red-600">{errors.firstName}</p>}
+                      {errors.firstName && <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">{errors.firstName}</p>}
                     </div>
 
                     <div>
@@ -382,7 +535,7 @@ export default function Signup() {
                         value={formData.lastName}
                         onChange={handleChange}
                       />
-                      {errors.lastName && <p className="mt-1 text-xs text-red-600">{errors.lastName}</p>}
+                      {errors.lastName && <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">{errors.lastName}</p>}
                     </div>
 
                     <div>
@@ -401,16 +554,16 @@ export default function Signup() {
                           </option>
                         ))}
                       </select>
-                      {errors.gender && <p className="mt-1 text-xs text-red-600">{errors.gender}</p>}
+                      {errors.gender && <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">{errors.gender}</p>}
                     </div>
 
-                    {/* NEW: Lieu de naissance */}
+                    {/* Lieu de naissance */}
                     <div>
                       <label className="block text-sm font-medium mb-1">{t('auth.signup.birthPlace')}</label>
                       <select
                         id="birthPlace"
                         name="birthPlace"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]"
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)] ${errors.birthPlace ? "border-red-500" : "border-gray-300"}`}
                         value={formData.birthPlace}
                         onChange={handleChange}
                       >
@@ -420,7 +573,7 @@ export default function Signup() {
                           </option>
                         ))}
                       </select>
-                      {errors.birthPlace && <p className="mt-1 text-xs text-red-600">{errors.birthPlace}</p>}
+                      {errors.birthPlace && <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">{errors.birthPlace}</p>}
                     </div>
 
                     {/* NEW: Date de naissance */}
@@ -436,7 +589,7 @@ export default function Signup() {
                         value={formData.birthDate}
                         onChange={handleChange}
                       />
-                      {errors.birthDate && <p className="mt-1 text-xs text-red-600">{errors.birthDate}</p>}
+                      {errors.birthDate && <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">{errors.birthDate}</p>}
                     </div>
 
                     <div className="md:col-span-2">
@@ -482,7 +635,7 @@ export default function Signup() {
                         onChange={handleChange}
                       >
                         {countries.map((opt) => (
-                          <option key={opt.code} value={opt.name}>
+                          <option key={opt.code} value={opt.code}>
                             {opt.name}
                           </option>
                         ))}
@@ -495,11 +648,12 @@ export default function Signup() {
                         id="adress"
                         name="adress"
                         type="text"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]"
+                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)] ${errors.adress ? "border-red-500" : "border-gray-300"}`}
                         placeholder={t('auth.signup.placeholders.address')}
                         value={formData.adress}
                         onChange={handleChange}
                       />
+                      {errors.adress && <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">{errors.adress}</p>}
                     </div>
 
                     <div>
@@ -528,7 +682,7 @@ export default function Signup() {
                           )}
                         </button>
                       </div>
-                      {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password}</p>}
+                      {errors.password && <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">{errors.password}</p>}
                       <p className="mt-1 text-xs text-gray-500">{t('auth.signup.minPassword')}</p>
                     </div>
 
@@ -595,7 +749,7 @@ export default function Signup() {
                           value={formData.orgName}
                           onChange={handleChange}
                         />
-                        {errors.orgName && <p className="mt-1 text-xs text-red-600">{errors.orgName}</p>}
+                        {errors.orgName && <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">{errors.orgName}</p>}
                       </div>
 
                       <div>
@@ -608,7 +762,9 @@ export default function Signup() {
                           value={formData.orgType}
                           onChange={handleChange}
                         >
-                          <option value="">{t('auth.signup.placeholders.selectType')}</option>
+                          {visibleOrgTypes.length > 1 && (
+                            <option value="">{t('auth.signup.placeholders.selectType')}</option>
+                          )}
                           {visibleOrgTypes.map((opt) => (
                             <option key={opt.value} value={opt.value}>
                               {opt.label}
@@ -630,7 +786,7 @@ export default function Signup() {
                           value={formData.orgEmail}
                           onChange={handleChange}
                         />
-                        {errors.orgEmail && <p className="mt-1 text-xs text-red-600">{errors.orgEmail}</p>}
+                        {errors.orgEmail && <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">{errors.orgEmail}</p>}
                       </div>
 
                       <div>

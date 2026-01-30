@@ -10,6 +10,7 @@ import {
   Statistic,
   Row,
   Col,
+  Grid,
   Divider,
   Tag,
   Space,
@@ -20,6 +21,8 @@ import {
   Select,
   Tooltip,
   Badge,
+  Modal,
+  message,
 } from "antd";
 import {
   GlobalOutlined,
@@ -30,6 +33,7 @@ import {
   BankOutlined,
   TeamOutlined,
   InfoCircleOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import organizationService from "../../../services/organizationService";
 import { BiBuilding } from "react-icons/bi";
@@ -87,6 +91,7 @@ const defaultUsersState = {
 const OrganizationDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const breakpoint = Grid.useBreakpoint();
 
   const [organization, setOrganization] = useState(null);
   const [loadingOrg, setLoadingOrg] = useState(true);
@@ -96,6 +101,7 @@ const OrganizationDetail = () => {
   const [usersTotal, setUsersTotal] = useState(0);
   const [usersState, setUsersState] = useState(defaultUsersState);
   const [loadingUsers, setLoadingUsers] = useState(true);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   // helper: trad du tri Antd -> backend
   const mapSorterToBackend = (sorter) => {
@@ -145,7 +151,6 @@ const OrganizationDetail = () => {
         sortOrder: users.filters?.sortOrder ?? s.sortOrder,
       }));
     } catch (error) {
-      console.error("Erreur lors de la récupération de l'organisation:", error);
       setOrganization(null);
       setUsersItems([]);
       setUsersTotal(0);
@@ -162,6 +167,32 @@ const OrganizationDetail = () => {
     fetchOrganization();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  const totalUsersCount = organization?.counts?.users ?? usersTotal;
+  const canDeleteOrganization = totalUsersCount === 0 && !loadingUsers;
+
+  const handleDeleteOrganization = () => {
+    if (!organization?.id || !canDeleteOrganization) return;
+    Modal.confirm({
+      title: "Supprimer l'organisation ?",
+      content: `L'organisation « ${organization.name} » sera supprimée. Cette action est irréversible.`,
+      okText: "Supprimer",
+      okType: "danger",
+      cancelText: "Annuler",
+      onOk: async () => {
+        setDeleteLoading(true);
+        try {
+          await organizationService.softDelete(organization.id);
+          message.success("Organisation supprimée.");
+          navigate("/admin/organisations", { replace: true });
+        } catch (err) {
+          message.error(err?.response?.data?.message || "Impossible de supprimer l'organisation.");
+        } finally {
+          setDeleteLoading(false);
+        }
+      },
+    });
+  };
 
   // Table columns
   const userColumns = useMemo(
@@ -261,48 +292,69 @@ const OrganizationDetail = () => {
 
   if (loadingOrg && !organization) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-[50vh] sm:min-h-screen p-4">
         <Spin size="large" />
       </div>
     );
   }
 
   if (!organization) {
-    return <div>Organisation non trouvée.</div>;
+    return (
+      <div className="container-fluid px-2 sm:px-3 py-4">Organisation non trouvée.</div>
+    );
   }
 
   return (
-    <div className="container-fluid relative px-3">
-      <div className="layout-specing">
-        <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Détails de l'organisation</h5>
+    <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+      <div className="layout-specing py-4 sm:py-6">
+        <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+          <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">Détails de l'organisation</h5>
           <Breadcrumb
+            className="order-1 sm:order-2"
             items={[
               { title: <Link to="/admin/dashboard">Dashboard</Link> },
               { title: <Link to="/admin/organisations">Organisations</Link> },
-              { title: organization.name },
+              { title: <span className="break-words">{organization.name}</span> },
             ]}
           />
         </div>
 
-        <div className="md:flex md:justify-end justify-end items-center mb-6">
-          <Button onClick={() => navigate(-1)}>Retour</Button>
+        <div className="flex flex-wrap justify-end items-center gap-2 mb-4 sm:mb-6">
+          <Button onClick={() => navigate(-1)} className="w-full sm:w-auto">Retour</Button>
           <Button
             type="primary"
             onClick={() => navigate(`/admin/organisations/${organization.id}/edit`)}
-            className="ml-2"
+            className="w-full sm:w-auto"
           >
             Modifier
           </Button>
+          {canDeleteOrganization && (
+            <Tooltip title="Supprimer l'organisation (aucun utilisateur associé)">
+              <Button
+                danger
+                icon={<DeleteOutlined />}
+                loading={deleteLoading}
+                onClick={handleDeleteOrganization}
+                className="w-full sm:w-auto"
+              >
+                Supprimer
+              </Button>
+            </Tooltip>
+          )}
         </div>
 
-        <Card>
-          <Descriptions title="Informations générales" bordered column={3}>
+        <Card className="overflow-hidden">
+          <Descriptions
+            title="Informations générales"
+            bordered
+            column={{ xs: 1, sm: 2, md: 3 }}
+            size="small"
+          >
             <Descriptions.Item label="Nom" span={2}>
-              <Space>
-                <Avatar shape="square" size="large" icon={<BiBuilding />} />
-                <span className="ml-3">{organization.name}</span>
-              </Space>
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <Avatar shape="square" size="large" icon={<BiBuilding />} className="shrink-0" />
+                <span className="break-words">{organization.name}</span>
+              </div>
             </Descriptions.Item>
             <Descriptions.Item label="Type" span={1}>
               <Tag color={getTypeColor(organization.type)}>
@@ -315,31 +367,31 @@ const OrganizationDetail = () => {
             </Descriptions.Item> */}
 
             <Descriptions.Item label="Email" span={1}>
-              <Space>
+              <Space className="flex-wrap">
                 <MailOutlined />
-                <a href={`mailto:${organization.email}`}>{organization.email}</a>
+                <a href={`mailto:${organization.email}`} className="break-all">{organization.email}</a>
               </Space>
             </Descriptions.Item>
 
             <Descriptions.Item label="Téléphone" span={1}>
-              <Space>
+              <Space className="flex-wrap">
                 <PhoneOutlined />
-                <a href={`tel:${organization.phone}`}>{organization.phone}</a>
+                <a href={`tel:${organization.phone}`} className="break-all">{organization.phone}</a>
               </Space>
             </Descriptions.Item>
 
             <Descriptions.Item label="Adresse" span={1}>
-              <Space>
+              <Space className="flex-wrap">
                 <EnvironmentOutlined />
-                <span>{organization.address || "—"}</span>
+                <span className="break-words">{organization.address || "—"}</span>
               </Space>
             </Descriptions.Item>
 
             <Descriptions.Item label="Site Web" span={1}>
-              <Space>
+              <Space className="flex-wrap">
                 <GlobalOutlined />
                 {organization.website ? (
-                  <a href={organization.website} target="_blank" rel="noopener noreferrer">
+                  <a href={organization.website} target="_blank" rel="noopener noreferrer" className="break-all">
                     {organization.website}
                   </a>
                 ) : (
@@ -363,23 +415,23 @@ const OrganizationDetail = () => {
           </Descriptions>
 
           <Divider />
-          <h3 className="text-lg font-semibold mb-4">Statistiques</h3>
-          <Row gutter={16}>
-            <Col xs={24} md={8}>
+          <h3 className="text-base sm:text-lg font-semibold mb-4">Statistiques</h3>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={24} md={8}>
               <Statistic
                 title="Utilisateurs"
                 value={organization.counts?.users ?? 0}
                 prefix={<UserOutlined />}
               />
             </Col>
-            <Col xs={24} md={8}>
+            <Col xs={24} sm={24} md={8}>
               <Statistic
                 title="Départements"
                 value={organization.counts?.departments ?? 0}
                 prefix={<BankOutlined />}
               />
             </Col>
-            <Col xs={24} md={8}>
+            <Col xs={24} sm={24} md={8}>
               <Statistic
                 title="Abonnements"
                 value={organization.counts?.subscriptions ?? 0}
@@ -388,8 +440,8 @@ const OrganizationDetail = () => {
             </Col>
           </Row>
           <Divider />
-          <h3 className="text-lg font-semibold mb-4">Navigation rapide</h3>
-          <Space wrap>
+          <h3 className="text-base sm:text-lg font-semibold mb-4">Navigation rapide</h3>
+          <Space wrap size={[8, 8]}>
             <Button onClick={() => navigate(`/admin/organisations/${organization.id}/users`)}>
               Voir les utilisateurs
             </Button>
@@ -417,18 +469,19 @@ const OrganizationDetail = () => {
             </Space>
           }
           extra={
-            <Space wrap>
+            <div className="flex flex-col gap-2 w-full sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
               <Search
                 allowClear
                 placeholder="Rechercher (nom, email, téléphone)"
                 onSearch={onSearchUsers}
                 defaultValue={usersState.search}
-                style={{ width: 320 }}
+                style={{ width: breakpoint.xs && !breakpoint.sm ? "100%" : 320, minWidth: 0 }}
+                className="w-full"
               />
               <Select
                 allowClear
                 placeholder="Filtrer par rôle"
-                style={{ width: 200 }}
+                style={{ width: breakpoint.xs && !breakpoint.sm ? "100%" : 200, minWidth: 0 }}
                 value={usersState.role}
                 onChange={onChangeRole}
                 options={[
@@ -438,11 +491,12 @@ const OrganizationDetail = () => {
                   { value: "TRADUCTEUR", label: "Traducteur" },
                   { value: "DEMANDEUR", label: "Demandeur" },
                 ]}
+                className="w-full sm:!w-[200px]"
               />
-              <Tag>
+              <Tag className="!m-0">
                 Total (org): {organization.counts?.users ?? usersTotal}
               </Tag>
-            </Space>
+            </div>
           }
         >
           <Table
@@ -450,6 +504,7 @@ const OrganizationDetail = () => {
             loading={loadingUsers}
             columns={userColumns}
             dataSource={usersItems}
+            scroll={{ x: "max-content" }}
             pagination={{
               current: usersState.page,
               pageSize: usersState.limit,

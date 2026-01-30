@@ -2068,20 +2068,25 @@
             "success": "注册成功！请检查您的电子邮件以激活您的账户。",
             "errors": {
                 "firstNameRequired": "名字是必需的。",
+                "firstNameMinLength": "名字至少需要2个字符。",
                 "lastNameRequired": "姓氏是必需的。",
-                "genderRequired": "性别是必需的。",
-                "birthPlaceRequired": "出生国家是必需的。",
-                "birthDateRequired": "出生日期是必需的。",
-                "birthDateInvalid": "无效的出生日期。",
-                "emailRequired": "电子邮件是必需的。",
-                "emailInvalid": "无效的电子邮件。",
+                "lastNameMinLength": "姓氏至少需要2个字符。",
+                "genderRequired": "请选择您的性别。",
+                "birthPlaceRequired": "请选择您的出生国家。",
+                "birthDateRequired": "请输入您的出生日期。",
+                "birthDateInvalid": "出生日期无效（请检查格式）。",
+                "emailRequired": "电子邮件地址是必需的。",
+                "emailInvalid": "请输入有效的电子邮件地址（例如 name@domain.com）。",
                 "passwordRequired": "密码是必需的。",
-                "passwordMin": "至少6个字符。",
-                "passwordMismatch": "密码不匹配。",
+                "passwordMin": "密码至少需要6个字符。",
+                "confirmRequired": "请确认您的密码。",
+                "passwordMismatch": "两次输入的密码不一致。",
                 "orgNameRequired": "组织名称是必需的。",
-                "orgTypeRequired": "组织类型是必需的。",
+                "orgTypeRequired": "请选择组织类型。",
                 "orgEmailRequired": "组织电子邮件是必需的。",
-                "orgEmailInvalid": "无效的组织电子邮件。"
+                "orgEmailInvalid": "请输入组织的有效电子邮件地址。",
+                "formSummary": "请更正下方红色标记字段中的错误。",
+                "general": "注册过程中发生错误。"
             },
             "roles": {
                 "DEMANDEUR": "申请人",
@@ -2390,6 +2395,122 @@
         },
         "pagination": {
             "total": "总计 {{total}} 组织"
+        }
+    },
+    "adminOrgCreate": {
+        "title": "新建组织",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "organizations": "组织",
+            "new": "新建组织"
+        },
+        "cardTitle": "新建组织",
+        "actions": {
+            "back": "返回"
+        },
+        "fields": {
+            "name": "组织名称",
+            "type": "类型",
+            "email": "电子邮件",
+            "phone": "电话",
+            "address": "地址",
+            "website": "网站",
+            "country": "国家"
+        },
+        "placeholders": {
+            "name": "组织名称",
+            "selectType": "选择类型",
+            "email": "电子邮件",
+            "phone": "电话",
+            "address": "地址",
+            "website": "网站",
+            "selectCountry": "选择国家"
+        },
+        "types": {
+            "ENTREPRISE": "公司",
+            "TRADUCTEUR": "翻译机构",
+            "BANQUE": "银行",
+            "COLLEGE": "学院",
+            "LYCEE": "高中",
+            "UNIVERSITE": "大学"
+        },
+        "validators": {
+            "nameRequired": "名称为必填项",
+            "typeRequired": "类型为必填项",
+            "emailRequired": "电子邮件为必填项",
+            "emailInvalid": "电子邮件无效",
+            "phoneRequired": "电话为必填项",
+            "addressRequired": "地址为必填项",
+            "urlInvalid": "URL 无效",
+            "countryRequired": "国家为必填项"
+        },
+        "buttons": {
+            "submit": "创建组织",
+            "submitting": "创建中..."
+        },
+        "messages": {
+            "success": "组织创建成功",
+            "error": "创建组织时出错"
+        }
+    },
+    "adminOrgEdit": {
+        "title": "编辑组织",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "organizations": "组织",
+            "edit": "编辑组织"
+        },
+        "cardTitle": "编辑组织",
+        "actions": {
+            "back": "返回"
+        },
+        "fields": {
+            "name": "组织名称",
+            "slug": "Slug",
+            "type": "类型",
+            "email": "电子邮件",
+            "phone": "电话",
+            "address": "地址",
+            "website": "网站",
+            "country": "国家"
+        },
+        "placeholders": {
+            "name": "组织名称",
+            "slug": "唯一 Slug",
+            "selectType": "选择类型",
+            "email": "电子邮件",
+            "phone": "电话",
+            "address": "地址",
+            "website": "网站",
+            "selectCountry": "选择国家"
+        },
+        "types": {
+            "ENTREPRISE": "公司",
+            "TRADUCTEUR": "翻译机构",
+            "BANQUE": "银行",
+            "COLLEGE": "学院",
+            "LYCEE": "高中",
+            "UNIVERSITE": "大学"
+        },
+        "validators": {
+            "nameRequired": "名称为必填项",
+            "slugRequired": "Slug 为必填项",
+            "typeRequired": "类型为必填项",
+            "emailRequired": "电子邮件为必填项",
+            "emailInvalid": "电子邮件无效",
+            "phoneRequired": "电话为必填项",
+            "addressRequired": "地址为必填项",
+            "urlInvalid": "URL 无效",
+            "countryRequired": "国家为必填项"
+        },
+        "buttons": {
+            "submit": "更新",
+            "submitting": "更新中..."
+        },
+        "messages": {
+            "success": "组织更新成功",
+            "error": "更新组织时出错",
+            "loadError": "获取组织时出错"
         }
     },
     "adminDemandeCreate": {

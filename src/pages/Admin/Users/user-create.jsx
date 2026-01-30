@@ -111,11 +111,12 @@ const UserCreate = () => {
     const needsOrganization = ["INSTITUT", "TRADUCTEUR", "SUPERVISEUR"].includes(selectedRole);
 
     return (
-        <div className="container-fluid relative px-3">
-            <div className="layout-specing">
-                <div className="md:flex justify-between items-center mb-6">
-                    <h5 className="text-lg font-semibold">{t("adminUserCreate.title")}</h5>
+        <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+            <div className="layout-specing py-4 sm:py-6">
+                <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+                    <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">{t("adminUserCreate.title")}</h5>
                     <Breadcrumb
+                        className="order-1 sm:order-2"
                         items={[
                             { title: <Link to="/admin/dashboard">{t("adminUserCreate.breadcrumb.dashboard")}</Link> },
                             { title: <Link to="/admin/users">{t("adminUserCreate.breadcrumb.users")}</Link> },
@@ -123,35 +124,39 @@ const UserCreate = () => {
                         ]}
                     />
                 </div>
-                <Card title={t("adminUserCreate.cardTitle")} className="mt-4">
+                <Card title={t("adminUserCreate.cardTitle")} className="mt-4 overflow-hidden">
                     <Form
                         form={form}
                         layout="vertical"
                         onFinish={handleSubmit}
                         initialValues={{ enabled: true, role: "DEMANDEUR" }}
+                        className="user-create-form"
                     >
-                        <Row gutter={16}>
-                            <Col span={6}>
-                                <Form.Item label={t("adminUserCreate.fields.avatar")} name="upload" valuePropName="fileList" getValueFromEvent={normFile}>
-                                    <Upload
-                                        name="avatar"
-                                        listType="picture-card"
-                                        showUploadList={false}
-                                        beforeUpload={() => false}
-                                        onChange={({ file }) => setImageUrl(URL.createObjectURL(file))}
-                                    >
-                                        {imageUrl ? (
-                                            <Avatar size={128} src={imageUrl} icon={<UserOutlined />} />
-                                        ) : (
-                                            <div>
-                                                <UploadOutlined />
-                                                <div style={{ marginTop: 8 }}>{t("adminUserCreate.upload.upload")}</div>
-                                            </div>
-                                        )}
-                                    </Upload>
-                                </Form.Item>
+                        <Row gutter={[16, 24]}>
+                            <Col xs={24} sm={24} md={10} lg={6}>
+                                <div className="flex flex-col items-center md:items-start">
+                                    <Form.Item label={t("adminUserCreate.fields.avatar")} name="upload" valuePropName="fileList" getValueFromEvent={normFile} className="mb-0">
+                                        <Upload
+                                            name="avatar"
+                                            listType="picture-card"
+                                            showUploadList={false}
+                                            beforeUpload={() => false}
+                                            onChange={({ file }) => setImageUrl(URL.createObjectURL(file))}
+                                            className="avatar-uploader-responsive"
+                                        >
+                                            {imageUrl ? (
+                                                <Avatar size={128} className="!w-full !max-w-[128px] !h-auto aspect-square" src={imageUrl} icon={<UserOutlined />} />
+                                            ) : (
+                                                <div className="flex flex-col items-center justify-center p-2">
+                                                    <UploadOutlined className="text-2xl" />
+                                                    <span className="mt-2 text-xs sm:text-sm">{t("adminUserCreate.upload.upload")}</span>
+                                                </div>
+                                            )}
+                                        </Upload>
+                                    </Form.Item>
+                                </div>
                             </Col>
-                            <Col span={18}>
+                            <Col xs={24} sm={24} md={14} lg={18}>
                                 <Form.Item
                                     name="firstName"
                                     label={t("adminUserCreate.fields.firstName")}
@@ -239,11 +244,11 @@ const UserCreate = () => {
                                     {permissionsLoading ? (
                                         <div>{t("adminUserCreate.loadingPermissions")}</div>
                                     ) : (
-                                        <Checkbox.Group>
-                                            <Row gutter={[0, 16]}>
+                                        <Checkbox.Group className="w-full">
+                                            <Row gutter={[12, 12]}>
                                                 {permissionsOptions.map((option) => (
-                                                    <Col span={8} key={option.value}>
-                                                        <Checkbox value={option.value}>{option.label}</Checkbox>
+                                                    <Col xs={24} sm={12} md={8} lg={8} key={option.value}>
+                                                        <Checkbox value={option.value} className="!whitespace-normal">{option.label}</Checkbox>
                                                     </Col>
                                                 ))}
                                             </Row>
@@ -276,12 +281,13 @@ const UserCreate = () => {
                                 >
                                     <Input.Password placeholder={t("adminUserCreate.fields.confirmPassword")} />
                                 </Form.Item>
-                                <Form.Item>
+                                <Form.Item className="mb-0 sm:mb-4">
                                     <Button
                                         htmlType="submit"
                                         type="primary"
                                         loading={loading}
                                         icon={!loading && <PlusCircleOutlined className="mr-1 h-4 w-4" />}
+                                        className="w-full sm:w-auto"
                                     >
                                         {loading ? t("adminUserCreate.buttons.submitting") : t("adminUserCreate.buttons.submit")}
                                     </Button>

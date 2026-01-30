@@ -2067,20 +2067,25 @@
             "success": "Registrierung erfolgreich! Überprüfen Sie Ihre E-Mail, um Ihr Konto zu aktivieren.",
             "errors": {
                 "firstNameRequired": "Vorname ist erforderlich.",
+                "firstNameMinLength": "Der Vorname muss mindestens 2 Zeichen haben.",
                 "lastNameRequired": "Nachname ist erforderlich.",
-                "genderRequired": "Geschlecht ist erforderlich.",
-                "birthPlaceRequired": "Geburtsland ist erforderlich.",
-                "birthDateRequired": "Geburtsdatum ist erforderlich.",
-                "birthDateInvalid": "Ungültiges Geburtsdatum.",
-                "emailRequired": "E-Mail ist erforderlich.",
-                "emailInvalid": "Ungültige E-Mail.",
+                "lastNameMinLength": "Der Nachname muss mindestens 2 Zeichen haben.",
+                "genderRequired": "Bitte wählen Sie Ihr Geschlecht.",
+                "birthPlaceRequired": "Bitte wählen Sie Ihr Geburtsland.",
+                "birthDateRequired": "Bitte geben Sie Ihr Geburtsdatum ein.",
+                "birthDateInvalid": "Ungültiges Geburtsdatum (Format prüfen).",
+                "emailRequired": "E-Mail-Adresse ist erforderlich.",
+                "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@domain.com).",
                 "passwordRequired": "Passwort ist erforderlich.",
-                "passwordMin": "Mindestens 6 Zeichen.",
-                "passwordMismatch": "Passwörter stimmen nicht überein.",
+                "passwordMin": "Das Passwort muss mindestens 6 Zeichen haben.",
+                "confirmRequired": "Bitte bestätigen Sie Ihr Passwort.",
+                "passwordMismatch": "Die beiden Passwörter stimmen nicht überein.",
                 "orgNameRequired": "Organisationsname ist erforderlich.",
-                "orgTypeRequired": "Organisationstyp ist erforderlich.",
+                "orgTypeRequired": "Bitte wählen Sie den Organisationstyp.",
                 "orgEmailRequired": "Organisations-E-Mail ist erforderlich.",
-                "orgEmailInvalid": "Ungültige Organisations-E-Mail."
+                "orgEmailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse für die Organisation ein.",
+                "formSummary": "Bitte korrigieren Sie die Fehler in den rot markierten Feldern unten.",
+                "general": "Bei der Registrierung ist ein Fehler aufgetreten."
             },
             "roles": {
                 "DEMANDEUR": "Antragsteller",
@@ -2389,6 +2394,122 @@
         },
         "pagination": {
             "total": "Gesamt {{total}} Organisationen"
+        }
+    },
+    "adminOrgCreate": {
+        "title": "Neue Organisation",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organisationen",
+            "new": "Neue Organisation"
+        },
+        "cardTitle": "Neue Organisation",
+        "actions": {
+            "back": "Zurück"
+        },
+        "fields": {
+            "name": "Organisationsname",
+            "type": "Typ",
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "address": "Adresse",
+            "website": "Website",
+            "country": "Land"
+        },
+        "placeholders": {
+            "name": "Organisationsname",
+            "selectType": "Typ auswählen",
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "address": "Adresse",
+            "website": "Website",
+            "selectCountry": "Land auswählen"
+        },
+        "types": {
+            "ENTREPRISE": "Unternehmen",
+            "TRADUCTEUR": "Übersetzungsagentur",
+            "BANQUE": "Bank",
+            "COLLEGE": "College",
+            "LYCEE": "Gymnasium",
+            "UNIVERSITE": "Universität"
+        },
+        "validators": {
+            "nameRequired": "Name ist erforderlich",
+            "typeRequired": "Typ ist erforderlich",
+            "emailRequired": "E-Mail ist erforderlich",
+            "emailInvalid": "Ungültige E-Mail",
+            "phoneRequired": "Telefon ist erforderlich",
+            "addressRequired": "Adresse ist erforderlich",
+            "urlInvalid": "Ungültige URL",
+            "countryRequired": "Land ist erforderlich"
+        },
+        "buttons": {
+            "submit": "Organisation erstellen",
+            "submitting": "Wird erstellt..."
+        },
+        "messages": {
+            "success": "Organisation erfolgreich erstellt",
+            "error": "Fehler beim Erstellen der Organisation"
+        }
+    },
+    "adminOrgEdit": {
+        "title": "Organisation bearbeiten",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organisationen",
+            "edit": "Organisation bearbeiten"
+        },
+        "cardTitle": "Organisation bearbeiten",
+        "actions": {
+            "back": "Zurück"
+        },
+        "fields": {
+            "name": "Organisationsname",
+            "slug": "Slug",
+            "type": "Typ",
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "address": "Adresse",
+            "website": "Website",
+            "country": "Land"
+        },
+        "placeholders": {
+            "name": "Organisationsname",
+            "slug": "Eindeutiger Slug",
+            "selectType": "Typ auswählen",
+            "email": "E-Mail",
+            "phone": "Telefon",
+            "address": "Adresse",
+            "website": "Website",
+            "selectCountry": "Land auswählen"
+        },
+        "types": {
+            "ENTREPRISE": "Unternehmen",
+            "TRADUCTEUR": "Übersetzungsagentur",
+            "BANQUE": "Bank",
+            "COLLEGE": "College",
+            "LYCEE": "Gymnasium",
+            "UNIVERSITE": "Universität"
+        },
+        "validators": {
+            "nameRequired": "Name ist erforderlich",
+            "slugRequired": "Slug ist erforderlich",
+            "typeRequired": "Typ ist erforderlich",
+            "emailRequired": "E-Mail ist erforderlich",
+            "emailInvalid": "Ungültige E-Mail",
+            "phoneRequired": "Telefon ist erforderlich",
+            "addressRequired": "Adresse ist erforderlich",
+            "urlInvalid": "Ungültige URL",
+            "countryRequired": "Land ist erforderlich"
+        },
+        "buttons": {
+            "submit": "Aktualisieren",
+            "submitting": "Wird aktualisiert..."
+        },
+        "messages": {
+            "success": "Organisation erfolgreich aktualisiert",
+            "error": "Fehler beim Aktualisieren der Organisation",
+            "loadError": "Fehler beim Abrufen der Organisation"
         }
     },
     "adminDemandeCreate": {

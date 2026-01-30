@@ -72,7 +72,6 @@ export default function UserProfile() {
       });
       setError(null);
     } catch (e) {
-      console.error("Error fetching user data:", e);
       setError(t("profilePage.alerts.loadError"));
     } finally {
       setLoading(false);
@@ -97,7 +96,6 @@ export default function UserProfile() {
       toast.success(t("profilePage.toasts.avatarUpdated"));
       await fetchUserData();
     } catch (e) {
-      console.error("Error uploading avatar:", e);
       toast.error(t("profilePage.toasts.avatarError"));
     }
     return false;
@@ -159,7 +157,6 @@ export default function UserProfile() {
       setIsPasswordModalVisible(false);
       passwordForm.resetFields();
     } catch (e) {
-      console.error("Error updating password:", e);
       toast.error(t("profilePage.toasts.passwordError"));
     } finally {
       setPasswordLoading(false);
@@ -197,75 +194,82 @@ export default function UserProfile() {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "400px" }}>
-        <Spin tip={t("profilePage.alerts.loading")} />
+      <div className="flex items-center justify-center min-h-[50vh] sm:min-h-screen p-4">
+        <Spin size="large" tip={t("profilePage.alerts.loading")} />
       </div>
     );
   }
 
   if (error) {
-    return <Alert message={t("profilePage.alerts.errorTitle")} description={error} type="error" showIcon style={{ margin: 20 }} />;
+    return (
+      <div className="container-fluid px-2 sm:px-3 py-4 sm:py-6">
+        <Alert message={t("profilePage.alerts.errorTitle")} description={error} type="error" showIcon />
+      </div>
+    );
   }
 
   if (!userData) {
     return (
-      <Alert
-        message={t("profilePage.alerts.noDataTitle")}
-        description={t("profilePage.alerts.noDataDesc")}
-        type="warning"
-        showIcon
-        style={{ margin: 20 }}
-      />
+      <div className="container-fluid px-2 sm:px-3 py-4 sm:py-6">
+        <Alert
+          message={t("profilePage.alerts.noDataTitle")}
+          description={t("profilePage.alerts.noDataDesc")}
+          type="warning"
+          showIcon
+        />
+      </div>
     );
   }
 
   return (
     <>
-      <div className="container-fluid relative px-3">
-        <div className="layout-specing">
-          <div style={{ padding: 24, backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
+      <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+        <div className="layout-specing py-4 sm:py-6">
+          <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-900/30 min-h-screen sm:min-h-0">
             <Row gutter={[24, 24]}>
               {/* Header */}
-              <Col span={24}>
-                <Card style={{ background: "linear-gradient(135deg, #1e81b0 0%,  #e28743 100%)", border: "none", borderRadius: 12 }}>
-                  <Row align="middle" gutter={24}>
-                    <Col>
+              <Col xs={24}>
+                <Card className="overflow-hidden" style={{ background: "linear-gradient(135deg, #1e81b0 0%,  #e28743 100%)", border: "none", borderRadius: 12 }}>
+                  <Row align="middle" gutter={[24, 24]}>
+                    <Col xs={24} md={6} className="flex justify-center md:justify-start">
                       <Badge count={<CheckCircleOutlined style={{ color: "#52c41a" }} />} offset={[-8, 8]}>
                         <Upload showUploadList={false} beforeUpload={handleAvatarUpload} accept="image/*">
-                          <Avatar
-                            size={120}
-                            src={userData.avatar ? buildImageUrl(userData.avatar) : undefined}
-                            icon={<UserOutlined />}
-                            style={{ cursor: "pointer", border: "4px solid rgba(255,255,255,0.3)", transition: "all 0.3s ease" }}
-                          />
-                          <div style={{ position: "absolute", bottom: 0, right: 0, backgroundColor: "rgba(0,0,0,0.6)", borderRadius: "50%", padding: 8, color: "white" }}>
-                            <CameraOutlined />
+                          <div className="relative cursor-pointer">
+                            <Avatar
+                              size={120}
+                              src={userData.avatar ? buildImageUrl(userData.avatar) : undefined}
+                              icon={<UserOutlined />}
+                              className="border-4 border-white/30 transition-all shrink-0"
+                            />
+                            <div className="absolute bottom-0 right-0 bg-black/60 rounded-full p-2 text-white">
+                              <CameraOutlined />
+                            </div>
                           </div>
                         </Upload>
                       </Badge>
                     </Col>
-                    <Col flex={1}>
-                      <Title level={2} style={{ color: "white", margin: 0 }}>
+                    <Col xs={24} md={10} className="flex flex-col justify-center">
+                      <Title level={2} className="!m-0 !text-white text-base sm:text-xl md:text-2xl break-words">
                         {userData.firstName || userData.lastName || userData.username || t("profilePage.header.userFallback")}
                       </Title>
-                      <Space size="middle" style={{ marginTop: 8 }}>
-                        <Tag color={getRoleColor(userData.role)} icon={<CrownOutlined />} style={{ fontSize: 14, padding: "4px 12px" }}>
+                      <Space size="middle" wrap className="mt-2 sm:mt-0">
+                        <Tag color={getRoleColor(userData.role)} icon={<CrownOutlined />} className="text-xs sm:text-sm">
                           {getRoleLabel(userData.role, t)}
                         </Tag>
-                        <Tag color={getStatusColor(userData.enabled)} icon={<SafetyCertificateOutlined />} style={{ fontSize: 14, padding: "4px 12px" }}>
+                        <Tag color={getStatusColor(userData.enabled)} icon={<SafetyCertificateOutlined />} className="text-xs sm:text-sm">
                           {userData.enabled ? t("profilePage.header.active") : t("profilePage.header.inactive")}
                         </Tag>
                       </Space>
                     </Col>
-                    <Col>
-                      <Space>
-                        <Button type="primary" ghost icon={<EditOutlined />} size="large" style={{ borderColor: "white", color: "white" }} onClick={handleEdit}>
+                    <Col xs={24} md={8} className="flex justify-center md:justify-end">
+                      <Space wrap size="small" className="w-full sm:w-auto justify-center md:justify-end">
+                        <Button type="primary" ghost icon={<EditOutlined />} size="large" className="w-full sm:w-auto !border-white !text-white" onClick={handleEdit}>
                           {t("profilePage.header.editProfile")}
                         </Button>
-                        <Button type="default" ghost icon={<LockOutlined />} size="large" style={{ borderColor: "white", color: "white" }} onClick={showPasswordModal}>
+                        <Button type="default" ghost icon={<LockOutlined />} size="large" className="w-full sm:w-auto !border-white !text-white" onClick={showPasswordModal}>
                           {t("profilePage.header.password")}
                         </Button>
-                        <Button type="default" ghost danger icon={<LogoutOutlined />} size="large" style={{ borderColor: "white", color: "white" }} onClick={handleLogout}>
+                        <Button type="default" ghost danger icon={<LogoutOutlined />} size="large" className="w-full sm:w-auto !border-white !text-white" onClick={handleLogout}>
                           {t("common.logout")}
                         </Button>
                       </Space>
@@ -275,10 +279,10 @@ export default function UserProfile() {
               </Col>
 
               {/* Quick stats */}
-              <Col span={24}>
-                <Row gutter={16}>
+              <Col xs={24}>
+                <Row gutter={[16, 16]}>
                   <Col xs={24} sm={8}>
-                    <Card>
+                    <Card className="overflow-hidden">
                       <Statistic
                         title={t("profilePage.stats.activePerms")}
                         value={userData.permissions?.length || 0}
@@ -288,7 +292,7 @@ export default function UserProfile() {
                     </Card>
                   </Col>
                   <Col xs={24} sm={8}>
-                    <Card>
+                    <Card className="overflow-hidden">
                       <Statistic
                         title={t("profilePage.stats.lastLogin")}
                         value={formatDate(userData.updatedAt)}
@@ -298,7 +302,7 @@ export default function UserProfile() {
                     </Card>
                   </Col>
                   <Col xs={24} sm={8}>
-                    <Card>
+                    <Card className="overflow-hidden">
                       <Statistic
                         title={t("profilePage.stats.memberSince")}
                         value={formatDate(userData.createdAt)}
@@ -313,6 +317,7 @@ export default function UserProfile() {
               {/* Personal info */}
               <Col xs={24} lg={12}>
                 <Card
+                  className="overflow-hidden h-full"
                   title={
                     <Space>
                       <UserOutlined />
@@ -320,11 +325,10 @@ export default function UserProfile() {
                     </Space>
                   }
                   extra={
-                    <Button type="link" icon={<EditOutlined />} onClick={handleEdit}>
+                    <Button type="link" icon={<EditOutlined />} onClick={handleEdit} className="p-0">
                       {t("profilePage.buttons.edit")}
                     </Button>
                   }
-                  style={{ height: "100%" }}
                 >
                   {isEditing ? (
                     <Form form={form} layout="vertical" onFinish={handleUpdateProfile}>
@@ -378,16 +382,16 @@ export default function UserProfile() {
                       </Form.Item>
                       
                       <Form.Item>
-                        <Space>
-                          <Button type="primary" loading={loading} icon={!loading && <PlusCircleOutlined />} htmlType="submit">
+                        <Space wrap size="small">
+                          <Button type="primary" loading={loading} icon={!loading && <PlusCircleOutlined />} htmlType="submit" className="w-full sm:w-auto">
                             {t("profilePage.buttons.save")}
                           </Button>
-                          <Button onClick={handleCancel}>{t("profilePage.buttons.cancel")}</Button>
+                          <Button onClick={handleCancel} className="w-full sm:w-auto">{t("profilePage.buttons.cancel")}</Button>
                         </Space>
                       </Form.Item>
                     </Form>
                   ) : (
-                    <Descriptions column={1} size="middle">
+                    <Descriptions column={{ xs: 1, sm: 2 }} size="small" className="break-words">
                       <Descriptions.Item
                         label={
                           <Space>
@@ -396,7 +400,7 @@ export default function UserProfile() {
                           </Space>
                         }
                       >
-                        <Text copyable>{userData.email}</Text>
+                        <Text copyable className="break-all">{userData.email}</Text>
                       </Descriptions.Item>
 
                       <Descriptions.Item
@@ -407,7 +411,7 @@ export default function UserProfile() {
                           </Space>
                         }
                       >
-                        <Text>{userData.firstName || ""} {userData.lastName || ""}</Text>
+                        <Text className="break-words">{userData.firstName || ""} {userData.lastName || ""}</Text>
                       </Descriptions.Item>
 
                       <Descriptions.Item
@@ -418,7 +422,7 @@ export default function UserProfile() {
                           </Space>
                         }
                       >
-                        <Text copyable>{userData.phone || t("profilePage.gender.UNSPECIFIED")}</Text>
+                        <Text copyable className="break-all">{userData.phone || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
 
                       <Descriptions.Item
@@ -429,7 +433,7 @@ export default function UserProfile() {
                           </Space>
                         }
                       >
-                        <Text>{userData.adress || t("profilePage.gender.UNSPECIFIED")}</Text>
+                        <Text className="break-words">{userData.adress || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
 
                       <Descriptions.Item
@@ -440,7 +444,7 @@ export default function UserProfile() {
                           </Space>
                         }
                       >
-                        <Text>{userData.placeOfBirth || t("profilePage.gender.UNSPECIFIED")}</Text>
+                        <Text className="break-words">{userData.placeOfBirth || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
 
                       <Descriptions.Item
@@ -462,7 +466,7 @@ export default function UserProfile() {
                           </Space>
                         }
                       >
-                        <Text>{userData.country || t("profilePage.gender.UNSPECIFIED")}</Text>
+                        <Text className="break-words">{userData.country || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
 
                       <Descriptions.Item
@@ -505,18 +509,18 @@ export default function UserProfile() {
               {/* Organization */}
               <Col xs={24} lg={12}>
                 <Card
+                  className="overflow-hidden h-full mb-4 sm:mb-6"
                   title={
                     <Space>
                       <BankOutlined />
                       <span>{t("profilePage.sections.organization")}</span>
                     </Space>
                   }
-                  style={{ height: "100%", marginBottom: 24 }}
                 >
-                  <Title level={5} style={{ marginBottom: 16 }}>
-                    {userData.organization?.name || t("profilePage.org.none")}
+                  <Title level={5} className="!mb-4">
+                    <span className="break-words">{userData.organization?.name || t("profilePage.org.none")}</span>
                   </Title>
-                  <Descriptions column={1} size="small">
+                  <Descriptions column={{ xs: 1, sm: 2 }} size="small" className="break-words">
                     <Descriptions.Item label={t("profilePage.fields.type")}>
                       <Tag color="blue">{userData.organization?.type || t("profilePage.org.unspecified")}</Tag>
                     </Descriptions.Item>
@@ -530,21 +534,21 @@ export default function UserProfile() {
               {/* Permissions */}
               <Col xs={24} lg={24}>
                 <Card
+                  className="overflow-hidden h-full"
                   title={
                     <Space>
                       <SafetyCertificateOutlined />
                       <span>{t("profilePage.sections.permissionsAccess")}</span>
                     </Space>
                   }
-                  style={{ height: "100%" }}
                 >
-                  <Title level={5} style={{ marginBottom: 16 }}>
+                  <Title level={5} className="!mb-4">
                     {t("profilePage.sections.role")}: <Tag color={getRoleColor(userData.role)}>{getRoleLabel(userData.role, t)}</Tag>
                   </Title>
                   <Divider orientation="left" orientationMargin="0">
                     <Text type="secondary">{t("profilePage.sections.grantedPerms")}</Text>
                   </Divider>
-                  <div style={{ maxHeight: 300, overflowY: "auto" }}>
+                  <div className="max-h-[300px] overflow-y-auto">
                     <Space size={[8, 8]} wrap>
                       {(userData.permissions || []).map((permission) => (
                         <Tag
@@ -612,9 +616,9 @@ export default function UserProfile() {
           </Form.Item>
 
           <Form.Item>
-            <Space style={{ width: "100%", justifyContent: "flex-end" }}>
-              <Button onClick={handlePasswordCancel}>{t("profilePage.buttons.cancel")}</Button>
-              <Button type="primary" htmlType="submit" loading={passwordLoading}>
+            <Space wrap size="small" className="w-full justify-end">
+              <Button onClick={handlePasswordCancel} className="w-full sm:w-auto">{t("profilePage.buttons.cancel")}</Button>
+              <Button type="primary" htmlType="submit" loading={passwordLoading} className="w-full sm:w-auto">
                 {t("profilePage.buttons.save")}
               </Button>
             </Space>

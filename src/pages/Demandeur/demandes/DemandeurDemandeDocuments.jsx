@@ -162,9 +162,11 @@ export default function DemandeurDemandeDocuments() {
 
   // Sections info de la demande
   const renderDemandeInfo = () => (
-    <Card>
-      <Descriptions title={t("demandeDocuments.info.general")} bordered column={2}>
-        <Descriptions.Item label={t("demandeDocuments.fields.code")}>{demande?.code || t("demandeDocuments.common.na")}</Descriptions.Item>
+    <Card className="overflow-hidden">
+      <Descriptions title={t("demandeDocuments.info.general")} bordered size="small" column={{ xs: 1, sm: 2 }}>
+        <Descriptions.Item label={t("demandeDocuments.fields.code")}>
+          <span className="break-words">{demande?.code || t("demandeDocuments.common.na")}</span>
+        </Descriptions.Item>
         <Descriptions.Item label={t("demandeDocuments.fields.date")}>{fmtDateTime(demande?.dateDemande)}</Descriptions.Item>
         <Descriptions.Item label={t("demandeDocuments.fields.status")}>
           {demande?.status ? <Tag color={statusColor(demande.status)}>{t(`demandeurDemandes.status.${demande.status}`)}</Tag> : t("demandeDocuments.common.na")}
@@ -173,12 +175,14 @@ export default function DemandeurDemandeDocuments() {
           {demande?.periode ? t(`demandeurDemandes.periods.${demande.periode}`) : t("demandeDocuments.common.na")}
         </Descriptions.Item>
         <Descriptions.Item label={t("demandeDocuments.fields.year")}>{demande?.year || t("demandeDocuments.common.na")}</Descriptions.Item>
-        <Descriptions.Item label={t("demandeDocuments.fields.observation")}>{demande?.observation || t("demandeDocuments.common.na")}</Descriptions.Item>
+        <Descriptions.Item label={t("demandeDocuments.fields.observation")}>
+          <span className="break-words">{demande?.observation || t("demandeDocuments.common.na")}</span>
+        </Descriptions.Item>
       </Descriptions>
 
       <Divider />
 
-      <Descriptions title={t("demandeDocuments.info.academic")} bordered column={2}>
+      <Descriptions title={t("demandeDocuments.info.academic")} bordered size="small" column={{ xs: 1, sm: 2 }}>
         <Descriptions.Item label={t("demandeDocuments.fields.serie")}>{demande?.serie || t("demandeDocuments.common.na")}</Descriptions.Item>
         <Descriptions.Item label={t("demandeDocuments.fields.niveau")}>{demande?.niveau || t("demandeDocuments.common.na")}</Descriptions.Item>
         <Descriptions.Item label={t("demandeDocuments.fields.mention")}>{demande?.mention || t("demandeDocuments.common.na")}</Descriptions.Item>
@@ -192,7 +196,7 @@ export default function DemandeurDemandeDocuments() {
 
       <Divider />
 
-      <Descriptions title={t("demandeDocuments.info.personal")} bordered column={2}>
+      <Descriptions title={t("demandeDocuments.info.personal")} bordered size="small" column={{ xs: 1, sm: 2 }}>
         <Descriptions.Item label={t("demandeDocuments.fields.dob")}>
           {demande?.dob ? dayjs(demande.dob).format("DD/MM/YYYY") : t("demandeDocuments.common.na")}
         </Descriptions.Item>
@@ -206,7 +210,7 @@ export default function DemandeurDemandeDocuments() {
 
       <Divider />
 
-      <Descriptions title={t("demandeDocuments.info.finance")} bordered column={2}>
+      <Descriptions title={t("demandeDocuments.info.finance")} bordered size="small" column={{ xs: 1, sm: 2 }}>
         <Descriptions.Item label={t("demandeDocuments.fields.willApplyForFinancialAid")}>
           {demande?.willApplyForFinancialAid ? t("demandeDocuments.common.yes") : t("demandeDocuments.common.no")}
         </Descriptions.Item>
@@ -217,7 +221,7 @@ export default function DemandeurDemandeDocuments() {
 
       <Divider />
 
-      <Descriptions title={t("demandeDocuments.info.visa")} bordered column={2}>
+      <Descriptions title={t("demandeDocuments.info.visa")} bordered size="small" column={{ xs: 1, sm: 2 }}>
         <Descriptions.Item label={t("demandeDocuments.fields.visaType")}>{demande?.visaType || t("demandeDocuments.common.na")}</Descriptions.Item>
         <Descriptions.Item label={t("demandeDocuments.fields.hasPreviouslyStudiedInUS")}>
           {demande?.hasPreviouslyStudiedInUS ? t("demandeDocuments.common.yes") : t("demandeDocuments.common.no")}
@@ -226,7 +230,7 @@ export default function DemandeurDemandeDocuments() {
 
       <Divider />
 
-      <Descriptions title={t("demandeDocuments.info.orgs")} bordered column={2}>
+      <Descriptions title={t("demandeDocuments.info.orgs")} bordered size="small" column={{ xs: 1, sm: 2 }}>
         <Descriptions.Item label={t("demandeDocuments.fields.targetOrg")}>{demande?.targetOrg?.name || t("demandeDocuments.common.na")}</Descriptions.Item>
         <Descriptions.Item label={t("demandeDocuments.fields.assignedOrg")}>{demande?.assignedOrg?.name || t("demandeDocuments.common.na")}</Descriptions.Item>
       </Descriptions>
@@ -234,33 +238,36 @@ export default function DemandeurDemandeDocuments() {
   );
 
   return (
-    <div className="container-fluid relative px-3">
-      <div className="layout-specing">
-        <div className="md:flex justify-between items-center mb-4">
-          <h5 className="text-lg font-semibold">{t("demandeDocuments.title")}</h5>
+    <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+      <div className="layout-specing py-4 sm:py-6">
+        <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+          <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">{t("demandeDocuments.title")}</h5>
           <Breadcrumb
+            className="order-1 sm:order-2"
             items={[
               { title: <Link to="/demandeur/dashboard">{t("demandeDocuments.breadcrumb.dashboard")}</Link> },
               { title: <Link to={`/demandeur/mes-demandes/${demandeId}/details`}>{t("demandeDocuments.breadcrumb.detail")}</Link> },
-              { title: t("demandeDocuments.breadcrumb.documents") },
+              { title: <span className="break-words">{t("demandeDocuments.breadcrumb.documents")}</span> },
             ]}
           />
         </div>
 
-        <Tabs 
+        <Tabs
           defaultActiveKey="1"
+          className="demande-documents-tabs"
           items={[
             {
               key: "1",
               label: t("demandeDocuments.tabs.documents"),
               children: (
-                <Card>
+                <Card className="overflow-hidden">
                   <Table
                     rowKey={(r) => r.id}
                     loading={loading}
                     columns={columns}
                     dataSource={rows}
-                    scroll={{ x: true }}
+                    scroll={{ x: "max-content" }}
+                    size="small"
                   />
                 </Card>
               ),
@@ -285,13 +292,13 @@ export default function DemandeurDemandeDocuments() {
           setPreview({ open: false, url: "", title: "" });
         }}
         footer={
-          <Space>
+          <Space wrap size="small">
             {preview.url && (
               <a href={preview.url} target="_blank" rel="noreferrer">
-                <Button type="default">{t("demandeDocuments.preview.openInNewTab")}</Button>
+                <Button type="default" className="w-full sm:w-auto">{t("demandeDocuments.preview.openInNewTab")}</Button>
               </a>
             )}
-            <Button type="primary" onClick={() => {
+            <Button type="primary" className="w-full sm:w-auto" onClick={() => {
               if (preview.url && preview.url.startsWith('blob:')) {
                 URL.revokeObjectURL(preview.url);
               }
@@ -302,8 +309,9 @@ export default function DemandeurDemandeDocuments() {
           </Space>
         }
         width="95vw"
-        style={{ top: 20, paddingBottom: 0 }}
+        style={{ top: 20, paddingBottom: 0, maxWidth: "1200px" }}
         styles={{ body: { height: "calc(95vh - 110px)", padding: 0 } }}
+        className="preview-modal-responsive"
         destroyOnHidden
       >
         {preview.url ? (

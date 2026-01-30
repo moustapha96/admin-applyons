@@ -156,8 +156,9 @@
 /* eslint-disable no-unused-vars */
 "use client";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Button, Card, Descriptions, Space, Tag, Typography, Divider, Breadcrumb } from "antd";
+import { EditOutlined, FileTextOutlined } from "@ant-design/icons";
 import demandeService from "@/services/demandeService";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
@@ -169,9 +170,13 @@ const statusColor = (s) =>
   s === "REJECTED" ? "red" :
   s === "IN_PROGRESS" ? "gold" : "blue";
 
+/** Statuts pour lesquels la candidature peut encore être modifiée (non validée, non rejetée). */
+const canEditStatus = (s) => s && s !== "VALIDATED" && s !== "REJECTED";
+
 export default function DemandeurDemandeDetail() {
   const { t, i18n } = useTranslation();
   const { demandeId } = useParams();
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -184,6 +189,7 @@ export default function DemandeurDemandeDetail() {
   }, [demandeId]);
 
   const d = data?.demande, p = data?.payment, tr = data?.transaction;
+  const editable = canEditStatus(d?.status);
 
   const fmtDateTime = (v) =>
     v ? dayjs(v).locale(i18n.language || "fr").format("DD/MM/YYYY HH:mm") : t("demandeDetail.common.na");
@@ -191,33 +197,39 @@ export default function DemandeurDemandeDetail() {
     v ? dayjs(v).locale(i18n.language || "fr").format("DD/MM/YYYY") : t("demandeDetail.common.na");
 
   return (
-    <div className="container-fluid relative px-3">
-      <div className="layout-specing">
-        <div className="md:flex justify-between items-center mb-4">
-          <h5 className="text-lg font-semibold">{t("demandeDetail.title")}</h5>
+    <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+      <div className="layout-specing py-4 sm:py-6">
+        <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+          <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">{t("demandeDetail.title")}</h5>
           <Breadcrumb
+            className="order-1 sm:order-2"
             items={[
               { title: <Link to="/demandeur/dashboard">{t("demandeDetail.breadcrumb.dashboard")}</Link> },
               { title: <Link to="/demandeur/mes-demandes">{t("demandeDetail.breadcrumb.mine")}</Link> },
-              { title: d?.code || t("demandeDetail.breadcrumb.detail") },
+              { title: <span className="break-words">{d?.code || t("demandeDetail.breadcrumb.detail")}</span> },
             ]}
           />
         </div>
 
-        <Card loading={loading}>
-          <Space style={{ width: "100%", justifyContent: "space-between" }} className="mb-2">
-            <Title level={4} style={{ margin: 0 }}>{d?.code || t("demandeDetail.common.na")}</Title>
-            <Space>
+        <Card loading={loading} className="overflow-hidden">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
+            <Title level={4} className="!mb-0 break-words">{d?.code || t("demandeDetail.common.na")}</Title>
+            <Space wrap size="small">
               <Link to={`/demandeur/mes-demandes/${demandeId}/documents`}>
-                <Button>{t("demandeDetail.actions.documents")}</Button>
+                <Button icon={<FileTextOutlined />} className="w-full sm:w-auto">{t("demandeDetail.actions.documents")}</Button>
               </Link>
+              {editable && (
+                <Button type="primary" icon={<EditOutlined />} onClick={() => navigate(`/demandeur/mes-demandes/${demandeId}/edit`)} className="w-full sm:w-auto">
+                  {t("demandeDetail.actions.edit")}
+                </Button>
+              )}
             </Space>
-          </Space>
+          </div>
 
           {!!d && (
             <>
               {/* Dossier */}
-              <Descriptions bordered size="small" column={2} title={t("demandeDetail.sections.case")}>
+              <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }} title={t("demandeDetail.sections.case")}>
                 <Descriptions.Item label={t("demandeDetail.fields.code")}>{d.code || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.status")}>
                   <Tag color={statusColor(d.status)}>{t(`demandeurDemandes.status.${d.status || "PENDING"}`)}</Tag>
@@ -242,7 +254,7 @@ export default function DemandeurDemandeDetail() {
 
               {/* Académique */}
               <Divider>{t("demandeDetail.sections.academic")}</Divider>
-              <Descriptions bordered size="small" column={2}>
+              <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }}>
                 <Descriptions.Item label={t("demandeDetail.fields.serie")}>{d.serie || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.niveau")}>{d.niveau || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.mention")}>{d.mention || t("demandeDetail.common.na")}</Descriptions.Item>
@@ -256,7 +268,7 @@ export default function DemandeurDemandeDetail() {
 
               {/* Identité */}
               <Divider>{t("demandeDetail.sections.identity")}</Divider>
-              <Descriptions bordered size="small" column={2}>
+              <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }}>
                 <Descriptions.Item label={t("demandeDetail.fields.dob")}>{fmtDate(d.dob)}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.citizenship")}>{d.citizenship || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.passport")}>{d.passport || t("demandeDetail.common.na")}</Descriptions.Item>
@@ -264,13 +276,13 @@ export default function DemandeurDemandeDetail() {
 
               {/* Anglais / Tests */}
               <Divider>{t("demandeDetail.sections.englishTests")}</Divider>
-              <Descriptions bordered size="small" column={2}>
+              <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }}>
                 <Descriptions.Item label={t("demandeDetail.fields.isEnglishFirstLanguage")}>
                   {d.isEnglishFirstLanguage ? t("demandeDetail.common.yes") : t("demandeDetail.common.no")}
                 </Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.testScores")}>{d.testScores || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.englishProficiencyTests")} span={2}>
-                  <pre style={{ whiteSpace: "pre-wrap", margin: 0 }}>
+                  <pre className="whitespace-pre-wrap break-words !m-0 text-xs sm:text-sm">
                     {d.englishProficiencyTests ? JSON.stringify(d.englishProficiencyTests) : t("demandeDetail.common.na")}
                   </pre>
                 </Descriptions.Item>
@@ -278,11 +290,11 @@ export default function DemandeurDemandeDetail() {
 
               {/* Scolarité / Notes */}
               <Divider>{t("demandeDetail.sections.schooling")}</Divider>
-              <Descriptions bordered size="small" column={2}>
+              <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }}>
                 <Descriptions.Item label={t("demandeDetail.fields.gradingScale")}>{d.gradingScale || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.gpa")}>{d.gpa || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.examsTaken")} span={2}>
-                  <pre style={{ whiteSpace: "pre-wrap", margin: 0 }}>
+                  <pre className="whitespace-pre-wrap break-words !m-0 text-xs sm:text-sm">
                     {d.examsTaken ? JSON.stringify(d.examsTaken) : t("demandeDetail.common.na")}
                   </pre>
                 </Descriptions.Item>
@@ -293,7 +305,7 @@ export default function DemandeurDemandeDetail() {
 
               {/* Activités & Distinctions */}
               <Divider>{t("demandeDetail.sections.activities")}</Divider>
-              <Descriptions bordered size="small" column={2}>
+              <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }}>
                 <Descriptions.Item label={t("demandeDetail.fields.extracurricularActivities")} span={2}>
                   {d.extracurricularActivities || t("demandeDetail.common.na")}
                 </Descriptions.Item>
@@ -304,7 +316,7 @@ export default function DemandeurDemandeDetail() {
 
               {/* Famille */}
               <Divider>{t("demandeDetail.sections.family")}</Divider>
-              <Descriptions bordered size="small" column={2}>
+              <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }}>
                 <Descriptions.Item label={t("demandeDetail.fields.parentGuardianName")}>{d.parentGuardianName || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.occupation")}>{d.occupation || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.educationLevel")}>{d.educationLevel || t("demandeDetail.common.na")}</Descriptions.Item>
@@ -323,7 +335,7 @@ export default function DemandeurDemandeDetail() {
 
               {/* Visa */}
               <Divider>{t("demandeDetail.sections.visa")}</Divider>
-              <Descriptions bordered size="small" column={2}>
+              <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }}>
                 <Descriptions.Item label={t("demandeDetail.fields.visaType")}>{d.visaType || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.hasPreviouslyStudiedInUS")}>
                   {d.hasPreviouslyStudiedInUS ? t("demandeDetail.common.yes") : t("demandeDetail.common.no")}
@@ -343,7 +355,7 @@ export default function DemandeurDemandeDetail() {
 
               {/* Candidature */}
               <Divider>{t("demandeDetail.sections.application")}</Divider>
-              <Descriptions bordered size="small" column={2}>
+              <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }}>
                 <Descriptions.Item label={t("demandeDetail.fields.applicationRound")}>{d.applicationRound || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.howDidYouHearAboutUs")}>{d.howDidYouHearAboutUs || t("demandeDetail.common.na")}</Descriptions.Item>
               </Descriptions>

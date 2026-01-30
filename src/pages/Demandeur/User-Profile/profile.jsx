@@ -51,7 +51,6 @@ export default function DemandeurUserProfile() {
       setLoading(true);
       const response = await authService.getProfile();
       setUserData(response.user);
-      console.log(response.user);
       refreshProfile();
       form.setFieldsValue({
         firstName: response.user.firstName || "",
@@ -177,80 +176,70 @@ export default function DemandeurUserProfile() {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 400 }}>
-        <Spin tip={t("profilePage.alerts.loading")} />
+      <div className="flex items-center justify-center min-h-[50vh] sm:min-h-screen p-4">
+        <Spin size="large" tip={t("profilePage.alerts.loading")} />
       </div>
     );
   }
 
   if (error) {
     return (
-      <Alert
-        message={t("profilePage.alerts.errorTitle")}
-        description={error}
-        type="error"
-        showIcon
-        style={{ margin: 20 }}
-      />
+      <div className="container-fluid px-2 sm:px-3 py-4 sm:py-6">
+        <Alert
+          message={t("profilePage.alerts.errorTitle")}
+          description={error}
+          type="error"
+          showIcon
+        />
+      </div>
     );
   }
 
   if (!userData) {
     return (
-      <Alert
-        message={t("profilePage.alerts.noDataTitle")}
-        description={t("profilePage.alerts.noDataDesc")}
-        type="warning"
-        showIcon
-        style={{ margin: 20 }}
-      />
+      <div className="container-fluid px-2 sm:px-3 py-4 sm:py-6">
+        <Alert
+          message={t("profilePage.alerts.noDataTitle")}
+          description={t("profilePage.alerts.noDataDesc")}
+          type="warning"
+          showIcon
+        />
+      </div>
     );
   }
 
   return (
     <>
-      <div className="container-fluid relative px-3">
-        <div className="layout-specing">
-          <div style={{ padding: 24, backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
+      <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+        <div className="layout-specing py-4 sm:py-6">
+          <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-900/30 min-h-screen sm:min-h-0">
             <Row gutter={[24, 24]}>
               {/* Header */}
-              <Col span={24}>
+              <Col xs={24}>
                 <Card
+                  className="overflow-hidden"
                   style={{
                     background: "linear-gradient(135deg, #1e81b0 0%,  #e28743 100%)",
                     border: "none",
                     borderRadius: 12
                   }}
                 >
-                  <Row align="middle" gutter={24}>
-                    <Col>
-                      <div style={{ position: "relative", display: "inline-block" }}>
+                  <Row align="middle" gutter={[24, 24]}>
+                    <Col xs={24} md={6} className="flex justify-center md:justify-start">
+                      <div className="relative inline-block">
                         <Badge
                           count={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
                           offset={[-8, 8]}
                         >
                           <Upload showUploadList={false} beforeUpload={handleAvatarUpload} accept="image/*">
-                            <div style={{ position: "relative", cursor: "pointer" }}>
+                            <div className="relative cursor-pointer">
                               <Avatar
                                 size={120}
                                 src={userData.avatar ? buildImageUrl(userData.avatar) : undefined}
                                 icon={<UserOutlined />}
-                                style={{
-                                  border: "4px solid rgba(255,255,255,0.3)",
-                                  transition: "all 0.3s ease"
-                                }}
+                                className="border-4 border-white/30 transition-all shrink-0"
                               />
-                              <div
-                                style={{
-                                  position: "absolute",
-                                  bottom: 0,
-                                  right: 0,
-                                  backgroundColor: "rgba(0,0,0,0.6)",
-                                  borderRadius: "50%",
-                                  padding: 8,
-                                  color: "white"
-                                }}
-                              >
+                              <div className="absolute bottom-0 right-0 bg-black/60 rounded-full p-2 text-white">
                                 <CameraOutlined />
                               </div>
                             </div>
@@ -259,22 +248,20 @@ export default function DemandeurUserProfile() {
                       </div>
                     </Col>
 
-                    <Col flex={1}>
-                      <Space direction="vertical" size={4} style={{ width: "100%" }}>
-                       
-
-                        <Space size="middle" style={{ marginTop: 8 }}>
+                    <Col xs={24} md={10} className="flex flex-col justify-center">
+                      <Space direction="vertical" size={4} className="w-full">
+                        <Space size="middle" wrap className="mt-2 sm:mt-0">
                           <Tag
                             color={getRoleColor(userData.role)}
                             icon={<CrownOutlined />}
-                            style={{ fontSize: 14, padding: "4px 12px" }}
+                            className="text-xs sm:text-sm"
                           >
                             {getRoleLabel(userData.role, t)}
                           </Tag>
                           <Tag
                             color={getStatusColor(userData.enabled)}
                             icon={<SafetyCertificateOutlined />}
-                            style={{ fontSize: 14, padding: "4px 12px" }}
+                            className="text-xs sm:text-sm"
                           >
                             {userData.enabled ? t("profilePage.header.active") : t("profilePage.header.inactive")}
                           </Tag>
@@ -282,14 +269,14 @@ export default function DemandeurUserProfile() {
                       </Space>
                     </Col>
 
-                    <Col>
-                      <Space>
+                    <Col xs={24} md={8} className="flex justify-center md:justify-end">
+                      <Space wrap size="small" className="w-full sm:w-auto justify-center md:justify-end">
                         <Button
                           type="primary"
                           ghost
                           icon={<EditOutlined />}
                           size="large"
-                          style={{ borderColor: "white", color: "white" }}
+                          className="w-full sm:w-auto !border-white !text-white"
                           onClick={handleEdit}
                         >
                           {t("profilePage.header.editProfile")}
@@ -299,7 +286,7 @@ export default function DemandeurUserProfile() {
                           ghost
                           icon={<LockOutlined />}
                           size="large"
-                          style={{ borderColor: "white", color: "white" }}
+                          className="w-full sm:w-auto !border-white !text-white"
                           onClick={showPasswordModal}
                         >
                           {t("profilePage.header.password")}
@@ -311,10 +298,10 @@ export default function DemandeurUserProfile() {
               </Col>
 
               {/* Stats */}
-              <Col span={24}>
-                <Row gutter={16}>
+              <Col xs={24}>
+                <Row gutter={[16, 16]}>
                   <Col xs={24} sm={12}>
-                    <Card>
+                    <Card className="overflow-hidden">
                       <Statistic
                         title={t("profilePage.stats.lastLogin")}
                         value={formatDate(userData.updatedAt)}
@@ -324,7 +311,7 @@ export default function DemandeurUserProfile() {
                     </Card>
                   </Col>
                   <Col xs={24} sm={12}>
-                    <Card>
+                    <Card className="overflow-hidden">
                       <Statistic
                         title={t("profilePage.stats.memberSince")}
                         value={formatDate(userData.createdAt)}
@@ -339,9 +326,9 @@ export default function DemandeurUserProfile() {
               {/* Personal info */}
               <Col xs={24} lg={16}>
                 <Card
+                  className="overflow-hidden h-full"
                   title={<span><UserOutlined />{" "}{t("profilePage.sections.personalInfo")}</span>}
-                  extra={<Button type="link" icon={<EditOutlined />} onClick={handleEdit}>{t("profilePage.buttons.edit")}</Button>}
-                  style={{ height: "100%" }}
+                  extra={<Button type="link" icon={<EditOutlined />} onClick={handleEdit} className="p-0">{t("profilePage.buttons.edit")}</Button>}
                 >
                   {isEditing ? (
                     <Form form={form} layout="vertical" onFinish={handleUpdateProfile}>
@@ -394,36 +381,36 @@ export default function DemandeurUserProfile() {
                         <Input disabled value={getGenderText(userData.gender)} />
                       </Form.Item>
                       <Form.Item>
-                        <Space>
-                          <Button type="primary" loading={loading} icon={!loading && <PlusCircleOutlined />} htmlType="submit">
+                        <Space wrap size="small">
+                          <Button type="primary" loading={loading} icon={!loading && <PlusCircleOutlined />} htmlType="submit" className="w-full sm:w-auto">
                             {t("profilePage.buttons.save")}
                           </Button>
-                          <Button onClick={handleCancel}>{t("profilePage.buttons.cancel")}</Button>
+                          <Button onClick={handleCancel} className="w-full sm:w-auto">{t("profilePage.buttons.cancel")}</Button>
                         </Space>
                       </Form.Item>
                     </Form>
                   ) : (
-                    <Descriptions column={1} size="middle">
+                    <Descriptions column={{ xs: 1, sm: 2 }} size="small" className="break-words">
                       <Descriptions.Item label={<span><MailOutlined />{" "}{t("profilePage.fields.email")}</span>}>
-                        <Text copyable>{userData.email}</Text>
+                        <Text copyable className="break-all">{userData.email}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={<span><UserOutlined />{" "}{t("profilePage.fields.fullName")}</span>}>
-                        <Text>{(userData.firstName || "") + " " + (userData.lastName || "")}</Text>
+                        <Text className="break-words">{(userData.firstName || "") + " " + (userData.lastName || "")}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={<span><PhoneOutlined />{" "}{t("profilePage.fields.phone")}</span>}>
-                        <Text copyable>{userData.phone || t("profilePage.gender.UNSPECIFIED")}</Text>
+                        <Text copyable className="break-all">{userData.phone || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={<span><HomeOutlined />{" "}{t("profilePage.fields.adress")}</span>}>
-                        <Text>{userData.adress || t("profilePage.gender.UNSPECIFIED")}</Text>
+                        <Text className="break-words">{userData.adress || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={<span><GlobalOutlined />{" "}{t("profilePage.fields.placeOfBirth")}</span>}>
-                        <Text>{userData.placeOfBirth || t("profilePage.gender.UNSPECIFIED")}</Text>
+                        <Text className="break-words">{userData.placeOfBirth || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={<span><CalendarOutlined />{" "}{t("profilePage.fields.dateOfBirth")}</span>}>
                         <Text>{formatDate(userData.dateOfBirth)}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={<span><GlobalOutlined />{" "}{t("profilePage.fields.country")}</span>}>
-                        <Text>{userData.country || t("profilePage.gender.UNSPECIFIED")}</Text>
+                        <Text className="break-words">{userData.country || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={<span><IoTransgender />{" "}{t("profilePage.fields.gender")}</span>}>
                         <Text>{getGenderText(userData.gender)}</Text>
@@ -488,9 +475,9 @@ export default function DemandeurUserProfile() {
             <Input.Password prefix={<LockOutlined />} placeholder={t("profilePage.placeholders.confirmPwd")} />
           </Form.Item>
           <Form.Item>
-            <Space style={{ width: "100%", justifyContent: "flex-end" }}>
-              <Button onClick={handlePasswordCancel}>{t("profilePage.buttons.cancel")}</Button>
-              <Button type="primary" htmlType="submit" loading={passwordLoading}>
+            <Space wrap size="small" className="w-full justify-end">
+              <Button onClick={handlePasswordCancel} className="w-full sm:w-auto">{t("profilePage.buttons.cancel")}</Button>
+              <Button type="primary" htmlType="submit" loading={passwordLoading} className="w-full sm:w-auto">
                 {t("profilePage.buttons.save")}
               </Button>
             </Space>

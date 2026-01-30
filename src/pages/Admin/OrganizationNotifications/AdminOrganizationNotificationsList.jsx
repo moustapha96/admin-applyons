@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { useCallback, useEffect, useState, useMemo } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Breadcrumb,
   Button,
@@ -34,7 +33,7 @@ const { Text } = Typography;
 
 export default function AdminOrganizationNotificationsList() {
   const { t } = useTranslation();
-  const { user: me } = useAuth();
+  useAuth();
   const navigate = useNavigate();
 
   const [rows, setRows] = useState([]);
@@ -63,8 +62,6 @@ export default function AdminOrganizationNotificationsList() {
   const [organization, setOrganization] = useState(null);
 
   const fetchData = useCallback(async () => {
-   
-
     setLoading(true);
     try {
       const params = {
@@ -112,8 +109,6 @@ export default function AdminOrganizationNotificationsList() {
   ]);
 
   const fetchStats = useCallback(async () => {
-    
-
     setLoadingStats(true);
     try {
       const res = await organizationDemandeNotificationService.statsGlobal();
@@ -125,9 +120,8 @@ export default function AdminOrganizationNotificationsList() {
         unviewed: statsData.unviewed ?? 0,
         viewed: statsData.viewed ?? 0,
       });
-    } catch (e) {
-      console.error("Error loading stats:", e);
-      // message.error(e?.response?.data?.message || e?.message || "Erreur stats");
+    } catch {
+      // Stats optionnels : on garde les valeurs précédentes
     } finally {
       setLoadingStats(false);
     }
@@ -161,7 +155,6 @@ export default function AdminOrganizationNotificationsList() {
   };
 
   const handleMarkAllAsViewed = async () => {
-    
     try {
       await organizationDemandeNotificationService.markAllAsViewedForGlobal();
       message.success(t("adminOrgNotifications.messages.allMarkedAsViewed"));
@@ -315,16 +308,15 @@ export default function AdminOrganizationNotificationsList() {
     [t, navigate]
   );
 
-
-
   return (
-    <div className="container-fluid relative px-3">
-      <div className="layout-specing">
-        <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">
+    <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+      <div className="layout-specing py-4 sm:py-6">
+        <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+          <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1 break-words">
             {t("adminOrgNotifications.pageTitle")}
           </h5>
           <Breadcrumb
+            className="order-1 sm:order-2"
             items={[
               {
                 title: (
@@ -340,16 +332,14 @@ export default function AdminOrganizationNotificationsList() {
                   </Link>
                 ),
               },
-              { title: organization?.name || "Global" },
+              { title: <span className="break-words">{organization?.name || "Global"}</span> },
               { title: t("adminOrgNotifications.breadcrumbs.notifications") },
             ]}
           />
         </div>
 
-
-
         {/* Statistiques */}
-        <Row gutter={[16, 16]} className="mb-6">
+        <Row gutter={[16, 16]} className="mb-4 sm:mb-6">
           <Col xs={24} sm={8}>
             <Card loading={loadingStats}>
               <Statistic
@@ -383,83 +373,95 @@ export default function AdminOrganizationNotificationsList() {
         </Row>
 
         {/* Filtres */}
-        <Card className="mb-6">
-          <Space wrap>
-            <Input.Search
-              placeholder={t("adminOrgNotifications.filters.searchPlaceholder")}
-              allowClear
-              value={filters.search}
-              onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
-              onSearch={() => {
-                setPagination((p) => ({ ...p, current: 1 }));
-                fetchData();
-              }}
-              style={{ width: 300 }}
-              prefix={<SearchOutlined />}
-            />
-            <Select
-              placeholder={t("adminOrgNotifications.filters.statusPlaceholder")}
-              allowClear
-              value={filters.unviewedOnly ? "unviewed" : undefined}
-              onChange={(v) => {
-                setFilters((f) => ({ ...f, unviewedOnly: v === "unviewed" }));
-                setPagination((p) => ({ ...p, current: 1 }));
-              }}
-              style={{ width: 200 }}
-              options={[
-                { label: t("adminOrgNotifications.filters.all"), value: undefined },
-                { label: t("adminOrgNotifications.filters.unviewedOnly"), value: "unviewed" },
-              ]}
-            />
-            <Switch
-              checked={filters.asTarget}
-              onChange={(checked) => {
-                setFilters((f) => ({
-                  ...f,
-                  asTarget: checked,
-                  asNotified: checked ? false : f.asNotified,
-                }));
-                setPagination((p) => ({ ...p, current: 1 }));
-              }}
-              checkedChildren={t("adminOrgNotifications.filters.asTarget")}
-              unCheckedChildren={t("adminOrgNotifications.filters.allNotifications")}
-            />
-            <Switch
-              checked={filters.asNotified}
-              onChange={(checked) => {
-                setFilters((f) => ({
-                  ...f,
-                  asNotified: checked,
-                  asTarget: checked ? false : f.asTarget,
-                }));
-                setPagination((p) => ({ ...p, current: 1 }));
-              }}
-              checkedChildren={t("adminOrgNotifications.filters.asNotified")}
-              unCheckedChildren={t("adminOrgNotifications.filters.allNotifications")}
-            />
-            <Button
-              icon={<ReloadOutlined />}
-              onClick={() => {
-                fetchData();
-                fetchStats();
-              }}
-            >
-              {t("adminOrgNotifications.buttons.refresh")}
-            </Button>
-            {stats.unviewed > 0 && (
-              <Button
-                type="primary"
-                icon={<CheckCircleOutlined />}
-                onClick={handleMarkAllAsViewed}
-              >
-                {t("adminOrgNotifications.buttons.markAllAsViewed")}
-              </Button>
-            )}
-          </Space>
+        <Card className="mb-4 sm:mb-6 overflow-hidden">
+          <Row gutter={[16, 16]} align="middle">
+            <Col xs={24} sm={24} md={10} lg={8}>
+              <Input.Search
+                placeholder={t("adminOrgNotifications.filters.searchPlaceholder")}
+                allowClear
+                value={filters.search}
+                onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
+                onSearch={() => {
+                  setPagination((p) => ({ ...p, current: 1 }));
+                  fetchData();
+                }}
+                className="w-full"
+                style={{ minWidth: 0 }}
+                prefix={<SearchOutlined />}
+              />
+            </Col>
+            <Col xs={24} sm={12} md={8} lg={6}>
+              <Select
+                placeholder={t("adminOrgNotifications.filters.statusPlaceholder")}
+                allowClear
+                value={filters.unviewedOnly ? "unviewed" : undefined}
+                onChange={(v) => {
+                  setFilters((f) => ({ ...f, unviewedOnly: v === "unviewed" }));
+                  setPagination((p) => ({ ...p, current: 1 }));
+                }}
+                className="w-full"
+                style={{ minWidth: 0 }}
+                options={[
+                  { label: t("adminOrgNotifications.filters.all"), value: undefined },
+                  { label: t("adminOrgNotifications.filters.unviewedOnly"), value: "unviewed" },
+                ]}
+              />
+            </Col>
+            <Col xs={24} sm={12} md={24} lg={10}>
+              <Space wrap size="middle" className="w-full">
+                <Switch
+                  checked={filters.asTarget}
+                  onChange={(checked) => {
+                    setFilters((f) => ({
+                      ...f,
+                      asTarget: checked,
+                      asNotified: checked ? false : f.asNotified,
+                    }));
+                    setPagination((p) => ({ ...p, current: 1 }));
+                  }}
+                  checkedChildren={t("adminOrgNotifications.filters.asTarget")}
+                  unCheckedChildren={t("adminOrgNotifications.filters.allNotifications")}
+                />
+                <Switch
+                  checked={filters.asNotified}
+                  onChange={(checked) => {
+                    setFilters((f) => ({
+                      ...f,
+                      asNotified: checked,
+                      asTarget: checked ? false : f.asTarget,
+                    }));
+                    setPagination((p) => ({ ...p, current: 1 }));
+                  }}
+                  checkedChildren={t("adminOrgNotifications.filters.asNotified")}
+                  unCheckedChildren={t("adminOrgNotifications.filters.allNotifications")}
+                />
+                <Button
+                  icon={<ReloadOutlined />}
+                  onClick={() => {
+                    fetchData();
+                    fetchStats();
+                  }}
+                  className="w-full sm:w-auto"
+                >
+                  {t("adminOrgNotifications.buttons.refresh")}
+                </Button>
+                {stats.unviewed > 0 && (
+                  <Button
+                    type="primary"
+                    icon={<CheckCircleOutlined />}
+                    onClick={handleMarkAllAsViewed}
+                    className="w-full sm:w-auto"
+                  >
+                    {t("adminOrgNotifications.buttons.markAllAsViewed")}
+                  </Button>
+                )}
+              </Space>
+            </Col>
+          </Row>
         </Card>
 
         {/* Table */}
-        <Card>
+        <Card className="overflow-hidden">
           <Table
             rowKey="id"
             loading={loading}
@@ -473,7 +475,7 @@ export default function AdminOrganizationNotificationsList() {
                 t("adminOrgNotifications.pagination.total", { total }),
             }}
             onChange={onTableChange}
-            scroll={{ x: true }}
+            scroll={{ x: "max-content" }}
           />
         </Card>
       </div>

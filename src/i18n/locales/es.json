@@ -2071,20 +2071,25 @@
             "success": "¡Registro exitoso! Verifica tu correo para activar tu cuenta.",
             "errors": {
                 "firstNameRequired": "El nombre es obligatorio.",
+                "firstNameMinLength": "El nombre debe tener al menos 2 caracteres.",
                 "lastNameRequired": "El apellido es obligatorio.",
-                "genderRequired": "El género es obligatorio.",
-                "birthPlaceRequired": "El país de nacimiento es obligatorio.",
-                "birthDateRequired": "La fecha de nacimiento es obligatoria.",
-                "birthDateInvalid": "Fecha de nacimiento inválida.",
-                "emailRequired": "El correo es obligatorio.",
-                "emailInvalid": "Correo inválido.",
+                "lastNameMinLength": "El apellido debe tener al menos 2 caracteres.",
+                "genderRequired": "Por favor seleccione su género.",
+                "birthPlaceRequired": "Por favor seleccione su país de nacimiento.",
+                "birthDateRequired": "Por favor ingrese su fecha de nacimiento.",
+                "birthDateInvalid": "Fecha de nacimiento inválida (verifique el formato).",
+                "emailRequired": "La dirección de correo es obligatoria.",
+                "emailInvalid": "Por favor ingrese una dirección de correo válida (ej. nombre@dominio.com).",
                 "passwordRequired": "La contraseña es obligatoria.",
-                "passwordMin": "Al menos 6 caracteres.",
-                "passwordMismatch": "Las contraseñas no coinciden.",
+                "passwordMin": "La contraseña debe tener al menos 6 caracteres.",
+                "confirmRequired": "Por favor confirme su contraseña.",
+                "passwordMismatch": "Las dos contraseñas no coinciden.",
                 "orgNameRequired": "El nombre de la organización es obligatorio.",
-                "orgTypeRequired": "El tipo de organización es obligatorio.",
+                "orgTypeRequired": "Por favor seleccione el tipo de organización.",
                 "orgEmailRequired": "El correo de la organización es obligatorio.",
-                "orgEmailInvalid": "Correo de organización inválido."
+                "orgEmailInvalid": "Por favor ingrese una dirección de correo válida para la organización.",
+                "formSummary": "Por favor corrija los errores en los campos marcados en rojo a continuación.",
+                "general": "Se produjo un error durante el registro."
             },
             "roles": {
                 "DEMANDEUR": "Solicitante",
@@ -2393,6 +2398,122 @@
         },
         "pagination": {
             "total": "Total {{total}} organizaciones"
+        }
+    },
+    "adminOrgCreate": {
+        "title": "Nueva Organización",
+        "breadcrumb": {
+            "dashboard": "Panel",
+            "organizations": "Organizaciones",
+            "new": "Nueva Organización"
+        },
+        "cardTitle": "Nueva Organización",
+        "actions": {
+            "back": "Volver"
+        },
+        "fields": {
+            "name": "Nombre de la organización",
+            "type": "Tipo",
+            "email": "Correo",
+            "phone": "Teléfono",
+            "address": "Dirección",
+            "website": "Sitio web",
+            "country": "País"
+        },
+        "placeholders": {
+            "name": "Nombre de la organización",
+            "selectType": "Seleccionar un tipo",
+            "email": "Correo",
+            "phone": "Teléfono",
+            "address": "Dirección",
+            "website": "Sitio web",
+            "selectCountry": "Seleccionar un país"
+        },
+        "types": {
+            "ENTREPRISE": "Empresa",
+            "TRADUCTEUR": "Agencia de Traducción",
+            "BANQUE": "Banco",
+            "COLLEGE": "Colegio",
+            "LYCEE": "Liceo",
+            "UNIVERSITE": "Universidad"
+        },
+        "validators": {
+            "nameRequired": "El nombre es obligatorio",
+            "typeRequired": "El tipo es obligatorio",
+            "emailRequired": "El correo es obligatorio",
+            "emailInvalid": "Correo inválido",
+            "phoneRequired": "El teléfono es obligatorio",
+            "addressRequired": "La dirección es obligatoria",
+            "urlInvalid": "URL inválida",
+            "countryRequired": "El país es obligatorio"
+        },
+        "buttons": {
+            "submit": "Crear organización",
+            "submitting": "Creando..."
+        },
+        "messages": {
+            "success": "Organización creada con éxito",
+            "error": "Error al crear la organización"
+        }
+    },
+    "adminOrgEdit": {
+        "title": "Editar organización",
+        "breadcrumb": {
+            "dashboard": "Panel",
+            "organizations": "Organizaciones",
+            "edit": "Editar organización"
+        },
+        "cardTitle": "Editar organización",
+        "actions": {
+            "back": "Volver"
+        },
+        "fields": {
+            "name": "Nombre de la organización",
+            "slug": "Slug",
+            "type": "Tipo",
+            "email": "Correo",
+            "phone": "Teléfono",
+            "address": "Dirección",
+            "website": "Sitio web",
+            "country": "País"
+        },
+        "placeholders": {
+            "name": "Nombre de la organización",
+            "slug": "Slug único",
+            "selectType": "Seleccionar un tipo",
+            "email": "Correo",
+            "phone": "Teléfono",
+            "address": "Dirección",
+            "website": "Sitio web",
+            "selectCountry": "Seleccionar un país"
+        },
+        "types": {
+            "ENTREPRISE": "Empresa",
+            "TRADUCTEUR": "Agencia de Traducción",
+            "BANQUE": "Banco",
+            "COLLEGE": "Colegio",
+            "LYCEE": "Liceo",
+            "UNIVERSITE": "Universidad"
+        },
+        "validators": {
+            "nameRequired": "El nombre es obligatorio",
+            "slugRequired": "El slug es obligatorio",
+            "typeRequired": "El tipo es obligatorio",
+            "emailRequired": "El correo es obligatorio",
+            "emailInvalid": "Correo inválido",
+            "phoneRequired": "El teléfono es obligatorio",
+            "addressRequired": "La dirección es obligatoria",
+            "urlInvalid": "URL inválida",
+            "countryRequired": "El país es obligatorio"
+        },
+        "buttons": {
+            "submit": "Actualizar",
+            "submitting": "Actualizando..."
+        },
+        "messages": {
+            "success": "Organización actualizada con éxito",
+            "error": "Error al actualizar la organización",
+            "loadError": "Error al obtener la organización"
         }
     },
     "adminDemandeCreate": {

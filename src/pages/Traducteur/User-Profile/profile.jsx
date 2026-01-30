@@ -90,7 +90,6 @@ export default function TraducteurUserProfile() {
             const response = await authService.getProfile()
             const user = response.user || response
             setUserData(user)
-            console.log(response)
             refreshProfile()
             form.setFieldsValue({
                 firstName: user.firstName || "",
@@ -139,9 +138,7 @@ export default function TraducteurUserProfile() {
         try {
             await authService.updateProfile(formData)
             toast.success(t("profilePage.toasts.avatarUpdated"))
-            const response = await authService.getProfile()
-            console.log(response)
-            fetchUserData()
+            await fetchUserData()
         } catch (error) {
             console.error("Error uploading avatar:", error)
             toast.error(t("profilePage.toasts.avatarError"))
@@ -296,103 +293,97 @@ export default function TraducteurUserProfile() {
 
     if (loading) {
         return (
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "400px" }}>
+            <div className="flex flex-col items-center justify-center min-h-[50vh] sm:min-h-screen p-4">
                 <Spin size="large" />
-                <Text style={{ marginTop: 16 }}>{t("profilePage.alerts.loading")}</Text>
+                <Text className="mt-4">{t("profilePage.alerts.loading")}</Text>
             </div>
         )
     }
 
     if (error) {
-        return <Alert message={t("profilePage.alerts.errorTitle")} description={error} type="error" showIcon style={{ margin: "20px" }} />
+        return (
+            <div className="container-fluid px-2 sm:px-3 py-4 sm:py-6">
+                <Alert message={t("profilePage.alerts.errorTitle")} description={error} type="error" showIcon />
+            </div>
+        )
     }
 
     if (!userData) {
         return (
-            <Alert
-                message={t("profilePage.alerts.noDataTitle")}
-                description={t("profilePage.alerts.noDataDesc")}
-                type="warning"
-                showIcon
-                style={{ margin: "20px" }}
-            />
+            <div className="container-fluid px-2 sm:px-3 py-4 sm:py-6">
+                <Alert
+                    message={t("profilePage.alerts.noDataTitle")}
+                    description={t("profilePage.alerts.noDataDesc")}
+                    type="warning"
+                    showIcon
+                />
+            </div>
         )
     }
 
     return (
         <>
-            <div className="container-fluid relative px-3">
-                <div className="layout-specing">
-                    <div style={{ padding: "24px", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
+            <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+                <div className="layout-specing py-4 sm:py-6">
+                    <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-900/30 min-h-screen sm:min-h-0">
                         <Row gutter={[24, 24]}>
                             {/* En-tête du profil */}
-                            <Col span={24}>
+                            <Col xs={24}>
                                 <Card
+                                    className="overflow-hidden"
                                     style={{
                                         background: "linear-gradient(135deg, #1e81b0 0%,  #e28743 100%)",
                                         border: "none",
                                         borderRadius: "12px",
                                     }}
                                 >
-                                    <Row align="middle" gutter={24}>
-                                        <Col>
+                                    <Row align="middle" gutter={[24, 24]}>
+                                        <Col xs={24} md={6} className="flex justify-center md:justify-start">
                                             <Badge count={<CheckCircleOutlined style={{ color: "#52c41a" }} />} offset={[-8, 8]}>
                                                 <Upload showUploadList={false} beforeUpload={handleAvatarUpload} accept="image/*">
-                                                    <Avatar
-                                                        size={120}
-                                                        src={userData.avatar ? buildImageUrl(userData.avatar) : undefined}
-                                                        icon={<UserOutlined />}
-                                                        style={{
-                                                            cursor: "pointer",
-                                                            border: "4px solid rgba(255,255,255,0.3)",
-                                                            transition: "all 0.3s ease",
-                                                        }}
-                                                    />
-                                                    <div
-                                                        style={{
-                                                            position: "absolute",
-                                                            bottom: 0,
-                                                            right: 0,
-                                                            backgroundColor: "rgba(0,0,0,0.6)",
-                                                            borderRadius: "50%",
-                                                            padding: "8px",
-                                                            color: "white",
-                                                        }}
-                                                    >
-                                                        <CameraOutlined />
+                                                    <div className="relative cursor-pointer">
+                                                        <Avatar
+                                                            size={120}
+                                                            src={userData.avatar ? buildImageUrl(userData.avatar) : undefined}
+                                                            icon={<UserOutlined />}
+                                                            className="border-4 border-white/30 transition-all shrink-0"
+                                                        />
+                                                        <div className="absolute bottom-0 right-0 bg-black/60 rounded-full p-2 text-white">
+                                                            <CameraOutlined />
+                                                        </div>
                                                     </div>
                                                 </Upload>
                                             </Badge>
                                         </Col>
-                                        <Col flex={1}>
-                                            <Title level={2} style={{ color: "white", margin: 0 }}>
+                                        <Col xs={24} md={10} className="flex flex-col justify-center">
+                                            <Title level={2} className="!m-0 !text-white text-base sm:text-xl md:text-2xl break-words">
                                                 {userData.firstName || userData.lastName || userData.username || t("profilePage.header.userFallback")}
                                             </Title>
-                                            <Space size="middle" style={{ marginTop: "8px" }}>
+                                            <Space size="middle" wrap className="mt-2 sm:mt-0">
                                                 <Tag
                                                     color={getRoleColor(userData.role)}
                                                     icon={<CrownOutlined />}
-                                                    style={{ fontSize: "14px", padding: "4px 12px" }}
+                                                    className="text-xs sm:text-sm"
                                                 >
                                                     {getRoleLabel(userData.role, t)}
                                                 </Tag>
                                                 <Tag
                                                     color={getStatusColor(userData.enabled)}
                                                     icon={<SafetyCertificateOutlined />}
-                                                    style={{ fontSize: "14px", padding: "4px 12px" }}
+                                                    className="text-xs sm:text-sm"
                                                 >
                                                     {userData.enabled ? t("profilePage.header.active") : t("profilePage.header.inactive")}
                                                 </Tag>
                                             </Space>
                                         </Col>
-                                        <Col>
-                                            <Space>
+                                        <Col xs={24} md={8} className="flex justify-center md:justify-end">
+                                            <Space wrap size="small" className="w-full sm:w-auto justify-center md:justify-end">
                                                 <Button
                                                     type="primary"
                                                     ghost
                                                     icon={<EditOutlined />}
                                                     size="large"
-                                                    style={{ borderColor: "white", color: "white" }}
+                                                    className="w-full sm:w-auto !border-white !text-white"
                                                     onClick={handleEdit}
                                                 >
                                                     {t("profilePage.header.editProfile")}
@@ -402,7 +393,7 @@ export default function TraducteurUserProfile() {
                                                     ghost
                                                     icon={<LockOutlined />}
                                                     size="large"
-                                                    style={{ borderColor: "white", color: "white" }}
+                                                    className="w-full sm:w-auto !border-white !text-white"
                                                     onClick={showPasswordModal}
                                                 >
                                                     {t("profilePage.header.password")}
@@ -413,7 +404,7 @@ export default function TraducteurUserProfile() {
                                                     danger
                                                     icon={<LogoutOutlined />}
                                                     size="large"
-                                                    style={{ borderColor: "white", color: "white" }}
+                                                    className="w-full sm:w-auto !border-white !text-white"
                                                     onClick={handleLogout}
                                                 >
                                                     {t("common.logout")}
@@ -425,10 +416,10 @@ export default function TraducteurUserProfile() {
                             </Col>
 
                             {/* Statistiques rapides */}
-                            <Col span={24}>
-                                <Row gutter={16}>
+                            <Col xs={24}>
+                                <Row gutter={[16, 16]}>
                                     <Col xs={24} sm={8}>
-                                        <Card>
+                                        <Card className="overflow-hidden">
                                             <Statistic
                                                 title={t("profilePage.stats.activePerms")}
                                                 value={userData.permissions.length}
@@ -438,7 +429,7 @@ export default function TraducteurUserProfile() {
                                         </Card>
                                     </Col>
                                     <Col xs={24} sm={8}>
-                                        <Card>
+                                        <Card className="overflow-hidden">
                                             <Statistic
                                                 title={t("profilePage.stats.lastLogin")}
                                                 value={formatDate(userData.updatedAt)}
@@ -448,7 +439,7 @@ export default function TraducteurUserProfile() {
                                         </Card>
                                     </Col>
                                     <Col xs={24} sm={8}>
-                                        <Card>
+                                        <Card className="overflow-hidden">
                                             <Statistic
                                                 title={t("profilePage.stats.memberSince")}
                                                 value={formatDate(userData.createdAt)}
@@ -463,6 +454,7 @@ export default function TraducteurUserProfile() {
                             {/* Informations personnelles */}
                             <Col xs={24} lg={12}>
                                 <Card
+                                    className="overflow-hidden h-full"
                                     title={
                                         <Space>
                                             <UserOutlined />
@@ -470,11 +462,10 @@ export default function TraducteurUserProfile() {
                                         </Space>
                                     }
                                     extra={
-                                        <Button type="link" icon={<EditOutlined />} onClick={handleEdit}>
+                                        <Button type="link" icon={<EditOutlined />} onClick={handleEdit} className="p-0">
                                             {t("profilePage.buttons.edit")}
                                         </Button>
                                     }
-                                    style={{ height: "100%" }}
                                 >
                                     {isEditing ? (
                                         <Form
@@ -535,23 +526,24 @@ export default function TraducteurUserProfile() {
 
 
                                             <Form.Item>
-                                                <Space>
+                                                <Space wrap size="small">
                                                     <Button
                                                         type="primary"
                                                         loading={loading}
                                                         icon={!loading && <PlusCircleOutlined className="mr-1 h-4 w-4" />}
                                                         htmlType="submit"
+                                                        className="w-full sm:w-auto"
                                                     >
                                                         {t("profilePage.buttons.save")}
                                                     </Button>
-                                                    <Button onClick={handleCancel}>
-                                                       {t("profilePage.buttons.cancel")}
+                                                    <Button onClick={handleCancel} className="w-full sm:w-auto">
+                                                        {t("profilePage.buttons.cancel")}
                                                     </Button>
                                                 </Space>
                                             </Form.Item>
                                         </Form>
                                     ) : (
-                                        <Descriptions column={1} size="middle">
+                                        <Descriptions column={{ xs: 1, sm: 2 }} size="small" className="break-words">
                                             <Descriptions.Item
                                                 label={
                                                     <Space>
@@ -560,7 +552,7 @@ export default function TraducteurUserProfile() {
                                                     </Space>
                                                 }
                                             >
-                                                <Text copyable>{userData.email}</Text>
+                                                <Text copyable className="break-all">{userData.email}</Text>
                                             </Descriptions.Item>
                                             <Descriptions.Item
                                                 label={
@@ -570,7 +562,7 @@ export default function TraducteurUserProfile() {
                                                     </Space>
                                                 }
                                             >
-                                                <Text>{userData.firstName || ""} {userData.lastName || ""}</Text>
+                                                <Text className="break-words">{userData.firstName || ""} {userData.lastName || ""}</Text>
                                             </Descriptions.Item>
                                             <Descriptions.Item
                                                 label={
@@ -580,7 +572,7 @@ export default function TraducteurUserProfile() {
                                                     </Space>
                                                 }
                                             >
-                                                <Text copyable>{userData.phone || t("profilePage.org.unspecified")}</Text>
+                                                <Text copyable className="break-all">{userData.phone || t("profilePage.org.unspecified")}</Text>
                                             </Descriptions.Item>
                                             <Descriptions.Item
                                                 label={
@@ -590,7 +582,7 @@ export default function TraducteurUserProfile() {
                                                     </Space>
                                                 }
                                             >
-                                                <Text>{userData.adress || t("profilePage.org.unspecified")}</Text>
+                                                <Text className="break-words">{userData.adress || t("profilePage.org.unspecified")}</Text>
                                             </Descriptions.Item>
                                             <Descriptions.Item
                                                 label={
@@ -600,7 +592,7 @@ export default function TraducteurUserProfile() {
                                                     </Space>
                                                 }
                                             >
-                                                <Text>{userData.country || t("profilePage.org.unspecified")}</Text>
+                                                <Text className="break-words">{userData.country || t("profilePage.org.unspecified")}</Text>
                                             </Descriptions.Item>
                                             <Descriptions.Item
                                                 label={
@@ -620,7 +612,7 @@ export default function TraducteurUserProfile() {
                                                     </Space>
                                                 }
                                             >
-                                                <Text>{userData.placeOfBirth || t("profilePage.org.unspecified")}</Text>
+                                                <Text className="break-words">{userData.placeOfBirth || t("profilePage.org.unspecified")}</Text>
                                             </Descriptions.Item>
                                             <Descriptions.Item
                                                 label={
@@ -660,6 +652,7 @@ export default function TraducteurUserProfile() {
                             {/* Organisation et permissions */}
                             <Col xs={24} lg={12}>
                                 <Card
+                                    className="overflow-hidden h-full mb-4 sm:mb-6"
                                     title={
                                         <Space>
                                             <BankOutlined />
@@ -668,12 +661,11 @@ export default function TraducteurUserProfile() {
                                     }
                                     extra={
                                         userData?.organization && canEditOrganization() && (
-                                            <Button type="link" icon={<EditOutlined />} onClick={handleOrgEdit}>
+                                            <Button type="link" icon={<EditOutlined />} onClick={handleOrgEdit} className="p-0">
                                                 {t("profilePage.buttons.edit")}
                                             </Button>
                                         )
                                     }
-                                    style={{ height: "100%", marginBottom: "24px" }}
                                 >
                                     {!userData?.organization ? (
                                         <Text type="secondary">{t("profilePage.orgEditor.noOrgAssociated")}</Text>
@@ -714,15 +706,16 @@ export default function TraducteurUserProfile() {
                                                 <Input type="email" placeholder="email@example.com" />
                                             </Form.Item>
                                             <Form.Item>
-                                                <Space>
+                                                <Space wrap size="small">
                                                     <Button
                                                         type="primary"
                                                         loading={orgLoading}
                                                         htmlType="submit"
+                                                        className="w-full sm:w-auto"
                                                     >
                                                         {t("profilePage.buttons.save")}
                                                     </Button>
-                                                    <Button onClick={handleOrgCancel}>
+                                                    <Button onClick={handleOrgCancel} className="w-full sm:w-auto">
                                                         {t("profilePage.buttons.cancel")}
                                                     </Button>
                                                 </Space>
@@ -730,10 +723,10 @@ export default function TraducteurUserProfile() {
                                         </Form>
                                     ) : (
                                         <>
-                                            <Title level={5} style={{ marginBottom: "16px" }}>
-                                                {userData.organization?.name || t("profilePage.org.none")}
+                                            <Title level={5} className="!mb-4">
+                                                <span className="break-words">{userData.organization?.name || t("profilePage.org.none")}</span>
                                             </Title>
-                                            <Descriptions column={1} size="small">
+                                            <Descriptions column={{ xs: 1, sm: 2 }} size="small" className="break-words">
                                                 <Descriptions.Item label={t("profilePage.fields.type")}>
                                                     <Tag color="blue">{
                                                     userData.organization?.type ? t(`profilePage.orgTypes.${userData.organization?.type}`) : t("profilePage.org.unspecified")
@@ -743,17 +736,17 @@ export default function TraducteurUserProfile() {
                                                 </Descriptions.Item>
                                                 
                                                 <Descriptions.Item label={t("profilePage.orgEditor.address")}>
-                                                    <Text>{userData.organization?.address || t("profilePage.org.unspecified")}</Text>
+                                                    <Text className="break-words">{userData.organization?.address || t("profilePage.org.unspecified")}</Text>
                                                 </Descriptions.Item>
                                                 <Descriptions.Item label={t("profilePage.orgEditor.phone")}>
-                                                    <Text copyable>{userData.organization?.phone || t("profilePage.org.unspecified")}</Text>
+                                                    <Text copyable className="break-all">{userData.organization?.phone || t("profilePage.org.unspecified")}</Text>
                                                 </Descriptions.Item>
                                                 <Descriptions.Item label={t("profilePage.orgEditor.country")}>
-                                                    <Text>{userData.organization?.country || t("profilePage.org.unspecified")}</Text>
+                                                    <Text className="break-words">{userData.organization?.country || t("profilePage.org.unspecified")}</Text>
                                                 </Descriptions.Item>
                                                 <Descriptions.Item label={t("profilePage.orgEditor.website")}>
                                                     {userData.organization?.website ? (
-                                                        <a href={userData.organization.website} target="_blank" rel="noreferrer">
+                                                        <a href={userData.organization.website} target="_blank" rel="noreferrer" className="break-all">
                                                             {userData.organization.website}
                                                         </a>
                                                     ) : (
@@ -761,7 +754,7 @@ export default function TraducteurUserProfile() {
                                                     )}
                                                 </Descriptions.Item>
                                                 <Descriptions.Item label={t("profilePage.orgEditor.email")}>
-                                                    <Text copyable>{userData.organization?.email || t("profilePage.org.unspecified")}</Text>
+                                                    <Text copyable className="break-all">{userData.organization?.email || t("profilePage.org.unspecified")}</Text>
                                                 </Descriptions.Item>
                                             </Descriptions>
                                         </>
@@ -770,23 +763,22 @@ export default function TraducteurUserProfile() {
                             </Col>
 
                             <Col xs={24} lg={24}>
-
                                 <Card
+                                    className="overflow-hidden h-full"
                                     title={
                                         <Space>
                                             <SafetyCertificateOutlined />
                                             <span>{t("profilePage.sections.permissionsAccess")}</span>
                                         </Space>
                                     }
-                                    style={{ height: "100%" }}
                                 >
-                                    <Title level={5} style={{ marginBottom: "16px" }}>
+                                    <Title level={5} className="!mb-4">
                                         {t("profilePage.sections.role")}: <Tag color={getRoleColor(userData.role)}>{getRoleLabel(userData.role, t)}</Tag>
                                     </Title>
                                     <Divider orientation="left" orientationMargin="0">
                                         <Text type="secondary">{t("profilePage.sections.grantedPerms")}</Text>
                                     </Divider>
-                                    <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+                                    <div className="max-h-[300px] overflow-y-auto">
                                         <Space size={[8, 8]} wrap>
                                             {userData.permissions.map((permission) => (
                                                 <Tag
@@ -886,14 +878,15 @@ export default function TraducteurUserProfile() {
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Space style={{ width: "100%", justifyContent: "flex-end" }}>
-                            <Button onClick={handlePasswordCancel}>
+                        <Space wrap size="small" className="w-full justify-end">
+                            <Button onClick={handlePasswordCancel} className="w-full sm:w-auto">
                                 {t("profilePage.buttons.cancel")}
                             </Button>
                             <Button
                                 type="primary"
                                 htmlType="submit"
                                 loading={passwordLoading}
+                                className="w-full sm:w-auto"
                             >
                                 {t("profilePage.buttons.save")}
                             </Button>

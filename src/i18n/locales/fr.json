@@ -448,7 +448,9 @@
             "detail": "Détail"
         },
         "actions": {
-            "documents": "Documents"
+            "documents": "Documents",
+            "edit": "Modifier la candidature",
+            "editRedirect": "Redirection vers le formulaire de modification..."
         },
         "sections": {
             "case": "Dossier",
@@ -2150,21 +2152,27 @@
             "success": "Inscription réussie ! Vérifiez votre email pour activer le compte.",
             "errors": {
                 "firstNameRequired": "Le prénom est obligatoire.",
+                "firstNameMinLength": "Le prénom doit contenir au moins 2 caractères.",
                 "lastNameRequired": "Le nom est obligatoire.",
-                "genderRequired": "Le genre est obligatoire.",
-                "birthPlaceRequired": "Le lieu de naissance est obligatoire.",
-                "birthDateRequired": "La date de naissance est obligatoire.",
-                "birthDateInvalid": "Date de naissance invalide.",
-                "emailRequired": "L'email est obligatoire.",
-                "emailInvalid": "Email invalide.",
+                "lastNameMinLength": "Le nom doit contenir au moins 2 caractères.",
+                "genderRequired": "Veuillez sélectionner votre genre.",
+                "birthPlaceRequired": "Veuillez sélectionner votre lieu de naissance.",
+                "birthDateRequired": "Veuillez saisir votre date de naissance.",
+                "birthDateInvalid": "Date de naissance invalide (vérifiez le format).",
+                "emailRequired": "L'adresse email est obligatoire.",
+                "emailInvalid": "Veuillez saisir une adresse email valide (ex. nom@domaine.com).",
                 "passwordRequired": "Le mot de passe est obligatoire.",
-                "passwordMin": "Au moins 6 caractères.",
-                "passwordMismatch": "Les mots de passe ne correspondent pas.",
+                "passwordMin": "Le mot de passe doit contenir au moins 6 caractères.",
+                "confirmRequired": "Veuillez confirmer votre mot de passe.",
+                "passwordMismatch": "Les deux mots de passe ne correspondent pas.",
                 "orgNameRequired": "Le nom de l'organisation est obligatoire.",
-                "orgTypeRequired": "Le type d'organisation est obligatoire.",
+                "orgTypeRequired": "Veuillez sélectionner le type d'organisation.",
                 "orgEmailRequired": "L'email de l'organisation est obligatoire.",
-                "orgEmailInvalid": "Email d'organisation invalide.",
-                "general": "Une erreur est survenue lors de l'inscription."
+                "orgEmailInvalid": "Veuillez saisir une adresse email valide pour l'organisation.",
+                "formSummary": "Veuillez corriger les erreurs dans les champs marqués en rouge ci-dessous.",
+                "formSummaryRequired": "Champs obligatoires non remplis ou invalides (selon votre type de profil et d'organisation) :",
+                "general": "Une erreur est survenue lors de l'inscription.",
+                "unknownField": "Erreur sur ce champ"
             },
             "roles": {
                 "DEMANDEUR": "Demandeur",
@@ -2497,6 +2505,122 @@
         },
         "pagination": {
             "total": "Total {{total}} organisations"
+        }
+    },
+    "adminOrgCreate": {
+        "title": "Nouvelle Organisation",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "organizations": "Organisations",
+            "new": "Nouvelle Organisation"
+        },
+        "cardTitle": "Nouvelle Organisation",
+        "actions": {
+            "back": "Retour"
+        },
+        "fields": {
+            "name": "Nom de l'organisation",
+            "type": "Type",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "website": "Site Web",
+            "country": "Pays"
+        },
+        "placeholders": {
+            "name": "Nom de l'organisation",
+            "selectType": "Sélectionner un type",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "website": "Site Web",
+            "selectCountry": "Sélectionner un pays"
+        },
+        "types": {
+            "ENTREPRISE": "Entreprise",
+            "TRADUCTEUR": "Agence de Traduction",
+            "BANQUE": "Banque",
+            "COLLEGE": "Collège",
+            "LYCEE": "Lycée",
+            "UNIVERSITE": "Université"
+        },
+        "validators": {
+            "nameRequired": "Le nom est obligatoire",
+            "typeRequired": "Le type est obligatoire",
+            "emailRequired": "L'email est obligatoire",
+            "emailInvalid": "Email invalide",
+            "phoneRequired": "Le téléphone est obligatoire",
+            "addressRequired": "L'adresse est obligatoire",
+            "urlInvalid": "URL invalide",
+            "countryRequired": "Le pays est obligatoire"
+        },
+        "buttons": {
+            "submit": "Créer l'organisation",
+            "submitting": "Création en cours..."
+        },
+        "messages": {
+            "success": "Organisation créée avec succès",
+            "error": "Erreur lors de la création de l'organisation"
+        }
+    },
+    "adminOrgEdit": {
+        "title": "Modifier l'organisation",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "organizations": "Organisations",
+            "edit": "Modifier l'organisation"
+        },
+        "cardTitle": "Modifier l'organisation",
+        "actions": {
+            "back": "Retour"
+        },
+        "fields": {
+            "name": "Nom de l'organisation",
+            "slug": "Slug",
+            "type": "Type",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "website": "Site Web",
+            "country": "Pays"
+        },
+        "placeholders": {
+            "name": "Nom de l'organisation",
+            "slug": "Slug unique",
+            "selectType": "Sélectionner un type",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "website": "Site Web",
+            "selectCountry": "Sélectionner un pays"
+        },
+        "types": {
+            "ENTREPRISE": "Entreprise",
+            "TRADUCTEUR": "Agence de Traduction",
+            "BANQUE": "Banque",
+            "COLLEGE": "Collège",
+            "LYCEE": "Lycée",
+            "UNIVERSITE": "Université"
+        },
+        "validators": {
+            "nameRequired": "Le nom est obligatoire",
+            "slugRequired": "Le slug est obligatoire",
+            "typeRequired": "Le type est obligatoire",
+            "emailRequired": "L'email est obligatoire",
+            "emailInvalid": "Email invalide",
+            "phoneRequired": "Le téléphone est obligatoire",
+            "addressRequired": "L'adresse est obligatoire",
+            "urlInvalid": "URL invalide",
+            "countryRequired": "Le pays est obligatoire"
+        },
+        "buttons": {
+            "submit": "Mettre à jour",
+            "submitting": "Mise à jour en cours..."
+        },
+        "messages": {
+            "success": "Organisation mise à jour avec succès",
+            "error": "Erreur lors de la mise à jour de l'organisation",
+            "loadError": "Erreur lors de la récupération de l'organisation"
         }
     },
     "adminDemandeCreate": {
@@ -3754,10 +3878,20 @@
             "documents": "Documents"
         },
         "columns": {
-            "demande": "Demande",
-            "ownerOrg": "Ajouté par (org.)",
+            "demande": "Candidature",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtention",
+            "translated": "Traduit",
+            "ownerOrg": "Organisation",
             "createdAt": "Créé le",
             "actions": "Actions"
+        },
+        "types": {
+            "ATTESTATION": "Attestation",
+            "RELEVE": "Relevé",
+            "DIPLOME": "Diplôme",
+            "OTHER": "Autre"
         },
         "filters": {
             "searchPlaceholder": "Recherche (code ADN…)",
@@ -3776,9 +3910,12 @@
         },
         "drawer": {
             "title": "Détails du document",
-            "demande": "Demande",
-            "owner": "Ajouté par",
-            "translationStatus": "Statut traduction",
+            "demande": "Candidature",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtention",
+            "owner": "Organisation",
+            "translationStatus": "Traduit",
             "encrypted": "Chiffré",
             "createdAt": "Créé le",
             "encryptedAt": "Chiffré le",
@@ -3799,6 +3936,9 @@
         "messages": {
             "loadError": "Erreur chargement des documents",
             "urlUnavailable": "URL indisponible",
+            "openError": "Impossible d'ouvrir le document",
+            "sessionExpired": "Session expirée. Veuillez vous reconnecter.",
+            "accessDenied": "Vous n'avez pas accès à ce document.",
             "deleted": "Document supprimé",
             "deleteError": "Suppression impossible"
         },

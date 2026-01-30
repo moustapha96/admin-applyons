@@ -183,18 +183,19 @@ const UserEdit = () => {
 
     if (loading && !user) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
+            <div className="flex items-center justify-center min-h-[50vh] sm:min-h-screen p-4">
                 <Spin size="large" />
             </div>
         );
     }
 
     return (
-        <div className="container-fluid relative px-3">
-            <div className="layout-specing">
-                <div className="md:flex justify-between items-center mb-6">
-                    <h5 className="text-lg font-semibold">{t("adminUserEdit.title")}</h5>
+        <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+            <div className="layout-specing py-4 sm:py-6">
+                <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+                    <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">{t("adminUserEdit.title")}</h5>
                     <Breadcrumb
+                        className="order-1 sm:order-2"
                         items={[
                             { title: <Link to="/admin/dashboard">{t("adminUserEdit.breadcrumb.dashboard")}</Link> },
                             { title: <Link to="/admin/users">{t("adminUserEdit.breadcrumb.users")}</Link> },
@@ -202,10 +203,11 @@ const UserEdit = () => {
                         ]}
                     />
                 </div>
-                <div className="md:flex md:justify-end justify-end items-center mb-6 gap-2">
+                <div className="flex flex-wrap justify-end items-center gap-2 mb-4 sm:mb-6">
                     <Button
                         onClick={() => navigate(-1)}
                         icon={<ArrowLeftOutlined />}
+                        className="w-full sm:w-auto"
                     >
                         {t("adminUserEdit.actions.back")}
                     </Button>
@@ -215,41 +217,49 @@ const UserEdit = () => {
                             type="primary"
                             icon={<DeleteOutlined />}
                             onClick={confirmDelete}
+                            className="w-full sm:w-auto"
                         >
                             {t("adminUserEdit.actions.delete") || "Supprimer"}
                         </Button>
                     )}
                 </div>
-                <Card title={t("adminUserEdit.cardTitle")} className="mt-4">
+                <Card title={t("adminUserEdit.cardTitle")} className="mt-4 overflow-hidden">
                     <Form
                         form={form}
                         layout="vertical"
                         onFinish={handleSubmit}
+                        className="user-edit-form"
                     >
-                        <Row gutter={16}>
-                            <Col span={6}>
-                                <Form.Item label={t("adminUserEdit.fields.avatar")} name="upload" valuePropName="fileList" getValueFromEvent={normFile}>
-                                    <Upload
-                                        name="avatar"
-                                        listType="picture-card"
-                                        showUploadList={false}
-                                        beforeUpload={() => false}
-                                        onChange={({ file }) => setImageUrl(URL.createObjectURL(file))}
-                                    >
-                                        {imageUrl ? (
-                                            <Avatar size={128} 
-                                            src={imageUrl ? buildImageUrl(imageUrl) : user?.avatar ? buildImageUrl(user?.avatar) : undefined}
-                                            icon={<UserOutlined />} />
-                                        ) : (
-                                            <div>
-                                                <UploadOutlined />
-                                                <div style={{ marginTop: 8 }}>{t("adminUserEdit.upload.upload")}</div>
-                                            </div>
-                                        )}
-                                    </Upload>
-                                </Form.Item>
+                        <Row gutter={[16, 24]}>
+                            <Col xs={24} sm={24} md={10} lg={6}>
+                                <div className="flex flex-col items-center md:items-start">
+                                    <Form.Item label={t("adminUserEdit.fields.avatar")} name="upload" valuePropName="fileList" getValueFromEvent={normFile} className="mb-0">
+                                        <Upload
+                                            name="avatar"
+                                            listType="picture-card"
+                                            showUploadList={false}
+                                            beforeUpload={() => false}
+                                            onChange={({ file }) => setImageUrl(URL.createObjectURL(file))}
+                                            className="avatar-uploader-responsive"
+                                        >
+                                            {imageUrl ? (
+                                                <Avatar
+                                                    size={128}
+                                                    className="!w-full !max-w-[128px] !h-auto aspect-square"
+                                                    src={imageUrl ? buildImageUrl(imageUrl) : user?.avatar ? buildImageUrl(user?.avatar) : undefined}
+                                                    icon={<UserOutlined />}
+                                                />
+                                            ) : (
+                                                <div className="flex flex-col items-center justify-center p-2">
+                                                    <UploadOutlined className="text-2xl" />
+                                                    <span className="mt-2 text-xs sm:text-sm">{t("adminUserEdit.upload.upload")}</span>
+                                                </div>
+                                            )}
+                                        </Upload>
+                                    </Form.Item>
+                                </div>
                             </Col>
-                            <Col span={18}>
+                            <Col xs={24} sm={24} md={14} lg={18}>
                                 <Form.Item
                                     name="firstName"
                                     label={t("adminUserEdit.fields.firstName")}
@@ -353,23 +363,24 @@ const UserEdit = () => {
                                     {permissionsLoading ? (
                                         <div>{t("adminUserEdit.loadingPermissions")}</div>
                                     ) : (
-                                        <Checkbox.Group>
-                                            <Row gutter={[0, 16]}>
+                                        <Checkbox.Group className="w-full">
+                                            <Row gutter={[12, 12]}>
                                                 {permissionsOptions.map((option) => (
-                                                    <Col span={8} key={option.value}>
-                                                        <Checkbox value={option.value}>{option.label}</Checkbox>
+                                                    <Col xs={24} sm={12} md={8} lg={8} key={option.value}>
+                                                        <Checkbox value={option.value} className="!whitespace-normal">{option.label}</Checkbox>
                                                     </Col>
                                                 ))}
                                             </Row>
                                         </Checkbox.Group>
                                     )}
                                 </Form.Item>
-                                <Form.Item>
+                                <Form.Item className="mb-0 sm:mb-4">
                                     <Button
                                         htmlType="submit"
                                         type="primary"
                                         loading={loading}
                                         icon={!loading && <SaveFilled className="mr-1 h-4 w-4" />}
+                                        className="w-full sm:w-auto"
                                     >
                                         {loading ? t("adminUserEdit.buttons.saving") : t("adminUserEdit.buttons.save")}
                                     </Button>
