@@ -51,7 +51,9 @@ const { Text } = Typography;
 
 /** ====== Payment Config (devient fallback seulement) ====== */
 const DEFAULT_CURRENCY = "USD";
-const DRAFT_KEY = "demande:draft:v4";
+const DRAFT_KEY_PREFIX = "demande:draft:v4";
+/** Clé de brouillon par utilisateur : chaque utilisateur a son propre brouillon (pas de partage entre comptes) */
+const getDraftKey = (userId) => `${DRAFT_KEY_PREFIX}:${userId ?? "anonymous"}`;
 
 const isDay = (d) => dayjs.isDayjs(d);
 const reviveDate = (v) => {
@@ -159,7 +161,7 @@ export default function DemandeurDemandeCreate() {
     [price],
   );
 
-  /** ------- DRAFT ------- */
+  /** ------- DRAFT (par utilisateur : chaque compte a son propre brouillon) ------- */
   const saveDraft = useCallback(() => {
     try {
       setSavingDraft(true);
@@ -170,23 +172,21 @@ export default function DemandeurDemandeCreate() {
         current,
         invites,
         selectedNotifyOrgIds,
-        // Sauvegarder les infos de paiement seulement si elles existent
-        // mais elles seront réinitialisées après création de demande
         paymentMethod: paymentMethod || null,
         paymentCompleted: paymentCompleted || false,
       };
-      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      localStorage.setItem(getDraftKey(me?.id), JSON.stringify(draft));
       setSavingDraft(false);
     } catch (e) {
       console.error("Échec sauvegarde brouillon:", e);
-      // Pas de message d'erreur
     }
-  }, [form, current, invites, selectedNotifyOrgIds, paymentMethod, paymentCompleted]);
+  }, [form, current, invites, selectedNotifyOrgIds, paymentMethod, paymentCompleted, me?.id]);
 
   const loadDraft = useCallback(() => {
     try {
       setIsLoadingDraft(true);
-      const draft = localStorage.getItem(DRAFT_KEY);
+      const draftKey = getDraftKey(me?.id);
+      const draft = localStorage.getItem(draftKey);
       const parsed = draft ? JSON.parse(draft) : null;
 
       if (!draft || !parsed) {
@@ -256,11 +256,9 @@ export default function DemandeurDemandeCreate() {
 
   const resetDraft = () => {
     try {
-      localStorage.removeItem(DRAFT_KEY);
-      // Pas de message
+      localStorage.removeItem(getDraftKey(me?.id));
     } catch (e) {
       console.error("Échec réinitialisation brouillon:", e);
-      // Pas de message d'erreur
     }
   };
 
@@ -285,11 +283,12 @@ export default function DemandeurDemandeCreate() {
 
   // Suppression de l'auto-save automatique - l'utilisateur enregistrera manuellement
 
-  /** Load draft on mount (sauf en mode édition) */
+  /** Load draft on mount / when user changes (chaque utilisateur a son propre brouillon, sauf en mode édition) */
   useEffect(() => {
     if (editDemandeId) return;
+    if (!me) return;
     loadDraft();
-  }, [loadDraft, editDemandeId]);
+  }, [loadDraft, editDemandeId, me]);
 
   /** Mode édition : charger la demande et préremplir le formulaire */
   useEffect(() => {
@@ -724,7 +723,7 @@ export default function DemandeurDemandeCreate() {
           paymentMethod: null,
           paymentCompleted: false,
         };
-        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+        localStorage.setItem(getDraftKey(me?.id), JSON.stringify(draft));
 
         // Réinitialiser les états de paiement dans le composant
         setPaymentMethod(null);
@@ -748,8 +747,8 @@ export default function DemandeurDemandeCreate() {
   /** ------- UI ------- */
   return (
     <PayPalScriptProvider options={getPayPalConfig()}>
-      <div className="container-fluid relative px-3" style={{ background: "#f9f9f9", minHeight: "100vh", paddingTop: 20, paddingBottom: 48 }}>
-        <div className="layout-specing" style={{ maxWidth: 800, margin: "0 auto" }}>
+      <div className="container-fluid relative px-2 px-sm-3 overflow-x-hidden" style={{ background: "#f9f9f9", minHeight: "100vh", paddingTop: 20, paddingBottom: 48 }}>
+        <div className="layout-specing" style={{ maxWidth: "min(100%, 1400px)", width: "100%", margin: "0 auto", paddingLeft: 8, paddingRight: 8 }}>
           <h1 style={{ fontFamily: "Arial, sans-serif", fontSize: 28, fontWeight: "normal", color: "#333", marginBottom: 20 }}>
             {t("demandeurDemandeCreate.pageTitle")}
           </h1>

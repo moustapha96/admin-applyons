@@ -7,6 +7,7 @@ import AuthNewPassword from "../pages/Authentication/auth-new-password";
 import AuthLockScreen from "../pages/Authentication/auth-lock-screen";
 import AuthNotAccess from "../pages/Authentication/auth-not-access";
 import AuthActivateAccount from "../pages/Authentication/auth-activated";
+import AuthSignupSuccess from "../pages/Authentication/auth-signup-success";
 import OrgInviteAccept from "../pages/Authentication/OrgInviteAccept";
 import ErrorPage from "../pages/error";
 
@@ -14,6 +15,7 @@ export const publicRoutes = (
   <>
     <Route path="/auth/login" element={<AuthLogin />} />
     <Route path="/auth/signup" element={<Signup />} />
+    <Route path="/auth/signup-success" element={<AuthSignupSuccess />} />
     <Route path="/registration" element={<Signup />} />
     <Route path="/auth/re-password" element={<AuthResetPassword />} />
     <Route path="/auth/new-password" element={<AuthNewPassword />} />

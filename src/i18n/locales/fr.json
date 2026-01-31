@@ -1275,7 +1275,8 @@
         },
         "errors": {
             "noOrgId": "ID d'organisation introuvable"
-        }
+        },
+        "empty": "Aucune notification"
     },
     "adminOrgNotifications": {
         "pageTitle": "Notifications de l'organisation",

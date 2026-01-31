@@ -1285,7 +1285,8 @@
         },
         "errors": {
             "noOrgId": "Organization ID not found"
-        }
+        },
+        "empty": "No notifications"
     },
     "adminOrgNotifications": {
         "pageTitle": "Organization Notifications",

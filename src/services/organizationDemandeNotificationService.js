@@ -66,15 +66,15 @@ const organizationDemandeNotificationService = {
    * GET /api/organization-demande-notifications/my-org
    * Params: asTarget, asNotified, viewedOnly, unviewedOnly, page, limit, sortBy, sortOrder
    */
-  listForCurrentOrg(params = {}) {
-    return axiosInstance.get(`${BASE}/my-org`, { params: normalizeParams(params) });
+  listForCurrentOrg(orgId, params = {}) {
+    return axiosInstance.get(`${BASE}/my-org/${orgId}`, { params: normalizeParams(params) });
   },
 
   /**
    * GET /api/organization-demande-notifications/my-org/stats
    */
-  statsForCurrentOrg() {
-    return axiosInstance.get(`${BASE}/my-org/stats`);
+  statsForCurrentOrg(orgId) {
+    return axiosInstance.get(`${BASE}/my-org/stats/${orgId}`);
   },
 
   /**

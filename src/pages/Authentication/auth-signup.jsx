@@ -344,6 +344,7 @@ export default function Signup() {
 
         await authService.register(userPayload);
         navigate("/auth/signup-success", { replace: true });
+        return;
       } else {
         const payload = {
           user: {
@@ -373,6 +374,7 @@ export default function Signup() {
         };
         await authService.createWithOrganization(payload);
         navigate("/auth/signup-success", { replace: true });
+        return;
       }
     } catch (err) {
       const data = err?.response?.data ?? err;

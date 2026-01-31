@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+"use client";
+
 import { useCallback, useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -15,6 +17,7 @@ import {
   Badge,
   Switch,
   Typography,
+  Empty,
 } from "antd";
 import {
   ReloadOutlined,
@@ -23,7 +26,7 @@ import {
   BellOutlined,
 } from "@ant-design/icons";
 import organizationDemandeNotificationService from "@/services/organizationDemandeNotificationService";
-import { useAuth } from "../../../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 
@@ -32,9 +35,9 @@ const { Text } = Typography;
 export default function OrganizationNotificationsList() {
   const { t } = useTranslation();
   const { user } = useAuth();
-
   const navigate = useNavigate();
   const orgId = user?.organization?.id;
+  console.log(orgId);
 
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -57,9 +60,10 @@ export default function OrganizationNotificationsList() {
     unviewed: 0,
     viewed: 0,
   });
+
   const fetchData = useCallback(async () => {
     if (!orgId) return;
-  
+
     setLoading(true);
     try {
       const params = {
@@ -69,22 +73,26 @@ export default function OrganizationNotificationsList() {
         asTarget: filters.asTarget ? "true" : undefined,
         asNotified: filters.asNotified ? "true" : undefined,
       };
-  
-      const res = await organizationDemandeNotificationService.listByOrg(orgId, params);
-  
-      const data = res?.data || {};
-      const notifications = Array.isArray(data.notifications) ? data.notifications : [];
-  
+
+      // my-org : le backend filtre par l'organisation du user connecté (JWT) → uniquement ses notifications
+      const res = await organizationDemandeNotificationService.listForCurrentOrg(orgId, params);
+
+      const data = res?.data ?? res ?? {};
+      const notifications = Array.isArray(data.notifications)
+        ? data.notifications
+        : Array.isArray(data)
+          ? data
+          : [];
+
       setRows(notifications);
-  
       setPagination((p) => ({
         ...p,
         total: data.pagination?.total ?? notifications.length,
       }));
     } catch (e) {
       message.error(
-        e?.response?.data?.message ||
-          e?.message ||
+        e?.response?.data?.message ??
+          e?.message ??
           t("orgNotifications.messages.loadError")
       );
     } finally {
@@ -100,30 +108,26 @@ export default function OrganizationNotificationsList() {
     t,
   ]);
 
-  
-
   const fetchStats = useCallback(async () => {
     if (!orgId) return;
-  
+
     setLoadingStats(true);
     try {
-      const res = await organizationDemandeNotificationService.stats(orgId);
-  
-      const statsData = res?.data?.stats || {};
-  
+      const res = await organizationDemandeNotificationService.statsForCurrentOrg(orgId);
+      const data = res?.data ?? res ?? {};
+      const statsData = data?.stats ?? data ?? {};
+
       setStats({
         total: statsData.total ?? 0,
         unviewed: statsData.unviewed ?? 0,
         viewed: statsData.viewed ?? 0,
       });
-    } catch (e) {
-      console.error("Error loading stats:", e);
-      // message.error(e?.response?.data?.message || e?.message || "Erreur stats");
+    } catch {
+      // Silencieux : les stats sont secondaires
     } finally {
       setLoadingStats(false);
     }
   }, [orgId]);
-  
 
   useEffect(() => {
     if (!orgId) return;
@@ -139,33 +143,36 @@ export default function OrganizationNotificationsList() {
     }));
   };
 
-  const handleMarkAsViewed = async (notificationId) => {
-    try {
-      await organizationDemandeNotificationService.markAsViewed(notificationId);
-      message.success(t("orgNotifications.messages.markedAsViewed"));
-      await Promise.all([fetchData(), fetchStats()]);
-    } catch (e) {
-      message.error(
-        e?.response?.data?.message ||
-          e?.message ||
-          t("orgNotifications.messages.markError")
-      );
-    }
-  };
+  const handleMarkAsViewed = useCallback(
+    async (notificationId) => {
+      try {
+        await organizationDemandeNotificationService.markAsViewed(notificationId);
+        message.success(t("orgNotifications.messages.markedAsViewed"));
+        await Promise.all([fetchData(), fetchStats()]);
+      } catch (e) {
+        message.error(
+          e?.response?.data?.message ??
+            e?.message ??
+            t("orgNotifications.messages.markError")
+        );
+      }
+    },
+    [fetchData, fetchStats, t]
+  );
 
-  const handleMarkAllAsViewed = async () => {
+  const handleMarkAllAsViewed = useCallback(async () => {
     try {
       await organizationDemandeNotificationService.markAllAsViewedForCurrentOrg();
       message.success(t("orgNotifications.messages.allMarkedAsViewed"));
       await Promise.all([fetchData(), fetchStats()]);
     } catch (e) {
       message.error(
-        e?.response?.data?.message ||
-          e?.message ||
+        e?.response?.data?.message ??
+          e?.message ??
           t("orgNotifications.messages.markAllError")
       );
     }
-  };
+  }, [fetchData, fetchStats, t]);
 
   const getNotificationTypeColor = (type) => {
     const colors = {
@@ -176,7 +183,7 @@ export default function OrganizationNotificationsList() {
       INVITATION_SENT: "cyan",
       DEFAULT: "default",
     };
-    return colors[type] || colors.DEFAULT;
+    return colors[type] ?? colors.DEFAULT;
   };
 
   const columns = useMemo(
@@ -200,6 +207,7 @@ export default function OrganizationNotificationsList() {
         title: t("orgNotifications.columns.type"),
         dataIndex: "type",
         key: "type",
+        width: 160,
         render: (type) => (
           <Tag color={getNotificationTypeColor(type)}>
             {t(`orgNotifications.types.${type || "DEFAULT"}`)}
@@ -209,21 +217,23 @@ export default function OrganizationNotificationsList() {
       {
         title: t("orgNotifications.columns.message"),
         key: "message",
+        ellipsis: true,
         render: (_, record) => (
           <Text strong={!record.viewed}>
-            {record.message || record.title || "—"}
+            {record.message ?? record.title ?? "—"}
           </Text>
         ),
       },
       {
         title: t("orgNotifications.columns.demande"),
         key: "demande",
+        width: 140,
         render: (_, record) => {
-          const demande = record.demandePartage || record.demande;
+          const demande = record.demandePartage ?? record.demande;
           if (demande?.id) {
             return (
               <Link to={`/organisations/demandes/${demande.id}/details`}>
-                {demande.code || demande.id}
+                {demande.code ?? demande.id}
               </Link>
             );
           }
@@ -234,12 +244,14 @@ export default function OrganizationNotificationsList() {
         title: t("orgNotifications.columns.createdAt"),
         dataIndex: "createdAt",
         key: "createdAt",
+        width: 150,
         render: (v) => (v ? dayjs(v).format("DD/MM/YYYY HH:mm") : "—"),
       },
       {
         title: t("orgNotifications.columns.actions"),
         key: "actions",
         width: 220,
+        fixed: "right",
         render: (_, record) => (
           <Space size="small" wrap>
             {!record.viewed && (
@@ -251,15 +263,14 @@ export default function OrganizationNotificationsList() {
                 {t("orgNotifications.buttons.markAsViewed")}
               </Button>
             )}
-
-            {(record.demandePartage?.id || record.demande?.id) && (
+            {(record.demandePartage?.id ?? record.demande?.id) && (
               <Button
                 size="small"
                 icon={<EyeOutlined />}
                 onClick={() =>
                   navigate(
                     `/organisations/demandes/${
-                      (record.demandePartage?.id || record.demande?.id)
+                      record.demandePartage?.id ?? record.demande?.id
                     }/details`
                   )
                 }
@@ -271,13 +282,13 @@ export default function OrganizationNotificationsList() {
         ),
       },
     ],
-    [t, navigate]
+    [t, navigate, handleMarkAsViewed]
   );
 
   if (!orgId) {
     return (
-      <div className="container-fluid relative px-3">
-        <div className="layout-specing">
+      <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+        <div className="layout-specing py-4 sm:py-6">
           <Card>
             <Text type="danger">{t("orgNotifications.errors.noOrgId")}</Text>
           </Card>
@@ -287,13 +298,14 @@ export default function OrganizationNotificationsList() {
   }
 
   return (
-    <div className="container-fluid relative px-3">
-      <div className="layout-specing">
-        <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">
+    <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
+      <div className="layout-specing py-4 sm:py-6">
+        <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+          <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">
             {t("orgNotifications.pageTitle")}
           </h5>
           <Breadcrumb
+            className="order-1 sm:order-2"
             items={[
               {
                 title: (
@@ -307,101 +319,91 @@ export default function OrganizationNotificationsList() {
           />
         </div>
 
-        {/* Statistiques */}
-        <Row gutter={[16, 16]} className="mb-6">
-          <Col xs={24} sm={8}>
-            <Card loading={loadingStats}>
+        {/* Stats */}
+        <Card className="mb-4 sm:mb-6" loading={loadingStats}>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={8}>
               <Statistic
                 title={t("orgNotifications.stats.total")}
                 value={stats.total}
                 prefix={<BellOutlined />}
-                valueStyle={{ color: "#1890ff" }}
               />
-            </Card>
-          </Col>
-          <Col xs={24} sm={8}>
-            <Card loading={loadingStats}>
+            </Col>
+            <Col xs={12} sm={8}>
               <Statistic
                 title={t("orgNotifications.stats.unviewed")}
                 value={stats.unviewed}
-                prefix={<Badge status="processing" />}
-                valueStyle={{ color: "#faad14" }}
+                valueStyle={{ color: "#1890ff" }}
               />
-            </Card>
-          </Col>
-          <Col xs={24} sm={8}>
-            <Card loading={loadingStats}>
+            </Col>
+            <Col xs={12} sm={8}>
               <Statistic
                 title={t("orgNotifications.stats.viewed")}
                 value={stats.viewed}
-                prefix={<CheckCircleOutlined />}
-                valueStyle={{ color: "#52c41a" }}
               />
-            </Card>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </Card>
 
         {/* Filtres */}
-        <Card className="mb-6">
-          <Space wrap>
-            <Switch
-              checked={filters.unviewedOnly}
-              onChange={(checked) => {
-                setFilters((f) => ({ ...f, unviewedOnly: checked }));
-                setPagination((p) => ({ ...p, current: 1 }));
-              }}
-              checkedChildren={t("orgNotifications.filters.unviewedOnly")}
-              unCheckedChildren={t("orgNotifications.filters.all")}
-            />
-
-            <Switch
-              checked={filters.asTarget}
-              onChange={(checked) => {
-                setFilters((f) => ({
-                  ...f,
-                  asTarget: checked,
-                  asNotified: checked ? false : f.asNotified,
-                }));
-                setPagination((p) => ({ ...p, current: 1 }));
-              }}
-              checkedChildren={t("orgNotifications.filters.asTarget")}
-              unCheckedChildren={t("orgNotifications.filters.allNotifications")}
-            />
-
-            <Switch
-              checked={filters.asNotified}
-              onChange={(checked) => {
-                setFilters((f) => ({
-                  ...f,
-                  asNotified: checked,
-                  asTarget: checked ? false : f.asTarget,
-                }));
-                setPagination((p) => ({ ...p, current: 1 }));
-              }}
-              checkedChildren={t("orgNotifications.filters.asNotified")}
-              unCheckedChildren={t("orgNotifications.filters.allNotifications")}
-            />
-
-            <Button
-              icon={<ReloadOutlined />}
-              onClick={() => {
-                fetchData();
-                fetchStats();
-              }}
-            >
-              {t("orgNotifications.buttons.refresh")}
-            </Button>
-
-            {stats.unviewed > 0 && (
-              <Button
-                type="primary"
-                icon={<CheckCircleOutlined />}
-                onClick={handleMarkAllAsViewed}
-              >
-                {t("orgNotifications.buttons.markAllAsViewed")}
-              </Button>
-            )}
-          </Space>
+        <Card className="mb-4 sm:mb-6">
+          <Row gutter={[12, 12]} align="middle">
+            <Col xs={24} sm={12} md={8}>
+              <Space>
+                <Switch
+                  checked={filters.unviewedOnly}
+                  onChange={(checked) =>
+                    setFilters((f) => ({ ...f, unviewedOnly: checked }))
+                  }
+                />
+                <span>{t("orgNotifications.filters.unviewedOnly")}</span>
+              </Space>
+            </Col>
+            <Col xs={24} sm={12} md={8}>
+              <Space>
+                <Switch
+                  checked={filters.asTarget}
+                  onChange={(checked) =>
+                    setFilters((f) => ({ ...f, asTarget: checked }))
+                  }
+                />
+                <span>{t("orgNotifications.filters.asTarget")}</span>
+              </Space>
+            </Col>
+            <Col xs={24} sm={12} md={8}>
+              <Space>
+                <Switch
+                  checked={filters.asNotified}
+                  onChange={(checked) =>
+                    setFilters((f) => ({ ...f, asNotified: checked }))
+                  }
+                />
+                <span>{t("orgNotifications.filters.asNotified")}</span>
+              </Space>
+            </Col>
+            <Col xs={24}>
+              <Space wrap>
+                <Button
+                  icon={<ReloadOutlined />}
+                  onClick={() => {
+                    fetchData();
+                    fetchStats();
+                  }}
+                >
+                  {t("orgNotifications.buttons.refresh")}
+                </Button>
+                {stats.unviewed > 0 && (
+                  <Button
+                    type="primary"
+                    icon={<CheckCircleOutlined />}
+                    onClick={handleMarkAllAsViewed}
+                  >
+                    {t("orgNotifications.buttons.markAllAsViewed")}
+                  </Button>
+                )}
+              </Space>
+            </Col>
+          </Row>
         </Card>
 
         {/* Table */}
@@ -412,14 +414,24 @@ export default function OrganizationNotificationsList() {
             dataSource={rows}
             columns={columns}
             pagination={{
-              ...pagination,
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              total: pagination.total,
               showSizeChanger: true,
               pageSizeOptions: ["5", "10", "20", "50"],
               showTotal: (total) =>
                 t("orgNotifications.pagination.total", { total }),
             }}
             onChange={onTableChange}
-            scroll={{ x: true }}
+            scroll={{ x: "max-content" }}
+            locale={{
+              emptyText: (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description={t("orgNotifications.empty")}
+                />
+              ),
+            }}
           />
         </Card>
       </div>
