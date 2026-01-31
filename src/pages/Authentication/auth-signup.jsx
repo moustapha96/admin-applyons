@@ -343,8 +343,7 @@ export default function Signup() {
         };
 
         await authService.register(userPayload);
-        toast.success(t('auth.signup.success'));
-        navigate("/auth/login", { replace: true });
+        navigate("/auth/signup-success", { replace: true });
       } else {
         const payload = {
           user: {
@@ -373,8 +372,7 @@ export default function Signup() {
           },
         };
         await authService.createWithOrganization(payload);
-        toast.success(t('auth.signup.success'));
-        navigate("/auth/login", { replace: true });
+        navigate("/auth/signup-success", { replace: true });
       }
     } catch (err) {
       const data = err?.response?.data ?? err;
@@ -607,23 +605,7 @@ export default function Signup() {
                       {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium mb-1">{t('auth.signup.phone')}</label>
-                      <div className="flex">
-                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                          {getDialCode}
-                        </span>
-                        <input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]"
-                          placeholder={t('auth.signup.placeholders.phone')}
-                          value={formData.phone}
-                          onChange={handleChange}
-                        />
-                      </div>
-                    </div>
+                   
 
                     <div>
                       <label className="block text-sm font-medium mb-1">{t('auth.signup.country')}</label>
@@ -640,6 +622,24 @@ export default function Signup() {
                           </option>
                         ))}
                       </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-1">{t('auth.signup.phone')}</label>
+                      <div className="flex">
+                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                          {getDialCode}
+                        </span>
+                        <input
+                          id="phone"
+                          name="phone"
+                          type="tel"
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]"
+                          placeholder={t('auth.signup.placeholders.phone')}
+                          value={formData.phone}
+                          onChange={handleChange}
+                        />
+                      </div>
                     </div>
 
                     <div className="md:col-span-2">

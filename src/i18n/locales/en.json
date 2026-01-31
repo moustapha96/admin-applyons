@@ -1100,6 +1100,35 @@
             "createError": "Error while creating"
         }
     },
+    "departmentEditInstitut": {
+        "pageTitle": "Edit department",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "departments": "Departments",
+            "edit": "Edit"
+        },
+        "fields": {
+            "name": "Name",
+            "code": "Code",
+            "description": "Description"
+        },
+        "placeholders": {
+            "name": "Department name",
+            "code": "Code (optional)",
+            "description": "Description (optional)"
+        },
+        "validators": {
+            "nameRequired": "Name is required"
+        },
+        "buttons": {
+            "save": "Save"
+        },
+        "messages": {
+            "loadError": "Failed to load department",
+            "updated": "Department updated",
+            "updateError": "Error while updating"
+        }
+    },
     "departmentDetailInstitut": {
         "pageTitle": "Department",
         "breadcrumbs": {
@@ -2160,6 +2189,11 @@
             "createAccountAndOrg": "Create account and organization",
             "creating": "Signing up...",
             "success": "Registration successful! Check your email to activate your account.",
+            "successModal": {
+                "title": "Registration successful",
+                "content": "Your registration has been recorded. Please check your email to verify and activate your account by clicking the link we sent you.",
+                "goToLogin": "Go to login"
+            },
             "errors": {
                 "firstNameRequired": "First name is required.",
                 "firstNameMinLength": "First name must be at least 2 characters.",
@@ -2272,6 +2306,14 @@
             "resendSuccess": "Activation link has been resent.",
             "resendError": "Unable to resend activation link.",
             "emailNotFound": "Email address not found. Please log in again.",
+            "footer": "© {{year}} Applyons. All rights reserved."
+        },
+        "signupSuccess": {
+            "title": "Registration successful",
+            "congratulations": "Your account has been created successfully.",
+            "message": "Please check your email to verify your account and activate it by clicking the link we sent you.",
+            "continue": "Continue",
+            "goToLogin": "Go to login",
             "footer": "© {{year}} Applyons. All rights reserved."
         },
         "orgInviteAccept": {
@@ -3553,6 +3595,70 @@
             "error": "Error sending data",
             "orgFetchError": "Error loading organizations"
         }
+    },
+    "adminDepartmentList": {
+        "pageTitle": "Departments",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "departments": "Departments"
+        },
+        "columns": {
+            "name": "Name",
+            "code": "Code",
+            "organization": "Organization",
+            "filieres": "Programs",
+            "actions": "Actions"
+        },
+        "actions": {
+            "details": "Details",
+            "edit": "Edit",
+            "filieres": "Programs"
+        },
+        "filters": {
+            "searchPlaceholder": "Search (name, code…)",
+            "organizationPlaceholder": "Organization"
+        },
+        "messages": {
+            "loadOrgsError": "Error loading organizations",
+            "loadError": "Load error"
+        },
+        "dash": "—"
+    },
+    "adminOrgDetails": {
+        "pageTitle": "Organization details",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizations"
+        },
+        "buttons": {
+            "back": "Back",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "deleteModal": {
+            "title": "Delete organization?",
+            "content": "Organization « {{name}} » will be deleted. This action is irreversible.",
+            "okText": "Delete",
+            "cancelText": "Cancel"
+        },
+        "messages": {
+            "deleteSuccess": "Organization deleted.",
+            "deleteError": "Unable to delete organization.",
+            "notFound": "Organization not found."
+        },
+        "usersTable": {
+            "user": "User",
+            "phone": "Phone",
+            "role": "Role",
+            "status": "Status",
+            "createdAt": "Created at",
+            "viewProfile": "View profile",
+            "view": "View",
+            "enabled": "Enabled",
+            "disabled": "Disabled"
+        },
+        "deleteTooltip": "Delete organization (no users associated)",
+        "dash": "—"
     },
     "adminUserDetails": {
         "title": "User Details",

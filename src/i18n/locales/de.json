@@ -1083,6 +1083,35 @@
             "createError": "Fehler beim Erstellen"
         }
     },
+    "departmentEditInstitut": {
+        "pageTitle": "Abteilung bearbeiten",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "departments": "Abteilungen",
+            "edit": "Bearbeiten"
+        },
+        "fields": {
+            "name": "Name",
+            "code": "Code",
+            "description": "Beschreibung"
+        },
+        "placeholders": {
+            "name": "Name der Abteilung",
+            "code": "Code (optional)",
+            "description": "Beschreibung (optional)"
+        },
+        "validators": {
+            "nameRequired": "Name ist erforderlich"
+        },
+        "buttons": {
+            "save": "Speichern"
+        },
+        "messages": {
+            "loadError": "Abteilung konnte nicht geladen werden",
+            "updated": "Abteilung aktualisiert",
+            "updateError": "Fehler beim Aktualisieren"
+        }
+    },
     "departmentDetailInstitut": {
         "pageTitle": "Abteilung",
         "breadcrumbs": {
@@ -2175,6 +2204,14 @@
             "resendSuccess": "Aktivierungslink wurde erneut gesendet.",
             "resendError": "Aktivierungslink konnte nicht erneut gesendet werden.",
             "emailNotFound": "E-Mail-Adresse nicht gefunden. Bitte melden Sie sich erneut an.",
+            "footer": "© {{year}} Applyons. Alle Rechte vorbehalten."
+        },
+        "signupSuccess": {
+            "title": "Registrierung erfolgreich",
+            "congratulations": "Ihr Konto wurde erfolgreich erstellt.",
+            "message": "Bitte überprüfen Sie Ihre E-Mail, um Ihr Konto zu verifizieren und zu aktivieren, indem Sie auf den gesendeten Link klicken.",
+            "continue": "Weiter",
+            "goToLogin": "Zur Anmeldung",
             "footer": "© {{year}} Applyons. Alle Rechte vorbehalten."
         },
         "orgInviteAccept": {
@@ -3297,8 +3334,73 @@
         },
         "messages": {
             "success": "Benutzer erfolgreich erstellt",
-            "error": "Fehler beim Senden der Daten"
+            "error": "Fehler beim Senden der Daten",
+            "orgFetchError": "Fehler beim Laden der Organisationen"
         }
+    },
+    "adminDepartmentList": {
+        "pageTitle": "Abteilungen",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "departments": "Abteilungen"
+        },
+        "columns": {
+            "name": "Name",
+            "code": "Code",
+            "organization": "Organisation",
+            "filieres": "Studiengänge",
+            "actions": "Aktionen"
+        },
+        "actions": {
+            "details": "Details",
+            "edit": "Bearbeiten",
+            "filieres": "Studiengänge"
+        },
+        "filters": {
+            "searchPlaceholder": "Suche (Name, Code…)",
+            "organizationPlaceholder": "Organisation"
+        },
+        "messages": {
+            "loadOrgsError": "Fehler beim Laden der Organisationen",
+            "loadError": "Ladefehler"
+        },
+        "dash": "—"
+    },
+    "adminOrgDetails": {
+        "pageTitle": "Organisationsdetails",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organisationen"
+        },
+        "buttons": {
+            "back": "Zurück",
+            "edit": "Bearbeiten",
+            "delete": "Löschen"
+        },
+        "deleteModal": {
+            "title": "Organisation löschen?",
+            "content": "Die Organisation « {{name}} » wird gelöscht. Diese Aktion ist unwiderruflich.",
+            "okText": "Löschen",
+            "cancelText": "Abbrechen"
+        },
+        "messages": {
+            "deleteSuccess": "Organisation gelöscht.",
+            "deleteError": "Organisation konnte nicht gelöscht werden.",
+            "notFound": "Organisation nicht gefunden."
+        },
+        "usersTable": {
+            "user": "Benutzer",
+            "phone": "Telefon",
+            "role": "Rolle",
+            "status": "Status",
+            "createdAt": "Erstellt am",
+            "viewProfile": "Profil anzeigen",
+            "view": "Anzeigen",
+            "enabled": "Aktiviert",
+            "disabled": "Deaktiviert"
+        },
+        "deleteTooltip": "Organisation löschen (keine zugeordneten Benutzer)",
+        "dash": "—"
     },
     "adminUserDetails": {
         "title": "Benutzerdetails",

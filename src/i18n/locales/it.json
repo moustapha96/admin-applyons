@@ -1086,6 +1086,35 @@
             "createError": "Errore durante la creazione"
         }
     },
+    "departmentEditInstitut": {
+        "pageTitle": "Modifica dipartimento",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "departments": "Dipartimenti",
+            "edit": "Modifica"
+        },
+        "fields": {
+            "name": "Nome",
+            "code": "Codice",
+            "description": "Descrizione"
+        },
+        "placeholders": {
+            "name": "Nome del dipartimento",
+            "code": "Codice (opzionale)",
+            "description": "Descrizione (opzionale)"
+        },
+        "validators": {
+            "nameRequired": "Il nome è obbligatorio"
+        },
+        "buttons": {
+            "save": "Salva"
+        },
+        "messages": {
+            "loadError": "Impossibile caricare il dipartimento",
+            "updated": "Dipartimento aggiornato",
+            "updateError": "Errore durante l'aggiornamento"
+        }
+    },
     "departmentDetailInstitut": {
         "pageTitle": "Dipartimento",
         "breadcrumbs": {
@@ -2178,6 +2207,14 @@
             "resendSuccess": "Link di attivazione inviato di nuovo.",
             "resendError": "Impossibile inviare di nuovo il link di attivazione.",
             "emailNotFound": "Indirizzo email non trovato. Effettua nuovamente l'accesso.",
+            "footer": "© {{year}} Applyons. Tutti i diritti riservati."
+        },
+        "signupSuccess": {
+            "title": "Registrazione completata",
+            "congratulations": "Il tuo account è stato creato con successo.",
+            "message": "Controlla la tua email per verificare e attivare il tuo account cliccando sul link ricevuto.",
+            "continue": "Continua",
+            "goToLogin": "Vai al login",
             "footer": "© {{year}} Applyons. Tutti i diritti riservati."
         },
         "orgInviteAccept": {
@@ -3301,8 +3338,73 @@
         },
         "messages": {
             "success": "Utente creato con successo",
-            "error": "Errore nell'invio dati"
+            "error": "Errore nell'invio dati",
+            "orgFetchError": "Errore caricamento organizzazioni"
         }
+    },
+    "adminDepartmentList": {
+        "pageTitle": "Dipartimenti",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "departments": "Dipartimenti"
+        },
+        "columns": {
+            "name": "Nome",
+            "code": "Codice",
+            "organization": "Organizzazione",
+            "filieres": "Indirizzi",
+            "actions": "Azioni"
+        },
+        "actions": {
+            "details": "Dettagli",
+            "edit": "Modifica",
+            "filieres": "Indirizzi"
+        },
+        "filters": {
+            "searchPlaceholder": "Cerca (nome, codice…)",
+            "organizationPlaceholder": "Organizzazione"
+        },
+        "messages": {
+            "loadOrgsError": "Errore caricamento organizzazioni",
+            "loadError": "Errore di caricamento"
+        },
+        "dash": "—"
+    },
+    "adminOrgDetails": {
+        "pageTitle": "Dettagli organizzazione",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organizations": "Organizzazioni"
+        },
+        "buttons": {
+            "back": "Indietro",
+            "edit": "Modifica",
+            "delete": "Elimina"
+        },
+        "deleteModal": {
+            "title": "Eliminare l'organizzazione?",
+            "content": "L'organizzazione « {{name}} » sarà eliminata. Questa azione è irreversibile.",
+            "okText": "Elimina",
+            "cancelText": "Annulla"
+        },
+        "messages": {
+            "deleteSuccess": "Organizzazione eliminata.",
+            "deleteError": "Impossibile eliminare l'organizzazione.",
+            "notFound": "Organizzazione non trovata."
+        },
+        "usersTable": {
+            "user": "Utente",
+            "phone": "Telefono",
+            "role": "Ruolo",
+            "status": "Stato",
+            "createdAt": "Creato il",
+            "viewProfile": "Vedi profilo",
+            "view": "Vedi",
+            "enabled": "Attivato",
+            "disabled": "Disattivato"
+        },
+        "deleteTooltip": "Elimina organizzazione (nessun utente associato)",
+        "dash": "—"
     },
     "adminUserDetails": {
         "title": "Dettagli utente",

@@ -1084,6 +1084,35 @@
             "createError": "创建时出错"
         }
     },
+    "departmentEditInstitut": {
+        "pageTitle": "编辑部门",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "departments": "院系",
+            "edit": "编辑"
+        },
+        "fields": {
+            "name": "名称",
+            "code": "代码",
+            "description": "描述"
+        },
+        "placeholders": {
+            "name": "部门名称",
+            "code": "代码（可选）",
+            "description": "描述（可选）"
+        },
+        "validators": {
+            "nameRequired": "名称为必填项"
+        },
+        "buttons": {
+            "save": "保存"
+        },
+        "messages": {
+            "loadError": "无法加载部门",
+            "updated": "部门已更新",
+            "updateError": "更新时出错"
+        }
+    },
     "departmentDetailInstitut": {
         "pageTitle": "院系",
         "breadcrumbs": {
@@ -2176,6 +2205,14 @@
             "resendSuccess": "已重新发送激活链接。",
             "resendError": "无法重新发送激活链接。",
             "emailNotFound": "未找到电子邮件地址。请重新登录。",
+            "footer": "© {{year}} Applyons. 保留所有权利。"
+        },
+        "signupSuccess": {
+            "title": "注册成功",
+            "congratulations": "您的账户已成功创建。",
+            "message": "请查收您的邮件，点击我们发送的链接以验证并激活您的账户。",
+            "continue": "继续",
+            "goToLogin": "前往登录",
             "footer": "© {{year}} Applyons. 保留所有权利。"
         },
         "orgInviteAccept": {
@@ -3298,8 +3335,73 @@
         },
         "messages": {
             "success": "用户创建成功",
-            "error": "发送数据错误"
+            "error": "发送数据错误",
+            "orgFetchError": "加载机构失败"
         }
+    },
+    "adminDepartmentList": {
+        "pageTitle": "部门",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "departments": "部门"
+        },
+        "columns": {
+            "name": "名称",
+            "code": "代码",
+            "organization": "机构",
+            "filieres": "专业",
+            "actions": "操作"
+        },
+        "actions": {
+            "details": "详情",
+            "edit": "编辑",
+            "filieres": "专业"
+        },
+        "filters": {
+            "searchPlaceholder": "搜索（名称、代码…）",
+            "organizationPlaceholder": "机构"
+        },
+        "messages": {
+            "loadOrgsError": "加载机构失败",
+            "loadError": "加载错误"
+        },
+        "dash": "—"
+    },
+    "adminOrgDetails": {
+        "pageTitle": "机构详情",
+        "breadcrumb": {
+            "dashboard": "仪表盘",
+            "organizations": "机构"
+        },
+        "buttons": {
+            "back": "返回",
+            "edit": "编辑",
+            "delete": "删除"
+        },
+        "deleteModal": {
+            "title": "删除机构？",
+            "content": "机构「{{name}}」将被删除。此操作不可逆。",
+            "okText": "删除",
+            "cancelText": "取消"
+        },
+        "messages": {
+            "deleteSuccess": "机构已删除。",
+            "deleteError": "无法删除机构。",
+            "notFound": "未找到机构。"
+        },
+        "usersTable": {
+            "user": "用户",
+            "phone": "电话",
+            "role": "角色",
+            "status": "状态",
+            "createdAt": "创建时间",
+            "viewProfile": "查看资料",
+            "view": "查看",
+            "enabled": "已启用",
+            "disabled": "已禁用"
+        },
+        "deleteTooltip": "删除机构（无关联用户）",
+        "dash": "—"
     },
     "adminUserDetails": {
         "title": "用户详情",

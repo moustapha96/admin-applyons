@@ -1090,6 +1090,35 @@
             "createError": "Erreur lors de la création"
         }
     },
+    "departmentEditInstitut": {
+        "pageTitle": "Modifier le département",
+        "breadcrumbs": {
+            "dashboard": "Tableau de bord",
+            "departments": "Départements",
+            "edit": "Modifier"
+        },
+        "fields": {
+            "name": "Nom",
+            "code": "Code",
+            "description": "Description"
+        },
+        "placeholders": {
+            "name": "Nom du département",
+            "code": "Code (optionnel)",
+            "description": "Description (optionnel)"
+        },
+        "validators": {
+            "nameRequired": "Le nom est obligatoire"
+        },
+        "buttons": {
+            "save": "Enregistrer"
+        },
+        "messages": {
+            "loadError": "Impossible de charger le département",
+            "updated": "Département mis à jour",
+            "updateError": "Erreur lors de la mise à jour"
+        }
+    },
     "departmentDetailInstitut": {
         "pageTitle": "Département",
         "breadcrumbs": {
@@ -2150,6 +2179,11 @@
             "createAccountAndOrg": "Créer le compte et l'organisation",
             "creating": "Inscription en cours...",
             "success": "Inscription réussie ! Vérifiez votre email pour activer le compte.",
+            "successModal": {
+                "title": "Inscription réussie",
+                "content": "Votre inscription a bien été enregistrée. Consultez votre boîte mail pour vérifier votre compte et activer celui-ci en cliquant sur le lien reçu.",
+                "goToLogin": "Aller à la connexion"
+            },
             "errors": {
                 "firstNameRequired": "Le prénom est obligatoire.",
                 "firstNameMinLength": "Le prénom doit contenir au moins 2 caractères.",
@@ -2282,11 +2316,12 @@
             "footer": "© {{year}} Applyons. Tous droits réservés."
         },
         "signupSuccess": {
-            "title": "Succès",
-            "congratulations": "Félicitations ! 🎉",
-            "message": "Votre compte a été créé avec succès. Profitez de votre parcours. Merci",
+            "title": "Inscription réussie",
+            "congratulations": "Votre compte a été créé avec succès.",
+            "message": "Consultez votre boîte mail pour vérifier votre compte et l'activer en cliquant sur le lien reçu.",
             "continue": "Continuer",
-            "footer": "© 2026 Applyons. Tous droits réservés."
+            "goToLogin": "Aller à la connexion",
+            "footer": "© {{year}} Applyons. Tous droits réservés."
         },
         "orgInviteAccept": {
             "loading": "Chargement de l'invitation...",
@@ -3568,6 +3603,70 @@
             "error": "Erreur lors de l'envoi des données",
             "orgFetchError": "Erreur lors de la récupération des organisations"
         }
+    },
+    "adminDepartmentList": {
+        "pageTitle": "Départements",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "departments": "Départements"
+        },
+        "columns": {
+            "name": "Nom",
+            "code": "Code",
+            "organization": "Organisation",
+            "filieres": "Filières",
+            "actions": "Actions"
+        },
+        "actions": {
+            "details": "Détails",
+            "edit": "Modifier",
+            "filieres": "Filières"
+        },
+        "filters": {
+            "searchPlaceholder": "Recherche (nom, code…)",
+            "organizationPlaceholder": "Organisation"
+        },
+        "messages": {
+            "loadOrgsError": "Erreur chargement organisations",
+            "loadError": "Erreur de chargement"
+        },
+        "dash": "—"
+    },
+    "adminOrgDetails": {
+        "pageTitle": "Détails de l'organisation",
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "organizations": "Organisations"
+        },
+        "buttons": {
+            "back": "Retour",
+            "edit": "Modifier",
+            "delete": "Supprimer"
+        },
+        "deleteModal": {
+            "title": "Supprimer l'organisation ?",
+            "content": "L'organisation « {{name}} » sera supprimée. Cette action est irréversible.",
+            "okText": "Supprimer",
+            "cancelText": "Annuler"
+        },
+        "messages": {
+            "deleteSuccess": "Organisation supprimée.",
+            "deleteError": "Impossible de supprimer l'organisation.",
+            "notFound": "Organisation non trouvée."
+        },
+        "usersTable": {
+            "user": "Utilisateur",
+            "phone": "Téléphone",
+            "role": "Rôle",
+            "status": "Statut",
+            "createdAt": "Créé le",
+            "viewProfile": "Voir le profil",
+            "view": "Voir",
+            "enabled": "Activé",
+            "disabled": "Désactivé"
+        },
+        "deleteTooltip": "Supprimer l'organisation (aucun utilisateur associé)",
+        "dash": "—"
     },
     "adminUserDetails": {
         "title": "Détails de l'utilisateur",

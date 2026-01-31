@@ -87,6 +87,26 @@ const toISO = (d) => {
 const nullIfEmpty = (v) => (v === "" || v === undefined ? null : v);
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || "").trim());
 
+/** Valeurs initiales récupérables depuis le profil utilisateur connecté (nouvelle candidature) */
+const getInitialValuesFromUser = (me, countriesList = []) => {
+  const initial = {};
+  if (!me) return initial;
+  const dobRaw = me.dateOfBirth || me.birthDate;
+  if (dobRaw) {
+    const d = reviveDate(dobRaw);
+    if (d) initial.dob = d;
+  }
+  const countryRaw = me.country;
+  if (countryRaw && Array.isArray(countriesList) && countriesList.length > 0) {
+    const byCode = countriesList.find((c) => (c.code || "").toUpperCase() === String(countryRaw).toUpperCase());
+    const byName = countriesList.find((c) => (c.name || "").toLowerCase() === String(countryRaw).toLowerCase());
+    if (byCode?.name) initial.citizenship = byCode.name;
+    else if (byName?.name) initial.citizenship = byName.name;
+    else if (typeof countryRaw === "string" && countryRaw.trim()) initial.citizenship = countryRaw.trim();
+  }
+  return initial;
+};
+
 // Helper pour ajouter l'astérisque rouge aux champs obligatoires
 const RequiredLabel = ({ children }) => (
   <span>
@@ -168,7 +188,24 @@ export default function DemandeurDemandeCreate() {
       setIsLoadingDraft(true);
       const draft = localStorage.getItem(DRAFT_KEY);
       const parsed = draft ? JSON.parse(draft) : null;
-      const values = { ...(parsed?.values || {}) };
+
+      if (!draft || !parsed) {
+        // Nouvelle candidature : formulaire vide sauf champs récupérables du profil utilisateur
+        form.resetFields();
+        const fromUser = getInitialValuesFromUser(me, countries);
+        if (Object.keys(fromUser).length > 0) {
+          form.setFieldsValue(fromUser);
+        }
+        setCurrent(0);
+        setInvites([]);
+        setSelectedNotifyOrgIds([]);
+        setPaymentMethod(null);
+        setPaymentCompleted(false);
+        setIsLoadingDraft(false);
+        return;
+      }
+
+      const values = { ...(parsed.values || {}) };
       values.dob = reviveDate(values.dob);
       values.graduationDate = reviveDate(values.graduationDate);
 
@@ -177,19 +214,8 @@ export default function DemandeurDemandeCreate() {
         const userDob = me.dateOfBirth || me.birthDate;
         if (userDob) {
           const dobValue = reviveDate(userDob);
-          if (dobValue) {
-            values.dob = dobValue;
-          }
+          if (dobValue) values.dob = dobValue;
         }
-      }
-
-      if (!draft) {
-        // Pas de brouillon, mais on peut quand même initialiser la date de naissance
-        if (values.dob) {
-          form.setFieldsValue({ dob: values.dob });
-        }
-        setIsLoadingDraft(false);
-        return;
       }
 
       // Charger d'abord targetOrgId pour que les filières soient filtrées
@@ -238,12 +264,10 @@ export default function DemandeurDemandeCreate() {
     }
   };
 
-  /** Reset form completely (dev mode only) */
+  /** Reset form completely (vide sauf champs récupérables du profil utilisateur) */
   const resetForm = () => {
     try {
-      // Réinitialiser le formulaire
       form.resetFields();
-      // Réinitialiser l'état
       setCurrent(0);
       setInvites([]);
       setSelectedNotifyOrgIds([]);
@@ -251,19 +275,9 @@ export default function DemandeurDemandeCreate() {
       setPaymentCompleted(false);
       setLastPaymentMeta(null);
       setClientSecret("");
-      // Supprimer le brouillon
       resetDraft();
-      // Réinitialiser la date de naissance avec celle de l'utilisateur
-      if (me && (me.dateOfBirth || me.birthDate)) {
-        const userDob = me.dateOfBirth || me.birthDate;
-        if (userDob) {
-          const dobValue = reviveDate(userDob);
-          if (dobValue) {
-            form.setFieldsValue({ dob: dobValue });
-          }
-        }
-      }
-      console.log("Formulaire réinitialisé");
+      const fromUser = getInitialValuesFromUser(me, countries);
+      if (Object.keys(fromUser).length > 0) form.setFieldsValue(fromUser);
     } catch (e) {
       console.error("Erreur lors de la réinitialisation:", e);
     }
@@ -338,22 +352,22 @@ export default function DemandeurDemandeCreate() {
     return () => { cancelled = true; };
   }, [editDemandeId, form, t]);
 
-  /** Initialize date of birth from user profile if not already set */
+  /** Compléter les champs récupérables du profil utilisateur si pas encore renseignés (ex: me chargé après loadDraft) */
   useEffect(() => {
-    if (me && (me.dateOfBirth || me.birthDate)) {
+    if (!me || editDemandeId) return;
+    const fromUser = getInitialValuesFromUser(me, countries);
+    if (Object.keys(fromUser).length === 0) return;
+    const updates = {};
+    if (fromUser.dob) {
       const currentDob = form.getFieldValue("dob");
-      // Si le champ n'a pas encore de valeur, initialiser avec la date de l'utilisateur
-      if (!currentDob) {
-        const userDob = me.dateOfBirth || me.birthDate;
-        if (userDob) {
-          const dobValue = reviveDate(userDob);
-          if (dobValue) {
-            form.setFieldsValue({ dob: dobValue });
-          }
-        }
-      }
+      if (!currentDob) updates.dob = fromUser.dob;
     }
-  }, [me, form]);
+    if (fromUser.citizenship) {
+      const currentCitizenship = form.getFieldValue("citizenship");
+      if (!currentCitizenship) updates.citizenship = fromUser.citizenship;
+    }
+    if (Object.keys(updates).length > 0) form.setFieldsValue(updates);
+  }, [me, form, editDemandeId]);
 
   /** Load organizations */
   useEffect(() => {

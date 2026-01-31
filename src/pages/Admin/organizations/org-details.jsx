@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Breadcrumb,
   Card,
@@ -89,6 +90,7 @@ const defaultUsersState = {
 };
 
 const OrganizationDetail = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const breakpoint = Grid.useBreakpoint();
@@ -174,19 +176,19 @@ const OrganizationDetail = () => {
   const handleDeleteOrganization = () => {
     if (!organization?.id || !canDeleteOrganization) return;
     Modal.confirm({
-      title: "Supprimer l'organisation ?",
-      content: `L'organisation « ${organization.name} » sera supprimée. Cette action est irréversible.`,
-      okText: "Supprimer",
+      title: t("adminOrgDetails.deleteModal.title"),
+      content: t("adminOrgDetails.deleteModal.content", { name: organization.name }),
+      okText: t("adminOrgDetails.deleteModal.okText"),
       okType: "danger",
-      cancelText: "Annuler",
+      cancelText: t("adminOrgDetails.deleteModal.cancelText"),
       onOk: async () => {
         setDeleteLoading(true);
         try {
           await organizationService.softDelete(organization.id);
-          message.success("Organisation supprimée.");
+          message.success(t("adminOrgDetails.messages.deleteSuccess"));
           navigate("/admin/organisations", { replace: true });
         } catch (err) {
-          message.error(err?.response?.data?.message || "Impossible de supprimer l'organisation.");
+          message.error(err?.response?.data?.message || t("adminOrgDetails.messages.deleteError"));
         } finally {
           setDeleteLoading(false);
         }
@@ -194,11 +196,12 @@ const OrganizationDetail = () => {
     });
   };
 
+  const dash = t("adminOrgDetails.dash");
   // Table columns
   const userColumns = useMemo(
     () => [
       {
-        title: "Utilisateur",
+        title: t("adminOrgDetails.usersTable.user"),
         dataIndex: "username",
         key: "username",
         sorter: true,
@@ -206,43 +209,43 @@ const OrganizationDetail = () => {
           <Space>
             <Avatar icon={<UserOutlined />} />
             <div>
-              <div className="font-medium">{text || "—"}</div>
+              <div className="font-medium">{text || dash}</div>
               <div className="text-xs text-gray-500">{record.email}</div>
             </div>
           </Space>
         ),
       },
       {
-        title: "Téléphone",
+        title: t("adminOrgDetails.usersTable.phone"),
         dataIndex: "phone",
         key: "phone",
-        render: (v) => v || "—",
+        render: (v) => v || dash,
       },
       {
-        title: "Rôle",
+        title: t("adminOrgDetails.usersTable.role"),
         dataIndex: "role",
         key: "role",
         sorter: true,
         render: (role) => <Tag color={roleTagColor(role)}>{role}</Tag>,
       },
       {
-        title: "Statut",
+        title: t("adminOrgDetails.usersTable.status"),
         dataIndex: "enabled",
         key: "enabled",
         sorter: true,
         render: (enabled) =>
           enabled ? (
-            <Badge status="success" text="Activé" />
+            <Badge status="success" text={t("adminOrgDetails.usersTable.enabled")} />
           ) : (
-            <Badge status="default" text="Désactivé" />
+            <Badge status="default" text={t("adminOrgDetails.usersTable.disabled")} />
           ),
       },
       {
-        title: "Créé le",
+        title: t("adminOrgDetails.usersTable.createdAt"),
         dataIndex: "createdAt",
         key: "createdAt",
         sorter: true,
-        render: (d) => (d ? new Date(d).toLocaleString() : "—"),
+        render: (d) => (d ? new Date(d).toLocaleString() : dash),
         defaultSortOrder: usersState.sortBy === "createdAt" ? (usersState.sortOrder === "asc" ? "ascend" : "descend") : undefined,
       },
       {
@@ -251,9 +254,9 @@ const OrganizationDetail = () => {
         width: 80,
         render: (_, record) => (
           <Space>
-            <Tooltip title="Voir le profil">
+            <Tooltip title={t("adminOrgDetails.usersTable.viewProfile")}>
               <Button size="small" onClick={() => navigate(`/admin/users/${record.id}/details`)}>
-                Voir
+                {t("adminOrgDetails.usersTable.view")}
               </Button>
             </Tooltip>
           </Space>
@@ -261,7 +264,7 @@ const OrganizationDetail = () => {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [navigate, usersState.sortBy, usersState.sortOrder]
+    [navigate, usersState.sortBy, usersState.sortOrder, t, dash]
   );
 
   // Handlers UI
@@ -300,7 +303,7 @@ const OrganizationDetail = () => {
 
   if (!organization) {
     return (
-      <div className="container-fluid px-2 sm:px-3 py-4">Organisation non trouvée.</div>
+      <div className="container-fluid px-2 sm:px-3 py-4">{t("adminOrgDetails.messages.notFound")}</div>
     );
   }
 
@@ -308,28 +311,28 @@ const OrganizationDetail = () => {
     <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
       <div className="layout-specing py-4 sm:py-6">
         <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
-          <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">Détails de l'organisation</h5>
+          <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">{t("adminOrgDetails.pageTitle")}</h5>
           <Breadcrumb
             className="order-1 sm:order-2"
             items={[
-              { title: <Link to="/admin/dashboard">Dashboard</Link> },
-              { title: <Link to="/admin/organisations">Organisations</Link> },
+              { title: <Link to="/admin/dashboard">{t("adminOrgDetails.breadcrumb.dashboard")}</Link> },
+              { title: <Link to="/admin/organisations">{t("adminOrgDetails.breadcrumb.organizations")}</Link> },
               { title: <span className="break-words">{organization.name}</span> },
             ]}
           />
         </div>
 
         <div className="flex flex-wrap justify-end items-center gap-2 mb-4 sm:mb-6">
-          <Button onClick={() => navigate(-1)} className="w-full sm:w-auto">Retour</Button>
+          <Button onClick={() => navigate(-1)} className="w-full sm:w-auto">{t("adminOrgDetails.buttons.back")}</Button>
           <Button
             type="primary"
             onClick={() => navigate(`/admin/organisations/${organization.id}/edit`)}
             className="w-full sm:w-auto"
           >
-            Modifier
+            {t("adminOrgDetails.buttons.edit")}
           </Button>
           {canDeleteOrganization && (
-            <Tooltip title="Supprimer l'organisation (aucun utilisateur associé)">
+            <Tooltip title={t("adminOrgDetails.deleteTooltip")}>
               <Button
                 danger
                 icon={<DeleteOutlined />}
@@ -337,7 +340,7 @@ const OrganizationDetail = () => {
                 onClick={handleDeleteOrganization}
                 className="w-full sm:w-auto"
               >
-                Supprimer
+                {t("adminOrgDetails.buttons.delete")}
               </Button>
             </Tooltip>
           )}

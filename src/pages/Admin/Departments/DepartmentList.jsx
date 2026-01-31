@@ -4,10 +4,11 @@ import { Breadcrumb, Button, Card, Input, Select, Space, Table, Tag, Typography,
 import { PlusOutlined, ReloadOutlined, DownloadOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import departmentService from "@/services/departmentService";
-import organizationService from "@/services/organizationService"; // ✅ chemin corrigé
-import { useOrgScope } from "@/hooks/useOrgScope"; // si indispo, remplace par un hook auth + orgId
+import organizationService from "@/services/organizationService";
+import { useOrgScope } from "@/hooks/useOrgScope";
 
 const { Title } = Typography;
 
@@ -15,6 +16,7 @@ const { Title } = Typography;
 const BASE_PATH = "/admin/departments";
 
 export default function DepartmentList() {
+  const { t } = useTranslation();
   const { isAdmin, organizationId: scopedOrgId } = useOrgScope?.() ?? { isAdmin: true, organizationId: undefined };
 
   const [rows, setRows] = useState([]);
@@ -52,16 +54,15 @@ export default function DepartmentList() {
           search: f.search || undefined,
           organizationId: f.organizationId || undefined,
         });
-        console.log(res);
         setRows(res?.departments ?? []);
         setPag({ current: page, pageSize, total: res?.pagination?.total ?? 0 });
       } catch (e) {
-        message.error(e?.response?.data?.message || "Erreur de chargement");
+        message.error(e?.response?.data?.message || t("adminDepartmentList.messages.loadError"));
       } finally {
         setLoading(false);
       }
     },
-    [pag.current, pag.pageSize, sorter, filters]
+    [pag.current, pag.pageSize, sorter, filters, t]
   );
 
   useEffect(() => { fetchOrgs(); }, [fetchOrgs]);
@@ -74,47 +75,46 @@ export default function DepartmentList() {
   const columns = useMemo(
     () => [
       {
-        title: "Nom",
+        title: t("adminDepartmentList.columns.name"),
         dataIndex: "name",
         sorter: true,
         render: (v, r) => r?.id ? <Link to={`${BASE_PATH}/${r.id}`}>{v}</Link> : v,
       },
-      { title: "Code", dataIndex: "code", sorter: true, width: 140, render: (v) => v || "—" },
+      { title: t("adminDepartmentList.columns.code"), dataIndex: "code", sorter: true, width: 140, render: (v) => v || t("adminDepartmentList.dash") },
       {
-        title: "Organisation",
+        title: t("adminDepartmentList.columns.organization"),
         dataIndex: ["organization", "name"],
-        render: (_, r) => r?.organization?.name || "—",
+        render: (_, r) => r?.organization?.name || t("adminDepartmentList.dash"),
       },
       {
-        title: "Filières",
+        title: t("adminDepartmentList.columns.filieres"),
         dataIndex: "filiereCount",
         width: 120,
         render: (v) => <Tag color="blue">{v ?? 0}</Tag>,
       },
-      
       {
-        title: "Actions",
+        title: t("adminDepartmentList.columns.actions"),
         key: "actions",
         width: 280,
         render: (_, r) => {
-          if (!r?.id) return "—";
+          if (!r?.id) return t("adminDepartmentList.dash");
           return (
             <Space wrap>
               <Link to={`${BASE_PATH}/${r.id}`}>
-                <Button size="small">Détails</Button>
+                <Button size="small">{t("adminDepartmentList.actions.details")}</Button>
               </Link>
               <Link to={`${BASE_PATH}/${r.id}/edit`}>
-                <Button size="small">Modifier</Button>
+                <Button size="small">{t("adminDepartmentList.actions.edit")}</Button>
               </Link>
               <Link to={`${BASE_PATH}/${r.id}/filieres`}>
-                <Button size="small">Filières</Button>
+                <Button size="small">{t("adminDepartmentList.actions.filieres")}</Button>
               </Link>
             </Space>
           );
         },
       },
     ],
-    []
+    [t]
   );
 
   const onTableChange = (pagination, _filters, sort) => {
@@ -132,11 +132,11 @@ export default function DepartmentList() {
      <div className="container-fluid relative px-3">
       <div className="layout-specing">
         <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Départements</h5>
+          <h5 className="text-lg font-semibold">{t("adminDepartmentList.pageTitle")}</h5>
           <Breadcrumb
             items={[
-              { title: <Link to="/admin/dashboard">Dashboard</Link> },
-              { title: "Départements" },
+              { title: <Link to="/admin/dashboard">{t("adminDepartmentList.breadcrumb.dashboard")}</Link> },
+              { title: t("adminDepartmentList.breadcrumb.departments") },
             ]}
           />
         </div>
@@ -145,11 +145,11 @@ export default function DepartmentList() {
     <Card>
       <Space className="mb-4" style={{ width: "100%", justifyContent: "space-between" }}>
         <Title level={4} style={{ margin: 0 }}>
-          Départements
+          {t("adminDepartmentList.pageTitle")}
         </Title>
         <Space wrap>
           <Input.Search
-            placeholder="Recherche (nom, code…)"
+            placeholder={t("adminDepartmentList.filters.searchPlaceholder")}
             allowClear
             onSearch={(v) => setFilters((s) => ({ ...s, search: v }))}
             onChange={(e) => setFilters((s) => ({ ...s, search: e.target.value }))}
@@ -158,7 +158,7 @@ export default function DepartmentList() {
           {isAdmin && (
             <Select
               allowClear
-              placeholder="Organisation"
+              placeholder={t("adminDepartmentList.filters.organizationPlaceholder")}
               style={{ width: 280 }}
               value={filters.organizationId}
               onChange={(v) => setFilters((s) => ({ ...s, organizationId: v || undefined }))}
