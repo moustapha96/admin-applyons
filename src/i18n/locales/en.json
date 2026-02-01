@@ -1248,16 +1248,14 @@
             "allNotifications": "All notifications"
         },
         "columns": {
-            "status": "Status",
+            "lastName": "Last name",
+            "firstName": "First name",
+            "dateOfBirth": "Date of birth",
             "type": "Type",
             "message": "Message",
             "demande": "Application",
             "createdAt": "Created at",
             "actions": "Actions"
-        },
-        "status": {
-            "viewed": "Viewed",
-            "unviewed": "Unviewed"
         },
         "types": {
             "DEMANDE_CREATED": "Application created",
@@ -1269,19 +1267,14 @@
         },
         "buttons": {
             "refresh": "Refresh",
-            "markAsViewed": "Mark as viewed",
-            "markAllAsViewed": "Mark all as viewed",
-            "viewDemande": "View application"
+            "viewDemande": "View application",
+            "addDocument": "Add document"
         },
         "pagination": {
             "total": "Total: {{total}} notifications"
         },
         "messages": {
-            "loadError": "Error loading notifications",
-            "markedAsViewed": "Notification marked as viewed",
-            "allMarkedAsViewed": "All notifications marked as viewed",
-            "markError": "Error marking notification as viewed",
-            "markAllError": "Error marking all notifications as viewed"
+            "loadError": "Error loading notifications"
         },
         "errors": {
             "noOrgId": "Organization ID not found"

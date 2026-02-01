@@ -11,18 +11,13 @@ import {
   Space,
   message,
   Card,
-  Row,
-  Col,
-  Statistic,
-  Badge,
-  Switch,
   Typography,
   Empty,
 } from "antd";
 import {
   ReloadOutlined,
   EyeOutlined,
-  CheckCircleOutlined,
+  FileAddOutlined,
   BellOutlined,
 } from "@ant-design/icons";
 import organizationDemandeNotificationService from "@/services/organizationDemandeNotificationService";
@@ -32,33 +27,25 @@ import dayjs from "dayjs";
 
 const { Text } = Typography;
 
+/** Extrait le demandeur (user) depuis une notification (demandePartage.demande.user ou demandePartage.user ou demande.user) */
+function getDemandeur(record) {
+  const demande = record.demandePartage ?? record.demande;
+  return record.demandePartage?.demande?.user ?? record.demandePartage?.user ?? demande?.user ?? null;
+}
+
 export default function OrganizationNotificationsList() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const orgId = user?.organization?.id;
-  console.log(orgId);
 
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loadingStats, setLoadingStats] = useState(false);
 
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
     total: 0,
-  });
-
-  const [filters, setFilters] = useState({
-    unviewedOnly: false,
-    asTarget: false,
-    asNotified: false,
-  });
-
-  const [stats, setStats] = useState({
-    total: 0,
-    unviewed: 0,
-    viewed: 0,
   });
 
   const fetchData = useCallback(async () => {
@@ -69,12 +56,8 @@ export default function OrganizationNotificationsList() {
       const params = {
         page: pagination.current,
         limit: pagination.pageSize,
-        unviewedOnly: filters.unviewedOnly ? "true" : undefined,
-        asTarget: filters.asTarget ? "true" : undefined,
-        asNotified: filters.asNotified ? "true" : undefined,
       };
 
-      // my-org : le backend filtre par l'organisation du user connecté (JWT) → uniquement ses notifications
       const res = await organizationDemandeNotificationService.listForCurrentOrg(orgId, params);
 
       const data = res?.data ?? res ?? {};
@@ -98,42 +81,12 @@ export default function OrganizationNotificationsList() {
     } finally {
       setLoading(false);
     }
-  }, [
-    orgId,
-    pagination.current,
-    pagination.pageSize,
-    filters.unviewedOnly,
-    filters.asTarget,
-    filters.asNotified,
-    t,
-  ]);
-
-  const fetchStats = useCallback(async () => {
-    if (!orgId) return;
-
-    setLoadingStats(true);
-    try {
-      const res = await organizationDemandeNotificationService.statsForCurrentOrg(orgId);
-      const data = res?.data ?? res ?? {};
-      const statsData = data?.stats ?? data ?? {};
-
-      setStats({
-        total: statsData.total ?? 0,
-        unviewed: statsData.unviewed ?? 0,
-        viewed: statsData.viewed ?? 0,
-      });
-    } catch {
-      // Silencieux : les stats sont secondaires
-    } finally {
-      setLoadingStats(false);
-    }
-  }, [orgId]);
+  }, [orgId, pagination.current, pagination.pageSize, t]);
 
   useEffect(() => {
     if (!orgId) return;
     fetchData();
-    fetchStats();
-  }, [orgId, fetchData, fetchStats]);
+  }, [orgId, fetchData]);
 
   const onTableChange = (pg) => {
     setPagination((p) => ({
@@ -142,37 +95,6 @@ export default function OrganizationNotificationsList() {
       pageSize: pg.pageSize,
     }));
   };
-
-  const handleMarkAsViewed = useCallback(
-    async (notificationId) => {
-      try {
-        await organizationDemandeNotificationService.markAsViewed(notificationId);
-        message.success(t("orgNotifications.messages.markedAsViewed"));
-        await Promise.all([fetchData(), fetchStats()]);
-      } catch (e) {
-        message.error(
-          e?.response?.data?.message ??
-            e?.message ??
-            t("orgNotifications.messages.markError")
-        );
-      }
-    },
-    [fetchData, fetchStats, t]
-  );
-
-  const handleMarkAllAsViewed = useCallback(async () => {
-    try {
-      await organizationDemandeNotificationService.markAllAsViewedForCurrentOrg();
-      message.success(t("orgNotifications.messages.allMarkedAsViewed"));
-      await Promise.all([fetchData(), fetchStats()]);
-    } catch (e) {
-      message.error(
-        e?.response?.data?.message ??
-          e?.message ??
-          t("orgNotifications.messages.markAllError")
-      );
-    }
-  }, [fetchData, fetchStats, t]);
 
   const getNotificationTypeColor = (type) => {
     const colors = {
@@ -189,19 +111,32 @@ export default function OrganizationNotificationsList() {
   const columns = useMemo(
     () => [
       {
-        title: t("orgNotifications.columns.status"),
-        key: "viewed",
-        width: 130,
-        render: (_, record) => (
-          <Badge
-            status={record.viewed ? "default" : "processing"}
-            text={
-              record.viewed
-                ? t("orgNotifications.status.viewed")
-                : t("orgNotifications.status.unviewed")
-            }
-          />
-        ),
+        title: t("orgNotifications.columns.lastName"),
+        key: "lastName",
+        width: 120,
+        render: (_, record) => {
+          const demandeur = getDemandeur(record);
+          return demandeur?.lastName ?? demandeur?.last_name ?? "—";
+        },
+      },
+      {
+        title: t("orgNotifications.columns.firstName"),
+        key: "firstName",
+        width: 120,
+        render: (_, record) => {
+          const demandeur = getDemandeur(record);
+          return demandeur?.firstName ?? demandeur?.first_name ?? "—";
+        },
+      },
+      {
+        title: t("orgNotifications.columns.dateOfBirth"),
+        key: "dateOfBirth",
+        width: 120,
+        render: (_, record) => {
+          const demandeur = getDemandeur(record);
+          const dob = demandeur?.dateOfBirth ?? demandeur?.dob ?? demandeur?.date_of_birth;
+          return dob ? dayjs(dob).format("DD/MM/YYYY") : "—";
+        },
       },
       {
         title: t("orgNotifications.columns.type"),
@@ -219,9 +154,7 @@ export default function OrganizationNotificationsList() {
         key: "message",
         ellipsis: true,
         render: (_, record) => (
-          <Text strong={!record.viewed}>
-            {record.message ?? record.title ?? "—"}
-          </Text>
+          <Text>{record.message ?? record.title ?? "—"}</Text>
         ),
       },
       {
@@ -250,39 +183,46 @@ export default function OrganizationNotificationsList() {
       {
         title: t("orgNotifications.columns.actions"),
         key: "actions",
-        width: 220,
+        width: 260,
         fixed: "right",
-        render: (_, record) => (
-          <Space size="small" wrap>
-            {!record.viewed && (
-              <Button
-                size="small"
-                icon={<CheckCircleOutlined />}
-                onClick={() => handleMarkAsViewed(record.id)}
-              >
-                {t("orgNotifications.buttons.markAsViewed")}
-              </Button>
-            )}
-            {(record.demandePartage?.id ?? record.demande?.id) && (
-              <Button
-                size="small"
-                icon={<EyeOutlined />}
-                onClick={() =>
-                  navigate(
-                    `/organisations/demandes/${
-                      record.demandePartage?.id ?? record.demande?.id
-                    }/details`
-                  )
-                }
-              >
-                {t("orgNotifications.buttons.viewDemande")}
-              </Button>
-            )}
-          </Space>
-        ),
+        render: (_, record) => {
+          const demande = record.demandePartage ?? record.demande;
+          const demandeId = demande?.id;
+          const code = demande?.code ?? "";
+          const targetOrgId = record.targetOrgId ?? record.demandePartage?.targetOrgId;
+          const isTargetOrg = targetOrgId != null && String(targetOrgId) === String(orgId);
+
+          return (
+            <Space size="small" wrap>
+              {demandeId && (
+                <Button
+                  size="small"
+                  icon={<EyeOutlined />}
+                  onClick={() => navigate(`/organisations/demandes/${demandeId}/details`)}
+                >
+                  {t("orgNotifications.buttons.viewDemande")}
+                </Button>
+              )}
+              {isTargetOrg && code && (
+                <Button
+                  size="small"
+                  type="primary"
+                  icon={<FileAddOutlined />}
+                  onClick={() =>
+                    navigate(
+                      `/organisations/demandes/ajoute-document?code=${encodeURIComponent(code)}`
+                    )
+                  }
+                >
+                  {t("orgNotifications.buttons.addDocument")}
+                </Button>
+              )}
+            </Space>
+          );
+        },
       },
     ],
-    [t, navigate, handleMarkAsViewed]
+    [t, navigate, orgId]
   );
 
   if (!orgId) {
@@ -319,92 +259,15 @@ export default function OrganizationNotificationsList() {
           />
         </div>
 
-        {/* Stats */}
-        <Card className="mb-4 sm:mb-6" loading={loadingStats}>
-          <Row gutter={[16, 16]}>
-            <Col xs={24} sm={8}>
-              <Statistic
-                title={t("orgNotifications.stats.total")}
-                value={stats.total}
-                prefix={<BellOutlined />}
-              />
-            </Col>
-            <Col xs={12} sm={8}>
-              <Statistic
-                title={t("orgNotifications.stats.unviewed")}
-                value={stats.unviewed}
-                valueStyle={{ color: "#1890ff" }}
-              />
-            </Col>
-            <Col xs={12} sm={8}>
-              <Statistic
-                title={t("orgNotifications.stats.viewed")}
-                value={stats.viewed}
-              />
-            </Col>
-          </Row>
-        </Card>
-
-        {/* Filtres */}
-        <Card className="mb-4 sm:mb-6">
-          <Row gutter={[12, 12]} align="middle">
-            <Col xs={24} sm={12} md={8}>
-              <Space>
-                <Switch
-                  checked={filters.unviewedOnly}
-                  onChange={(checked) =>
-                    setFilters((f) => ({ ...f, unviewedOnly: checked }))
-                  }
-                />
-                <span>{t("orgNotifications.filters.unviewedOnly")}</span>
-              </Space>
-            </Col>
-            <Col xs={24} sm={12} md={8}>
-              <Space>
-                <Switch
-                  checked={filters.asTarget}
-                  onChange={(checked) =>
-                    setFilters((f) => ({ ...f, asTarget: checked }))
-                  }
-                />
-                <span>{t("orgNotifications.filters.asTarget")}</span>
-              </Space>
-            </Col>
-            <Col xs={24} sm={12} md={8}>
-              <Space>
-                <Switch
-                  checked={filters.asNotified}
-                  onChange={(checked) =>
-                    setFilters((f) => ({ ...f, asNotified: checked }))
-                  }
-                />
-                <span>{t("orgNotifications.filters.asNotified")}</span>
-              </Space>
-            </Col>
-            <Col xs={24}>
-              <Space wrap>
-                <Button
-                  icon={<ReloadOutlined />}
-                  onClick={() => {
-                    fetchData();
-                    fetchStats();
-                  }}
-                >
-                  {t("orgNotifications.buttons.refresh")}
-                </Button>
-                {stats.unviewed > 0 && (
-                  <Button
-                    type="primary"
-                    icon={<CheckCircleOutlined />}
-                    onClick={handleMarkAllAsViewed}
-                  >
-                    {t("orgNotifications.buttons.markAllAsViewed")}
-                  </Button>
-                )}
-              </Space>
-            </Col>
-          </Row>
-        </Card>
+        <div className="mb-4 sm:mb-6 flex flex-wrap items-center gap-2">
+          <span className="text-neutral-600 flex items-center gap-1">
+            <BellOutlined />
+            {t("orgNotifications.stats.total")}: <strong>{pagination.total}</strong>
+          </span>
+          <Button icon={<ReloadOutlined />} onClick={fetchData}>
+            {t("orgNotifications.buttons.refresh")}
+          </Button>
+        </div>
 
         {/* Table */}
         <Card>

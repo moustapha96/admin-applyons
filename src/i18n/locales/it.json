@@ -1234,16 +1234,14 @@
             "allNotifications": "Tutte le notifiche"
         },
         "columns": {
-            "status": "Stato",
+            "lastName": "Cognome",
+            "firstName": "Nome",
+            "dateOfBirth": "Data di nascita",
             "type": "Tipo",
             "message": "Messaggio",
             "demande": "Richiesta",
             "createdAt": "Creata il",
             "actions": "Azioni"
-        },
-        "status": {
-            "viewed": "Visualizzata",
-            "unviewed": "Non visualizzata"
         },
         "types": {
             "DEMANDE_CREATED": "Richiesta creata",
@@ -1255,19 +1253,14 @@
         },
         "buttons": {
             "refresh": "Aggiorna",
-            "markAsViewed": "Segna come visualizzata",
-            "markAllAsViewed": "Segna tutte come visualizzate",
-            "viewDemande": "Visualizza richiesta"
+            "viewDemande": "Visualizza richiesta",
+            "addDocument": "Aggiungi documento"
         },
         "pagination": {
             "total": "Totale: {{total}} notifiche"
         },
         "messages": {
-            "loadError": "Errore nel caricamento delle notifiche",
-            "markedAsViewed": "Notifica segnata come visualizzata",
-            "allMarkedAsViewed": "Tutte le notifiche segnate come visualizzate",
-            "markError": "Errore nel segnare la notifica",
-            "markAllError": "Errore nel segnare tutte le notifiche"
+            "loadError": "Errore nel caricamento delle notifiche"
         },
         "errors": {
             "noOrgId": "ID organizzazione non trovato"

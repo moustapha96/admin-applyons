@@ -1238,16 +1238,14 @@
             "allNotifications": "Toutes les notifications"
         },
         "columns": {
-            "status": "Statut",
+            "lastName": "Nom",
+            "firstName": "Prénom",
+            "dateOfBirth": "Date de naissance",
             "type": "Type",
             "message": "Message",
             "demande": "Candidature",
             "createdAt": "Créée le",
             "actions": "Actions"
-        },
-        "status": {
-            "viewed": "Vue",
-            "unviewed": "Non vue"
         },
         "types": {
             "DEMANDE_CREATED": "Candidature créée",
@@ -1259,9 +1257,8 @@
         },
         "buttons": {
             "refresh": "Actualiser",
-            "markAsViewed": "Marquer comme vue",
-            "markAllAsViewed": "Tout marquer comme vu",
-            "viewDemande": "Voir candidature"
+            "viewDemande": "Voir candidature",
+            "addDocument": "Ajouter un document"
         },
         "pagination": {
             "total": "Total: {{total}} notifications"

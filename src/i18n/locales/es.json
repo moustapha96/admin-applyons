@@ -1235,16 +1235,14 @@
             "allNotifications": "Todas las notificaciones"
         },
         "columns": {
-            "status": "Estado",
+            "lastName": "Apellido",
+            "firstName": "Nombre",
+            "dateOfBirth": "Fecha de nacimiento",
             "type": "Tipo",
             "message": "Mensaje",
             "demande": "Aplicación",
             "createdAt": "Creada el",
             "actions": "Acciones"
-        },
-        "status": {
-            "viewed": "Vista",
-            "unviewed": "No vista"
         },
         "types": {
             "DEMANDE_CREATED": "Aplicación creada",
@@ -1256,19 +1254,14 @@
         },
         "buttons": {
             "refresh": "Actualizar",
-            "markAsViewed": "Marcar como vista",
-            "markAllAsViewed": "Marcar todas como vistas",
-            "viewDemande": "Ver aplicación"
+            "viewDemande": "Ver aplicación",
+            "addDocument": "Añadir documento"
         },
         "pagination": {
             "total": "Total: {{total}} notificaciones"
         },
         "messages": {
-            "loadError": "Error al cargar notificaciones",
-            "markedAsViewed": "Notificación marcada como vista",
-            "allMarkedAsViewed": "Todas las notificaciones marcadas como vistas",
-            "markError": "Error al marcar la notificación",
-            "markAllError": "Error al marcar todas las notificaciones"
+            "loadError": "Error al cargar notificaciones"
         },
         "errors": {
             "noOrgId": "ID de organización no encontrado"

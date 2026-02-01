@@ -1231,16 +1231,14 @@
             "allNotifications": "Alle Benachrichtigungen"
         },
         "columns": {
-            "status": "Status",
+            "lastName": "Nachname",
+            "firstName": "Vorname",
+            "dateOfBirth": "Geburtsdatum",
             "type": "Typ",
             "message": "Nachricht",
             "demande": "Bewerbung",
             "createdAt": "Erstellt am",
             "actions": "Aktionen"
-        },
-        "status": {
-            "viewed": "Gesehen",
-            "unviewed": "Ungesehen"
         },
         "types": {
             "DEMANDE_CREATED": "Bewerbung erstellt",
@@ -1252,19 +1250,14 @@
         },
         "buttons": {
             "refresh": "Aktualisieren",
-            "markAsViewed": "Als gesehen markieren",
-            "markAllAsViewed": "Alle als gesehen markieren",
-            "viewDemande": "Bewerbung anzeigen"
+            "viewDemande": "Bewerbung anzeigen",
+            "addDocument": "Dokument hinzufügen"
         },
         "pagination": {
             "total": "Gesamt: {{total}} Benachrichtigungen"
         },
         "messages": {
-            "loadError": "Fehler beim Laden der Benachrichtigungen",
-            "markedAsViewed": "Benachrichtigung als gesehen markiert",
-            "allMarkedAsViewed": "Alle Benachrichtigungen als gesehen markiert",
-            "markError": "Fehler beim Markieren der Benachrichtigung",
-            "markAllError": "Fehler beim Markieren aller Benachrichtigungen"
+            "loadError": "Fehler beim Laden der Benachrichtigungen"
         },
         "errors": {
             "noOrgId": "Organisations-ID nicht gefunden"

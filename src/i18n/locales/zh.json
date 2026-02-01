@@ -1232,16 +1232,14 @@
             "allNotifications": "所有通知"
         },
         "columns": {
-            "status": "状态",
+            "lastName": "姓",
+            "firstName": "名",
+            "dateOfBirth": "出生日期",
             "type": "类型",
             "message": "消息",
             "demande": "申请",
             "createdAt": "创建时间",
             "actions": "操作"
-        },
-        "status": {
-            "viewed": "已查看",
-            "unviewed": "未查看"
         },
         "types": {
             "DEMANDE_CREATED": "申请已创建",
@@ -1253,19 +1251,14 @@
         },
         "buttons": {
             "refresh": "刷新",
-            "markAsViewed": "标记为已查看",
-            "markAllAsViewed": "全部标记为已查看",
-            "viewDemande": "查看申请"
+            "viewDemande": "查看申请",
+            "addDocument": "添加文档"
         },
         "pagination": {
             "total": "总计: {{total}} 条通知"
         },
         "messages": {
-            "loadError": "加载通知失败",
-            "markedAsViewed": "通知已标记为已查看",
-            "allMarkedAsViewed": "所有通知已标记为已查看",
-            "markError": "标记通知失败",
-            "markAllError": "标记所有通知失败"
+            "loadError": "加载通知失败"
         },
         "errors": {
             "noOrgId": "未找到组织ID"

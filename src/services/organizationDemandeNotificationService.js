@@ -63,7 +63,7 @@ const organizationDemandeNotificationService = {
   },
 
   /**
-   * GET /api/organization-demande-notifications/my-org
+   * GET /api/organization-demande-notifications/my-org/:orgId
    * Params: asTarget, asNotified, viewedOnly, unviewedOnly, page, limit, sortBy, sortOrder
    */
   listForCurrentOrg(orgId, params = {}) {

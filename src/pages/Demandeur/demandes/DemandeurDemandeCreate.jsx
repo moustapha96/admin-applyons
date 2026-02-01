@@ -8,6 +8,7 @@ import {
   Button,
   Card,
   Form,
+  Grid,
   Input,
   Select,
   Space,
@@ -588,6 +589,9 @@ export default function DemandeurDemandeCreate() {
     { title: t("demandeurDemandeCreate.steps.payment"), icon: <CreditCardOutlined /> },
   ];
 
+  const breakpoint = Grid.useBreakpoint();
+  const isSmallScreen = !breakpoint.md;
+
   const next = async () => {
     if (current === 2) await form.validateFields(["targetOrgId"]);
     setCurrent((c) => c + 1);
@@ -747,14 +751,39 @@ export default function DemandeurDemandeCreate() {
   /** ------- UI ------- */
   return (
     <PayPalScriptProvider options={getPayPalConfig()}>
-      <div className="container-fluid relative px-2 px-sm-3 overflow-x-hidden" style={{ background: "#f9f9f9", minHeight: "100vh", paddingTop: 20, paddingBottom: 48 }}>
-        <div className="layout-specing" style={{ maxWidth: "min(100%, 1400px)", width: "100%", margin: "0 auto", paddingLeft: 8, paddingRight: 8 }}>
-          <h1 style={{ fontFamily: "Arial, sans-serif", fontSize: 28, fontWeight: "normal", color: "#333", marginBottom: 20 }}>
+      <div
+        className="container-fluid relative overflow-x-hidden max-w-full"
+        style={{
+          background: "#f9f9f9",
+          minHeight: "100vh",
+          paddingTop: "clamp(12px, 3vw, 24px)",
+          paddingBottom: "clamp(24px, 6vw, 48px)",
+          paddingLeft: "clamp(8px, 2vw, 24px)",
+          paddingRight: "clamp(8px, 2vw, 24px)",
+        }}
+      >
+        <div
+          className="layout-specing"
+          style={{ maxWidth: "min(100%, 1400px)", width: "100%", margin: "0 auto" }}
+        >
+          <h1
+            className="!mb-4 sm:!mb-5"
+            style={{
+              fontFamily: "Arial, sans-serif",
+              fontSize: "clamp(1.25rem, 4vw, 1.75rem)",
+              fontWeight: "normal",
+              color: "#333",
+            }}
+          >
             {t("demandeurDemandeCreate.pageTitle")}
           </h1>
 
-          <Card style={{ marginBottom: 20, borderRadius: 0, boxShadow: "0 0 10px rgba(0,0,0,0.05)", background: "white", border: "none" }}>
+          <Card
+            className="mb-4 sm:mb-5 overflow-x-auto"
+            style={{ borderRadius: 0, boxShadow: "0 0 10px rgba(0,0,0,0.05)", background: "white", border: "none" }}
+          >
             <Steps
+              direction={isSmallScreen ? "vertical" : "horizontal"}
               current={current}
               onChange={(step) => setCurrent(step)}
               items={steps.map((step, idx) => ({
@@ -762,25 +791,30 @@ export default function DemandeurDemandeCreate() {
                 icon: current > idx ? <CheckCircleOutlined /> : step.icon,
                 status: current > idx ? "finish" : current === idx ? "process" : "wait",
               }))}
-              style={{ padding: "12px 0" }}
+              style={{ padding: isSmallScreen ? "8px 0" : "12px 0" }}
             />
           </Card>
 
           <Card
             title={
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#e0e0e0", display: "flex", alignItems: "center", justifyContent: "center", color: "#333", fontSize: 16 }}>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                <div
+                  className="shrink-0 w-10 h-10 sm:w-8 sm:h-8 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-700 text-base"
+                >
                   {steps[current].icon}
                 </div>
-                <div>
-                  <div style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333" }}>{steps[current].title}</div>
-                  <div style={{ fontFamily: "Arial, sans-serif", fontSize: 13, color: "#666", fontWeight: 400 }}>
+                <div className="min-w-0">
+                  <div className="font-semibold text-base sm:text-lg text-neutral-800 truncate">
+                    {steps[current].title}
+                  </div>
+                  <div className="text-xs sm:text-sm text-neutral-500">
                     {t("demandeurDemandeCreate.stepCounter", { current: current + 1, total: steps.length })}
                   </div>
                 </div>
               </div>
             }
-            style={{ borderRadius: 0, boxShadow: "0 0 10px rgba(0,0,0,0.05)", overflow: "hidden", background: "white", border: "none" }}
+            className="overflow-hidden"
+            style={{ borderRadius: 0, boxShadow: "0 0 10px rgba(0,0,0,0.05)", background: "white", border: "none" }}
           >
             <style>{`
               .ant-form-item-label > label {
@@ -805,6 +839,22 @@ export default function DemandeurDemandeCreate() {
                 display: flex;
                 flex-direction: column;
               }
+              .demande-create-section-title {
+                font-family: Arial, sans-serif;
+                font-size: clamp(0.9375rem, 2.5vw, 1.125rem);
+                font-weight: 600;
+                color: #333;
+                border-bottom: 2px solid #ccc;
+                padding-bottom: 5px;
+                margin-top: 24px;
+                margin-bottom: 16px;
+              }
+              .demande-create-section-title:first-child {
+                margin-top: 8px;
+              }
+              @media (min-width: 640px) {
+                .demande-create-section-title { margin-top: 30px; margin-bottom: 20px; }
+              }
             `}</style>
             <Form
               form={form}
@@ -816,10 +866,10 @@ export default function DemandeurDemandeCreate() {
             >
               {/* STEP 0 - Identité */}
               <div style={{ display: current === 0 ? "block" : "none" }}>
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.personalInfo")}
                 </h2>
-                <Row gutter={16}>
+                <Row gutter={[12, 16]}>
                   <Col xs={24} md={8}>
                     <Form.Item
                       label={
@@ -871,7 +921,7 @@ export default function DemandeurDemandeCreate() {
 
               {/* STEP 1 - Académique */}
               <div style={{ display: current === 1 ? "block" : "none" }}>
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.englishProficiency")}
                 </h2>
                 <Row gutter={16}>
@@ -921,7 +971,7 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                 </Row>
 
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.academicBackground")}
                 </h2>
                 <Row gutter={16}>
@@ -1022,7 +1072,7 @@ export default function DemandeurDemandeCreate() {
 
               {/* STEP 2 - Cible */}
               <div style={{ display: current === 2 ? "block" : "none" }}>
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.target") || "Cible"}
                 </h2>
                 <Row gutter={16}>
@@ -1072,7 +1122,7 @@ export default function DemandeurDemandeCreate() {
 
               {/* STEP 3 - Programme souhaité */}
               <div style={{ display: current === 3 ? "block" : "none" }}>
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.intendedProgram")}
                 </h2>
                 <Row gutter={16}>
@@ -1131,7 +1181,7 @@ export default function DemandeurDemandeCreate() {
 
               {/* STEP 4 - Activités, famille, finances, visa, essais, soumission */}
               <div style={{ display: current === 4 ? "block" : "none" }}>
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.activities")}
                 </h2>
                 <Row gutter={16}>
@@ -1153,7 +1203,7 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                 </Row>
 
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.familyInfo")}
                 </h2>
                 <Row gutter={16}>
@@ -1208,7 +1258,7 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                 </Row>
 
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.financialInfo")}
                 </h2>
                 <Row gutter={16}>
@@ -1246,7 +1296,7 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                 </Row>
 
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.visaInfo")}
                 </h2>
                 <Row gutter={16}>
@@ -1286,7 +1336,7 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                 </Row>
 
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.essays")}
                 </h2>
                 <Row gutter={16}>
@@ -1308,7 +1358,7 @@ export default function DemandeurDemandeCreate() {
                   </Col>
                 </Row>
 
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.submission")}
                 </h2>
                 <Row gutter={16}>
@@ -1354,7 +1404,7 @@ export default function DemandeurDemandeCreate() {
               {/* STEP 5 — Invitations + Summary */}
               <div style={{ display: current === 5 ? "block" : "none" }}>
 
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.notifyOrgs")}
                 </h2>
                 <OrgNotifyPicker
@@ -1366,7 +1416,7 @@ export default function DemandeurDemandeCreate() {
 
                 <Divider className="!mt-6" />
 
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.inviteOrgs")}
                 </h2>
                 <Card style={{ background: "#fafafa", marginBottom: 16, border: "1px solid #e0e0e0" }}>
@@ -1447,7 +1497,7 @@ export default function DemandeurDemandeCreate() {
                   )}
                 />
                 
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginTop: 30, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.summary")}
                 </h2>
                 <Summary form={form} invites={invites} orgs={orgs} tradOrgs={tradOrgs} t={t} me={me} />
@@ -1455,17 +1505,17 @@ export default function DemandeurDemandeCreate() {
 
               {/* STEP 6 - Payment */}
               <div style={{ display: current === 6 ? "block" : "none" }}>
-                <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: 18, fontWeight: 600, color: "#333", borderBottom: "2px solid #ccc", paddingBottom: 5, marginBottom: 20 }}>
+                <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.choosePayment")}
                 </h2>
 
-                <Card style={{ background: "#f5f5f5", color: "#333", marginBottom: 24, border: "1px solid #ccc" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div>
-                      <h3 style={{ fontFamily: "Arial, sans-serif", color: "#333", margin: 0, fontSize: 18 }}>{t("demandeurDemandeCreate.payment.processingFee")}</h3>
-                      <p style={{ fontFamily: "Arial, sans-serif", color: "#666", margin: "4px 0 0 0" }}>{t("demandeurDemandeCreate.payment.oneTimePayment")}</p>
+                <Card className="!mb-4 sm:!mb-6" style={{ background: "#f5f5f5", color: "#333", border: "1px solid #ccc" }}>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+                    <div className="min-w-0">
+                      <h3 className="!m-0 text-base sm:text-lg text-neutral-800">{t("demandeurDemandeCreate.payment.processingFee")}</h3>
+                      <p className="mt-1 text-sm text-neutral-500">{t("demandeurDemandeCreate.payment.oneTimePayment")}</p>
                     </div>
-                    <div style={{ fontFamily: "Arial, sans-serif", fontSize: 32, fontWeight: 700, color: "#333" }}>
+                    <div className="text-2xl sm:text-3xl font-bold text-neutral-800 shrink-0">
                       {priceLabel}
                     </div>
                   </div>
@@ -1533,31 +1583,21 @@ export default function DemandeurDemandeCreate() {
               </div>
 
               <Divider className="!mt-6" />
-              <div className="flex items-center justify-between">
-                <Space>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
+                <div className="flex flex-wrap gap-2 order-2 sm:order-1">
                   {current > 0 && (
-                    <Button onClick={prev} size="large">
+                    <Button onClick={prev} size="large" className="!inline-flex">
                       {t("demandeurDemandeCreate.buttons.previous")}
                     </Button>
                   )}
-                  {/* Bouton de réinitialisation en mode dev */}
-                  {process.env.NODE_ENV === 'development' && (
-                    <Button
-                      danger
-                      onClick={resetForm}
-                      size="large"
-                      style={{ marginLeft: 8 }}
-                    >
+                  {process.env.NODE_ENV === "development" && (
+                    <Button danger onClick={resetForm} size="large" className="!inline-flex">
                       🔄 Réinitialiser (Dev)
                     </Button>
                   )}
-                </Space>
-                <Space>
-                  <Button
-                    onClick={saveDraft}
-                    size="large"
-                    loading={savingDraft}
-                  >
+                </div>
+                <Space wrap className="order-1 sm:order-2 justify-end sm:justify-start" size="small">
+                  <Button onClick={saveDraft} size="large" loading={savingDraft}>
                     {t("demandeurDemandeCreate.buttons.save") || "Enregistrer"}
                   </Button>
                   {current < 6 && (
@@ -1607,30 +1647,24 @@ export default function DemandeurDemandeCreate() {
             open={showPaymentModal}
             onCancel={() => setShowPaymentModal(false)}
             footer={null}
-            width={600}
-            centered
+            width={isSmallScreen ? "100%" : 600}
+            style={isSmallScreen ? { maxWidth: "100%", top: 8, paddingBottom: 0 } : undefined}
+            centered={!isSmallScreen}
             destroyOnHidden
+            className="sm:!max-w-[600px]"
           >
-            <div style={{ padding: "24px 0" }}>
+            <div className="p-4 sm:p-6 sm:py-6">
               <div
-                style={{
-                  background: "#f0f5ff",
-                  padding: 16,
-                  borderRadius: 8,
-                  marginBottom: 24,
-                  border: "1px solid #adc6ff",
-                }}
+                className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center p-4 rounded-lg mb-6 bg-[#f0f5ff] border border-[#adc6ff]"
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div>
-                    <h4 style={{ margin: 0, fontSize: 16 }}>{t("demandeurDemandeCreate.payment.processingFeeLabel")}</h4>
-                    <p style={{ margin: "4px 0 0 0", color: "#8c8c8c", fontSize: 14 }}>
-                      {t("demandeurDemandeCreate.payment.securePaymentBy")}{" "}
-                      {paymentMethod === "stripe" ? t("demandeurDemandeCreate.payment.stripe") : t("demandeurDemandeCreate.payment.paypal")}
-                    </p>
-                  </div>
-                  <div style={{ fontSize: 24, fontWeight: 700, color: "#1890ff" }}>{priceLabel}</div>
+                <div className="min-w-0">
+                  <h4 className="!m-0 text-sm sm:text-base">{t("demandeurDemandeCreate.payment.processingFeeLabel")}</h4>
+                  <p className="mt-1 text-xs sm:text-sm text-neutral-500">
+                    {t("demandeurDemandeCreate.payment.securePaymentBy")}{" "}
+                    {paymentMethod === "stripe" ? t("demandeurDemandeCreate.payment.stripe") : t("demandeurDemandeCreate.payment.paypal")}
+                  </p>
                 </div>
+                <div className="text-xl sm:text-2xl font-bold text-[#1890ff] shrink-0">{priceLabel}</div>
               </div>
 
               {paymentMethod === "stripe" && (
