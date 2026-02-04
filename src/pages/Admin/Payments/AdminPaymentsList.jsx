@@ -113,6 +113,7 @@ export default function PaymentsList() {
   const [qAbonnementId, setQAbonnementId] = useState();
   const [qDemandePartageId, setQDemandePartageId] = useState();
   const [qTransactionId, setQTransactionId] = useState();
+  const [qDemandeAuthentificationId, setQDemandeAuthentificationId] = useState();
   const [dateRange, setDateRange] = useState(null); // placeholder pour extension future
 
   // Drawer
@@ -131,6 +132,7 @@ export default function PaymentsList() {
         if (qAbonnementId) params.abonnementId = qAbonnementId;
         if (qDemandePartageId) params.demandePartageId = qDemandePartageId;
         if (qTransactionId) params.transactionId = qTransactionId;
+        if (qDemandeAuthentificationId) params.demandeAuthentificationId = qDemandeAuthentificationId;
 
         const res = await paymentService.list(params);
         const payments = res?.payments ?? res?.data?.payments ?? [];
@@ -153,7 +155,7 @@ export default function PaymentsList() {
 
   useEffect(() => {
     fetchData(1, limit);
-  }, [qProvider, qStatus, qAbonnementId, qDemandePartageId, qTransactionId]); // relancer à chaque filtre
+  }, [qProvider, qStatus, qAbonnementId, qDemandePartageId, qTransactionId, qDemandeAuthentificationId]); // relancer à chaque filtre
 
   const handleRefresh = () => fetchData(page, limit);
 
@@ -182,7 +184,9 @@ export default function PaymentsList() {
   const metrics = useMemo(() => {
     const byStatus = countBy(rows, (r) => r.status);
     const byProvider = countBy(rows, (r) => (r.provider || "").toUpperCase());
-    const linkType = countBy(rows, (r) => (r.abonnement ? "ABONNEMENT" : r.demandePartage ? "DEMANDE" : "SANS LIEN"));
+    const linkType = countBy(rows, (r) =>
+      r.abonnement ? "ABONNEMENT" : r.demandePartage ? "DEMANDE" : r.demandeAuthentification ? "DEMANDE_AUTH" : "SANS LIEN"
+    );
     const totalsByCurrency = sumByCurrency(rows);
 
     // petit formatage pour l'affichage “montant total”
@@ -289,6 +293,17 @@ export default function PaymentsList() {
               <Space size={6}>
                 <Tag color="blue">{t("adminPayments.linkTypes.DEMANDE")}</Tag>
                 <Text strong>{d.code || d.id}</Text>
+              </Space>
+            </Space>
+          );
+        }
+        const auth = r.demandeAuthentification;
+        if (auth) {
+          return (
+            <Space direction="vertical" size={0}>
+              <Space size={6}>
+                <Tag color="purple">{t("adminPayments.linkTypes.DEMANDE_AUTH")}</Tag>
+                <Text strong>{auth.codeADN || auth.id}</Text>
               </Space>
             </Space>
           );
@@ -419,6 +434,14 @@ export default function PaymentsList() {
                 placeholder={t("adminPayments.filters.abonnementId")}
                 value={qAbonnementId}
                 onChange={(e) => setQAbonnementId(e.target.value || undefined)}
+              />
+            </Col>
+            <Col xs={24} md={6}>
+              <Input
+                allowClear
+                placeholder={t("adminPayments.filters.demandeAuthentificationId")}
+                value={qDemandeAuthentificationId}
+                onChange={(e) => setQDemandeAuthentificationId(e.target.value || undefined)}
               />
             </Col>
 

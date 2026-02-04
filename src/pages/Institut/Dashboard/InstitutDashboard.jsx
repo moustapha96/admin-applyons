@@ -172,8 +172,15 @@ export default function InstitutDashboard() {
               />
             </Card>
           </Col>
-         
-        
+          <Col xs={12} md={6}>
+            <Card loading={loading}>
+              <Statistic
+                title={t("institutDashboard.kpis.demandesAuthentificationAttributed")}
+                prefix={<BookOutlined />}
+                value={widgets.demandesAuthentificationAttributed?.total ?? 0}
+              />
+            </Card>
+          </Col>
           <Col xs={12} md={6}>
             <Card loading={loading}>
               <Statistic
@@ -189,7 +196,7 @@ export default function InstitutDashboard() {
             </Card>
           </Col>
 
-          <Col xs={24} md={12}>
+          <Col xs={12} md={6}>
             <Card loading={loading}>
               <Statistic
                 title={t("institutDashboard.kpis.usersTotal")}
@@ -198,7 +205,6 @@ export default function InstitutDashboard() {
               />
             </Card>
           </Col>
-         
         </Row>
 
       

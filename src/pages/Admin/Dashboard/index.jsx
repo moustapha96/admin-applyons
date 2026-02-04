@@ -118,7 +118,14 @@ export default function AdminDashboard() {
         value: d.contacts?.total ?? 0,
         sub: undefined,
       },
-    
+      {
+        label: t("adminDashboard.kpis.demandesAuthentificationTotal"),
+        value: d.demandesAuthentification?.total ?? 0,
+        sub:
+          d.demandesAuthentification?.byStatus && Object.keys(d.demandesAuthentification.byStatus).length > 0
+            ? t("adminDashboard.kpis.demandesBreakdown")
+            : t("adminDashboard.kpis.demandesNone"),
+      },
     ]
   }, [stats, t])
 

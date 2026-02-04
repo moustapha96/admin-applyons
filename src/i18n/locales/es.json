@@ -25,6 +25,56 @@
         "notifications": "Notificaciones",
         "required": "Este campo es obligatorio"
     },
+    "adminConfig": {
+        "title": "Ajustes",
+        "subtitle": "Gestione la configuración general de su sitio",
+        "tabGeneral": "Configuración general",
+        "tabPayment": "Importes de pago",
+        "siteInfo": "Información del sitio",
+        "siteName": "Nombre del sitio",
+        "siteNameRequired": "El nombre del sitio es obligatorio",
+        "siteNamePlaceholder": "APPLYONS - Nombre del sitio...",
+        "contactEmail": "Email de contacto",
+        "contactEmailRequired": "El email de contacto es obligatorio",
+        "invalidEmail": "Formato de email inválido",
+        "contactEmailPlaceholder": "contacto@ejemplo.org",
+        "contactAddress": "Dirección de contacto",
+        "contactAddressPlaceholder": "Dirección de la sede",
+        "contactPhone": "Teléfono (fijo)",
+        "contactPhonePlaceholder": "+34 912 345 678",
+        "contactMobile": "Teléfono (móvil)",
+        "contactMobilePlaceholder": "+34 612 345 678",
+        "urlSite": "URL del sitio web",
+        "invalidUrl": "Formato de URL inválido",
+        "urlSitePlaceholder": "https://ejemplo.org",
+        "footerText": "Texto del pie de página",
+        "footerPlaceholder": "© 2024 - Todos los derechos reservados",
+        "logoAndFavicon": "Logo y Favicon",
+        "logoTitle": "Logo del sitio",
+        "logoHint": "PNG/SVG/JPG ≤ 2 MB — recomendado ~ 180×60 (fondo transparente si es posible)",
+        "faviconTitle": "Favicon",
+        "faviconHint": "ICO/PNG ≤ 1 MB — recomendado 32×32 o 48×48",
+        "dragOrClick": "Arrastre y suelte o haga clic para seleccionar",
+        "replaceLogo": "Reemplaza el logo actual.",
+        "replaceFavicon": "Reemplaza el favicon actual.",
+        "fileTypeInvalid": "Tipo de archivo inválido.",
+        "fileTooLarge": "El archivo supera {{maxMB}} MB.",
+        "socialNetworks": "Redes sociales",
+        "saveGeneral": "Guardar configuración",
+        "paymentTitle": "Importes por tipo de operación",
+        "paymentDescription": "Estos importes se utilizan para solicitudes de autenticación, solicitudes de compartir y suscripciones por tipo de organización.",
+        "currency": "Moneda",
+        "currencyRequired": "La moneda es obligatoria",
+        "demandeAuth": "Solicitud de autenticación (por solicitud)",
+        "application": "Solicitud / Solicitud de compartir (por solicitud)",
+        "subscriptionByType": "Suscripción por tipo de organización",
+        "savePayment": "Guardar importes",
+        "toastLoadError": "Error al cargar los datos",
+        "toastPaymentLoadError": "Error al cargar la configuración de pago",
+        "toastPaymentSaved": "Configuración de pago guardada",
+        "toastSaveError": "Error al guardar",
+        "toastGeneralSaved": "Configuración general guardada correctamente"
+    },
     "notifications": {
         "newMessage": "Nuevo mensaje",
         "messageReceived": "Has recibido un nuevo mensaje",
@@ -38,7 +88,11 @@
         "justNow": "Ahora mismo",
         "minutesAgo": "min",
         "hoursAgo": "h",
-        "daysAgo": "d"
+        "daysAgo": "d",
+        "genericTitle": "Notificación",
+        "genericMessage": "Tiene una nueva notificación",
+        "orgDemandeTitle": "Solicitud que le concierne",
+        "orgDemandeMessage": "Una solicitud compartida concierne a su organización (ver código para más detalles)"
     },
     "roles": {
         "ADMIN": "ADMIN",
@@ -165,7 +219,126 @@
         "souscrire": "Suscribirse",
         "dossiersTraiter": "Archivos para procesar",
         "notifications": "Notificaciones",
-        "logout": "Cerrar sesión"
+        "logout": "Cerrar sesión",
+        "demandesAuthentification": "Autenticación de documentos",
+        "demandesAuthentificationList": "Mis solicitudes de autenticación",
+        "demandesAuthentificationCreate": "Nueva solicitud",
+        "demandesAuthentificationAttribuees": "Solicitudes que me fueron atribuidas",
+        "codeADN": "Acceder por código ADN",
+        "authenticationDocument": "Autenticación de documentos",
+        "demandesAuthentificationAdmin": "Solicitudes de autenticación"
+    },
+    "demandesAuthentification": {
+        "title": "Solicitudes de autenticación de documentos",
+        "breadcrumb": { "dashboard": "Panel", "list": "Solicitudes de autenticación" },
+        "createBtn": "Nueva solicitud de autenticación",
+        "createTitle": "Crear solicitud de autenticación",
+        "submitCreate": "Crear solicitud",
+        "cancel": "Cancelar",
+        "createSuccess": "Solicitud creada. Puede notificar a instituciones o ver el detalle.",
+        "detailTitle": "Detalle de la solicitud",
+        "documentsTitle": "Documentos presentados",
+        "noDocuments": "Ningún documento",
+        "attributedOrgCannotAdd": "Como institución atribuida, no puede añadir documentos. Solo las instituciones notificadas por el solicitante pueden subir documentos.",
+        "addDocumentTitle": "Añadir un documento",
+        "backToList": "Volver a la lista",
+        "loading": "Cargando...",
+        "notFound": "Solicitud no encontrada.",
+        "copied": "Código ADN copiado al portapapeles.",
+        "copyCode": "Copiar código ADN",
+        "justCreatedMessage": "Su solicitud ha sido creada. Comparta este código ADN con la institución atribuida o con las que desee notificar.",
+        "notifyInstituts": "Notificar instituciones",
+        "attributedTitle": "Solicitudes que me fueron atribuidas",
+        "columns": {
+            "codeADN": "Código ADN",
+            "objet": "Asunto",
+            "attributedOrg": "Institución atribuida",
+            "date": "Fecha",
+            "status": "Estado",
+            "documents": "Documentos",
+            "actions": "Acciones",
+            "demandeur": "Solicitante"
+        },
+        "actions": { "detail": "Detalle", "notify": "Notificar" },
+        "fields": {
+            "codeADN": "Código ADN",
+            "objet": "Asunto",
+            "objetPlaceholder": "ej. autenticación de un diploma",
+            "observation": "Observación",
+            "observationPlaceholder": "Observaciones (opcional)",
+            "attributedOrg": "Institución atribuida",
+            "attributedOrgPlaceholder": "Seleccionar la institución atribuida",
+            "demandeur": "Solicitante",
+            "status": "Estado",
+            "createdAt": "Creado el"
+        },
+        "validation": { "attributedOrgRequired": "Seleccione la institución atribuida." },
+        "status": {
+            "EN_ATTENTE": "Pendiente",
+            "DOCUMENTS_RECUS": "Documentos recibidos",
+            "TRAITEE": "Tratada",
+            "ANNULEE": "Anulada"
+        },
+        "doc": { "type": "Tipo", "mention": "Mención", "addedBy": "Añadido por", "date": "Fecha", "file": "Archivo", "viewFile": "Ver documento", "institutDetails": "Detalles de la institución que envió el documento", "orgName": "Nombre", "orgType": "Tipo", "orgEmail": "Email", "orgPhone": "Teléfono", "orgAddress": "Dirección", "orgWebsite": "Sitio web", "orgCountry": "País" },
+        "upload": {
+            "file": "Archivo",
+            "select": "Elegir archivo",
+            "selectFile": "Seleccione un archivo.",
+            "submit": "Enviar",
+            "success": "Documento añadido correctamente.",
+            "error": "Error al añadir el documento.",
+            "typePlaceholder": "Tipo de documento",
+            "mentionPlaceholder": "Mención (opcional)"
+        },
+        "codeADN": {
+            "title": "Acceder por código ADN",
+            "description": "Introduzca el código ADN facilitado por el solicitante para acceder a la solicitud y subir documentos.",
+            "placeholder": "ej. ADN-20250204-0001",
+            "submit": "Acceder a la solicitud",
+            "enterCode": "Introduzca un código ADN.",
+            "notFound": "Ninguna solicitud encontrada para este código."
+        },
+        "notify": {
+            "title": "Notificar instituciones",
+            "description": "Seleccione las instituciones a las que enviar el código ADN por correo.",
+            "placeholder": "Buscar una institución…",
+            "send": "Enviar notificaciones",
+            "selectAtLeastOne": "Seleccione al menos una institución.",
+            "success": "Notificaciones enviadas correctamente.",
+            "error": "Error al enviar las notificaciones."
+        },
+        "toasts": {
+            "loadError": "Error al cargar.",
+            "createError": "Error al crear.",
+            "orgLoadError": "Error al cargar las organizaciones."
+        }
+    },
+    "adminDemandesAuthentification": {
+        "title": "Solicitudes de autenticación (todas)",
+        "breadcrumb": { "dashboard": "Panel", "list": "Solicitudes de autenticación" },
+        "detailTitle": "Detalle de la solicitud de autenticación",
+        "filters": { "search": "Buscar (código ADN, asunto, solicitante…)", "status": "Estado" },
+        "columns": {
+            "codeADN": "Código ADN",
+            "objet": "Asunto",
+            "demandeur": "Solicitante",
+            "attributedOrg": "Institución atribuida",
+            "date": "Fecha",
+            "status": "Estado",
+            "documents": "Documentos",
+            "actions": "Acciones"
+        },
+        "actions": { "detail": "Detalle", "refresh": "Actualizar" },
+        "pagination": { "total": "Total {{total}} solicitudes" },
+        "toasts": { "loadError": "Error al cargar las solicitudes." },
+        "statusLabel": "Estado",
+        "statusUpdateSuccess": "Estado actualizado.",
+        "statusUpdateError": "Error al actualizar el estado.",
+        "documentsTitle": "Documentos presentados (instituciones que los añadieron)",
+        "docAddedBy": "Añadido por (institución)",
+        "noDocuments": "Ningún documento",
+        "notifiedInstitutsTitle": "Instituciones notificadas por correo",
+        "notifiedAt": "Notificado el"
     },
     "profile": {
         "title": "Perfil de usuario",
@@ -625,6 +798,7 @@
         },
         "kpis": {
             "myRequests": "Mis candidaturas",
+            "myDemandesAuthentification": "Solicitudes de autenticación",
             "myDocuments": "Mis documentos",
             "myTransactions": "Mis transacciones",
             "myPayments": "Mis pagos",
@@ -639,7 +813,17 @@
             "title": "Actividad reciente",
             "requestLine": "Candidatura {{code}} — {{status}} — {{date}}",
             "paymentLine": "Pago {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
-            "none": "Sin actividad reciente"
+            "none": "Sin actividad reciente",
+            "table": {
+                "type": "Tipo",
+                "reference": "Referencia",
+                "status": "Estado",
+                "amount": "Importe",
+                "date": "Fecha",
+                "typeRequest": "Solicitud",
+                "typePayment": "Pago",
+                "total": "{{total}} elemento(s)"
+            }
         },
         "toasts": {
             "loadError": "Error al cargar estadísticas"
@@ -673,6 +857,7 @@
         },
         "kpis": {
             "targetRequests": "Candidaturas (total)",
+            "demandesAuthentificationAttributed": "Solicitudes auth. atribuidas",
             "assignedRequests": "Solicitudes asignadas (total)",
             "documents": "Documentos (total/por traducir/traducidos)",
             "subscriptions": "Suscripciones (activas/total)",
@@ -2260,7 +2445,8 @@
             "paymentsBreakdown": "Ver desglose a continuación",
             "abonnementsTotal": "Suscripciones",
             "abonnementsActive": "Activas: {{active}} · Próximas a expirar: {{expiring}}",
-            "contactsTotal": "Contactos (mensajes)"
+            "contactsTotal": "Contactos (mensajes)",
+            "demandesAuthentificationTotal": "Solicitudes de autenticación"
         },
         "breakdowns": {
             "usersByRole": "Desglose de roles de usuarios",
@@ -4210,6 +4396,7 @@
         "messages": {
             "loadError": "Error al cargar el pago",
             "paymentRefused": "Pago rechazado",
+            "paymentSuccess": "Pago realizado correctamente",
             "stripeError": "Error en el pago de Stripe"
         },
         "paymentStatus": {

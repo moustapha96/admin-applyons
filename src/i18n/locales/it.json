@@ -23,6 +23,56 @@
         "yes": "Sì",
         "no": "No"
     },
+    "adminConfig": {
+        "title": "Impostazioni",
+        "subtitle": "Gestisci le impostazioni generali del tuo sito",
+        "tabGeneral": "Impostazioni generali",
+        "tabPayment": "Importi di pagamento",
+        "siteInfo": "Informazioni sul sito",
+        "siteName": "Nome del sito",
+        "siteNameRequired": "Il nome del sito è obbligatorio",
+        "siteNamePlaceholder": "APPLYONS - Nome del sito...",
+        "contactEmail": "Email di contatto",
+        "contactEmailRequired": "L'email di contatto è obbligatoria",
+        "invalidEmail": "Formato email non valido",
+        "contactEmailPlaceholder": "contact@example.org",
+        "contactAddress": "Indirizzo di contatto",
+        "contactAddressPlaceholder": "Indirizzo della sede",
+        "contactPhone": "Telefono (fisso)",
+        "contactPhonePlaceholder": "+39 02 1234567",
+        "contactMobile": "Telefono (mobile)",
+        "contactMobilePlaceholder": "+39 333 1234567",
+        "urlSite": "URL del sito web",
+        "invalidUrl": "Formato URL non valido",
+        "urlSitePlaceholder": "https://example.org",
+        "footerText": "Testo del footer",
+        "footerPlaceholder": "© 2024 - Tutti i diritti riservati",
+        "logoAndFavicon": "Logo e Favicon",
+        "logoTitle": "Logo del sito",
+        "logoHint": "PNG/SVG/JPG ≤ 2 MB — consigliato ~ 180×60 (sfondo trasparente se possibile)",
+        "faviconTitle": "Favicon",
+        "faviconHint": "ICO/PNG ≤ 1 MB — consigliato 32×32 o 48×48",
+        "dragOrClick": "Trascina e rilascia o clicca per selezionare",
+        "replaceLogo": "Sostituisce il logo attuale.",
+        "replaceFavicon": "Sostituisce il favicon attuale.",
+        "fileTypeInvalid": "Tipo di file non valido.",
+        "fileTooLarge": "Il file supera {{maxMB}} MB.",
+        "socialNetworks": "Social network",
+        "saveGeneral": "Salva impostazioni",
+        "paymentTitle": "Importi per tipo di operazione",
+        "paymentDescription": "Questi importi sono utilizzati per le richieste di autenticazione, le candidature (richieste di condivisione) e gli abbonamenti per tipo di organizzazione.",
+        "currency": "Valuta",
+        "currencyRequired": "La valuta è obbligatoria",
+        "demandeAuth": "Richiesta di autenticazione (per richiesta)",
+        "application": "Candidatura / Richiesta di condivisione (per richiesta)",
+        "subscriptionByType": "Abbonamento per tipo di organizzazione",
+        "savePayment": "Salva importi",
+        "toastLoadError": "Errore nel caricamento dei dati",
+        "toastPaymentLoadError": "Errore nel caricamento delle impostazioni di pagamento",
+        "toastPaymentSaved": "Impostazioni di pagamento salvate",
+        "toastSaveError": "Errore durante il salvataggio",
+        "toastGeneralSaved": "Impostazioni generali salvate con successo"
+    },
     "notifications": {
         "newMessage": "Nuovo messaggio",
         "messageReceived": "Hai ricevuto un nuovo messaggio",
@@ -36,7 +86,11 @@
         "justNow": "Proprio ora",
         "minutesAgo": "min",
         "hoursAgo": "h",
-        "daysAgo": "g"
+        "daysAgo": "g",
+        "genericTitle": "Notifica",
+        "genericMessage": "Hai una nuova notifica",
+        "orgDemandeTitle": "Richiesta che ti riguarda",
+        "orgDemandeMessage": "Una richiesta condivisa riguarda la tua organizzazione (vedi codice per i dettagli)"
     },
     "roles": {
         "ADMIN": "ADMIN",
@@ -163,7 +217,126 @@
         "souscrire": "Iscriviti",
         "dossiersTraiter": "Fascicoli da trattare",
         "notifications": "Notifiche",
-        "logout": "Disconnettersi"
+        "logout": "Disconnettersi",
+        "demandesAuthentification": "Autenticazione documenti",
+        "demandesAuthentificationList": "Le mie richieste di autenticazione",
+        "demandesAuthentificationCreate": "Nuova richiesta",
+        "demandesAuthentificationAttribuees": "Richieste a me attribuite",
+        "codeADN": "Accedi con codice ADN",
+        "authenticationDocument": "Autenticazione documenti",
+        "demandesAuthentificationAdmin": "Richieste di autenticazione"
+    },
+    "demandesAuthentification": {
+        "title": "Richieste di autenticazione documenti",
+        "breadcrumb": { "dashboard": "Dashboard", "list": "Richieste di autenticazione" },
+        "createBtn": "Nuova richiesta di autenticazione",
+        "createTitle": "Crea richiesta di autenticazione",
+        "submitCreate": "Crea richiesta",
+        "cancel": "Annulla",
+        "createSuccess": "Richiesta creata. Puoi notificare le istituzioni o consultare il dettaglio.",
+        "detailTitle": "Dettaglio richiesta",
+        "documentsTitle": "Documenti depositati",
+        "noDocuments": "Nessun documento",
+        "attributedOrgCannotAdd": "In qualità di istituzione attribuita, non puoi aggiungere documenti. Solo le istituzioni notificate dal richiedente possono caricare documenti.",
+        "addDocumentTitle": "Aggiungi un documento",
+        "backToList": "Torna alla lista",
+        "loading": "Caricamento...",
+        "notFound": "Richiesta non trovata.",
+        "copied": "Codice ADN copiato negli appunti.",
+        "copyCode": "Copia codice ADN",
+        "justCreatedMessage": "La tua richiesta è stata creata. Comunica questo codice ADN all'istituzione attribuita o a quelle che desideri notificare.",
+        "notifyInstituts": "Notifica istituzioni",
+        "attributedTitle": "Richieste a me attribuite",
+        "columns": {
+            "codeADN": "Codice ADN",
+            "objet": "Oggetto",
+            "attributedOrg": "Istituzione attribuita",
+            "date": "Data",
+            "status": "Stato",
+            "documents": "Documenti",
+            "actions": "Azioni",
+            "demandeur": "Richiedente"
+        },
+        "actions": { "detail": "Dettaglio", "notify": "Notifica" },
+        "fields": {
+            "codeADN": "Codice ADN",
+            "objet": "Oggetto",
+            "objetPlaceholder": "es. autenticazione di un diploma",
+            "observation": "Osservazione",
+            "observationPlaceholder": "Osservazioni (opzionale)",
+            "attributedOrg": "Istituzione attribuita",
+            "attributedOrgPlaceholder": "Seleziona l'istituzione attribuita",
+            "demandeur": "Richiedente",
+            "status": "Stato",
+            "createdAt": "Creato il"
+        },
+        "validation": { "attributedOrgRequired": "Seleziona l'istituzione attribuita." },
+        "status": {
+            "EN_ATTENTE": "In attesa",
+            "DOCUMENTS_RECUS": "Documenti ricevuti",
+            "TRAITEE": "Elaborata",
+            "ANNULEE": "Annullata"
+        },
+        "doc": { "type": "Tipo", "mention": "Menzione", "addedBy": "Aggiunto da", "date": "Data", "file": "File", "viewFile": "Visualizza documento", "institutDetails": "Dettagli dell'istituzione che ha depositato il documento", "orgName": "Nome", "orgType": "Tipo", "orgEmail": "Email", "orgPhone": "Telefono", "orgAddress": "Indirizzo", "orgWebsite": "Sito web", "orgCountry": "Paese" },
+        "upload": {
+            "file": "File",
+            "select": "Scegli file",
+            "selectFile": "Seleziona un file.",
+            "submit": "Invia",
+            "success": "Documento aggiunto con successo.",
+            "error": "Errore nell'aggiunta del documento.",
+            "typePlaceholder": "Tipo di documento",
+            "mentionPlaceholder": "Menzione (opzionale)"
+        },
+        "codeADN": {
+            "title": "Accedi con codice ADN",
+            "description": "Inserisci il codice ADN fornito dal richiedente per accedere alla richiesta e caricare documenti.",
+            "placeholder": "es. ADN-20250204-0001",
+            "submit": "Accedi alla richiesta",
+            "enterCode": "Inserisci un codice ADN.",
+            "notFound": "Nessuna richiesta trovata per questo codice."
+        },
+        "notify": {
+            "title": "Notifica istituzioni",
+            "description": "Seleziona le istituzioni a cui inviare il codice ADN via email.",
+            "placeholder": "Cerca un'istituzione…",
+            "send": "Invia notifiche",
+            "selectAtLeastOne": "Seleziona almeno un'istituzione.",
+            "success": "Notifiche inviate con successo.",
+            "error": "Errore nell'invio delle notifiche."
+        },
+        "toasts": {
+            "loadError": "Errore nel caricamento.",
+            "createError": "Errore nella creazione.",
+            "orgLoadError": "Errore nel caricamento delle organizzazioni."
+        }
+    },
+    "adminDemandesAuthentification": {
+        "title": "Richieste di autenticazione (tutte)",
+        "breadcrumb": { "dashboard": "Dashboard", "list": "Richieste di autenticazione" },
+        "detailTitle": "Dettaglio richiesta di autenticazione",
+        "filters": { "search": "Cerca (codice ADN, oggetto, richiedente…)", "status": "Stato" },
+        "columns": {
+            "codeADN": "Codice ADN",
+            "objet": "Oggetto",
+            "demandeur": "Richiedente",
+            "attributedOrg": "Istituzione attribuita",
+            "date": "Data",
+            "status": "Stato",
+            "documents": "Documenti",
+            "actions": "Azioni"
+        },
+        "actions": { "detail": "Dettaglio", "refresh": "Aggiorna" },
+        "pagination": { "total": "Totale {{total}} richieste" },
+        "toasts": { "loadError": "Errore nel caricamento delle richieste." },
+        "statusLabel": "Stato",
+        "statusUpdateSuccess": "Stato aggiornato.",
+        "statusUpdateError": "Errore nell'aggiornamento dello stato.",
+        "documentsTitle": "Documenti depositati (istituzioni che li hanno aggiunti)",
+        "docAddedBy": "Aggiunto da (istituzione)",
+        "noDocuments": "Nessun documento",
+        "notifiedInstitutsTitle": "Istituzioni notificate per email",
+        "notifiedAt": "Notificato il"
     },
     "profile": {
         "title": "Profilo utente",
@@ -624,6 +797,7 @@
         },
         "kpis": {
             "myRequests": "Le mie candidature",
+            "myDemandesAuthentification": "Richieste di autenticazione",
             "myDocuments": "I miei documenti",
             "myTransactions": "Le mie transazioni",
             "myPayments": "I miei pagamenti",
@@ -638,7 +812,17 @@
             "title": "Attività recente",
             "requestLine": "Candidatura {{code}} — {{status}} — {{date}}",
             "paymentLine": "Pagamento {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
-            "none": "Nessuna attività recente"
+            "none": "Nessuna attività recente",
+            "table": {
+                "type": "Tipo",
+                "reference": "Riferimento",
+                "status": "Stato",
+                "amount": "Importo",
+                "date": "Data",
+                "typeRequest": "Candidatura",
+                "typePayment": "Pagamento",
+                "total": "{{total}} elemento/i"
+            }
         },
         "toasts": {
             "loadError": "Errore nel caricamento statistiche"
@@ -672,6 +856,7 @@
         },
         "kpis": {
             "targetRequests": "Candidature (totale)",
+            "demandesAuthentificationAttributed": "Richieste auth. attribuite",
             "assignedRequests": "Richieste assegnate (totale)",
             "documents": "Documenti (totale/da tradurre/tradotti)",
             "subscriptions": "Abbonamenti (attivi/totale)",
@@ -2259,7 +2444,8 @@
             "paymentsBreakdown": "Vedi ripartizione qui sotto",
             "abonnementsTotal": "Abbonamenti",
             "abonnementsActive": "Attivi: {{active}} · In scadenza: {{expiring}}",
-            "contactsTotal": "Contatti (messaggi)"
+            "contactsTotal": "Contatti (messaggi)",
+            "demandesAuthentificationTotal": "Richieste di autenticazione"
         },
         "breakdowns": {
             "usersByRole": "Ripartizione ruoli utenti",
@@ -4056,6 +4242,7 @@
         "messages": {
             "loadError": "Errore nel caricamento del pagamento",
             "paymentRefused": "Pagamento rifiutato",
+            "paymentSuccess": "Pagamento riuscito",
             "stripeError": "Pagamento Stripe fallito"
         },
         "paymentStatus": {

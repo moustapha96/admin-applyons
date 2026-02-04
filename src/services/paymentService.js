@@ -104,6 +104,22 @@ const paymentService = {
         return res; // { publishable_key }
     },
 
+    // Demandes d'authentification (paiement par le demandeur)
+    getForDemandeAuthentification: (demandeAuthId) =>
+        axiosInstance.get(`/payments/demande-authentification/${demandeAuthId}`),
+    getQuoteDemandeAuthentification: (demandeAuthId) =>
+        axiosInstance.get(`/payments/demande-authentification/${demandeAuthId}/quote`),
+    getQuoteDemandeAuthNew: () =>
+        axiosInstance.get(`/payments/quote-demande-auth`),
+    createStripeIntentDemandeAuth: (payload) =>
+        axiosInstance.post(`/payments/stripe/create-intent-demande-auth`, payload),
+    confirmStripeDemandeAuth: (payload) =>
+        axiosInstance.post(`/payments/stripe/confirm-demande-auth`, payload),
+    createPaypalOrderDemandeAuth: (payload) =>
+        axiosInstance.post(`/payments/paypal/create-order-demande-auth`, payload),
+    capturePaypalOrderDemandeAuth: (payload) =>
+        axiosInstance.post(`/payments/paypal/capture-demande-auth`, payload),
+
 };
 
 export default paymentService;

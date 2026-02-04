@@ -88,8 +88,12 @@ const MENU_ADMIN = [
     i18nKey: "demandes",
     icon: <AiOutlineHistory />,
     anyPerms: ["demandes.read", "demandes.manage"],
-    children: [{ i18nKey: "allDemandes", to: "/admin/demandes", anyPerms: ["demandes.read"], icon: <BiListCheck /> }],
+    children: [
+      { i18nKey: "allDemandes", to: "/admin/demandes", anyPerms: ["demandes.read"], icon: <BiListCheck /> },
+    ],
   },
+
+  { i18nKey: "authenticationDocument", to: "/admin/demandes-authentification", anyPerms: ["demandes-authentification.manage"], icon: <RiFileList3Line /> },
 
   {
     i18nKey: "documents",
@@ -172,8 +176,12 @@ const MENU_SUPER_ADMIN = [
     i18nKey: "demandes",
     icon: <AiOutlineHistory />,
     anyPerms: [],
-    children: [{ i18nKey: "allDemandes", to: "/admin/demandes", anyPerms: [], icon: <BiListCheck /> }],
+    children: [
+      { i18nKey: "allDemandes", to: "/admin/demandes", anyPerms: [], icon: <BiListCheck /> },
+    ],
   },
+
+  { i18nKey: "authenticationDocument", to: "/admin/demandes-authentification", anyPerms: [], icon: <RiFileList3Line /> },
 
   {
     i18nKey: "documents",
@@ -259,6 +267,15 @@ const MENU_DEMANDEUR = [
       { i18nKey: "newApplication", to: "/demandeur/mes-demandes/create", anyPerms: ["demandes.manage"], icon: <HiOutlineDocumentAdd /> },
     ],
   },
+  {
+    i18nKey: "authenticationDocument",
+    icon: <RiFileList3Line />,
+    anyPerms: ["demandes-authentification.read", "demandes-authentification.create"],
+    children: [
+      { i18nKey: "demandesAuthentificationList", to: "/demandeur/demandes-authentification", anyPerms: ["demandes-authentification.read"], icon: <BiListCheck /> },
+      { i18nKey: "demandesAuthentificationCreate", to: "/demandeur/demandes-authentification/create", anyPerms: ["demandes-authentification.create"], icon: <HiOutlineDocumentAdd /> },
+    ],
+  },
   { i18nKey: "profile", icon: <AiOutlineUser />, to: "/profile" },
 ];
 
@@ -296,6 +313,16 @@ function buildStaffMenu(orgId, handleLogOut) {
         { i18nKey: "invited", to: "/organisations/demandes/invited", anyPerms: ["invites.read", "invites.manage"], icon: <MdOutlineSend /> },
         { i18nKey: "ajouteDocument", to: "/organisations/demandes/ajoute-document", anyPerms: ["documents.create"], icon: <HiOutlineDocumentAdd /> },
         { i18nKey: "notifications", to: "/organisations/notifications", anyPerms: ["notifications.read", "demandes.read"], icon: <BellOutlined /> },
+      ],
+    },
+
+    {
+      i18nKey: "authenticationDocument",
+      icon: <RiFileList3Line />,
+      anyPerms: ["demandes-authentification.read-attributed", "demandes-authentification.read-by-code"],
+      children: [
+        { i18nKey: "demandesAuthentificationAttribuees", to: "/organisations/demandes-authentification", anyPerms: ["demandes-authentification.read-attributed"], icon: <BiListCheck /> },
+        { i18nKey: "codeADN", to: "/organisations/code-adn", anyPerms: ["demandes-authentification.read-by-code"], icon: <HiOutlineDocumentAdd /> },
       ],
     },
 

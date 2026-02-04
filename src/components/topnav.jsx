@@ -403,7 +403,16 @@ export default function Topnav({ setToggle, toggle }) {
                   <>
                     <Divider className="my-0" />
                     <div className="px-4 py-3 text-center">
-                      <Button type="link" size="small" onClick={() => setShowNotifications(false)}>
+                      <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                          setShowNotifications(false);
+                          if (role === "INSTITUT" || role === "SUPERVISEUR") {
+                            navigate("/organisations/notifications");
+                          }
+                        }}
+                      >
                         {t("notifications.viewAll") || "Voir toutes les notifications"}
                       </Button>
                     </div>

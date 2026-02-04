@@ -25,6 +25,56 @@
         "notifications": "Notifications",
         "required": "This field is required"
     },
+    "adminConfig": {
+        "title": "Settings",
+        "subtitle": "Manage your site general settings",
+        "tabGeneral": "General settings",
+        "tabPayment": "Payment amounts",
+        "siteInfo": "Site information",
+        "siteName": "Site name",
+        "siteNameRequired": "Site name is required",
+        "siteNamePlaceholder": "APPLYONS - Site name...",
+        "contactEmail": "Contact email",
+        "contactEmailRequired": "Contact email is required",
+        "invalidEmail": "Invalid email format",
+        "contactEmailPlaceholder": "contact@example.org",
+        "contactAddress": "Contact address",
+        "contactAddressPlaceholder": "Headquarters address",
+        "contactPhone": "Phone (landline)",
+        "contactPhonePlaceholder": "+1 234 567 8900",
+        "contactMobile": "Phone (mobile)",
+        "contactMobilePlaceholder": "+1 234 567 8901",
+        "urlSite": "Website URL",
+        "invalidUrl": "Invalid URL format",
+        "urlSitePlaceholder": "https://example.org",
+        "footerText": "Footer text",
+        "footerPlaceholder": "© 2024 - All rights reserved",
+        "logoAndFavicon": "Logo and Favicon",
+        "logoTitle": "Site logo",
+        "logoHint": "PNG/SVG/JPG ≤ 2 MB — recommended ~ 180×60 (transparent background if possible)",
+        "faviconTitle": "Favicon",
+        "faviconHint": "ICO/PNG ≤ 1 MB — recommended 32×32 or 48×48",
+        "dragOrClick": "Drag and drop or click to select",
+        "replaceLogo": "Replaces the current logo.",
+        "replaceFavicon": "Replaces the current favicon.",
+        "fileTypeInvalid": "Invalid file type.",
+        "fileTooLarge": "File exceeds {{maxMB}} MB.",
+        "socialNetworks": "Social networks",
+        "saveGeneral": "Save settings",
+        "paymentTitle": "Amounts by operation type",
+        "paymentDescription": "These amounts are used for authentication requests, applications (sharing requests) and subscriptions by organization type.",
+        "currency": "Currency",
+        "currencyRequired": "Currency is required",
+        "demandeAuth": "Authentication request (per request)",
+        "application": "Application / Sharing request (per request)",
+        "subscriptionByType": "Subscription by organization type",
+        "savePayment": "Save amounts",
+        "toastLoadError": "Error loading data",
+        "toastPaymentLoadError": "Error loading payment settings",
+        "toastPaymentSaved": "Payment settings saved",
+        "toastSaveError": "Error saving",
+        "toastGeneralSaved": "General settings saved successfully"
+    },
     "notifications": {
         "newMessage": "New message",
         "messageReceived": "You have received a new message",
@@ -38,7 +88,11 @@
         "justNow": "Just now",
         "minutesAgo": "min",
         "hoursAgo": "h",
-        "daysAgo": "d"
+        "daysAgo": "d",
+        "genericTitle": "Notification",
+        "genericMessage": "You have a new notification",
+        "orgDemandeTitle": "Request concerning you",
+        "orgDemandeMessage": "A shared request concerns your organization (see code for details)"
     },
     "roles": {
         "ADMIN": "ADMINISTRATOR",
@@ -165,7 +219,150 @@
         "souscrire": "Subscribe",
         "dossiersTraiter": "Files to process",
         "notifications": "Notifications",
-        "logout": "Log out"
+        "logout": "Log out",
+        "demandesAuthentification": "Document authentication",
+        "demandesAuthentificationList": "My authentication requests",
+        "demandesAuthentificationCreate": "New request",
+        "demandesAuthentificationAttribuees": "Requests attributed to me",
+        "codeADN": "Access by ADN code",
+        "authenticationDocument": "Authentication document",
+        "demandesAuthentificationAdmin": "Authentication requests"
+    },
+    "demandesAuthentification": {
+        "title": "Document authentication requests",
+        "breadcrumb": { "dashboard": "Dashboard", "list": "Authentication requests" },
+        "createBtn": "New authentication request",
+        "createTitle": "Create an authentication request",
+        "submitCreate": "Create request",
+        "submitPayAndCreate": "Pay and create request",
+        "paymentRequiredFirst": "Payment required",
+        "paymentRequiredFirstDesc": "The authentication request is only created after your payment is confirmed. Fill in the form then pay the amount shown.",
+        "paymentStepTitle": "Pay to create your request",
+        "paymentStepDesc": "Choose a payment method below. Once payment is confirmed, your request will be created and you will receive your ADN code.",
+        "backToForm": "Back to form",
+        "cancel": "Cancel",
+        "createSuccess": "Request created. You can notify institutions or view details.",
+        "detailTitle": "Request details",
+        "documentsTitle": "Submitted documents",
+        "noDocuments": "No documents",
+        "attributedOrgCannotAdd": "As the attributed institution, you cannot add documents. Only institutions notified by the applicant can upload documents.",
+        "addDocumentTitle": "Add a document",
+        "backToList": "Back to list",
+        "loading": "Loading...",
+        "notFound": "Request not found.",
+        "copied": "ADN code copied to clipboard.",
+        "copyCode": "Copy ADN code",
+        "justCreatedMessage": "Your request has been created. Share this ADN code with the attributed institution or institutions you wish to notify.",
+        "notifyInstituts": "Notify institutions",
+        "attributedTitle": "Requests attributed to me",
+        "columns": {
+            "codeADN": "ADN code",
+            "objet": "Subject",
+            "attributedOrg": "Attributed institution",
+            "date": "Date",
+            "status": "Status",
+            "documents": "Documents",
+            "actions": "Actions",
+            "demandeur": "Applicant"
+        },
+        "actions": { "detail": "Details", "notify": "Notify" },
+        "fields": {
+            "codeADN": "ADN code",
+            "objet": "Subject",
+            "objetPlaceholder": "e.g. authentication of a diploma",
+            "observation": "Observation",
+            "observationPlaceholder": "Any remarks (optional)",
+            "attributedOrg": "Attributed institution",
+            "attributedOrgPlaceholder": "Select the attributed institution",
+            "demandeur": "Applicant",
+            "status": "Status",
+            "createdAt": "Created at"
+        },
+        "validation": { "attributedOrgRequired": "Please select the attributed institution." },
+        "status": {
+            "EN_ATTENTE": "Pending",
+            "DOCUMENTS_RECUS": "Documents received",
+            "TRAITEE": "Processed",
+            "ANNULEE": "Cancelled"
+        },
+        "doc": { "type": "Type", "mention": "Mention", "addedBy": "Added by", "date": "Date", "file": "File", "viewFile": "View document", "institutDetails": "Details of the institution that submitted the document", "orgName": "Name", "orgType": "Type", "orgEmail": "Email", "orgPhone": "Phone", "orgAddress": "Address", "orgWebsite": "Website", "orgCountry": "Country" },
+        "upload": {
+            "file": "File",
+            "select": "Choose file",
+            "selectFile": "Please select a file.",
+            "submit": "Submit",
+            "success": "Document added successfully.",
+            "error": "Error adding document.",
+            "typePlaceholder": "Document type",
+            "mentionPlaceholder": "Mention (optional)"
+        },
+        "codeADN": {
+            "title": "Access by ADN code",
+            "description": "Enter the ADN code provided by the applicant to access the request and upload documents.",
+            "placeholder": "e.g. ADN-20250204-0001",
+            "submit": "Access request",
+            "enterCode": "Please enter an ADN code.",
+            "notFound": "No request found for this code."
+        },
+        "notify": {
+            "title": "Notify institutions",
+            "description": "Select the institutions to send the ADN code to by email. They will be able to access the request and upload documents.",
+            "placeholder": "Search for an institution…",
+            "send": "Send notifications",
+            "selectAtLeastOne": "Please select at least one institution.",
+            "success": "Notifications sent successfully.",
+            "error": "Error sending notifications."
+        },
+        "toasts": {
+            "loadError": "Error loading.",
+            "createError": "Error creating.",
+            "orgLoadError": "Error loading organizations."
+        },
+        "payment": {
+            "title": "Payment",
+            "status": "Payment status",
+            "amount": "Amount",
+            "paid": "Paid",
+            "unpaid": "Unpaid",
+            "payButton": "Pay for this request",
+            "alreadyPaid": "This authentication request is already paid.",
+            "loading": "Loading payment status..."
+        },
+        "paymentPage": {
+            "title": "Payment - Authentication request",
+            "breadcrumbList": "Authentication requests",
+            "breadcrumbDetail": "Detail",
+            "breadcrumbPayment": "Payment",
+            "summaryTitle": "Summary",
+            "backToDetail": "Back to request detail"
+        }
+    },
+    "adminDemandesAuthentification": {
+        "title": "Authentication requests (all)",
+        "breadcrumb": { "dashboard": "Dashboard", "list": "Authentication requests" },
+        "detailTitle": "Authentication request details",
+        "filters": { "search": "Search (ADN code, subject, applicant…)", "status": "Status" },
+        "columns": {
+            "codeADN": "ADN code",
+            "objet": "Subject",
+            "demandeur": "Applicant",
+            "attributedOrg": "Attributed institution",
+            "date": "Date",
+            "status": "Status",
+            "documents": "Documents",
+            "actions": "Actions"
+        },
+        "actions": { "detail": "Details", "refresh": "Refresh" },
+        "pagination": { "total": "Total {{total}} requests" },
+        "toasts": { "loadError": "Error loading requests." },
+        "statusLabel": "Status",
+        "statusUpdateSuccess": "Status updated.",
+        "statusUpdateError": "Error updating status.",
+        "documentsTitle": "Submitted documents (institutions that added them)",
+        "docAddedBy": "Added by (institution)",
+        "noDocuments": "No documents",
+        "notifiedInstitutsTitle": "Institutions notified by email",
+        "notifiedAt": "Notified at"
     },
     "profile": {
         "title": "User profile",
@@ -637,6 +834,8 @@
         },
         "kpis": {
             "myApplications": "My applications",
+            "myRequests": "My applications",
+            "myDemandesAuthentification": "Authentication requests",
             "myDocuments": "My documents",
             "myTransactions": "My transactions",
             "myPayments": "My payments",
@@ -651,7 +850,17 @@
             "title": "Recent activity",
             "applicationLine": "Application {{code}} — {{status}} — {{date}}",
             "paymentLine": "Payment {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
-            "none": "No recent activity"
+            "none": "No recent activity",
+            "table": {
+                "type": "Type",
+                "reference": "Reference",
+                "status": "Status",
+                "amount": "Amount",
+                "date": "Date",
+                "typeRequest": "Application",
+                "typePayment": "Payment",
+                "total": "{{total}} item(s)"
+            }
         },
         "toasts": {
             "loadError": "Error loading statistics"
@@ -685,6 +894,7 @@
         },
         "kpis": {
             "targetRequests": "Applications (total)",
+            "demandesAuthentificationAttributed": "Authentication requests (attributed)",
             "assignedRequests": "Assigned applications (total)",
             "documents": "Documents (total/to translate/translated)",
             "subscriptions": "Subscriptions (active/total)",
@@ -2359,7 +2569,8 @@
             "paymentsBreakdown": "See breakdown below",
             "abonnementsTotal": "Subscriptions",
             "abonnementsActive": "Active: {{active}} · Expiring soon: {{expiring}}",
-            "contactsTotal": "Contacts (messages)"
+            "contactsTotal": "Contacts (messages)",
+            "demandesAuthentificationTotal": "Authentication requests"
         },
         "breakdowns": {
             "usersByRole": "User roles breakdown",
@@ -4312,6 +4523,7 @@
         "messages": {
             "loadError": "Payment loading error",
             "paymentRefused": "Payment refused",
+            "paymentSuccess": "Payment successful",
             "stripeError": "Stripe payment failed"
         },
         "paymentStatus": {

@@ -7,6 +7,8 @@ export const settingsService = {
         headers: { 'Content-Type': 'multipart/form-data' },
     }),
     getAudits: (params) => axiosInstance.get('/settings/audit-logs', { params }),
+    getPaymentSettings: () => axiosInstance.get('/settings/payment-settings'),
+    updatePaymentSettings: (data) => axiosInstance.put('/settings/payment-settings', data),
 };
 
 export default settingsService;

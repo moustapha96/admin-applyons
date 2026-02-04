@@ -27,6 +27,56 @@
         "yes": "Oui",
         "no": "Non"
     },
+    "adminConfig": {
+        "title": "Paramètres",
+        "subtitle": "Gérez les paramètres généraux de votre site",
+        "tabGeneral": "Paramètres généraux",
+        "tabPayment": "Montants de paiement",
+        "siteInfo": "Informations du site",
+        "siteName": "Nom du site",
+        "siteNameRequired": "Le nom du site est requis",
+        "siteNamePlaceholder": "APPLYONS - Nom du site...",
+        "contactEmail": "Email de contact",
+        "contactEmailRequired": "L'email de contact est requis",
+        "invalidEmail": "Format d'email invalide",
+        "contactEmailPlaceholder": "contact@example.org",
+        "contactAddress": "Adresse de contact",
+        "contactAddressPlaceholder": "Adresse du siège",
+        "contactPhone": "Numéro de téléphone (fixe)",
+        "contactPhonePlaceholder": "+33 1 00 00 00 00",
+        "contactMobile": "Numéro de téléphone (mobile)",
+        "contactMobilePlaceholder": "+33 6 00 00 00 00",
+        "urlSite": "URL du site web",
+        "invalidUrl": "Format d'URL invalide",
+        "urlSitePlaceholder": "https://example.org",
+        "footerText": "Texte du footer",
+        "footerPlaceholder": "© 2024 - Tous droits réservés",
+        "logoAndFavicon": "Logo et Favicon",
+        "logoTitle": "Logo du site",
+        "logoHint": "PNG/SVG/JPG ≤ 2 Mo — recommandé ~ 180×60 (fond transparent si possible)",
+        "faviconTitle": "Favicon",
+        "faviconHint": "ICO/PNG ≤ 1 Mo — recommandé 32×32 ou 48×48",
+        "dragOrClick": "Glissez-déposez ou cliquez pour sélectionner",
+        "replaceLogo": "Remplace le logo actuel.",
+        "replaceFavicon": "Remplace le favicon actuel.",
+        "fileTypeInvalid": "Type de fichier invalide.",
+        "fileTooLarge": "Le fichier dépasse {{maxMB}} Mo.",
+        "socialNetworks": "Réseaux sociaux",
+        "saveGeneral": "Sauvegarder les paramètres",
+        "paymentTitle": "Montants par type d'opération",
+        "paymentDescription": "Ces montants sont utilisés pour les demandes d'authentification, les applications (demandes de partage) et les abonnements par type d'organisation.",
+        "currency": "Devise",
+        "currencyRequired": "La devise est requise",
+        "demandeAuth": "Demande d'authentification (par demande)",
+        "application": "Application / Demande de partage (par demande)",
+        "subscriptionByType": "Abonnement par type d'organisation",
+        "savePayment": "Enregistrer les montants",
+        "toastLoadError": "Erreur lors du chargement des données",
+        "toastPaymentLoadError": "Erreur chargement paramètres de paiement",
+        "toastPaymentSaved": "Paramètres de paiement enregistrés",
+        "toastSaveError": "Erreur lors de la sauvegarde",
+        "toastGeneralSaved": "Paramètres généraux sauvegardés avec succès"
+    },
     "notifications": {
         "newMessage": "Nouveau message",
         "messageReceived": "Vous avez reçu un nouveau message",
@@ -40,7 +90,11 @@
         "justNow": "À l'instant",
         "minutesAgo": "min",
         "hoursAgo": "h",
-        "daysAgo": "j"
+        "daysAgo": "j",
+        "genericTitle": "Notification",
+        "genericMessage": "Vous avez une nouvelle notification",
+        "orgDemandeTitle": "Demande vous concernant",
+        "orgDemandeMessage": "Une demande partagée vous concerne (voir le code pour plus de détails)"
     },
     "roles": {
         "ADMIN": "ADMIN",
@@ -168,7 +222,150 @@
         "dossiersTraiter": "Dossier à traiter",
         "organizationInvites": "Invitations d'organisations",
         "notifications": "Notifications",
-        "logout": "Déconnexion"
+        "logout": "Déconnexion",
+        "demandesAuthentification": "Authentification de documents",
+        "demandesAuthentificationList": "Mes demandes d'authentification",
+        "demandesAuthentificationCreate": "Nouvelle demande",
+        "demandesAuthentificationAttribuees": "Demandes qui me sont attribuées",
+        "codeADN": "Accéder par code ADN",
+        "authenticationDocument": "Authentification de documents",
+        "demandesAuthentificationAdmin": "Demandes d'authentification"
+    },
+    "demandesAuthentification": {
+        "title": "Demandes d'authentification de documents",
+        "breadcrumb": { "dashboard": "Tableau de bord", "list": "Demandes d'authentification" },
+        "createBtn": "Nouvelle demande d'authentification",
+        "createTitle": "Créer une demande d'authentification",
+        "submitCreate": "Créer la demande",
+        "submitPayAndCreate": "Payer et créer la demande",
+        "paymentRequiredFirst": "Paiement obligatoire",
+        "paymentRequiredFirstDesc": "La demande d'authentification n'est créée qu'après confirmation de votre paiement. Remplissez le formulaire puis réglez le montant indiqué.",
+        "paymentStepTitle": "Réglez le montant pour créer votre demande",
+        "paymentStepDesc": "Choisissez un moyen de paiement ci-dessous. Une fois le paiement validé, votre demande sera créée et vous recevrez votre code ADN.",
+        "backToForm": "Retour au formulaire",
+        "cancel": "Annuler",
+        "createSuccess": "Demande créée. Vous pouvez notifier des instituts ou consulter le détail.",
+        "detailTitle": "Détail de la demande",
+        "documentsTitle": "Documents déposés",
+        "noDocuments": "Aucun document",
+        "attributedOrgCannotAdd": "En tant qu'institut attributaire, vous ne pouvez pas ajouter de documents. Seuls les instituts notifiés par le demandeur peuvent en déposer.",
+        "addDocumentTitle": "Ajouter un document",
+        "backToList": "Retour à la liste",
+        "loading": "Chargement...",
+        "notFound": "Demande introuvable.",
+        "copied": "Code ADN copié dans le presse-papiers.",
+        "copyCode": "Copier le code ADN",
+        "justCreatedMessage": "Votre demande a été créée. Communiquez ce code ADN à l'institut attributaire ou aux instituts que vous souhaitez notifier.",
+        "notifyInstituts": "Notifier des instituts",
+        "attributedTitle": "Demandes qui me sont attribuées",
+        "columns": {
+            "codeADN": "Code ADN",
+            "objet": "Objet",
+            "attributedOrg": "Institut attributaire",
+            "date": "Date",
+            "status": "Statut",
+            "documents": "Documents",
+            "actions": "Actions",
+            "demandeur": "Demandeur"
+        },
+        "actions": { "detail": "Détail", "notify": "Notifier" },
+        "fields": {
+            "codeADN": "Code ADN",
+            "objet": "Objet",
+            "objetPlaceholder": "Ex. authentification d'un diplôme",
+            "observation": "Observation",
+            "observationPlaceholder": "Remarques éventuelles (optionnel)",
+            "attributedOrg": "Institut attributaire",
+            "attributedOrgPlaceholder": "Choisir l'institut attributaire",
+            "demandeur": "Demandeur",
+            "status": "Statut",
+            "createdAt": "Créé le"
+        },
+        "validation": { "attributedOrgRequired": "Veuillez sélectionner l'institut attributaire." },
+        "status": {
+            "EN_ATTENTE": "En attente",
+            "DOCUMENTS_RECUS": "Documents reçus",
+            "TRAITEE": "Traitée",
+            "ANNULEE": "Annulée"
+        },
+        "doc": { "type": "Type", "mention": "Mention", "addedBy": "Ajouté par", "date": "Date", "file": "Fichier", "viewFile": "Voir le document", "institutDetails": "Détails de l'institut ayant déposé le document", "orgName": "Nom", "orgType": "Type", "orgEmail": "Email", "orgPhone": "Téléphone", "orgAddress": "Adresse", "orgWebsite": "Site web", "orgCountry": "Pays" },
+        "upload": {
+            "file": "Fichier",
+            "select": "Choisir un fichier",
+            "selectFile": "Veuillez sélectionner un fichier.",
+            "submit": "Envoyer",
+            "success": "Document ajouté avec succès.",
+            "error": "Erreur lors de l'ajout du document.",
+            "typePlaceholder": "Type du document",
+            "mentionPlaceholder": "Mention (optionnel)"
+        },
+        "codeADN": {
+            "title": "Accéder par code ADN",
+            "description": "Saisissez le code ADN communiqué par le demandeur pour accéder à la demande et déposer des documents.",
+            "placeholder": "Ex. ADN-20250204-0001",
+            "submit": "Accéder à la demande",
+            "enterCode": "Veuillez saisir un code ADN.",
+            "notFound": "Aucune demande trouvée pour ce code."
+        },
+        "notify": {
+            "title": "Notifier des instituts",
+            "description": "Sélectionnez les instituts à qui envoyer le code ADN par email. Ils pourront accéder à la demande et déposer des documents.",
+            "placeholder": "Rechercher un institut…",
+            "send": "Envoyer les notifications",
+            "selectAtLeastOne": "Veuillez sélectionner au moins un institut.",
+            "success": "Notifications envoyées avec succès.",
+            "error": "Erreur lors de l'envoi des notifications."
+        },
+        "toasts": {
+            "loadError": "Erreur lors du chargement.",
+            "createError": "Erreur lors de la création.",
+            "orgLoadError": "Erreur lors du chargement des organisations."
+        },
+        "payment": {
+            "title": "Paiement",
+            "status": "Statut du paiement",
+            "amount": "Montant",
+            "paid": "Payé",
+            "unpaid": "Non payé",
+            "payButton": "Payer la demande",
+            "alreadyPaid": "Cette demande d'authentification est déjà payée.",
+            "loading": "Chargement du statut de paiement..."
+        },
+        "paymentPage": {
+            "title": "Paiement - Demande d'authentification",
+            "breadcrumbList": "Demandes d'authentification",
+            "breadcrumbDetail": "Détail",
+            "breadcrumbPayment": "Paiement",
+            "summaryTitle": "Récapitulatif",
+            "backToDetail": "Retour au détail de la demande"
+        }
+    },
+    "adminDemandesAuthentification": {
+        "title": "Demandes d'authentification (toutes)",
+        "breadcrumb": { "dashboard": "Tableau de bord", "list": "Demandes d'authentification" },
+        "detailTitle": "Détail de la demande d'authentification",
+        "filters": { "search": "Rechercher (code ADN, objet, demandeur…)", "status": "Statut" },
+        "columns": {
+            "codeADN": "Code ADN",
+            "objet": "Objet",
+            "demandeur": "Demandeur",
+            "attributedOrg": "Institut attributaire",
+            "date": "Date",
+            "status": "Statut",
+            "documents": "Documents",
+            "actions": "Actions"
+        },
+        "actions": { "detail": "Détail", "refresh": "Actualiser" },
+        "pagination": { "total": "Total {{total}} demandes" },
+        "toasts": { "loadError": "Erreur lors du chargement des demandes." },
+        "statusLabel": "Statut",
+        "statusUpdateSuccess": "Statut mis à jour.",
+        "statusUpdateError": "Erreur lors de la mise à jour du statut.",
+        "documentsTitle": "Documents déposés (instituts ayant ajouté)",
+        "docAddedBy": "Ajouté par (institut)",
+        "noDocuments": "Aucun document",
+        "notifiedInstitutsTitle": "Instituts notifiés par email",
+        "notifiedAt": "Notifié le"
     },
     "profile": {
         "title": "Profil utilisateur",
@@ -630,6 +827,7 @@
         },
         "kpis": {
             "myRequests": "Mes candidatures",
+            "myDemandesAuthentification": "Demandes d'authentification",
             "myDocuments": "Mes documents",
             "myTransactions": "Mes transactions",
             "myPayments": "Mes paiements",
@@ -644,7 +842,17 @@
             "title": "Activité récente",
             "requestLine": "Candidature {{code}} — {{status}} — {{date}}",
             "paymentLine": "Paiement {{provider}} — {{status}} — {{amount}} {{currency}} — {{date}}",
-            "none": "Aucune activité récente"
+            "none": "Aucune activité récente",
+            "table": {
+                "type": "Type",
+                "reference": "Référence",
+                "status": "Statut",
+                "amount": "Montant",
+                "date": "Date",
+                "typeRequest": "Candidature",
+                "typePayment": "Paiement",
+                "total": "{{total}} élément(s)"
+            }
         },
         "toasts": {
             "loadError": "Erreur lors de la récupération des statistiques"
@@ -678,6 +886,7 @@
         },
         "kpis": {
             "targetRequests": "Candidatures (total)",
+            "demandesAuthentificationAttributed": "Demandes auth. attribuées",
             "assignedRequests": "Demandes assignées (total)",
             "documents": "Documents (total/à traduire/traduit)",
             "subscriptions": "Abonnements (actifs/total)",
@@ -2370,7 +2579,8 @@
             "paymentsBreakdown": "Voir la répartition ci-dessous",
             "abonnementsTotal": "Abonnements",
             "abonnementsActive": "Actifs: {{active}} · Expirent bientôt: {{expiring}}",
-            "contactsTotal": "Contacts (messages)"
+            "contactsTotal": "Contacts (messages)",
+            "demandesAuthentificationTotal": "Demandes d'authentification"
         },
         "breakdowns": {
             "usersByRole": "Répartition des rôles utilisateurs",
@@ -4318,6 +4528,7 @@
         "messages": {
             "loadError": "Erreur chargement paiement",
             "paymentRefused": "Paiement refusé",
+            "paymentSuccess": "Paiement réussi",
             "stripeError": "Échec paiement Stripe"
         },
         "paymentStatus": {

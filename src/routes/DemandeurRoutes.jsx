@@ -11,6 +11,11 @@ import DemandeurDemandeDocuments from "../pages/Demandeur/demandes/DemandeurDema
 import DemandeurUserProfile from "../pages/Demandeur/User-Profile/profile";
 import DemandeurDashboard from "../pages/Demandeur/Dashboard/index";
 import DemandeurOrganisationDetail from "../pages/Demandeur/Organisation/DetailOragisation";
+import DemandeurDemandesAuthentificationList from "../pages/Demandeur/demandes-authentification/DemandeurDemandesAuthentificationList";
+import DemandeurDemandeAuthentificationCreate from "../pages/Demandeur/demandes-authentification/DemandeurDemandeAuthentificationCreate";
+import DemandeurDemandeAuthentificationDetail from "../pages/Demandeur/demandes-authentification/DemandeurDemandeAuthentificationDetail";
+import DemandeurDemandeAuthentificationNotifyInstituts from "../pages/Demandeur/demandes-authentification/DemandeurDemandeAuthentificationNotifyInstituts";
+import DemandeurDemandeAuthentificationPaymentPage from "../pages/Demandeur/demandes-authentification/DemandeurDemandeAuthentificationPaymentPage";
 
 export const demandeurRoutes = (
   <>
@@ -22,6 +27,13 @@ export const demandeurRoutes = (
       <Route index element={<DemandeurDashboard />} />
       <Route path="dashboard" element={<DemandeurDashboard />} />
       <Route path="profile" element={<DemandeurUserProfile />} />
+
+      {/* demandes d'authentification (code ADN) */}
+      <Route path="demandes-authentification" element={<DemandeurDemandesAuthentificationList />} />
+      <Route path="demandes-authentification/create" element={<DemandeurDemandeAuthentificationCreate />} />
+      <Route path="demandes-authentification/:id" element={<DemandeurDemandeAuthentificationDetail />} />
+      <Route path="demandes-authentification/:id/notify-instituts" element={<DemandeurDemandeAuthentificationNotifyInstituts />} />
+      <Route path="demandes-authentification/:id/payer" element={<DemandeurDemandeAuthentificationPaymentPage />} />
 
       {/* demandes */}
       <Route path="mes-demandes" element={<DemandeurDemandesList />} />

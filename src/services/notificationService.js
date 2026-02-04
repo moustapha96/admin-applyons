@@ -17,17 +17,19 @@ export async function fetchNotifications(params = {}) {
 
   const data = await axiosInstance.get(url);
 
-  // On normalise un minimum la structure attendue par le composant Topnav
-  // pour éviter de changer tout le code d'affichage.
+  // On normalise la structure attendue par le composant Topnav (demandeur = Notification, institut = OrganizationDemandeNotification).
   return (data.notifications || data || []).map((n) => ({
     id: n.id,
     type: n.type || "info",
-    // Le backend peut renvoyer directement des textes, ou bien des clés i18n.
-    // On stocke les deux et on laisse le composant décider quoi afficher.
     titleKey: n.titleKey || n.title || "notifications.genericTitle",
     messageKey: n.messageKey || n.message || "notifications.genericMessage",
     createdAt: n.createdAt ? new Date(n.createdAt) : new Date(),
     read: Boolean(n.read),
+    link: n.link || undefined,
+    entityType: n.entityType,
+    entityId: n.entityId,
+    demandeId: n.demandeId,
+    documentId: n.documentId,
   }));
 }
 

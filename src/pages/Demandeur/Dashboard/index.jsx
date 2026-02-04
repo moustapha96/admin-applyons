@@ -3,6 +3,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { Table, Tag } from "antd";
 import { useAuth } from "../../../hooks/useAuth";
 import dashboardService from "../../../services/dashboardService";
 import { useTranslation } from "react-i18next";
@@ -25,20 +26,23 @@ export default function DemandeurDashboard() {
   const { user } = useAuth();
 
   useEffect(() => {
+    if (!user?.id) return;
     const fetchStats = async () => {
       try {
         setLoading(true);
         const res = await dashboardService.getDemandeurStats(user.id);
-        setPayload(res);
+        // Axios interceptor retourne res.data : { success, meta, data }
+        setPayload(res?.data ? res : { data: res });
       } catch (error) {
         console.error("Error fetching demandeur stats:", error);
         toast.error(error?.message || t("demandeurDashboard.toasts.loadError"));
+        setPayload({ data: { widgets: {}, tables: {} } });
       } finally {
         setLoading(false);
       }
     };
     fetchStats();
-  }, [user.id, t]);
+  }, [user?.id, t]);
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
@@ -46,8 +50,8 @@ export default function DemandeurDashboard() {
     document.documentElement.classList.remove("dark");
   }, []);
 
-  // Extraction des données
-  const data = payload?.data || {};
+  // Extraction des données (payload = réponse API : { data: { widgets, tables } } ou { success, data } )
+  const data = payload?.data ?? payload ?? {};
   const widgets = data.widgets || {};
   const tables = data.tables || {};
 
@@ -59,6 +63,14 @@ export default function DemandeurDashboard() {
         value: widgets.myDemandes?.total ?? 0,
         sublabel:
           widgets.myDemandes?.byStatus && Object.keys(widgets.myDemandes.byStatus).length > 0
+            ? t("demandeurDashboard.kpis.seeBreakdown")
+            : t("demandeurDashboard.kpis.none"),
+      },
+      {
+        label: t("demandeurDashboard.kpis.myDemandesAuthentification"),
+        value: widgets.myDemandesAuthentification?.total ?? 0,
+        sublabel:
+          widgets.myDemandesAuthentification?.byStatus && Object.keys(widgets.myDemandesAuthentification.byStatus).length > 0
             ? t("demandeurDashboard.kpis.seeBreakdown")
             : t("demandeurDashboard.kpis.none"),
       },
@@ -96,6 +108,96 @@ export default function DemandeurDashboard() {
     }
   };
 
+  // Activités récentes fusionnées (demandes + paiements) triées par date
+  const recentActivities = useMemo(() => {
+    const items = [];
+    (tables.allDemandes || []).forEach((d) => {
+      items.push({
+        key: `demande-${d.id}`,
+        type: "demande",
+        reference: d.code,
+        status: d.status,
+        amount: null,
+        currency: null,
+        sortDate: new Date(d.createdAt || 0).getTime(),
+        date: d.createdAt,
+      });
+    });
+    (tables.allPayments || []).forEach((p) => {
+      const ref = p.demandePartage?.code
+        ? `Demande ${p.demandePartage.code}`
+        : p.demandeAuthentification?.codeADN
+          ? p.demandeAuthentification.codeADN
+          : (p.provider || p.id);
+      items.push({
+        key: `payment-${p.id}`,
+        type: "payment",
+        reference: ref,
+        status: p.status,
+        amount: p.amount,
+        currency: p.currency,
+        sortDate: new Date(p.createdAt || 0).getTime(),
+        date: p.createdAt,
+      });
+    });
+    items.sort((a, b) => b.sortDate - a.sortDate);
+    return items;
+  }, [tables.allDemandes, tables.allPayments]);
+
+  const activityColumns = [
+    {
+      title: t("demandeurDashboard.activity.table.type"),
+      dataIndex: "type",
+      key: "type",
+      width: 120,
+      render: (type) => (
+        <Tag color={type === "demande" ? "blue" : "green"}>
+          {type === "demande"
+            ? t("demandeurDashboard.activity.table.typeRequest")
+            : t("demandeurDashboard.activity.table.typePayment")}
+        </Tag>
+      ),
+    },
+    {
+      title: t("demandeurDashboard.activity.table.reference"),
+      dataIndex: "reference",
+      key: "reference",
+      ellipsis: true,
+    },
+    {
+      title: t("demandeurDashboard.activity.table.status"),
+      dataIndex: "status",
+      key: "status",
+      width: 120,
+      render: (status) => (
+        <Tag color={
+          status === "VALIDATED" || status === "PAID" || status === "SUCCEEDED" || status === "CAPTURED" ? "green" :
+          status === "REJECTED" || status === "FAILED" || status === "CANCELED" ? "red" :
+          "default"
+        }>
+          {status || "—"}
+        </Tag>
+      ),
+    },
+    {
+      title: t("demandeurDashboard.activity.table.amount"),
+      key: "amount",
+      width: 110,
+      align: "right",
+      render: (_, row) =>
+        row.amount != null
+          ? `${row.amount} ${row.currency || ""}`.trim()
+          : "—",
+    },
+    {
+      title: t("demandeurDashboard.activity.table.date"),
+      dataIndex: "date",
+      key: "date",
+      width: 160,
+      render: (date) => formatDate(date),
+    },
+  ];
+
   return (
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
@@ -132,37 +234,26 @@ export default function DemandeurDashboard() {
               ))}
             </div>
 
-            <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-              <div className="rounded-2xl border border-dashed border-slate-200 p-4 text-sm text-slate-500">
-                <h6 className="font-medium">{t("demandeurDashboard.activity.title")}</h6>
-                <ul className="mt-2 list-disc pl-5 text-xs text-slate-600">
-                  {tables.allDemandes?.map((demande) => (
-                    <li key={demande.id}>
-                      {t("demandeurDashboard.activity.requestLine", {
-                        code: demande.code,
-                        status: demande.status,
-                        date: formatDate(demande.createdAt)
-                      })}
-                    </li>
-                  ))}
-                  {tables.allPayments?.map((paiement) => (
-                    <li key={paiement.id}>
-                      {t("demandeurDashboard.activity.paymentLine", {
-                        provider: paiement.provider,
-                        status: paiement.status,
-                        amount: paiement.amount,
-                        currency: paiement.currency,
-                        date: formatDate(paiement.createdAt)
-                      })}
-                    </li>
-                  ))}
-                  {(!tables.allDemandes || tables.allDemandes.length === 0) &&
-                    (!tables.allPayments || tables.allPayments.length === 0) && (
-                      <li className="list-none text-slate-400">
-                        {t("demandeurDashboard.activity.none")}
-                      </li>
-                    )}
-                </ul>
+            <div className="mt-6">
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <h6 className="mb-3 font-medium text-slate-700">
+                  {t("demandeurDashboard.activity.title")}
+                </h6>
+                {recentActivities.length > 0 ? (
+                  <Table
+                    size="small"
+                    columns={activityColumns}
+                    dataSource={recentActivities}
+                    pagination={{
+                      pageSize: 10,
+                      showSizeChanger: false,
+                      showTotal: (total) => t("demandeurDashboard.activity.table.total", { total }),
+                    }}
+                    locale={{ emptyText: t("demandeurDashboard.activity.none") }}
+                  />
+                ) : (
+                  <p className="text-sm text-slate-500">{t("demandeurDashboard.activity.none")}</p>
+                )}
               </div>
             </div>
           </>

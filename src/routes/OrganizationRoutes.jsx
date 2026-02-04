@@ -26,6 +26,9 @@ import InstitutAbonnementsListe from "../pages/Institut/abonnement/InstitutAbonn
 import DemandeDocumentAdd from "../pages/Institut/demandes/DemandeDocumentAdd.jsx";
 import InstitutDemandesInviteesList from "../pages/Institut/demandes/InstitutDemandesInviteesList.jsx";
 import OrganizationNotificationsList from "../pages/Institut/notifications/OrganizationNotificationsList.jsx";
+import InstitutDemandesAuthentificationAttribueesList from "../pages/Institut/demandes-authentification/InstitutDemandesAuthentificationAttribueesList";
+import InstitutCodeADNPage from "../pages/Institut/demandes-authentification/InstitutCodeADNPage";
+import InstitutDemandeAuthentificationDetail from "../pages/Institut/demandes-authentification/InstitutDemandeAuthentificationDetail";
 
 export const organizationRoutes = (
   <>
@@ -37,6 +40,11 @@ export const organizationRoutes = (
 
       <Route path=":orgId/abonnement" element={<AbonnementInstitutSouscription />} />
       <Route path="abonnements" element={<InstitutAbonnementsListe />} />
+
+      {/* Demandes d'authentification (code ADN) */}
+      <Route path="demandes-authentification" element={<InstitutDemandesAuthentificationAttribueesList />} />
+      <Route path="demandes-authentification/:id" element={<InstitutDemandeAuthentificationDetail />} />
+      <Route path="code-adn" element={<InstitutCodeADNPage />} />
 
       <Route path="demandes" element={<InstitutDemandesList />} />
       <Route path="demandes/invited" element={<InstitutDemandesInviteesList />} />

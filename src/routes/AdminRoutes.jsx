@@ -88,6 +88,8 @@ import AdminOrganizationNotificationDetail from "../pages/Admin/OrganizationNoti
 import OrganizationNotificationsList from "../pages/Admin/organizations/OrganizationNotificationsList.jsx";
 import PermissionsList from "../pages/Admin/Permissions/PermissionsList.jsx";
 import ApiRoutesList from "../pages/Admin/ApiRoutes/ApiRoutesList.jsx";
+import AdminDemandesAuthentificationList from "../pages/Admin/DemandesAuthentification/AdminDemandesAuthentificationList.jsx";
+import AdminDemandeAuthentificationDetail from "../pages/Admin/DemandesAuthentification/AdminDemandeAuthentificationDetail.jsx";
 
 export const adminRoutes = (
   <>
@@ -272,7 +274,12 @@ export const adminRoutes = (
         <Route path="demandes" element={<UserDemandesList />} />
         <Route path="demandes/:id/details" element={<UserDemandeDetail />} />
         <Route path="demandes/:id/documents" element={<OrganizationDemandeDocuments />} />
+      </Route>
 
+      {/* -------- Demandes d'authentification (admin) -------- */}
+      <Route element={<ProtectedRoute requiredPermissions={["demandes-authentification.manage"]} />}>
+        <Route path="demandes-authentification" element={<AdminDemandesAuthentificationList />} />
+        <Route path="demandes-authentification/:id" element={<AdminDemandeAuthentificationDetail />} />
       </Route>
 
       <Route element={<ProtectedRoute requiredPermissions={["demandes.manage"]} />}>
