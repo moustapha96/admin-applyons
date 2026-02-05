@@ -23,7 +23,12 @@
         "reset": "Reset",
         "selectLanguage": "Select language",
         "notifications": "Notifications",
-        "required": "This field is required"
+        "required": "This field is required",
+        "back": "Back",
+        "upload": {
+            "pdfOnly": "Only PDF files are accepted.",
+            "maxSize": "Maximum file size is 5 MB."
+        }
     },
     "adminConfig": {
         "title": "Settings",
@@ -194,6 +199,7 @@
         "filieres": "Programs",
         "demandes": "Applications",
         "allDemandes": "All Applications",
+        "dossiersATraiter": "Files to process",
         "invited": "Invited",
         "documents": "Documents",
         "myDocuments": "My documents",
@@ -286,6 +292,16 @@
             "ANNULEE": "Cancelled"
         },
         "doc": { "type": "Type", "mention": "Mention", "addedBy": "Added by", "date": "Date", "file": "File", "viewFile": "View document", "institutDetails": "Details of the institution that submitted the document", "orgName": "Name", "orgType": "Type", "orgEmail": "Email", "orgPhone": "Phone", "orgAddress": "Address", "orgWebsite": "Website", "orgCountry": "Country" },
+        "documentTypes": {
+            "DIPLOMA": "Diploma",
+            "TRANSCRIPT": "Transcript",
+            "ID_CARD": "ID card",
+            "BIRTH_CERTIFICATE": "Birth certificate",
+            "PASSPORT": "Passport",
+            "CERTIFICATE": "Certificate / Attestation",
+            "LETTER": "Recommendation letter",
+            "OTHER": "Other (specify)"
+        },
         "upload": {
             "file": "File",
             "select": "Choose file",
@@ -293,8 +309,10 @@
             "submit": "Submit",
             "success": "Document added successfully.",
             "error": "Error adding document.",
-            "typePlaceholder": "Document type",
-            "mentionPlaceholder": "Mention (optional)"
+            "typePlaceholder": "Select a document type",
+            "typeOtherPlaceholder": "Specify the document type",
+            "mentionPlaceholder": "Mention (optional)",
+            "pdfOnlyExtra": "PDF only, 5 MB max."
         },
         "codeADN": {
             "title": "Access by ADN code",
@@ -832,6 +850,14 @@
             "hello": "Hello, {{firstName}} {{lastName}}",
             "welcome": "Welcome!"
         },
+        "links": {
+            "title": "Quick access",
+            "mesDemandes": "My applications",
+            "newApplication": "New application",
+            "demandesAuthentification": "Authentication requests",
+            "profile": "My profile",
+            "seeAll": "See all"
+        },
         "kpis": {
             "myApplications": "My applications",
             "myRequests": "My applications",
@@ -892,6 +918,20 @@
             "home": "Home",
             "institute": "Institute"
         },
+        "traducteur": {
+            "header": { "title": "Translator Institute Dashboard" },
+            "breadcrumb": { "institute": "Translator institute" },
+            "kpis": {
+                "assignedRequests": "Assigned applications",
+                "docsToTranslate": "Documents to translate",
+                "docsTranslated": "Documents translated"
+            },
+            "tables": {
+                "assignedByStatus": "Assigned applications by status",
+                "recentAssigned": "Recent assigned applications",
+                "date": "Date"
+            }
+        },
         "kpis": {
             "targetRequests": "Applications (total)",
             "demandesAuthentificationAttributed": "Authentication requests (attributed)",
@@ -899,7 +939,9 @@
             "documents": "Documents (total/to translate/translated)",
             "subscriptions": "Subscriptions (active/total)",
             "expiringSoon": "Expiring soon: {{count}}",
-            "usersTotal": "Users (total)"
+            "usersTotal": "Users (total)",
+            "notifications": "Notifications",
+            "unread": "unread"
         },
         "charts": {
             "targetVsAssigned": {
@@ -1458,6 +1500,7 @@
             "allNotifications": "All notifications"
         },
         "columns": {
+            "demandeur": "Applicant",
             "lastName": "Last name",
             "firstName": "First name",
             "dateOfBirth": "Date of birth",
@@ -1477,6 +1520,7 @@
         },
         "buttons": {
             "refresh": "Refresh",
+            "viewDetails": "View details",
             "viewDemande": "View application",
             "addDocument": "Add document"
         },
@@ -1489,7 +1533,51 @@
         "errors": {
             "noOrgId": "Organization ID not found"
         },
-        "empty": "No notifications"
+        "empty": "No notifications",
+        "viewMode": {
+            "compact": "Few details",
+            "full": "All details"
+        }
+    },
+    "orgNotificationDetail": {
+        "pageTitle": "Notification details",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "notifications": "Notifications"
+        },
+        "sections": {
+            "mainInfo": "Main information",
+            "demandeur": "Applicant",
+            "demande": "Related application"
+        },
+        "fields": {
+            "status": "Status",
+            "type": "Type",
+            "message": "Message",
+            "createdAt": "Created at",
+            "viewedAt": "Viewed at",
+            "demandeurName": "Name",
+            "demandeurEmail": "Email",
+            "demandeCode": "Application code",
+            "demandeDate": "Application date"
+        },
+        "status": {
+            "viewed": "Viewed",
+            "unviewed": "Unviewed"
+        },
+        "actions": {
+            "back": "Back",
+            "backToList": "Back to list",
+            "markAsViewed": "Mark as viewed"
+        },
+        "messages": {
+            "loadError": "Error loading notification",
+            "markedAsViewed": "Notification marked as viewed",
+            "markError": "Error marking notification"
+        },
+        "errors": {
+            "notFound": "Notification not found"
+        }
     },
     "adminOrgNotifications": {
         "pageTitle": "Organization Notifications",
@@ -2244,13 +2332,13 @@
             "year": "Year obtained",
             "yearRequired": "Year obtained is required",
             "file": "File",
-            "fileHelp": "Upload the document file (PDF/JPG/PNG).",
+            "fileHelp": "Upload the document file (PDF only, max 5 MB).",
             "fileOriginal": "Original file",
             "fileRequired": "Please select a file."
         },
         "upload": {
             "dragTitle": "Drag & drop or click to select",
-            "dragHint": "PDF / JPG / PNG (max 1 file)",
+            "dragHint": "PDF only (max 5 MB, 1 file)",
             "tooltipRequired": "Required"
         },
         "toasts": {
@@ -2587,8 +2675,25 @@
         "error": "Error fetching stats"
     },
     "traducteurDashboard": {
+        "breadcrumb": { "dashboard": "Dashboard" },
         "hello": "Hello, {{firstName}} {{lastName}}",
-        "welcome": "Welcome!",
+        "welcome": "Welcome to your translator space.",
+        "links": {
+            "title": "Quick access",
+            "demandes": "Assigned applications",
+            "dossiers": "Files to process",
+            "profile": "My profile",
+            "users": "Users",
+            "seeAll": "View all applications",
+            "goToDemandes": "View applications"
+        },
+        "tables": {
+            "recentAssigned": "Recent assigned applications",
+            "code": "Code",
+            "status": "Status",
+            "date": "Date",
+            "view": "View"
+        },
         "kpis": {
             "usersTotal": "Users (total)",
             "usersActive": "Active: {{count}}",
@@ -4017,6 +4122,7 @@
         },
         "actions": {
             "details": "Details",
+            "detail": "Detail",
             "start": "Start",
             "validate": "Validate",
             "reject": "Reject",

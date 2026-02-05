@@ -673,6 +673,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../../../components/payment/CheckoutForm";
 import paymentService, { getPayPalConfig } from "@/services/paymentService";
 import { useTranslation } from "react-i18next";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -1346,7 +1347,7 @@ export default function AbonnementInstitutSouscription() {
                 name="periode"
                 rules={[{ required: true, message: t("institutAbonnementSouscription.modals.renew.selectPeriod") }]}
               >
-                <RangePicker className="w-full" />
+                <RangePicker className="w-full" format={DATE_FORMAT} />
               </Form.Item>
               <Form.Item
                 label={t("institutAbonnementSouscription.modals.renew.amount")}

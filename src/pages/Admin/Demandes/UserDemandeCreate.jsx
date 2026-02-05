@@ -30,6 +30,7 @@ import paymentService from "@/services/paymentService";
 import { useAuth } from "@/hooks/useAuth";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -234,7 +235,7 @@ const UserDemandeCreate = () => {
               name="graduationDate"
               label="Date de graduation"
             >
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
             </Form.Item>
           </Col>
         </Row>
@@ -249,7 +250,7 @@ const UserDemandeCreate = () => {
               name="dob"
               label="Date de naissance"
             >
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
             </Form.Item>
           </Col>
           <Col span={12}>

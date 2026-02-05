@@ -5,6 +5,7 @@ import { SaveOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import demandeService from "@/services/demandeService";
 import organizationService from "@/services/organizationService";
 import { useAuth } from "@/hooks/useAuth";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -198,7 +199,7 @@ const UserDemandeEdit = () => {
               name="graduationDate"
               label="Date de graduation"
             >
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
             </Form.Item>
           </Col>
         </Row>
@@ -213,7 +214,7 @@ const UserDemandeEdit = () => {
               name="dob"
               label="Date de naissance"
             >
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
             </Form.Item>
           </Col>
           <Col span={12}>

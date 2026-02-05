@@ -19,7 +19,12 @@
         "reset": "重置",
         "selectLanguage": "选择语言",
         "notifications": "通知",
-        "required": "此字段为必填项"
+        "required": "此字段为必填项",
+        "back": "返回",
+        "upload": {
+            "pdfOnly": "仅接受 PDF 文件。",
+            "maxSize": "文件最大大小为 5 MB。"
+        }
     },
     "adminConfig": {
         "title": "设置",
@@ -190,6 +195,7 @@
         "filieres": "课程",
         "demandes": "申请",
         "allDemandes": "申请",
+        "dossiersATraiter": "待处理卷宗",
         "invited": "已邀请",
         "documents": "文件",
         "myDocuments": "我的文件",
@@ -276,6 +282,16 @@
             "ANNULEE": "已取消"
         },
         "doc": { "type": "类型", "mention": "说明", "addedBy": "添加者", "date": "日期", "file": "文件", "viewFile": "查看文件", "institutDetails": "提交文件的机构详情", "orgName": "名称", "orgType": "类型", "orgEmail": "邮箱", "orgPhone": "电话", "orgAddress": "地址", "orgWebsite": "网站", "orgCountry": "国家" },
+        "documentTypes": {
+            "DIPLOMA": "文凭",
+            "TRANSCRIPT": "成绩单",
+            "ID_CARD": "身份证",
+            "BIRTH_CERTIFICATE": "出生证明",
+            "PASSPORT": "护照",
+            "CERTIFICATE": "证明/证书",
+            "LETTER": "推荐信",
+            "OTHER": "其他（请说明）"
+        },
         "upload": {
             "file": "文件",
             "select": "选择文件",
@@ -283,8 +299,10 @@
             "submit": "提交",
             "success": "文件已成功添加。",
             "error": "添加文件时出错。",
-            "typePlaceholder": "文件类型",
-            "mentionPlaceholder": "说明（可选）"
+            "typePlaceholder": "选择文件类型",
+            "typeOtherPlaceholder": "请说明文件类型",
+            "mentionPlaceholder": "说明（可选）",
+            "pdfOnlyExtra": "仅PDF，最大5MB。"
         },
         "codeADN": {
             "title": "通过ADN码访问",
@@ -792,6 +810,14 @@
             "hello": "你好，{{firstName}} {{lastName}}",
             "welcome": "欢迎！"
         },
+        "links": {
+            "title": "快速访问",
+            "mesDemandes": "我的申请",
+            "newApplication": "新申请",
+            "demandesAuthentification": "认证申请",
+            "profile": "我的资料",
+            "seeAll": "查看全部"
+        },
         "kpis": {
             "myRequests": "我的申请",
             "myDemandesAuthentification": "认证申请",
@@ -851,6 +877,20 @@
             "home": "首页",
             "institute": "学院"
         },
+        "traducteur": {
+            "header": { "title": "翻译机构控制台" },
+            "breadcrumb": { "institute": "翻译机构" },
+            "kpis": {
+                "assignedRequests": "已分配申请",
+                "docsToTranslate": "待翻译文档",
+                "docsTranslated": "已翻译文档"
+            },
+            "tables": {
+                "assignedByStatus": "按状态的已分配申请",
+                "recentAssigned": "最近分配的申请",
+                "date": "日期"
+            }
+        },
         "kpis": {
             "targetRequests": "申请（总数）",
             "demandesAuthentificationAttributed": "认证申请（已分配）",
@@ -858,7 +898,9 @@
             "documents": "文件（总数/待翻译/已翻译）",
             "subscriptions": "订阅（有效/总数）",
             "expiringSoon": "即将到期：{{count}}",
-            "usersTotal": "用户（总数）"
+            "usersTotal": "用户（总数）",
+            "notifications": "通知",
+            "unread": "未读"
         },
         "charts": {
             "targetVsAssigned": {
@@ -1417,6 +1459,7 @@
             "allNotifications": "所有通知"
         },
         "columns": {
+            "demandeur": "申请人",
             "lastName": "姓",
             "firstName": "名",
             "dateOfBirth": "出生日期",
@@ -1436,6 +1479,7 @@
         },
         "buttons": {
             "refresh": "刷新",
+            "viewDetails": "查看详情",
             "viewDemande": "查看申请",
             "addDocument": "添加文档"
         },
@@ -1447,6 +1491,51 @@
         },
         "errors": {
             "noOrgId": "未找到组织ID"
+        },
+        "empty": "暂无通知",
+        "viewMode": {
+            "compact": "简要",
+            "full": "全部详情"
+        }
+    },
+    "orgNotificationDetail": {
+        "pageTitle": "通知详情",
+        "breadcrumbs": {
+            "dashboard": "仪表盘",
+            "notifications": "通知"
+        },
+        "sections": {
+            "mainInfo": "主要信息",
+            "demandeur": "申请人",
+            "demande": "相关申请"
+        },
+        "fields": {
+            "status": "状态",
+            "type": "类型",
+            "message": "消息",
+            "createdAt": "创建时间",
+            "viewedAt": "查看时间",
+            "demandeurName": "姓名",
+            "demandeurEmail": "邮箱",
+            "demandeCode": "申请编号",
+            "demandeDate": "申请日期"
+        },
+        "status": {
+            "viewed": "已查看",
+            "unviewed": "未查看"
+        },
+        "actions": {
+            "back": "返回",
+            "backToList": "返回列表",
+            "markAsViewed": "标记为已读"
+        },
+        "messages": {
+            "loadError": "加载通知失败",
+            "markedAsViewed": "已标记为已读",
+            "markError": "标记失败"
+        },
+        "errors": {
+            "notFound": "未找到通知"
         }
     },
     "adminOrgNotifications": {
@@ -2202,13 +2291,13 @@
             "year": "获得年份",
             "yearRequired": "必须选择获得年份",
             "file": "文件",
-            "fileHelp": "上传文档文件（PDF/JPG/PNG）。",
+            "fileHelp": "上传文档文件（仅限 PDF，最大 5 MB）。",
             "fileOriginal": "原始文件",
             "fileRequired": "请选择一个文件。"
         },
         "upload": {
             "dragTitle": "拖拽到此或点击选择",
-            "dragHint": "PDF / JPG / PNG（最多 1 个文件）",
+            "dragHint": "仅限 PDF（最大 5 MB，1 个文件）",
             "tooltipRequired": "必填"
         },
         "toasts": {
@@ -2460,8 +2549,25 @@
         "error": "获取统计信息时出错"
     },
     "traducteurDashboard": {
+        "breadcrumb": { "dashboard": "控制台" },
         "hello": "你好，{{firstName}} {{lastName}}",
-        "welcome": "欢迎！",
+        "welcome": "欢迎使用翻译员空间。",
+        "links": {
+            "title": "快速访问",
+            "demandes": "已分配申请",
+            "dossiers": "待处理卷宗",
+            "profile": "我的资料",
+            "users": "用户",
+            "seeAll": "查看所有申请",
+            "goToDemandes": "查看申请"
+        },
+        "tables": {
+            "recentAssigned": "最近分配的申请",
+            "code": "编号",
+            "status": "状态",
+            "date": "日期",
+            "view": "查看"
+        },
         "kpis": {
             "usersTotal": "用户（总计）",
             "usersActive": "活跃：{{count}}",
@@ -3722,6 +3828,7 @@
         },
         "actions": {
             "details": "详情",
+            "detail": "详情",
             "start": "开始",
             "validate": "验证",
             "reject": "拒绝",

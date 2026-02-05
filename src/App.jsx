@@ -4,6 +4,8 @@ import { useState } from "react"
 import Sidebar from "./components/sidebar"
 import Switcher from "./components/switcher"
 import Topnav from "./components/topnav"
+import PageBackBar from "./components/PageBackBar"
+import ScrollToTop from "./components/ScrollToTop"
 import { AppRoutes } from "./routes/AppRoutes"
 import { useLocation } from "react-router-dom"
 import Footer from "./components/footer"
@@ -54,6 +56,8 @@ function App() {
           <Sidebar isCollapsed={!toggle} />
           <main className="page-content bg-gray-50 dark:bg-slate-800">
             <Topnav toggle={toggle} setToggle={setToggle} />
+            <PageBackBar />
+            <ScrollToTop />
             <AppRoutes />
             <Footer />
           </main>

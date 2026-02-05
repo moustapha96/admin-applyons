@@ -47,6 +47,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate, useLocation } from "react-router-dom";
 import countries from "@/assets/countries.json";
 import { useTranslation } from "react-i18next";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Text } = Typography;
 
@@ -881,7 +882,7 @@ export default function DemandeurDemandeCreate() {
                       rules={[{ required: true, message: t("common.required") }]}
                       getValueProps={(v) => ({ value: reviveDate(v) })}
                     >
-                      <DatePicker className="w-full" size="large" allowClear />
+                      <DatePicker className="w-full" size="large" allowClear format={DATE_FORMAT} />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={8}>
@@ -1018,7 +1019,7 @@ export default function DemandeurDemandeCreate() {
                       rules={[{ required: true, message: t("common.required") }]}
                       getValueProps={(v) => ({ value: reviveDate(v) })}
                     >
-                      <DatePicker className="w-full" size="large" allowClear />
+                      <DatePicker className="w-full" size="large" allowClear format={DATE_FORMAT} />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={8}>
@@ -1798,7 +1799,7 @@ function Summary({ form, invites, orgs, tradOrgs, t, me }) {
         />
         <Item
           label={t("demandeurDemandeCreate.fields.dateOfBirth")}
-          value={v.dob ? dayjs(v.dob).format("DD/MM/YYYY") : null}
+          value={v.dob ? dayjs(v.dob).format(DATE_FORMAT) : null}
         />
         <Item
           label={t("demandeurDemandeCreate.fields.countryOfCitizenship")}
@@ -1830,7 +1831,7 @@ function Summary({ form, invites, orgs, tradOrgs, t, me }) {
         />
         <Item
           label={t("demandeurDemandeCreate.fields.graduationDate")}
-          value={v.graduationDate ? dayjs(v.graduationDate).format("DD/MM/YYYY") : null}
+          value={v.graduationDate ? dayjs(v.graduationDate).format(DATE_FORMAT) : null}
         />
         <Item
           label={t("demandeurDemandeCreate.fields.gradingScale")}

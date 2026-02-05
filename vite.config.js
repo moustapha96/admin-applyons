@@ -4,8 +4,19 @@ import path from 'path';
 
 const BACKEND_URL = process.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
+// Plugin : injecte un timestamp dans index.html pour invalider le cache à chaque build
+function noCacheIndexPlugin() {
+    return {
+        name: 'no-cache-index',
+        transformIndexHtml(html) {
+            const comment = `<!-- build: ${Date.now()} -->`;
+            return html.replace('</head>', `${comment}\n</head>`);
+        },
+    };
+}
+
 export default defineConfig({
-    plugins: [react()],
+    plugins: [react(), noCacheIndexPlugin()],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src'),
@@ -44,5 +55,13 @@ export default defineConfig({
     },
     build: {
         outDir: '../admin.applyons.com',
+        rollupOptions: {
+            output: {
+                entryFileNames: 'assets/[name]-[hash].js',
+                chunkFileNames: 'assets/[name]-[hash].js',
+                assetFileNames: 'assets/[name]-[hash][extname]',
+            },
+        },
+        // Chaque build produit des noms de fichiers uniques (hash) = pas de cache obsolète
     },
 });

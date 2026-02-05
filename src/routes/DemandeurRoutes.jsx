@@ -21,7 +21,12 @@ export const demandeurRoutes = (
   <>
     <Route
       path="/demandeur"
-      element={<ProtectedRoute allowedRoles={["DEMANDEUR"]} />}
+      element={
+        <ProtectedRoute
+          allowedRoles={["DEMANDEUR"]}
+          redirectTo="own-dashboard"
+        />
+      }
     >
       {/* ✅ chemins RELATIFS ici */}
       <Route index element={<DemandeurDashboard />} />

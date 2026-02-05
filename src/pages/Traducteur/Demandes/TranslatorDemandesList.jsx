@@ -36,6 +36,8 @@ import { useAuth } from "../../../hooks/useAuth";
 import demandeService from "@/services/demandeService";
 import documentService from "@/services/documentService"; // <-- nouveau service
 import { buildImageUrl } from "@/utils/imageUtils";
+import { DATE_FORMAT } from "@/utils/dateFormat";
+import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 
 const { Title, Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -231,10 +233,10 @@ export default function TranslatorDemandesList() {
 
         {!d.estTraduit && (
           <Upload
-            accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+            accept={PDF_ACCEPT}
             maxCount={1}
             showUploadList={false}
-            beforeUpload={() => false} // on envoie manuellement
+            beforeUpload={createPdfBeforeUpload(message.error, t, Upload.LIST_IGNORE)}
             customRequest={async ({ file, onSuccess, onError }) => {
               try {
                 // si tu veux passer encryptionKeyTraduit ou ownerOrgId :
@@ -392,6 +394,7 @@ export default function TranslatorDemandesList() {
             />
 
             <RangePicker
+              format={DATE_FORMAT}
               placeholder={[t("traducteurDemandesList.filters.dateRange"), t("traducteurDemandesList.filters.dateRange")]}
               onChange={(v) =>
                 setFilters((f) => ({

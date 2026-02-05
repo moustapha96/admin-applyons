@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { Form, Input, Button, Select, Card, Breadcrumb, Row, Col, message, Spin, DatePicker } from "antd";
 import { SaveOutlined, ArrowLeftOutlined, CreditCardOutlined } from "@ant-design/icons";
 import organizationService from "../../../services/organizationService";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -141,7 +142,7 @@ const OrganizationAbonnementEdit = () => {
                   label="Date de début"
                   rules={[{ required: true, message: "La date de début est obligatoire" }]}
                 >
-                  <DatePicker style={{ width: "100%" }} />
+                  <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -150,7 +151,7 @@ const OrganizationAbonnementEdit = () => {
                   label="Date de fin"
                   rules={[{ required: true, message: "La date de fin est obligatoire" }]}
                 >
-                  <DatePicker style={{ width: "100%" }} />
+                  <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
                 </Form.Item>
               </Col>
               <Col span={24}>

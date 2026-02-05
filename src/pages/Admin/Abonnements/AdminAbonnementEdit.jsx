@@ -32,6 +32,7 @@ import dayjs from "dayjs";
 import organizationService from "@/services/organizationService";
 import abonnementService from "@/services/abonnement.service";
 import { useTranslation } from "react-i18next";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -209,7 +210,7 @@ export default function AdminAbonnementEdit() {
                   rules={[{ required: true, message: t("adminAbonnements.edit.form.period.required") }]}
                 >
                   <RangePicker
-                    format="YYYY-MM-DD"
+                    format={DATE_FORMAT}
                     className="w-full"
                     disabledDate={(current) => current && current < dayjs().startOf("day")}
                   />

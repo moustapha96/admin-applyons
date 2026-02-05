@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { LogoutOutlined } from "@ant-design/icons";
 import countries from "../../../assets/countries.json";
 import dayjs from "dayjs";
+import { DATE_FORMAT } from "../../../utils/dateFormat";
 
 const { Title, Text } = Typography;
 
@@ -411,7 +412,7 @@ export default function InstitutUserProfile() {
                       <DatePicker 
                         style={{ width: "100%" }}
                         placeholder={t("profilePage.placeholders.dateOfBirth")}
-                        format="DD/MM/YYYY"
+                        format={DATE_FORMAT}
                         disabledDate={(current) => current && current > dayjs().endOf('day')}
                       />
                     </Form.Item>

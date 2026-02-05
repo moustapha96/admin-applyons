@@ -33,6 +33,8 @@ import demandeService from "@/services/demandeService";
 import userService from "@/services/userService";
 import documentService from "@/services/documentService";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "react-i18next";
+import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 
 const { Title, Text } = Typography;
 
@@ -57,6 +59,7 @@ const fmtDate = (d, f = "DD/MM/YYYY") =>
 const safeUrl = (u) => buildImageUrl(u);
 
 export default function TraducteurDemandeurDetails() {
+  const { t } = useTranslation();
   const { id: userId } = useParams(); // id du DEMANDEUR dans l'URL
   const navigate = useNavigate();
   const { user: me } = useAuth() || {};
@@ -270,10 +273,10 @@ export default function TraducteurDemandeurDetails() {
         {/* Bloc upload si non traduit */}
         {!d.estTraduit && (
           <Upload
-            accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+            accept={PDF_ACCEPT}
             maxCount={1}
             showUploadList={false}
-            beforeUpload={() => false} // on gère l’envoi manuellement
+            beforeUpload={createPdfBeforeUpload(message.error, t, Upload.LIST_IGNORE)} // on gère l’envoi manuellement
             customRequest={async ({ file, onSuccess, onError }) => {
               try {
                 await handleUploadTranslated(d, file);
@@ -388,7 +391,7 @@ export default function TraducteurDemandeurDetails() {
           <Breadcrumb
             items={[
               { title: <Link to="/traducteur/dashboard">Dashboard</Link> },
-              { title: <Link to="/traducteur/mes-demandes">Mes demandes</Link> },
+              { title: <Link to="/traducteur/demandes">Demandes</Link> },
               {
                 title:
                   demandeur &&

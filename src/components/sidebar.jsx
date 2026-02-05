@@ -10,7 +10,7 @@ import { MdOutlineEmail, MdOutlineEvent, MdOutlineGroups, MdOutlineBusiness, MdO
 import { BiNews, BiListCheck } from "react-icons/bi";
 import { RiSettings4Line, RiMailSettingsLine, RiFileList3Line, RiShieldUserLine, RiRouteLine } from "react-icons/ri";
 import { FaRegHandshake, FaRegImages, FaRegFileAlt } from "react-icons/fa";
-import { BellOutlined } from "@ant-design/icons";
+import { BellOutlined, FolderOpenOutlined } from "@ant-design/icons";
 import { useAuth } from "../hooks/useAuth";
 import { usePermissions } from "../hooks/usePermissions";
 import { useTranslation } from "react-i18next";
@@ -237,7 +237,16 @@ const MENU_SUPER_ADMIN = [
 
 const MENU_TRADUCTEUR = [
   { i18nKey: "dashboard", icon: <AiOutlineLineChart />, to: "/traducteur/dashboard" },
-
+  {
+    i18nKey: "demandes",
+    icon: <AiOutlineHistory />,
+    anyPerms: ["demandes.read"],
+    children: [
+      // { i18nKey: "allDemandes", to: "/traducteur/demandes", anyPerms: ["demandes.read"], icon: <BiListCheck /> },
+      { i18nKey: "dossiersATraiter", to: "/traducteur/dossiers-a-traiter", anyPerms: ["demandes.read"], icon: <FolderOpenOutlined /> },
+    ],
+  },
+  { i18nKey: "notifications", icon: <BellOutlined />, to: "/traducteur/notifications" },
   {
     i18nKey: "users",
     icon: <AiOutlineUser />,
@@ -246,12 +255,6 @@ const MENU_TRADUCTEUR = [
       { i18nKey: "userList", to: "/traducteur/users", anyPerms: ["users.read", "users.manage"], icon: <MdOutlineGroups /> },
       { i18nKey: "userNew", to: "/traducteur/users/create", anyPerms: ["users.manage"], icon: <AiOutlineUserAdd /> },
     ],
-  },
-  {
-    i18nKey: "demandes",
-    icon: <AiOutlineHistory />,
-    anyPerms: ["demandes.read"],
-    children: [{ i18nKey: "allDemandes", to: "/traducteur/demandes", anyPerms: ["demandes.read"], icon: <BiListCheck /> }],
   },
   { i18nKey: "profile", icon: <AiOutlineUser />, to: "/profile" },
 ];
@@ -396,7 +399,6 @@ const resolveMenuForUser = (user, handleLogOut) => {
 /* -------------------- Sidebar -------------------- */
 export default function Sidebar({ isCollapsed = false }) {
   const { user, logout } = useAuth();
-  console.log(user);
   const { hasAnyPermission } = usePermissions();
   const { t } = useTranslation();
   const location = useLocation();

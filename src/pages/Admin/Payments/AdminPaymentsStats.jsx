@@ -168,6 +168,7 @@ import { Link } from "react-router-dom";
 import { DollarCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import paymentService from "@/services/paymentService";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell, Legend,
 } from "recharts";
@@ -320,6 +321,7 @@ export default function AdminPaymentsStats() {
             <Col xs={24} sm={24} md={10} lg={8}>
               <RangePicker
                 allowClear={false}
+                format={DATE_FORMAT}
                 className="w-full"
                 value={[dayjs(filters.from), dayjs(filters.to)]}
                 onChange={(vals) => {

@@ -93,8 +93,16 @@ import AdminDemandeAuthentificationDetail from "../pages/Admin/DemandesAuthentif
 
 export const adminRoutes = (
   <>
-    {/* Scope Admin protégé */}
-    <Route path="/admin" element={<ProtectedRoute />}>
+    {/* Scope Admin : réservé aux rôles ADMIN et SUPER_ADMIN uniquement */}
+    <Route
+      path="/admin"
+      element={
+        <ProtectedRoute
+          allowedRoles={["ADMIN", "SUPER_ADMIN"]}
+          redirectTo="own-dashboard"
+        />
+      }
+    >
       {/* Dashboard & profil */}
       <Route index element={<AdminDashboard />} />
       <Route path="dashboard" element={<AdminDashboard />} />

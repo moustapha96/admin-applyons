@@ -25,11 +25,14 @@ import {
 } from "@ant-design/icons";
 import documentService from "../../../services/documentService";
 import { useAuth } from "../../../hooks/useAuth";
+import { useTranslation } from "react-i18next";
+import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 
 const { Option } = Select;
 const { Dragger } = Upload;
 
 const OrganizationAddDocumentToDemande = () => {
+  const { t } = useTranslation();
   const { id: demandeId } = useParams();
   const { user } = useAuth();
   const [form] = Form.useForm();
@@ -205,9 +208,9 @@ const OrganizationAddDocumentToDemande = () => {
                     customRequest={handleUpload}
                     fileList={fileList}
                     maxCount={1}
-                    accept=".pdf"
+                    accept={PDF_ACCEPT}
                     disabled={uploading}
-                    beforeUpload={() => false}
+                    beforeUpload={createPdfBeforeUpload(message.error, t, Upload.LIST_IGNORE)}
                   >
                     <p className="ant-upload-drag-icon">
                       <FilePdfOutlined style={{ fontSize: "48px", color: "#1890ff" }} />

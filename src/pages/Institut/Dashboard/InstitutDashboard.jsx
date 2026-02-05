@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Card,
   Row,
@@ -11,9 +11,7 @@ import {
   Typography,
   Table,
   Tag,
-  Space,
   Breadcrumb,
-  Progress,
   message,
 } from "antd";
 import {
@@ -21,12 +19,13 @@ import {
   BookOutlined,
   SafetyCertificateOutlined,
   TeamOutlined,
+  TranslationOutlined,
+  BellOutlined,
 } from "@ant-design/icons";
-import dayjs from "dayjs";
 import dashboardService from "@/services/dashboardService";
+import organizationDemandeNotificationService from "@/services/organizationDemandeNotificationService";
 import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
-
 const { Title, Text } = Typography;
 
 const statusColor = (s) =>
@@ -37,15 +36,18 @@ const statusColor = (s) =>
 export default function InstitutDashboard() {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [payload, setPayload] = useState(null);
+  const [notificationStats, setNotificationStats] = useState({ total: 0, unviewed: 0 });
 
   useEffect(() => {
     const load = async () => {
+      if (!user?.organization?.id) return;
       setLoading(true);
       try {
         const res = await dashboardService.getInstitutStats(user.organization.id, { recentDays: 30 });
-        setPayload(res);
+        setPayload(res?.data ?? res);
       } catch (e) {
         console.error(e);
         message.error(e?.message || t("institutDashboard.toasts.loadError"));
@@ -55,13 +57,30 @@ export default function InstitutDashboard() {
     };
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.organization?.id, t]);
+  }, [user?.organization?.id, t]);
 
-  // Extraction des données
-  const data = payload?.data || {};
-  const widgets = data.widgets || {};
-  const tables = data.tables || {};
-  const charts = data.charts || {};
+  useEffect(() => {
+    const loadNotifStats = async () => {
+      if (!user?.organization?.id) return;
+      try {
+        const res = await organizationDemandeNotificationService.statsForCurrentOrg(user.organization.id);
+        const stats = res?.data?.stats ?? res?.stats ?? { total: 0, unviewed: 0, viewed: 0 };
+        setNotificationStats({ total: stats.total ?? 0, unviewed: stats.unviewed ?? 0 });
+      } catch (e) {
+        console.warn("Notification stats:", e?.message || e);
+      }
+    };
+    loadNotifStats();
+  }, [user?.organization?.id]);
+
+  // Backend returns { success, meta, data: { widgets, tables, charts } }
+  const responseBody = payload ?? {};
+  const meta = responseBody.meta ?? {};
+  const data = responseBody.data ?? responseBody;
+  const widgets = data.widgets ?? {};
+  const tables = data.tables ?? {};
+  const charts = data.charts ?? {};
+  const isTraducteur = meta.institutType === "TRADUCTEUR" || user?.organization?.type === "TRADUCTEUR";
 
   // Helper lines
   const mapToRows = (obj) => {
@@ -108,15 +127,19 @@ export default function InstitutDashboard() {
     { title: t("institutDashboard.tables.listCols.description"), dataIndex: "description", key: "description" },
   ];
 
-  // Récents (entrants)
-  const recent = tables?.recentIncomingDemandes || [];
-  const totalRecent = recent.length;
-  const byStatus = recent.reduce((acc, { status }) => {
-    const k = status || "UNKNOWN";
-    acc[k] = (acc[k] || 0) + 1;
-    return acc;
-  }, {});
-  const statusEntries = Object.entries(byStatus);
+  const percentAssigned = charts.targetVsAssigned?.assigned && charts.targetVsAssigned?.target
+    ? Math.round(
+        (charts.targetVsAssigned.assigned /
+          (charts.targetVsAssigned.target + charts.targetVsAssigned.assigned)) * 100
+      )
+    : 0;
+
+  // Données pour le dashboard TRADUCTEUR
+  const recentAssigned = tables?.recentAssignedDemandes ?? [];
+  const demandesAssignedOrgRowsTraducteur = useMemo(
+    () => mapToRows(widgets.demandesAssignedOrg?.byStatus),
+    [widgets.demandesAssignedOrg?.byStatus]
+  );
 
   const formatDate = (v) => {
     if (!v) return t("institutDashboard.common.na");
@@ -135,13 +158,145 @@ export default function InstitutDashboard() {
     }
   };
 
-  const percentAssigned = charts.targetVsAssigned?.assigned && charts.targetVsAssigned?.target
-    ? Math.round(
-        (charts.targetVsAssigned.assigned /
-          (charts.targetVsAssigned.target + charts.targetVsAssigned.assigned)) * 100
-      )
-    : 0;
+  // ——— Dashboard TRADUCTEUR : uniquement les données essentielles ———
+  if (isTraducteur) {
+    return (
+      <div className="container-fluid relative px-3">
+        <div className="layout-specing">
+          <div className="md:flex justify-between items-center mb-6">
+            <Title level={3} className="mb-0">
+              {t("institutDashboard.traducteur.header.title")}
+            </Title>
+            <Breadcrumb
+              items={[
+                { title: <Link to="/organisations/dashboard">{t("institutDashboard.breadcrumb.home")}</Link> },
+                { title: t("institutDashboard.traducteur.breadcrumb.institute") },
+              ]}
+            />
+          </div>
+          <Text type="secondary">
+            {t("institutDashboard.header.orgLabel")}{" "}
+            <Text code>{user?.organization?.name || t("institutDashboard.common.undef")}</Text>
+          </Text>
 
+          <Row gutter={[16, 16]} className="mt-3">
+            <Col xs={12} md={8}>
+              <Card loading={loading}>
+                <Statistic
+                  title={t("institutDashboard.traducteur.kpis.assignedRequests")}
+                  prefix={<FileTextOutlined />}
+                  value={widgets.demandesAssignedOrg?.total ?? 0}
+                />
+              </Card>
+            </Col>
+            <Col xs={12} md={8}>
+              <Card loading={loading}>
+                <Statistic
+                  title={t("institutDashboard.traducteur.kpis.docsToTranslate")}
+                  prefix={<TranslationOutlined />}
+                  value={widgets.docsToTranslate?.total ?? 0}
+                />
+              </Card>
+            </Col>
+            <Col xs={12} md={8}>
+              <Card loading={loading}>
+                <Statistic
+                  title={t("institutDashboard.traducteur.kpis.docsTranslated")}
+                  prefix={<BookOutlined />}
+                  value={widgets.docsTranslated?.total ?? 0}
+                />
+              </Card>
+            </Col>
+            <Col xs={12} md={8}>
+              <Card loading={loading}>
+                <Statistic
+                  title={t("institutDashboard.kpis.demandesAuthentificationAttributed")}
+                  prefix={<BookOutlined />}
+                  value={widgets.demandesAuthentificationAttributed?.total ?? 0}
+                />
+              </Card>
+            </Col>
+            <Col xs={12} md={8}>
+              <Card loading={loading}>
+                <Statistic
+                  title={t("institutDashboard.kpis.subscriptions")}
+                  prefix={<SafetyCertificateOutlined />}
+                  value={`${widgets.subscriptions?.active ?? 0} / ${widgets.subscriptions?.total ?? 0}`}
+                />
+                {(widgets.subscriptions?.expiringSoon ?? 0) > 0 && (
+                  <Tag color="gold" style={{ marginTop: 8 }}>
+                    {t("institutDashboard.kpis.expiringSoon", { count: widgets.subscriptions.expiringSoon })}
+                  </Tag>
+                )}
+              </Card>
+            </Col>
+            <Col xs={12} md={8}>
+              <Card loading={loading}>
+                <Statistic
+                  title={t("institutDashboard.kpis.usersTotal")}
+                  prefix={<TeamOutlined />}
+                  value={widgets.users?.total ?? 0}
+                />
+              </Card>
+            </Col>
+            <Col xs={12} md={8}>
+              <Link to="/organisations/notifications" className="block">
+                <Card loading={loading} className="hover:shadow-md transition-shadow">
+                  <Statistic
+                    title={t("institutDashboard.kpis.notifications")}
+                    prefix={<BellOutlined />}
+                    value={notificationStats.total}
+                    suffix={notificationStats.unviewed > 0 ? (
+                      <Tag color="blue">{notificationStats.unviewed} {t("institutDashboard.kpis.unread")}</Tag>
+                    ) : null}
+                  />
+                </Card>
+              </Link>
+            </Col>
+          </Row>
+
+          <Row gutter={[16, 16]} className="mt-2">
+            <Col xs={24} md={12}>
+              <Card title={t("institutDashboard.traducteur.tables.assignedByStatus")} loading={loading}>
+                <Table
+                  rowKey="key"
+                  size="small"
+                  columns={simpleCols}
+                  dataSource={demandesAssignedOrgRowsTraducteur}
+                  pagination={false}
+                  locale={{ emptyText: t("institutDashboard.common.noData") }}
+                />
+              </Card>
+            </Col>
+            <Col xs={24} md={12}>
+              <Card
+                title={t("institutDashboard.traducteur.tables.recentAssigned")}
+                loading={loading}
+                extra={recentAssigned.length > 0 ? <Tag color="blue">{recentAssigned.length}</Tag> : null}
+              >
+                <Table
+                  rowKey="id"
+                  size="small"
+                  dataSource={recentAssigned}
+                  pagination={false}
+                  locale={{ emptyText: t("institutDashboard.common.noData") }}
+                  columns={[
+                    { title: t("institutDashboard.tables.listCols.code"), dataIndex: "code", key: "code", render: (code, row) => (
+                      <a onClick={() => navigate(`/organisations/demandes/${row.id}/details`)}>{code || row.id}</a>
+                    )},
+                    { title: t("institutDashboard.tables.simpleCols.name"), dataIndex: "status", key: "status", render: (s) => <Tag color={statusColor(s)}>{s}</Tag> },
+                    { title: t("institutDashboard.traducteur.tables.date"), dataIndex: "createdAt", key: "createdAt", render: (v) => formatDate(v) },
+                  ]}
+                />
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </div>
+    );
+  }
+
+  // ——— Dashboard INSTITUT standard ———
   return (
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
@@ -158,10 +313,9 @@ export default function InstitutDashboard() {
         </div>
         <Text type="secondary">
           {t("institutDashboard.header.orgLabel")}{" "}
-          <Text code>{user.organization?.name || t("institutDashboard.common.undef")}</Text>
+          <Text code>{user?.organization?.name || t("institutDashboard.common.undef")}</Text>
         </Text>
 
-        {/* KPIs 1 */}
         <Row gutter={[16, 16]} className="mt-3">
           <Col xs={12} md={6}>
             <Card loading={loading}>
@@ -195,7 +349,6 @@ export default function InstitutDashboard() {
               </div>
             </Card>
           </Col>
-
           <Col xs={12} md={6}>
             <Card loading={loading}>
               <Statistic
@@ -205,11 +358,22 @@ export default function InstitutDashboard() {
               />
             </Card>
           </Col>
+          <Col xs={12} md={6}>
+            <Link to="/organisations/notifications" className="block">
+              <Card loading={loading} className="hover:shadow-md transition-shadow">
+                <Statistic
+                  title={t("institutDashboard.kpis.notifications")}
+                  prefix={<BellOutlined />}
+                  value={notificationStats.total}
+                  suffix={notificationStats.unviewed > 0 ? (
+                    <Tag color="blue">{notificationStats.unviewed} {t("institutDashboard.kpis.unread")}</Tag>
+                  ) : null}
+                />
+              </Card>
+            </Link>
+          </Col>
         </Row>
 
-      
-
-        {/* Répartition demandes par statut */}
         <Row gutter={[16, 16]} className="mt-2">
           <Col xs={24} md={12}>
             <Card title={t("institutDashboard.tables.targetByStatus")} loading={loading}>
@@ -223,11 +387,8 @@ export default function InstitutDashboard() {
               />
             </Card>
           </Col>
-         
         </Row>
 
-       
-        {/* Départements & Filières */}
         <Row gutter={[16, 16]} className="mt-2">
           <Col xs={24} md={12}>
             <Card
@@ -245,7 +406,6 @@ export default function InstitutDashboard() {
               />
             </Card>
           </Col>
-
           <Col xs={24} md={12}>
             <Card
               title={t("institutDashboard.lists.tracksTitle", { n: widgets.filieres?.total ?? 0 })}
@@ -266,8 +426,6 @@ export default function InstitutDashboard() {
             </Card>
           </Col>
         </Row>
-
-        
       </div>
     </div>
   );

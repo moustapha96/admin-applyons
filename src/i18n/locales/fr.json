@@ -24,8 +24,13 @@
         "selectLanguage": "Sélectionner la langue",
         "notifications": "Notifications",
         "required": "Ce champ est obligatoire",
+        "back": "Retour",
         "yes": "Oui",
-        "no": "Non"
+        "no": "Non",
+        "upload": {
+            "pdfOnly": "Seuls les fichiers PDF sont acceptés.",
+            "maxSize": "La taille maximale du fichier est de 5 Mo."
+        }
     },
     "adminConfig": {
         "title": "Paramètres",
@@ -196,6 +201,7 @@
         "filieres": "Filières",
         "demandes": "Candidatures",
         "allDemandes": "Applications",
+        "dossiersATraiter": "Dossiers à traiter",
         "invited": "Invitées",
         "documents": "Documents",
         "myDocuments": "Mes documents",
@@ -289,6 +295,16 @@
             "ANNULEE": "Annulée"
         },
         "doc": { "type": "Type", "mention": "Mention", "addedBy": "Ajouté par", "date": "Date", "file": "Fichier", "viewFile": "Voir le document", "institutDetails": "Détails de l'institut ayant déposé le document", "orgName": "Nom", "orgType": "Type", "orgEmail": "Email", "orgPhone": "Téléphone", "orgAddress": "Adresse", "orgWebsite": "Site web", "orgCountry": "Pays" },
+        "documentTypes": {
+            "DIPLOMA": "Diplôme",
+            "TRANSCRIPT": "Relevé de notes",
+            "ID_CARD": "Pièce d'identité",
+            "BIRTH_CERTIFICATE": "Acte de naissance",
+            "PASSPORT": "Passeport",
+            "CERTIFICATE": "Attestation / Certificat",
+            "LETTER": "Lettre de recommandation",
+            "OTHER": "Autre (précisez)"
+        },
         "upload": {
             "file": "Fichier",
             "select": "Choisir un fichier",
@@ -296,8 +312,10 @@
             "submit": "Envoyer",
             "success": "Document ajouté avec succès.",
             "error": "Erreur lors de l'ajout du document.",
-            "typePlaceholder": "Type du document",
-            "mentionPlaceholder": "Mention (optionnel)"
+            "typePlaceholder": "Sélectionner un type de document",
+            "typeOtherPlaceholder": "Précisez le type de document",
+            "mentionPlaceholder": "Mention (optionnel)",
+            "pdfOnlyExtra": "PDF uniquement, 5 Mo max."
         },
         "codeADN": {
             "title": "Accéder par code ADN",
@@ -825,6 +843,14 @@
             "hello": "Hello, {{firstName}} {{lastName}}",
             "welcome": "Bienvenue!"
         },
+        "links": {
+            "title": "Accès rapide",
+            "mesDemandes": "Mes candidatures",
+            "newApplication": "Nouvelle candidature",
+            "demandesAuthentification": "Demandes d'authentification",
+            "profile": "Mon profil",
+            "seeAll": "Voir tout"
+        },
         "kpis": {
             "myRequests": "Mes candidatures",
             "myDemandesAuthentification": "Demandes d'authentification",
@@ -884,6 +910,20 @@
             "home": "Accueil",
             "institute": "Institut"
         },
+        "traducteur": {
+            "header": { "title": "Dashboard Institut Traducteur" },
+            "breadcrumb": { "institute": "Institut traducteur" },
+            "kpis": {
+                "assignedRequests": "Demandes assignées",
+                "docsToTranslate": "Documents à traduire",
+                "docsTranslated": "Documents traduits"
+            },
+            "tables": {
+                "assignedByStatus": "Demandes assignées par statut",
+                "recentAssigned": "Demandes assignées récentes",
+                "date": "Date"
+            }
+        },
         "kpis": {
             "targetRequests": "Candidatures (total)",
             "demandesAuthentificationAttributed": "Demandes auth. attribuées",
@@ -891,7 +931,9 @@
             "documents": "Documents (total/à traduire/traduit)",
             "subscriptions": "Abonnements (actifs/total)",
             "expiringSoon": "Expirent bientôt : {{count}}",
-            "usersTotal": "Utilisateurs (total)"
+            "usersTotal": "Utilisateurs (total)",
+            "notifications": "Notifications",
+            "unread": "non lues"
         },
         "charts": {
             "targetVsAssigned": {
@@ -1040,7 +1082,9 @@
             "lastName": "Nom",
             "email": "Email",
             "phone": "Téléphone",
+            "address": "Adresse",
             "country": "Pays de résidence",
+            "gender": "Genre",
             "role": "Rôle",
             "status": "Statut",
             "permissions": "Permissions"
@@ -1447,6 +1491,7 @@
             "allNotifications": "Toutes les notifications"
         },
         "columns": {
+            "demandeur": "Demandeur",
             "lastName": "Nom",
             "firstName": "Prénom",
             "dateOfBirth": "Date de naissance",
@@ -1466,6 +1511,7 @@
         },
         "buttons": {
             "refresh": "Actualiser",
+            "viewDetails": "Voir détails",
             "viewDemande": "Voir candidature",
             "addDocument": "Ajouter un document"
         },
@@ -1482,7 +1528,51 @@
         "errors": {
             "noOrgId": "ID d'organisation introuvable"
         },
-        "empty": "Aucune notification"
+        "empty": "Aucune notification",
+        "viewMode": {
+            "compact": "Peu de détails",
+            "full": "Tous les détails"
+        }
+    },
+    "orgNotificationDetail": {
+        "pageTitle": "Détail de la notification",
+        "breadcrumbs": {
+            "dashboard": "Tableau de bord",
+            "notifications": "Notifications"
+        },
+        "sections": {
+            "mainInfo": "Informations principales",
+            "demandeur": "Demandeur",
+            "demande": "Candidature liée"
+        },
+        "fields": {
+            "status": "Statut",
+            "type": "Type",
+            "message": "Message",
+            "createdAt": "Créée le",
+            "viewedAt": "Vue le",
+            "demandeurName": "Nom",
+            "demandeurEmail": "Email",
+            "demandeCode": "Code candidature",
+            "demandeDate": "Date de la candidature"
+        },
+        "status": {
+            "viewed": "Vue",
+            "unviewed": "Non vue"
+        },
+        "actions": {
+            "back": "Retour",
+            "backToList": "Retour à la liste",
+            "markAsViewed": "Marquer comme vue"
+        },
+        "messages": {
+            "loadError": "Erreur lors du chargement de la notification",
+            "markedAsViewed": "Notification marquée comme vue",
+            "markError": "Erreur lors du marquage"
+        },
+        "errors": {
+            "notFound": "Notification introuvable"
+        }
     },
     "adminOrgNotifications": {
         "pageTitle": "Notifications de l'organisation",
@@ -2237,13 +2327,13 @@
             "year": "Année d’obtention",
             "yearRequired": "Année d'obtention requise",
             "file": "Fichier",
-            "fileHelp": "Téléversez le fichier du document (PDF/JPG/PNG).",
+            "fileHelp": "Téléversez le fichier du document (PDF uniquement, max 5 Mo).",
             "fileOriginal": "Fichier original",
             "fileRequired": "Veuillez sélectionner un fichier."
         },
         "upload": {
             "dragTitle": "Glissez-déposez ou cliquez pour sélectionner",
-            "dragHint": "PDF / JPG / PNG (max 1 fichier)",
+            "dragHint": "PDF uniquement (max 5 Mo, 1 fichier)",
             "tooltipRequired": "Obligatoire"
         },
         "toasts": {
@@ -2597,8 +2687,25 @@
         "error": "Error fetching stats"
     },
     "traducteurDashboard": {
-        "hello": "Hello, {{firstName}} {{lastName}}",
-        "welcome": "Bienvenue!",
+        "breadcrumb": { "dashboard": "Tableau de bord" },
+        "hello": "Bonjour, {{firstName}} {{lastName}}",
+        "welcome": "Bienvenue sur votre espace traducteur.",
+        "links": {
+            "title": "Accès rapide",
+            "demandes": "Candidatures assignées",
+            "dossiers": "Dossiers à traiter",
+            "profile": "Mon profil",
+            "users": "Utilisateurs",
+            "seeAll": "Voir toutes les candidatures",
+            "goToDemandes": "Voir les candidatures"
+        },
+        "tables": {
+            "recentAssigned": "Candidatures assignées récentes",
+            "code": "Code",
+            "status": "Statut",
+            "date": "Date",
+            "view": "Voir"
+        },
         "kpis": {
             "usersTotal": "Utilisateurs (total)",
             "usersActive": "Actifs: {{count}}",
@@ -4028,6 +4135,7 @@
         },
         "actions": {
             "details": "Détails",
+            "detail": "Détail",
             "start": "Démarrer",
             "validate": "Valider",
             "reject": "Rejeter",
@@ -4045,7 +4153,9 @@
             "updateError": "Échec mise à jour du statut",
             "documentsError": "Erreur chargement des documents",
             "translationAdded": "Traduction ajoutée",
-            "uploadError": "Échec upload traduction"
+            "uploadError": "Échec upload traduction",
+            "translationNotReady": "La traduction n'est pas encore disponible.",
+            "downloadSuccess": "Téléchargement réussi"
         },
         "pagination": {
             "total": "Total {{total}} demandes"
@@ -4066,7 +4176,8 @@
             "encrypted": "Chiffré",
             "notEncrypted": "Non chiffré",
             "blockchain": "Blockchain",
-            "original": "Original"
+            "original": "Original",
+            "download": "Télécharger"
         },
         "table": {
             "title": "Liste des candidatures assignées"

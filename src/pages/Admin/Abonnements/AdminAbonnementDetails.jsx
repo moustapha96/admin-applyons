@@ -33,6 +33,7 @@ import {
 import dayjs from "dayjs";
 import abonnementService from "@/services/abonnement.service";
 import { useTranslation } from "react-i18next";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Title, Text } = Typography;
 const { confirm } = Modal;
@@ -332,7 +333,7 @@ export default function AdminAbonnementDetails() {
               rules={[{ required: true, message: t("adminAbonnements.renew.form.period.required") }]}
             >
               <RangePicker
-                format="YYYY-MM-DD"
+                format={DATE_FORMAT}
                 className="w-full"
                 disabledDate={(current) =>
                   current && current < dayjs(abonnement.dateExpiration).startOf("day")

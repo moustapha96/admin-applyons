@@ -97,11 +97,25 @@ export const ROLES = {
   SUPER_ADMIN: "SUPER_ADMIN",
 };
 
+/** Tableau de bord par rôle : un utilisateur qui tente d'accéder à un autre espace est redirigé ici */
+export const DASHBOARD_BY_ROLE = {
+  [ROLES.ADMIN]: "/admin/dashboard",
+  [ROLES.SUPER_ADMIN]: "/admin/dashboard",
+  [ROLES.INSTITUT]: "/organisations/dashboard",
+  [ROLES.SUPERVISEUR]: "/organisations/dashboard",
+  [ROLES.TRADUCTEUR]: "/traducteur/dashboard",
+  [ROLES.DEMANDEUR]: "/demandeur/dashboard",
+};
+
+export function getDashboardPathForRole(role) {
+  return DASHBOARD_BY_ROLE[role] || "/auth/not-access";
+}
+
 export const ProtectedRoute = ({
   allowedRoles = [],                 // ex: ["DEMANDEUR"]
   requiredPermissions = [],          // ex: ["demandes.read"]
   requireAllPermissions = false,     // true = toutes; false = au moins une
-  redirectTo = "/auth/not-access",   // destination si refus
+  redirectTo = "/auth/not-access",   // destination si refus (ou "own-dashboard" pour rediriger vers le dashboard du rôle)
   children,
 }) => {
   const { user, isAuthenticated, loading, logout } = useAuth();
@@ -126,20 +140,17 @@ export const ProtectedRoute = ({
     return <Navigate to="/auth/lock-screen" replace />;
   }
 
-  // 4) SUPER_ADMIN = accès total à tout (vérifier user.role et user.roles)
-  const userRoles = Array.isArray(user?.roles) ? user.roles : user?.role ? [user.role] : [];
-  if (userRoles.includes(ROLES.SUPER_ADMIN) || user.role === ROLES.SUPER_ADMIN) {
-    return children ? <>{children}</> : <Outlet />;
-  }
+  const userRole = user?.role;
+  const userRoles = Array.isArray(user?.roles) ? user.roles : userRole ? [userRole] : [];
 
-  // 5) Admin = accès total
-  if (user.role === ROLES.ADMIN || userRoles.includes(ROLES.ADMIN)) {
-    return children ? <>{children}</> : <Outlet />;
-  }
+  // 4) SUPER_ADMIN = accès total uniquement aux routes admin (vérifié via allowedRoles au niveau parent)
+  // 5) ADMIN = idem, accès admin uniquement si la route le permet
+  // On ne donne plus d'accès "automatique" à tout : chaque bloc de routes (Admin, Organisation, etc.)
+  // doit déclarer explicitement allowedRoles. Si allowedRoles est vide, on considère que tout rôle authentifié est accepté (comportement legacy).
 
-  // 6) Rôles
+  // 6) Vérification du rôle pour cette route
   const hasAllowedRole =
-    allowedRoles.length === 0 || allowedRoles.includes(user.role);
+    allowedRoles.length === 0 || allowedRoles.includes(userRole);
 
   // 7) Permissions (on préfère .key, fallback .name ou string)
   const userPermissionKeys = Array.isArray(user.permissions)
@@ -156,14 +167,16 @@ export const ProtectedRoute = ({
       : requiredPermissions.some((perm) => userPermissionKeys.includes(perm));
 
   if (!(hasAllowedRole && hasRequiredPermission)) {
-    console.warn("Accès refusé (rôle/permission)", {
-      userRole: user.role,
+    const targetRedirect =
+      redirectTo === "own-dashboard"
+        ? getDashboardPathForRole(userRole)
+        : redirectTo;
+    console.warn("Accès refusé (rôle/permission) – redirection vers tableau de bord du rôle", {
+      userRole: userRole,
       allowedRoles,
-      userPermissions: userPermissionKeys,
-      requiredPermissions,
-      requireAllPermissions,
+      redirectTo: targetRedirect,
     });
-    return <Navigate to={redirectTo} replace />;
+    return <Navigate to={targetRedirect} replace />;
   }
 
   return children ? <>{children}</> : <Outlet />;

@@ -1,13 +1,17 @@
 "use client";
 import { useState } from "react";
-import { Card, Input, Button, message, Descriptions, Tag, Table, Form, Upload, Alert, Modal, Spin } from "antd";
+import { Card, Input, Button, message, Descriptions, Tag, Table, Form, Upload, Alert, Modal, Spin, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import demandeAuthentificationService from "@/services/demandeAuthentification.service";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
+import { PDF_ACCEPT, PDF_ACCEPT_MIME, createPdfBeforeUpload } from "@/utils/uploadValidation";
 import dayjs from "dayjs";
 
 const statusColors = { EN_ATTENTE: "blue", DOCUMENTS_RECUS: "gold", TRAITEE: "green", ANNULEE: "red" };
+
+const DOC_TYPE_OTHER = "__OTHER__";
+const DOC_TYPE_KEYS = ["DIPLOMA", "TRANSCRIPT", "ID_CARD", "BIRTH_CERTIFICATE", "PASSPORT", "CERTIFICATE", "LETTER", "OTHER"];
 
 export default function InstitutCodeADNPage() {
   const { t } = useTranslation();
@@ -69,11 +73,12 @@ export default function InstitutCodeADNPage() {
       message.warning(t("demandesAuthentification.upload.selectFile"));
       return;
     }
+    const typeValue = values.type === DOC_TYPE_OTHER ? (values.typeCustom || "").trim() : values.type;
     setUploading(true);
     try {
       const formData = new FormData();
       formData.append("file", file.originFileObj || file);
-      if (values.type) formData.append("type", values.type);
+      if (typeValue) formData.append("type", typeValue);
       if (values.mention) formData.append("mention", values.mention);
       // organizationId est récupéré côté backend depuis l'utilisateur connecté (token)
       await demandeAuthentificationService.addDocumentByCode(demande.codeADN, formData);
@@ -89,8 +94,14 @@ export default function InstitutCodeADNPage() {
 
   const documentsList = demande ? (Array.isArray(demande.documents) ? demande.documents : []) : [];
 
+  const getTypeLabel = (v) => {
+    if (!v) return "—";
+    if (DOC_TYPE_KEYS.includes(v)) return t(`demandesAuthentification.documentTypes.${v}`);
+    return v;
+  };
+
   const docColumns = [
-    { title: t("demandesAuthentification.doc.type"), dataIndex: "type", render: (v) => v || "—" },
+    { title: t("demandesAuthentification.doc.type"), dataIndex: "type", render: getTypeLabel },
     { title: t("demandesAuthentification.doc.mention"), dataIndex: "mention", render: (v) => v || "—" },
     { title: t("demandesAuthentification.doc.addedBy"), dataIndex: ["organization", "name"], render: (v) => v || "—" },
     { title: t("demandesAuthentification.doc.date"), dataIndex: "createdAt", render: (v) => (v ? dayjs(v).format("DD/MM/YYYY HH:mm") : "—") },
@@ -155,13 +166,34 @@ export default function InstitutCodeADNPage() {
             ) : (
               <Card title={t("demandesAuthentification.addDocumentTitle")} className="mt-4">
                 <Form form={form} onFinish={onUpload} layout="vertical">
-                  <Form.Item name="file" label={t("demandesAuthentification.upload.file")} valuePropName="file" rules={[{ required: true }]}>
-                    <Upload maxCount={1} beforeUpload={() => false} accept=".pdf">
+                  <Form.Item name="file" label={t("demandesAuthentification.upload.file")} valuePropName="file" rules={[{ required: true }]} extra={t("demandesAuthentification.upload.pdfOnlyExtra", "PDF uniquement, 5 Mo max.")}>
+                    <Upload maxCount={1} beforeUpload={createPdfBeforeUpload(message.error, t, Upload.LIST_IGNORE)} accept={PDF_ACCEPT_MIME}>
                       <Button icon={<UploadOutlined />}>{t("demandesAuthentification.upload.select")}</Button>
                     </Upload>
                   </Form.Item>
                   <Form.Item name="type" label={t("demandesAuthentification.doc.type")}>
-                    <Input placeholder={t("demandesAuthentification.upload.typePlaceholder")} />
+                    <Select
+                      placeholder={t("demandesAuthentification.upload.typePlaceholder")}
+                      allowClear
+                      showSearch
+                      optionFilterProp="label"
+                      options={DOC_TYPE_KEYS.map((key) => ({
+                        value: key === "OTHER" ? DOC_TYPE_OTHER : key,
+                        label: t(`demandesAuthentification.documentTypes.${key}`),
+                      }))}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    noStyle
+                    shouldUpdate={(prev, curr) => prev.type !== curr.type}
+                  >
+                    {({ getFieldValue }) =>
+                      getFieldValue("type") === DOC_TYPE_OTHER ? (
+                        <Form.Item name="typeCustom" label={t("demandesAuthentification.upload.typeOtherPlaceholder")} rules={[{ required: true, message: t("demandesAuthentification.upload.typeOtherPlaceholder") }]}>
+                          <Input placeholder={t("demandesAuthentification.upload.typeOtherPlaceholder")} />
+                        </Form.Item>
+                      ) : null
+                    }
                   </Form.Item>
                   <Form.Item name="mention" label={t("demandesAuthentification.doc.mention")}>
                     <Input placeholder={t("demandesAuthentification.upload.mentionPlaceholder")} />
@@ -183,7 +215,12 @@ export default function InstitutCodeADNPage() {
             >
               <div style={{ minHeight: "75vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {viewingDoc?.blobUrl ? (
-                  <iframe src={`${viewingDoc.blobUrl}#toolbar=0`} title={t("demandesAuthentification.doc.viewFile")} style={{ width: "100%", height: "75vh", border: "none" }} />
+                  <embed
+                    src={`${viewingDoc.blobUrl}#toolbar=0`}
+                    type="application/pdf"
+                    style={{ width: "100%", height: "75vh", border: "none" }}
+                    title={t("demandesAuthentification.doc.viewFile")}
+                  />
                 ) : (
                   <Spin size="large" />
                 )}

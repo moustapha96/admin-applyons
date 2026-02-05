@@ -4,6 +4,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import documentService from "@/services/documentService";
+import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 
 export default function DocumentUpload(){
   const { t } = useTranslation();
@@ -86,8 +87,8 @@ export default function DocumentUpload(){
             customRequest={customRequest} 
             fileList={fileList}
             multiple={false} 
-            accept=".pdf,.png,.jpg,.jpeg"
-            beforeUpload={() => false}
+            accept={PDF_ACCEPT}
+            beforeUpload={createPdfBeforeUpload(message.error, t, Upload.LIST_IGNORE)}
           >
             <p className="ant-upload-drag-icon"><InboxOutlined /></p>
             <p className="ant-upload-text">{t("institutDocuments.upload.uploadText")}</p>

@@ -44,11 +44,14 @@ const UserEdit = () => {
     // Rôle sélectionné dans le formulaire
     const selectedRole = Form.useWatch("role", form);
 
-    // Filtrer les permissions selon le rôle sélectionné
+    // Filtrer les permissions : ADMIN et SUPER_ADMIN voient toutes les permissions, les autres rôles uniquement celles de leur rôle
     const filteredPermissions = useMemo(() => {
-        if (!selectedRole) return permissions;
-        if (!getPermissionsByRole || typeof getPermissionsByRole !== "function") {
+        if (!selectedRole) return [];
+        if (selectedRole === "ADMIN" || selectedRole === "SUPER_ADMIN") {
             return permissions;
+        }
+        if (!getPermissionsByRole || typeof getPermissionsByRole !== "function") {
+            return [];
         }
         return getPermissionsByRole(selectedRole);
     }, [selectedRole, getPermissionsByRole, permissions]);

@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 
 import demandeService from "@/services/demandeService";
 import organizationService from "@/services/organizationService";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { RangePicker } = DatePicker;
 
@@ -279,6 +280,7 @@ export default function AdminDemandesList() {
 
               <RangePicker
                 allowClear
+                format={DATE_FORMAT}
                 onChange={(vals) => {
                   const from = vals?.[0] ? vals[0].startOf("day").toISOString() : undefined;
                   const to   = vals?.[1] ? vals[1].endOf("day").toISOString() : undefined;

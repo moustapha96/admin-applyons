@@ -27,16 +27,17 @@ export default function UserEditTraducteur() {
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
-  // Rôle de l'utilisateur connecté (pour Traducteur)
-  const userRole = me?.role || "TRADUCTEUR";
+  // Rôle de l'utilisateur en cours d'édition (pour n'afficher que les permissions de son rôle)
+  const selectedRole = Form.useWatch("role", form);
+  const roleForPermissions = selectedRole || user?.role || "TRADUCTEUR";
 
-  // Filtrer les permissions selon le rôle de l'utilisateur connecté
+  // Filtrer les permissions : uniquement celles du rôle de l'utilisateur édité
   const filteredPermissions = useMemo(() => {
     if (!getPermissionsByRole || typeof getPermissionsByRole !== "function") {
-      return permissions;
+      return [];
     }
-    return getPermissionsByRole(userRole);
-  }, [getPermissionsByRole, userRole, permissions]);
+    return getPermissionsByRole(roleForPermissions);
+  }, [getPermissionsByRole, roleForPermissions]);
 
   // Utiliser les permissions du backend filtrées par rôle
   const permissionsOptions = useMemo(() => {
@@ -65,7 +66,7 @@ export default function UserEditTraducteur() {
         lastName: u.lastName || "",
         email: u.email,
         phone: u.phone || "",
-        role: me.role,
+        role: u.role || "TRADUCTEUR",
         enabled: !!u.enabled,
         country: u.country || "",
         permissions: u.permissions?.map((p) => p.key) || [],
@@ -88,7 +89,7 @@ export default function UserEditTraducteur() {
       fd.append("firstName", values.firstName);
       fd.append("lastName", values.lastName);
       fd.append("phone", values.phone || "");
-      fd.append("role", me.role);
+      fd.append("role", values.role ?? user?.role ?? "TRADUCTEUR");
       fd.append("enabled", values.enabled);
       fd.append("country", values.country || "");
       if (values.upload?.[0]) fd.append("avatar", values.upload[0].originFileObj);
@@ -176,6 +177,10 @@ export default function UserEditTraducteur() {
 
                 <Form.Item name="enabled" label={t("userEditTraducteur.fields.status")} valuePropName="checked">
                   <Checkbox>{t("userEditTraducteur.labels.active")}</Checkbox>
+                </Form.Item>
+
+                <Form.Item name="role" hidden>
+                  <Input type="hidden" />
                 </Form.Item>
 
                 <Divider>{t("userEditTraducteur.sections.permissions")}</Divider>

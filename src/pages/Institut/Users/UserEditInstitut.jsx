@@ -196,16 +196,17 @@ export default function UserEditInstitut() {
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
-  // Rôle de l'utilisateur connecté (pour Institut, généralement INSTITUT ou SUPERVISEUR)
-  const userRole = me?.role || "INSTITUT";
+  // Rôle de l'utilisateur en cours d'édition (pour n'afficher que les permissions de son rôle)
+  const selectedRole = Form.useWatch("role", form);
+  const roleForPermissions = selectedRole || user?.role || "INSTITUT";
 
-  // Filtrer les permissions selon le rôle de l'utilisateur connecté
+  // Filtrer les permissions : uniquement celles du rôle de l'utilisateur édité
   const filteredPermissions = useMemo(() => {
     if (!getPermissionsByRole || typeof getPermissionsByRole !== "function") {
-      return permissions;
+      return [];
     }
-    return getPermissionsByRole(userRole);
-  }, [getPermissionsByRole, userRole, permissions]);
+    return getPermissionsByRole(roleForPermissions);
+  }, [getPermissionsByRole, roleForPermissions]);
 
   // Utiliser les permissions du backend filtrées par rôle
   const permissionsOptions = useMemo(() => {
@@ -234,7 +235,7 @@ export default function UserEditInstitut() {
         lastName: u.lastName || "",
         email: u.email,
         phone: u.phone || "",
-        role: me.role || "INSTITUT",
+        role: u.role || "INSTITUT",
         enabled: !!u.enabled,
         country: u.country || "",
         gender: u.gender || "",
@@ -262,7 +263,7 @@ export default function UserEditInstitut() {
       fd.append("firstName", values.firstName);
       fd.append("lastName", values.lastName);
       fd.append("phone", values.phone || "");
-      fd.append("role", values.role || "INSTITUT");
+      fd.append("role", values.role ?? user?.role ?? "INSTITUT");
       fd.append("enabled", String(!!values.enabled));
       fd.append("gender", values.gender || "");
       fd.append("address", values.address || "");
@@ -414,6 +415,10 @@ export default function UserEditInstitut() {
 
                 <Form.Item name="enabled" label={t("userEditInstitut.fields.status")} valuePropName="checked">
                   <Checkbox>{t("userEditInstitut.labels.active")}</Checkbox>
+                </Form.Item>
+
+                <Form.Item name="role" hidden>
+                  <Input type="hidden" />
                 </Form.Item>
 
                 <Divider>{t("userEditInstitut.sections.permissions")}</Divider>

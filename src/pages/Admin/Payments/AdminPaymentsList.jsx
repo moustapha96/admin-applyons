@@ -37,6 +37,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useTranslation } from "react-i18next";
 import paymentService from "@/services/paymentService"; // => list({page,limit,...}), getById(id)
 import { useNavigate } from "react-router-dom";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 dayjs.extend(advancedFormat);
 dayjs.extend(relativeTime);
@@ -446,7 +447,7 @@ export default function PaymentsList() {
             </Col>
 
             <Col xs={24} md={10}>
-              <RangePicker style={{ width: "100%" }} value={dateRange} onChange={setDateRange} disabled />
+              <RangePicker style={{ width: "100%" }} format={DATE_FORMAT} value={dateRange} onChange={setDateRange} disabled />
             </Col>
             <Col xs={24} md={8} style={{ textAlign: "right" }}>
               <Space>

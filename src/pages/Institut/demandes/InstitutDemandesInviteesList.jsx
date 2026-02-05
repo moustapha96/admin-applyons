@@ -10,6 +10,7 @@ import {
 import dayjs from "dayjs";
 import demandeService from "@/services/demandeService";
 import { useAuth } from "../../../hooks/useAuth";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 import {
   EyeOutlined, ReloadOutlined, SearchOutlined, FileAddOutlined
 } from "@ant-design/icons";
@@ -229,6 +230,7 @@ export default function InstitutDemandesInviteesList() {
                 }))}
               />
               <RangePicker
+                format={DATE_FORMAT}
                 onChange={(v) =>
                   setFilters((f) => ({
                     ...f,

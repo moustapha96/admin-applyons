@@ -29,6 +29,7 @@ import { CloudUploadOutlined, EyeOutlined, DownloadOutlined } from "@ant-design/
 import { useTranslation } from "react-i18next";
 import { buildImageUrl } from "@/utils/imageUtils";
 import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
+import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
@@ -450,8 +451,8 @@ export default function TranslatorDemandeDetails() {
           <Space direction="vertical" style={{ width: "100%" }}>
             <Dragger
               multiple={false}
-              accept=".pdf"
-              beforeUpload={() => false}
+              accept={PDF_ACCEPT}
+              beforeUpload={createPdfBeforeUpload(message.error, t, Upload.LIST_IGNORE)}
               onChange={({ fileList }) => onChangeUpload({ fileList })}
               fileList={uploadFile ? [{ uid: "1", name: uploadFile.name }] : []}
             >

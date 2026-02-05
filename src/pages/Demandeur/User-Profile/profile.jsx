@@ -19,6 +19,7 @@ import { getRoleLabel } from "../../../auth/permissions";
 import { buildImageUrl } from "../../../utils/imageUtils";
 import dayjs from "dayjs";
 import countries from "../../../assets/countries.json";
+import { DATE_FORMAT } from "../../../utils/dateFormat";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -359,7 +360,7 @@ export default function DemandeurUserProfile() {
                         <DatePicker 
                           style={{ width: "100%" }}
                           placeholder={t("profilePage.placeholders.dateOfBirth")}
-                          format="DD/MM/YYYY"
+                          format={DATE_FORMAT}
                           disabledDate={(current) => current && current > dayjs().endOf('day')}
                         />
                       </Form.Item>

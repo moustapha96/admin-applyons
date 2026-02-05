@@ -36,10 +36,12 @@ const UserCreate = () => {
     // Rôle sélectionné dans le formulaire
     const selectedRole = Form.useWatch("role", form);
 
-    // Filtrer les permissions selon le rôle sélectionné
-    const filteredPermissions = selectedRole 
-        ? getPermissionsByRole(selectedRole)
-        : permissions;
+    // Filtrer les permissions : ADMIN et SUPER_ADMIN voient toutes les permissions, les autres rôles uniquement celles de leur rôle
+    const filteredPermissions = !selectedRole
+        ? []
+        : selectedRole === "ADMIN" || selectedRole === "SUPER_ADMIN"
+            ? permissions
+            : (getPermissionsByRole(selectedRole) || []);
 
     // Utiliser les permissions du backend filtrées par rôle
     const permissionsOptions = filteredPermissions.map((perm) => ({

@@ -163,16 +163,16 @@ export default function UserCreateInstitut() {
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
-  // Rôle de l'utilisateur connecté (pour Institut, généralement INSTITUT ou SUPERVISEUR)
-  const userRole = me?.role || "INSTITUT";
+  // Rôle assigné au nouvel utilisateur (celui de l'org / connecté) → n'afficher que les permissions de ce rôle
+  const roleForNewUser = me?.role || "INSTITUT";
 
-  // Filtrer les permissions selon le rôle de l'utilisateur connecté
+  // Filtrer les permissions : uniquement celles du rôle qui sera assigné au nouvel utilisateur
   const filteredPermissions = useMemo(() => {
     if (!getPermissionsByRole || typeof getPermissionsByRole !== "function") {
-      return permissions;
+      return [];
     }
-    return getPermissionsByRole(userRole);
-  }, [getPermissionsByRole, userRole, permissions]);
+    return getPermissionsByRole(roleForNewUser);
+  }, [getPermissionsByRole, roleForNewUser]);
 
   // Utiliser les permissions du backend filtrées par rôle
   const permissionsOptions = useMemo(() => {

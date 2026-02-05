@@ -16,8 +16,8 @@ function getDocumentFilePath(urlOriginal) {
 async function getDocumentFileBlob(urlOriginal) {
   const path = getDocumentFilePath(urlOriginal);
   if (!path) throw new Error("URL document invalide");
-  const blob = await axiosInstance.get(path, { responseType: "blob" });
-  return blob;
+  const res = await axiosInstance.get(path, { responseType: "blob" });
+  return res?.data ?? res;
 }
 
 const demandeAuthentificationService = {

@@ -8,17 +8,25 @@ import TranslatorDemandeDocuments from "../pages/Traducteur/Demandes/TranslatorD
 import UserListTraducteur from "../pages/Traducteur/Users/UserListTraducteur";
 import UserCreateTraducteur from "../pages/Traducteur/Users/UserCreateTraducteur";
 import TraducteurUserProfile from "../pages/Traducteur/User-Profile/profile";
-import DossierATraiterTraducteur from "../pages/Institut/dossier/DossierATraiter";
+import DossierATraiterTraducteur from "../pages/Traducteur/Dossiers/DossierATraiter";
 import UserDetailTraducteur from "../pages/Traducteur/Users/UserDetailTraducteur";
 import UserEditTraducteur from "../pages/Traducteur/Users/UserEditTraducteur";
 import TraducteurDashboard from "../pages/Traducteur/Dashboard";
 import TraducteurDemandeurDetails from "../pages/Traducteur/Demandeur/demandeur-details";
+import OrganizationNotificationsList from "../pages/Institut/notifications/OrganizationNotificationsList";
+import OrganizationNotificationDetail from "../pages/Institut/notifications/OrganizationNotificationDetail";
+import DemandeDocumentAdd from "../pages/Institut/demandes/DemandeDocumentAdd.jsx";
 
 export const traducteurRoutes = (
   <>
     <Route
       path="/traducteur"
-      element={<ProtectedRoute allowedRoles={["TRADUCTEUR"]} />}
+      element={
+        <ProtectedRoute
+          allowedRoles={["TRADUCTEUR"]}
+          redirectTo="own-dashboard"
+        />
+      }
     >
       {/* ✅ relatifs */}
       <Route path="dashboard" element={<TraducteurDashboard />} />
@@ -32,6 +40,7 @@ export const traducteurRoutes = (
 
       {/* Demandes assignées */}
       <Route path="demandes" element={<TranslatorDemandesList />} />
+      <Route path="demandes/ajoute-document" element={<DemandeDocumentAdd />} />
       <Route path="demandes/:id" element={<TranslatorDemandeDetails />} />
       <Route path="demandes/:demandeId/documents" element={<TranslatorDemandeDocuments />} />
 
@@ -42,7 +51,11 @@ export const traducteurRoutes = (
       <Route path="users/:id/edit" element={<UserEditTraducteur />} />
 
        <Route path="dossiers-a-traiter" element={<DossierATraiterTraducteur />} />
-       {/*  */}
+
+      {/* Notifications (institut traducteur) */}
+      <Route path="notifications" element={<OrganizationNotificationsList />} />
+      <Route path="notifications/:id" element={<OrganizationNotificationDetail />} />
+
        <Route path="demandeur/:id/details" element={<TraducteurDemandeurDetails />} />
 
 

@@ -38,6 +38,7 @@ import { useTranslation } from "react-i18next";
 import documentService from "@/services/documentService";
 import organizationService from "@/services/organizationService";
 import { hasTranslation, hasOriginal, normalizeDocument } from "@/utils/documentUtils";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { RangePicker } = DatePicker;
 const { confirm } = Modal;
@@ -320,6 +321,7 @@ export default function DocumentsList() {
                             <Space wrap size="small">
                                 <RangePicker
                                     allowClear
+                                    format={DATE_FORMAT}
                                     className="w-full sm:w-auto"
                                     onChange={(vals) => {
                                         const from = vals?.[0] ? vals[0].startOf("day").toISOString() : undefined;

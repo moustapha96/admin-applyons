@@ -52,6 +52,7 @@ import { useNavigate } from "react-router-dom"
 import { LogoutOutlined } from "@ant-design/icons"
 import countries from "../../../assets/countries.json"
 import dayjs from "dayjs"
+import { DATE_FORMAT } from "../../../utils/dateFormat"
 
 const { Title, Text } = Typography
 
@@ -502,7 +503,7 @@ export default function TraducteurUserProfile() {
                                                 <DatePicker
                                                     style={{ width: "100%" }}
                                                     placeholder={t("profilePage.placeholders.dateOfBirth")}
-                                                    format="DD/MM/YYYY"
+                                                    format={DATE_FORMAT}
                                                     disabledDate={(current) => current && current > dayjs().endOf('day')}
                                                 />
                                             </Form.Item>
@@ -602,7 +603,7 @@ export default function TraducteurUserProfile() {
                                                     </Space>
                                                 }
                                             >
-                                                <Text>{userData.dateOfBirth ? dayjs(userData.dateOfBirth).format("DD/MM/YYYY") : t("profilePage.org.unspecified")}</Text>
+                                                <Text>{userData.dateOfBirth ? dayjs(userData.dateOfBirth).format(DATE_FORMAT) : t("profilePage.org.unspecified")}</Text>
                                             </Descriptions.Item>
                                             <Descriptions.Item
                                                 label={

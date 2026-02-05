@@ -25,6 +25,7 @@ import paymentService from "../../../services/paymentService";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import { useTranslation } from "react-i18next";
+import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Title, Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -360,6 +361,7 @@ export default function InstitutDemandesList() {
                     }))}
                   />
                   <RangePicker
+                    format={DATE_FORMAT}
                     onChange={(v) =>
                       setFilters((f) => ({
                         ...f,

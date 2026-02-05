@@ -26,13 +26,23 @@ import InstitutAbonnementsListe from "../pages/Institut/abonnement/InstitutAbonn
 import DemandeDocumentAdd from "../pages/Institut/demandes/DemandeDocumentAdd.jsx";
 import InstitutDemandesInviteesList from "../pages/Institut/demandes/InstitutDemandesInviteesList.jsx";
 import OrganizationNotificationsList from "../pages/Institut/notifications/OrganizationNotificationsList.jsx";
+import OrganizationNotificationDetail from "../pages/Institut/notifications/OrganizationNotificationDetail.jsx";
 import InstitutDemandesAuthentificationAttribueesList from "../pages/Institut/demandes-authentification/InstitutDemandesAuthentificationAttribueesList";
 import InstitutCodeADNPage from "../pages/Institut/demandes-authentification/InstitutCodeADNPage";
 import InstitutDemandeAuthentificationDetail from "../pages/Institut/demandes-authentification/InstitutDemandeAuthentificationDetail";
 
 export const organizationRoutes = (
   <>
-    <Route path="/organisations" element={<ProtectedRoute />}>
+    {/* Scope Institut : réservé aux rôles INSTITUT et SUPERVISEUR uniquement */}
+    <Route
+      path="/organisations"
+      element={
+        <ProtectedRoute
+          allowedRoles={["INSTITUT", "SUPERVISEUR"]}
+          redirectTo="own-dashboard"
+        />
+      }
+    >
       
       <Route index element={<InstitutDashboard />} />
       <Route path="dashboard" element={<InstitutDashboard />} />
@@ -75,6 +85,7 @@ export const organizationRoutes = (
 
       {/* Notifications */}
       <Route path="notifications" element={<OrganizationNotificationsList />} />
+      <Route path="notifications/:id" element={<OrganizationNotificationDetail />} />
       
     </Route>
   </>

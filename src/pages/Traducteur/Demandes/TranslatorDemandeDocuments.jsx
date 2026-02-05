@@ -35,6 +35,7 @@ import demandeService from "@/services/demandeService";
 import { useTranslation } from "react-i18next";
 import { buildImageUrl } from "@/utils/imageUtils";
 import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
+import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 
 const { Dragger } = Upload;
 const { Text } = Typography;
@@ -75,6 +76,9 @@ export default function DemandeDocumentsPage() {
   const [currentDoc, setCurrentDoc] = useState(null);
   const [uploadFile, setUploadFile] = useState(null);
   const [encryptionKeyTraduit, setEncryptionKeyTraduit] = useState("");
+
+  // Prévisualisation des fichiers dans l'application (reste dans l'app)
+  const [preview, setPreview] = useState({ open: false, url: "", title: "" });
 
   const fetchDemande = useCallback(async () => {
     try {
@@ -128,33 +132,41 @@ export default function DemandeDocumentsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [demandeId]);
 
-  // Actions Documents
+  // Nettoyer l'URL blob quand la prévisualisation se ferme
+  useEffect(() => {
+    return () => {
+      if (preview.url && preview.url.startsWith("blob:")) URL.revokeObjectURL(preview.url);
+    };
+  }, [preview.url]);
+
+  const closePreview = () => {
+    if (preview.url && preview.url.startsWith("blob:")) URL.revokeObjectURL(preview.url);
+    setPreview({ open: false, url: "", title: "" });
+  };
+
+  // Affichage des fichiers dans l'application (modal iframe, pas nouvel onglet)
   const viewDoc = async (row, type = "original") => {
     try {
-      // Pour les traductions, vérifier d'abord si le document a vraiment une traduction disponible
       if (type === "traduit") {
-        // Vérifier via getInfo si le document a une traduction disponible
         try {
           const info = await documentService.getInfo(row.id);
           const docInfo = info?.document || info;
           const hasTranslated = docInfo?.traduit?.hasFile || docInfo?.estTraduit;
-          
           if (!hasTranslated) {
             message.warning(t("traducteurDemandeDocuments.messages.translationNotReady") || "La traduction n'est pas encore disponible. Veuillez rafraîchir la page.");
             return;
           }
         } catch (infoError) {
           console.warn("Impossible de vérifier les infos du document:", infoError);
-          // Continuer quand même, peut-être que le fichier existe
         }
       }
-      
-      // Utiliser getContent pour obtenir le blob avec authentification
       const blob = await documentService.getContent(row.id, { type, display: true });
       const url = URL.createObjectURL(blob);
-      window.open(url, "_blank", "noopener,noreferrer");
-      // Nettoyer l'URL après un délai
-      setTimeout(() => URL.revokeObjectURL(url), 100);
+      setPreview({
+        open: true,
+        url,
+        title: type === "traduit" ? t("traducteurDemandeDocuments.preview.translated") || "Document traduit" : t("traducteurDemandeDocuments.preview.original") || "Document original",
+      });
     } catch (error) {
       if (error.response?.status === 401) {
         message.error(t("traducteurDemandeDocuments.messages.sessionExpired") || "Session expirée. Veuillez vous reconnecter.");
@@ -162,7 +174,7 @@ export default function DemandeDocumentsPage() {
         message.error(t("traducteurDemandeDocuments.messages.accessDenied") || "Vous n'avez pas accès à ce document.");
       } else if (error.response?.status === 404) {
         if (type === "traduit") {
-          message.error(t("traducteurDemandeDocuments.messages.translationNotFound") || "Le fichier traduit n'est pas encore disponible. Le fichier peut être en cours de traitement. Veuillez rafraîchir la page dans quelques instants.");
+          message.error(t("traducteurDemandeDocuments.messages.translationNotFound") || "Le fichier traduit n'est pas encore disponible.");
         } else {
           message.error(t("traducteurDemandeDocuments.messages.noFileAvailable"));
         }
@@ -359,7 +371,7 @@ export default function DemandeDocumentsPage() {
           <h5 className="text-lg font-semibold">{t("traducteurDemandeDocuments.title")}</h5>
           <Breadcrumb
             items={[
-              { title: <Link to="/">{t("traducteurDemandeDocuments.breadcrumbs.dashboard")}</Link> },
+              { title: <Link to="/traducteur/dashboard">{t("traducteurDemandeDocuments.breadcrumbs.dashboard")}</Link> },
               { title: <Link to="/traducteur/demandes">{t("traducteurDemandeDocuments.breadcrumbs.demandes")}</Link> },
               { title: t("traducteurDemandeDocuments.breadcrumbs.documents") },
             ]}
@@ -461,8 +473,8 @@ export default function DemandeDocumentsPage() {
         <Space direction="vertical" style={{ width: "100%" }}>
           <Dragger
             multiple={false}
-            accept=".pdf"
-            beforeUpload={() => false}
+            accept={PDF_ACCEPT}
+            beforeUpload={createPdfBeforeUpload(message.error, t, Upload.LIST_IGNORE)}
             onChange={onChangeUpload}
             fileList={uploadFile ? [{ uid: "1", name: uploadFile.name }] : []}
           >
@@ -474,6 +486,42 @@ export default function DemandeDocumentsPage() {
           </Dragger>
 
         </Space>
+      </Modal>
+
+      {/* Prévisualisation des documents dans l'application */}
+      <Modal
+        open={preview.open}
+        title={preview.title}
+        onCancel={closePreview}
+        footer={
+          <Space>
+            {preview.url && (
+              <a href={preview.url} download target="_blank" rel="noreferrer">
+                <Button icon={<DownloadOutlined />}>{t("traducteurDemandeDocuments.actions.download") || "Télécharger"}</Button>
+              </a>
+            )}
+            {preview.url && (
+              <a href={preview.url} target="_blank" rel="noreferrer">
+                <Button>{t("traducteurDemandeDetails.modals.openInNewTab") || "Ouvrir dans un nouvel onglet"}</Button>
+              </a>
+            )}
+            <Button type="primary" onClick={closePreview}>
+              {t("traducteurDemandeDetails.modals.close") || "Fermer"}
+            </Button>
+          </Space>
+        }
+        width="95vw"
+        style={{ top: 20, paddingBottom: 0 }}
+        styles={{ body: { height: "calc(95vh - 110px)", padding: 0 } }}
+        destroyOnClose
+      >
+        {preview.url ? (
+          <iframe src={preview.url} title="aperçu-document" style={{ width: "100%", height: "100%", border: "none" }} />
+        ) : (
+          <div style={{ padding: 16 }}>
+            <Text type="secondary">{t("traducteurDemandeDetails.modals.noContent")}</Text>
+          </div>
+        )}
       </Modal>
     </div>
   );

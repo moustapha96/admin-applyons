@@ -19,7 +19,12 @@
         "reset": "Zurücksetzen",
         "selectLanguage": "Sprache auswählen",
         "notifications": "Benachrichtigungen",
-        "required": "Dieses Feld ist erforderlich"
+        "required": "Dieses Feld ist erforderlich",
+        "back": "Zurück",
+        "upload": {
+            "pdfOnly": "Es werden nur PDF-Dateien akzeptiert.",
+            "maxSize": "Die maximale Dateigröße beträgt 5 MB."
+        }
     },
     "adminConfig": {
         "title": "Einstellungen",
@@ -190,6 +195,7 @@
         "filieres": "Programme",
         "demandes": "Bewerbungen",
         "allDemandes": "Bewerbungen",
+        "dossiersATraiter": "Zu bearbeitende Vorgänge",
         "invited": "Eingeladen",
         "documents": "Dokumente",
         "myDocuments": "Meine Dokumente",
@@ -276,6 +282,16 @@
             "ANNULEE": "Storniert"
         },
         "doc": { "type": "Typ", "mention": "Vermerk", "addedBy": "Hinzugefügt von", "date": "Datum", "file": "Datei", "viewFile": "Dokument ansehen", "institutDetails": "Details der Institution, die das Dokument eingereicht hat", "orgName": "Name", "orgType": "Typ", "orgEmail": "E-Mail", "orgPhone": "Telefon", "orgAddress": "Adresse", "orgWebsite": "Webseite", "orgCountry": "Land" },
+        "documentTypes": {
+            "DIPLOMA": "Diplom",
+            "TRANSCRIPT": "Zeugnis / Notenübersicht",
+            "ID_CARD": "Personalausweis",
+            "BIRTH_CERTIFICATE": "Geburtsurkunde",
+            "PASSPORT": "Reisepass",
+            "CERTIFICATE": "Bescheinigung / Attest",
+            "LETTER": "Empfehlungsschreiben",
+            "OTHER": "Sonstiges (angeben)"
+        },
         "upload": {
             "file": "Datei",
             "select": "Datei wählen",
@@ -283,8 +299,10 @@
             "submit": "Senden",
             "success": "Dokument erfolgreich hinzugefügt.",
             "error": "Fehler beim Hinzufügen des Dokuments.",
-            "typePlaceholder": "Dokumenttyp",
-            "mentionPlaceholder": "Vermerk (optional)"
+            "typePlaceholder": "Dokumenttyp auswählen",
+            "typeOtherPlaceholder": "Dokumenttyp angeben",
+            "mentionPlaceholder": "Vermerk (optional)",
+            "pdfOnlyExtra": "Nur PDF, max. 5 MB."
         },
         "codeADN": {
             "title": "Zugang per ADN-Code",
@@ -792,6 +810,14 @@
             "hello": "Hallo, {{firstName}} {{lastName}}",
             "welcome": "Willkommen!"
         },
+        "links": {
+            "title": "Schnellzugriff",
+            "mesDemandes": "Meine Bewerbungen",
+            "newApplication": "Neue Bewerbung",
+            "demandesAuthentification": "Authentifizierungsanfragen",
+            "profile": "Mein Profil",
+            "seeAll": "Alle anzeigen"
+        },
         "kpis": {
             "myRequests": "Meine Bewerbungen",
             "myDemandesAuthentification": "Authentifizierungsanfragen",
@@ -851,6 +877,20 @@
             "home": "Startseite",
             "institute": "Institut"
         },
+        "traducteur": {
+            "header": { "title": "Übersetzer-Instituts-Dashboard" },
+            "breadcrumb": { "institute": "Übersetzer-Institut" },
+            "kpis": {
+                "assignedRequests": "Zugewiesene Bewerbungen",
+                "docsToTranslate": "Zu übersetzende Dokumente",
+                "docsTranslated": "Übersetzte Dokumente"
+            },
+            "tables": {
+                "assignedByStatus": "Zugewiesene Bewerbungen nach Status",
+                "recentAssigned": "Kürzlich zugewiesene Bewerbungen",
+                "date": "Datum"
+            }
+        },
         "kpis": {
             "targetRequests": "Bewerbungen (gesamt)",
             "demandesAuthentificationAttributed": "Auth.-Anfragen (zugewiesen)",
@@ -858,7 +898,9 @@
             "documents": "Dokumente (gesamt/zu übersetzen/übersetzt)",
             "subscriptions": "Abonnements (aktiv/gesamt)",
             "expiringSoon": "Laufen bald ab: {{count}}",
-            "usersTotal": "Benutzer (gesamt)"
+            "usersTotal": "Benutzer (gesamt)",
+            "notifications": "Benachrichtigungen",
+            "unread": "ungelesen"
         },
         "charts": {
             "targetVsAssigned": {
@@ -1416,6 +1458,7 @@
             "allNotifications": "Alle Benachrichtigungen"
         },
         "columns": {
+            "demandeur": "Antragsteller",
             "lastName": "Nachname",
             "firstName": "Vorname",
             "dateOfBirth": "Geburtsdatum",
@@ -1435,6 +1478,7 @@
         },
         "buttons": {
             "refresh": "Aktualisieren",
+            "viewDetails": "Details anzeigen",
             "viewDemande": "Bewerbung anzeigen",
             "addDocument": "Dokument hinzufügen"
         },
@@ -1446,6 +1490,51 @@
         },
         "errors": {
             "noOrgId": "Organisations-ID nicht gefunden"
+        },
+        "empty": "Keine Benachrichtigungen",
+        "viewMode": {
+            "compact": "Weniger Details",
+            "full": "Alle Details"
+        }
+    },
+    "orgNotificationDetail": {
+        "pageTitle": "Benachrichtigungsdetails",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "notifications": "Benachrichtigungen"
+        },
+        "sections": {
+            "mainInfo": "Hauptinformationen",
+            "demandeur": "Bewerber",
+            "demande": "Zugehörige Bewerbung"
+        },
+        "fields": {
+            "status": "Status",
+            "type": "Typ",
+            "message": "Nachricht",
+            "createdAt": "Erstellt am",
+            "viewedAt": "Angesehen am",
+            "demandeurName": "Name",
+            "demandeurEmail": "E-Mail",
+            "demandeCode": "Bewerbungscode",
+            "demandeDate": "Bewerbungsdatum"
+        },
+        "status": {
+            "viewed": "Angesehen",
+            "unviewed": "Nicht angesehen"
+        },
+        "actions": {
+            "back": "Zurück",
+            "backToList": "Zurück zur Liste",
+            "markAsViewed": "Als gelesen markieren"
+        },
+        "messages": {
+            "loadError": "Fehler beim Laden der Benachrichtigung",
+            "markedAsViewed": "Benachrichtigung als gelesen markiert",
+            "markError": "Fehler beim Markieren"
+        },
+        "errors": {
+            "notFound": "Benachrichtigung nicht gefunden"
         }
     },
     "adminOrgNotifications": {
@@ -2201,13 +2290,13 @@
             "year": "Jahr des Erwerbs",
             "yearRequired": "Jahr des Erwerbs ist erforderlich",
             "file": "Datei",
-            "fileHelp": "Dokumentdatei hochladen (PDF/JPG/PNG).",
+            "fileHelp": "Dokumentdatei hochladen (nur PDF, max. 5 MB).",
             "fileOriginal": "Originaldatei",
             "fileRequired": "Bitte eine Datei wählen."
         },
         "upload": {
             "dragTitle": "Ziehen & ablegen oder zum Auswählen klicken",
-            "dragHint": "PDF / JPG / PNG (max. 1 Datei)",
+            "dragHint": "Nur PDF (max. 5 MB, 1 Datei)",
             "tooltipRequired": "Erforderlich"
         },
         "toasts": {
@@ -2459,8 +2548,25 @@
         "error": "Fehler beim Abrufen der Statistiken"
     },
     "traducteurDashboard": {
+        "breadcrumb": { "dashboard": "Dashboard" },
         "hello": "Hallo, {{firstName}} {{lastName}}",
-        "welcome": "Willkommen!",
+        "welcome": "Willkommen in Ihrem Übersetzerbereich.",
+        "links": {
+            "title": "Schnellzugriff",
+            "demandes": "Zugewiesene Bewerbungen",
+            "dossiers": "Zu bearbeitende Vorgänge",
+            "profile": "Mein Profil",
+            "users": "Benutzer",
+            "seeAll": "Alle Bewerbungen anzeigen",
+            "goToDemandes": "Bewerbungen anzeigen"
+        },
+        "tables": {
+            "recentAssigned": "Kürzlich zugewiesene Bewerbungen",
+            "code": "Code",
+            "status": "Status",
+            "date": "Datum",
+            "view": "Anzeigen"
+        },
         "kpis": {
             "usersTotal": "Benutzer (gesamt)",
             "usersActive": "Aktiv: {{count}}",
@@ -3721,6 +3827,7 @@
         },
         "actions": {
             "details": "Details",
+            "detail": "Detail",
             "start": "Starten",
             "validate": "Validieren",
             "reject": "Ablehnen",

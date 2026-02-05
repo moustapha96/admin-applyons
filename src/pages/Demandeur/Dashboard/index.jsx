@@ -1,9 +1,15 @@
-
 /* eslint-disable react/prop-types */
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
-import { Table, Tag } from "antd";
+import { Card, Table, Tag, Row, Col } from "antd";
+import {
+  FileTextOutlined,
+  PlusOutlined,
+  SafetyCertificateOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { useAuth } from "../../../hooks/useAuth";
 import dashboardService from "../../../services/dashboardService";
 import { useTranslation } from "react-i18next";
@@ -215,6 +221,36 @@ export default function DemandeurDashboard() {
           </div>
         </div>
 
+        {/* Liens rapides */}
+        <Card title={t("demandeurDashboard.links.title")} className="mb-4">
+          <Row gutter={[12, 12]}>
+            <Col xs={12} sm={12} md={6}>
+              <Link to="/demandeur/mes-demandes" className="block rounded-lg border p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                <FileTextOutlined className="text-xl text-primary" />
+                <span className="ml-2 font-medium">{t("demandeurDashboard.links.mesDemandes")}</span>
+              </Link>
+            </Col>
+            <Col xs={12} sm={12} md={6}>
+              <Link to="/demandeur/mes-demandes/create" className="block rounded-lg border p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                <PlusOutlined className="text-xl text-primary" />
+                <span className="ml-2 font-medium">{t("demandeurDashboard.links.newApplication")}</span>
+              </Link>
+            </Col>
+            <Col xs={12} sm={12} md={6}>
+              <Link to="/demandeur/demandes-authentification" className="block rounded-lg border p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                <SafetyCertificateOutlined className="text-xl text-primary" />
+                <span className="ml-2 font-medium">{t("demandeurDashboard.links.demandesAuthentification")}</span>
+              </Link>
+            </Col>
+            <Col xs={12} sm={12} md={6}>
+              <Link to="/demandeur/profile" className="block rounded-lg border p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                <UserOutlined className="text-xl text-primary" />
+                <span className="ml-2 font-medium">{t("demandeurDashboard.links.profile")}</span>
+              </Link>
+            </Col>
+          </Row>
+        </Card>
+
         {/* Loader */}
         {loading && (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -236,9 +272,14 @@ export default function DemandeurDashboard() {
 
             <div className="mt-6">
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <h6 className="mb-3 font-medium text-slate-700">
-                  {t("demandeurDashboard.activity.title")}
-                </h6>
+                <div className="mb-3 flex items-center justify-between">
+                  <h6 className="mb-0 font-medium text-slate-700">
+                    {t("demandeurDashboard.activity.title")}
+                  </h6>
+                  {recentActivities.length > 0 && (
+                    <Link to="/demandeur/mes-demandes">{t("demandeurDashboard.links.seeAll")}</Link>
+                  )}
+                </div>
                 {recentActivities.length > 0 ? (
                   <Table
                     size="small"

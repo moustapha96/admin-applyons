@@ -25,7 +25,6 @@ const RoleBasedHomeRedirect = () => {
 
     case "TRADUCTEUR":
       return <Navigate to="/traducteur/dashboard" replace />;
-
     // Exemple pour un user d’organisation
     case "INSTITUT":
     case "SUPERVISEUR": 

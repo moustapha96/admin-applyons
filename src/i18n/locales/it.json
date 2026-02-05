@@ -20,8 +20,13 @@
         "selectLanguage": "Seleziona lingua",
         "notifications": "Notifiche",
         "required": "Questo campo è obbligatorio",
+        "back": "Indietro",
         "yes": "Sì",
-        "no": "No"
+        "no": "No",
+        "upload": {
+            "pdfOnly": "Sono accettati solo file PDF.",
+            "maxSize": "La dimensione massima del file è 5 MB."
+        }
     },
     "adminConfig": {
         "title": "Impostazioni",
@@ -192,6 +197,7 @@
         "filieres": "Corsi",
         "demandes": "Applicazioni",
         "allDemandes": "Applicazioni",
+        "dossiersATraiter": "Pratiche da trattare",
         "invited": "Invitate",
         "documents": "Documenti",
         "myDocuments": "I miei documenti",
@@ -278,6 +284,16 @@
             "ANNULEE": "Annullata"
         },
         "doc": { "type": "Tipo", "mention": "Menzione", "addedBy": "Aggiunto da", "date": "Data", "file": "File", "viewFile": "Visualizza documento", "institutDetails": "Dettagli dell'istituzione che ha depositato il documento", "orgName": "Nome", "orgType": "Tipo", "orgEmail": "Email", "orgPhone": "Telefono", "orgAddress": "Indirizzo", "orgWebsite": "Sito web", "orgCountry": "Paese" },
+        "documentTypes": {
+            "DIPLOMA": "Diploma",
+            "TRANSCRIPT": "Trascrizione / Pagella",
+            "ID_CARD": "Documento d'identità",
+            "BIRTH_CERTIFICATE": "Certificato di nascita",
+            "PASSPORT": "Passaporto",
+            "CERTIFICATE": "Attestato / Certificato",
+            "LETTER": "Lettera di raccomandazione",
+            "OTHER": "Altro (specificare)"
+        },
         "upload": {
             "file": "File",
             "select": "Scegli file",
@@ -285,8 +301,10 @@
             "submit": "Invia",
             "success": "Documento aggiunto con successo.",
             "error": "Errore nell'aggiunta del documento.",
-            "typePlaceholder": "Tipo di documento",
-            "mentionPlaceholder": "Menzione (opzionale)"
+            "typePlaceholder": "Seleziona tipo di documento",
+            "typeOtherPlaceholder": "Specificare il tipo di documento",
+            "mentionPlaceholder": "Menzione (opzionale)",
+            "pdfOnlyExtra": "Solo PDF, 5 MB max."
         },
         "codeADN": {
             "title": "Accedi con codice ADN",
@@ -795,6 +813,14 @@
             "hello": "Ciao, {{firstName}} {{lastName}}",
             "welcome": "Benvenuto!"
         },
+        "links": {
+            "title": "Accesso rapido",
+            "mesDemandes": "Le mie candidature",
+            "newApplication": "Nuova candidatura",
+            "demandesAuthentification": "Richieste di autenticazione",
+            "profile": "Il mio profilo",
+            "seeAll": "Vedi tutto"
+        },
         "kpis": {
             "myRequests": "Le mie candidature",
             "myDemandesAuthentification": "Richieste di autenticazione",
@@ -854,6 +880,20 @@
             "home": "Home",
             "institute": "Istituto"
         },
+        "traducteur": {
+            "header": { "title": "Dashboard Istituto Traduttore" },
+            "breadcrumb": { "institute": "Istituto traduttore" },
+            "kpis": {
+                "assignedRequests": "Richieste assegnate",
+                "docsToTranslate": "Documenti da tradurre",
+                "docsTranslated": "Documenti tradotti"
+            },
+            "tables": {
+                "assignedByStatus": "Richieste assegnate per stato",
+                "recentAssigned": "Richieste assegnate recenti",
+                "date": "Data"
+            }
+        },
         "kpis": {
             "targetRequests": "Candidature (totale)",
             "demandesAuthentificationAttributed": "Richieste auth. attribuite",
@@ -861,7 +901,9 @@
             "documents": "Documenti (totale/da tradurre/tradotti)",
             "subscriptions": "Abbonamenti (attivi/totale)",
             "expiringSoon": "In scadenza: {{count}}",
-            "usersTotal": "Utenti (totale)"
+            "usersTotal": "Utenti (totale)",
+            "notifications": "Notifiche",
+            "unread": "non lette"
         },
         "charts": {
             "targetVsAssigned": {
@@ -1419,6 +1461,7 @@
             "allNotifications": "Tutte le notifiche"
         },
         "columns": {
+            "demandeur": "Richiedente",
             "lastName": "Cognome",
             "firstName": "Nome",
             "dateOfBirth": "Data di nascita",
@@ -1438,6 +1481,7 @@
         },
         "buttons": {
             "refresh": "Aggiorna",
+            "viewDetails": "Visualizza dettagli",
             "viewDemande": "Visualizza richiesta",
             "addDocument": "Aggiungi documento"
         },
@@ -1449,6 +1493,51 @@
         },
         "errors": {
             "noOrgId": "ID organizzazione non trovato"
+        },
+        "empty": "Nessuna notifica",
+        "viewMode": {
+            "compact": "Pochi dettagli",
+            "full": "Tutti i dettagli"
+        }
+    },
+    "orgNotificationDetail": {
+        "pageTitle": "Dettaglio notifica",
+        "breadcrumbs": {
+            "dashboard": "Dashboard",
+            "notifications": "Notifiche"
+        },
+        "sections": {
+            "mainInfo": "Informazioni principali",
+            "demandeur": "Richiedente",
+            "demande": "Richiesta collegata"
+        },
+        "fields": {
+            "status": "Stato",
+            "type": "Tipo",
+            "message": "Messaggio",
+            "createdAt": "Creata il",
+            "viewedAt": "Visualizzata il",
+            "demandeurName": "Nome",
+            "demandeurEmail": "Email",
+            "demandeCode": "Codice richiesta",
+            "demandeDate": "Data richiesta"
+        },
+        "status": {
+            "viewed": "Visualizzata",
+            "unviewed": "Non visualizzata"
+        },
+        "actions": {
+            "back": "Indietro",
+            "backToList": "Torna all'elenco",
+            "markAsViewed": "Segna come letta"
+        },
+        "messages": {
+            "loadError": "Errore nel caricamento della notifica",
+            "markedAsViewed": "Notifica segnata come letta",
+            "markError": "Errore durante la marcatura"
+        },
+        "errors": {
+            "notFound": "Notifica non trovata"
         }
     },
     "adminOrgNotifications": {
@@ -2204,13 +2293,13 @@
             "year": "Anno di conseguimento",
             "yearRequired": "Anno di conseguimento obbligatorio",
             "file": "File",
-            "fileHelp": "Carica il file del documento (PDF/JPG/PNG).",
+            "fileHelp": "Carica il file del documento (solo PDF, max 5 MB).",
             "fileOriginal": "File originale",
             "fileRequired": "Seleziona un file."
         },
         "upload": {
             "dragTitle": "Trascina e rilascia o clicca per selezionare",
-            "dragHint": "PDF / JPG / PNG (max 1 file)",
+            "dragHint": "Solo PDF (max 5 MB, 1 file)",
             "tooltipRequired": "Obbligatorio"
         },
         "toasts": {
@@ -2462,8 +2551,25 @@
         "error": "Errore nel recupero delle statistiche"
     },
     "traducteurDashboard": {
+        "breadcrumb": { "dashboard": "Dashboard" },
         "hello": "Ciao, {{firstName}} {{lastName}}",
-        "welcome": "Benvenuto!",
+        "welcome": "Benvenuto nella tua area traduttore.",
+        "links": {
+            "title": "Accesso rapido",
+            "demandes": "Richieste assegnate",
+            "dossiers": "Pratiche da trattare",
+            "profile": "Il mio profilo",
+            "users": "Utenti",
+            "seeAll": "Vedi tutte le richieste",
+            "goToDemandes": "Vedi richieste"
+        },
+        "tables": {
+            "recentAssigned": "Richieste assegnate recenti",
+            "code": "Codice",
+            "status": "Stato",
+            "date": "Data",
+            "view": "Visualizza"
+        },
         "kpis": {
             "usersTotal": "Utenti (totale)",
             "usersActive": "Attivi: {{count}}",
@@ -3724,6 +3830,7 @@
         },
         "actions": {
             "details": "Dettagli",
+            "detail": "Dettaglio",
             "start": "Avvia",
             "validate": "Valida",
             "reject": "Rifiuta",

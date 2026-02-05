@@ -214,7 +214,7 @@
 //                     required
 //                     tooltip="Obligatoire"
 //                   >
-//                     <Dragger {...makeUploadProps(setFileOriginal)}>
+//                     <Dragger {...makeUploadProps(setFileOriginal, message.error, t, Upload.LIST_IGNORE)}>
 //                       <p className="ant-upload-drag-icon"><InboxOutlined /></p>
 //                       <p className="ant-upload-text">Glissez-déposez ou cliquez pour sélectionner</p>
 //                       <p className="ant-upload-hint">PDF / JPG / PNG (max 1 fichier)</p>
@@ -261,15 +261,16 @@ import { useAuth } from "../../../hooks/useAuth";
 import documentService from "@/services/documentService";
 import demandeService from "@/services/demandeService";
 import { useTranslation } from "react-i18next";
+import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
 
-function makeUploadProps(setter) {
+function makeUploadProps(setter, messageError, t, listIgnore) {
   return {
     name: "file",
     multiple: false,
-    beforeUpload: () => false,
+    beforeUpload: createPdfBeforeUpload(messageError, t, listIgnore),
     onRemove: () => { setter(null); return true; },
     onChange: (info) => {
       const f = Array.isArray(info.fileList) && info.fileList[0]?.originFileObj
@@ -277,7 +278,7 @@ function makeUploadProps(setter) {
         : null;
       setter(f || null);
     },
-    accept: ".pdf,.jpg,.jpeg,.png,.webp",
+    accept: PDF_ACCEPT,
     maxCount: 1,
   };
 }
@@ -465,7 +466,7 @@ export default function DemandeDocumentAdd() {
                     required
                     tooltip={t("demandeDocAdd.upload.tooltipRequired")}
                   >
-                    <Dragger {...makeUploadProps(setFileOriginal)}>
+                    <Dragger {...makeUploadProps(setFileOriginal, message.error, t, Upload.LIST_IGNORE)}>
                       <p className="ant-upload-drag-icon"><InboxOutlined /></p>
                       <p className="ant-upload-text">{t("demandeDocAdd.upload.dragTitle")}</p>
                       <p className="ant-upload-hint">{t("demandeDocAdd.upload.dragHint")}</p>

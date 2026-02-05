@@ -120,15 +120,14 @@ const documentService = {
     uploadTranslated(documentId, file, extra = {}) {
         const fd = new FormData();
         fd.append("file", file);
-        // facultatif si ton ctrl le souhaite :
         if (extra.ownerOrgId) fd.append("ownerOrgId", extra.ownerOrgId);
         if (extra.encryptionKeyTraduit) fd.append("encryptionKeyTraduit", extra.encryptionKeyTraduit);
 
-        // endpoint que tu as configuré :
-        const { data } = axiosInstance.post(`/documents/${documentId}/traduire-upload`, fd, {
-            headers: { "Content-Type": "multipart/form-data" },
-        });
-        return data;
+        return axiosInstance
+            .post(`/documents/${documentId}/traduire-upload`, fd, {
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((r) => r.data);
     },
 
     deleteTranslation(documentId) {
