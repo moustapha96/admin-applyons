@@ -2239,6 +2239,7 @@
         },
         "docs": {
             "title": "Attached documents",
+            "accessRestricted": "Access to this application's documents is restricted to the target organization.",
             "empty": "No document",
             "ownerOrg": "Institute (source)",
             "type": "Type",

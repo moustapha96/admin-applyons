@@ -4,13 +4,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Card, Table, Tag, Space, Typography, Button, message, Breadcrumb, Modal, Spin } from "antd";
+import { Card, Table, Tag, Space, Typography, Button, message, Breadcrumb, Modal, Spin, Alert } from "antd";
 import dayjs from "dayjs";
 import demandeService from "@/services/demandeService";
 import documentService from "@/services/documentService";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { normalizeDocument } from "@/utils/documentUtils";
+import { useAuth } from "@/hooks/useAuth";
 
 const { Title, Text } = Typography;
 
@@ -37,11 +38,16 @@ export default function DemandeDocumentsPage() {
   const { t } = useTranslation();
   const { id } = useParams(); // demandePartageId
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const [demande, setDemande] = useState(null);
   const [preview, setPreview] = useState({ open: false, url: "", title: "", loading: false });
+
+  const userOrgId = user?.organization?.id ?? null;
+  const targetOrgId = demande?.targetOrg?.id ?? demande?.targetOrgId ?? null;
+  const isTargetOrganization = Boolean(userOrgId && targetOrgId && userOrgId === targetOrgId);
 
   const normalizeItems = (res) => {
     // Supporte: tableau brut | {items: []} | {documents: []}
@@ -94,6 +100,7 @@ export default function DemandeDocumentsPage() {
     fetchDemande();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
 
   const openUrl = async (doc, type = "original") => {
     try {
@@ -204,6 +211,19 @@ export default function DemandeDocumentsPage() {
             </Title>
           </Space>
 
+          {demande && !isTargetOrganization ? (
+            <Card>
+              <Alert
+                type="warning"
+                showIcon
+                message={t("institutDemandeDetails.docs.accessRestricted")}
+                className="mb-3"
+              />
+              <Button type="primary" onClick={() => navigate(`/organisations/demandes/${id}/details`)}>
+                {t("demandeDocuments.buttons.back")} {t("demandeDocuments.breadcrumbs.details")}
+              </Button>
+            </Card>
+          ) : (
           <Card>
             <Table
               rowKey={(r) => r.id}
@@ -215,6 +235,7 @@ export default function DemandeDocumentsPage() {
               locale={{ emptyText: t("demandeDocuments.table.empty") }}
             />
           </Card>
+          )}
         </div>
       </div>
 

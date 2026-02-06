@@ -2198,6 +2198,7 @@
         },
         "docs": {
             "title": "关联文档",
+            "accessRestricted": "此申请相关文档的访问权限仅限申请的目标机构。",
             "empty": "暂无文档",
             "ownerOrg": "机构（来源）",
             "type": "类型",

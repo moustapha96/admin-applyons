@@ -26,6 +26,7 @@ import demandeService from "@/services/demandeService";
 import documentService from "@/services/documentService";
 import { useTranslation } from "react-i18next";
 import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
+import { useAuth } from "@/hooks/useAuth";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -43,10 +44,16 @@ export default function InstitutDemandeDetails() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const [demande, setDemande] = useState(null);
   const [docs, setDocs] = useState([]);
+
+  // L'utilisateur ne peut modifier le statut ni accéder aux documents que si son organisation est l'organisation cible de la demande
+  const userOrgId = user?.organization?.id ?? null;
+  const targetOrgId = demande?.targetOrg?.id ?? demande?.targetOrgId ?? null;
+  const isTargetOrganization = Boolean(userOrgId && targetOrgId && userOrgId === targetOrgId);
 
   // Modal workflow
   const [wfOpen, setWfOpen] = useState(false);
@@ -340,35 +347,39 @@ export default function InstitutDemandeDetails() {
                   </Descriptions.Item>
                 </Descriptions>
 
-                <Divider />
+                {isTargetOrganization && (
+                  <>
+                    <Divider />
 
-                <Card
-                  className="mt-3"
-                  title={t("institutDemandeDetails.sections.actionsWorkflow")}
-                  extra={
-                    <Button onClick={() => openWorkflowModal()} type="default">
-                      {t("institutDemandeDetails.buttons.updateStatus")}
-                    </Button>
-                  }
-                >
-                  <Space wrap>
-                    <Button onClick={() => openWorkflowModal("PENDING")}>{t("institutDemandeDetails.buttons.pending")}</Button>
-                    <Button onClick={() => openWorkflowModal("IN_PROGRESS")}>{t("institutDemandeDetails.buttons.inProgress")}</Button>
-                    <Button type="primary" onClick={() => openWorkflowModal("VALIDATED")}>{t("institutDemandeDetails.buttons.validated")}</Button>
-                    <Button danger onClick={() => openWorkflowModal("REJECTED")}>{t("institutDemandeDetails.buttons.rejected")}</Button>
-                  </Space>
-                </Card>
+                    <Card
+                      className="mt-3"
+                      title={t("institutDemandeDetails.sections.actionsWorkflow")}
+                      extra={
+                        <Button onClick={() => openWorkflowModal()} type="default">
+                          {t("institutDemandeDetails.buttons.updateStatus")}
+                        </Button>
+                      }
+                    >
+                      <Space wrap>
+                        <Button onClick={() => openWorkflowModal("PENDING")}>{t("institutDemandeDetails.buttons.pending")}</Button>
+                        <Button onClick={() => openWorkflowModal("IN_PROGRESS")}>{t("institutDemandeDetails.buttons.inProgress")}</Button>
+                        <Button type="primary" onClick={() => openWorkflowModal("VALIDATED")}>{t("institutDemandeDetails.buttons.validated")}</Button>
+                        <Button danger onClick={() => openWorkflowModal("REJECTED")}>{t("institutDemandeDetails.buttons.rejected")}</Button>
+                      </Space>
+                    </Card>
 
-                <Divider />
+                    <Divider />
 
-                <Space wrap className="mb-2">
-                  <Button
-                    icon={<FileTextOutlined />}
-                    onClick={() => navigate(`/organisations/demandes/${demande.id}/documents`)}
-                  >
-                    {t("institutDemandeDetails.buttons.seeDocs")}
-                  </Button>
-                </Space>
+                    <Space wrap className="mb-2">
+                      <Button
+                        icon={<FileTextOutlined />}
+                        onClick={() => navigate(`/organisations/demandes/${demande.id}/documents`)}
+                      >
+                        {t("institutDemandeDetails.buttons.seeDocs")}
+                      </Button>
+                    </Space>
+                  </>
+                )}
               </>
             )}
           </Card>
@@ -377,18 +388,24 @@ export default function InstitutDemandeDetails() {
             title={
               <Space>
                 {t("institutDemandeDetails.docs.title")}
-                <Tag>{demande?._count?.documents ?? docs?.length ?? 0}</Tag>
+                {isTargetOrganization && <Tag>{demande?._count?.documents ?? docs?.length ?? 0}</Tag>}
               </Space>
             }
           >
-            <Table
-              rowKey={(r) => r.id}
-              columns={docColumns}
-              dataSource={docs}
-              pagination={{ pageSize: 5 }}
-              locale={{ emptyText: t("institutDemandeDetails.docs.empty") }}
-              scroll={{ x: true }}
-            />
+            {isTargetOrganization ? (
+              <Table
+                rowKey={(r) => r.id}
+                columns={docColumns}
+                dataSource={docs}
+                pagination={{ pageSize: 5 }}
+                locale={{ emptyText: t("institutDemandeDetails.docs.empty") }}
+                scroll={{ x: true }}
+              />
+            ) : (
+              <Text type="secondary">
+                {t("institutDemandeDetails.docs.accessRestricted")}
+              </Text>
+            )}
           </Card>
         </div>
       </div>

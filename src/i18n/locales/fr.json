@@ -2234,6 +2234,7 @@
         },
         "docs": {
             "title": "Documents associés",
+            "accessRestricted": "L'accès aux documents de cette demande est réservé à l'organisation cible de l'application.",
             "empty": "Aucun document",
             "ownerOrg": "Institut (source)",
             "type": "Type",

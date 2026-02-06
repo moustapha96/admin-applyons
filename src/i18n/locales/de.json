@@ -2197,6 +2197,7 @@
         },
         "docs": {
             "title": "Zugehörige Dokumente",
+            "accessRestricted": "Der Zugriff auf die Dokumente dieser Anfrage ist der Zielorganisation der Bewerbung vorbehalten.",
             "empty": "Kein Dokument",
             "ownerOrg": "Institut (Quelle)",
             "type": "Typ",

@@ -2201,6 +2201,7 @@
         },
         "docs": {
             "title": "Documentos asociados",
+            "accessRestricted": "El acceso a los documentos de esta solicitud está reservado a la organización destinataria de la solicitud.",
             "empty": "Ningún documento",
             "ownerOrg": "Instituto (origen)",
             "type": "Tipo",

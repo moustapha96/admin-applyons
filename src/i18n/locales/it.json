@@ -2200,6 +2200,7 @@
         },
         "docs": {
             "title": "Documenti associati",
+            "accessRestricted": "L'accesso ai documenti di questa richiesta è riservato all'organizzazione destinataria dell'istanza.",
             "empty": "Nessun documento",
             "ownerOrg": "Istituto (origine)",
             "type": "Tipo",
