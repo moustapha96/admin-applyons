@@ -225,6 +225,7 @@ export default function OrganizationNotificationsList() {
             const demandeId = demande?.id;
             const code = demande?.code ?? "";
             const targetOrgId = record.targetOrgId ?? record.demandePartage?.targetOrgId;
+            // const assignedOrgId = record.assignedOrgId ?? record.demandePartage?.assignedOrgId;
             const isTargetOrg = targetOrgId != null && String(targetOrgId) === String(orgId);
 
             return (
@@ -236,7 +237,7 @@ export default function OrganizationNotificationsList() {
                 >
                   {t("orgNotifications.buttons.viewDetails")}
                 </Button>
-                {demandeId && (
+                {isTargetOrg &&demandeId && (
                   <Button
                     size="small"
                     onClick={() => navigate(getDemandeDetailPath(basePath, demandeId))}
@@ -244,7 +245,7 @@ export default function OrganizationNotificationsList() {
                     {t("orgNotifications.buttons.viewDemande")}
                   </Button>
                 )}
-                {isTargetOrg && code && (
+                {!isTargetOrg && code && (
                   <Button
                     size="small"
                     type="primary"
