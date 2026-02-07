@@ -68,6 +68,7 @@ export default function OrganizationNotificationsList() {
     total: 0,
   });
 
+  // Récupérer uniquement les notifications de l'organisation du user connecté (backend impose l'org du token pour les non-admins)
   const fetchData = useCallback(async () => {
     if (!orgId) return;
 
@@ -225,6 +226,7 @@ export default function OrganizationNotificationsList() {
             const demandeId = demande?.id;
             const code = demande?.code ?? "";
             const targetOrgId = record.targetOrgId ?? record.demandePartage?.targetOrgId;
+            const role = user?.role;
             // const assignedOrgId = record.assignedOrgId ?? record.demandePartage?.assignedOrgId;
             const isTargetOrg = targetOrgId != null && String(targetOrgId) === String(orgId);
 
@@ -245,7 +247,7 @@ export default function OrganizationNotificationsList() {
                     {t("orgNotifications.buttons.viewDemande")}
                   </Button>
                 )}
-                {!isTargetOrg && code && (
+                {!isTargetOrg && code &&  role !== "TRADUCTEUR" && (
                   <Button
                     size="small"
                     type="primary"
@@ -271,7 +273,7 @@ export default function OrganizationNotificationsList() {
       }
       return baseCols;
     },
-    [t, navigate, orgId, basePath, viewMode]
+    [t, navigate, orgId, basePath, viewMode, user]
   );
 
   if (!orgId) {
