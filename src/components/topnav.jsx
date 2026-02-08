@@ -12,7 +12,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 
-import { Avatar, Tag, Dropdown, List, Empty, Button, Divider } from "antd";
+import { Avatar, Tag, Dropdown, List, Empty, Button, Divider, Drawer } from "antd";
 import { UserOutlined, GlobalOutlined, BellOutlined, MessageOutlined, CheckCircleOutlined, WarningOutlined } from "@ant-design/icons";
 
 import { useAuth } from "../hooks/useAuth";
@@ -36,6 +36,7 @@ export default function Topnav({ setToggle, toggle }) {
 
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showNotificationsDrawer, setShowNotificationsDrawer] = useState(false);
   const userMenuRef = useRef(null);
   const notificationRef = useRef(null);
   
@@ -98,11 +99,32 @@ export default function Topnav({ setToggle, toggle }) {
   const handleNotificationClick = (notification) => {
     // On marque comme lue immédiatement côté front + backend
     markAsRead(notification.id);
+    console.log(notification);
+    // Si le backend fournit une URL directe, on reste sur la même page (navigation dans l'app)
+   
 
-    // Si le backend fournit une URL directe, on l'utilise en priorité
-    if (notification.link) {
-      navigate(notification.link);
+    if (notification.entityType === "DEMANDE" && notification.demandeId && notification.type === "DOC_ADDED") {
+      navigate(`/demandeur/mes-demandes/${notification.demandeId}/details`);
       setShowNotifications(false);
+      setShowNotificationsDrawer(false);
+      return;
+    }
+   
+    if (notification.entityType === "DEMANDE" && notification.demandeId && notification.type === "ORG_DEMANDE") {
+      navigate(`/organisations/demandes/${notification.demandeId}/details`);
+      setShowNotifications(false);
+      setShowNotificationsDrawer(false);
+      return;
+    }
+
+    if (notification.link) {
+      setShowNotifications(false);
+      setShowNotificationsDrawer(false);
+      if (notification.link.startsWith("/")) {
+        navigate(notification.link);
+      } else {
+        window.open(notification.link);
+      }
       return;
     }
 
@@ -117,19 +139,18 @@ export default function Topnav({ setToggle, toggle }) {
 
     // DEMANDEUR : détail d'une demande
     if (entityType === "DEMANDE") {
-      // ex: /demandeur/mes-demandes/:demandeId/details
       navigate(`/demandeur/mes-demandes/${entityId}/details`);
       setShowNotifications(false);
+      setShowNotificationsDrawer(false);
       return;
     }
 
     // DEMANDEUR : documents d'une demande
     if (entityType === "DOCUMENT" || entityType === "DOCUMENTS") {
-      // Si le backend envoie documentId + demandeId, on peut adapter ici.
-      // En attendant, on redirige vers la page documents de la demande.
       const demandeId = notification.demandeId || entityId;
       navigate(`/demandeur/mes-demandes/${demandeId}/documents`);
       setShowNotifications(false);
+      setShowNotificationsDrawer(false);
       return;
     }
 
@@ -137,6 +158,7 @@ export default function Topnav({ setToggle, toggle }) {
     if (entityType === "ORGANISATION" || entityType === "INSTITUT") {
       navigate(`/demandeur/organisation/${entityId}/details`);
       setShowNotifications(false);
+      setShowNotificationsDrawer(false);
       return;
     }
 
@@ -408,9 +430,7 @@ export default function Topnav({ setToggle, toggle }) {
                         size="small"
                         onClick={() => {
                           setShowNotifications(false);
-                          if (role === "INSTITUT" || role === "SUPERVISEUR") {
-                            navigate("/organisations/notifications");
-                          }
+                          setShowNotificationsDrawer(true);
                         }}
                       >
                         {t("notifications.viewAll") || "Voir toutes les notifications"}
@@ -516,6 +536,87 @@ export default function Topnav({ setToggle, toggle }) {
               </div>
             </li>
           </ul>
+
+          {/* Drawer "Toutes les notifications" sur la même page */}
+          <Drawer
+            title={t("common.notifications") || "Notifications"}
+            placement="right"
+            width={400}
+            open={showNotificationsDrawer}
+            onClose={() => setShowNotificationsDrawer(false)}
+            extra={
+              (role === "INSTITUT" || role === "SUPERVISEUR") && (
+                <Button
+                  type="link"
+                  size="small"
+                  onClick={() => {
+                    setShowNotificationsDrawer(false);
+                    navigate("/organisations/notifications");
+                  }}
+                >
+                  {t("notifications.fullList") || "Liste complète"}
+                </Button>
+              )
+            }
+          >
+            {notifications.length === 0 ? (
+              <Empty
+                description={t("notifications.noNotifications") || "Aucune notification"}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                className="py-8"
+              />
+            ) : (
+              <>
+                {unreadCount > 0 && (
+                  <Button type="link" size="small" onClick={markAllAsRead} className="mb-3 p-0">
+                    {t("notifications.markAllRead") || "Tout marquer comme lu"}
+                  </Button>
+                )}
+                <List
+                  dataSource={notifications}
+                  renderItem={(notification) => (
+                    <List.Item
+                      key={notification.id}
+                      className={`cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-800 rounded px-2 -mx-2 ${
+                        !notification.read ? "bg-blue-50 dark:bg-blue-900/10" : ""
+                      }`}
+                      onClick={() => handleNotificationClick(notification)}
+                    >
+                      <List.Item.Meta
+                        avatar={
+                          <Avatar
+                            icon={notification.icon}
+                            style={{ backgroundColor: notification.color }}
+                            size="default"
+                          />
+                        }
+                        title={
+                          <div className="flex justify-between items-start">
+                            <span className={`text-sm ${!notification.read ? "font-semibold" : ""}`}>
+                              {t(notification.titleKey)}
+                            </span>
+                            {!notification.read && (
+                              <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1.5" />
+                            )}
+                          </div>
+                        }
+                        description={
+                          <div>
+                            <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+                              {t(notification.messageKey)}
+                            </div>
+                            <div className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                              {formatTimeAgo(notification.createdAt)}
+                            </div>
+                          </div>
+                        }
+                      />
+                    </List.Item>
+                  )}
+                />
+              </>
+            )}
+          </Drawer>
         </div>
       </div>
     </>
