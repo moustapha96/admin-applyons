@@ -27,7 +27,8 @@ export default function ProfileRedirect() {
   if (loading) return null;        // tu peux mettre un spinner si tu veux
   if (!isAuthenticated || !user) {
     const from = location.pathname + location.search;
-    const loginTo = from && from !== "/auth/login"
+    const isAuthPage = from.startsWith("/auth");
+    const loginTo = from && !isAuthPage
       ? `/auth/login?redirect=${encodeURIComponent(from)}`
       : "/auth/login";
     return <Navigate to={loginTo} replace />;

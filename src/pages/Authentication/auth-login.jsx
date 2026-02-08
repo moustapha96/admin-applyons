@@ -56,10 +56,8 @@ export default function AuthLogin() {
             console.log(response);
             if (response.token && response.user) {
                 login({ ...response.user, token: response.token }, rememberMe);
-                const target = redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//")
-                    ? redirectTo
-                    : undefined;
-                navigate(target || "/", { replace: true });
+                const isSafeRedirect = redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//") && !redirectTo.startsWith("/auth");
+                navigate(isSafeRedirect ? redirectTo : "/", { replace: true });
                 return;
             } else {
                 setError(t('auth.login.errorNoToken'));

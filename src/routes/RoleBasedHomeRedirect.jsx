@@ -14,7 +14,8 @@ const RoleBasedHomeRedirect = () => {
   // Sécurité : si pas d'utilisateur, on renvoie vers le login en gardant l'URL pour après connexion
   if (!user) {
     const from = location.pathname + location.search;
-    const loginTo = from && from !== "/auth/login"
+    const isAuthPage = from.startsWith("/auth");
+    const loginTo = from && !isAuthPage
       ? `/auth/login?redirect=${encodeURIComponent(from)}`
       : "/auth/login";
     return <Navigate to={loginTo} replace />;

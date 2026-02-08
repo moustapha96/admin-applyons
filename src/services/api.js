@@ -189,7 +189,8 @@ axiosInstance.interceptors.response.use(
                 sessionStorage.removeItem("user");
                 try {
                     const from = (typeof window !== "undefined" && window.location.pathname + window.location.search) || "";
-                    const loginUrl = from && from !== "/auth/login"
+                    const isAuthPage = from.startsWith("/auth");
+                    const loginUrl = from && !isAuthPage
                         ? `/auth/login?redirect=${encodeURIComponent(from)}`
                         : "/auth/login";
                     window.location.href = loginUrl.startsWith("/") ? loginUrl : "/auth/login";
@@ -257,7 +258,8 @@ axiosInstance.interceptors.response.use(
                 sessionStorage.removeItem("user");
                 try {
                     const from = (typeof window !== "undefined" && window.location.pathname + window.location.search) || "";
-                    const loginUrl = from && from !== "/auth/login"
+                    const isAuthPage = from.startsWith("/auth");
+                    const loginUrl = from && !isAuthPage
                         ? `/auth/login?redirect=${encodeURIComponent(from)}`
                         : "/auth/login";
                     window.location.href = loginUrl.startsWith("/") ? loginUrl : "/auth/login";

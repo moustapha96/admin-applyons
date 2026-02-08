@@ -130,10 +130,11 @@ export const ProtectedRoute = ({
     );
   }
 
-  // 2) Non loggé : on redirige vers login en conservant l'URL demandée pour y revenir après connexion
+  // 2) Non loggé : on redirige vers login en conservant l'URL demandée pour y revenir après connexion (sauf pages auth)
   if (!isAuthenticated || !user) {
     const from = location.pathname + location.search;
-    const loginUrl = from && from !== "/auth/login"
+    const isAuthPage = from.startsWith("/auth");
+    const loginUrl = from && !isAuthPage
       ? `/auth/login?redirect=${encodeURIComponent(from)}`
       : "/auth/login";
     return <Navigate to={loginUrl} replace state={{ from: location }} />;
