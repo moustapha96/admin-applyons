@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {
   Card, Avatar, Typography, Row, Col, Tag, Descriptions, Spin, Alert,
-  Badge, Space, Button, Upload, Statistic, Form, Input, Modal, Select, DatePicker
+  Badge, Space, Button, Upload, Statistic, Form, Input, Modal, Select, DatePicker, Grid
 } from "antd";
 import {
   UserOutlined, MailOutlined, PhoneOutlined, CalendarOutlined, CrownOutlined,
@@ -35,6 +35,7 @@ const reviveDate = (v) => {
 
 export default function DemandeurUserProfile() {
   const { t, i18n } = useTranslation();
+  const screens = Grid.useBreakpoint();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -211,37 +212,38 @@ export default function DemandeurUserProfile() {
 
   return (
     <>
-      <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
-        <div className="layout-specing py-4 sm:py-6">
-          <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-900/30 min-h-screen sm:min-h-0">
-            <Row gutter={[24, 24]}>
+      <div className="container-fluid relative w-full px-3 sm:px-4 md:px-6 overflow-x-hidden max-w-full">
+        <div className="layout-specing w-full py-3 sm:py-4 md:py-6">
+          <div className="p-3 sm:p-4 md:p-6 w-full bg-gray-50 dark:bg-gray-900/30 min-h-screen sm:min-h-0 rounded-lg sm:rounded-xl">
+            <Row gutter={[16, 16]} className="!mx-0 sm:!mx-[-8px] w-full">
               {/* Header */}
               <Col xs={24}>
                 <Card
-                  className="overflow-hidden"
+                  className="overflow-hidden !rounded-xl"
                   style={{
                     background: "linear-gradient(135deg, #1e81b0 0%,  #e28743 100%)",
                     border: "none",
                     borderRadius: 12
                   }}
+                  bodyStyle={{ padding: screens.md ? 24 : "16px 12px" }}
                 >
-                  <Row align="middle" gutter={[24, 24]}>
-                    <Col xs={24} md={6} className="flex justify-center md:justify-start">
+                  <Row align="middle" gutter={[16, 16]}>
+                    <Col xs={24} md={6} className="flex justify-center md:justify-start order-1 md:order-1">
                       <div className="relative inline-block">
                         <Badge
                           count={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
-                          offset={[-8, 8]}
+                          offset={[-6, 6]}
                         >
                           <Upload showUploadList={false} beforeUpload={handleAvatarUpload} accept="image/*">
                             <div className="relative cursor-pointer">
                               <Avatar
-                                size={120}
+                                size={screens.md ? 120 : screens.sm ? 96 : 80}
                                 src={userData.avatar ? buildImageUrl(userData.avatar) : undefined}
                                 icon={<UserOutlined />}
                                 className="border-4 border-white/30 transition-all shrink-0"
                               />
-                              <div className="absolute bottom-0 right-0 bg-black/60 rounded-full p-2 text-white">
-                                <CameraOutlined />
+                              <div className="absolute bottom-0 right-0 bg-black/60 rounded-full p-1.5 sm:p-2 text-white">
+                                <CameraOutlined className="text-xs sm:text-sm" />
                               </div>
                             </div>
                           </Upload>
@@ -249,20 +251,25 @@ export default function DemandeurUserProfile() {
                       </div>
                     </Col>
 
-                    <Col xs={24} md={10} className="flex flex-col justify-center">
-                      <Space direction="vertical" size={4} className="w-full">
-                        <Space size="middle" wrap className="mt-2 sm:mt-0">
+                    <Col xs={24} md={10} className="flex flex-col justify-center order-3 md:order-2 text-center md:text-left">
+                      <Title level={4} className="!text-white !mb-1 !text-base sm:!text-lg md:!text-xl truncate max-w-full">
+                        {(userData.firstName || userData.lastName)
+                          ? `${userData.firstName || ""} ${userData.lastName || ""}`.trim()
+                          : userData.email}
+                      </Title>
+                      <Space direction="vertical" size={4} className="w-full justify-center md:justify-start">
+                        <Space size="small" wrap className="justify-center md:justify-start">
                           <Tag
                             color={getRoleColor(userData.role)}
                             icon={<CrownOutlined />}
-                            className="text-xs sm:text-sm"
+                            className="!text-xs !text-inherit"
                           >
                             {getRoleLabel(userData.role, t)}
                           </Tag>
                           <Tag
                             color={getStatusColor(userData.enabled)}
                             icon={<SafetyCertificateOutlined />}
-                            className="text-xs sm:text-sm"
+                            className="!text-xs !text-inherit"
                           >
                             {userData.enabled ? t("profilePage.header.active") : t("profilePage.header.inactive")}
                           </Tag>
@@ -270,14 +277,19 @@ export default function DemandeurUserProfile() {
                       </Space>
                     </Col>
 
-                    <Col xs={24} md={8} className="flex justify-center md:justify-end">
-                      <Space wrap size="small" className="w-full sm:w-auto justify-center md:justify-end">
+                    <Col xs={24} md={8} className="flex justify-center md:justify-end order-2 md:order-3">
+                      <Space
+                        wrap
+                        size="small"
+                        className="w-full sm:w-auto justify-center md:justify-end gap-2"
+                        direction={screens.sm ? "horizontal" : "vertical"}
+                      >
                         <Button
                           type="primary"
                           ghost
                           icon={<EditOutlined />}
-                          size="large"
-                          className="w-full sm:w-auto !border-white !text-white"
+                          size={screens.sm ? "large" : "middle"}
+                          className="!min-h-[44px] sm:!min-h-0 w-full sm:w-auto !border-white !text-white !flex items-center justify-center"
                           onClick={handleEdit}
                         >
                           {t("profilePage.header.editProfile")}
@@ -286,8 +298,8 @@ export default function DemandeurUserProfile() {
                           type="default"
                           ghost
                           icon={<LockOutlined />}
-                          size="large"
-                          className="w-full sm:w-auto !border-white !text-white"
+                          size={screens.sm ? "large" : "middle"}
+                          className="!min-h-[44px] sm:!min-h-0 w-full sm:w-auto !border-white !text-white !flex items-center justify-center"
                           onClick={showPasswordModal}
                         >
                           {t("profilePage.header.password")}
@@ -300,24 +312,32 @@ export default function DemandeurUserProfile() {
 
               {/* Stats */}
               <Col xs={24}>
-                <Row gutter={[16, 16]}>
+                <Row gutter={[12, 12]} className="!mx-0 sm:!mx-[-8px]">
                   <Col xs={24} sm={12}>
-                    <Card className="overflow-hidden">
+                    <Card className="overflow-hidden !rounded-lg" bodyStyle={{ padding: "12px 16px" }}>
                       <Statistic
-                        title={t("profilePage.stats.lastLogin")}
+                        title={<span className="text-xs sm:text-sm">{t("profilePage.stats.lastLogin")}</span>}
                         value={formatDate(userData.updatedAt)}
-                        prefix={<ClockCircleOutlined />}
-                        valueStyle={{ color: "#1e81b0", fontSize: 16 }}
+                        prefix={<ClockCircleOutlined className="!text-sm" />}
+                        valueStyle={{
+                          color: "#1e81b0",
+                          fontSize: screens.sm ? 16 : 14,
+                          wordBreak: "break-word",
+                        }}
                       />
                     </Card>
                   </Col>
                   <Col xs={24} sm={12}>
-                    <Card className="overflow-hidden">
+                    <Card className="overflow-hidden !rounded-lg" bodyStyle={{ padding: "12px 16px" }}>
                       <Statistic
-                        title={t("profilePage.stats.memberSince")}
+                        title={<span className="text-xs sm:text-sm">{t("profilePage.stats.memberSince")}</span>}
                         value={formatDate(userData.createdAt)}
-                        prefix={<CalendarOutlined />}
-                        valueStyle={{ color: "#722ed1", fontSize: 16 }}
+                        prefix={<CalendarOutlined className="!text-sm" />}
+                        valueStyle={{
+                          color: "#722ed1",
+                          fontSize: screens.sm ? 16 : 14,
+                          wordBreak: "break-word",
+                        }}
                       />
                     </Card>
                   </Col>
@@ -325,14 +345,15 @@ export default function DemandeurUserProfile() {
               </Col>
 
               {/* Personal info */}
-              <Col xs={24} lg={16}>
+              <Col xs={24} className="!w-full !max-w-full">
                 <Card
-                  className="overflow-hidden h-full"
-                  title={<span><UserOutlined />{" "}{t("profilePage.sections.personalInfo")}</span>}
-                  extra={<Button type="link" icon={<EditOutlined />} onClick={handleEdit} className="p-0">{t("profilePage.buttons.edit")}</Button>}
+                  className="overflow-hidden h-full !rounded-lg min-w-0 w-full"
+                  title={<span className="text-sm sm:text-base"><UserOutlined />{" "}{t("profilePage.sections.personalInfo")}</span>}
+                  extra={<Button type="link" icon={<EditOutlined />} onClick={handleEdit} className="p-0 text-xs sm:text-sm">{t("profilePage.buttons.edit")}</Button>}
+                  bodyStyle={{ padding: screens.md ? 24 : "16px 12px" }}
                 >
                   {isEditing ? (
-                    <Form form={form} layout="vertical" onFinish={handleUpdateProfile}>
+                    <Form form={form} layout="vertical" onFinish={handleUpdateProfile} size={screens.sm ? "middle" : "small"}>
                       <Form.Item name="firstName" label={t("profilePage.fields.firstName")}>
                         <Input placeholder={t("profilePage.placeholders.firstName")} />
                       </Form.Item>
@@ -381,45 +402,60 @@ export default function DemandeurUserProfile() {
                       <Form.Item name="gender" label={t("profilePage.fields.gender")}>
                         <Input disabled value={getGenderText(userData.gender)} />
                       </Form.Item>
-                      <Form.Item>
-                        <Space wrap size="small">
-                          <Button type="primary" loading={loading} icon={!loading && <PlusCircleOutlined />} htmlType="submit" className="w-full sm:w-auto">
+                      <Form.Item className="!mb-0">
+                        <Space wrap size="small" className="w-full sm:w-auto" direction={screens.sm ? "horizontal" : "vertical"}>
+                          <Button type="primary" loading={loading} icon={!loading && <PlusCircleOutlined />} htmlType="submit" className="!min-h-[44px] w-full sm:w-auto sm:!min-h-0">
                             {t("profilePage.buttons.save")}
                           </Button>
-                          <Button onClick={handleCancel} className="w-full sm:w-auto">{t("profilePage.buttons.cancel")}</Button>
+                          <Button onClick={handleCancel} className="!min-h-[44px] w-full sm:w-auto sm:!min-h-0">{t("profilePage.buttons.cancel")}</Button>
                         </Space>
                       </Form.Item>
                     </Form>
                   ) : (
-                    <Descriptions column={{ xs: 1, sm: 2 }} size="small" className="break-words">
-                      <Descriptions.Item label={<span><MailOutlined />{" "}{t("profilePage.fields.email")}</span>}>
+                    <Descriptions
+                      column={{ xs: 1, sm: 2 }}
+                      size="small"
+                      layout="horizontal"
+                      labelStyle={{
+                        fontWeight: 500,
+                        whiteSpace: "nowrap",
+                        paddingRight: 16,
+                        verticalAlign: "top",
+                      }}
+                      contentStyle={{
+                        wordBreak: "break-word",
+                        verticalAlign: "top",
+                      }}
+                      className="w-full max-w-full [&_.ant-descriptions-view]:!w-full [&_.ant-descriptions-table]:!w-full [&_.ant-descriptions-item-label]:text-xs [&_.ant-descriptions-item-content]:text-xs [&_.ant-descriptions-item-label]:min-w-0 sm:[&_.ant-descriptions-item-label]:!min-w-[120px] sm:[&_.ant-descriptions-item-label]:text-sm sm:[&_.ant-descriptions-item-content]:text-sm [&_.ant-descriptions-row]:border-b [&_.ant-descriptions-row]:border-gray-100 dark:[&_.ant-descriptions-row]:border-gray-700"
+                    >
+                      <Descriptions.Item label={<span><MailOutlined className="mr-1" />{t("profilePage.fields.email")}</span>}>
                         <Text copyable className="break-all">{userData.email}</Text>
                       </Descriptions.Item>
-                      <Descriptions.Item label={<span><UserOutlined />{" "}{t("profilePage.fields.fullName")}</span>}>
+                      <Descriptions.Item label={<span><UserOutlined className="mr-1" />{t("profilePage.fields.fullName")}</span>}>
                         <Text className="break-words">{(userData.firstName || "") + " " + (userData.lastName || "")}</Text>
                       </Descriptions.Item>
-                      <Descriptions.Item label={<span><PhoneOutlined />{" "}{t("profilePage.fields.phone")}</span>}>
+                      <Descriptions.Item label={<span><PhoneOutlined className="mr-1" />{t("profilePage.fields.phone")}</span>}>
                         <Text copyable className="break-all">{userData.phone || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
-                      <Descriptions.Item label={<span><HomeOutlined />{" "}{t("profilePage.fields.adress")}</span>}>
+                      <Descriptions.Item label={<span><HomeOutlined className="mr-1" />{t("profilePage.fields.adress")}</span>}>
                         <Text className="break-words">{userData.adress || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
-                      <Descriptions.Item label={<span><GlobalOutlined />{" "}{t("profilePage.fields.placeOfBirth")}</span>}>
+                      <Descriptions.Item label={<span><GlobalOutlined className="mr-1" />{t("profilePage.fields.placeOfBirth")}</span>}>
                         <Text className="break-words">{userData.placeOfBirth || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
-                      <Descriptions.Item label={<span><CalendarOutlined />{" "}{t("profilePage.fields.dateOfBirth")}</span>}>
-                        <Text>{formatDate(userData.dateOfBirth)}</Text>
+                      <Descriptions.Item label={<span><CalendarOutlined className="mr-1" />{t("profilePage.fields.dateOfBirth")}</span>}>
+                        {formatDate(userData.dateOfBirth)}
                       </Descriptions.Item>
-                      <Descriptions.Item label={<span><GlobalOutlined />{" "}{t("profilePage.fields.country")}</span>}>
+                      <Descriptions.Item label={<span><GlobalOutlined className="mr-1" />{t("profilePage.fields.country")}</span>}>
                         <Text className="break-words">{userData.country || t("profilePage.gender.UNSPECIFIED")}</Text>
                       </Descriptions.Item>
-                      <Descriptions.Item label={<span><IoTransgender />{" "}{t("profilePage.fields.gender")}</span>}>
-                        <Text>{getGenderText(userData.gender)}</Text>
+                      <Descriptions.Item label={<span><IoTransgender className="mr-1" />{t("profilePage.fields.gender")}</span>}>
+                        {getGenderText(userData.gender)}
                       </Descriptions.Item>
-                      <Descriptions.Item label={<span><CalendarOutlined />{" "}{t("profilePage.fields.createdAt")}</span>}>
+                      <Descriptions.Item label={<span><CalendarOutlined className="mr-1" />{t("profilePage.fields.createdAt")}</span>}>
                         {formatDate(userData.createdAt)}
                       </Descriptions.Item>
-                      <Descriptions.Item label={<span><ClockCircleOutlined />{" "}{t("profilePage.fields.updatedAt")}</span>}>
+                      <Descriptions.Item label={<span><ClockCircleOutlined className="mr-1" />{t("profilePage.fields.updatedAt")}</span>}>
                         {formatDate(userData.updatedAt)}
                       </Descriptions.Item>
                     </Descriptions>
@@ -438,6 +474,9 @@ export default function DemandeurUserProfile() {
         onCancel={handlePasswordCancel}
         footer={null}
         centered
+        width={screens.sm ? 480 : "100%"}
+        style={{ maxWidth: "calc(100vw - 24px)", top: 24 }}
+        bodyStyle={{ padding: screens.sm ? 24 : 16 }}
       >
         <Form form={passwordForm} layout="vertical" onFinish={handlePasswordUpdate} autoComplete="off">
           <Form.Item
@@ -475,10 +514,10 @@ export default function DemandeurUserProfile() {
           >
             <Input.Password prefix={<LockOutlined />} placeholder={t("profilePage.placeholders.confirmPwd")} />
           </Form.Item>
-          <Form.Item>
-            <Space wrap size="small" className="w-full justify-end">
-              <Button onClick={handlePasswordCancel} className="w-full sm:w-auto">{t("profilePage.buttons.cancel")}</Button>
-              <Button type="primary" htmlType="submit" loading={passwordLoading} className="w-full sm:w-auto">
+          <Form.Item className="!mb-0">
+            <Space wrap size="small" className="w-full justify-end gap-2" direction={screens.sm ? "horizontal" : "vertical"}>
+              <Button onClick={handlePasswordCancel} className="!min-h-[44px] w-full sm:w-auto sm:!min-h-0">{t("profilePage.buttons.cancel")}</Button>
+              <Button type="primary" htmlType="submit" loading={passwordLoading} className="!min-h-[44px] w-full sm:w-auto sm:!min-h-0">
                 {t("profilePage.buttons.save")}
               </Button>
             </Space>
