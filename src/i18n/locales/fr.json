@@ -294,7 +294,8 @@
             "TRAITEE": "Traitée",
             "ANNULEE": "Annulée"
         },
-        "doc": { "type": "Type", "mention": "Mention", "addedBy": "Ajouté par", "date": "Date", "file": "Fichier", "viewFile": "Voir le document", "institutDetails": "Détails de l'institut ayant déposé le document", "orgName": "Nom", "orgType": "Type", "orgEmail": "Email", "orgPhone": "Téléphone", "orgAddress": "Adresse", "orgWebsite": "Site web", "orgCountry": "Pays" },
+        "doc": { "type": "Type", "mention": "Mention", "addedBy": "Ajouté par", "date": "Date", "file": "Fichier", "viewFile": "Voir le document", "addDocument": "Ajouter un document", "institutDetails": "Détails de l'institut ayant déposé le document", "orgName": "Nom", "orgType": "Type", "orgEmail": "Email", "orgPhone": "Téléphone", "orgAddress": "Adresse", "orgWebsite": "Site web", "orgCountry": "Pays" },
+        "toasts": { "loadError": "Erreur lors du chargement de la demande." },
         "documentTypes": {
             "DIPLOMA": "Diplôme",
             "TRANSCRIPT": "Relevé de notes",

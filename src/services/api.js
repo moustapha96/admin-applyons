@@ -134,7 +134,7 @@ axiosInstance.interceptors.request.use((config) => {
     const isPublic = publicRoutes.some((r) => url.startsWith(r));
 
     if (!isPublic) {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -185,8 +185,14 @@ axiosInstance.interceptors.response.use(
             if (original._retry) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
+                sessionStorage.removeItem("token");
+                sessionStorage.removeItem("user");
                 try {
-                    window.location.href = "/auth/login";
+                    const from = (typeof window !== "undefined" && window.location.pathname + window.location.search) || "";
+                    const loginUrl = from && from !== "/auth/login"
+                        ? `/auth/login?redirect=${encodeURIComponent(from)}`
+                        : "/auth/login";
+                    window.location.href = loginUrl.startsWith("/") ? loginUrl : "/auth/login";
                 } catch (e) {}
                 return Promise.reject(error.response.data || error.message);
             }
@@ -215,12 +221,21 @@ axiosInstance.interceptors.response.use(
                 const newToken = refreshRes.token; // PAS refreshRes.data.token
                 const newUser = refreshRes.user;
 
+                const fromLocal = !!localStorage.getItem("token");
                 if (newToken) {
-                    localStorage.setItem("token", newToken);
+                    if (fromLocal) {
+                        localStorage.setItem("token", newToken);
+                    } else {
+                        sessionStorage.setItem("token", newToken);
+                    }
                     axiosInstance.defaults.headers.common.Authorization = `Bearer ${newToken}`;
                 }
                 if (newUser) {
-                    localStorage.setItem("user", JSON.stringify(newUser));
+                    if (fromLocal) {
+                        localStorage.setItem("user", JSON.stringify(newUser));
+                    } else {
+                        sessionStorage.setItem("user", JSON.stringify(newUser));
+                    }
                 }
 
                 processQueue(null, newToken);
@@ -235,11 +250,17 @@ axiosInstance.interceptors.response.use(
                 processQueue(e, null);
                 isRefreshing = false;
 
-                // purge session + redirection
+                // purge session + redirection (on garde l'URL pour rediriger après connexion)
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
+                sessionStorage.removeItem("token");
+                sessionStorage.removeItem("user");
                 try {
-                    window.location.href = "/auth/login";
+                    const from = (typeof window !== "undefined" && window.location.pathname + window.location.search) || "";
+                    const loginUrl = from && from !== "/auth/login"
+                        ? `/auth/login?redirect=${encodeURIComponent(from)}`
+                        : "/auth/login";
+                    window.location.href = loginUrl.startsWith("/") ? loginUrl : "/auth/login";
                 } catch (e2) {}
 
                 return Promise.reject(e.response?.data || e.message);

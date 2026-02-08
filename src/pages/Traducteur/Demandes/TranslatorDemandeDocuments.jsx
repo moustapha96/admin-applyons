@@ -513,7 +513,7 @@ export default function DemandeDocumentsPage() {
         width="95vw"
         style={{ top: 20, paddingBottom: 0 }}
         styles={{ body: { height: "calc(95vh - 110px)", padding: 0 } }}
-        destroyOnClose
+        destroyOnHidden
       >
         {preview.url ? (
           <iframe src={preview.url} title="aperçu-document" style={{ width: "100%", height: "100%", border: "none" }} />

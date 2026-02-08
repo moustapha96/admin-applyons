@@ -84,7 +84,7 @@
 
 /* eslint-disable react/prop-types */
 "use client";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { Spin } from "antd";
 import { useAuth } from "../hooks/useAuth";
 
@@ -119,6 +119,7 @@ export const ProtectedRoute = ({
   children,
 }) => {
   const { user, isAuthenticated, loading, logout } = useAuth();
+  const location = useLocation();
 
   // 1) Pend. chargement
   if (loading) {
@@ -129,9 +130,13 @@ export const ProtectedRoute = ({
     );
   }
 
-  // 2) Non loggé
+  // 2) Non loggé : on redirige vers login en conservant l'URL demandée pour y revenir après connexion
   if (!isAuthenticated || !user) {
-    return <Navigate to="/auth/login" replace />;
+    const from = location.pathname + location.search;
+    const loginUrl = from && from !== "/auth/login"
+      ? `/auth/login?redirect=${encodeURIComponent(from)}`
+      : "/auth/login";
+    return <Navigate to={loginUrl} replace state={{ from: location }} />;
   }
 
   // 3) Compte désactivé

@@ -362,7 +362,7 @@ export default function DocumentsList() {
                     width={breakpoint.xs && !breakpoint.sm ? "100%" : breakpoint.sm && !breakpoint.md ? 400 : 560}
                     open={drawerOpen}
                     onClose={() => setDrawerOpen(false)}
-                    destroyOnClose
+                    destroyOnHidden
                     styles={{
                         body: { padding: "16px 12px 24px", overflowX: "hidden" },
                         header: { padding: "12px 16px" },
@@ -446,7 +446,7 @@ export default function DocumentsList() {
                     width="95vw"
                     style={{ top: 20, paddingBottom: 0, maxWidth: 1200 }}
                     styles={{ body: { height: "calc(95vh - 110px)", padding: 0, overflow: "hidden" } }}
-                    destroyOnClose
+                    destroyOnHidden
                 >
                     {previewUrl ? (
                         <iframe src={previewUrl} style={{ width: "100%", height: "100%", border: "none" }} title="preview" />
