@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import logoDark from "../assets/images/logo-icon-64-dark.png";
@@ -12,7 +12,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 
-import { Avatar, Tag, Dropdown, List, Empty, Button, Divider, Drawer } from "antd";
+import { Avatar, Tag, Dropdown, List, Empty, Button, Divider, Drawer, notification as antdNotification } from "antd";
 import { UserOutlined, GlobalOutlined, BellOutlined, MessageOutlined, CheckCircleOutlined, WarningOutlined } from "@ant-design/icons";
 
 import { useAuth } from "../hooks/useAuth";
@@ -39,10 +39,14 @@ export default function Topnav({ setToggle, toggle }) {
   const [showNotificationsDrawer, setShowNotificationsDrawer] = useState(false);
   const userMenuRef = useRef(null);
   const notificationRef = useRef(null);
-  
+  /** Ensemble des ids de notifications déjà vus (pour détecter les nouvelles et afficher le popup) */
+  const lastKnownNotificationIdsRef = useRef(new Set());
+  const isFirstLoadRef = useRef(true);
+  const handleNotificationClickRef = useRef(null);
+
   // État pour les notifications récupérées depuis le backend
   const [notifications, setNotifications] = useState([]);
-  
+
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   // --- Helpers ---
@@ -91,35 +95,61 @@ export default function Topnav({ setToggle, toggle }) {
   const fullName = user ? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim() : t("common.user");
   const orgName = user?.organization?.name;
 
+  /** Lien détail demande selon le rôle : traducteur = /traducteur/demandes/:id, org = /organisations/demandes/:id/details, demandeur = /demandeur/mes-demandes/:id/details */
+  const getDemandeDetailPath = (demandeId) => {
+    if (!demandeId) return null;
+    if (role === "TRADUCTEUR") return `/traducteur/demandes/${demandeId}`;
+    if (role === "INSTITUT" || role === "SUPERVISEUR") return `/organisations/demandes/${demandeId}/details`;
+    return `/demandeur/mes-demandes/${demandeId}/details`;
+  };
+
+  /** Lien détail demande d'authentification selon le rôle */
+  const getDemandeAuthDetailPath = (demandeAuthId) => {
+    if (!demandeAuthId) return null;
+    if (role === "ADMIN" || role === "SUPER_ADMIN") return `/admin/demandes-authentification/${demandeAuthId}`;
+    if (role === "INSTITUT" || role === "SUPERVISEUR") return `/organisations/demandes-authentification/${demandeAuthId}`;
+    return `/demandeur/demandes-authentification/${demandeAuthId}`;
+  };
+
+  const closeNotificationUi = () => {
+    setShowNotifications(false);
+    setShowNotificationsDrawer(false);
+  };
+
   // Détermine vers quelle page aller quand on clique sur une notification.
-  // On suppose que le backend envoie des infos du type :
-  //  - notification.entityType: "DEMANDE" | "DOCUMENT" | "ORGANISATION" | ...
-  //  - notification.entityId   : l'id de la demande / document / organisation
-  //  - ou éventuellement notification.link : URL directe.
   const handleNotificationClick = (notification) => {
-    // On marque comme lue immédiatement côté front + backend
     markAsRead(notification.id);
-    console.log(notification);
-    // Si le backend fournit une URL directe, on reste sur la même page (navigation dans l'app)
-   
+    const go = (path) => {
+      if (path) {
+        closeNotificationUi();
+        navigate(path);
+      }
+    };
 
-    if (notification.entityType === "DEMANDE" && notification.demandeId && notification.type === "DOC_ADDED") {
-      navigate(`/demandeur/mes-demandes/${notification.demandeId}/details`);
-      setShowNotifications(false);
-      setShowNotificationsDrawer(false);
-      return;
-    }
-   
-    if (notification.entityType === "DEMANDE" && notification.demandeId && notification.type === "ORG_DEMANDE") {
-      navigate(`/organisations/demandes/${notification.demandeId}/details`);
-      setShowNotifications(false);
-      setShowNotificationsDrawer(false);
+    const demandeId = notification.demandeId || notification.entityId;
+
+    // Notifications "demandeur" (DOC_ADDED, DOC_TRANSLATED, DEMANDE_ASSIGNED, DEMANDE_STATUS_UPDATED) → détail demande demandeur
+    if (notification.entityType === "DEMANDE" && demandeId && ["DOC_ADDED", "DOC_TRANSLATED", "DEMANDE_ASSIGNED", "DEMANDE_STATUS_UPDATED"].includes(notification.type)) {
+      go(getDemandeDetailPath(demandeId));
       return;
     }
 
+    // Notifications "org / traducteur" (ORG_DEMANDE, DEMANDE_ASSIGNED, DOCUMENT_ADDED, DOCUMENT_TRANSLATED, DEMANDE_CREATED) → détail demande selon rôle
+    if (notification.entityType === "DEMANDE" && demandeId && ["ORG_DEMANDE", "DEMANDE_ASSIGNED", "DOCUMENT_ADDED", "DOCUMENT_TRANSLATED", "DEMANDE_CREATED"].includes(notification.type)) {
+      go(getDemandeDetailPath(demandeId));
+      return;
+    }
+
+    // Demande d'authentification (nouvelle attribuée, document ajouté)
+    const demandeAuthId = notification.demandeAuthentificationId || (notification.entityType === "DEMANDE_AUTHENTIFICATION" ? notification.entityId : null);
+    if (demandeAuthId) {
+      go(getDemandeAuthDetailPath(demandeAuthId));
+      return;
+    }
+
+    // Lien explicite fourni par le backend (prioritaire)
     if (notification.link) {
-      setShowNotifications(false);
-      setShowNotificationsDrawer(false);
+      closeNotificationUi();
       if (notification.link.startsWith("/")) {
         navigate(notification.link);
       } else {
@@ -128,42 +158,27 @@ export default function Topnav({ setToggle, toggle }) {
       return;
     }
 
-    // Sinon on route en fonction du type d'entité + id
     const entityType = (notification.entityType || notification.type || "").toUpperCase();
-    const entityId = notification.entityId || notification.demandeId || notification.documentId || notification.organisationId;
+    const entityId = notification.entityId || demandeId || notification.documentId || notification.organisationId;
+    if (!entityType || !entityId) return;
 
-    if (!entityType || !entityId) {
-      // Pas assez d'infos pour naviguer
-      return;
-    }
-
-    // DEMANDEUR : détail d'une demande
     if (entityType === "DEMANDE") {
-      navigate(`/demandeur/mes-demandes/${entityId}/details`);
-      setShowNotifications(false);
-      setShowNotificationsDrawer(false);
+      go(getDemandeDetailPath(entityId));
       return;
     }
-
-    // DEMANDEUR : documents d'une demande
     if (entityType === "DOCUMENT" || entityType === "DOCUMENTS") {
-      const demandeId = notification.demandeId || entityId;
-      navigate(`/demandeur/mes-demandes/${demandeId}/documents`);
-      setShowNotifications(false);
-      setShowNotificationsDrawer(false);
+      const dId = notification.demandeId || entityId;
+      if (role === "TRADUCTEUR") go(`/traducteur/demandes/${dId}/documents`);
+      else if (role === "INSTITUT" || role === "SUPERVISEUR") go(`/organisations/demandes/${dId}/documents`);
+      else go(`/demandeur/mes-demandes/${dId}/documents`);
       return;
     }
-
-    // DEMANDEUR : détail d'une organisation
     if (entityType === "ORGANISATION" || entityType === "INSTITUT") {
-      navigate(`/demandeur/organisation/${entityId}/details`);
-      setShowNotifications(false);
-      setShowNotificationsDrawer(false);
-      return;
+      go(`/demandeur/organisation/${entityId}/details`);
     }
-
-    // Par défaut : on ne fait rien de spécial (ou on pourrait aller sur le dashboard)
   };
+
+  handleNotificationClickRef.current = handleNotificationClick;
 
   const handleLogOut = async () => {
     try {
@@ -187,41 +202,96 @@ export default function Topnav({ setToggle, toggle }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Chargement des notifications depuis le backend,
-  // avec un filtrage possible selon le rôle (DEMANDEUR / INSTITUT / …)
-  useEffect(() => {
-    async function loadNotifications() {
-      if (!user) return;
-      try {
-        const roleParam =
-          role === "DEMANDEUR" || role === "INSTITUT" ? { role } : {};
-        const backendNotifications = await fetchNotifications(roleParam);
+  // Chargement des notifications depuis le backend + détection des nouvelles pour popup
+  const loadNotifications = useCallback(async (options = {}) => {
+    const { showNewPopup = true } = options;
+    if (!user) return;
+    try {
+      const roleParam =
+        role === "DEMANDEUR" || role === "INSTITUT" ? { role } : {};
+      const backendNotifications = await fetchNotifications(roleParam);
 
-        // On garde la possibilité d'associer une icône/couleur par type ici
-        const withUiProps = backendNotifications.map((n) => {
-          let icon = <MessageOutlined />;
-          let color = "#1e81b0";
+      const withUiProps = backendNotifications.map((n) => {
+        let icon = <MessageOutlined />;
+        let color = "#1e81b0";
+        if (n.type === "success" || n.type === "DOC_TRANSLATED" || n.type === "DEMANDE_ASSIGNED") {
+          icon = <CheckCircleOutlined />;
+          color = "#52c41a";
+        } else if (n.type === "warning") {
+          icon = <WarningOutlined />;
+          color = "#faad14";
+        } else if (n.type === "DOCUMENT_ADDED" || n.type === "DOC_ADDED" || n.type === "DOCUMENT_TRANSLATED") {
+          color = "#1890ff";
+        }
+        return { ...n, icon, color };
+      });
 
-          if (n.type === "success") {
-            icon = <CheckCircleOutlined />;
-            color = "#52c41a";
-          } else if (n.type === "warning") {
-            icon = <WarningOutlined />;
-            color = "#faad14";
-          }
+      const knownIds = lastKnownNotificationIdsRef.current;
+      const currentIds = new Set(withUiProps.map((n) => n.id));
+      const newUnread = withUiProps.filter((n) => !n.read && !knownIds.has(n.id));
 
-          return { ...n, icon, color };
+      if (showNewPopup && !isFirstLoadRef.current && newUnread.length > 0) {
+        const toShow = newUnread.slice(0, 3);
+        toShow.forEach((n) => {
+          const title = n.title || t(n.titleKey) || t("notifications.genericTitle");
+          const message = n.message || t(n.messageKey) || t("notifications.genericMessage");
+          antdNotification.info({
+            key: n.id,
+            message: title,
+            description: message,
+            placement: "topRight",
+            duration: 5,
+            onClick: () => {
+              antdNotification.destroy(n.id);
+              if (handleNotificationClickRef.current) handleNotificationClickRef.current(n);
+            },
+          });
         });
-
-        setNotifications(withUiProps);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("Erreur lors du chargement des notifications :", e);
+        if (newUnread.length > 3) {
+          antdNotification.info({
+            key: "more-notifications",
+            message: t("notifications.moreNew", { count: newUnread.length - 3 }) || `${newUnread.length - 3} autre(s) notification(s)`,
+            placement: "topRight",
+            duration: 4,
+          });
+        }
       }
-    }
 
-    loadNotifications();
-  }, [user, role]);
+      if (isFirstLoadRef.current) {
+        isFirstLoadRef.current = false;
+      }
+      lastKnownNotificationIdsRef.current = currentIds;
+      setNotifications(withUiProps);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error("Erreur lors du chargement des notifications :", e);
+    }
+  }, [user, role, t]);
+
+  useEffect(() => {
+    loadNotifications({ showNewPopup: false });
+  }, [loadNotifications]);
+
+  // Polling toutes les 45s pour nouvelles notifications + popup si l'utilisateur est sur l'app
+  useEffect(() => {
+    if (!user) return;
+    const interval = setInterval(() => {
+      loadNotifications({ showNewPopup: true });
+    }, 45000);
+    return () => clearInterval(interval);
+  }, [user, loadNotifications]);
+
+  // Recharger au retour sur l'onglet (visibility change)
+  useEffect(() => {
+    if (!user) return;
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        loadNotifications({ showNewPopup: true });
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, [user, loadNotifications]);
 
   const markAsRead = async (notificationId) => {
     setNotifications((prev) =>
@@ -397,7 +467,7 @@ export default function Topnav({ setToggle, toggle }) {
                             title={
                               <div className="flex justify-between items-start">
                                 <span className={`text-sm ${!notification.read ? "font-semibold" : ""}`}>
-                                  {t(notification.titleKey)}
+                                  {notification.title || t(notification.titleKey)}
                                 </span>
                                 {!notification.read && (
                                   <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1.5"></span>
@@ -407,7 +477,7 @@ export default function Topnav({ setToggle, toggle }) {
                             description={
                               <div>
                                 <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                                  {t(notification.messageKey)}
+                                  {notification.message || t(notification.messageKey)}
                                 </div>
                                 <div className="text-xs text-slate-400 dark:text-slate-500 mt-1">
                                   {formatTimeAgo(notification.createdAt)}
@@ -545,13 +615,13 @@ export default function Topnav({ setToggle, toggle }) {
             open={showNotificationsDrawer}
             onClose={() => setShowNotificationsDrawer(false)}
             extra={
-              (role === "INSTITUT" || role === "SUPERVISEUR") && (
+              (role === "TRADUCTEUR" || role === "INSTITUT" || role === "SUPERVISEUR") && (
                 <Button
                   type="link"
                   size="small"
                   onClick={() => {
-                    setShowNotificationsDrawer(false);
-                    navigate("/organisations/notifications");
+                    closeNotificationUi();
+                    navigate(role === "TRADUCTEUR" ? "/traducteur/notifications" : "/organisations/notifications");
                   }}
                 >
                   {t("notifications.fullList") || "Liste complète"}
@@ -593,7 +663,7 @@ export default function Topnav({ setToggle, toggle }) {
                         title={
                           <div className="flex justify-between items-start">
                             <span className={`text-sm ${!notification.read ? "font-semibold" : ""}`}>
-                              {t(notification.titleKey)}
+                              {notification.title || t(notification.titleKey)}
                             </span>
                             {!notification.read && (
                               <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1.5" />
@@ -603,7 +673,7 @@ export default function Topnav({ setToggle, toggle }) {
                         description={
                           <div>
                             <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                              {t(notification.messageKey)}
+                              {notification.message || t(notification.messageKey)}
                             </div>
                             <div className="text-xs text-slate-400 dark:text-slate-500 mt-1">
                               {formatTimeAgo(notification.createdAt)}

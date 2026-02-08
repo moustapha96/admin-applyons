@@ -285,7 +285,8 @@
             "TRAITEE": "Tratada",
             "ANNULEE": "Anulada"
         },
-        "doc": { "type": "Tipo", "mention": "Mención", "addedBy": "Añadido por", "date": "Fecha", "file": "Archivo", "viewFile": "Ver documento", "institutDetails": "Detalles de la institución que envió el documento", "orgName": "Nombre", "orgType": "Tipo", "orgEmail": "Email", "orgPhone": "Teléfono", "orgAddress": "Dirección", "orgWebsite": "Sitio web", "orgCountry": "País" },
+        "doc": { "type": "Tipo", "mention": "Mención", "addedBy": "Añadido por", "date": "Fecha", "file": "Archivo", "viewFile": "Ver documento", "addDocument": "Añadir documento", "institutDetails": "Detalles de la institución que envió el documento", "orgName": "Nombre", "orgType": "Tipo", "orgEmail": "Email", "orgPhone": "Teléfono", "orgAddress": "Dirección", "orgWebsite": "Sitio web", "orgCountry": "País" },
+        "toasts": { "loadError": "Error al cargar la solicitud." },
         "documentTypes": {
             "DIPLOMA": "Diploma",
             "TRANSCRIPT": "Expediente académico",

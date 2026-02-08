@@ -1,21 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Card, Descriptions, Tag, Button, Table, message, Modal, Spin } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import demandeAuthentificationService from "@/services/demandeAuthentification.service";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
+import { useAuth } from "@/hooks/useAuth";
+
 
 const statusColors = { EN_ATTENTE: "blue", DOCUMENTS_RECUS: "gold", TRAITEE: "green", ANNULEE: "red" };
 
 export default function InstitutDemandeAuthentificationDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const userOrgId = user?.organization?.id ?? user?.organizationId ?? null;
   const [demande, setDemande] = useState(null);
   const [loading, setLoading] = useState(true);
   const [openingDoc, setOpeningDoc] = useState(null);
-
+  const isAttributedOrg = Boolean(userOrgId && userOrgId === demande?.attributedOrganizationId);
   const [viewingDoc, setViewingDoc] = useState(null); // { url, blobUrl }
 
   const openDocument = async (urlOriginal) => {
@@ -143,38 +148,52 @@ export default function InstitutDemandeAuthentificationDetail() {
             <Descriptions.Item label={t("demandesAuthentification.fields.observation")}>{demande.observation || "—"}</Descriptions.Item>
           </Descriptions>
         </Card>
-        <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
-          <Table
-            rowKey="id"
-            dataSource={documentsList}
-            columns={docColumns}
-            pagination={false}
-            size="small"
-            locale={{ emptyText: t("demandesAuthentification.noDocuments") }}
-            expandable={{
-              expandedRowRender: (record) => renderInstitutDetails(record.organization),
-              rowExpandable: (record) => !!record?.organization,
-            }}
-          />
-        </Card>
+        {!isAttributedOrg && (
+          <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
+            <Button
+              type="primary"
+              onClick={() => navigate(`/organisations/code-adn?code=${encodeURIComponent(demande.codeADN || "")}`)}
+            >
+              {t("demandesAuthentification.doc.addDocument")}
+            </Button>
+          </Card>
+        )}
+        {isAttributedOrg && <>
 
-        <Modal
-          title={t("demandesAuthentification.doc.viewFile")}
-          open={!!viewingDoc}
-          onCancel={closeDocumentModal}
-          footer={[<Button key="close" onClick={closeDocumentModal}>{t("demandesAuthentification.cancel")}</Button>]}
-          width="90vw"
-          style={{ top: 24 }}
-          destroyOnClose
-        >
-          <div style={{ minHeight: "75vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {viewingDoc?.blobUrl ? (
-              <iframe src={`${viewingDoc.blobUrl}#toolbar=0`} title={t("demandesAuthentification.doc.viewFile")} style={{ width: "100%", height: "75vh", border: "none" }} />
-            ) : (
-              <Spin size="large" />
-            )}
-          </div>
-        </Modal>
+          <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
+            <Table
+              rowKey="id"
+              dataSource={documentsList}
+              columns={docColumns}
+              pagination={false}
+              size="small"
+              locale={{ emptyText: t("demandesAuthentification.noDocuments") }}
+              expandable={{
+                expandedRowRender: (record) => renderInstitutDetails(record.organization),
+                rowExpandable: (record) => !!record?.organization,
+              }}
+            />
+          </Card>
+
+          <Modal
+            title={t("demandesAuthentification.doc.viewFile")}
+            open={!!viewingDoc}
+            onCancel={closeDocumentModal}
+            footer={[<Button key="close" onClick={closeDocumentModal}>{t("demandesAuthentification.cancel")}</Button>]}
+            width="90vw"
+            style={{ top: 24 }}
+            destroyOnHidden
+          >
+            <div style={{ minHeight: "75vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {viewingDoc?.blobUrl ? (
+                <iframe src={`${viewingDoc.blobUrl}#toolbar=0`} title={t("demandesAuthentification.doc.viewFile")} style={{ width: "100%", height: "75vh", border: "none" }} />
+              ) : (
+                <Spin size="large" />
+              )}
+            </div>
+          </Modal>
+        </>}
+
       </div>
     </div>
   );

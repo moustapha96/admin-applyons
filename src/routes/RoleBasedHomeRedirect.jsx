@@ -1,18 +1,23 @@
 // routes/RoleBasedHomeRedirect.jsx
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth"; // adapte le chemin à ton projet
 
 const RoleBasedHomeRedirect = () => {
   const { user, loading } = useAuth?.() || { user: null, loading: false };
+  const location = useLocation();
 
   // Pendant le chargement de l'état auth (optionnel)
   if (loading) {
     return null; // ou un loader plein écran
   }
 
-  // Sécurité : si pas d'utilisateur, on renvoie vers le login
+  // Sécurité : si pas d'utilisateur, on renvoie vers le login en gardant l'URL pour après connexion
   if (!user) {
-    return <Navigate to="/auth/login" replace />;
+    const from = location.pathname + location.search;
+    const loginTo = from && from !== "/auth/login"
+      ? `/auth/login?redirect=${encodeURIComponent(from)}`
+      : "/auth/login";
+    return <Navigate to={loginTo} replace />;
   }
 
   // 🎯 Redirections selon le rôle

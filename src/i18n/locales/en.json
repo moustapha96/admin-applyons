@@ -291,7 +291,8 @@
             "TRAITEE": "Processed",
             "ANNULEE": "Cancelled"
         },
-        "doc": { "type": "Type", "mention": "Mention", "addedBy": "Added by", "date": "Date", "file": "File", "viewFile": "View document", "institutDetails": "Details of the institution that submitted the document", "orgName": "Name", "orgType": "Type", "orgEmail": "Email", "orgPhone": "Phone", "orgAddress": "Address", "orgWebsite": "Website", "orgCountry": "Country" },
+        "doc": { "type": "Type", "mention": "Mention", "addedBy": "Added by", "date": "Date", "file": "File", "viewFile": "View document", "addDocument": "Add document", "institutDetails": "Details of the institution that submitted the document", "orgName": "Name", "orgType": "Type", "orgEmail": "Email", "orgPhone": "Phone", "orgAddress": "Address", "orgWebsite": "Website", "orgCountry": "Country" },
+        "toasts": { "loadError": "Error loading the request." },
         "documentTypes": {
             "DIPLOMA": "Diploma",
             "TRANSCRIPT": "Transcript",

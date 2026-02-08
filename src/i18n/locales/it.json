@@ -283,7 +283,8 @@
             "TRAITEE": "Elaborata",
             "ANNULEE": "Annullata"
         },
-        "doc": { "type": "Tipo", "mention": "Menzione", "addedBy": "Aggiunto da", "date": "Data", "file": "File", "viewFile": "Visualizza documento", "institutDetails": "Dettagli dell'istituzione che ha depositato il documento", "orgName": "Nome", "orgType": "Tipo", "orgEmail": "Email", "orgPhone": "Telefono", "orgAddress": "Indirizzo", "orgWebsite": "Sito web", "orgCountry": "Paese" },
+        "doc": { "type": "Tipo", "mention": "Menzione", "addedBy": "Aggiunto da", "date": "Data", "file": "File", "viewFile": "Visualizza documento", "addDocument": "Aggiungi documento", "institutDetails": "Dettagli dell'istituzione che ha depositato il documento", "orgName": "Nome", "orgType": "Tipo", "orgEmail": "Email", "orgPhone": "Telefono", "orgAddress": "Indirizzo", "orgWebsite": "Sito web", "orgCountry": "Paese" },
+        "toasts": { "loadError": "Errore nel caricamento della richiesta." },
         "documentTypes": {
             "DIPLOMA": "Diploma",
             "TRANSCRIPT": "Trascrizione / Pagella",

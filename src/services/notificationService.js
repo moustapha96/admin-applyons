@@ -23,6 +23,8 @@ export async function fetchNotifications(params = {}) {
     type: n.type || "info",
     titleKey: n.titleKey || n.title || "notifications.genericTitle",
     messageKey: n.messageKey || n.message || "notifications.genericMessage",
+    title: n.title,
+    message: n.message,
     createdAt: n.createdAt ? new Date(n.createdAt) : new Date(),
     read: Boolean(n.read),
     link: n.link || undefined,
@@ -30,6 +32,7 @@ export async function fetchNotifications(params = {}) {
     entityId: n.entityId,
     demandeId: n.demandeId,
     documentId: n.documentId,
+    demandeAuthentificationId: n.demandeAuthentificationId,
   }));
 }
 

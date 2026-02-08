@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Card, Input, Button, message, Descriptions, Tag, Table, Form, Upload, Alert, Modal, Spin, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import demandeAuthentificationService from "@/services/demandeAuthentification.service";
@@ -15,12 +16,15 @@ const DOC_TYPE_KEYS = ["DIPLOMA", "TRANSCRIPT", "ID_CARD", "BIRTH_CERTIFICATE", 
 
 export default function InstitutCodeADNPage() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   const { user } = useAuth();
   const userOrgId = user?.organization?.id ?? user?.organizationId ?? null;
 
-  const [codeADN, setCodeADN] = useState("");
+  const codeFromUrl = searchParams.get("code")?.trim() || "";
+  const [codeADN, setCodeADN] = useState(codeFromUrl);
   const [loading, setLoading] = useState(false);
   const [demande, setDemande] = useState(null);
+  const autoLoadDoneRef = useRef(false);
   const [uploading, setUploading] = useState(false);
   const [form] = Form.useForm();
   const [openingDoc, setOpeningDoc] = useState(null);
@@ -66,6 +70,23 @@ export default function InstitutCodeADNPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!codeFromUrl || autoLoadDoneRef.current) return;
+    setCodeADN(codeFromUrl);
+    autoLoadDoneRef.current = true;
+    setLoading(true);
+    setDemande(null);
+    demandeAuthentificationService
+      .getByCode(codeFromUrl)
+      .then((res) => {
+        const d = res?.data ?? res;
+        if (d?.id) setDemande(d);
+        else message.error(t("demandesAuthentification.codeADN.notFound"));
+      })
+      .catch((e) => message.error(e?.message || t("demandesAuthentification.codeADN.notFound")))
+      .finally(() => setLoading(false));
+  }, [codeFromUrl, t]);
 
   const onUpload = async (values) => {
     const file = values?.file?.file || values?.file;
@@ -211,7 +232,7 @@ export default function InstitutCodeADNPage() {
               footer={[<Button key="close" onClick={closeDocumentModal}>{t("demandesAuthentification.cancel")}</Button>]}
               width="90vw"
               style={{ top: 24 }}
-              destroyOnClose
+              destroyOnHidden
             >
               <div style={{ minHeight: "75vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {viewingDoc?.blobUrl ? (

@@ -12,6 +12,7 @@ export const AuthContext = createContext(undefined);
 const USER_COOKIE = "applyons_user";
 const TOKEN_KEY = "token";
 const USER_KEY = "user";
+const REMEMBER_KEY = "applyons_remember_me";
 const COOKIE_EXPIRES = 7;
 
 
@@ -53,14 +54,27 @@ export const AuthProvider = ({ children }) => {
       : { sameSite: "strict", secure: isProd };
 
     if (u && t) {
-      // Stockage (UI only) + localStorage
       Cookies.set(USER_COOKIE, JSON.stringify(u), cookieOpts);
-      localStorage.setItem(TOKEN_KEY, t);
-      localStorage.setItem(USER_KEY, JSON.stringify(u));
+      try {
+        localStorage.setItem(REMEMBER_KEY, rememberMe ? "1" : "0");
+      } catch (_) {}
+      if (rememberMe) {
+        localStorage.setItem(TOKEN_KEY, t);
+        localStorage.setItem(USER_KEY, JSON.stringify(u));
+        sessionStorage.removeItem(TOKEN_KEY);
+        sessionStorage.removeItem(USER_KEY);
+      } else {
+        sessionStorage.setItem(TOKEN_KEY, t);
+        sessionStorage.setItem(USER_KEY, JSON.stringify(u));
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
+      }
     } else {
       Cookies.remove(USER_COOKIE);
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(USER_KEY);
+      sessionStorage.removeItem(TOKEN_KEY);
+      sessionStorage.removeItem(USER_KEY);
     }
   }, [setAuthHeader]);
 
@@ -89,20 +103,19 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       try {
-        const savedToken = localStorage.getItem(TOKEN_KEY);
+        const savedToken = localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY);
+        const fromLocal = !!localStorage.getItem(TOKEN_KEY);
         if (savedToken) {
           setAuthHeader(savedToken);
           try {
             const prof = await authService.getProfile();
             const freshUser = prof?.user || prof;
             if (freshUser) {
-              persistAuth(freshUser, savedToken, !!Cookies.get(USER_COOKIE));
+              persistAuth(freshUser, savedToken, fromLocal);
             } else {
-              // profil invalide ⇒ purge
               persistAuth(null, null);
             }
           } catch {
-            // token invalide ⇒ essai refresh
             try {
               const r = await authService.refreshToken();
               const t = r?.token || r?.data?.token;
@@ -114,14 +127,13 @@ export const AuthProvider = ({ children }) => {
             }
           }
         } else {
-          // pas de token → essai refresh
           try {
             const r = await authService.refreshToken();
             const t = r?.token || r?.data?.token;
             const u = r?.user || r?.data?.user;
             if (t && u) persistAuth(u, t, true);
           } catch {
-            // pas de session; OK
+            // pas de session
           }
         }
       } finally {
@@ -178,7 +190,7 @@ export const AuthProvider = ({ children }) => {
       const prof = await authService.getProfile();
       const u = prof?.user || prof;
       if (u) {
-        persistAuth(u, token, !!Cookies.get(USER_COOKIE));
+        persistAuth(u, token, !!localStorage.getItem(TOKEN_KEY));
         return u;
       }
     } catch {

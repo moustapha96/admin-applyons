@@ -19,17 +19,24 @@ import applyonsAbout1 from "../../assets/logo.png";
 export default function AuthLogin() {
     const { t } = useTranslation();
     const location = useLocation();
+    const navigate = useNavigate();
     const searchParams = new URLSearchParams(location.search);
     const emailUrl = searchParams.get('email');
+    const redirectTo = searchParams.get('redirect');
 
     const [email, setEmail] = useState(emailUrl || '');
     const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
+    const [rememberMe, setRememberMe] = useState(() => {
+        try {
+            return localStorage.getItem('applyons_remember_me') === '1';
+        } catch {
+            return false;
+        }
+    });
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    const navigate = useNavigate();
     const { login } = useAuth();
 
     useEffect(() => {
@@ -49,6 +56,11 @@ export default function AuthLogin() {
             console.log(response);
             if (response.token && response.user) {
                 login({ ...response.user, token: response.token }, rememberMe);
+                const target = redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//")
+                    ? redirectTo
+                    : undefined;
+                navigate(target || "/", { replace: true });
+                return;
             } else {
                 setError(t('auth.login.errorNoToken'));
             }

@@ -281,7 +281,8 @@
             "TRAITEE": "Bearbeitet",
             "ANNULEE": "Storniert"
         },
-        "doc": { "type": "Typ", "mention": "Vermerk", "addedBy": "Hinzugefügt von", "date": "Datum", "file": "Datei", "viewFile": "Dokument ansehen", "institutDetails": "Details der Institution, die das Dokument eingereicht hat", "orgName": "Name", "orgType": "Typ", "orgEmail": "E-Mail", "orgPhone": "Telefon", "orgAddress": "Adresse", "orgWebsite": "Webseite", "orgCountry": "Land" },
+        "doc": { "type": "Typ", "mention": "Vermerk", "addedBy": "Hinzugefügt von", "date": "Datum", "file": "Datei", "viewFile": "Dokument ansehen", "addDocument": "Dokument hinzufügen", "institutDetails": "Details der Institution, die das Dokument eingereicht hat", "orgName": "Name", "orgType": "Typ", "orgEmail": "E-Mail", "orgPhone": "Telefon", "orgAddress": "Adresse", "orgWebsite": "Webseite", "orgCountry": "Land" },
+        "toasts": { "loadError": "Fehler beim Laden der Anfrage." },
         "documentTypes": {
             "DIPLOMA": "Diplom",
             "TRANSCRIPT": "Zeugnis / Notenübersicht",

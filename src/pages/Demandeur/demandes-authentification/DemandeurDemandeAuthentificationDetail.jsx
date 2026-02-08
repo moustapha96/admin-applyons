@@ -248,7 +248,7 @@ export default function DemandeurDemandeAuthentificationDetail() {
           ]}
           width="90vw"
           style={{ top: 24 }}
-          destroyOnClose
+          destroyOnHidden
         >
           <div style={{ minHeight: "75vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
             {viewingDoc?.blobUrl ? (

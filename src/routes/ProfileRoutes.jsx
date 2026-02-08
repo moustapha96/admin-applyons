@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 "use client";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
 // Map rôle -> chemin profil du sous-espace
@@ -22,9 +22,16 @@ const profilePathForRole = (role) => {
 
 export default function ProfileRedirect() {
   const { user, isAuthenticated, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) return null;        // tu peux mettre un spinner si tu veux
-  if (!isAuthenticated || !user) return <Navigate to="/auth/login" replace />;
+  if (!isAuthenticated || !user) {
+    const from = location.pathname + location.search;
+    const loginTo = from && from !== "/auth/login"
+      ? `/auth/login?redirect=${encodeURIComponent(from)}`
+      : "/auth/login";
+    return <Navigate to={loginTo} replace />;
+  }
 
   const to = profilePathForRole(user.role);
   return <Navigate to={to} replace />;

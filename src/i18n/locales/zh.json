@@ -281,7 +281,8 @@
             "TRAITEE": "已处理",
             "ANNULEE": "已取消"
         },
-        "doc": { "type": "类型", "mention": "说明", "addedBy": "添加者", "date": "日期", "file": "文件", "viewFile": "查看文件", "institutDetails": "提交文件的机构详情", "orgName": "名称", "orgType": "类型", "orgEmail": "邮箱", "orgPhone": "电话", "orgAddress": "地址", "orgWebsite": "网站", "orgCountry": "国家" },
+        "doc": { "type": "类型", "mention": "说明", "addedBy": "添加者", "date": "日期", "file": "文件", "viewFile": "查看文件", "addDocument": "添加文档", "institutDetails": "提交文件的机构详情", "orgName": "名称", "orgType": "类型", "orgEmail": "邮箱", "orgPhone": "电话", "orgAddress": "地址", "orgWebsite": "网站", "orgCountry": "国家" },
+        "toasts": { "loadError": "加载申请时出错。" },
         "documentTypes": {
             "DIPLOMA": "文凭",
             "TRANSCRIPT": "成绩单",
