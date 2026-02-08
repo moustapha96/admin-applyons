@@ -179,9 +179,9 @@ export default function InstitutCodeADNPage() {
                 <Descriptions.Item label={t("demandesAuthentification.fields.observation")}>{demande.observation || "—"}</Descriptions.Item>
               </Descriptions>
             </Card>
-            <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
+            {/* <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
               <Table rowKey="id" dataSource={documentsList} columns={docColumns} pagination={false} size="small" locale={{ emptyText: t("demandesAuthentification.noDocuments") }} />
-            </Card>
+            </Card> */}
             {userOrgId && userOrgId === demande.attributedOrganizationId ? (
               <Alert type="info" message={t("demandesAuthentification.attributedOrgCannotAdd")} className="mt-4" showIcon />
             ) : (
