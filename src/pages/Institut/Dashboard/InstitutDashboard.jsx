@@ -181,67 +181,79 @@ export default function InstitutDashboard() {
 
           <Row gutter={[16, 16]} className="mt-3">
             <Col xs={12} md={8}>
-              <Card loading={loading}>
-                <Statistic
-                  title={t("institutDashboard.traducteur.kpis.assignedRequests")}
-                  prefix={<FileTextOutlined />}
-                  value={widgets.demandesAssignedOrg?.total ?? 0}
-                />
-              </Card>
+              <Link to="/organisations/demandes" className="block">
+                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                  <Statistic
+                    title={t("institutDashboard.traducteur.kpis.assignedRequests")}
+                    prefix={<FileTextOutlined />}
+                    value={widgets.demandesAssignedOrg?.total ?? 0}
+                  />
+                </Card>
+              </Link>
             </Col>
             <Col xs={12} md={8}>
-              <Card loading={loading}>
-                <Statistic
-                  title={t("institutDashboard.traducteur.kpis.docsToTranslate")}
-                  prefix={<TranslationOutlined />}
-                  value={widgets.docsToTranslate?.total ?? 0}
-                />
-              </Card>
+              <Link to="/organisations/demandes" className="block">
+                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                  <Statistic
+                    title={t("institutDashboard.traducteur.kpis.docsToTranslate")}
+                    prefix={<TranslationOutlined />}
+                    value={widgets.docsToTranslate?.total ?? 0}
+                  />
+                </Card>
+              </Link>
             </Col>
             <Col xs={12} md={8}>
-              <Card loading={loading}>
-                <Statistic
-                  title={t("institutDashboard.traducteur.kpis.docsTranslated")}
-                  prefix={<BookOutlined />}
-                  value={widgets.docsTranslated?.total ?? 0}
-                />
-              </Card>
+              <Link to="/organisations/demandes" className="block">
+                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                  <Statistic
+                    title={t("institutDashboard.traducteur.kpis.docsTranslated")}
+                    prefix={<BookOutlined />}
+                    value={widgets.docsTranslated?.total ?? 0}
+                  />
+                </Card>
+              </Link>
             </Col>
             <Col xs={12} md={8}>
-              <Card loading={loading}>
-                <Statistic
-                  title={t("institutDashboard.kpis.demandesAuthentificationAttributed")}
-                  prefix={<BookOutlined />}
-                  value={widgets.demandesAuthentificationAttributed?.total ?? 0}
-                />
-              </Card>
+              <Link to="/organisations/demandes-authentification" className="block">
+                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                  <Statistic
+                    title={t("institutDashboard.kpis.demandesAuthentificationAttributed")}
+                    prefix={<BookOutlined />}
+                    value={widgets.demandesAuthentificationAttributed?.total ?? 0}
+                  />
+                </Card>
+              </Link>
             </Col>
             <Col xs={12} md={8}>
-              <Card loading={loading}>
-                <Statistic
-                  title={t("institutDashboard.kpis.subscriptions")}
-                  prefix={<SafetyCertificateOutlined />}
-                  value={`${widgets.subscriptions?.active ?? 0} / ${widgets.subscriptions?.total ?? 0}`}
-                />
-                {(widgets.subscriptions?.expiringSoon ?? 0) > 0 && (
-                  <Tag color="gold" style={{ marginTop: 8 }}>
-                    {t("institutDashboard.kpis.expiringSoon", { count: widgets.subscriptions.expiringSoon })}
-                  </Tag>
-                )}
-              </Card>
+              <Link to="/organisations/abonnements" className="block">
+                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                  <Statistic
+                    title={t("institutDashboard.kpis.subscriptions")}
+                    prefix={<SafetyCertificateOutlined />}
+                    value={`${widgets.subscriptions?.active ?? 0} / ${widgets.subscriptions?.total ?? 0}`}
+                  />
+                  {(widgets.subscriptions?.expiringSoon ?? 0) > 0 && (
+                    <Tag color="gold" style={{ marginTop: 8 }}>
+                      {t("institutDashboard.kpis.expiringSoon", { count: widgets.subscriptions.expiringSoon })}
+                    </Tag>
+                  )}
+                </Card>
+              </Link>
             </Col>
             <Col xs={12} md={8}>
-              <Card loading={loading}>
-                <Statistic
-                  title={t("institutDashboard.kpis.usersTotal")}
-                  prefix={<TeamOutlined />}
-                  value={widgets.users?.total ?? 0}
-                />
-              </Card>
+              <Link to="/organisations/users" className="block">
+                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                  <Statistic
+                    title={t("institutDashboard.kpis.usersTotal")}
+                    prefix={<TeamOutlined />}
+                    value={widgets.users?.total ?? 0}
+                  />
+                </Card>
+              </Link>
             </Col>
             <Col xs={12} md={8}>
               <Link to="/organisations/notifications" className="block">
-                <Card loading={loading} className="hover:shadow-md transition-shadow">
+                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
                   <Statistic
                     title={t("institutDashboard.kpis.notifications")}
                     prefix={<BellOutlined />}
@@ -257,16 +269,22 @@ export default function InstitutDashboard() {
 
           <Row gutter={[16, 16]} className="mt-2">
             <Col xs={24} md={12}>
-              <Card title={t("institutDashboard.traducteur.tables.assignedByStatus")} loading={loading}>
-                <Table
-                  rowKey="key"
-                  size="small"
-                  columns={simpleCols}
-                  dataSource={demandesAssignedOrgRowsTraducteur}
-                  pagination={false}
-                  locale={{ emptyText: t("institutDashboard.common.noData") }}
-                />
-              </Card>
+              <Link to="/organisations/demandes" className="block">
+                <Card
+                  title={t("institutDashboard.traducteur.tables.assignedByStatus")}
+                  loading={loading}
+                  className="hover:shadow-md transition-shadow cursor-pointer"
+                >
+                  <Table
+                    rowKey="key"
+                    size="small"
+                    columns={simpleCols}
+                    dataSource={demandesAssignedOrgRowsTraducteur}
+                    pagination={false}
+                    locale={{ emptyText: t("institutDashboard.common.noData") }}
+                  />
+                </Card>
+              </Link>
             </Col>
             <Col xs={24} md={12}>
               <Card
@@ -318,49 +336,57 @@ export default function InstitutDashboard() {
 
         <Row gutter={[16, 16]} className="mt-3">
           <Col xs={12} md={6}>
-            <Card loading={loading}>
-              <Statistic
-                title={t("institutDashboard.kpis.targetRequests")}
-                prefix={<FileTextOutlined />}
-                value={widgets.demandesTargetOrg?.total ?? 0}
-              />
-            </Card>
+            <Link to="/organisations/demandes" className="block">
+              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                <Statistic
+                  title={t("institutDashboard.kpis.targetRequests")}
+                  prefix={<FileTextOutlined />}
+                  value={widgets.demandesTargetOrg?.total ?? 0}
+                />
+              </Card>
+            </Link>
           </Col>
           <Col xs={12} md={6}>
-            <Card loading={loading}>
-              <Statistic
-                title={t("institutDashboard.kpis.demandesAuthentificationAttributed")}
-                prefix={<BookOutlined />}
-                value={widgets.demandesAuthentificationAttributed?.total ?? 0}
-              />
-            </Card>
+            <Link to="/organisations/demandes-authentification" className="block">
+              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                <Statistic
+                  title={t("institutDashboard.kpis.demandesAuthentificationAttributed")}
+                  prefix={<BookOutlined />}
+                  value={widgets.demandesAuthentificationAttributed?.total ?? 0}
+                />
+              </Card>
+            </Link>
           </Col>
           <Col xs={12} md={6}>
-            <Card loading={loading}>
-              <Statistic
-                title={t("institutDashboard.kpis.subscriptions")}
-                prefix={<SafetyCertificateOutlined />}
-                value={`${widgets.subscriptions?.active ?? 0} / ${widgets.subscriptions?.total ?? 0}`}
-              />
-              <div style={{ marginTop: 8 }}>
-                <Tag color="gold">
-                  {t("institutDashboard.kpis.expiringSoon", { count: widgets.subscriptions?.expiringSoon ?? 0 })}
-                </Tag>
-              </div>
-            </Card>
+            <Link to="/organisations/abonnements" className="block">
+              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                <Statistic
+                  title={t("institutDashboard.kpis.subscriptions")}
+                  prefix={<SafetyCertificateOutlined />}
+                  value={`${widgets.subscriptions?.active ?? 0} / ${widgets.subscriptions?.total ?? 0}`}
+                />
+                <div style={{ marginTop: 8 }}>
+                  <Tag color="gold">
+                    {t("institutDashboard.kpis.expiringSoon", { count: widgets.subscriptions?.expiringSoon ?? 0 })}
+                  </Tag>
+                </div>
+              </Card>
+            </Link>
           </Col>
           <Col xs={12} md={6}>
-            <Card loading={loading}>
-              <Statistic
-                title={t("institutDashboard.kpis.usersTotal")}
-                prefix={<TeamOutlined />}
-                value={widgets.users?.total ?? 0}
-              />
-            </Card>
+            <Link to="/organisations/users" className="block">
+              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+                <Statistic
+                  title={t("institutDashboard.kpis.usersTotal")}
+                  prefix={<TeamOutlined />}
+                  value={widgets.users?.total ?? 0}
+                />
+              </Card>
+            </Link>
           </Col>
           <Col xs={12} md={6}>
             <Link to="/organisations/notifications" className="block">
-              <Card loading={loading} className="hover:shadow-md transition-shadow">
+              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
                 <Statistic
                   title={t("institutDashboard.kpis.notifications")}
                   prefix={<BellOutlined />}
@@ -376,54 +402,66 @@ export default function InstitutDashboard() {
 
         <Row gutter={[16, 16]} className="mt-2">
           <Col xs={24} md={12}>
-            <Card title={t("institutDashboard.tables.targetByStatus")} loading={loading}>
-              <Table
-                rowKey="key"
-                size="small"
-                columns={simpleCols}
-                dataSource={demandesTargetOrgRows}
-                pagination={false}
-                locale={{ emptyText: t("institutDashboard.common.noData") }}
-              />
-            </Card>
+            <Link to="/organisations/demandes" className="block">
+              <Card
+                title={t("institutDashboard.tables.targetByStatus")}
+                loading={loading}
+                className="hover:shadow-md transition-shadow cursor-pointer"
+              >
+                <Table
+                  rowKey="key"
+                  size="small"
+                  columns={simpleCols}
+                  dataSource={demandesTargetOrgRows}
+                  pagination={false}
+                  locale={{ emptyText: t("institutDashboard.common.noData") }}
+                />
+              </Card>
+            </Link>
           </Col>
         </Row>
 
         <Row gutter={[16, 16]} className="mt-2">
           <Col xs={24} md={12}>
-            <Card
-              title={t("institutDashboard.lists.departmentsTitle", { n: widgets.departments?.total ?? 0 })}
-              loading={loading}
-              extra={<Tag color="blue">{widgets.departments?.total ?? 0}</Tag>}
-            >
-              <Table
-                rowKey="id"
-                size="small"
-                columns={listCols}
-                dataSource={widgets.departments?.list || []}
-                pagination={false}
-                locale={{ emptyText: t("institutDashboard.lists.noDepartment") }}
-              />
-            </Card>
+            <Link to="/organisations/departements" className="block">
+              <Card
+                title={t("institutDashboard.lists.departmentsTitle", { n: widgets.departments?.total ?? 0 })}
+                loading={loading}
+                extra={<Tag color="blue">{widgets.departments?.total ?? 0}</Tag>}
+                className="hover:shadow-md transition-shadow cursor-pointer"
+              >
+                <Table
+                  rowKey="id"
+                  size="small"
+                  columns={listCols}
+                  dataSource={widgets.departments?.list || []}
+                  pagination={false}
+                  locale={{ emptyText: t("institutDashboard.lists.noDepartment") }}
+                />
+              </Card>
+            </Link>
           </Col>
           <Col xs={24} md={12}>
-            <Card
-              title={t("institutDashboard.lists.tracksTitle", { n: widgets.filieres?.total ?? 0 })}
-              loading={loading}
-              extra={<Tag color="blue">{widgets.filieres?.total ?? 0}</Tag>}
-            >
-              <Table
-                rowKey="id"
-                size="small"
-                columns={[
-                  ...listCols,
-                  { title: t("institutDashboard.lists.departmentCol"), dataIndex: ["department", "name"], key: "department" },
-                ]}
-                dataSource={widgets.filieres?.list || []}
-                pagination={false}
-                locale={{ emptyText: t("institutDashboard.lists.noTrack") }}
-              />
-            </Card>
+            <Link to="/organisations/filieres" className="block">
+              <Card
+                title={t("institutDashboard.lists.tracksTitle", { n: widgets.filieres?.total ?? 0 })}
+                loading={loading}
+                extra={<Tag color="blue">{widgets.filieres?.total ?? 0}</Tag>}
+                className="hover:shadow-md transition-shadow cursor-pointer"
+              >
+                <Table
+                  rowKey="id"
+                  size="small"
+                  columns={[
+                    ...listCols,
+                    { title: t("institutDashboard.lists.departmentCol"), dataIndex: ["department", "name"], key: "department" },
+                  ]}
+                  dataSource={widgets.filieres?.list || []}
+                  pagination={false}
+                  locale={{ emptyText: t("institutDashboard.lists.noTrack") }}
+                />
+              </Card>
+            </Link>
           </Col>
         </Row>
       </div>

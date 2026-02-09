@@ -96,6 +96,8 @@
         "daysAgo": "d",
         "genericTitle": "Notification",
         "genericMessage": "You have a new notification",
+        "moreNew": "{{count}} more new notification(s)",
+        "fullList": "Full list",
         "orgDemandeTitle": "Request concerning you",
         "orgDemandeMessage": "A shared request concerns your organization (see code for details)"
     },

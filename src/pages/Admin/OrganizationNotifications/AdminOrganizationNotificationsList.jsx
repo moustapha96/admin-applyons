@@ -33,6 +33,7 @@ const { Text } = Typography;
 
 export default function AdminOrganizationNotificationsList() {
   const { t } = useTranslation();
+  const tEn = (key, opts) => t(key, { ...opts, lng: "en" });
   useAuth();
   const navigate = useNavigate();
 
@@ -93,7 +94,7 @@ export default function AdminOrganizationNotificationsList() {
       message.error(
         e?.response?.data?.message ||
           e?.message ||
-          t("adminOrgNotifications.messages.loadError")
+          tEn("adminOrgNotifications.messages.loadError")
       );
     } finally {
       setLoading(false);
@@ -143,13 +144,13 @@ export default function AdminOrganizationNotificationsList() {
   const handleMarkAsViewed = async (notificationId) => {
     try {
       await organizationDemandeNotificationService.markAsViewed(notificationId);
-      message.success(t("adminOrgNotifications.messages.markedAsViewed"));
+      message.success(tEn("adminOrgNotifications.messages.markedAsViewed"));
       await Promise.all([fetchData(), fetchStats()]);
     } catch (e) {
       message.error(
         e?.response?.data?.message ||
           e?.message ||
-          t("adminOrgNotifications.messages.markError")
+          tEn("adminOrgNotifications.messages.markError")
       );
     }
   };
@@ -157,13 +158,13 @@ export default function AdminOrganizationNotificationsList() {
   const handleMarkAllAsViewed = async () => {
     try {
       await organizationDemandeNotificationService.markAllAsViewedForGlobal();
-      message.success(t("adminOrgNotifications.messages.allMarkedAsViewed"));
+      message.success(tEn("adminOrgNotifications.messages.allMarkedAsViewed"));
       await Promise.all([fetchData(), fetchStats()]);
     } catch (e) {
       message.error(
         e?.response?.data?.message ||
           e?.message ||
-          t("adminOrgNotifications.messages.markAllError")
+          tEn("adminOrgNotifications.messages.markAllError")
       );
     }
   };
@@ -183,7 +184,7 @@ export default function AdminOrganizationNotificationsList() {
   const columns = useMemo(
     () => [
       {
-        title: t("adminOrgNotifications.columns.status"),
+        title: tEn("adminOrgNotifications.columns.status"),
         key: "viewed",
         width: 130,
         render: (_, record) => (
@@ -191,14 +192,14 @@ export default function AdminOrganizationNotificationsList() {
             status={record.viewed ? "default" : "processing"}
             text={
               record.viewed
-                ? t("adminOrgNotifications.status.viewed")
-                : t("adminOrgNotifications.status.unviewed")
+                ? tEn("adminOrgNotifications.status.viewed")
+                : tEn("adminOrgNotifications.status.unviewed")
             }
           />
         ),
       },
       {
-        title: t("adminOrgNotifications.columns.type"),
+        title: tEn("adminOrgNotifications.columns.type"),
         dataIndex: "type",
         key: "type",
         render: (type) => (
@@ -208,7 +209,7 @@ export default function AdminOrganizationNotificationsList() {
         ),
       },
       {
-        title: t("adminOrgNotifications.columns.message"),
+        title: tEn("adminOrgNotifications.columns.message"),
         key: "message",
         render: (_, record) => (
           <Text strong={!record.viewed}>
@@ -217,7 +218,7 @@ export default function AdminOrganizationNotificationsList() {
         ),
       },
       {
-        title: t("adminOrgNotifications.columns.demande"),
+        title: tEn("adminOrgNotifications.columns.demande"),
         key: "demande",
         render: (_, record) => {
           const demande = record.demandePartage || record.demande;
@@ -232,7 +233,7 @@ export default function AdminOrganizationNotificationsList() {
         },
       },
       {
-        title: t("adminOrgNotifications.columns.user"),
+        title: tEn("adminOrgNotifications.columns.user"),
         key: "user",
         render: (_, record) => {
           const user = record.user || record.createdBy;
@@ -247,13 +248,13 @@ export default function AdminOrganizationNotificationsList() {
         },
       },
       {
-        title: t("adminOrgNotifications.columns.createdAt"),
+        title: tEn("adminOrgNotifications.columns.createdAt"),
         dataIndex: "createdAt",
         key: "createdAt",
         render: (v) => (v ? dayjs(v).format("DD/MM/YYYY HH:mm") : "—"),
       },
       {
-        title: t("adminOrgNotifications.columns.actions"),
+        title: tEn("adminOrgNotifications.columns.actions"),
         key: "actions",
         width: 280,
         render: (_, record) => (
@@ -263,7 +264,7 @@ export default function AdminOrganizationNotificationsList() {
               icon={<EyeOutlined />}
               onClick={() => navigate(`/admin/organisations/notifications/${record.id}/details`)}
             >
-              {t("adminOrgNotifications.buttons.viewDetails")}
+              {tEn("adminOrgNotifications.buttons.viewDetails")}
             </Button>
 
             {!record.viewed && (
@@ -272,7 +273,7 @@ export default function AdminOrganizationNotificationsList() {
                 icon={<CheckCircleOutlined />}
                 onClick={() => handleMarkAsViewed(record.id)}
               >
-                {t("adminOrgNotifications.buttons.markAsViewed")}
+                {tEn("adminOrgNotifications.buttons.markAsViewed")}
               </Button>
             )}
 
@@ -288,7 +289,7 @@ export default function AdminOrganizationNotificationsList() {
                   )
                 }
               >
-                {t("adminOrgNotifications.buttons.viewDemande")}
+                {tEn("adminOrgNotifications.buttons.viewDemande")}
               </Button>
             )}
 
@@ -298,7 +299,7 @@ export default function AdminOrganizationNotificationsList() {
                 icon={<EyeOutlined />}
                 onClick={() => navigate(`/admin/users/${record.user.id}/details`)}
               >
-                {t("adminOrgNotifications.buttons.viewUser")}
+                {tEn("adminOrgNotifications.buttons.viewUser")}
               </Button>
             )}
           </Space>
@@ -313,7 +314,7 @@ export default function AdminOrganizationNotificationsList() {
       <div className="layout-specing py-4 sm:py-6">
         <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
           <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1 break-words">
-            {t("adminOrgNotifications.pageTitle")}
+            {tEn("adminOrgNotifications.pageTitle")}
           </h5>
           <Breadcrumb
             className="order-1 sm:order-2"
@@ -321,19 +322,19 @@ export default function AdminOrganizationNotificationsList() {
               {
                 title: (
                   <Link to="/admin/dashboard">
-                    {t("adminOrgNotifications.breadcrumbs.dashboard")}
+                    {tEn("adminOrgNotifications.breadcrumbs.dashboard")}
                   </Link>
                 ),
               },
               {
                 title: (
                   <Link to="/admin/organisations">
-                    {t("adminOrgNotifications.breadcrumbs.organizations")}
+                    {tEn("adminOrgNotifications.breadcrumbs.organizations")}
                   </Link>
                 ),
               },
               { title: <span className="break-words">{organization?.name || "Global"}</span> },
-              { title: t("adminOrgNotifications.breadcrumbs.notifications") },
+              { title: tEn("adminOrgNotifications.breadcrumbs.notifications") },
             ]}
           />
         </div>
@@ -343,7 +344,7 @@ export default function AdminOrganizationNotificationsList() {
           <Col xs={24} sm={8}>
             <Card loading={loadingStats}>
               <Statistic
-                title={t("adminOrgNotifications.stats.total")}
+                title={tEn("adminOrgNotifications.stats.total")}
                 value={stats.total}
                 prefix={<BellOutlined />}
                 valueStyle={{ color: "#1890ff" }}
@@ -353,7 +354,7 @@ export default function AdminOrganizationNotificationsList() {
           <Col xs={24} sm={8}>
             <Card loading={loadingStats}>
               <Statistic
-                title={t("adminOrgNotifications.stats.unviewed")}
+                title={tEn("adminOrgNotifications.stats.unviewed")}
                 value={stats.unviewed}
                 prefix={<Badge status="processing" />}
                 valueStyle={{ color: "#faad14" }}
@@ -363,7 +364,7 @@ export default function AdminOrganizationNotificationsList() {
           <Col xs={24} sm={8}>
             <Card loading={loadingStats}>
               <Statistic
-                title={t("adminOrgNotifications.stats.viewed")}
+                title={tEn("adminOrgNotifications.stats.viewed")}
                 value={stats.viewed}
                 prefix={<CheckCircleOutlined />}
                 valueStyle={{ color: "#52c41a" }}
@@ -377,7 +378,7 @@ export default function AdminOrganizationNotificationsList() {
           <Row gutter={[16, 16]} align="middle">
             <Col xs={24} sm={24} md={10} lg={8}>
               <Input.Search
-                placeholder={t("adminOrgNotifications.filters.searchPlaceholder")}
+                placeholder={tEn("adminOrgNotifications.filters.searchPlaceholder")}
                 allowClear
                 value={filters.search}
                 onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
@@ -392,7 +393,7 @@ export default function AdminOrganizationNotificationsList() {
             </Col>
             <Col xs={24} sm={12} md={8} lg={6}>
               <Select
-                placeholder={t("adminOrgNotifications.filters.statusPlaceholder")}
+                placeholder={tEn("adminOrgNotifications.filters.statusPlaceholder")}
                 allowClear
                 value={filters.unviewedOnly ? "unviewed" : undefined}
                 onChange={(v) => {
@@ -402,8 +403,8 @@ export default function AdminOrganizationNotificationsList() {
                 className="w-full"
                 style={{ minWidth: 0 }}
                 options={[
-                  { label: t("adminOrgNotifications.filters.all"), value: undefined },
-                  { label: t("adminOrgNotifications.filters.unviewedOnly"), value: "unviewed" },
+                  { label: tEn("adminOrgNotifications.filters.all"), value: undefined },
+                  { label: tEn("adminOrgNotifications.filters.unviewedOnly"), value: "unviewed" },
                 ]}
               />
             </Col>
@@ -419,8 +420,8 @@ export default function AdminOrganizationNotificationsList() {
                     }));
                     setPagination((p) => ({ ...p, current: 1 }));
                   }}
-                  checkedChildren={t("adminOrgNotifications.filters.asTarget")}
-                  unCheckedChildren={t("adminOrgNotifications.filters.allNotifications")}
+                  checkedChildren={tEn("adminOrgNotifications.filters.asTarget")}
+                  unCheckedChildren={tEn("adminOrgNotifications.filters.allNotifications")}
                 />
                 <Switch
                   checked={filters.asNotified}
@@ -432,8 +433,8 @@ export default function AdminOrganizationNotificationsList() {
                     }));
                     setPagination((p) => ({ ...p, current: 1 }));
                   }}
-                  checkedChildren={t("adminOrgNotifications.filters.asNotified")}
-                  unCheckedChildren={t("adminOrgNotifications.filters.allNotifications")}
+                  checkedChildren={tEn("adminOrgNotifications.filters.asNotified")}
+                  unCheckedChildren={tEn("adminOrgNotifications.filters.allNotifications")}
                 />
                 <Button
                   icon={<ReloadOutlined />}
@@ -443,7 +444,7 @@ export default function AdminOrganizationNotificationsList() {
                   }}
                   className="w-full sm:w-auto"
                 >
-                  {t("adminOrgNotifications.buttons.refresh")}
+                  {tEn("adminOrgNotifications.buttons.refresh")}
                 </Button>
                 {stats.unviewed > 0 && (
                   <Button
@@ -452,7 +453,7 @@ export default function AdminOrganizationNotificationsList() {
                     onClick={handleMarkAllAsViewed}
                     className="w-full sm:w-auto"
                   >
-                    {t("adminOrgNotifications.buttons.markAllAsViewed")}
+                    {tEn("adminOrgNotifications.buttons.markAllAsViewed")}
                   </Button>
                 )}
               </Space>
@@ -472,7 +473,7 @@ export default function AdminOrganizationNotificationsList() {
               showSizeChanger: true,
               pageSizeOptions: ["5", "10", "20", "50"],
               showTotal: (total) =>
-                t("adminOrgNotifications.pagination.total", { total }),
+                tEn("adminOrgNotifications.pagination.total", { total }),
             }}
             onChange={onTableChange}
             scroll={{ x: "max-content" }}

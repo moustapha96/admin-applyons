@@ -33,6 +33,8 @@ export default function Topnav({ setToggle, toggle }) {
   const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  /** Notifications: always display in English */
+  const tEn = (key, options) => t(key, { ...options, lng: "en" });
 
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -233,8 +235,8 @@ export default function Topnav({ setToggle, toggle }) {
       if (showNewPopup && !isFirstLoadRef.current && newUnread.length > 0) {
         const toShow = newUnread.slice(0, 3);
         toShow.forEach((n) => {
-          const title = n.title || t(n.titleKey) || t("notifications.genericTitle");
-          const message = n.message || t(n.messageKey) || t("notifications.genericMessage");
+          const title = n.title || tEn(n.titleKey) || tEn("notifications.genericTitle");
+          const message = n.message || tEn(n.messageKey) || tEn("notifications.genericMessage");
           antdNotification.info({
             key: n.id,
             message: title,
@@ -250,7 +252,7 @@ export default function Topnav({ setToggle, toggle }) {
         if (newUnread.length > 3) {
           antdNotification.info({
             key: "more-notifications",
-            message: t("notifications.moreNew", { count: newUnread.length - 3 }) || `${newUnread.length - 3} autre(s) notification(s)`,
+            message: tEn("notifications.moreNew", { count: newUnread.length - 3 }),
             placement: "topRight",
             duration: 4,
           });
@@ -318,10 +320,10 @@ export default function Topnav({ setToggle, toggle }) {
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
     
-    if (minutes < 1) return t("notifications.justNow") || "À l'instant";
-    if (minutes < 60) return `${minutes} ${t("notifications.minutesAgo") || "min"}`;
-    if (hours < 24) return `${hours} ${t("notifications.hoursAgo") || "h"}`;
-    return `${days} ${t("notifications.daysAgo") || "j"}`;
+    if (minutes < 1) return tEn("notifications.justNow");
+    if (minutes < 60) return `${minutes} ${tEn("notifications.minutesAgo")}`;
+    if (hours < 24) return `${hours} ${tEn("notifications.hoursAgo")}`;
+    return `${days} ${tEn("notifications.daysAgo")}`;
   };
 
   const toggleHandler = () => setToggle(!toggle);
@@ -411,8 +413,8 @@ export default function Topnav({ setToggle, toggle }) {
                 }}
                 className="size-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-[20px] text-center bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-gray-100 dark:border-gray-800 text-slate-900 dark:text-white rounded-full relative"
                 type="button"
-                title={t("common.notifications") || "Notifications"}
-                aria-label={t("common.notifications") || "Notifications"}
+                title={tEn("common.notifications")}
+                aria-label={tEn("common.notifications")}
               >
                 <BellOutlined className="text-base" />
                 {unreadCount > 0 && (
@@ -430,18 +432,17 @@ export default function Topnav({ setToggle, toggle }) {
                 onClick={stopPropagation}
               >
                 <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
-                  <span className="font-semibold text-base">{t("common.notifications") || "Notifications"}</span>
+                  <span className="font-semibold text-base">{tEn("common.notifications")}</span>
                   {unreadCount > 0 && (
                     <Button type="link" size="small" onClick={markAllAsRead} className="text-xs">
-                      {t("notifications.markAllRead") || "Tout marquer comme lu"}
+                      {tEn("notifications.markAllRead")}
                     </Button>
                   )}
                 </div>
-                
                 <div className="max-h-96 overflow-y-auto">
                   {notifications.length === 0 ? (
                     <Empty
-                      description={t("notifications.noNotifications") || "Aucune notification"}
+                      description={tEn("notifications.noNotifications")}
                       className="py-8"
                       image={Empty.PRESENTED_IMAGE_SIMPLE}
                     />
@@ -467,7 +468,7 @@ export default function Topnav({ setToggle, toggle }) {
                             title={
                               <div className="flex justify-between items-start">
                                 <span className={`text-sm ${!notification.read ? "font-semibold" : ""}`}>
-                                  {notification.title || t(notification.titleKey)}
+                                  {notification.title || tEn(notification.titleKey)}
                                 </span>
                                 {!notification.read && (
                                   <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1.5"></span>
@@ -477,7 +478,7 @@ export default function Topnav({ setToggle, toggle }) {
                             description={
                               <div>
                                 <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                                  {notification.message || t(notification.messageKey)}
+                                  {notification.message || tEn(notification.messageKey)}
                                 </div>
                                 <div className="text-xs text-slate-400 dark:text-slate-500 mt-1">
                                   {formatTimeAgo(notification.createdAt)}
@@ -490,7 +491,6 @@ export default function Topnav({ setToggle, toggle }) {
                     />
                   )}
                 </div>
-                
                 {notifications.length > 0 && (
                   <>
                     <Divider className="my-0" />
@@ -503,7 +503,7 @@ export default function Topnav({ setToggle, toggle }) {
                           setShowNotificationsDrawer(true);
                         }}
                       >
-                        {t("notifications.viewAll") || "Voir toutes les notifications"}
+                        {tEn("notifications.viewAll")}
                       </Button>
                     </div>
                   </>
@@ -607,9 +607,9 @@ export default function Topnav({ setToggle, toggle }) {
             </li>
           </ul>
 
-          {/* Drawer "Toutes les notifications" sur la même page */}
+          {/* Drawer "Full list" - notifications always in English */}
           <Drawer
-            title={t("common.notifications") || "Notifications"}
+            title={tEn("common.notifications")}
             placement="right"
             width={400}
             open={showNotificationsDrawer}
@@ -624,14 +624,14 @@ export default function Topnav({ setToggle, toggle }) {
                     navigate(role === "TRADUCTEUR" ? "/traducteur/notifications" : "/organisations/notifications");
                   }}
                 >
-                  {t("notifications.fullList") || "Liste complète"}
+                  {tEn("notifications.fullList")}
                 </Button>
               )
             }
           >
             {notifications.length === 0 ? (
               <Empty
-                description={t("notifications.noNotifications") || "Aucune notification"}
+                description={tEn("notifications.noNotifications")}
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                 className="py-8"
               />
@@ -639,7 +639,7 @@ export default function Topnav({ setToggle, toggle }) {
               <>
                 {unreadCount > 0 && (
                   <Button type="link" size="small" onClick={markAllAsRead} className="mb-3 p-0">
-                    {t("notifications.markAllRead") || "Tout marquer comme lu"}
+                    {tEn("notifications.markAllRead")}
                   </Button>
                 )}
                 <List
@@ -663,7 +663,7 @@ export default function Topnav({ setToggle, toggle }) {
                         title={
                           <div className="flex justify-between items-start">
                             <span className={`text-sm ${!notification.read ? "font-semibold" : ""}`}>
-                              {notification.title || t(notification.titleKey)}
+                              {notification.title || tEn(notification.titleKey)}
                             </span>
                             {!notification.read && (
                               <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1.5" />
@@ -673,7 +673,7 @@ export default function Topnav({ setToggle, toggle }) {
                         description={
                           <div>
                             <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                              {notification.message || t(notification.messageKey)}
+                              {notification.message || tEn(notification.messageKey)}
                             </div>
                             <div className="text-xs text-slate-400 dark:text-slate-500 mt-1">
                               {formatTimeAgo(notification.createdAt)}

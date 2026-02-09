@@ -52,6 +52,7 @@ function getDemandeur(record) {
 
 export default function OrganizationNotificationsList() {
   const { t } = useTranslation();
+  const tEn = (key, opts) => t(key, { ...opts, lng: "en" });
   const { user } = useAuth();
   const navigate = useNavigate();
   const basePath = useNotificationsBasePath();
@@ -97,7 +98,7 @@ export default function OrganizationNotificationsList() {
       message.error(
         e?.response?.data?.message ??
           e?.message ??
-          t("orgNotifications.messages.loadError")
+          tEn("orgNotifications.messages.loadError")
       );
     } finally {
       setLoading(false);
@@ -133,7 +134,7 @@ export default function OrganizationNotificationsList() {
     () => {
       const baseCols = [
         {
-          title: t("orgNotifications.columns.demandeur"),
+          title: tEn("orgNotifications.columns.demandeur"),
           key: "demandeur",
           width: 180,
           render: (_, record) => {
@@ -145,7 +146,7 @@ export default function OrganizationNotificationsList() {
           },
         },
         {
-          title: t("orgNotifications.columns.lastName"),
+          title: tEn("orgNotifications.columns.lastName"),
           key: "lastName",
           width: 120,
           render: (_, record) => {
@@ -154,7 +155,7 @@ export default function OrganizationNotificationsList() {
           },
         },
         {
-          title: t("orgNotifications.columns.firstName"),
+          title: tEn("orgNotifications.columns.firstName"),
           key: "firstName",
           width: 120,
           render: (_, record) => {
@@ -163,7 +164,7 @@ export default function OrganizationNotificationsList() {
           },
         },
         {
-          title: t("orgNotifications.columns.dateOfBirth"),
+          title: tEn("orgNotifications.columns.dateOfBirth"),
           key: "dateOfBirth",
           width: 120,
           render: (_, record) => {
@@ -173,18 +174,18 @@ export default function OrganizationNotificationsList() {
           },
         },
         {
-          title: t("orgNotifications.columns.type"),
+          title: tEn("orgNotifications.columns.type"),
           dataIndex: "type",
           key: "type",
           width: 160,
           render: (type) => (
             <Tag color={getNotificationTypeColor(type)}>
-              {t(`orgNotifications.types.${type || "DEFAULT"}`)}
+              {tEn(`orgNotifications.types.${type || "DEFAULT"}`)}
             </Tag>
           ),
         },
         {
-          title: t("orgNotifications.columns.message"),
+          title: tEn("orgNotifications.columns.message"),
           key: "message",
           ellipsis: true,
           render: (_, record) => (
@@ -194,7 +195,7 @@ export default function OrganizationNotificationsList() {
           ),
         },
         {
-          title: t("orgNotifications.columns.demande"),
+          title: tEn("orgNotifications.columns.demande"),
           key: "demande",
           width: 140,
           render: (_, record) => {
@@ -210,14 +211,14 @@ export default function OrganizationNotificationsList() {
           },
         },
         {
-          title: t("orgNotifications.columns.createdAt"),
+          title: tEn("orgNotifications.columns.createdAt"),
           dataIndex: "createdAt",
           key: "createdAt",
           width: 150,
           render: (v) => (v ? dayjs(v).format("DD/MM/YYYY HH:mm") : "—"),
         },
         {
-          title: t("orgNotifications.columns.actions"),
+          title: tEn("orgNotifications.columns.actions"),
           key: "actions",
           width: 260,
           fixed: "right",
@@ -237,14 +238,14 @@ export default function OrganizationNotificationsList() {
                   icon={<EyeOutlined />}
                   onClick={() => navigate(`${basePath}/notifications/${record.id}`)}
                 >
-                  {t("orgNotifications.buttons.viewDetails")}
+                  {tEn("orgNotifications.buttons.viewDetails")}
                 </Button>
                 {isTargetOrg &&demandeId && (
                   <Button
                     size="small"
                     onClick={() => navigate(getDemandeDetailPath(basePath, demandeId))}
                   >
-                    {t("orgNotifications.buttons.viewDemande")}
+                    {tEn("orgNotifications.buttons.viewDemande")}
                   </Button>
                 )}
                 {!isTargetOrg && code &&  role !== "TRADUCTEUR" && (
@@ -258,7 +259,7 @@ export default function OrganizationNotificationsList() {
                       )
                     }
                   >
-                    {t("orgNotifications.buttons.addDocument")}
+                    {tEn("orgNotifications.buttons.addDocument")}
                   </Button>
                 )}
               </Space>
@@ -281,7 +282,7 @@ export default function OrganizationNotificationsList() {
       <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
         <div className="layout-specing py-4 sm:py-6">
           <Card>
-            <Text type="danger">{t("orgNotifications.errors.noOrgId")}</Text>
+            <Text type="danger">{tEn("orgNotifications.errors.noOrgId")}</Text>
           </Card>
         </div>
       </div>
@@ -293,7 +294,7 @@ export default function OrganizationNotificationsList() {
       <div className="layout-specing py-4 sm:py-6">
         <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
           <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1">
-            {t("orgNotifications.pageTitle")}
+            {tEn("orgNotifications.pageTitle")}
           </h5>
           <Breadcrumb
             className="order-1 sm:order-2"
@@ -301,11 +302,11 @@ export default function OrganizationNotificationsList() {
               {
                 title: (
                   <Link to={`${basePath}/dashboard`}>
-                    {t("orgNotifications.breadcrumbs.dashboard")}
+                    {tEn("orgNotifications.breadcrumbs.dashboard")}
                   </Link>
                 ),
               },
-              { title: t("orgNotifications.breadcrumbs.notifications") },
+              { title: tEn("orgNotifications.breadcrumbs.notifications") },
             ]}
           />
         </div>
@@ -313,7 +314,7 @@ export default function OrganizationNotificationsList() {
         <div className="mb-4 sm:mb-6 flex flex-wrap items-center gap-2">
           <span className="text-neutral-600 flex items-center gap-1">
             <BellOutlined />
-            {t("orgNotifications.stats.total")}: <strong>{pagination.total}</strong>
+            {tEn("orgNotifications.stats.total")}: <strong>{pagination.total}</strong>
           </span>
           <Segmented
             value={viewMode}
@@ -324,7 +325,7 @@ export default function OrganizationNotificationsList() {
                 label: (
                   <span className="flex items-center gap-1">
                     <UnorderedListOutlined />
-                    {t("orgNotifications.viewMode.compact")}
+                    {tEn("orgNotifications.viewMode.compact")}
                   </span>
                 ),
               },
@@ -333,14 +334,14 @@ export default function OrganizationNotificationsList() {
                 label: (
                   <span className="flex items-center gap-1">
                     <AppstoreOutlined />
-                    {t("orgNotifications.viewMode.full")}
+                    {tEn("orgNotifications.viewMode.full")}
                   </span>
                 ),
               },
             ]}
           />
           <Button icon={<ReloadOutlined />} onClick={fetchData}>
-            {t("orgNotifications.buttons.refresh")}
+            {tEn("orgNotifications.buttons.refresh")}
           </Button>
         </div>
 
@@ -358,7 +359,7 @@ export default function OrganizationNotificationsList() {
               showSizeChanger: true,
               pageSizeOptions: ["5", "10", "20", "50"],
               showTotal: (total) =>
-                t("orgNotifications.pagination.total", { total }),
+                tEn("orgNotifications.pagination.total", { total }),
             }}
             onChange={onTableChange}
             scroll={{ x: "max-content" }}
@@ -366,7 +367,7 @@ export default function OrganizationNotificationsList() {
               emptyText: (
                 <Empty
                   image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  description={t("orgNotifications.empty")}
+                  description={tEn("orgNotifications.empty")}
                 />
               ),
             }}

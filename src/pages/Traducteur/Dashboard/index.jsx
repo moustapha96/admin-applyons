@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/useAuth";
 import dashboardService from "../../../services/dashboardService";
-import { Card, Table, Tag, Row, Col, Breadcrumb } from "antd";
+import organizationDemandeNotificationService from "../../../services/organizationDemandeNotificationService";
+import { Card, Table, Tag, Row, Col, Breadcrumb, Statistic } from "antd";
 import {
   FileTextOutlined,
   TeamOutlined,
   UserOutlined,
   FolderOpenOutlined,
+  BellOutlined,
 } from "@ant-design/icons";
 import { toast } from "sonner";
 
@@ -41,6 +43,7 @@ export default function TraducteurDashboard() {
   const { t, i18n } = useTranslation();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [notificationStats, setNotificationStats] = useState({ total: 0 });
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -61,6 +64,21 @@ export default function TraducteurDashboard() {
     };
     fetchStats();
   }, [user?.id, t]);
+
+  useEffect(() => {
+    const orgId = user?.organization?.id;
+    if (!orgId) return;
+    const load = async () => {
+      try {
+        const res = await organizationDemandeNotificationService.statsForCurrentOrg(orgId);
+        const data = res?.data?.stats ?? res?.stats ?? { total: 0, unviewed: 0, viewed: 0 };
+        setNotificationStats({ total: data.total ?? 0 });
+      } catch (e) {
+        console.warn("Notification stats:", e?.message || e);
+      }
+    };
+    load();
+  }, [user?.organization?.id]);
 
   const widgets = stats?.widgets ?? {};
   const tables = stats?.tables ?? {};
@@ -162,29 +180,65 @@ export default function TraducteurDashboard() {
 
         {!loading && stats && (
           <>
-            {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-1 xl:grid-cols-2" style={{ marginBottom: 24, maxWidth: 480 }}>
-              {kpis.map((k) => (
-                <StatCard
-                  key={k.label}
-                  label={k.label}
-                  value={k.value}
-                  sublabel={k.sub}
-                  linkTo={k.linkTo}
-                  icon={k.icon}
-                  linkLabel={k.linkLabel}
-                />
-              ))}
-            </div> */}
+            <Row gutter={[16, 16]} className="mb-4">
+              <Col xs={12} md={6}>
+                <Link to="/traducteur/demandes" className="block">
+                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+                    <Statistic
+                      title={t("traducteurDashboard.kpis.demandesAsTranslationOrg")}
+                      value={demandesAsTranslationOrg.total ?? demandesAssigned.total ?? 0}
+                      prefix={<FileTextOutlined />}
+                    />
+                  </Card>
+                </Link>
+              </Col>
+              <Col xs={12} md={6}>
+                <Link to="/traducteur/dossiers-a-traiter" className="block">
+                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+                    <Statistic
+                      title={t("traducteurDashboard.links.dossiers")}
+                      value={demandesAsTranslationOrg.total ?? demandesAssigned.total ?? 0}
+                      prefix={<FolderOpenOutlined />}
+                    />
+                  </Card>
+                </Link>
+              </Col>
+              <Col xs={12} md={6}>
+                <Link to="/traducteur/users" className="block">
+                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+                    <Statistic
+                      title={t("traducteurDashboard.links.users")}
+                      value={organization?.usersCount ?? organization?.totalUsers ?? "—"}
+                      prefix={<TeamOutlined />}
+                    />
+                  </Card>
+                </Link>
+              </Col>
+              <Col xs={12} md={6}>
+                <Link to="/traducteur/notifications" className="block">
+                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+                    <Statistic
+                      title={t("traducteurDashboard.links.notifications", { defaultValue: "Notifications" })}
+                      value={notificationStats.total}
+                      prefix={<BellOutlined />}
+                    />
+                  </Card>
+                </Link>
+              </Col>
+            </Row>
 
-            <Card
-              title={t("traducteurDashboard.tables.recentAssigned")}
-              extra={
-                recentDemandes.length > 0 ? (
-                  <Link to="/traducteur/demandes">{t("traducteurDashboard.links.seeAll")}</Link>
-                ) : null
-              }
-            >
-              <Table
+            <Link to="/traducteur/demandes" className="block mb-4">
+              <Card
+                title={t("traducteurDashboard.tables.recentAssigned")}
+                loading={loading}
+                className="hover:shadow-md transition-shadow cursor-pointer"
+                extra={
+                  recentDemandes.length > 0 ? (
+                    <span className="text-primary font-medium">{t("traducteurDashboard.links.seeAll")}</span>
+                  ) : null
+                }
+              >
+                <Table
                 rowKey="id"
                 size="small"
                 dataSource={recentDemandes}
@@ -196,7 +250,14 @@ export default function TraducteurDashboard() {
                     dataIndex: "code",
                     key: "code",
                     render: (code, row) => (
-                      <a onClick={() => navigate(`/traducteur/demandes/${row.id}`)}>
+                      <a
+                        href={`#/traducteur/demandes/${row.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          navigate(`/traducteur/demandes/${row.id}`);
+                        }}
+                      >
                         {code || row.id}
                       </a>
                     ),
@@ -217,14 +278,22 @@ export default function TraducteurDashboard() {
                     title: "",
                     key: "action",
                     render: (_, row) => (
-                      <a onClick={() => navigate(`/traducteur/demandes/${row.id}`)}>
+                      <a
+                        href={`#/traducteur/demandes/${row.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          navigate(`/traducteur/demandes/${row.id}`);
+                        }}
+                      >
                         {t("traducteurDashboard.tables.view")}
                       </a>
                     ),
                   },
                 ]}
               />
-            </Card>
+              </Card>
+            </Link>
           </>
         )}
 

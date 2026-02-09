@@ -38,6 +38,7 @@ const { Search } = Input;
 
 export default function OrganizationNotificationsList() {
   const { t } = useTranslation();
+  const tEn = (key, opts) => t(key, { ...opts, lng: "en" });
   const { id: orgId } = useParams();
   const { user: me } = useAuth();
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ export default function OrganizationNotificationsList() {
       setOrganization(res?.organization || res);
     } catch (e) {
       console.error("Erreur lors de la récupération de l'organisation:", e);
-      message.error(t("adminOrgNotifications.messages.orgLoadError") || "Erreur lors du chargement de l'organisation");
+      message.error(tEn("adminOrgNotifications.messages.orgLoadError") || "Erreur lors du chargement de l'organisation");
     } finally {
       setLoadingOrg(false);
     }
@@ -112,7 +113,7 @@ export default function OrganizationNotificationsList() {
       message.error(
         e?.response?.data?.message ||
           e?.message ||
-          t("adminOrgNotifications.messages.loadError")
+          tEn("adminOrgNotifications.messages.loadError")
       );
     } finally {
       setLoading(false);
@@ -159,14 +160,14 @@ export default function OrganizationNotificationsList() {
   const handleMarkAsViewed = async (id) => {
     try {
       await organizationDemandeNotificationService.markAsViewed(id);
-      message.success(t("adminOrgNotifications.messages.markedAsViewed"));
+      message.success(tEn("adminOrgNotifications.messages.markedAsViewed"));
       await fetchData();
       await fetchStats();
     } catch (e) {
       message.error(
         e?.response?.data?.message ||
           e?.message ||
-          t("adminOrgNotifications.messages.markError")
+          tEn("adminOrgNotifications.messages.markError")
       );
     }
   };
@@ -174,14 +175,14 @@ export default function OrganizationNotificationsList() {
   const handleMarkAllAsViewed = async () => {
     try {
       await organizationDemandeNotificationService.markAllAsViewedForOrg(orgId);
-      message.success(t("adminOrgNotifications.messages.allMarkedAsViewed"));
+      message.success(tEn("adminOrgNotifications.messages.allMarkedAsViewed"));
       await fetchData();
       await fetchStats();
     } catch (e) {
       message.error(
         e?.response?.data?.message ||
           e?.message ||
-          t("adminOrgNotifications.messages.markAllError")
+          tEn("adminOrgNotifications.messages.markAllError")
       );
     }
   };
@@ -200,18 +201,18 @@ export default function OrganizationNotificationsList() {
   const columns = useMemo(
     () => [
       {
-        title: t("adminOrgNotifications.columns.type"),
+        title: tEn("adminOrgNotifications.columns.type"),
         dataIndex: "type",
         key: "type",
         width: 150,
         render: (type) => (
           <Tag color={getTypeColor(type)}>
-            {t(`adminOrgNotifications.types.${type}`) || type}
+            {tEn(`adminOrgNotifications.types.${type}`) || type}
           </Tag>
         ),
       },
       {
-        title: t("adminOrgNotifications.columns.demande"),
+        title: tEn("adminOrgNotifications.columns.demande"),
         dataIndex: "demande",
         key: "demande",
         render: (demande) =>
@@ -224,37 +225,37 @@ export default function OrganizationNotificationsList() {
           ),
       },
       {
-        title: t("adminOrgNotifications.columns.targetOrg"),
+        title: tEn("adminOrgNotifications.columns.targetOrg"),
         dataIndex: "targetOrg",
         key: "targetOrg",
         render: (org) => (org ? <Link to={`/admin/organisations/${org.id}`}>{org.name}</Link> : "—"),
       },
       {
-        title: t("adminOrgNotifications.columns.notifiedOrg"),
+        title: tEn("adminOrgNotifications.columns.notifiedOrg"),
         dataIndex: "notifiedOrg",
         key: "notifiedOrg",
         render: (org) => (org ? <Link to={`/admin/organisations/${org.id}`}>{org.name}</Link> : "—"),
       },
       {
-        title: t("adminOrgNotifications.columns.user"),
+        title: tEn("adminOrgNotifications.columns.user"),
         dataIndex: "user",
         key: "user",
         render: (user) => (user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() || user.email : "—"),
       },
       {
-        title: t("adminOrgNotifications.columns.viewed"),
+        title: tEn("adminOrgNotifications.columns.viewed"),
         dataIndex: "viewed",
         key: "viewed",
         width: 100,
         render: (viewed) =>
           viewed ? (
-            <Badge status="success" text={t("adminOrgNotifications.status.viewed")} />
+            <Badge status="success" text={tEn("adminOrgNotifications.status.viewed")} />
           ) : (
-            <Badge status="default" text={t("adminOrgNotifications.status.unviewed")} />
+            <Badge status="default" text={tEn("adminOrgNotifications.status.unviewed")} />
           ),
       },
       {
-        title: t("adminOrgNotifications.columns.createdAt"),
+        title: tEn("adminOrgNotifications.columns.createdAt"),
         dataIndex: "createdAt",
         key: "createdAt",
         width: 180,
@@ -262,7 +263,7 @@ export default function OrganizationNotificationsList() {
         render: (date) => (date ? dayjs(date).format("DD/MM/YYYY HH:mm") : "—"),
       },
       {
-        title: t("adminOrgNotifications.columns.actions"),
+        title: tEn("adminOrgNotifications.columns.actions"),
         key: "actions",
         width: 120,
         render: (_, record) => (
@@ -273,14 +274,14 @@ export default function OrganizationNotificationsList() {
                 icon={<EyeOutlined />}
                 onClick={() => handleMarkAsViewed(record.id)}
               >
-                {t("adminOrgNotifications.actions.markAsViewed")}
+                {tEn("adminOrgNotifications.actions.markAsViewed")}
               </Button>
             )}
             <Button
               size="small"
               onClick={() => navigate(`/admin/organisations/notifications/${record.id}/details`)}
             >
-              {t("adminOrgNotifications.actions.details")}
+              {tEn("adminOrgNotifications.actions.details")}
             </Button>
           </Space>
         ),
@@ -298,7 +299,7 @@ export default function OrganizationNotificationsList() {
   }
 
   if (!organization) {
-    return <div>{t("adminOrgNotifications.messages.orgNotFound") || "Organisation non trouvée"}</div>;
+    return <div>{tEn("adminOrgNotifications.messages.orgNotFound") || "Organisation non trouvée"}</div>;
   }
 
   return (
@@ -306,21 +307,21 @@ export default function OrganizationNotificationsList() {
       <div className="layout-specing">
         <div className="md:flex justify-between items-center mb-6">
           <h5 className="text-lg font-semibold">
-            {t("adminOrgNotifications.pageTitle") || "Notifications de l'organisation"}
+            {tEn("adminOrgNotifications.pageTitle") || "Notifications de l'organisation"}
           </h5>
           <Breadcrumb
             items={[
               {
                 title: (
                   <Link to="/admin/dashboard">
-                    {t("adminOrgNotifications.breadcrumbs.dashboard") || "Dashboard"}
+                    {tEn("adminOrgNotifications.breadcrumbs.dashboard") || "Dashboard"}
                   </Link>
                 ),
               },
               {
                 title: (
                   <Link to="/admin/organisations">
-                    {t("adminOrgNotifications.breadcrumbs.organizations") || "Organisations"}
+                    {tEn("adminOrgNotifications.breadcrumbs.organizations") || "Organisations"}
                   </Link>
                 ),
               },
@@ -331,7 +332,7 @@ export default function OrganizationNotificationsList() {
                   </Link>
                 ),
               },
-              { title: t("adminOrgNotifications.breadcrumbs.notifications") || "Notifications" },
+              { title: tEn("adminOrgNotifications.breadcrumbs.notifications") || "Notifications" },
             ]}
           />
         </div>
@@ -348,7 +349,7 @@ export default function OrganizationNotificationsList() {
             <Col xs={24} sm={12} md={8}>
               <Card>
                 <Statistic
-                  title={t("adminOrgNotifications.stats.total") || "Total"}
+                  title={tEn("adminOrgNotifications.stats.total") || "Total"}
                   value={stats.total || 0}
                   loading={loadingStats}
                   prefix={<BellOutlined />}
@@ -358,7 +359,7 @@ export default function OrganizationNotificationsList() {
             <Col xs={24} sm={12} md={8}>
               <Card>
                 <Statistic
-                  title={t("adminOrgNotifications.stats.unviewed") || "Non vues"}
+                  title={tEn("adminOrgNotifications.stats.unviewed") || "Non vues"}
                   value={stats.unviewed || 0}
                   valueStyle={{ color: "#cf1322" }}
                   prefix={<Badge status="error" />}
@@ -369,7 +370,7 @@ export default function OrganizationNotificationsList() {
             <Col xs={24} sm={12} md={8}>
               <Card>
                 <Statistic
-                  title={t("adminOrgNotifications.stats.viewed") || "Vues"}
+                  title={tEn("adminOrgNotifications.stats.viewed") || "Vues"}
                   value={stats.viewed || 0}
                   valueStyle={{ color: "#3f8600" }}
                   prefix={<CheckCircleOutlined />}
@@ -384,7 +385,7 @@ export default function OrganizationNotificationsList() {
         <Card className="mb-4">
           <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center mb-4">
             <Search
-              placeholder={t("adminOrgNotifications.searchPlaceholder") || "Rechercher..."}
+              placeholder={tEn("adminOrgNotifications.searchPlaceholder") || "Rechercher..."}
               allowClear
               enterButton={<SearchOutlined />}
               size="large"
@@ -400,11 +401,11 @@ export default function OrganizationNotificationsList() {
               <Switch
                 checked={filters.unviewedOnly}
                 onChange={(checked) => handleFilterChange("unviewedOnly", checked)}
-                checkedChildren={t("adminOrgNotifications.filters.unviewedOnly") || "Non vues"}
-                unCheckedChildren={t("adminOrgNotifications.filters.all") || "Toutes"}
+                checkedChildren={tEn("adminOrgNotifications.filters.unviewedOnly") || "Non vues"}
+                unCheckedChildren={tEn("adminOrgNotifications.filters.all") || "Toutes"}
               />
               <Select
-                placeholder={t("adminOrgNotifications.filters.role") || "Rôle"}
+                placeholder={tEn("adminOrgNotifications.filters.role") || "Rôle"}
                 allowClear
                 style={{ width: 150 }}
                 value={filters.asTarget ? "target" : filters.asNotified ? "notified" : undefined}
@@ -414,10 +415,10 @@ export default function OrganizationNotificationsList() {
                 }}
               >
                 <Select.Option value="target">
-                  {t("adminOrgNotifications.filters.asTarget") || "Comme cible"}
+                  {tEn("adminOrgNotifications.filters.asTarget") || "Comme cible"}
                 </Select.Option>
                 <Select.Option value="notified">
-                  {t("adminOrgNotifications.filters.asNotified") || "Comme notifié"}
+                  {tEn("adminOrgNotifications.filters.asNotified") || "Comme notifié"}
                 </Select.Option>
               </Select>
               <Button icon={<ReloadOutlined />} onClick={() => { fetchData(); fetchStats(); }}>
@@ -429,7 +430,7 @@ export default function OrganizationNotificationsList() {
                   icon={<CheckCircleOutlined />}
                   onClick={handleMarkAllAsViewed}
                 >
-                  {t("adminOrgNotifications.actions.markAllAsViewed") || "Tout marquer comme vu"}
+                  {tEn("adminOrgNotifications.actions.markAllAsViewed") || "Tout marquer comme vu"}
                 </Button>
               )}
             </Space>
@@ -448,7 +449,7 @@ export default function OrganizationNotificationsList() {
               showSizeChanger: true,
               pageSizeOptions: ["10", "20", "50", "100"],
               showTotal: (total) =>
-                t("adminOrgNotifications.pagination.total", { total }) || `Total: ${total} notifications`,
+                tEn("adminOrgNotifications.pagination.total", { total }) || `Total: ${total} notifications`,
             }}
             onChange={handleTableChange}
             scroll={{ x: true }}

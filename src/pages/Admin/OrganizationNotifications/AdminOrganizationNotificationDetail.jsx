@@ -34,6 +34,7 @@ const getNotificationTypeColor = (type) => {
 
 export default function AdminOrganizationNotificationDetail() {
   const { t } = useTranslation();
+  const tEn = (key, opts) => t(key, { ...opts, lng: "en" });
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -50,7 +51,7 @@ export default function AdminOrganizationNotificationDetail() {
       message.error(
         e?.response?.data?.message ||
           e?.message ||
-          t("adminOrgNotificationDetail.messages.loadError")
+          tEn("adminOrgNotificationDetail.messages.loadError")
       );
       navigate("/admin/organisations/notifications");
     } finally {
@@ -69,13 +70,13 @@ export default function AdminOrganizationNotificationDetail() {
     if (!notification || notification.viewed) return;
     try {
       await organizationDemandeNotificationService.markAsViewed(id);
-      message.success(t("adminOrgNotificationDetail.messages.markedAsViewed"));
+      message.success(tEn("adminOrgNotificationDetail.messages.markedAsViewed"));
       loadNotification();
     } catch (e) {
       message.error(
         e?.response?.data?.message ||
           e?.message ||
-          t("adminOrgNotificationDetail.messages.markError")
+          tEn("adminOrgNotificationDetail.messages.markError")
       );
     }
   };
@@ -97,9 +98,9 @@ export default function AdminOrganizationNotificationDetail() {
       <div className="container-fluid relative px-2 sm:px-3 overflow-x-hidden max-w-full">
         <div className="layout-specing py-4 sm:py-6">
           <Card className="overflow-hidden">
-            <p className="break-words">{t("adminOrgNotificationDetail.errors.notFound")}</p>
+            <p className="break-words">{tEn("adminOrgNotificationDetail.errors.notFound")}</p>
             <Button onClick={() => navigate("/admin/organisations/notifications")} className="w-full sm:w-auto">
-              {t("adminOrgNotificationDetail.actions.backToList")}
+              {tEn("adminOrgNotificationDetail.actions.backToList")}
             </Button>
           </Card>
         </div>
@@ -117,7 +118,7 @@ export default function AdminOrganizationNotificationDetail() {
       <div className="layout-specing py-4 sm:py-6">
         <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
           <h5 className="text-base sm:text-lg font-semibold order-2 sm:order-1 break-words">
-            {t("adminOrgNotificationDetail.pageTitle")}
+            {tEn("adminOrgNotificationDetail.pageTitle")}
           </h5>
           <Breadcrumb
             className="order-1 sm:order-2"
@@ -125,14 +126,14 @@ export default function AdminOrganizationNotificationDetail() {
               {
                 title: (
                   <Link to="/admin/dashboard">
-                    {t("adminOrgNotificationDetail.breadcrumbs.dashboard")}
+                    {tEn("adminOrgNotificationDetail.breadcrumbs.dashboard")}
                   </Link>
                 ),
               },
               {
                 title: (
                   <Link to="/admin/organisations/notifications">
-                    {t("adminOrgNotificationDetail.breadcrumbs.notifications")}
+                    {tEn("adminOrgNotificationDetail.breadcrumbs.notifications")}
                   </Link>
                 ),
               },
@@ -144,7 +145,7 @@ export default function AdminOrganizationNotificationDetail() {
         <div className="mb-4 sm:mb-6">
           <Space wrap size="small">
             <Button icon={<ArrowLeftOutlined />} onClick={() => navigate(-1)} className="w-full sm:w-auto">
-              {t("adminOrgNotificationDetail.actions.back")}
+              {tEn("adminOrgNotificationDetail.actions.back")}
             </Button>
             {!notification.viewed && (
               <Button
@@ -153,58 +154,58 @@ export default function AdminOrganizationNotificationDetail() {
                 onClick={handleMarkAsViewed}
                 className="w-full sm:w-auto"
               >
-                {t("adminOrgNotificationDetail.actions.markAsViewed")}
+                {tEn("adminOrgNotificationDetail.actions.markAsViewed")}
               </Button>
             )}
           </Space>
         </div>
 
         {/* Informations principales */}
-        <Card className="mb-4 sm:mb-6 overflow-hidden" title={t("adminOrgNotificationDetail.sections.mainInfo")}>
+        <Card className="mb-4 sm:mb-6 overflow-hidden" title={tEn("adminOrgNotificationDetail.sections.mainInfo")}>
           <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
-            <Descriptions.Item label={t("adminOrgNotificationDetail.fields.id")} span={2}>
+            <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.id")} span={2}>
               <Tag color="blue">{notification.id}</Tag>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("adminOrgNotificationDetail.fields.status")}>
+            <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.status")}>
               <Badge
                 status={notification.viewed ? "default" : "processing"}
                 text={
                   notification.viewed
-                    ? t("adminOrgNotificationDetail.status.viewed")
-                    : t("adminOrgNotificationDetail.status.unviewed")
+                    ? tEn("adminOrgNotificationDetail.status.viewed")
+                    : tEn("adminOrgNotificationDetail.status.unviewed")
                 }
               />
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("adminOrgNotificationDetail.fields.type")}>
+            <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.type")}>
               <Tag color={getNotificationTypeColor(notification.type)}>
-                {t(
+                {tEn(
                   `adminOrgNotificationDetail.types.${notification.type || "DEFAULT"}`
                 )}
               </Tag>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("adminOrgNotificationDetail.fields.message")} span={2}>
+            <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.message")} span={2}>
               <div className="break-words whitespace-pre-wrap">
                 {notification.message || notification.title || "—"}
               </div>
             </Descriptions.Item>
 
-            <Descriptions.Item label={t("adminOrgNotificationDetail.fields.createdAt")}>
+            <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.createdAt")}>
               {notification.createdAt
                 ? dayjs(notification.createdAt).format("DD/MM/YYYY HH:mm:ss")
                 : "—"}
             </Descriptions.Item>
 
             {notification.notifiedAt && (
-              <Descriptions.Item label={t("adminOrgNotificationDetail.fields.notifiedAt")}>
+              <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.notifiedAt")}>
                 {dayjs(notification.notifiedAt).format("DD/MM/YYYY HH:mm:ss")}
               </Descriptions.Item>
             )}
 
             {notification.viewedAt && (
-              <Descriptions.Item label={t("adminOrgNotificationDetail.fields.viewedAt")}>
+              <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.viewedAt")}>
                 {dayjs(notification.viewedAt).format("DD/MM/YYYY HH:mm:ss")}
               </Descriptions.Item>
             )}
@@ -213,9 +214,9 @@ export default function AdminOrganizationNotificationDetail() {
 
         {/* Demande liée */}
         {demande && (
-          <Card className="mb-4 sm:mb-6 overflow-hidden" title={t("adminOrgNotificationDetail.sections.demande")}>
+          <Card className="mb-4 sm:mb-6 overflow-hidden" title={tEn("adminOrgNotificationDetail.sections.demande")}>
             <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
-              <Descriptions.Item label={t("adminOrgNotificationDetail.fields.demandeCode")}>
+              <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.demandeCode")}>
                 <Space wrap size="small">
                   <Tag color="blue">{demande.code || demande.id}</Tag>
                   <Button
@@ -224,19 +225,19 @@ export default function AdminOrganizationNotificationDetail() {
                     onClick={() => navigate(`/admin/demandes/${demande.id}/details`)}
                     className="w-full sm:w-auto"
                   >
-                    {t("adminOrgNotificationDetail.actions.viewDemande")}
+                    {tEn("adminOrgNotificationDetail.actions.viewDemande")}
                   </Button>
                 </Space>
               </Descriptions.Item>
 
               {demande.status && (
-                <Descriptions.Item label={t("adminOrgNotificationDetail.fields.demandeStatus")}>
+                <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.demandeStatus")}>
                   <Tag color="blue">{demande.status}</Tag>
                 </Descriptions.Item>
               )}
 
               {demande.dateDemande && (
-                <Descriptions.Item label={t("adminOrgNotificationDetail.fields.demandeDate")}>
+                <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.demandeDate")}>
                   {dayjs(demande.dateDemande).format("DD/MM/YYYY HH:mm")}
                 </Descriptions.Item>
               )}
@@ -246,10 +247,10 @@ export default function AdminOrganizationNotificationDetail() {
 
         {/* Organisations */}
         {(targetOrg || notifiedOrg) && (
-          <Card className="mb-4 sm:mb-6 overflow-hidden" title={t("adminOrgNotificationDetail.sections.organizations")}>
+          <Card className="mb-4 sm:mb-6 overflow-hidden" title={tEn("adminOrgNotificationDetail.sections.organizations")}>
             <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
               {targetOrg && (
-                <Descriptions.Item label={t("adminOrgNotificationDetail.fields.targetOrg")}>
+                <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.targetOrg")}>
                   <Space wrap size="small">
                     <span className="break-words">{targetOrg.name}</span>
                     {targetOrg.id && (
@@ -259,7 +260,7 @@ export default function AdminOrganizationNotificationDetail() {
                         onClick={() => navigate(`/admin/organisations/${targetOrg.id}`)}
                         className="w-full sm:w-auto"
                       >
-                        {t("adminOrgNotificationDetail.actions.viewOrg")}
+                        {tEn("adminOrgNotificationDetail.actions.viewOrg")}
                       </Button>
                     )}
                   </Space>
@@ -267,7 +268,7 @@ export default function AdminOrganizationNotificationDetail() {
               )}
 
               {notifiedOrg && (
-                <Descriptions.Item label={t("adminOrgNotificationDetail.fields.notifiedOrg")}>
+                <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.notifiedOrg")}>
                   <Space wrap size="small">
                     <span className="break-words">{notifiedOrg.name}</span>
                     {notifiedOrg.id && (
@@ -277,7 +278,7 @@ export default function AdminOrganizationNotificationDetail() {
                         onClick={() => navigate(`/admin/organisations/${notifiedOrg.id}`)}
                         className="w-full sm:w-auto"
                       >
-                        {t("adminOrgNotificationDetail.actions.viewOrg")}
+                        {tEn("adminOrgNotificationDetail.actions.viewOrg")}
                       </Button>
                     )}
                   </Space>
@@ -289,9 +290,9 @@ export default function AdminOrganizationNotificationDetail() {
 
         {/* Utilisateur */}
         {user && (
-          <Card className="mb-4 sm:mb-6 overflow-hidden" title={t("adminOrgNotificationDetail.sections.user")}>
+          <Card className="mb-4 sm:mb-6 overflow-hidden" title={tEn("adminOrgNotificationDetail.sections.user")}>
             <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
-              <Descriptions.Item label={t("adminOrgNotificationDetail.fields.userEmail")}>
+              <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.userEmail")}>
                 <Space wrap size="small">
                   <span className="break-all">{user.email || user.username || "—"}</span>
                   {user.id && (
@@ -301,20 +302,20 @@ export default function AdminOrganizationNotificationDetail() {
                       onClick={() => navigate(`/admin/users/${user.id}/details`)}
                       className="w-full sm:w-auto"
                     >
-                      {t("adminOrgNotificationDetail.actions.viewUser")}
+                      {tEn("adminOrgNotificationDetail.actions.viewUser")}
                     </Button>
                   )}
                 </Space>
               </Descriptions.Item>
 
               {(user.firstName || user.lastName) && (
-                <Descriptions.Item label={t("adminOrgNotificationDetail.fields.userName")}>
+                <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.userName")}>
                   {`${user.firstName || ""} ${user.lastName || ""}`.trim() || "—"}
                 </Descriptions.Item>
               )}
 
               {user.role && (
-                <Descriptions.Item label={t("adminOrgNotificationDetail.fields.userRole")}>
+                <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.userRole")}>
                   <Tag color="blue">{user.role}</Tag>
                 </Descriptions.Item>
               )}
@@ -323,10 +324,10 @@ export default function AdminOrganizationNotificationDetail() {
         )}
 
         {/* Métadonnées */}
-        <Card className="overflow-hidden" title={t("adminOrgNotificationDetail.sections.metadata")}>
+        <Card className="overflow-hidden" title={tEn("adminOrgNotificationDetail.sections.metadata")}>
           <Descriptions bordered column={{ xs: 1, sm: 2 }} size="small" className="break-words">
             {notification.createdBy && (
-              <Descriptions.Item label={t("adminOrgNotificationDetail.fields.createdBy")}>
+              <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.createdBy")}>
                 <span className="break-all">
                   {typeof notification.createdBy === "object"
                     ? (notification.createdBy.email || notification.createdBy.id || "—")
@@ -336,7 +337,7 @@ export default function AdminOrganizationNotificationDetail() {
             )}
 
             {notification.updatedAt && (
-              <Descriptions.Item label={t("adminOrgNotificationDetail.fields.updatedAt")}>
+              <Descriptions.Item label={tEn("adminOrgNotificationDetail.fields.updatedAt")}>
                 {dayjs(notification.updatedAt).format("DD/MM/YYYY HH:mm:ss")}
               </Descriptions.Item>
             )}
