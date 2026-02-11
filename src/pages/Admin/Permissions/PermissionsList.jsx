@@ -405,10 +405,10 @@ export default function PermissionsList() {
                   required: true,
                   message: t("adminPermissions.form.keyRequired"),
                 },
-                {
-                  pattern: /^[a-z0-9.]+$/,
-                  message: t("adminPermissions.form.keyPattern"),
-                },
+                // {
+                //   pattern: /^[a-z0-9.]+$/,
+                //   message: t("adminPermissions.form.keyPattern"),
+                // },
               ]}
               help={t("adminPermissions.form.keyHelp")}
             >
