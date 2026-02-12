@@ -124,7 +124,13 @@ export default function DemandeurDemandeDocuments() {
       width: 220
     },
     { title: t("demandeDocuments.columns.mention"), dataIndex: "mention" },
-    { title: t("demandeDocuments.columns.type"), dataIndex: "type" },
+    {
+      title: t("demandeDocuments.columns.type"),
+      dataIndex: "type",
+      render: (v) => (v && String(v).toUpperCase() === "LETTRE_ACCEPTATION"
+        ? t("demandeDocuments.types.lettreAcceptation")
+        : (v || t("demandeDocuments.common.na"))),
+    },
     {
       title: t("demandeDocuments.columns.createdAt"),
       dataIndex: "createdAt",

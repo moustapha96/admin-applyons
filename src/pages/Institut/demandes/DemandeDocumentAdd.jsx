@@ -252,8 +252,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
-  Breadcrumb, Button, Card, Col, DatePicker, Divider, Form, Input, Row,
-  Select, Space, Typography, Upload, message
+  Alert, Breadcrumb, Button, Card, Col, DatePicker, Divider, Form, Input, Modal, Row,
+  Result, Select, Space, Spin, Typography, Upload, message
 } from "antd";
 import { ArrowLeftOutlined, InboxOutlined, SaveOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
@@ -302,21 +302,61 @@ export default function DemandeDocumentAdd() {
   const [submitting, setSubmitting] = useState(false);
   const [form] = Form.useForm();
   const [fileOriginal, setFileOriginal] = useState(null);
+  const [resultModal, setResultModal] = useState({ visible: false, success: false, message: "", fromInvited: false });
+  const [demandeInfo, setDemandeInfo] = useState(null);
+  const [demandeInfoLoading, setDemandeInfoLoading] = useState(false);
+  const [demandeInfoError, setDemandeInfoError] = useState(null);
 
-  // Pré-remplir le code depuis l'URL si présent
+  const codeFromUrl = searchParams.get("code");
+  const typeFromUrl = searchParams.get("type");
+  const isAcceptanceLetterOnly = typeFromUrl === "LETTRE_ACCEPTATION";
+
+  // Charger les infos demande par code pour savoir si validée / destinataire / lettre déjà présente
   useEffect(() => {
-    const codeFromUrl = searchParams.get("code");
-    if (codeFromUrl) {
-      form.setFieldsValue({ code: codeFromUrl });
+    if (!codeFromUrl || !user?.organization?.id) {
+      setDemandeInfo(null);
+      setDemandeInfoError(null);
+      return;
     }
-  }, [searchParams, form]);
+    setDemandeInfoLoading(true);
+    setDemandeInfoError(null);
+    demandeService
+      .getByCode(codeFromUrl)
+      .then((res) => {
+        setDemandeInfo(res?.demande ?? null);
+        form.setFieldsValue({
+          code: codeFromUrl,
+          ...(isAcceptanceLetterOnly ? { type: "LETTRE_ACCEPTATION" } : {}),
+        });
+      })
+      .catch((e) => {
+        setDemandeInfo(null);
+        setDemandeInfoError(e?.response?.data?.message || e?.message || t("demandeDocAdd.toasts.error"));
+      })
+      .finally(() => setDemandeInfoLoading(false));
+  }, [codeFromUrl, user?.organization?.id, isAcceptanceLetterOnly, form, t]);
+
+  // Pré-remplir le code si pas encore chargé par getByCode
+  useEffect(() => {
+    if (codeFromUrl && !demandeInfoLoading) {
+      form.setFieldsValue((prev) => ({ ...prev, code: codeFromUrl }));
+    }
+  }, [codeFromUrl, demandeInfoLoading, form]);
+
+  const isDemandeValidated = (demandeInfo?.status || "").toUpperCase() === "VALIDATED";
+  const isTargetOrg = Boolean(demandeInfo?.isTargetOrganization);
+  const hasAcceptanceLetter = Boolean(demandeInfo?.hasAcceptanceLetter);
+  const blockAddBecauseValidated = isDemandeValidated && !isTargetOrg;
+  const blockAddBecauseLetterExists = isDemandeValidated && isTargetOrg && hasAcceptanceLetter;
+  const onlyAcceptanceLetterForm = isDemandeValidated && isTargetOrg && !hasAcceptanceLetter;
 
   // Types de document i18n
   const DOC_TYPES = [
     { label: t("demandeDocAdd.types.ATTESTATION"), value: "ATTESTATION" },
     { label: t("demandeDocAdd.types.RELEVE"), value: "RELEVE" },
     { label: t("demandeDocAdd.types.DIPLOME"), value: "DIPLOME" },
-    { label: t("demandeDocAdd.types.AUTRE"), value: "AUTRE" }
+    { label: t("demandeDocAdd.types.AUTRE"), value: "AUTRE" },
+    { label: t("demandeDocAdd.types.LETTRE_ACCEPTATION"), value: "LETTRE_ACCEPTATION" },
   ];
 
   const handleCancel = () => navigate(-1);
@@ -332,7 +372,8 @@ export default function DemandeDocumentAdd() {
       }
 
       const formData = new FormData();
-      formData.append("type", values.type);
+      const docType = onlyAcceptanceLetterForm ? "LETTRE_ACCEPTATION" : (values.type || "AUTRE");
+      formData.append("type", docType);
       formData.append("mention", values.mention ?? "");
       if (values.dateObtention) {
         // ici on prend l'année choisie et on crée une date ISO (1er janvier de l'année)
@@ -361,26 +402,38 @@ export default function DemandeDocumentAdd() {
         try {
           await demandeService.deleteInviteeByDemandeCode(user.organization.id, codeFromUrl);
         } catch (e) {
-          // Ne pas bloquer si la suppression de l'invitation échoue
           console.warn("Erreur lors de la suppression de l'invitation:", e);
         }
       }
-      
-      message.success(t("demandeDocAdd.toasts.success"));
+
       form.resetFields();
       setFileOriginal(null);
-      
-      // Rediriger vers la page appropriée
-      if (fromInvited) {
-        navigate("/organisations/demandes/invited");
-      } else {
-        navigate("/organisations/demandes");
-      }
+      setResultModal({
+        visible: true,
+        success: true,
+        message: t("demandeDocAdd.toasts.success"),
+        fromInvited: !!fromInvited,
+      });
     } catch (e) {
-      message.error(e?.response?.data?.message || e?.message || t("demandeDocAdd.toasts.error"));
+      const errMsg = e?.response?.data?.message || e?.message || t("demandeDocAdd.toasts.error");
+      setResultModal({
+        visible: true,
+        success: false,
+        message: String(errMsg),
+        fromInvited: searchParams.get("fromInvited") === "true",
+      });
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const goToList = (fromInvited = false) => {
+    setResultModal((prev) => ({ ...prev, visible: false }));
+    navigate(fromInvited ? "/organisations/demandes/invited" : "/organisations/demandes");
+  };
+
+  const closeResultModal = () => {
+    setResultModal((prev) => ({ ...prev, visible: false }));
   };
 
   return (
@@ -404,11 +457,63 @@ export default function DemandeDocumentAdd() {
 
         <div className="p-2 md:p-4">
           <Title level={3} className="!mb-3">
-            {t("demandeDocAdd.title")}
+            {onlyAcceptanceLetterForm ? t("demandeDocAdd.titleAcceptanceLetter") : t("demandeDocAdd.title")}
           </Title>
 
+          {demandeInfoLoading && (
+            <Card>
+              <div className="flex justify-center py-8">
+                <Spin size="large" />
+              </div>
+            </Card>
+          )}
+
+          {!demandeInfoLoading && demandeInfoError && (
+            <Card>
+              <Alert
+                type="warning"
+                showIcon
+                message={demandeInfoError}
+                className="mb-3"
+              />
+              <Button onClick={handleCancel}>{t("demandeDocAdd.buttons.back")}</Button>
+            </Card>
+          )}
+
+          {!demandeInfoLoading && blockAddBecauseValidated && (
+            <Card>
+              <Alert
+                type="info"
+                showIcon
+                message={t("demandeDocAdd.validatedOnlyTargetCanAdd")}
+                className="mb-3"
+              />
+              <Button onClick={handleCancel}>{t("demandeDocAdd.buttons.back")}</Button>
+            </Card>
+          )}
+
+          {!demandeInfoLoading && blockAddBecauseLetterExists && (
+            <Card>
+              <Alert
+                type="success"
+                showIcon
+                message={t("demandeDocAdd.acceptanceLetterAlreadyExists")}
+                className="mb-3"
+              />
+              <Space>
+                <Button onClick={handleCancel}>{t("demandeDocAdd.buttons.back")}</Button>
+                <Button type="primary" onClick={() => navigate(`/organisations/demandes/${demandeInfo?.id}/details`)}>
+                  {t("demandeDocAdd.buttons.seeDemande")}
+                </Button>
+              </Space>
+            </Card>
+          )}
+
+          {!demandeInfoLoading && !demandeInfoError && !blockAddBecauseValidated && !blockAddBecauseLetterExists && (
           <Card>
-            <Form form={form} layout="vertical" onFinish={onFinish}>
+            <Form form={form} layout="vertical" onFinish={onFinish}
+              initialValues={onlyAcceptanceLetterForm ? { type: "LETTRE_ACCEPTATION" } : undefined}
+            >
               <Row gutter={[16, 8]}>
                 <Col xs={24} md={12}>
                   <Form.Item
@@ -420,6 +525,7 @@ export default function DemandeDocumentAdd() {
                   </Form.Item>
                 </Col>
 
+                {!onlyAcceptanceLetterForm && (
                 <Col xs={24} md={12}>
                   <Form.Item
                     name="type"
@@ -427,13 +533,19 @@ export default function DemandeDocumentAdd() {
                     rules={[{ required: true, message: t("demandeDocAdd.form.typeRequired") }]}
                   >
                     <Select
-                      options={DOC_TYPES}
+                      options={DOC_TYPES.filter((o) => o.value !== "LETTRE_ACCEPTATION")}
                       placeholder={t("demandeDocAdd.form.typePh")}
                       showSearch
                       optionFilterProp="label"
                     />
                   </Form.Item>
                 </Col>
+                )}
+                {onlyAcceptanceLetterForm && (
+                  <Form.Item name="type" hidden initialValue="LETTRE_ACCEPTATION">
+                    <Input type="hidden" />
+                  </Form.Item>
+                )}
 
                 <Col xs={24} md={12}>
                   <Form.Item name="mention" label={t("demandeDocAdd.form.mention")}>
@@ -492,8 +604,33 @@ export default function DemandeDocumentAdd() {
               </Space>
             </Form>
           </Card>
+          )}
         </div>
       </div>
+
+      <Modal
+        open={resultModal.visible}
+        onCancel={resultModal.success ? () => goToList(resultModal.fromInvited) : closeResultModal}
+        footer={null}
+        closable
+        width={440}
+      >
+        <Result
+          status={resultModal.success ? "success" : "error"}
+          title={resultModal.success ? t("demandeDocAdd.resultModal.successTitle") : t("demandeDocAdd.resultModal.errorTitle")}
+          subTitle={resultModal.message}
+          extra={[
+            <Button type="primary" key="list" onClick={() => goToList(resultModal.fromInvited)}>
+              {t("demandeDocAdd.resultModal.goToList")}
+            </Button>,
+            !resultModal.success && (
+              <Button key="close" onClick={closeResultModal}>
+                {t("common.ok")}
+              </Button>
+            ),
+          ].filter(Boolean)}
+        />
+      </Modal>
     </div>
   );
 }

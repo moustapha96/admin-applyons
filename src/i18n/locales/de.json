@@ -21,10 +21,17 @@
         "notifications": "Benachrichtigungen",
         "required": "Dieses Feld ist erforderlich",
         "back": "Zurück",
+        "yes": "Ja",
+        "na": "—",
+        "ok": "OK",
         "upload": {
             "pdfOnly": "Es werden nur PDF-Dateien akzeptiert.",
             "maxSize": "Die maximale Dateigröße beträgt 5 MB."
-        }
+        },
+        "editProfile": "Edit Profile",
+        "birthDate": "Date of Birth",
+        "birthPlace": "Place of Birth",
+        "translator": "Translator"
     },
     "adminConfig": {
         "title": "Einstellungen",
@@ -93,7 +100,9 @@
         "genericTitle": "Benachrichtigung",
         "genericMessage": "Sie haben eine neue Benachrichtigung",
         "orgDemandeTitle": "Anfrage betreffend Ihre Organisation",
-        "orgDemandeMessage": "Eine geteilte Anfrage betrifft Ihre Organisation (siehe Code für Details)"
+        "orgDemandeMessage": "Eine geteilte Anfrage betrifft Ihre Organisation (siehe Code für Details)",
+        "moreNew": "{{count}} more new notification(s)",
+        "fullList": "Full list"
     },
     "roles": {
         "ADMIN": "ADMIN",
@@ -232,7 +241,10 @@
     },
     "demandesAuthentification": {
         "title": "Anfragen zur Dokumentenauthentifizierung",
-        "breadcrumb": { "dashboard": "Dashboard", "list": "Authentifizierungsanfragen" },
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "list": "Authentifizierungsanfragen"
+        },
         "createBtn": "Neue Authentifizierungsanfrage",
         "createTitle": "Authentifizierungsanfrage erstellen",
         "submitCreate": "Anfrage erstellen",
@@ -261,7 +273,10 @@
             "actions": "Aktionen",
             "demandeur": "Antragsteller"
         },
-        "actions": { "detail": "Details", "notify": "Benachrichtigen" },
+        "actions": {
+            "detail": "Details",
+            "notify": "Benachrichtigen"
+        },
         "fields": {
             "codeADN": "ADN-Code",
             "objet": "Betreff",
@@ -274,15 +289,37 @@
             "status": "Status",
             "createdAt": "Erstellt am"
         },
-        "validation": { "attributedOrgRequired": "Bitte wählen Sie die zugewiesene Institution." },
+        "validation": {
+            "attributedOrgRequired": "Bitte wählen Sie die zugewiesene Institution."
+        },
         "status": {
             "EN_ATTENTE": "Ausstehend",
             "DOCUMENTS_RECUS": "Dokumente erhalten",
             "TRAITEE": "Bearbeitet",
             "ANNULEE": "Storniert"
         },
-        "doc": { "type": "Typ", "mention": "Vermerk", "addedBy": "Hinzugefügt von", "date": "Datum", "file": "Datei", "viewFile": "Dokument ansehen", "addDocument": "Dokument hinzufügen", "institutDetails": "Details der Institution, die das Dokument eingereicht hat", "orgName": "Name", "orgType": "Typ", "orgEmail": "E-Mail", "orgPhone": "Telefon", "orgAddress": "Adresse", "orgWebsite": "Webseite", "orgCountry": "Land" },
-        "toasts": { "loadError": "Fehler beim Laden der Anfrage." },
+        "doc": {
+            "type": "Typ",
+            "mention": "Vermerk",
+            "addedBy": "Hinzugefügt von",
+            "date": "Datum",
+            "file": "Datei",
+            "viewFile": "Dokument ansehen",
+            "addDocument": "Dokument hinzufügen",
+            "institutDetails": "Details der Institution, die das Dokument eingereicht hat",
+            "orgName": "Name",
+            "orgType": "Typ",
+            "orgEmail": "E-Mail",
+            "orgPhone": "Telefon",
+            "orgAddress": "Adresse",
+            "orgWebsite": "Webseite",
+            "orgCountry": "Land"
+        },
+        "toasts": {
+            "loadError": "Fehler beim Laden.",
+            "createError": "Fehler beim Erstellen.",
+            "orgLoadError": "Fehler beim Laden der Organisationen."
+        },
         "documentTypes": {
             "DIPLOMA": "Diplom",
             "TRANSCRIPT": "Zeugnis / Notenübersicht",
@@ -322,17 +359,42 @@
             "success": "Benachrichtigungen erfolgreich gesendet.",
             "error": "Fehler beim Senden der Benachrichtigungen."
         },
-        "toasts": {
-            "loadError": "Fehler beim Laden.",
-            "createError": "Fehler beim Erstellen.",
-            "orgLoadError": "Fehler beim Laden der Organisationen."
+        "submitPayAndCreate": "Pay and create request",
+        "paymentRequiredFirst": "Payment required",
+        "paymentRequiredFirstDesc": "The authentication request is only created after your payment is confirmed. Fill in the form then pay the amount shown.",
+        "paymentStepTitle": "Pay to create your request",
+        "paymentStepDesc": "Choose a payment method below. Once payment is confirmed, your request will be created and you will receive your ADN code.",
+        "backToForm": "Back to form",
+        "payment": {
+            "title": "Payment",
+            "status": "Payment status",
+            "amount": "Amount",
+            "paid": "Paid",
+            "unpaid": "Unpaid",
+            "payButton": "Pay for this request",
+            "alreadyPaid": "This authentication request is already paid.",
+            "loading": "Loading payment status..."
+        },
+        "paymentPage": {
+            "title": "Payment - Authentication request",
+            "breadcrumbList": "Authentication requests",
+            "breadcrumbDetail": "Detail",
+            "breadcrumbPayment": "Payment",
+            "summaryTitle": "Summary",
+            "backToDetail": "Back to request detail"
         }
     },
     "adminDemandesAuthentification": {
         "title": "Authentifizierungsanfragen (alle)",
-        "breadcrumb": { "dashboard": "Dashboard", "list": "Authentifizierungsanfragen" },
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "list": "Authentifizierungsanfragen"
+        },
         "detailTitle": "Details der Authentifizierungsanfrage",
-        "filters": { "search": "Suchen (ADN-Code, Betreff, Antragsteller…)", "status": "Status" },
+        "filters": {
+            "search": "Suchen (ADN-Code, Betreff, Antragsteller…)",
+            "status": "Status"
+        },
         "columns": {
             "codeADN": "ADN-Code",
             "objet": "Betreff",
@@ -343,9 +405,16 @@
             "documents": "Dokumente",
             "actions": "Aktionen"
         },
-        "actions": { "detail": "Details", "refresh": "Aktualisieren" },
-        "pagination": { "total": "Gesamt {{total}} Anfragen" },
-        "toasts": { "loadError": "Fehler beim Laden der Anfragen." },
+        "actions": {
+            "detail": "Details",
+            "refresh": "Aktualisieren"
+        },
+        "pagination": {
+            "total": "Gesamt {{total}} Anfragen"
+        },
+        "toasts": {
+            "loadError": "Fehler beim Laden der Anfragen."
+        },
         "statusLabel": "Status",
         "statusUpdateSuccess": "Status aktualisiert.",
         "statusUpdateError": "Fehler beim Aktualisieren des Status.",
@@ -415,7 +484,8 @@
                 "universite": "Universität / Institut",
                 "lycee": "Gymnasium",
                 "entreprise": "Unternehmen",
-                "traducteur": "Übersetzer"
+                "traducteur": "Übersetzer",
+                "institut": "Institute"
             },
             "placeholders": {
                 "name": "Organisationsname",
@@ -633,7 +703,9 @@
             "detail": "Details"
         },
         "actions": {
-            "documents": "Dokumente"
+            "documents": "Dokumente",
+            "edit": "Edit application",
+            "editRedirect": "Redirecting to edit form..."
         },
         "sections": {
             "case": "Akte",
@@ -720,6 +792,9 @@
         "tabs": {
             "documents": "Dokumente",
             "info": "Anfrageinformationen"
+        },
+        "types": {
+            "lettreAcceptation": "Annahmeschreiben"
         },
         "columns": {
             "ownerOrg": "Eigentümerorganisation",
@@ -830,7 +905,8 @@
             "translatedCount": "Übersetzt: {{count}}",
             "myDemandes": "Meine Anfragen",
             "breakdown": "Siehe Aufschlüsselung unten",
-            "translated": "Übersetzt: {{count}}"
+            "translated": "Übersetzt: {{count}}",
+            "myApplications": "My applications"
         },
         "activity": {
             "title": "Aktuelle Aktivität",
@@ -846,7 +922,8 @@
                 "typeRequest": "Bewerbung",
                 "typePayment": "Zahlung",
                 "total": "{{total}} Eintrag/Einträge"
-            }
+            },
+            "applicationLine": "Application {{code}} — {{status}} — {{date}}"
         },
         "toasts": {
             "loadError": "Fehler beim Laden der Statistiken"
@@ -861,12 +938,14 @@
         "breakdowns": {
             "demandesByStatus": "Meine Anfragen nach Status",
             "transactionsByStatus": "Meine Transaktionen nach Status",
-            "paymentsByStatus": "Meine Zahlungen nach Status"
+            "paymentsByStatus": "Meine Zahlungen nach Status",
+            "applicationsByStatus": "My applications by status"
         },
         "tables": {
             "recentDemandes": "Aktuelle Anfragen",
             "recentTransactions": "Aktuelle Transaktionen",
-            "recentPayments": "Aktuelle Zahlungen"
+            "recentPayments": "Aktuelle Zahlungen",
+            "recentApplications": "Recent applications"
         }
     },
     "institutDashboard": {
@@ -879,8 +958,12 @@
             "institute": "Institut"
         },
         "traducteur": {
-            "header": { "title": "Übersetzer-Instituts-Dashboard" },
-            "breadcrumb": { "institute": "Übersetzer-Institut" },
+            "header": {
+                "title": "Übersetzer-Instituts-Dashboard"
+            },
+            "breadcrumb": {
+                "institute": "Übersetzer-Institut"
+            },
             "kpis": {
                 "assignedRequests": "Zugewiesene Bewerbungen",
                 "docsToTranslate": "Zu übersetzende Dokumente",
@@ -1156,7 +1239,8 @@
         "toasts": {
             "success": "Benutzer erfolgreich erstellt",
             "error": "Fehler beim Senden der Daten"
-        }
+        },
+        "loadingPermissions": "Loading permissions..."
     },
     "userEditTraducteur": {
         "title": "Benutzer bearbeiten",
@@ -2146,6 +2230,7 @@
             "COMPLETED": "Abgeschlossen",
             "CANCELLED": "Abgebrochen"
         },
+        "validatedNoAdd": "Bewerbung validiert — Dokumente hinzufügen nicht erlaubt",
         "organization": {
             "name": "Organisation"
         },
@@ -2208,7 +2293,23 @@
             "translated": "Übersetzt",
             "isTranslated": "Ist übersetzt",
             "addedAt": "Hinzugefügt am",
-            "count": "{{count}}"
+            "count": "{{count}}",
+            "delete": "Löschen",
+            "deleteConfirmTitle": "Dieses Dokument löschen?",
+            "deleteConfirmMessage": "Diese Aktion kann nicht rückgängig gemacht werden."
+        },
+        "acceptanceLetter": {
+            "title": "Annahmeschreiben",
+            "view": "Ansehen / Herunterladen",
+            "addedOn": "Hinzugefügt am",
+            "modalTitle": "Annahmeschreiben hinzufügen",
+            "modalHint": "Wählen Sie die PDF-Datei des Annahmeschreibens (max. 5 MB).",
+            "save": "Zur Bewerbung speichern",
+            "dragText": "Datei hierher ziehen oder klicken zum Auswählen",
+            "dragHint": "Nur PDF, max. 5 MB",
+            "uploadSuccess": "Annahmeschreiben gespeichert.",
+            "uploadError": "Speichern fehlgeschlagen.",
+            "selectFile": "Bitte wählen Sie eine PDF-Datei."
         },
         "modals": {
             "statusTitle": "Status & Hinweis aktualisieren",
@@ -2236,6 +2337,7 @@
             "loadError": "Anfrage konnte nicht geladen werden",
             "statusSaved": "Status/Hinweis aktualisiert",
             "statusSaveError": "Aktualisierung fehlgeschlagen",
+            "docDeleted": "Dokument gelöscht.",
             "urlMissing": "URL nicht verfügbar",
             "stripeSecretMissing": "Stripe Client-Secret fehlt",
             "sessionExpired": "Sitzung abgelaufen. Bitte melden Sie sich erneut an.",
@@ -2278,7 +2380,8 @@
         "buttons": {
             "back": "Zurück",
             "cancel": "Abbrechen",
-            "save": "Dokument speichern"
+            "save": "Dokument speichern",
+            "seeDemande": "Bewerbung ansehen"
         },
         "form": {
             "code": "Bewerbungs-Code",
@@ -2309,7 +2412,16 @@
             "ATTESTATION": "ATTEST",
             "RELEVE": "ZEUGNIS",
             "DIPLOME": "DIPLOM",
-            "AUTRE": "ANDERE"
+            "AUTRE": "ANDERE",
+            "LETTRE_ACCEPTATION": "Annahmeschreiben"
+        },
+        "titleAcceptanceLetter": "Annahmeschreiben hinzufügen",
+        "validatedOnlyTargetCanAdd": "Diese Bewerbung ist validiert. Nur der Empfänger kann das Annahmeschreiben hinzufügen. Andere Institute können keine Dokumente mehr hinzufügen.",
+        "acceptanceLetterAlreadyExists": "Ein Annahmeschreiben wurde bereits für diese Bewerbung hinzugefügt.",
+        "resultModal": {
+            "successTitle": "Dokument hinzugefügt",
+            "errorTitle": "Hinzufügen fehlgeschlagen",
+            "goToList": "Zur Bewerbungsliste"
         }
     },
     "auth": {
@@ -2383,7 +2495,9 @@
                 "orgEmailRequired": "Organisations-E-Mail ist erforderlich.",
                 "orgEmailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse für die Organisation ein.",
                 "formSummary": "Bitte korrigieren Sie die Fehler in den rot markierten Feldern unten.",
-                "general": "Bei der Registrierung ist ein Fehler aufgetreten."
+                "general": "Bei der Registrierung ist ein Fehler aufgetreten.",
+                "formSummaryRequired": "Required fields missing or invalid (according to your profile and organization type):",
+                "unknownField": "Error on this field"
             },
             "roles": {
                 "DEMANDEUR": "Antragsteller",
@@ -2419,6 +2533,11 @@
                 "orgWebsite": "https://organisation.com",
                 "orgAddress": "Vollständige Organisationsadresse",
                 "selectType": "Typ auswählen"
+            },
+            "successModal": {
+                "title": "Registration successful",
+                "content": "Your registration has been recorded. Please check your email to verify and activate your account by clicking the link we sent you.",
+                "goToLogin": "Go to login"
             }
         },
         "resetPassword": {
@@ -2550,7 +2669,9 @@
         "error": "Fehler beim Abrufen der Statistiken"
     },
     "traducteurDashboard": {
-        "breadcrumb": { "dashboard": "Dashboard" },
+        "breadcrumb": {
+            "dashboard": "Dashboard"
+        },
         "hello": "Hallo, {{firstName}} {{lastName}}",
         "welcome": "Willkommen in Ihrem Übersetzerbereich.",
         "links": {
@@ -2703,7 +2824,8 @@
             "BANQUE": "Bank",
             "COLLEGE": "College",
             "LYCEE": "Gymnasium",
-            "UNIVERSITE": "Universität / Institut"
+            "UNIVERSITE": "Universität / Institut",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "Senegal",
@@ -2969,7 +3091,18 @@
             "total": "Gesamtabonnements",
             "active": "Aktiv",
             "expired": "Abgelaufen",
-            "expiringSoon": "Läuft bald ab"
+            "expiringSoon": "Läuft bald ab",
+            "titleFull": "Subscription statistics",
+            "breadcrumb": "Subscription statistics",
+            "summaryTitle": "Summary",
+            "revenueTotal": "Total revenue",
+            "monthlyTitle": "Details by month",
+            "noData": "No data",
+            "columns": {
+                "month": "Month",
+                "count": "Number of subscriptions",
+                "revenue": "Revenue (USD)"
+            }
         },
         "modals": {
             "archiveTitle": "Dieses Abonnement archivieren?",
@@ -2980,6 +3113,148 @@
             "deleteContent": "Diese Aktion ist irreversibel. Alle Daten gehen verloren.",
             "deleteOk": "Löschen",
             "deleteCancel": "Abbrechen"
+        },
+        "common": {
+            "currency": "USD"
+        },
+        "expiringSoon": {
+            "title": "Subscriptions expiring soon",
+            "breadcrumb": "Subscriptions expiring soon",
+            "alert": "Subscriptions expiring in the next {{days}} days",
+            "daysAddon": "Days",
+            "daysPlaceholder": "Number of days",
+            "columns": {
+                "expirationDate": "Expiration date"
+            },
+            "daysLabel": "{{count}} days"
+        },
+        "renew": {
+            "title": "Renew subscription #{{id}}…",
+            "breadcrumb": "Renew",
+            "modal": {
+                "title": "Renew subscription"
+            },
+            "current": {
+                "title": "Current subscription",
+                "organization": "Organization",
+                "period": "Current period",
+                "amount": "Current amount"
+            },
+            "alert": {
+                "title": "Renewal",
+                "description": "Set the new period and amount. The new period must start after the end of the current subscription."
+            },
+            "form": {
+                "period": {
+                    "label": "New period",
+                    "required": "Period is required"
+                },
+                "amount": {
+                    "label": "New amount (USD)",
+                    "required": "Amount is required",
+                    "min": "Amount must be positive"
+                },
+                "submit": {
+                    "label": "Renew subscription",
+                    "loading": "Renewal in progress..."
+                }
+            },
+            "messages": {
+                "success": "Subscription renewed successfully",
+                "error": "Renewal failed. Please check dates and amount."
+            }
+        },
+        "details": {
+            "title": "Subscription details #{{id}}…",
+            "breadcrumb": "Details",
+            "info": {
+                "title": "Subscription information",
+                "id": "ID",
+                "organization": "Organization",
+                "period": "Period",
+                "status": "Status",
+                "amount": "Amount",
+                "createdAt": "Created at",
+                "updatedAt": "Updated at"
+            },
+            "payments": {
+                "title": "Payment history",
+                "line": "{{amount}} {{currency}} via {{provider}}{{ref}}"
+            },
+            "actions": {
+                "title": "Actions",
+                "deleteForever": "Delete permanently"
+            }
+        },
+        "edit": {
+            "title": "Edit subscription #{{id}}…",
+            "breadcrumb": "Edit",
+            "current": {
+                "title": "Current information",
+                "organization": "Organization",
+                "createdAt": "Created at",
+                "status": "Status"
+            },
+            "alert": {
+                "title": "Warning",
+                "description": "Changing dates may cause overlaps with other subscriptions."
+            },
+            "form": {
+                "organization": {
+                    "label": "Organization",
+                    "required": "Organization is required",
+                    "placeholder": "Select an organization"
+                },
+                "period": {
+                    "label": "Subscription period",
+                    "required": "Period is required"
+                },
+                "amount": {
+                    "label": "Amount (USD)",
+                    "required": "Amount is required",
+                    "min": "Amount must be positive"
+                },
+                "submit": {
+                    "label": "Update",
+                    "loading": "Updating..."
+                }
+            },
+            "messages": {
+                "success": "Subscription updated successfully",
+                "error": "Update failed. Please check dates and amount."
+            }
+        },
+        "create": {
+            "title": "Create a new subscription",
+            "breadcrumb": "New subscription",
+            "alert": {
+                "title": "Important information",
+                "description": "Dates must not overlap with an existing subscription for the same organization. Amount must be positive and organization must be active."
+            },
+            "form": {
+                "organization": {
+                    "label": "Organization",
+                    "required": "Organization is required",
+                    "placeholder": "Select an organization"
+                },
+                "period": {
+                    "label": "Subscription period",
+                    "required": "Period is required"
+                },
+                "amount": {
+                    "label": "Amount (USD)",
+                    "required": "Amount is required",
+                    "min": "Amount must be positive"
+                },
+                "submit": {
+                    "label": "Create subscription",
+                    "loading": "Creation in progress..."
+                }
+            },
+            "messages": {
+                "success": "Subscription created successfully",
+                "error": "Subscription creation failed. Please check dates and amount."
+            }
         }
     },
     "adminPayments": {
@@ -3584,7 +3859,8 @@
             "role": "Rolle",
             "permissions": "Berechtigungen",
             "password": "Passwort",
-            "confirmPassword": "Passwort bestätigen"
+            "confirmPassword": "Passwort bestätigen",
+            "organization": "Organization"
         },
         "loadingPermissions": "Berechtigungen werden geladen...",
         "placeholders": {
@@ -3592,7 +3868,8 @@
             "lastName": "Nachname",
             "email": "E-Mail",
             "phone": "Telefon",
-            "role": "Rolle auswählen"
+            "role": "Rolle auswählen",
+            "organization": "Select an organization"
         },
         "dividers": {
             "permissions": "Berechtigungen",
@@ -3613,7 +3890,8 @@
             "passwordRequired": "Passwort erforderlich",
             "confirmRequired": "Passwortbestätigung erforderlich",
             "passwordMismatch": "Passwörter stimmen nicht überein",
-            "roleRequired": "Rolle erforderlich"
+            "roleRequired": "Rolle erforderlich",
+            "organizationRequired": "Organization is required for this role"
         },
         "buttons": {
             "submit": "Senden",
@@ -3756,7 +4034,10 @@
             "country": "Wohnsitzland",
             "role": "Rolle",
             "status": "Status",
-            "permissions": "Berechtigungen"
+            "permissions": "Berechtigungen",
+            "adress": "Address",
+            "gender": "Gender",
+            "organization": "Organization"
         },
         "loadingPermissions": "Berechtigungen werden geladen...",
         "placeholders": {
@@ -3764,7 +4045,10 @@
             "lastName": "Nachname",
             "phone": "Telefon",
             "country": "Wohnsitzland",
-            "role": "Rolle auswählen"
+            "role": "Rolle auswählen",
+            "adress": "Address",
+            "gender": "Select a gender",
+            "organization": "Select an organization"
         },
         "dividers": {
             "permissions": "Berechtigungen"
@@ -3776,7 +4060,9 @@
             "firstNameRequired": "Vorname erforderlich",
             "lastNameRequired": "Nachname erforderlich",
             "emailInvalid": "Ungültige E-Mail",
-            "roleRequired": "Rolle erforderlich"
+            "roleRequired": "Rolle erforderlich",
+            "gender": "Gender is required",
+            "organizationRequired": "Organization is required for this role"
         },
         "buttons": {
             "save": "Speichern",
@@ -3788,14 +4074,18 @@
             "updateError": "Fehler beim Senden der Daten",
             "deleteSuccess": "Benutzer erfolgreich gelöscht",
             "deleteError": "Fehler beim Löschen des Benutzers",
-            "deleteWarning": "Diese Aktion ist unwiderruflich. Der Benutzer wird archiviert."
+            "deleteWarning": "Diese Aktion ist unwiderruflich. Der Benutzer wird archiviert.",
+            "orgFetchError": "Error loading organizations"
         },
         "labels": {
             "active": "Aktiv"
         },
         "roles": {
             "ADMIN": "Administrator",
-            "SUPER_ADMIN": "Super Administrator"
+            "SUPER_ADMIN": "Super Administrator",
+            "MALE": "Male",
+            "FEMALE": "Female",
+            "OTHER": "Other"
         }
     },
     "traducteurDemandesList": {
@@ -3839,10 +4129,13 @@
             "documents": "Dokument(e)",
             "translate": "Übersetzen",
             "addTranslation": "Übersetzung hinzufügen",
+            "uploading": "Wird hochgeladen…",
             "apply": "Anwenden"
         },
         "messages": {
             "loadError": "Fehler beim Laden der Anfragen",
+            "translationNotReady": "Die Übersetzung ist noch nicht verfügbar.",
+            "downloadSuccess": "Download erfolgreich",
             "updateSuccess": "Status aktualisiert: {{status}}",
             "updateError": "Fehler beim Aktualisieren des Status",
             "documentsError": "Fehler beim Laden der Dokumente",
@@ -3868,7 +4161,8 @@
             "encrypted": "Verschlüsselt",
             "notEncrypted": "Nicht verschlüsselt",
             "blockchain": "Blockchain",
-            "original": "Original"
+            "original": "Original",
+            "download": "Herunterladen"
         },
         "table": {
             "title": "Liste zugewiesener Anfragen"
@@ -3876,6 +4170,10 @@
         "modal": {
             "documentsTitle": "Anfragedokumente",
             "noDocuments": "Keine Dokumente"
+        },
+        "uploadResult": {
+            "successTitle": "Upload erfolgreich",
+            "errorTitle": "Upload fehlgeschlagen"
         }
     },
     "institutAbos": {
@@ -4078,18 +4376,20 @@
             "draftResetError": "Entwurf kann nicht zurückgesetzt werden",
             "orgLoadError": "Fehler beim Laden der Organisationen",
             "priceInvalid": "Ungültiger Abonnementbetrag auf dem Server.",
-            "filieresLoadError": "Filieres dieser Organisation können nicht geladen werden",
+            "filieresLoadError": "Filieres für diese Organisation können nicht geladen werden",
             "stripeInitError": "Stripe kann nicht initialisiert werden",
             "stripeKeyMissing": "Stripe öffentlicher Schlüssel fehlt",
             "stripeInvalidParams": "Ungültige Stripe-Parameter",
-            "stripeSecretInvalid": "Ungültiges/fehlendes Stripe Client-Geheimnis",
+            "stripeSecretInvalid": "Ungültiges/fehlendes Stripe-Client-Geheimnis",
             "paymentIntentError": "PaymentIntent kann nicht erstellt werden",
             "stripeSuccess": "Stripe-Zahlung bestätigt!",
             "paypalSuccess": "PayPal-Zahlung bestätigt!",
             "paymentError": "Zahlung fehlgeschlagen: {{error}}",
-            "paymentRequired": "Bitte Zahlung abschließen, bevor Sie absenden",
-            "demandeCreated": "Anfrage erstellt (Einladungen & Benachrichtigungen gesendet)",
-            "creationError": "Erstellung fehlgeschlagen"
+            "paymentRequired": "Bitte schließen Sie die Zahlung ab, bevor Sie absenden",
+            "demandeCreated": "Anfrage erstellt (Einladungen und Benachrichtigungen gesendet)",
+            "creationError": "Erstellung fehlgeschlagen",
+            "paypalError": "PayPal-Fehler: {{error}}",
+            "required": "Erforderlich"
         },
         "sections": {
             "personalInfo": "1. Persönliche Angaben",
@@ -4274,27 +4574,15 @@
             "yes": "Ja",
             "no": "Nein"
         },
-        "messages": {
-            "draftSaveError": "Entwurf kann nicht gespeichert werden",
-            "draftLoaded": "Entwurf geladen",
-            "draftReset": "Entwurf zurückgesetzt",
-            "draftResetError": "Entwurf kann nicht zurückgesetzt werden",
-            "orgLoadError": "Fehler beim Laden der Organisationen",
-            "priceInvalid": "Ungültiger Abonnementbetrag auf dem Server.",
-            "filieresLoadError": "Filieres für diese Organisation können nicht geladen werden",
-            "stripeInitError": "Stripe kann nicht initialisiert werden",
-            "stripeKeyMissing": "Stripe öffentlicher Schlüssel fehlt",
-            "stripeInvalidParams": "Ungültige Stripe-Parameter",
-            "stripeSecretInvalid": "Ungültiges/fehlendes Stripe-Client-Geheimnis",
-            "paymentIntentError": "PaymentIntent kann nicht erstellt werden",
-            "stripeSuccess": "Stripe-Zahlung bestätigt!",
-            "paypalSuccess": "PayPal-Zahlung bestätigt!",
-            "paymentError": "Zahlung fehlgeschlagen: {{error}}",
-            "paymentRequired": "Bitte schließen Sie die Zahlung ab, bevor Sie absenden",
-            "demandeCreated": "Anfrage erstellt (Einladungen und Benachrichtigungen gesendet)",
-            "creationError": "Erstellung fehlgeschlagen",
-            "paypalError": "PayPal-Fehler: {{error}}",
-            "required": "Erforderlich"
+        "formMessages": {
+            "stripeSuccess": "Stripe payment confirmed!",
+            "paypalSuccess": "PayPal payment confirmed!",
+            "paymentError": "Payment failed: {{error}}",
+            "paymentRequired": "Please complete payment before submitting",
+            "demandeCreated": "Application created (invitations & notifications sent)",
+            "creationError": "Creation failed",
+            "paypalError": "PayPal error: {{error}}",
+            "required": "Required"
         }
     },
     "demandeurDemandePayment": {
@@ -4381,7 +4669,8 @@
             "BANQUE": "Bank",
             "COLLEGE": "College",
             "LYCEE": "Gymnasium",
-            "UNIVERSITE": "Universität / Institut"
+            "UNIVERSITE": "Universität / Institut",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "Senegal",
@@ -4697,6 +4986,7 @@
             "deleteError": "Deletion failed",
             "noFileAvailable": "No file available to display.",
             "noFileToDownload": "No file to download.",
+            "translationNotFound": "Die übersetzte Datei ist noch nicht verfügbar. Die Datei wird möglicherweise verarbeitet. Bitte aktualisieren Sie die Seite in wenigen Augenblicken.",
             "previewTitleOriginal": "Original PDF — {{id}}",
             "previewTitleTranslated": "Translated PDF — {{id}}"
         },
@@ -4920,5 +5210,210 @@
         "title": "Meine Organisation",
         "loading": "Wird geladen...",
         "error": "Fehler beim Laden der Organisation"
+    },
+    "orgTypes": {
+        "COLLEGE": "College",
+        "BANQUE": "Bank",
+        "UNIVERSITE": "University",
+        "INSTITUT": "Institute",
+        "LYCEE": "High School",
+        "ENTREPRISE": "Company",
+        "TRADUCTEUR": "Translator"
+    },
+    "adminDocuments": {
+        "title": "Documents",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "documents": "Documents"
+        },
+        "columns": {
+            "demande": "Application",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtained",
+            "translated": "Translated",
+            "ownerOrg": "Organization",
+            "createdAt": "Created at",
+            "actions": "Actions"
+        },
+        "types": {
+            "ATTESTATION": "Attestation",
+            "RELEVE": "Transcript",
+            "DIPLOME": "Diploma",
+            "OTHER": "Other"
+        },
+        "filters": {
+            "searchPlaceholder": "Search (DNA code…)",
+            "demandePlaceholder": "By application (ID)",
+            "orgPlaceholder": "By org. (ID)",
+            "translatedPlaceholder": "Translated?",
+            "translatedYes": "Yes",
+            "translatedNo": "No"
+        },
+        "actions": {
+            "viewOriginal": "View original",
+            "viewTranslated": "View translated",
+            "details": "Details",
+            "delete": "Delete",
+            "refresh": "Refresh"
+        },
+        "drawer": {
+            "title": "Document details",
+            "demande": "Application",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtained",
+            "owner": "Organization",
+            "translationStatus": "Translated",
+            "encrypted": "Encrypted",
+            "createdAt": "Created at",
+            "encryptedAt": "Encrypted at",
+            "quickActions": "Quick actions"
+        },
+        "translation": {
+            "translated": "Translated",
+            "notTranslated": "No"
+        },
+        "encryption": {
+            "yes": "Yes",
+            "no": "No"
+        },
+        "preview": {
+            "title": "Document",
+            "loading": "Loading…"
+        },
+        "messages": {
+            "loadError": "Error loading documents",
+            "urlUnavailable": "URL unavailable",
+            "openError": "Unable to open document",
+            "sessionExpired": "Session expired. Please log in again.",
+            "accessDenied": "You do not have access to this document.",
+            "deleted": "Document deleted",
+            "deleteError": "Deletion failed"
+        },
+        "modals": {
+            "delete": {
+                "title": "Delete this document?",
+                "content": "This action cannot be undone.",
+                "okText": "Delete",
+                "cancelText": "Cancel"
+            }
+        }
+    },
+    "appsCalendar": {
+        "title": "Calendar",
+        "breadcrumbs": {
+            "home": "Home",
+            "calendar": "Calendar"
+        },
+        "events": {
+            "allEvents": "All Events",
+            "meeting": "Meeting",
+            "operations": "Operations",
+            "lunch": "Lunch",
+            "conference": "Conference",
+            "businessMeeting": "Business Meeting"
+        },
+        "options": {
+            "removeAfterDrop": "Remove after drop",
+            "addEvent": "Add Event"
+        }
+    },
+    "appsChat": {
+        "title": "Messaging Center",
+        "breadcrumbs": {
+            "home": "Home",
+            "chatbox": "Messages"
+        },
+        "menu": {
+            "profile": "Profile",
+            "profileSettings": "Profile Settings",
+            "delete": "Delete"
+        },
+        "status": {
+            "online": "Online"
+        },
+        "typing": "{{name}} is typing",
+        "placeholders": {
+            "message": "Enter message..."
+        }
+    },
+    "appsEmail": {
+        "title": "Email / Messages",
+        "breadcrumbs": {
+            "home": "Home",
+            "emails": "Emails"
+        },
+        "composeButton": "Compose",
+        "composeTitle": "Compose",
+        "menu": {
+            "inbox": "Inbox",
+            "starred": "Starred",
+            "spam": "Spam",
+            "sent": "Sent",
+            "drafts": "Drafts",
+            "trash": "Trash",
+            "notes": "Notes"
+        },
+        "placeholders": {
+            "to": "To",
+            "cc": "Cc",
+            "bcc": "Bcc"
+        },
+        "buttons": {
+            "sendNow": "Send Now"
+        },
+        "table": {
+            "name": "Name",
+            "subject": "Subject",
+            "dateTime": "Date & Time"
+        },
+        "pagination": {
+            "showing": "Showing {{from}} - {{to}} out of {{total}}"
+        },
+        "empty": {
+            "spam": "Hooray, no spam here!",
+            "drafts": "You don't have any saved drafts. Saving a draft allows you to keep a message you aren't ready to send yet.",
+            "trash": "No conversations in Trash.",
+            "notes": "No notes in Notes."
+        }
+    },
+    "miscComingSoon": {
+        "title": "We Are Coming Soon...",
+        "subtitle": "Start working with Applyons that can provide everything you need to generate awareness, drive traffic, connect.",
+        "countdown": {
+            "days": "Days",
+            "hours": "Hours",
+            "minutes": "Mins",
+            "seconds": "Secs"
+        },
+        "footer": "© 2026 applyons by"
+    },
+    "miscMaintenance": {
+        "title": "We Are Back Soon...",
+        "subtitle": "Start working with Applyons that can provide everything you need to generate awareness, drive traffic, connect.",
+        "minutesLabel": "Minutes",
+        "placeholders": {
+            "email": "Enter your email..."
+        },
+        "buttons": {
+            "subscribeNow": "Subscribe Now"
+        }
+    },
+    "miscThankyou": {
+        "title": "Thank You",
+        "subtitle": "Launch your campaign and benefit from our expertise on designing and managing conversion centered pages.",
+        "backToHome": "Back to Home"
+    },
+    "dashboardIndex": {
+        "greeting": "Hello, {{name}}",
+        "welcome": "Welcome!",
+        "filters": {
+            "yearly": "Yearly",
+            "monthly": "Monthly",
+            "weekly": "Weekly",
+            "today": "Today"
+        },
+        "export": "Export"
     }
 }

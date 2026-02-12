@@ -21,6 +21,7 @@ import {
   Tooltip,
   Descriptions,
   Collapse,
+  Result,
 } from "antd";
 import dayjs from "dayjs";
 import demandeService from "@/services/demandeService";
@@ -38,7 +39,7 @@ import { useTranslation } from "react-i18next";
 import { buildImageUrl } from "@/utils/imageUtils";
 import { DATE_FORMAT } from "@/utils/dateFormat";
 import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
-import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
+import { PDF_ACCEPT, validatePdfFile } from "@/utils/uploadValidation";
 
 const { Title, Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -90,6 +91,8 @@ export default function DossierATraiterTraducteur() {
   const [docs, setDocs] = useState([]);
   const [currentDemande, setCurrentDemande] = useState(null);
   const [preview, setPreview] = useState({ open: false, url: "", title: "" });
+  const [uploadingDocId, setUploadingDocId] = useState(null);
+  const [uploadResult, setUploadResult] = useState({ visible: false, success: false, message: "" });
 
   const fetchData = useCallback(
     async (page = pagination.page, limit = pagination.limit, override = {}) => {
@@ -208,66 +211,99 @@ export default function DossierATraiterTraducteur() {
   };
 
   const handleUploadTranslated = async (doc, file, extra = {}) => {
+    setUploadingDocId(doc.id);
     try {
       await documentService.uploadTranslated(doc.id, file, extra);
-      message.success(t("traducteurDemandesList.messages.translationAdded"));
+      setUploadResult({
+        visible: true,
+        success: true,
+        message: String(t("traducteurDemandesList.messages.translationAdded") || "Fichier traduit envoyé avec succès."),
+      });
       if (currentDemande) await openDocs(currentDemande);
       fetchData(pagination.page, pagination.limit);
     } catch (e) {
-      message.error(e?.response?.data?.message || e?.message || t("traducteurDemandesList.messages.uploadError"));
+      const errMsg =
+        e?.response?.data?.message ||
+        (typeof e?.message === "string" ? e.message : null) ||
+        t("traducteurDemandesList.messages.uploadError") ||
+        "Erreur lors de l'envoi du fichier.";
+      setUploadResult({
+        visible: true,
+        success: false,
+        message: String(errMsg),
+      });
+    } finally {
+      setUploadingDocId(null);
     }
   };
 
-  const DocsRow = ({ d }) => (
-    <div className="flex items-start justify-between gap-3 p-2 rounded border" style={{ borderColor: "#f0f0f0" }} key={d.id}>
-      <div className="min-w-0">
-        <Space direction="vertical" size={2}>
-          <Space wrap size="small">
-            <Tag>{d.ownerOrg?.name || "—"}</Tag>
-            {hasTranslation(d) ? <Tag color="green">{t("traducteurDemandesList.documents.translated")}</Tag> : <Tag>{t("traducteurDemandesList.documents.notTranslated")}</Tag>}
-            {(d.urlChiffre || d.original?.isEncrypted) ? <Tag color="geekblue">{t("traducteurDemandesList.documents.encrypted")}</Tag> : <Tag>{t("traducteurDemandesList.documents.notEncrypted")}</Tag>}
-            {(d.blockchainHash || d.original?.blockchainHash) && <Tag color="purple">{t("traducteurDemandesList.documents.blockchain")}</Tag>}
+  const closeUploadResultModal = () => {
+    setUploadResult({ visible: false, success: false, message: "" });
+  };
+
+  const DocsRow = ({ d }) => {
+    const isUploading = uploadingDocId === d.id;
+    return (
+      <div className="flex items-start justify-between gap-3 p-2 rounded border" style={{ borderColor: "#f0f0f0" }} key={d.id}>
+        <div className="min-w-0">
+          <Space direction="vertical" size={2}>
+            <Space wrap size="small">
+              <Tag>{d.ownerOrg?.name || "—"}</Tag>
+              {hasTranslation(d) ? <Tag color="green">{t("traducteurDemandesList.documents.translated")}</Tag> : <Tag>{t("traducteurDemandesList.documents.notTranslated")}</Tag>}
+              {(d.urlChiffre || d.original?.isEncrypted) ? <Tag color="geekblue">{t("traducteurDemandesList.documents.encrypted")}</Tag> : <Tag>{t("traducteurDemandesList.documents.notEncrypted")}</Tag>}
+              {(d.blockchainHash || d.original?.blockchainHash) && <Tag color="purple">{t("traducteurDemandesList.documents.blockchain")}</Tag>}
+            </Space>
+            <Space wrap size="small">
+              <Button size="small" icon={<EyeOutlined />} onClick={() => openPreview(d, "original")}>
+                {t("traducteurDemandesList.documents.original")}
+              </Button>
+              <Button size="small" icon={<DownloadOutlined />} onClick={() => downloadDoc(d, "original")}>
+                {t("traducteurDemandesList.documents.download") || "Télécharger"}
+              </Button>
+              {hasTranslation(d) && (
+                <>
+                  <Button size="small" type="primary" icon={<EyeOutlined />} onClick={() => openPreview(d, "traduit")}>
+                    {t("traducteurDemandesList.documents.translated")}
+                  </Button>
+                  <Button size="small" icon={<DownloadOutlined />} onClick={() => downloadDoc(d, "traduit")}>
+                    {t("traducteurDemandesList.documents.download") || "Télécharger"} {t("traducteurDemandesList.documents.translated")}
+                  </Button>
+                </>
+              )}
+            </Space>
           </Space>
-          <Space wrap size="small">
-            <Button size="small" icon={<EyeOutlined />} onClick={() => openPreview(d, "original")}>
-              {t("traducteurDemandesList.documents.original")}
+        </div>
+        {!hasTranslation(d) && (
+          <Upload
+            accept={PDF_ACCEPT}
+            maxCount={1}
+            showUploadList={false}
+            disabled={isUploading}
+            beforeUpload={(file) => {
+              const { valid, errorKey } = validatePdfFile(file);
+              if (!valid) {
+                message.error(t(`common.upload.${errorKey}`));
+                return Upload.LIST_IGNORE;
+              }
+              return true;
+            }}
+            customRequest={async ({ file, onSuccess, onError }) => {
+              try {
+                await handleUploadTranslated(d, file, {});
+                onSuccess?.("ok");
+              } catch (err) {
+                onError?.(err);
+              }
+            }}
+          >
+            <Button type="primary" icon={<UploadOutlined />} loading={isUploading}>
+              {isUploading ? (t("traducteurDemandesList.actions.uploading") || "Envoi en cours…") : t("traducteurDemandesList.actions.addTranslation")}
             </Button>
-            <Button size="small" icon={<DownloadOutlined />} onClick={() => downloadDoc(d, "original")}>
-              {t("traducteurDemandesList.documents.download") || "Télécharger"}
-            </Button>
-            {hasTranslation(d) && (
-              <>
-                <Button size="small" type="primary" icon={<EyeOutlined />} onClick={() => openPreview(d, "traduit")}>
-                  {t("traducteurDemandesList.documents.translated")}
-                </Button>
-                <Button size="small" icon={<DownloadOutlined />} onClick={() => downloadDoc(d, "traduit")}>
-                  {t("traducteurDemandesList.documents.download") || "Télécharger"} {t("traducteurDemandesList.documents.translated")}
-                </Button>
-              </>
-            )}
-          </Space>
-        </Space>
+          </Upload>
+        )}
       </div>
-      {!hasTranslation(d) && (
-        <Upload
-          accept={PDF_ACCEPT}
-          maxCount={1}
-          showUploadList={false}
-          beforeUpload={createPdfBeforeUpload(message.error, t, Upload.LIST_IGNORE)}
-          customRequest={async ({ file, onSuccess, onError }) => {
-            try {
-              await handleUploadTranslated(d, file, {});
-              onSuccess?.("ok");
-            } catch (err) {
-              onError?.(err);
-            }
-          }}
-        >
-          <Button type="primary" icon={<UploadOutlined />}>{t("traducteurDemandesList.actions.addTranslation")}</Button>
-        </Upload>
-      )}
-    </div>
-  );
+    );
+  };
 
   const columns = useMemo(
     () => [
@@ -525,6 +561,25 @@ export default function DossierATraiterTraducteur() {
             )}
           </Space>
         )}
+      </Modal>
+
+      {/* Popup résultat envoi fichier traduit */}
+      <Modal
+        open={uploadResult.visible}
+        onCancel={closeUploadResultModal}
+        footer={
+          <Button type="primary" onClick={closeUploadResultModal}>
+            {t("common.ok") || "OK"}
+          </Button>
+        }
+        closable
+        width={440}
+      >
+        <Result
+          status={uploadResult.success ? "success" : "error"}
+          title={uploadResult.success ? (t("traducteurDemandesList.uploadResult.successTitle") || "Envoi réussi") : (t("traducteurDemandesList.uploadResult.errorTitle") || "Échec de l'envoi")}
+          subTitle={uploadResult.message}
+        />
       </Modal>
 
       {/* Prévisualisation des fichiers dans l'application */}

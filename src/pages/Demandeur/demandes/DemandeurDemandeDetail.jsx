@@ -2,13 +2,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Button, Card, Descriptions, Space, Tag, Typography, Divider, Breadcrumb } from "antd";
-import { EditOutlined, FileTextOutlined } from "@ant-design/icons";
+import { Button, Card, Descriptions, Space, Tag, Typography, Divider, Breadcrumb, Modal, Spin, message } from "antd";
+import { EditOutlined, FileTextOutlined, FilePdfOutlined } from "@ant-design/icons";
 import demandeService from "@/services/demandeService";
+import documentService from "@/services/documentService";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const statusColor = (s) =>
   s === "VALIDATED" ? "green" :
@@ -24,6 +25,9 @@ export default function DemandeurDemandeDetail() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [acceptanceLetterDoc, setAcceptanceLetterDoc] = useState(null);
+  const [loadingLetter, setLoadingLetter] = useState(false);
+  const [preview, setPreview] = useState({ open: false, url: "", title: "" });
 
   useEffect(() => {
     (async () => {
@@ -32,6 +36,52 @@ export default function DemandeurDemandeDetail() {
       setLoading(false);
     })();
   }, [demandeId]);
+
+  useEffect(() => {
+    if (!data?.demande || data.demande.status !== "VALIDATED" || !demandeId) return;
+    setLoadingLetter(true);
+    (async () => {
+      try {
+        const res = await documentService.listByDemande(demandeId);
+        const list = Array.isArray(res) ? res : (res?.documents || res?.data || []);
+        const doc = list.find((item) => (item.type || "").toUpperCase() === "LETTRE_ACCEPTATION");
+        setAcceptanceLetterDoc(doc || null);
+      } catch (e) {
+        setAcceptanceLetterDoc(null);
+      } finally {
+        setLoadingLetter(false);
+      }
+    })();
+  }, [data?.demande?.status, demandeId]);
+
+  useEffect(() => {
+    return () => {
+      if (preview.url && preview.url.startsWith("blob:")) {
+        URL.revokeObjectURL(preview.url);
+      }
+    };
+  }, [preview.url]);
+
+  const openAcceptanceLetter = async () => {
+    if (!acceptanceLetterDoc?.id) return;
+    try {
+      const blob = await documentService.getContent(acceptanceLetterDoc.id, { type: "original", display: true });
+      const url = URL.createObjectURL(blob);
+      setPreview({
+        open: true,
+        url,
+        title: t("demandeDetail.acceptanceLetter.previewTitle"),
+      });
+    } catch (error) {
+      if (error.response?.status === 403) {
+        message.error(t("demandeDetail.acceptanceLetter.accessDenied") || "Accès refusé.");
+      } else if (error.response?.status === 404) {
+        message.error(t("demandeDetail.acceptanceLetter.notFound") || "Document non disponible.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("demandeDetail.acceptanceLetter.openError"));
+      }
+    }
+  };
 
   const d = data?.demande, p = data?.payment, tr = data?.transaction;
   const editable = canEditStatus(d?.status);
@@ -96,6 +146,29 @@ export default function DemandeurDemandeDetail() {
                   {d.observation || t("demandeDetail.common.na")}
                 </Descriptions.Item>
               </Descriptions>
+
+              {/* Lettre d'acceptation (visible uniquement si candidature acceptée) */}
+              {d.status === "VALIDATED" && (
+                <>
+                  <Divider>{t("demandeDetail.acceptanceLetter.sectionTitle")}</Divider>
+                  <Card size="small" className="mb-4">
+                    {loadingLetter ? (
+                      <Space><Spin size="small" /><Text type="secondary">{t("demandeDetail.acceptanceLetter.loading")}</Text></Space>
+                    ) : acceptanceLetterDoc ? (
+                      <Space wrap>
+                        <Button type="primary" icon={<FilePdfOutlined />} onClick={openAcceptanceLetter}>
+                          {t("demandeDetail.acceptanceLetter.viewButton")}
+                        </Button>
+                        {acceptanceLetterDoc.createdAt && (
+                          <Text type="secondary">{t("demandeDetail.acceptanceLetter.addedOn")} {fmtDateTime(acceptanceLetterDoc.createdAt)}</Text>
+                        )}
+                      </Space>
+                    ) : (
+                      <Text type="secondary">{t("demandeDetail.acceptanceLetter.notYetAvailable")}</Text>
+                    )}
+                  </Card>
+                </>
+              )}
 
               {/* Académique */}
               <Divider>{t("demandeDetail.sections.academic")}</Divider>
@@ -225,6 +298,36 @@ export default function DemandeurDemandeDetail() {
             </>
           )}
         </Card>
+
+        {/* Modal aperçu PDF lettre d'acceptation */}
+        <Modal
+          open={preview.open}
+          title={preview.title}
+          onCancel={() => {
+            if (preview.url?.startsWith("blob:")) URL.revokeObjectURL(preview.url);
+            setPreview({ open: false, url: "", title: "" });
+          }}
+          footer={[
+            preview.url ? (
+              <a key="newtab" href={preview.url} target="_blank" rel="noreferrer">
+                <Button>{t("demandeDetail.acceptanceLetter.openInNewTab")}</Button>
+              </a>
+            ) : null,
+            <Button key="close" type="primary" onClick={() => { if (preview.url?.startsWith("blob:")) URL.revokeObjectURL(preview.url); setPreview({ open: false, url: "", title: "" }); }}>
+              {t("demandeDetail.acceptanceLetter.close")}
+            </Button>,
+          ].filter(Boolean)}
+          width="95vw"
+          style={{ top: 20, paddingBottom: 0, maxWidth: "1200px" }}
+          styles={{ body: { height: "calc(95vh - 110px)", padding: 0 } }}
+          destroyOnClose
+        >
+          {preview.url ? (
+            <iframe src={preview.url} title="lettre-acceptation" style={{ width: "100%", height: "100%", border: "none" }} />
+          ) : (
+            <div style={{ padding: 16 }}><Text type="secondary">{t("demandeDetail.acceptanceLetter.noContent")}</Text></div>
+          )}
+        </Modal>
       </div>
     </div>
   );

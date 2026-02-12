@@ -21,10 +21,17 @@
         "notifications": "通知",
         "required": "此字段为必填项",
         "back": "返回",
+        "yes": "是",
+        "na": "不适用",
+        "ok": "确定",
         "upload": {
             "pdfOnly": "仅接受 PDF 文件。",
             "maxSize": "文件最大大小为 5 MB。"
-        }
+        },
+        "editProfile": "Edit Profile",
+        "birthDate": "Date of Birth",
+        "birthPlace": "Place of Birth",
+        "translator": "Translator"
     },
     "adminConfig": {
         "title": "设置",
@@ -93,7 +100,9 @@
         "genericTitle": "通知",
         "genericMessage": "您有一条新通知",
         "orgDemandeTitle": "与您相关的申请",
-        "orgDemandeMessage": "有一条共享申请与您的机构相关（详见代码）"
+        "orgDemandeMessage": "有一条共享申请与您的机构相关（详见代码）",
+        "moreNew": "{{count}} more new notification(s)",
+        "fullList": "Full list"
     },
     "roles": {
         "ADMIN": "管理员",
@@ -232,7 +241,10 @@
     },
     "demandesAuthentification": {
         "title": "文件认证申请",
-        "breadcrumb": { "dashboard": "仪表板", "list": "认证申请" },
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "list": "认证申请"
+        },
         "createBtn": "新建认证申请",
         "createTitle": "创建认证申请",
         "submitCreate": "创建申请",
@@ -261,7 +273,10 @@
             "actions": "操作",
             "demandeur": "申请人"
         },
-        "actions": { "detail": "详情", "notify": "通知" },
+        "actions": {
+            "detail": "详情",
+            "notify": "通知"
+        },
         "fields": {
             "codeADN": "ADN码",
             "objet": "主题",
@@ -274,15 +289,37 @@
             "status": "状态",
             "createdAt": "创建于"
         },
-        "validation": { "attributedOrgRequired": "请选择指定机构。" },
+        "validation": {
+            "attributedOrgRequired": "请选择指定机构。"
+        },
         "status": {
             "EN_ATTENTE": "待处理",
             "DOCUMENTS_RECUS": "已收文件",
             "TRAITEE": "已处理",
             "ANNULEE": "已取消"
         },
-        "doc": { "type": "类型", "mention": "说明", "addedBy": "添加者", "date": "日期", "file": "文件", "viewFile": "查看文件", "addDocument": "添加文档", "institutDetails": "提交文件的机构详情", "orgName": "名称", "orgType": "类型", "orgEmail": "邮箱", "orgPhone": "电话", "orgAddress": "地址", "orgWebsite": "网站", "orgCountry": "国家" },
-        "toasts": { "loadError": "加载申请时出错。" },
+        "doc": {
+            "type": "类型",
+            "mention": "说明",
+            "addedBy": "添加者",
+            "date": "日期",
+            "file": "文件",
+            "viewFile": "查看文件",
+            "addDocument": "添加文档",
+            "institutDetails": "提交文件的机构详情",
+            "orgName": "名称",
+            "orgType": "类型",
+            "orgEmail": "邮箱",
+            "orgPhone": "电话",
+            "orgAddress": "地址",
+            "orgWebsite": "网站",
+            "orgCountry": "国家"
+        },
+        "toasts": {
+            "loadError": "加载失败。",
+            "createError": "创建失败。",
+            "orgLoadError": "加载机构失败。"
+        },
         "documentTypes": {
             "DIPLOMA": "文凭",
             "TRANSCRIPT": "成绩单",
@@ -322,17 +359,42 @@
             "success": "通知已成功发送。",
             "error": "发送通知时出错。"
         },
-        "toasts": {
-            "loadError": "加载失败。",
-            "createError": "创建失败。",
-            "orgLoadError": "加载机构失败。"
+        "submitPayAndCreate": "Pay and create request",
+        "paymentRequiredFirst": "Payment required",
+        "paymentRequiredFirstDesc": "The authentication request is only created after your payment is confirmed. Fill in the form then pay the amount shown.",
+        "paymentStepTitle": "Pay to create your request",
+        "paymentStepDesc": "Choose a payment method below. Once payment is confirmed, your request will be created and you will receive your ADN code.",
+        "backToForm": "Back to form",
+        "payment": {
+            "title": "Payment",
+            "status": "Payment status",
+            "amount": "Amount",
+            "paid": "Paid",
+            "unpaid": "Unpaid",
+            "payButton": "Pay for this request",
+            "alreadyPaid": "This authentication request is already paid.",
+            "loading": "Loading payment status..."
+        },
+        "paymentPage": {
+            "title": "Payment - Authentication request",
+            "breadcrumbList": "Authentication requests",
+            "breadcrumbDetail": "Detail",
+            "breadcrumbPayment": "Payment",
+            "summaryTitle": "Summary",
+            "backToDetail": "Back to request detail"
         }
     },
     "adminDemandesAuthentification": {
         "title": "认证申请（全部）",
-        "breadcrumb": { "dashboard": "仪表板", "list": "认证申请" },
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "list": "认证申请"
+        },
         "detailTitle": "认证申请详情",
-        "filters": { "search": "搜索（ADN码、主题、申请人…）", "status": "状态" },
+        "filters": {
+            "search": "搜索（ADN码、主题、申请人…）",
+            "status": "状态"
+        },
         "columns": {
             "codeADN": "ADN码",
             "objet": "主题",
@@ -343,9 +405,16 @@
             "documents": "文件",
             "actions": "操作"
         },
-        "actions": { "detail": "详情", "refresh": "刷新" },
-        "pagination": { "total": "共 {{total}} 条申请" },
-        "toasts": { "loadError": "加载申请失败。" },
+        "actions": {
+            "detail": "详情",
+            "refresh": "刷新"
+        },
+        "pagination": {
+            "total": "共 {{total}} 条申请"
+        },
+        "toasts": {
+            "loadError": "加载申请失败。"
+        },
         "statusLabel": "状态",
         "statusUpdateSuccess": "状态已更新。",
         "statusUpdateError": "更新状态时出错。",
@@ -415,7 +484,8 @@
                 "universite": "大学 / 学院",
                 "lycee": "高中",
                 "entreprise": "企业",
-                "traducteur": "翻译"
+                "traducteur": "翻译",
+                "institut": "Institute"
             },
             "placeholders": {
                 "name": "组织名称",
@@ -570,7 +640,7 @@
             "COLLEGE": "学院",
             "BANQUE": "银行",
             "UNIVERSITE": "大学",
-            "INSTITUT":  "学院",
+            "INSTITUT": "学院",
             "LYCEE": "中学",
             "ENTREPRISE": "公司",
             "TRADUCTEUR": "翻译机构"
@@ -633,7 +703,9 @@
             "detail": "详情"
         },
         "actions": {
-            "documents": "文件"
+            "documents": "文件",
+            "edit": "Edit application",
+            "editRedirect": "Redirecting to edit form..."
         },
         "sections": {
             "case": "档案",
@@ -720,6 +792,9 @@
         "tabs": {
             "documents": "文档",
             "info": "申请信息"
+        },
+        "types": {
+            "lettreAcceptation": "录取信"
         },
         "columns": {
             "ownerOrg": "所属组织",
@@ -830,7 +905,8 @@
             "translatedCount": "已翻译: {{count}}",
             "myDemandes": "我的请求",
             "breakdown": "查看下面的明细",
-            "translated": "已翻译: {{count}}"
+            "translated": "已翻译: {{count}}",
+            "myApplications": "My applications"
         },
         "activity": {
             "title": "最近活动",
@@ -846,7 +922,8 @@
                 "typeRequest": "申请",
                 "typePayment": "付款",
                 "total": "共 {{total}} 条"
-            }
+            },
+            "applicationLine": "Application {{code}} — {{status}} — {{date}}"
         },
         "toasts": {
             "loadError": "加载统计错误"
@@ -861,12 +938,14 @@
         "breakdowns": {
             "demandesByStatus": "按状态的我的请求",
             "transactionsByStatus": "按状态的我的交易",
-            "paymentsByStatus": "按状态的我的付款"
+            "paymentsByStatus": "按状态的我的付款",
+            "applicationsByStatus": "My applications by status"
         },
         "tables": {
             "recentDemandes": "最近的请求",
             "recentTransactions": "最近的交易",
-            "recentPayments": "最近的付款"
+            "recentPayments": "最近的付款",
+            "recentApplications": "Recent applications"
         }
     },
     "institutDashboard": {
@@ -879,8 +958,12 @@
             "institute": "学院"
         },
         "traducteur": {
-            "header": { "title": "翻译机构控制台" },
-            "breadcrumb": { "institute": "翻译机构" },
+            "header": {
+                "title": "翻译机构控制台"
+            },
+            "breadcrumb": {
+                "institute": "翻译机构"
+            },
             "kpis": {
                 "assignedRequests": "已分配申请",
                 "docsToTranslate": "待翻译文档",
@@ -2147,6 +2230,7 @@
             "COMPLETED": "已完成",
             "CANCELLED": "已取消"
         },
+        "validatedNoAdd": "申请已通过验证 — 不允许添加文档",
         "organization": {
             "name": "组织"
         },
@@ -2209,7 +2293,23 @@
             "translated": "已翻译",
             "isTranslated": "是否翻译",
             "addedAt": "添加时间",
-            "count": "{{count}}"
+            "count": "{{count}}",
+            "delete": "删除",
+            "deleteConfirmTitle": "确定删除此文档？",
+            "deleteConfirmMessage": "此操作无法撤销。"
+        },
+        "acceptanceLetter": {
+            "title": "录取信",
+            "view": "查看 / 下载",
+            "addedOn": "添加于",
+            "modalTitle": "添加录取信",
+            "modalHint": "请选择录取信 PDF 文件（最大 5 MB）。",
+            "save": "保存到申请",
+            "dragText": "将文件拖到此处或点击选择",
+            "dragHint": "仅限 PDF，最大 5 MB",
+            "uploadSuccess": "录取信已保存。",
+            "uploadError": "保存失败。",
+            "selectFile": "请选择一个 PDF 文件。"
         },
         "modals": {
             "statusTitle": "更新状态与备注",
@@ -2237,6 +2337,7 @@
             "loadError": "加载申请失败",
             "statusSaved": "状态/备注已更新",
             "statusSaveError": "更新失败",
+            "docDeleted": "文档已删除。",
             "urlMissing": "URL 不可用",
             "stripeSecretMissing": "缺少 Stripe 客户端密钥",
             "sessionExpired": "会话已过期。请重新登录。",
@@ -2279,7 +2380,8 @@
         "buttons": {
             "back": "返回",
             "cancel": "取消",
-            "save": "保存文档"
+            "save": "保存文档",
+            "seeDemande": "查看申请"
         },
         "form": {
             "code": "申请编码",
@@ -2310,7 +2412,16 @@
             "ATTESTATION": "证明",
             "RELEVE": "成绩单",
             "DIPLOME": "文凭",
-            "AUTRE": "其他"
+            "AUTRE": "其他",
+            "LETTRE_ACCEPTATION": "录取信"
+        },
+        "titleAcceptanceLetter": "添加录取信",
+        "validatedOnlyTargetCanAdd": "该申请已通过验证。仅收件人可添加录取信。其他机构无法再添加文档。",
+        "acceptanceLetterAlreadyExists": "该申请已添加录取信。",
+        "resultModal": {
+            "successTitle": "文档已添加",
+            "errorTitle": "添加失败",
+            "goToList": "前往申请列表"
         }
     },
     "auth": {
@@ -2384,7 +2495,9 @@
                 "orgEmailRequired": "组织电子邮件是必需的。",
                 "orgEmailInvalid": "请输入组织的有效电子邮件地址。",
                 "formSummary": "请更正下方红色标记字段中的错误。",
-                "general": "注册过程中发生错误。"
+                "general": "注册过程中发生错误。",
+                "formSummaryRequired": "Required fields missing or invalid (according to your profile and organization type):",
+                "unknownField": "Error on this field"
             },
             "roles": {
                 "DEMANDEUR": "申请人",
@@ -2420,6 +2533,11 @@
                 "orgWebsite": "www.organization.com",
                 "orgAddress": "完整组织地址",
                 "selectType": "选择类型"
+            },
+            "successModal": {
+                "title": "Registration successful",
+                "content": "Your registration has been recorded. Please check your email to verify and activate your account by clicking the link we sent you.",
+                "goToLogin": "Go to login"
             }
         },
         "resetPassword": {
@@ -2551,7 +2669,9 @@
         "error": "获取统计信息时出错"
     },
     "traducteurDashboard": {
-        "breadcrumb": { "dashboard": "控制台" },
+        "breadcrumb": {
+            "dashboard": "控制台"
+        },
         "hello": "你好，{{firstName}} {{lastName}}",
         "welcome": "欢迎使用翻译员空间。",
         "links": {
@@ -2704,7 +2824,8 @@
             "BANQUE": "银行",
             "COLLEGE": "学院",
             "LYCEE": "高中",
-            "UNIVERSITE": "大学 / 学院"
+            "UNIVERSITE": "大学 / 学院",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "塞内加尔",
@@ -2970,7 +3091,18 @@
             "total": "总订阅数",
             "active": "活跃",
             "expired": "已过期",
-            "expiringSoon": "即将过期"
+            "expiringSoon": "即将过期",
+            "titleFull": "Subscription statistics",
+            "breadcrumb": "Subscription statistics",
+            "summaryTitle": "Summary",
+            "revenueTotal": "Total revenue",
+            "monthlyTitle": "Details by month",
+            "noData": "No data",
+            "columns": {
+                "month": "Month",
+                "count": "Number of subscriptions",
+                "revenue": "Revenue (USD)"
+            }
         },
         "modals": {
             "archiveTitle": "归档此订阅？",
@@ -2981,6 +3113,148 @@
             "deleteContent": "此操作不可逆。所有数据将丢失。",
             "deleteOk": "删除",
             "deleteCancel": "取消"
+        },
+        "common": {
+            "currency": "USD"
+        },
+        "expiringSoon": {
+            "title": "Subscriptions expiring soon",
+            "breadcrumb": "Subscriptions expiring soon",
+            "alert": "Subscriptions expiring in the next {{days}} days",
+            "daysAddon": "Days",
+            "daysPlaceholder": "Number of days",
+            "columns": {
+                "expirationDate": "Expiration date"
+            },
+            "daysLabel": "{{count}} days"
+        },
+        "renew": {
+            "title": "Renew subscription #{{id}}…",
+            "breadcrumb": "Renew",
+            "modal": {
+                "title": "Renew subscription"
+            },
+            "current": {
+                "title": "Current subscription",
+                "organization": "Organization",
+                "period": "Current period",
+                "amount": "Current amount"
+            },
+            "alert": {
+                "title": "Renewal",
+                "description": "Set the new period and amount. The new period must start after the end of the current subscription."
+            },
+            "form": {
+                "period": {
+                    "label": "New period",
+                    "required": "Period is required"
+                },
+                "amount": {
+                    "label": "New amount (USD)",
+                    "required": "Amount is required",
+                    "min": "Amount must be positive"
+                },
+                "submit": {
+                    "label": "Renew subscription",
+                    "loading": "Renewal in progress..."
+                }
+            },
+            "messages": {
+                "success": "Subscription renewed successfully",
+                "error": "Renewal failed. Please check dates and amount."
+            }
+        },
+        "details": {
+            "title": "Subscription details #{{id}}…",
+            "breadcrumb": "Details",
+            "info": {
+                "title": "Subscription information",
+                "id": "ID",
+                "organization": "Organization",
+                "period": "Period",
+                "status": "Status",
+                "amount": "Amount",
+                "createdAt": "Created at",
+                "updatedAt": "Updated at"
+            },
+            "payments": {
+                "title": "Payment history",
+                "line": "{{amount}} {{currency}} via {{provider}}{{ref}}"
+            },
+            "actions": {
+                "title": "Actions",
+                "deleteForever": "Delete permanently"
+            }
+        },
+        "edit": {
+            "title": "Edit subscription #{{id}}…",
+            "breadcrumb": "Edit",
+            "current": {
+                "title": "Current information",
+                "organization": "Organization",
+                "createdAt": "Created at",
+                "status": "Status"
+            },
+            "alert": {
+                "title": "Warning",
+                "description": "Changing dates may cause overlaps with other subscriptions."
+            },
+            "form": {
+                "organization": {
+                    "label": "Organization",
+                    "required": "Organization is required",
+                    "placeholder": "Select an organization"
+                },
+                "period": {
+                    "label": "Subscription period",
+                    "required": "Period is required"
+                },
+                "amount": {
+                    "label": "Amount (USD)",
+                    "required": "Amount is required",
+                    "min": "Amount must be positive"
+                },
+                "submit": {
+                    "label": "Update",
+                    "loading": "Updating..."
+                }
+            },
+            "messages": {
+                "success": "Subscription updated successfully",
+                "error": "Update failed. Please check dates and amount."
+            }
+        },
+        "create": {
+            "title": "Create a new subscription",
+            "breadcrumb": "New subscription",
+            "alert": {
+                "title": "Important information",
+                "description": "Dates must not overlap with an existing subscription for the same organization. Amount must be positive and organization must be active."
+            },
+            "form": {
+                "organization": {
+                    "label": "Organization",
+                    "required": "Organization is required",
+                    "placeholder": "Select an organization"
+                },
+                "period": {
+                    "label": "Subscription period",
+                    "required": "Period is required"
+                },
+                "amount": {
+                    "label": "Amount (USD)",
+                    "required": "Amount is required",
+                    "min": "Amount must be positive"
+                },
+                "submit": {
+                    "label": "Create subscription",
+                    "loading": "Creation in progress..."
+                }
+            },
+            "messages": {
+                "success": "Subscription created successfully",
+                "error": "Subscription creation failed. Please check dates and amount."
+            }
         }
     },
     "adminPayments": {
@@ -3585,7 +3859,8 @@
             "role": "角色",
             "permissions": "权限",
             "password": "密码",
-            "confirmPassword": "确认密码"
+            "confirmPassword": "确认密码",
+            "organization": "Organization"
         },
         "loadingPermissions": "加载权限中...",
         "placeholders": {
@@ -3593,7 +3868,8 @@
             "lastName": "姓氏",
             "email": "电子邮件",
             "phone": "电话",
-            "role": "选择角色"
+            "role": "选择角色",
+            "organization": "Select an organization"
         },
         "dividers": {
             "permissions": "权限",
@@ -3614,7 +3890,8 @@
             "passwordRequired": "需要密码",
             "confirmRequired": "需要确认密码",
             "passwordMismatch": "密码不匹配",
-            "roleRequired": "需要角色"
+            "roleRequired": "需要角色",
+            "organizationRequired": "Organization is required for this role"
         },
         "buttons": {
             "submit": "提交",
@@ -3757,7 +4034,10 @@
             "country": "居住国家",
             "role": "角色",
             "status": "状态",
-            "permissions": "权限"
+            "permissions": "权限",
+            "adress": "Address",
+            "gender": "Gender",
+            "organization": "Organization"
         },
         "loadingPermissions": "加载权限中...",
         "placeholders": {
@@ -3765,7 +4045,10 @@
             "lastName": "姓氏",
             "phone": "电话",
             "country": "居住国家",
-            "role": "选择角色"
+            "role": "选择角色",
+            "adress": "Address",
+            "gender": "Select a gender",
+            "organization": "Select an organization"
         },
         "dividers": {
             "permissions": "权限"
@@ -3777,7 +4060,9 @@
             "firstNameRequired": "需要名字",
             "lastNameRequired": "需要姓氏",
             "emailInvalid": "无效的电子邮件",
-            "roleRequired": "需要角色"
+            "roleRequired": "需要角色",
+            "gender": "Gender is required",
+            "organizationRequired": "Organization is required for this role"
         },
         "buttons": {
             "save": "保存",
@@ -3789,14 +4074,18 @@
             "updateError": "发送数据错误",
             "deleteSuccess": "用户删除成功",
             "deleteError": "删除用户时出错",
-            "deleteWarning": "此操作不可逆。用户将被归档。"
+            "deleteWarning": "此操作不可逆。用户将被归档。",
+            "orgFetchError": "Error loading organizations"
         },
         "labels": {
             "active": "活跃"
         },
         "roles": {
             "ADMIN": "管理员",
-            "SUPER_ADMIN": "超级管理员"
+            "SUPER_ADMIN": "超级管理员",
+            "MALE": "Male",
+            "FEMALE": "Female",
+            "OTHER": "Other"
         }
     },
     "traducteurDemandesList": {
@@ -3840,6 +4129,7 @@
             "documents": "文档",
             "translate": "翻译",
             "addTranslation": "添加翻译",
+            "uploading": "上传中…",
             "apply": "应用"
         },
         "messages": {
@@ -3848,6 +4138,8 @@
             "updateError": "更新状态失败",
             "documentsError": "加载文档错误",
             "translationAdded": "翻译已添加",
+            "translationNotReady": "翻译尚不可用。",
+            "downloadSuccess": "下载成功",
             "uploadError": "上传失败"
         },
         "pagination": {
@@ -3869,7 +4161,8 @@
             "encrypted": "已加密",
             "notEncrypted": "未加密",
             "blockchain": "区块链",
-            "original": "原始"
+            "original": "原始",
+            "download": "下载"
         },
         "table": {
             "title": "已分配的请求列表"
@@ -3877,6 +4170,10 @@
         "modal": {
             "documentsTitle": "请求文档",
             "noDocuments": "无文档"
+        },
+        "uploadResult": {
+            "successTitle": "上传成功",
+            "errorTitle": "上传失败"
         }
     },
     "institutAbos": {
@@ -4080,17 +4377,19 @@
             "orgLoadError": "加载组织失败",
             "priceInvalid": "服务器上的订阅金额无效。",
             "filieresLoadError": "无法加载此组织的专业",
-            "stripeInitError": "无法初始化 Stripe",
-            "stripeKeyMissing": "Stripe 公钥缺失",
-            "stripeInvalidParams": "Stripe 参数无效",
-            "stripeSecretInvalid": "Stripe 客户端密钥无效/缺失",
-            "paymentIntentError": "无法创建 PaymentIntent",
-            "stripeSuccess": "Stripe 支付已确认！",
-            "paypalSuccess": "PayPal 支付已确认！",
-            "paymentError": "支付失败：{{error}}",
-            "paymentRequired": "请在提交前完成支付",
-            "demandeCreated": "请求已创建（邀请和通知已发送）",
-            "creationError": "创建失败"
+            "stripeInitError": "无法初始化Stripe",
+            "stripeKeyMissing": "缺少Stripe公钥",
+            "stripeInvalidParams": "无效的Stripe参数",
+            "stripeSecretInvalid": "无效/缺少Stripe客户端密钥",
+            "paymentIntentError": "无法创建PaymentIntent",
+            "stripeSuccess": "Stripe付款已确认！",
+            "paypalSuccess": "PayPal付款已确认！",
+            "paymentError": "付款失败：{{error}}",
+            "paymentRequired": "请在提交前完成付款",
+            "demandeCreated": "请求已创建（已发送邀请和通知）",
+            "creationError": "创建失败",
+            "paypalError": "PayPal错误：{{error}}",
+            "required": "必填"
         },
         "sections": {
             "personalInfo": "1. 个人信息",
@@ -4275,27 +4574,15 @@
             "yes": "是",
             "no": "否"
         },
-        "messages": {
-            "draftSaveError": "无法保存草稿",
-            "draftLoaded": "草稿已加载",
-            "draftReset": "草稿已重置",
-            "draftResetError": "无法重置草稿",
-            "orgLoadError": "加载组织失败",
-            "priceInvalid": "服务器上的订阅金额无效。",
-            "filieresLoadError": "无法加载此组织的专业",
-            "stripeInitError": "无法初始化Stripe",
-            "stripeKeyMissing": "缺少Stripe公钥",
-            "stripeInvalidParams": "无效的Stripe参数",
-            "stripeSecretInvalid": "无效/缺少Stripe客户端密钥",
-            "paymentIntentError": "无法创建PaymentIntent",
-            "stripeSuccess": "Stripe付款已确认！",
-            "paypalSuccess": "PayPal付款已确认！",
-            "paymentError": "付款失败：{{error}}",
-            "paymentRequired": "请在提交前完成付款",
-            "demandeCreated": "请求已创建（已发送邀请和通知）",
-            "creationError": "创建失败",
-            "paypalError": "PayPal错误：{{error}}",
-            "required": "必填"
+        "formMessages": {
+            "stripeSuccess": "Stripe payment confirmed!",
+            "paypalSuccess": "PayPal payment confirmed!",
+            "paymentError": "Payment failed: {{error}}",
+            "paymentRequired": "Please complete payment before submitting",
+            "demandeCreated": "Application created (invitations & notifications sent)",
+            "creationError": "Creation failed",
+            "paypalError": "PayPal error: {{error}}",
+            "required": "Required"
         }
     },
     "demandeurDemandePayment": {
@@ -4382,7 +4669,8 @@
             "BANQUE": "银行",
             "COLLEGE": "学院",
             "LYCEE": "高中",
-            "UNIVERSITE": "大学 / 学院"
+            "UNIVERSITE": "大学 / 学院",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "塞内加尔",
@@ -4698,6 +4986,7 @@
             "deleteError": "Deletion failed",
             "noFileAvailable": "No file available to display.",
             "noFileToDownload": "No file to download.",
+            "translationNotFound": "翻译文件尚不可用。文件可能正在处理中。请稍后刷新页面。",
             "previewTitleOriginal": "Original PDF — {{id}}",
             "previewTitleTranslated": "Translated PDF — {{id}}"
         },
@@ -4921,5 +5210,210 @@
         "title": "我的组织",
         "loading": "加载中...",
         "error": "加载组织时出错"
+    },
+    "orgTypes": {
+        "COLLEGE": "College",
+        "BANQUE": "Bank",
+        "UNIVERSITE": "University",
+        "INSTITUT": "Institute",
+        "LYCEE": "High School",
+        "ENTREPRISE": "Company",
+        "TRADUCTEUR": "Translator"
+    },
+    "adminDocuments": {
+        "title": "Documents",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "documents": "Documents"
+        },
+        "columns": {
+            "demande": "Application",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtained",
+            "translated": "Translated",
+            "ownerOrg": "Organization",
+            "createdAt": "Created at",
+            "actions": "Actions"
+        },
+        "types": {
+            "ATTESTATION": "Attestation",
+            "RELEVE": "Transcript",
+            "DIPLOME": "Diploma",
+            "OTHER": "Other"
+        },
+        "filters": {
+            "searchPlaceholder": "Search (DNA code…)",
+            "demandePlaceholder": "By application (ID)",
+            "orgPlaceholder": "By org. (ID)",
+            "translatedPlaceholder": "Translated?",
+            "translatedYes": "Yes",
+            "translatedNo": "No"
+        },
+        "actions": {
+            "viewOriginal": "View original",
+            "viewTranslated": "View translated",
+            "details": "Details",
+            "delete": "Delete",
+            "refresh": "Refresh"
+        },
+        "drawer": {
+            "title": "Document details",
+            "demande": "Application",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtained",
+            "owner": "Organization",
+            "translationStatus": "Translated",
+            "encrypted": "Encrypted",
+            "createdAt": "Created at",
+            "encryptedAt": "Encrypted at",
+            "quickActions": "Quick actions"
+        },
+        "translation": {
+            "translated": "Translated",
+            "notTranslated": "No"
+        },
+        "encryption": {
+            "yes": "Yes",
+            "no": "No"
+        },
+        "preview": {
+            "title": "Document",
+            "loading": "Loading…"
+        },
+        "messages": {
+            "loadError": "Error loading documents",
+            "urlUnavailable": "URL unavailable",
+            "openError": "Unable to open document",
+            "sessionExpired": "Session expired. Please log in again.",
+            "accessDenied": "You do not have access to this document.",
+            "deleted": "Document deleted",
+            "deleteError": "Deletion failed"
+        },
+        "modals": {
+            "delete": {
+                "title": "Delete this document?",
+                "content": "This action cannot be undone.",
+                "okText": "Delete",
+                "cancelText": "Cancel"
+            }
+        }
+    },
+    "appsCalendar": {
+        "title": "Calendar",
+        "breadcrumbs": {
+            "home": "Home",
+            "calendar": "Calendar"
+        },
+        "events": {
+            "allEvents": "All Events",
+            "meeting": "Meeting",
+            "operations": "Operations",
+            "lunch": "Lunch",
+            "conference": "Conference",
+            "businessMeeting": "Business Meeting"
+        },
+        "options": {
+            "removeAfterDrop": "Remove after drop",
+            "addEvent": "Add Event"
+        }
+    },
+    "appsChat": {
+        "title": "Messaging Center",
+        "breadcrumbs": {
+            "home": "Home",
+            "chatbox": "Messages"
+        },
+        "menu": {
+            "profile": "Profile",
+            "profileSettings": "Profile Settings",
+            "delete": "Delete"
+        },
+        "status": {
+            "online": "Online"
+        },
+        "typing": "{{name}} is typing",
+        "placeholders": {
+            "message": "Enter message..."
+        }
+    },
+    "appsEmail": {
+        "title": "Email / Messages",
+        "breadcrumbs": {
+            "home": "Home",
+            "emails": "Emails"
+        },
+        "composeButton": "Compose",
+        "composeTitle": "Compose",
+        "menu": {
+            "inbox": "Inbox",
+            "starred": "Starred",
+            "spam": "Spam",
+            "sent": "Sent",
+            "drafts": "Drafts",
+            "trash": "Trash",
+            "notes": "Notes"
+        },
+        "placeholders": {
+            "to": "To",
+            "cc": "Cc",
+            "bcc": "Bcc"
+        },
+        "buttons": {
+            "sendNow": "Send Now"
+        },
+        "table": {
+            "name": "Name",
+            "subject": "Subject",
+            "dateTime": "Date & Time"
+        },
+        "pagination": {
+            "showing": "Showing {{from}} - {{to}} out of {{total}}"
+        },
+        "empty": {
+            "spam": "Hooray, no spam here!",
+            "drafts": "You don't have any saved drafts. Saving a draft allows you to keep a message you aren't ready to send yet.",
+            "trash": "No conversations in Trash.",
+            "notes": "No notes in Notes."
+        }
+    },
+    "miscComingSoon": {
+        "title": "We Are Coming Soon...",
+        "subtitle": "Start working with Applyons that can provide everything you need to generate awareness, drive traffic, connect.",
+        "countdown": {
+            "days": "Days",
+            "hours": "Hours",
+            "minutes": "Mins",
+            "seconds": "Secs"
+        },
+        "footer": "© 2026 applyons by"
+    },
+    "miscMaintenance": {
+        "title": "We Are Back Soon...",
+        "subtitle": "Start working with Applyons that can provide everything you need to generate awareness, drive traffic, connect.",
+        "minutesLabel": "Minutes",
+        "placeholders": {
+            "email": "Enter your email..."
+        },
+        "buttons": {
+            "subscribeNow": "Subscribe Now"
+        }
+    },
+    "miscThankyou": {
+        "title": "Thank You",
+        "subtitle": "Launch your campaign and benefit from our expertise on designing and managing conversion centered pages.",
+        "backToHome": "Back to Home"
+    },
+    "dashboardIndex": {
+        "greeting": "Hello, {{name}}",
+        "welcome": "Welcome!",
+        "filters": {
+            "yearly": "Yearly",
+            "monthly": "Monthly",
+            "weekly": "Weekly",
+            "today": "Today"
+        },
+        "export": "Export"
     }
 }

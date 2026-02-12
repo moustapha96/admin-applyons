@@ -25,6 +25,9 @@
         "notifications": "Notifications",
         "required": "This field is required",
         "back": "Back",
+        "yes": "Yes",
+        "na": "N/A",
+        "ok": "OK",
         "upload": {
             "pdfOnly": "Only PDF files are accepted.",
             "maxSize": "Maximum file size is 5 MB."
@@ -740,6 +743,20 @@
         "empty": {
             "noPayment": "No payment recorded."
         },
+        "acceptanceLetter": {
+            "sectionTitle": "Acceptance letter",
+            "loading": "Loading…",
+            "viewButton": "View acceptance letter",
+            "addedOn": "Added on",
+            "notYetAvailable": "The acceptance letter is not yet available.",
+            "previewTitle": "Acceptance letter",
+            "openInNewTab": "Open in new tab",
+            "noContent": "No content.",
+            "accessDenied": "Access denied.",
+            "notFound": "Document not available.",
+            "openError": "Unable to open the document.",
+            "close": "Close"
+        },
         "common": {
             "yes": "Yes",
             "no": "No",
@@ -762,6 +779,9 @@
         "tabs": {
             "documents": "Documents",
             "info": "Application Information"
+        },
+        "types": {
+            "lettreAcceptation": "Acceptance letter"
         },
         "columns": {
             "ownerOrg": "Owner Organization",
@@ -2190,6 +2210,7 @@
             "COMPLETED": "Completed",
             "CANCELLED": "Cancelled"
         },
+        "validatedNoAdd": "Application validated — document add not allowed",
         "organization": {
             "name": "Organization"
         },
@@ -2217,7 +2238,8 @@
             "pending": "PENDING",
             "inProgress": "IN_PROGRESS",
             "validated": "VALIDATED",
-            "rejected": "REJECTED"
+            "rejected": "REJECTED",
+            "addAcceptanceLetter": "Add acceptance letter"
         },
         "fields": {
             "code": "Code",
@@ -2252,7 +2274,23 @@
             "translated": "Translated",
             "isTranslated": "Is translated",
             "addedAt": "Added on",
-            "count": "{{count}}"
+            "count": "{{count}}",
+            "delete": "Delete",
+            "deleteConfirmTitle": "Delete this document?",
+            "deleteConfirmMessage": "This action cannot be undone."
+        },
+        "acceptanceLetter": {
+            "title": "Acceptance letter",
+            "view": "View / Download",
+            "addedOn": "Added on",
+            "modalTitle": "Add acceptance letter",
+            "modalHint": "Select the acceptance letter PDF file (max 5 MB).",
+            "save": "Save on application",
+            "dragText": "Drag file here or click to select",
+            "dragHint": "PDF only, 5 MB max",
+            "uploadSuccess": "Acceptance letter saved.",
+            "uploadError": "Save failed.",
+            "selectFile": "Please select a PDF file."
         },
         "modals": {
             "statusTitle": "Update status & note",
@@ -2280,6 +2318,7 @@
             "loadError": "Failed to load application",
             "statusSaved": "Status/Note updated",
             "statusSaveError": "Update failed",
+            "docDeleted": "Document deleted",
             "urlMissing": "URL unavailable",
             "stripeSecretMissing": "Stripe client secret missing",
             "sessionExpired": "Session expired. Please log in again.",
@@ -2353,7 +2392,22 @@
             "ATTESTATION": "CERTIFICATE",
             "RELEVE": "TRANSCRIPT",
             "DIPLOME": "DIPLOMA",
-            "AUTRE": "OTHER"
+            "AUTRE": "OTHER",
+            "LETTRE_ACCEPTATION": "Acceptance letter"
+        },
+        "titleAcceptanceLetter": "Add acceptance letter",
+        "validatedOnlyTargetCanAdd": "This application is validated. Only the recipient (target institute) can add the acceptance letter. Other institutes can no longer add documents.",
+        "acceptanceLetterAlreadyExists": "An acceptance letter has already been added for this application.",
+        "buttons": {
+            "back": "Back",
+            "cancel": "Cancel",
+            "save": "Save document",
+            "seeDemande": "View application"
+        },
+        "resultModal": {
+            "successTitle": "Document added",
+            "errorTitle": "Add failed",
+            "goToList": "Go to applications list"
         }
     },
     "institutAbos": {
@@ -4136,6 +4190,7 @@
             "documents": "Document(s)",
             "translate": "Translate",
             "addTranslation": "Add translation",
+            "uploading": "Uploading…",
             "apply": "Apply"
         },
         "messages": {
@@ -4144,6 +4199,8 @@
             "updateError": "Failed to update status",
             "documentsError": "Error loading documents",
             "translationAdded": "Translation added",
+            "translationNotReady": "The translation is not yet available.",
+            "downloadSuccess": "Download successful",
             "uploadError": "Upload failed"
         },
         "pagination": {
@@ -4165,7 +4222,8 @@
             "encrypted": "Encrypted",
             "notEncrypted": "Not encrypted",
             "blockchain": "Blockchain",
-            "original": "Original"
+            "original": "Original",
+            "download": "Download"
         },
         "table": {
             "title": "Assigned applications list"
@@ -4173,6 +4231,10 @@
         "modal": {
             "documentsTitle": "Application documents",
             "noDocuments": "No documents"
+        },
+        "uploadResult": {
+            "successTitle": "Upload successful",
+            "errorTitle": "Upload failed"
         }
     },
     "institutAbonnementSouscription": {
@@ -4983,6 +5045,7 @@
             "deleteError": "Deletion failed",
             "noFileAvailable": "No file available to display.",
             "noFileToDownload": "No file to download.",
+            "translationNotFound": "The translated file is not yet available. The file may be processing. Please refresh the page in a few moments.",
             "previewTitleOriginal": "Original PDF — {{id}}",
             "previewTitleTranslated": "Translated PDF — {{id}}"
         },

@@ -233,13 +233,13 @@ export default function OrganizationNotificationsList() {
 
             return (
               <Space size="small" wrap>
-                <Button
+                {/* <Button
                   size="small"
                   icon={<EyeOutlined />}
                   onClick={() => navigate(`${basePath}/notifications/${record.id}`)}
                 >
                   {tEn("orgNotifications.buttons.viewDetails")}
-                </Button>
+                </Button> */}
                 {isTargetOrg &&demandeId && (
                   <Button
                     size="small"

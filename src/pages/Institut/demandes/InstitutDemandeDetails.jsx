@@ -19,14 +19,19 @@ import {
   Select,
   Input,
   Spin,
+  Upload,
 } from "antd";
 import dayjs from "dayjs";
-import { ArrowLeftOutlined, FileTextOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, DeleteOutlined, FileTextOutlined, InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import demandeService from "@/services/demandeService";
 import documentService from "@/services/documentService";
 import { useTranslation } from "react-i18next";
 import { hasTranslation, normalizeDocument } from "@/utils/documentUtils";
 import { useAuth } from "@/hooks/useAuth";
+import { usePermissions } from "@/hooks/usePermissions";
+import { PDF_ACCEPT, validatePdfFile } from "@/utils/uploadValidation";
+
+const { Dragger } = Upload;
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -45,6 +50,7 @@ export default function InstitutDemandeDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { hasPermission } = usePermissions();
 
   const [loading, setLoading] = useState(false);
   const [demande, setDemande] = useState(null);
@@ -70,6 +76,11 @@ export default function InstitutDemandeDetails() {
 
   // Modal preview PDF
   const [preview, setPreview] = useState({ open: false, url: "", title: "" });
+
+  // Modal lettre d'acceptation (upload)
+  const [acceptanceLetterModalOpen, setAcceptanceLetterModalOpen] = useState(false);
+  const [acceptanceLetterFile, setAcceptanceLetterFile] = useState(null);
+  const [acceptanceLetterUploading, setAcceptanceLetterUploading] = useState(false);
   
   // Cleanup URL when preview closes
   useEffect(() => {
@@ -220,6 +231,73 @@ export default function InstitutDemandeDetails() {
 
   const openOrgPopup = (doc) => { setOrgDoc(doc); setOrgOpen(true); };
 
+  // Document "Lettre d'acceptation" (un seul par demande validée)
+  const acceptanceLetterDoc = useMemo(
+    () => docs.find((d) => (d.type || "").toUpperCase() === "LETTRE_ACCEPTATION") || null,
+    [docs]
+  );
+
+  const openAcceptanceLetterModal = () => {
+    setAcceptanceLetterFile(null);
+    setAcceptanceLetterModalOpen(true);
+  };
+
+  const submitAcceptanceLetter = async () => {
+    if (!acceptanceLetterFile || !demande?.code || !userOrgId) {
+      message.error(t("institutDemandeDetails.acceptanceLetter.selectFile"));
+      return;
+    }
+    const { valid, errorKey } = validatePdfFile(acceptanceLetterFile);
+    if (!valid) {
+      message.error(t(`common.upload.${errorKey}`));
+      return;
+    }
+    setAcceptanceLetterUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("demandeCode", demande.code);
+      formData.append("type", "LETTRE_ACCEPTATION");
+      formData.append("ownerOrgId", userOrgId);
+      formData.append("file", acceptanceLetterFile);
+      await documentService.create(formData);
+      message.success(t("institutDemandeDetails.acceptanceLetter.uploadSuccess"));
+      setAcceptanceLetterModalOpen(false);
+      setAcceptanceLetterFile(null);
+      await fetchDemande();
+    } catch (e) {
+      message.error(e?.response?.data?.message || e?.message || t("institutDemandeDetails.acceptanceLetter.uploadError"));
+    } finally {
+      setAcceptanceLetterUploading(false);
+    }
+  };
+
+  const handleDeleteDocument = (docRow) => {
+    if (!docRow?.id) return;
+    const isOwner = docRow.ownerOrgId === userOrgId || docRow.ownerOrg?.id === userOrgId;
+    if (!isOwner || !hasPermission("documents.delete")) return;
+    Modal.confirm({
+      title: t("institutDemandeDetails.docs.deleteConfirmTitle"),
+      content: t("institutDemandeDetails.docs.deleteConfirmMessage"),
+      okText: t("common.yes"),
+      okType: "danger",
+      cancelText: t("common.no"),
+      onOk: async () => {
+        try {
+          await documentService.remove(docRow.id);
+          message.success(t("institutDemandeDetails.toasts.docDeleted"));
+          await fetchDemande();
+        } catch (e) {
+          message.error(e?.response?.data?.message || e?.message || "Erreur lors de la suppression");
+        }
+      },
+    });
+  };
+
+  const canDeleteDoc = (r) => {
+    const isOwner = r.ownerOrgId === userOrgId || r.ownerOrg?.id === userOrgId;
+    return isOwner && hasPermission("documents.delete");
+  };
+
   // Colonnes documents
   const docColumns = [
     {
@@ -263,6 +341,17 @@ export default function InstitutDemandeDetails() {
         ),
     },
     { title: t("institutDemandeDetails.docs.addedAt"), dataIndex: "createdAt", width: 170, render: (v) => fmtDate(v, true) },
+    {
+      title: "",
+      key: "actions",
+      width: 90,
+      render: (_v, r) =>
+        canDeleteDoc(r) ? (
+          <Button type="text" danger size="small" icon={<DeleteOutlined />} onClick={() => handleDeleteDocument(r)} title={t("institutDemandeDetails.docs.delete")}>
+            {t("institutDemandeDetails.docs.delete")}
+          </Button>
+        ) : null,
+    },
   ];
 
   return (
@@ -368,6 +457,39 @@ export default function InstitutDemandeDetails() {
                       </Space>
                     </Card>
 
+                    {demande?.status === "VALIDATED" && (
+                      <>
+                        <Divider />
+                        <Card
+                          className="mt-3"
+                          title={t("institutDemandeDetails.acceptanceLetter.title")}
+                          size="small"
+                        >
+                          {acceptanceLetterDoc ? (
+                            <Space wrap>
+                              <Button
+                                type="primary"
+                                size="small"
+                                icon={<FileTextOutlined />}
+                                onClick={() => openUrl(acceptanceLetterDoc, "original")}
+                              >
+                                {t("institutDemandeDetails.acceptanceLetter.view")}
+                              </Button>
+                              <Tag color="green">{t("institutDemandeDetails.acceptanceLetter.addedOn")} {fmtDate(acceptanceLetterDoc.createdAt, true)}</Tag>
+                            </Space>
+                          ) : (
+                            <Button
+                              type="primary"
+                              icon={<UploadOutlined />}
+                              onClick={openAcceptanceLetterModal}
+                            >
+                              {t("institutDemandeDetails.buttons.addAcceptanceLetter")}
+                            </Button>
+                          )}
+                        </Card>
+                      </>
+                    )}
+
                     <Divider />
 
                     <Space wrap className="mb-2">
@@ -448,6 +570,53 @@ export default function InstitutDemandeDetails() {
             />
           </Form.Item>
         </Form>
+      </Modal>
+
+      {/* ===== Modal Lettre d'acceptation (sélection fichier + enregistrer) ===== */}
+      <Modal
+        open={acceptanceLetterModalOpen}
+        title={t("institutDemandeDetails.acceptanceLetter.modalTitle")}
+        onCancel={() => !acceptanceLetterUploading && setAcceptanceLetterModalOpen(false)}
+        footer={[
+          <Button key="cancel" onClick={() => setAcceptanceLetterModalOpen(false)} disabled={acceptanceLetterUploading}>
+            {t("institutDemandeDetails.buttons.close")}
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            loading={acceptanceLetterUploading}
+            disabled={!acceptanceLetterFile}
+            onClick={submitAcceptanceLetter}
+          >
+            {t("institutDemandeDetails.acceptanceLetter.save")}
+          </Button>,
+        ]}
+        destroyOnClose
+      >
+        <div className="mb-3">
+          <Text type="secondary">{t("institutDemandeDetails.acceptanceLetter.modalHint")}</Text>
+        </div>
+        <Dragger
+          accept={PDF_ACCEPT}
+          maxCount={1}
+          showUploadList={true}
+          beforeUpload={(file) => {
+            const { valid, errorKey } = validatePdfFile(file);
+            if (!valid) {
+              message.error(t(`common.upload.${errorKey}`));
+              return Upload.LIST_IGNORE;
+            }
+            setAcceptanceLetterFile(file);
+            return false;
+          }}
+          onRemove={() => setAcceptanceLetterFile(null)}
+        >
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined />
+          </p>
+          <p className="ant-upload-text">{t("institutDemandeDetails.acceptanceLetter.dragText")}</p>
+          <p className="ant-upload-hint">{t("institutDemandeDetails.acceptanceLetter.dragHint")}</p>
+        </Dragger>
       </Modal>
 
       {/* ===== Modal Détails Institut (source du document) ===== */}

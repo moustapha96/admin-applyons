@@ -25,6 +25,9 @@
         "notifications": "Notificaciones",
         "required": "Este campo es obligatorio",
         "back": "Volver",
+        "yes": "Sí",
+        "na": "—",
+        "ok": "OK",
         "upload": {
             "pdfOnly": "Solo se aceptan archivos PDF.",
             "maxSize": "El tamaño máximo del archivo es de 5 MB."
@@ -97,7 +100,9 @@
         "genericTitle": "Notificación",
         "genericMessage": "Tiene una nueva notificación",
         "orgDemandeTitle": "Solicitud que le concierne",
-        "orgDemandeMessage": "Una solicitud compartida concierne a su organización (ver código para más detalles)"
+        "orgDemandeMessage": "Una solicitud compartida concierne a su organización (ver código para más detalles)",
+        "moreNew": "{{count}} more new notification(s)",
+        "fullList": "Full list"
     },
     "roles": {
         "ADMIN": "ADMIN",
@@ -236,7 +241,10 @@
     },
     "demandesAuthentification": {
         "title": "Solicitudes de autenticación de documentos",
-        "breadcrumb": { "dashboard": "Panel", "list": "Solicitudes de autenticación" },
+        "breadcrumb": {
+            "dashboard": "Panel",
+            "list": "Solicitudes de autenticación"
+        },
         "createBtn": "Nueva solicitud de autenticación",
         "createTitle": "Crear solicitud de autenticación",
         "submitCreate": "Crear solicitud",
@@ -265,7 +273,10 @@
             "actions": "Acciones",
             "demandeur": "Solicitante"
         },
-        "actions": { "detail": "Detalle", "notify": "Notificar" },
+        "actions": {
+            "detail": "Detalle",
+            "notify": "Notificar"
+        },
         "fields": {
             "codeADN": "Código ADN",
             "objet": "Asunto",
@@ -278,15 +289,37 @@
             "status": "Estado",
             "createdAt": "Creado el"
         },
-        "validation": { "attributedOrgRequired": "Seleccione la institución atribuida." },
+        "validation": {
+            "attributedOrgRequired": "Seleccione la institución atribuida."
+        },
         "status": {
             "EN_ATTENTE": "Pendiente",
             "DOCUMENTS_RECUS": "Documentos recibidos",
             "TRAITEE": "Tratada",
             "ANNULEE": "Anulada"
         },
-        "doc": { "type": "Tipo", "mention": "Mención", "addedBy": "Añadido por", "date": "Fecha", "file": "Archivo", "viewFile": "Ver documento", "addDocument": "Añadir documento", "institutDetails": "Detalles de la institución que envió el documento", "orgName": "Nombre", "orgType": "Tipo", "orgEmail": "Email", "orgPhone": "Teléfono", "orgAddress": "Dirección", "orgWebsite": "Sitio web", "orgCountry": "País" },
-        "toasts": { "loadError": "Error al cargar la solicitud." },
+        "doc": {
+            "type": "Tipo",
+            "mention": "Mención",
+            "addedBy": "Añadido por",
+            "date": "Fecha",
+            "file": "Archivo",
+            "viewFile": "Ver documento",
+            "addDocument": "Añadir documento",
+            "institutDetails": "Detalles de la institución que envió el documento",
+            "orgName": "Nombre",
+            "orgType": "Tipo",
+            "orgEmail": "Email",
+            "orgPhone": "Teléfono",
+            "orgAddress": "Dirección",
+            "orgWebsite": "Sitio web",
+            "orgCountry": "País"
+        },
+        "toasts": {
+            "loadError": "Error al cargar.",
+            "createError": "Error al crear.",
+            "orgLoadError": "Error al cargar las organizaciones."
+        },
         "documentTypes": {
             "DIPLOMA": "Diploma",
             "TRANSCRIPT": "Expediente académico",
@@ -326,17 +359,42 @@
             "success": "Notificaciones enviadas correctamente.",
             "error": "Error al enviar las notificaciones."
         },
-        "toasts": {
-            "loadError": "Error al cargar.",
-            "createError": "Error al crear.",
-            "orgLoadError": "Error al cargar las organizaciones."
+        "submitPayAndCreate": "Pay and create request",
+        "paymentRequiredFirst": "Payment required",
+        "paymentRequiredFirstDesc": "The authentication request is only created after your payment is confirmed. Fill in the form then pay the amount shown.",
+        "paymentStepTitle": "Pay to create your request",
+        "paymentStepDesc": "Choose a payment method below. Once payment is confirmed, your request will be created and you will receive your ADN code.",
+        "backToForm": "Back to form",
+        "payment": {
+            "title": "Payment",
+            "status": "Payment status",
+            "amount": "Amount",
+            "paid": "Paid",
+            "unpaid": "Unpaid",
+            "payButton": "Pay for this request",
+            "alreadyPaid": "This authentication request is already paid.",
+            "loading": "Loading payment status..."
+        },
+        "paymentPage": {
+            "title": "Payment - Authentication request",
+            "breadcrumbList": "Authentication requests",
+            "breadcrumbDetail": "Detail",
+            "breadcrumbPayment": "Payment",
+            "summaryTitle": "Summary",
+            "backToDetail": "Back to request detail"
         }
     },
     "adminDemandesAuthentification": {
         "title": "Solicitudes de autenticación (todas)",
-        "breadcrumb": { "dashboard": "Panel", "list": "Solicitudes de autenticación" },
+        "breadcrumb": {
+            "dashboard": "Panel",
+            "list": "Solicitudes de autenticación"
+        },
         "detailTitle": "Detalle de la solicitud de autenticación",
-        "filters": { "search": "Buscar (código ADN, asunto, solicitante…)", "status": "Estado" },
+        "filters": {
+            "search": "Buscar (código ADN, asunto, solicitante…)",
+            "status": "Estado"
+        },
         "columns": {
             "codeADN": "Código ADN",
             "objet": "Asunto",
@@ -347,9 +405,16 @@
             "documents": "Documentos",
             "actions": "Acciones"
         },
-        "actions": { "detail": "Detalle", "refresh": "Actualizar" },
-        "pagination": { "total": "Total {{total}} solicitudes" },
-        "toasts": { "loadError": "Error al cargar las solicitudes." },
+        "actions": {
+            "detail": "Detalle",
+            "refresh": "Actualizar"
+        },
+        "pagination": {
+            "total": "Total {{total}} solicitudes"
+        },
+        "toasts": {
+            "loadError": "Error al cargar las solicitudes."
+        },
         "statusLabel": "Estado",
         "statusUpdateSuccess": "Estado actualizado.",
         "statusUpdateError": "Error al actualizar el estado.",
@@ -419,7 +484,8 @@
                 "universite": "Universidad / Instituto",
                 "lycee": "Liceo",
                 "entreprise": "Empresa",
-                "traducteur": "Traductor"
+                "traducteur": "Traductor",
+                "institut": "Institute"
             },
             "placeholders": {
                 "name": "Nombre de la organización",
@@ -637,7 +703,9 @@
             "detail": "Detalle"
         },
         "actions": {
-            "documents": "Documentos"
+            "documents": "Documentos",
+            "edit": "Edit application",
+            "editRedirect": "Redirecting to edit form..."
         },
         "sections": {
             "case": "Expediente",
@@ -724,6 +792,9 @@
         "tabs": {
             "documents": "Documentos",
             "info": "Información de la Solicitud"
+        },
+        "types": {
+            "lettreAcceptation": "Carta de aceptación"
         },
         "columns": {
             "ownerOrg": "Organización Propietaria",
@@ -834,7 +905,8 @@
             "translatedCount": "Traducido: {{count}}",
             "myDemandes": "Mis solicitudes",
             "breakdown": "Ver desglose abajo",
-            "translated": "Traducido: {{count}}"
+            "translated": "Traducido: {{count}}",
+            "myApplications": "My applications"
         },
         "activity": {
             "title": "Actividad reciente",
@@ -850,7 +922,8 @@
                 "typeRequest": "Solicitud",
                 "typePayment": "Pago",
                 "total": "{{total}} elemento(s)"
-            }
+            },
+            "applicationLine": "Application {{code}} — {{status}} — {{date}}"
         },
         "toasts": {
             "loadError": "Error al cargar estadísticas"
@@ -865,12 +938,14 @@
         "breakdowns": {
             "demandesByStatus": "Mis solicitudes por estado",
             "transactionsByStatus": "Mis transacciones por estado",
-            "paymentsByStatus": "Mis pagos por estado"
+            "paymentsByStatus": "Mis pagos por estado",
+            "applicationsByStatus": "My applications by status"
         },
         "tables": {
             "recentDemandes": "Solicitudes recientes",
             "recentTransactions": "Transacciones recientes",
-            "recentPayments": "Pagos recientes"
+            "recentPayments": "Pagos recientes",
+            "recentApplications": "Recent applications"
         }
     },
     "institutDashboard": {
@@ -883,8 +958,12 @@
             "institute": "Instituto"
         },
         "traducteur": {
-            "header": { "title": "Panel Instituto Traductor" },
-            "breadcrumb": { "institute": "Instituto traductor" },
+            "header": {
+                "title": "Panel Instituto Traductor"
+            },
+            "breadcrumb": {
+                "institute": "Instituto traductor"
+            },
             "kpis": {
                 "assignedRequests": "Solicitudes asignadas",
                 "docsToTranslate": "Documentos por traducir",
@@ -2150,6 +2229,7 @@
             "COMPLETED": "Completado",
             "CANCELLED": "Cancelado"
         },
+        "validatedNoAdd": "Solicitud validada — no se pueden añadir documentos",
         "organization": {
             "name": "Organización"
         },
@@ -2212,7 +2292,23 @@
             "translated": "Traducido",
             "isTranslated": "Está traducido",
             "addedAt": "Añadido el",
-            "count": "{{count}}"
+            "count": "{{count}}",
+            "delete": "Eliminar",
+            "deleteConfirmTitle": "¿Eliminar este documento?",
+            "deleteConfirmMessage": "Esta acción no se puede deshacer."
+        },
+        "acceptanceLetter": {
+            "title": "Carta de aceptación",
+            "view": "Ver / Descargar",
+            "addedOn": "Añadida el",
+            "modalTitle": "Añadir carta de aceptación",
+            "modalHint": "Seleccione el archivo PDF de la carta de aceptación (máx. 5 MB).",
+            "save": "Guardar en la solicitud",
+            "dragText": "Arrastre el archivo aquí o haga clic para seleccionar",
+            "dragHint": "Solo PDF, 5 MB máx.",
+            "uploadSuccess": "Carta de aceptación guardada.",
+            "uploadError": "Error al guardar.",
+            "selectFile": "Por favor seleccione un archivo PDF."
         },
         "modals": {
             "statusTitle": "Actualizar estado y observación",
@@ -2240,6 +2336,7 @@
             "loadError": "Error al cargar la solicitud",
             "statusSaved": "Estado/Observación actualizados",
             "statusSaveError": "Error de actualización",
+            "docDeleted": "Documento eliminado.",
             "urlMissing": "URL no disponible",
             "stripeSecretMissing": "Falta el secreto del cliente de Stripe",
             "sessionExpired": "Sesión expirada. Por favor, inicie sesión nuevamente.",
@@ -2282,7 +2379,8 @@
         "buttons": {
             "back": "Volver",
             "cancel": "Cancelar",
-            "save": "Guardar documento"
+            "save": "Guardar documento",
+            "seeDemande": "Ver solicitud"
         },
         "form": {
             "code": "Código de aplicación",
@@ -2313,7 +2411,16 @@
             "ATTESTATION": "CERTIFICADO",
             "RELEVE": "CERTIFICADO DE NOTAS",
             "DIPLOME": "TÍTULO",
-            "AUTRE": "OTRO"
+            "AUTRE": "OTRO",
+            "LETTRE_ACCEPTATION": "Carta de aceptación"
+        },
+        "titleAcceptanceLetter": "Añadir carta de aceptación",
+        "validatedOnlyTargetCanAdd": "Esta solicitud está validada. Solo el destinatario puede añadir la carta de aceptación. Los demás institutos ya no pueden añadir documentos.",
+        "acceptanceLetterAlreadyExists": "Ya se ha añadido una carta de aceptación para esta solicitud.",
+        "resultModal": {
+            "successTitle": "Documento agregado",
+            "errorTitle": "Error al agregar",
+            "goToList": "Ir a la lista de solicitudes"
         }
     },
     "auth": {
@@ -2387,7 +2494,9 @@
                 "orgEmailRequired": "El correo de la organización es obligatorio.",
                 "orgEmailInvalid": "Por favor ingrese una dirección de correo válida para la organización.",
                 "formSummary": "Por favor corrija los errores en los campos marcados en rojo a continuación.",
-                "general": "Se produjo un error durante el registro."
+                "general": "Se produjo un error durante el registro.",
+                "formSummaryRequired": "Required fields missing or invalid (according to your profile and organization type):",
+                "unknownField": "Error on this field"
             },
             "roles": {
                 "DEMANDEUR": "Solicitante",
@@ -2423,6 +2532,11 @@
                 "orgWebsite": "https://organizacion.com",
                 "orgAddress": "Dirección completa de la organización",
                 "selectType": "Selecciona un tipo"
+            },
+            "successModal": {
+                "title": "Registration successful",
+                "content": "Your registration has been recorded. Please check your email to verify and activate your account by clicking the link we sent you.",
+                "goToLogin": "Go to login"
             }
         },
         "resetPassword": {
@@ -2554,7 +2668,9 @@
         "error": "Error al obtener estadísticas"
     },
     "traducteurDashboard": {
-        "breadcrumb": { "dashboard": "Panel" },
+        "breadcrumb": {
+            "dashboard": "Panel"
+        },
         "hello": "Hola, {{firstName}} {{lastName}}",
         "welcome": "Bienvenido a su espacio de traductor.",
         "links": {
@@ -2707,7 +2823,8 @@
             "BANQUE": "Banco",
             "COLLEGE": "Colegio",
             "LYCEE": "Liceo",
-            "UNIVERSITE": "Universidad / Instituto"
+            "UNIVERSITE": "Universidad / Instituto",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "Senegal",
@@ -3741,7 +3858,8 @@
             "role": "Rol",
             "permissions": "Permisos",
             "password": "Contraseña",
-            "confirmPassword": "Confirmar contraseña"
+            "confirmPassword": "Confirmar contraseña",
+            "organization": "Organization"
         },
         "loadingPermissions": "Cargando permisos...",
         "placeholders": {
@@ -3749,7 +3867,8 @@
             "lastName": "Apellido",
             "email": "Correo electrónico",
             "phone": "Teléfono",
-            "role": "Seleccionar un rol"
+            "role": "Seleccionar un rol",
+            "organization": "Select an organization"
         },
         "dividers": {
             "permissions": "Permisos",
@@ -3770,7 +3889,8 @@
             "passwordRequired": "Contraseña requerida",
             "confirmRequired": "Confirmar contraseña requerida",
             "passwordMismatch": "Las contraseñas no coinciden",
-            "roleRequired": "Rol requerido"
+            "roleRequired": "Rol requerido",
+            "organizationRequired": "Organization is required for this role"
         },
         "buttons": {
             "submit": "Enviar",
@@ -3913,7 +4033,10 @@
             "country": "País de residencia",
             "role": "Rol",
             "status": "Estado",
-            "permissions": "Permisos"
+            "permissions": "Permisos",
+            "adress": "Address",
+            "gender": "Gender",
+            "organization": "Organization"
         },
         "loadingPermissions": "Cargando permisos...",
         "placeholders": {
@@ -3921,7 +4044,10 @@
             "lastName": "Apellido",
             "phone": "Teléfono",
             "country": "País de residencia",
-            "role": "Seleccionar un rol"
+            "role": "Seleccionar un rol",
+            "adress": "Address",
+            "gender": "Select a gender",
+            "organization": "Select an organization"
         },
         "dividers": {
             "permissions": "Permisos"
@@ -3933,7 +4059,9 @@
             "firstNameRequired": "Nombre requerido",
             "lastNameRequired": "Apellido requerido",
             "emailInvalid": "Correo inválido",
-            "roleRequired": "Rol requerido"
+            "roleRequired": "Rol requerido",
+            "gender": "Gender is required",
+            "organizationRequired": "Organization is required for this role"
         },
         "buttons": {
             "save": "Guardar",
@@ -3945,14 +4073,18 @@
             "updateError": "Error al enviar datos",
             "deleteSuccess": "Usuario eliminado exitosamente",
             "deleteError": "Error al eliminar usuario",
-            "deleteWarning": "Esta acción es irreversible. El usuario será archivado."
+            "deleteWarning": "Esta acción es irreversible. El usuario será archivado.",
+            "orgFetchError": "Error loading organizations"
         },
         "labels": {
             "active": "Activo"
         },
         "roles": {
             "ADMIN": "Administrador",
-            "SUPER_ADMIN": "Super Administrador"
+            "SUPER_ADMIN": "Super Administrador",
+            "MALE": "Male",
+            "FEMALE": "Female",
+            "OTHER": "Other"
         }
     },
     "traducteurDemandesList": {
@@ -3996,6 +4128,7 @@
             "documents": "Documento(s)",
             "translate": "Traducir",
             "addTranslation": "Agregar traducción",
+            "uploading": "Enviando…",
             "apply": "Aplicar"
         },
         "messages": {
@@ -4004,6 +4137,8 @@
             "updateError": "Error al actualizar estado",
             "documentsError": "Error al cargar documentos",
             "translationAdded": "Traducción agregada",
+            "translationNotReady": "La traducción aún no está disponible.",
+            "downloadSuccess": "Descarga correcta",
             "uploadError": "Error al subir"
         },
         "pagination": {
@@ -4025,7 +4160,8 @@
             "encrypted": "Cifrado",
             "notEncrypted": "No cifrado",
             "blockchain": "Blockchain",
-            "original": "Original"
+            "original": "Original",
+            "download": "Descargar"
         },
         "table": {
             "title": "Lista de solicitudes asignadas"
@@ -4033,6 +4169,10 @@
         "modal": {
             "documentsTitle": "Documentos de la solicitud",
             "noDocuments": "Sin documentos"
+        },
+        "uploadResult": {
+            "successTitle": "Envío correcto",
+            "errorTitle": "Error de envío"
         }
     },
     "institutAbos": {
@@ -4246,7 +4386,9 @@
             "paymentError": "Error en el pago: {{error}}",
             "paymentRequired": "Complete el pago antes de enviar",
             "demandeCreated": "Solicitud creada (invitaciones y notificaciones enviadas)",
-            "creationError": "Error al crear"
+            "creationError": "Error al crear",
+            "paypalError": "Error de PayPal: {{error}}",
+            "required": "Requerido"
         },
         "sections": {
             "personalInfo": "1. Información personal",
@@ -4431,27 +4573,15 @@
             "yes": "Sí",
             "no": "No"
         },
-        "messages": {
-            "draftSaveError": "No se puede guardar el borrador",
-            "draftLoaded": "Borrador cargado",
-            "draftReset": "Borrador restablecido",
-            "draftResetError": "No se puede restablecer el borrador",
-            "orgLoadError": "Error al cargar organizaciones",
-            "priceInvalid": "Importe de suscripción inválido en el servidor.",
-            "filieresLoadError": "No se pueden cargar las filières de esta organización",
-            "stripeInitError": "No se puede inicializar Stripe",
-            "stripeKeyMissing": "Clave pública de Stripe faltante",
-            "stripeInvalidParams": "Parámetros de Stripe inválidos",
-            "stripeSecretInvalid": "Secreto de cliente de Stripe inválido/ausente",
-            "paymentIntentError": "No se puede crear PaymentIntent",
-            "stripeSuccess": "¡Pago de Stripe confirmado!",
-            "paypalSuccess": "¡Pago de PayPal confirmado!",
-            "paymentError": "Error en el pago: {{error}}",
-            "paymentRequired": "Complete el pago antes de enviar",
-            "demandeCreated": "Solicitud creada (invitaciones y notificaciones enviadas)",
-            "creationError": "Error al crear",
-            "paypalError": "Error de PayPal: {{error}}",
-            "required": "Requerido"
+        "formMessages": {
+            "stripeSuccess": "Stripe payment confirmed!",
+            "paypalSuccess": "PayPal payment confirmed!",
+            "paymentError": "Payment failed: {{error}}",
+            "paymentRequired": "Please complete payment before submitting",
+            "demandeCreated": "Application created (invitations & notifications sent)",
+            "creationError": "Creation failed",
+            "paypalError": "PayPal error: {{error}}",
+            "required": "Required"
         }
     },
     "demandeurDemandePayment": {
@@ -4538,7 +4668,8 @@
             "BANQUE": "Banco",
             "COLLEGE": "Colegio",
             "LYCEE": "Instituto",
-            "UNIVERSITE": "Universidad / Instituto"
+            "UNIVERSITE": "Universidad / Instituto",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "Senegal",
@@ -4854,6 +4985,7 @@
             "deleteError": "Deletion failed",
             "noFileAvailable": "No file available to display.",
             "noFileToDownload": "No file to download.",
+            "translationNotFound": "El archivo traducido aún no está disponible. El archivo puede estar en proceso. Por favor, actualice la página en unos momentos.",
             "previewTitleOriginal": "Original PDF — {{id}}",
             "previewTitleTranslated": "Translated PDF — {{id}}"
         },
@@ -5077,5 +5209,210 @@
         "title": "Mi Organización",
         "loading": "Cargando...",
         "error": "Error al cargar la organización"
+    },
+    "orgTypes": {
+        "COLLEGE": "College",
+        "BANQUE": "Bank",
+        "UNIVERSITE": "University",
+        "INSTITUT": "Institute",
+        "LYCEE": "High School",
+        "ENTREPRISE": "Company",
+        "TRADUCTEUR": "Translator"
+    },
+    "adminDocuments": {
+        "title": "Documents",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "documents": "Documents"
+        },
+        "columns": {
+            "demande": "Application",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtained",
+            "translated": "Translated",
+            "ownerOrg": "Organization",
+            "createdAt": "Created at",
+            "actions": "Actions"
+        },
+        "types": {
+            "ATTESTATION": "Attestation",
+            "RELEVE": "Transcript",
+            "DIPLOME": "Diploma",
+            "OTHER": "Other"
+        },
+        "filters": {
+            "searchPlaceholder": "Search (DNA code…)",
+            "demandePlaceholder": "By application (ID)",
+            "orgPlaceholder": "By org. (ID)",
+            "translatedPlaceholder": "Translated?",
+            "translatedYes": "Yes",
+            "translatedNo": "No"
+        },
+        "actions": {
+            "viewOriginal": "View original",
+            "viewTranslated": "View translated",
+            "details": "Details",
+            "delete": "Delete",
+            "refresh": "Refresh"
+        },
+        "drawer": {
+            "title": "Document details",
+            "demande": "Application",
+            "type": "Type",
+            "mention": "Mention",
+            "dateObtention": "Date obtained",
+            "owner": "Organization",
+            "translationStatus": "Translated",
+            "encrypted": "Encrypted",
+            "createdAt": "Created at",
+            "encryptedAt": "Encrypted at",
+            "quickActions": "Quick actions"
+        },
+        "translation": {
+            "translated": "Translated",
+            "notTranslated": "No"
+        },
+        "encryption": {
+            "yes": "Yes",
+            "no": "No"
+        },
+        "preview": {
+            "title": "Document",
+            "loading": "Loading…"
+        },
+        "messages": {
+            "loadError": "Error loading documents",
+            "urlUnavailable": "URL unavailable",
+            "openError": "Unable to open document",
+            "sessionExpired": "Session expired. Please log in again.",
+            "accessDenied": "You do not have access to this document.",
+            "deleted": "Document deleted",
+            "deleteError": "Deletion failed"
+        },
+        "modals": {
+            "delete": {
+                "title": "Delete this document?",
+                "content": "This action cannot be undone.",
+                "okText": "Delete",
+                "cancelText": "Cancel"
+            }
+        }
+    },
+    "appsCalendar": {
+        "title": "Calendar",
+        "breadcrumbs": {
+            "home": "Home",
+            "calendar": "Calendar"
+        },
+        "events": {
+            "allEvents": "All Events",
+            "meeting": "Meeting",
+            "operations": "Operations",
+            "lunch": "Lunch",
+            "conference": "Conference",
+            "businessMeeting": "Business Meeting"
+        },
+        "options": {
+            "removeAfterDrop": "Remove after drop",
+            "addEvent": "Add Event"
+        }
+    },
+    "appsChat": {
+        "title": "Messaging Center",
+        "breadcrumbs": {
+            "home": "Home",
+            "chatbox": "Messages"
+        },
+        "menu": {
+            "profile": "Profile",
+            "profileSettings": "Profile Settings",
+            "delete": "Delete"
+        },
+        "status": {
+            "online": "Online"
+        },
+        "typing": "{{name}} is typing",
+        "placeholders": {
+            "message": "Enter message..."
+        }
+    },
+    "appsEmail": {
+        "title": "Email / Messages",
+        "breadcrumbs": {
+            "home": "Home",
+            "emails": "Emails"
+        },
+        "composeButton": "Compose",
+        "composeTitle": "Compose",
+        "menu": {
+            "inbox": "Inbox",
+            "starred": "Starred",
+            "spam": "Spam",
+            "sent": "Sent",
+            "drafts": "Drafts",
+            "trash": "Trash",
+            "notes": "Notes"
+        },
+        "placeholders": {
+            "to": "To",
+            "cc": "Cc",
+            "bcc": "Bcc"
+        },
+        "buttons": {
+            "sendNow": "Send Now"
+        },
+        "table": {
+            "name": "Name",
+            "subject": "Subject",
+            "dateTime": "Date & Time"
+        },
+        "pagination": {
+            "showing": "Showing {{from}} - {{to}} out of {{total}}"
+        },
+        "empty": {
+            "spam": "Hooray, no spam here!",
+            "drafts": "You don't have any saved drafts. Saving a draft allows you to keep a message you aren't ready to send yet.",
+            "trash": "No conversations in Trash.",
+            "notes": "No notes in Notes."
+        }
+    },
+    "miscComingSoon": {
+        "title": "We Are Coming Soon...",
+        "subtitle": "Start working with Applyons that can provide everything you need to generate awareness, drive traffic, connect.",
+        "countdown": {
+            "days": "Days",
+            "hours": "Hours",
+            "minutes": "Mins",
+            "seconds": "Secs"
+        },
+        "footer": "© 2026 applyons by"
+    },
+    "miscMaintenance": {
+        "title": "We Are Back Soon...",
+        "subtitle": "Start working with Applyons that can provide everything you need to generate awareness, drive traffic, connect.",
+        "minutesLabel": "Minutes",
+        "placeholders": {
+            "email": "Enter your email..."
+        },
+        "buttons": {
+            "subscribeNow": "Subscribe Now"
+        }
+    },
+    "miscThankyou": {
+        "title": "Thank You",
+        "subtitle": "Launch your campaign and benefit from our expertise on designing and managing conversion centered pages.",
+        "backToHome": "Back to Home"
+    },
+    "dashboardIndex": {
+        "greeting": "Hello, {{name}}",
+        "welcome": "Welcome!",
+        "filters": {
+            "yearly": "Yearly",
+            "monthly": "Monthly",
+            "weekly": "Weekly",
+            "today": "Today"
+        },
+        "export": "Export"
     }
 }

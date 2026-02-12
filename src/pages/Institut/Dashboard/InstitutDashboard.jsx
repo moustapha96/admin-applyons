@@ -158,31 +158,39 @@ export default function InstitutDashboard() {
     }
   };
 
+  // Hauteur minimale pour aligner les cartes KPI (partagé Traducteur / Institut)
+  const kpiCardStyle = { minHeight: "132px", display: "flex", flexDirection: "column", justifyContent: "center" };
+
   // ——— Dashboard TRADUCTEUR : uniquement les données essentielles ———
   if (isTraducteur) {
     return (
       <div className="container-fluid relative px-3">
         <div className="layout-specing">
-          <div className="md:flex justify-between items-center mb-6">
-            <Title level={3} className="mb-0">
-              {t("institutDashboard.traducteur.header.title")}
-            </Title>
+          {/* En-tête aligné */}
+          <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+            <div className="flex flex-col gap-1">
+              <Title level={3} className="!mb-0">
+                {t("institutDashboard.traducteur.header.title")}
+              </Title>
+              <Text type="secondary" className="text-sm">
+                {t("institutDashboard.header.orgLabel")}{" "}
+                <Text code>{user?.organization?.name || t("institutDashboard.common.undef")}</Text>
+              </Text>
+            </div>
             <Breadcrumb
+              className="self-start sm:self-center"
               items={[
                 { title: <Link to="/organisations/dashboard">{t("institutDashboard.breadcrumb.home")}</Link> },
                 { title: t("institutDashboard.traducteur.breadcrumb.institute") },
               ]}
             />
           </div>
-          <Text type="secondary">
-            {t("institutDashboard.header.orgLabel")}{" "}
-            <Text code>{user?.organization?.name || t("institutDashboard.common.undef")}</Text>
-          </Text>
 
-          <Row gutter={[16, 16]} className="mt-3">
-            <Col xs={12} md={8}>
-              <Link to="/organisations/demandes" className="block">
-                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+          {/* Grille KPI : 3 colonnes md, cartes alignées */}
+          <Row gutter={[16, 16]} className="mb-4">
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/organisations/demandes" className="block h-full">
+                <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                   <Statistic
                     title={t("institutDashboard.traducteur.kpis.assignedRequests")}
                     prefix={<FileTextOutlined />}
@@ -191,9 +199,9 @@ export default function InstitutDashboard() {
                 </Card>
               </Link>
             </Col>
-            <Col xs={12} md={8}>
-              <Link to="/organisations/demandes" className="block">
-                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/organisations/demandes" className="block h-full">
+                <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                   <Statistic
                     title={t("institutDashboard.traducteur.kpis.docsToTranslate")}
                     prefix={<TranslationOutlined />}
@@ -202,9 +210,9 @@ export default function InstitutDashboard() {
                 </Card>
               </Link>
             </Col>
-            <Col xs={12} md={8}>
-              <Link to="/organisations/demandes" className="block">
-                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/organisations/demandes" className="block h-full">
+                <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                   <Statistic
                     title={t("institutDashboard.traducteur.kpis.docsTranslated")}
                     prefix={<BookOutlined />}
@@ -213,9 +221,9 @@ export default function InstitutDashboard() {
                 </Card>
               </Link>
             </Col>
-            <Col xs={12} md={8}>
-              <Link to="/organisations/demandes-authentification" className="block">
-                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/organisations/demandes-authentification" className="block h-full">
+                <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                   <Statistic
                     title={t("institutDashboard.kpis.demandesAuthentificationAttributed")}
                     prefix={<BookOutlined />}
@@ -224,9 +232,9 @@ export default function InstitutDashboard() {
                 </Card>
               </Link>
             </Col>
-            <Col xs={12} md={8}>
-              <Link to="/organisations/abonnements" className="block">
-                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/organisations/abonnements" className="block h-full">
+                <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                   <Statistic
                     title={t("institutDashboard.kpis.subscriptions")}
                     prefix={<SafetyCertificateOutlined />}
@@ -240,9 +248,9 @@ export default function InstitutDashboard() {
                 </Card>
               </Link>
             </Col>
-            <Col xs={12} md={8}>
-              <Link to="/organisations/users" className="block">
-                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/organisations/users" className="block h-full">
+                <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                   <Statistic
                     title={t("institutDashboard.kpis.usersTotal")}
                     prefix={<TeamOutlined />}
@@ -251,9 +259,9 @@ export default function InstitutDashboard() {
                 </Card>
               </Link>
             </Col>
-            <Col xs={12} md={8}>
-              <Link to="/organisations/notifications" className="block">
-                <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/organisations/notifications" className="block h-full">
+                <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                   <Statistic
                     title={t("institutDashboard.kpis.notifications")}
                     prefix={<BellOutlined />}
@@ -267,13 +275,14 @@ export default function InstitutDashboard() {
             </Col>
           </Row>
 
-          <Row gutter={[16, 16]} className="mt-2">
+          {/* Tableaux côte à côte */}
+          <Row gutter={[16, 16]}>
             <Col xs={24} md={12}>
-              <Link to="/organisations/demandes" className="block">
+              <Link to="/organisations/demandes" className="block h-full">
                 <Card
                   title={t("institutDashboard.traducteur.tables.assignedByStatus")}
                   loading={loading}
-                  className="hover:shadow-md transition-shadow cursor-pointer"
+                  className="h-full hover:shadow-md transition-shadow cursor-pointer"
                 >
                   <Table
                     rowKey="key"
@@ -318,26 +327,31 @@ export default function InstitutDashboard() {
   return (
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
-        <div className="md:flex justify-between items-center mb-6">
-          <Title level={3} className="mb-0">
-            {t("institutDashboard.header.title")}
-          </Title>
+        {/* En-tête aligné */}
+        <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6">
+          <div className="flex flex-col gap-1">
+            <Title level={3} className="!mb-0">
+              {t("institutDashboard.header.title")}
+            </Title>
+            <Text type="secondary" className="text-sm">
+              {t("institutDashboard.header.orgLabel")}{" "}
+              <Text code>{user?.organization?.name || t("institutDashboard.common.undef")}</Text>
+            </Text>
+          </div>
           <Breadcrumb
+            className="self-start sm:self-center"
             items={[
               { title: <Link to="/organisations/dashboard">{t("institutDashboard.breadcrumb.home")}</Link> },
               { title: t("institutDashboard.breadcrumb.institute") },
             ]}
           />
         </div>
-        <Text type="secondary">
-          {t("institutDashboard.header.orgLabel")}{" "}
-          <Text code>{user?.organization?.name || t("institutDashboard.common.undef")}</Text>
-        </Text>
 
-        <Row gutter={[16, 16]} className="mt-3">
-          <Col xs={12} md={6}>
-            <Link to="/organisations/demandes" className="block">
-              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+        {/* Grille KPI : 4 colonnes lg, alignement uniforme */}
+        <Row gutter={[16, 16]} className="mb-4">
+          <Col xs={24} sm={12} lg={6}>
+            <Link to="/organisations/demandes" className="block h-full">
+              <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                 <Statistic
                   title={t("institutDashboard.kpis.targetRequests")}
                   prefix={<FileTextOutlined />}
@@ -346,9 +360,9 @@ export default function InstitutDashboard() {
               </Card>
             </Link>
           </Col>
-          <Col xs={12} md={6}>
-            <Link to="/organisations/demandes-authentification" className="block">
-              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+          <Col xs={24} sm={12} lg={6}>
+            <Link to="/organisations/demandes-authentification" className="block h-full">
+              <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                 <Statistic
                   title={t("institutDashboard.kpis.demandesAuthentificationAttributed")}
                   prefix={<BookOutlined />}
@@ -357,25 +371,25 @@ export default function InstitutDashboard() {
               </Card>
             </Link>
           </Col>
-          <Col xs={12} md={6}>
-            <Link to="/organisations/abonnements" className="block">
-              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+          <Col xs={24} sm={12} lg={6}>
+            <Link to="/organisations/abonnements" className="block h-full">
+              <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                 <Statistic
                   title={t("institutDashboard.kpis.subscriptions")}
                   prefix={<SafetyCertificateOutlined />}
                   value={`${widgets.subscriptions?.active ?? 0} / ${widgets.subscriptions?.total ?? 0}`}
                 />
-                <div style={{ marginTop: 8 }}>
-                  <Tag color="gold">
-                    {t("institutDashboard.kpis.expiringSoon", { count: widgets.subscriptions?.expiringSoon ?? 0 })}
+                {(widgets.subscriptions?.expiringSoon ?? 0) > 0 && (
+                  <Tag color="gold" style={{ marginTop: 8 }}>
+                    {t("institutDashboard.kpis.expiringSoon", { count: widgets.subscriptions.expiringSoon })}
                   </Tag>
-                </div>
+                )}
               </Card>
             </Link>
           </Col>
-          <Col xs={12} md={6}>
-            <Link to="/organisations/users" className="block">
-              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+          <Col xs={24} sm={12} lg={6}>
+            <Link to="/organisations/users" className="block h-full">
+              <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                 <Statistic
                   title={t("institutDashboard.kpis.usersTotal")}
                   prefix={<TeamOutlined />}
@@ -384,9 +398,9 @@ export default function InstitutDashboard() {
               </Card>
             </Link>
           </Col>
-          <Col xs={12} md={6}>
-            <Link to="/organisations/notifications" className="block">
-              <Card loading={loading} className="hover:shadow-md transition-shadow cursor-pointer">
+          <Col xs={24} sm={12} lg={6}>
+            <Link to="/organisations/notifications" className="block h-full">
+              <Card loading={loading} className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={kpiCardStyle}>
                 <Statistic
                   title={t("institutDashboard.kpis.notifications")}
                   prefix={<BellOutlined />}
@@ -400,13 +414,14 @@ export default function InstitutDashboard() {
           </Col>
         </Row>
 
-        <Row gutter={[16, 16]} className="mt-2">
-          <Col xs={24} md={12}>
-            <Link to="/organisations/demandes" className="block">
+        {/* Tableau répartition par statut */}
+        <Row gutter={[16, 16]} className="mb-4">
+          <Col xs={24} lg={12}>
+            <Link to="/organisations/demandes" className="block h-full">
               <Card
                 title={t("institutDashboard.tables.targetByStatus")}
                 loading={loading}
-                className="hover:shadow-md transition-shadow cursor-pointer"
+                className="h-full hover:shadow-md transition-shadow cursor-pointer"
               >
                 <Table
                   rowKey="key"
@@ -421,14 +436,15 @@ export default function InstitutDashboard() {
           </Col>
         </Row>
 
-        <Row gutter={[16, 16]} className="mt-2">
-          <Col xs={24} md={12}>
-            <Link to="/organisations/departements" className="block">
+        {/* Départements et filières côte à côte */}
+        <Row gutter={[16, 16]}>
+          <Col xs={24} lg={12}>
+            <Link to="/organisations/departements" className="block h-full">
               <Card
                 title={t("institutDashboard.lists.departmentsTitle", { n: widgets.departments?.total ?? 0 })}
                 loading={loading}
                 extra={<Tag color="blue">{widgets.departments?.total ?? 0}</Tag>}
-                className="hover:shadow-md transition-shadow cursor-pointer"
+                className="h-full hover:shadow-md transition-shadow cursor-pointer"
               >
                 <Table
                   rowKey="id"
@@ -441,13 +457,13 @@ export default function InstitutDashboard() {
               </Card>
             </Link>
           </Col>
-          <Col xs={24} md={12}>
-            <Link to="/organisations/filieres" className="block">
+          <Col xs={24} lg={12}>
+            <Link to="/organisations/filieres" className="block h-full">
               <Card
                 title={t("institutDashboard.lists.tracksTitle", { n: widgets.filieres?.total ?? 0 })}
                 loading={loading}
                 extra={<Tag color="blue">{widgets.filieres?.total ?? 0}</Tag>}
-                className="hover:shadow-md transition-shadow cursor-pointer"
+                className="h-full hover:shadow-md transition-shadow cursor-pointer"
               >
                 <Table
                   rowKey="id"

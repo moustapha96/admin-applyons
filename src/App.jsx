@@ -14,7 +14,7 @@ import { Toaster } from 'sonner';
 import "react-quill/dist/quill.snow.css";
 
 function App() {
-  const [toggle, setToggle] = useState(true)
+  const [toggle, setToggle] = useState(false)
   const location = useLocation()
 
   const noLayoutRoutes = [

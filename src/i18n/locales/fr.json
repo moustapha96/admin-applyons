@@ -26,7 +26,8 @@
         "required": "Ce champ est obligatoire",
         "back": "Retour",
         "yes": "Oui",
-        "no": "Non",
+        "na": "—",
+        "ok": "OK",
         "upload": {
             "pdfOnly": "Seuls les fichiers PDF sont acceptés.",
             "maxSize": "La taille maximale du fichier est de 5 Mo."
@@ -99,7 +100,9 @@
         "genericTitle": "Notification",
         "genericMessage": "Vous avez une nouvelle notification",
         "orgDemandeTitle": "Demande vous concernant",
-        "orgDemandeMessage": "Une demande partagée vous concerne (voir le code pour plus de détails)"
+        "orgDemandeMessage": "Une demande partagée vous concerne (voir le code pour plus de détails)",
+        "moreNew": "{{count}} more new notification(s)",
+        "fullList": "Full list"
     },
     "roles": {
         "ADMIN": "ADMIN",
@@ -239,7 +242,10 @@
     },
     "demandesAuthentification": {
         "title": "Demandes d'authentification de documents",
-        "breadcrumb": { "dashboard": "Tableau de bord", "list": "Demandes d'authentification" },
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "list": "Demandes d'authentification"
+        },
         "createBtn": "Nouvelle demande d'authentification",
         "createTitle": "Créer une demande d'authentification",
         "submitCreate": "Créer la demande",
@@ -274,7 +280,10 @@
             "actions": "Actions",
             "demandeur": "Demandeur"
         },
-        "actions": { "detail": "Détail", "notify": "Notifier" },
+        "actions": {
+            "detail": "Détail",
+            "notify": "Notifier"
+        },
         "fields": {
             "codeADN": "Code ADN",
             "objet": "Objet",
@@ -287,15 +296,37 @@
             "status": "Statut",
             "createdAt": "Créé le"
         },
-        "validation": { "attributedOrgRequired": "Veuillez sélectionner l'institut attributaire." },
+        "validation": {
+            "attributedOrgRequired": "Veuillez sélectionner l'institut attributaire."
+        },
         "status": {
             "EN_ATTENTE": "En attente",
             "DOCUMENTS_RECUS": "Documents reçus",
             "TRAITEE": "Traitée",
             "ANNULEE": "Annulée"
         },
-        "doc": { "type": "Type", "mention": "Mention", "addedBy": "Ajouté par", "date": "Date", "file": "Fichier", "viewFile": "Voir le document", "addDocument": "Ajouter un document", "institutDetails": "Détails de l'institut ayant déposé le document", "orgName": "Nom", "orgType": "Type", "orgEmail": "Email", "orgPhone": "Téléphone", "orgAddress": "Adresse", "orgWebsite": "Site web", "orgCountry": "Pays" },
-        "toasts": { "loadError": "Erreur lors du chargement de la demande." },
+        "doc": {
+            "type": "Type",
+            "mention": "Mention",
+            "addedBy": "Ajouté par",
+            "date": "Date",
+            "file": "Fichier",
+            "viewFile": "Voir le document",
+            "addDocument": "Ajouter un document",
+            "institutDetails": "Détails de l'institut ayant déposé le document",
+            "orgName": "Nom",
+            "orgType": "Type",
+            "orgEmail": "Email",
+            "orgPhone": "Téléphone",
+            "orgAddress": "Adresse",
+            "orgWebsite": "Site web",
+            "orgCountry": "Pays"
+        },
+        "toasts": {
+            "loadError": "Erreur lors du chargement.",
+            "createError": "Erreur lors de la création.",
+            "orgLoadError": "Erreur lors du chargement des organisations."
+        },
         "documentTypes": {
             "DIPLOMA": "Diplôme",
             "TRANSCRIPT": "Relevé de notes",
@@ -335,11 +366,6 @@
             "success": "Notifications envoyées avec succès.",
             "error": "Erreur lors de l'envoi des notifications."
         },
-        "toasts": {
-            "loadError": "Erreur lors du chargement.",
-            "createError": "Erreur lors de la création.",
-            "orgLoadError": "Erreur lors du chargement des organisations."
-        },
         "payment": {
             "title": "Paiement",
             "status": "Statut du paiement",
@@ -361,9 +387,15 @@
     },
     "adminDemandesAuthentification": {
         "title": "Demandes d'authentification (toutes)",
-        "breadcrumb": { "dashboard": "Tableau de bord", "list": "Demandes d'authentification" },
+        "breadcrumb": {
+            "dashboard": "Tableau de bord",
+            "list": "Demandes d'authentification"
+        },
         "detailTitle": "Détail de la demande d'authentification",
-        "filters": { "search": "Rechercher (code ADN, objet, demandeur…)", "status": "Statut" },
+        "filters": {
+            "search": "Rechercher (code ADN, objet, demandeur…)",
+            "status": "Statut"
+        },
         "columns": {
             "codeADN": "Code ADN",
             "objet": "Objet",
@@ -374,9 +406,16 @@
             "documents": "Documents",
             "actions": "Actions"
         },
-        "actions": { "detail": "Détail", "refresh": "Actualiser" },
-        "pagination": { "total": "Total {{total}} demandes" },
-        "toasts": { "loadError": "Erreur lors du chargement des demandes." },
+        "actions": {
+            "detail": "Détail",
+            "refresh": "Actualiser"
+        },
+        "pagination": {
+            "total": "Total {{total}} demandes"
+        },
+        "toasts": {
+            "loadError": "Erreur lors du chargement des demandes."
+        },
         "statusLabel": "Statut",
         "statusUpdateSuccess": "Statut mis à jour.",
         "statusUpdateError": "Erreur lors de la mise à jour du statut.",
@@ -446,7 +485,8 @@
                 "universite": "Université / Institut",
                 "lycee": "Lycée",
                 "entreprise": "Entreprise",
-                "traducteur": "Traducteur"
+                "traducteur": "Traducteur",
+                "institut": "Institute"
             },
             "placeholders": {
                 "name": "Nom de l'organisation",
@@ -731,6 +771,20 @@
         "empty": {
             "noPayment": "Aucun paiement enregistré."
         },
+        "acceptanceLetter": {
+            "sectionTitle": "Lettre d'acceptation",
+            "loading": "Chargement…",
+            "viewButton": "Voir la lettre d'acceptation",
+            "addedOn": "Ajoutée le",
+            "notYetAvailable": "La lettre d'acceptation n'est pas encore disponible.",
+            "previewTitle": "Lettre d'acceptation",
+            "openInNewTab": "Ouvrir dans un nouvel onglet",
+            "noContent": "Aucun contenu.",
+            "accessDenied": "Accès refusé.",
+            "notFound": "Document non disponible.",
+            "openError": "Impossible d'ouvrir le document.",
+            "close": "Fermer"
+        },
         "common": {
             "yes": "Oui",
             "no": "Non",
@@ -753,6 +807,9 @@
         "tabs": {
             "documents": "Documents",
             "info": "Informations de la candidature"
+        },
+        "types": {
+            "lettreAcceptation": "Lettre d'acceptation"
         },
         "columns": {
             "ownerOrg": "Organisation propriétaire",
@@ -863,7 +920,8 @@
             "translatedCount": "Traduit: {{count}}",
             "myDemandes": "Mes candidatures",
             "breakdown": "Voir la répartition ci-dessous",
-            "translated": "Traduit: {{count}}"
+            "translated": "Traduit: {{count}}",
+            "myApplications": "My applications"
         },
         "activity": {
             "title": "Activité récente",
@@ -879,7 +937,8 @@
                 "typeRequest": "Candidature",
                 "typePayment": "Paiement",
                 "total": "{{total}} élément(s)"
-            }
+            },
+            "applicationLine": "Application {{code}} — {{status}} — {{date}}"
         },
         "toasts": {
             "loadError": "Erreur lors de la récupération des statistiques"
@@ -894,12 +953,14 @@
         "breakdowns": {
             "demandesByStatus": "Mes demandes par statut",
             "transactionsByStatus": "Mes transactions par statut",
-            "paymentsByStatus": "Mes paiements par statut"
+            "paymentsByStatus": "Mes paiements par statut",
+            "applicationsByStatus": "My applications by status"
         },
         "tables": {
             "recentDemandes": "Demandes récentes",
             "recentTransactions": "Transactions récentes",
-            "recentPayments": "Paiements récents"
+            "recentPayments": "Paiements récents",
+            "recentApplications": "Recent applications"
         }
     },
     "institutDashboard": {
@@ -912,8 +973,12 @@
             "institute": "Institut"
         },
         "traducteur": {
-            "header": { "title": "Dashboard Institut Traducteur" },
-            "breadcrumb": { "institute": "Institut traducteur" },
+            "header": {
+                "title": "Dashboard Institut Traducteur"
+            },
+            "breadcrumb": {
+                "institute": "Institut traducteur"
+            },
             "kpis": {
                 "assignedRequests": "Demandes assignées",
                 "docsToTranslate": "Documents à traduire",
@@ -1189,7 +1254,8 @@
         "toasts": {
             "success": "Utilisateur créé avec succès",
             "error": "Erreur lors de l'envoi des données"
-        }
+        },
+        "loadingPermissions": "Loading permissions..."
     },
     "userEditTraducteur": {
         "title": "Modifier l'utilisateur",
@@ -2183,6 +2249,7 @@
             "COMPLETED": "Terminé",
             "CANCELLED": "Annulé"
         },
+        "validatedNoAdd": "Demande validée — ajout de documents non autorisé",
         "organization": {
             "name": "Organisation"
         },
@@ -2210,7 +2277,8 @@
             "pending": "PENDING",
             "inProgress": "IN_PROGRESS",
             "validated": "VALIDATED",
-            "rejected": "REJECTED"
+            "rejected": "REJECTED",
+            "addAcceptanceLetter": "Ajouter la lettre d'acceptation"
         },
         "fields": {
             "code": "Code",
@@ -2245,7 +2313,23 @@
             "translated": "Traduit",
             "isTranslated": "Est traduit",
             "addedAt": "Ajouté le",
-            "count": "{{count}}"
+            "count": "{{count}}",
+            "delete": "Supprimer",
+            "deleteConfirmTitle": "Supprimer ce document ?",
+            "deleteConfirmMessage": "Cette action est irréversible."
+        },
+        "acceptanceLetter": {
+            "title": "Lettre d'acceptation",
+            "view": "Voir / Télécharger",
+            "addedOn": "Ajoutée le",
+            "modalTitle": "Ajouter la lettre d'acceptation",
+            "modalHint": "Sélectionnez le fichier PDF de la lettre d'acceptation (max 5 Mo).",
+            "save": "Enregistrer sur la demande",
+            "dragText": "Glissez le fichier ici ou cliquez pour sélectionner",
+            "dragHint": "PDF uniquement, 5 Mo max",
+            "uploadSuccess": "Lettre d'acceptation enregistrée.",
+            "uploadError": "Échec de l'enregistrement.",
+            "selectFile": "Veuillez sélectionner un fichier PDF."
         },
         "modals": {
             "statusTitle": "Mettre à jour le statut & l’observation",
@@ -2273,6 +2357,7 @@
             "loadError": "Erreur lors du chargement de la demande",
             "statusSaved": "Statut/Observation mis à jour",
             "statusSaveError": "Échec de la mise à jour",
+            "docDeleted": "Document supprimé.",
             "urlMissing": "URL indisponible",
             "stripeSecretMissing": "Client secret Stripe manquant",
             "sessionExpired": "Session expirée. Veuillez vous reconnecter.",
@@ -2315,7 +2400,8 @@
         "buttons": {
             "back": "Retour",
             "cancel": "Annuler",
-            "save": "Enregistrer le document"
+            "save": "Enregistrer le document",
+            "seeDemande": "Voir la demande"
         },
         "form": {
             "code": "Code Candidature",
@@ -2346,7 +2432,16 @@
             "ATTESTATION": "ATTESTATION",
             "RELEVE": "RELEVE",
             "DIPLOME": "DIPLOME",
-            "AUTRE": "AUTRE"
+            "AUTRE": "AUTRE",
+            "LETTRE_ACCEPTATION": "Lettre d'acceptation"
+        },
+        "titleAcceptanceLetter": "Ajouter la lettre d'acceptation",
+        "validatedOnlyTargetCanAdd": "Cette demande est validée. Seul le destinataire peut ajouter la lettre d'acceptation. Les autres instituts ne peuvent plus ajouter de documents.",
+        "acceptanceLetterAlreadyExists": "Une lettre d'acceptation a déjà été ajoutée pour cette demande.",
+        "resultModal": {
+            "successTitle": "Document ajouté",
+            "errorTitle": "Échec de l'ajout",
+            "goToList": "Aller à la liste des candidatures"
         }
     },
     "institutAbos": {
@@ -2689,7 +2784,9 @@
         "error": "Error fetching stats"
     },
     "traducteurDashboard": {
-        "breadcrumb": { "dashboard": "Tableau de bord" },
+        "breadcrumb": {
+            "dashboard": "Tableau de bord"
+        },
         "hello": "Bonjour, {{firstName}} {{lastName}}",
         "welcome": "Bienvenue sur votre espace traducteur.",
         "links": {
@@ -2842,7 +2939,8 @@
             "BANQUE": "Banque",
             "COLLEGE": "Collège",
             "LYCEE": "Lycée",
-            "UNIVERSITE": "Université / Institut"
+            "UNIVERSITE": "Université / Institut",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "Sénégal",
@@ -3877,8 +3975,7 @@
             "permissions": "Permissions",
             "password": "Mot de passe",
             "confirmPassword": "Confirmer le mot de passe",
-            "organization": "Organisation",
-            "permissions": "Permissions"
+            "organization": "Organisation"
         },
         "loadingPermissions": "Chargement des permissions...",
         "placeholders": {
@@ -4146,7 +4243,8 @@
             "viewDocuments": "Voir les documents",
             "documents": "Document(s)",
             "translate": "Traduire",
-            "addTranslation": "Ajouter traduction",
+            "addTranslation": "Ajouter la traduction",
+            "uploading": "Envoi en cours…",
             "apply": "Appliquer"
         },
         "messages": {
@@ -4187,6 +4285,10 @@
         "modal": {
             "documentsTitle": "Documents de la candidature",
             "noDocuments": "Aucun document"
+        },
+        "uploadResult": {
+            "successTitle": "Envoi réussi",
+            "errorTitle": "Échec de l'envoi"
         }
     },
     "institutAbonnementSouscription": {
@@ -4371,7 +4473,7 @@
             }
         }
     },
-        "demandeurDemandeCreate": {
+    "demandeurDemandeCreate": {
         "pageTitle": "Candidature Étudiant International",
         "steps": {
             "identity": "Identité",
@@ -4588,6 +4690,16 @@
             "creationError": "Échec de création",
             "paypalError": "Erreur PayPal: {{error}}",
             "required": "Requis"
+        },
+        "formMessages": {
+            "stripeSuccess": "Stripe payment confirmed!",
+            "paypalSuccess": "PayPal payment confirmed!",
+            "paymentError": "Payment failed: {{error}}",
+            "paymentRequired": "Please complete payment before submitting",
+            "demandeCreated": "Application created (invitations & notifications sent)",
+            "creationError": "Creation failed",
+            "paypalError": "PayPal error: {{error}}",
+            "required": "Required"
         }
     },
     "demandeurDemandePayment": {
@@ -4674,7 +4786,8 @@
             "BANQUE": "Banque",
             "COLLEGE": "Collège",
             "LYCEE": "Lycée",
-            "UNIVERSITE": "Université / Institut"
+            "UNIVERSITE": "Université / Institut",
+            "INSTITUT": "Institute"
         },
         "countries": {
             "SN": "Sénégal",
@@ -5014,6 +5127,7 @@
             "deleteError": "Échec suppression",
             "noFileAvailable": "Aucun fichier disponible à afficher.",
             "noFileToDownload": "Aucun fichier à télécharger.",
+            "translationNotFound": "Le fichier traduit n'est pas encore disponible. Le fichier peut être en cours de traitement. Veuillez rafraîchir la page dans quelques instants.",
             "previewTitleOriginal": "PDF original — {{id}}",
             "previewTitleTranslated": "PDF traduit — {{id}}"
         },
@@ -5360,5 +5474,14 @@
             "today": "Aujourd'hui"
         },
         "export": "Exporter"
+    },
+    "orgTypes": {
+        "COLLEGE": "College",
+        "BANQUE": "Bank",
+        "UNIVERSITE": "University",
+        "INSTITUT": "Institute",
+        "LYCEE": "High School",
+        "ENTREPRISE": "Company",
+        "TRADUCTEUR": "Translator"
     }
 }

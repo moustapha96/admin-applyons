@@ -9,6 +9,9 @@ const demandeService = {
     // GET /demandes/:id
     getById: (id) => axiosInstance.get(`/demandes/${id}`),
 
+    // GET /demandes/by-code/:code (minimal info pour ajout document)
+    getByCode: (code) => axiosInstance.get(`/demandes/by-code/${encodeURIComponent(code)}`),
+
     // POST /demandes
     create: (data) => axiosInstance.post('/demandes', data),
 

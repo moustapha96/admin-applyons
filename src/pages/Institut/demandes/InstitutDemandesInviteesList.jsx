@@ -143,7 +143,7 @@ export default function InstitutDemandesInviteesList() {
         width: 200,
         render: (_, r) => (
           <Space>
-            {user && user?.permissions?.some((p) => p.key === "invites.manage") && (
+            {user && user?.permissions?.some((p) => p.key === "invites.manage") && (r.status || "").toUpperCase() !== "VALIDATED" && (
               <Button
                 type="primary"
                 size="small"
@@ -152,6 +152,9 @@ export default function InstitutDemandesInviteesList() {
               >
                 {t("institutDemandesInviteesList.buttons.respond")}
               </Button>
+            )}
+            {(r.status || "").toUpperCase() === "VALIDATED" && (
+              <Tag color="green">{t("institutDemandesInviteesList.validatedNoAdd")}</Tag>
             )}
           </Space>
         )
