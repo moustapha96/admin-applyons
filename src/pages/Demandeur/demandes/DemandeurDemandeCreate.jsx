@@ -12,7 +12,6 @@ import {
   Input,
   Select,
   Space,
-  DatePicker,
   Checkbox,
   Divider,
   Row,
@@ -50,6 +49,20 @@ import { useTranslation } from "react-i18next";
 import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Text } = Typography;
+
+/** Input date natif (comme auth-signup) pour usage avec Form.Item */
+function NativeDateInput({ value, onChange, max, hasError, ...rest }) {
+  return (
+    <input
+      type="date"
+      value={value ?? ""}
+      onChange={(e) => onChange(e.target.value)}
+      max={max}
+      className={`w-full px-3 py-2 border ${hasError ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]`}
+      {...rest}
+    />
+  );
+}
 
 /** ====== Payment Config (devient fallback seulement) ====== */
 const DEFAULT_CURRENCY = "USD";
@@ -89,6 +102,12 @@ const toISO = (d) => {
   return parsed.isValid() ? parsed.toDate().toISOString() : null;
 };
 const nullIfEmpty = (v) => (v === "" || v === undefined ? null : v);
+/** Format date pour input type="date" (YYYY-MM-DD) */
+const toDateInputValue = (v) => {
+  const d = reviveDate(v);
+  if (!d) return "";
+  return dayjs(d).isValid() ? dayjs(d).format("YYYY-MM-DD") : "";
+};
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || "").trim());
 
 /** Valeurs initiales récupérables depuis le profil utilisateur connecté (nouvelle candidature) */
@@ -880,9 +899,12 @@ export default function DemandeurDemandeCreate() {
                       }
                       name="dob"
                       rules={[{ required: true, message: t("common.required") }]}
-                      getValueProps={(v) => ({ value: reviveDate(v) })}
+                      getValueProps={(v) => ({ value: toDateInputValue(v) })}
                     >
-                      <DatePicker className="w-full" size="large" allowClear format={DATE_FORMAT} />
+                      <NativeDateInput
+                        max={new Date().toISOString().split("T")[0]}
+                        hasError={!!form.getFieldError("dob")?.length}
+                      />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={8}>
@@ -1017,9 +1039,12 @@ export default function DemandeurDemandeCreate() {
                       }
                       name="graduationDate"
                       rules={[{ required: true, message: t("common.required") }]}
-                      getValueProps={(v) => ({ value: reviveDate(v) })}
+                      getValueProps={(v) => ({ value: toDateInputValue(v) })}
                     >
-                      <DatePicker className="w-full" size="large" allowClear format={DATE_FORMAT} />
+                      <NativeDateInput
+                        max={new Date().toISOString().split("T")[0]}
+                        hasError={!!form.getFieldError("graduationDate")?.length}
+                      />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={8}>

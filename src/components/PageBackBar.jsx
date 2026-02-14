@@ -1,13 +1,29 @@
 "use client";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button, Tooltip } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
+/** Routes où la barre "Retour" est masquée (pages dashboard) */
+const DASHBOARD_PATHS = [
+  "/admin",
+  "/admin/dashboard",
+  "/traducteur/dashboard",
+  "/organisations",
+  "/organisations/dashboard",
+  "/demandeur",
+  "/demandeur/dashboard",
+];
+
 function PageBackBar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
+
+  const isDashboard = DASHBOARD_PATHS.some((path) => location.pathname === path || location.pathname === path + "/");
+
+  if (isDashboard) return null;
 
   const handleBack = () => navigate(-1);
 
