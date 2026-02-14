@@ -9,6 +9,7 @@ import ScrollToTop from "./components/ScrollToTop"
 import { AppRoutes } from "./routes/AppRoutes"
 import { useLocation } from "react-router-dom"
 import Footer from "./components/footer"
+import { GoogleAnalytics } from "./components/GoogleAnalytics"
 import { useAuth } from "./hooks/useAuth"
 import { Toaster } from 'sonner';
 import "react-quill/dist/quill.snow.css";
@@ -50,6 +51,7 @@ function App() {
 
   return (
     <>
+      <GoogleAnalytics />
       <Toaster richColors position="top-right" /> 
       {shouldShowLayout ? (
         <div className={`page-wrapper ${toggle ? "toggled" : ""}`}>
