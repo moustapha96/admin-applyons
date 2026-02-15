@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axiosInstance from "@/services/api";
 import authService from "@/services/authService";
+import { mixpanelIdentify, mixpanelReset } from "@/utils/mixpanel";
 
 export const AuthContext = createContext(undefined);
 
@@ -56,6 +57,13 @@ export const AuthProvider = ({ children }) => {
     if (u && t) {
       Cookies.set(USER_COOKIE, JSON.stringify(u), cookieOpts);
       try {
+        mixpanelIdentify(String(u.id), {
+          email: u.email,
+          name: [u.firstName, u.lastName].filter(Boolean).join(" ") || u.username,
+          role: u.role,
+        });
+      } catch (_) {}
+      try {
         localStorage.setItem(REMEMBER_KEY, rememberMe ? "1" : "0");
       } catch (_) {}
       if (rememberMe) {
@@ -70,6 +78,9 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem(USER_KEY);
       }
     } else {
+      try {
+        mixpanelReset();
+      } catch (_) {}
       Cookies.remove(USER_COOKIE);
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(USER_KEY);

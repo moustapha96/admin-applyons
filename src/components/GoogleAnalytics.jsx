@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { initGA, pageview } from "../utils/analytics";
-import { initMixpanel, mixpanelPageView } from "../utils/mixpanel";
+import { initMixpanel } from "../utils/mixpanel";
 
 /**
- * Composant invisible qui initialise les analytics (GA4 + Mixpanel)
- * et envoie une page view à chaque changement de route (SPA).
+ * Composant invisible qui initialise les analytics (GA4 + Mixpanel).
+ * GA4 : page view manuelle à chaque route (SPA).
+ * Mixpanel : track_pageview "full-url" gère automatiquement les changements d’URL (SPA).
  */
 export function GoogleAnalytics() {
   const location = useLocation();
@@ -16,10 +17,7 @@ export function GoogleAnalytics() {
   }, []);
 
   useEffect(() => {
-    const path = location.pathname + location.search;
-    const title = document.title;
-    pageview(path, title);
-    mixpanelPageView(path, title);
+    pageview(location.pathname + location.search, document.title);
   }, [location.pathname, location.search]);
 
   return null;
