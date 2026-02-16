@@ -770,6 +770,28 @@
         "empty": {
             "noPayment": "No hay pagos registrados."
         },
+        "acceptanceLetter": {
+            "sectionTitle": "Carta de aceptación",
+            "loading": "Cargando…",
+            "viewButton": "Ver carta de aceptación",
+            "addedOn": "Añadida el",
+            "notYetAvailable": "La carta de aceptación aún no está disponible.",
+            "previewTitle": "Carta de aceptación",
+            "accessDenied": "Acceso denegado.",
+            "notFound": "Documento no disponible.",
+            "openError": "No se puede abrir el documento."
+        },
+        "passport": {
+            "sectionTitle": "Pasaporte (PDF)",
+            "loading": "Cargando…",
+            "viewButton": "Ver pasaporte",
+            "addedOn": "Añadido el",
+            "notYetAvailable": "No se ha subido ningún documento de pasaporte para esta solicitud.",
+            "previewTitle": "Pasaporte",
+            "accessDenied": "Acceso denegado.",
+            "notFound": "Documento no disponible.",
+            "openError": "No se puede abrir el documento."
+        },
         "common": {
             "yes": "Sí",
             "no": "No",
@@ -2297,6 +2319,12 @@
             "deleteConfirmTitle": "¿Eliminar este documento?",
             "deleteConfirmMessage": "Esta acción no se puede deshacer."
         },
+        "passport": {
+            "title": "Pasaporte",
+            "view": "Ver pasaporte",
+            "addedOn": "Añadido el",
+            "none": "No hay documento de pasaporte disponible."
+        },
         "acceptanceLetter": {
             "title": "Carta de aceptación",
             "view": "Ver / Descargar",
@@ -2411,6 +2439,7 @@
             "ATTESTATION": "CERTIFICADO",
             "RELEVE": "CERTIFICADO DE NOTAS",
             "DIPLOME": "TÍTULO",
+            "PASSPORT": "Pasaporte",
             "AUTRE": "OTRO",
             "LETTRE_ACCEPTATION": "Carta de aceptación"
         },
@@ -4439,6 +4468,7 @@
             "reset": "Restablecer",
             "completePayment": "Completar pago",
             "createApplication": "Enviar",
+            "saveChanges": "Guardar cambios",
             "autoSaving": "Guardando automáticamente..."
         },
         "fields": {
@@ -4447,6 +4477,7 @@
             "dateOfBirth": "Fecha de nacimiento",
             "countryOfCitizenship": "País de ciudadanía",
             "passportNumber": "Número de pasaporte",
+            "passportFile": "Pasaporte (PDF)",
             "preferredStartTerm": "Trimestre de inicio preferido",
             "year": "Año",
             "isEnglishFirstLanguage": "¿Es el inglés su idioma materno?",
@@ -4494,6 +4525,15 @@
             "address": "Dirección (opc.)",
             "role": "Rol (opc.)",
             "notifyOrgs": "Seleccionar organizaciones para notificar"
+        },
+        "tooltips": {
+            "passportFile": "Sube tu pasaporte en formato PDF (opcional)."
+        },
+        "passportUpload": {
+            "text": "Haz clic o arrastra un PDF del pasaporte aquí",
+            "hint": "Solo PDF, hasta 10 MB.",
+            "error": "Error al subir el pasaporte, pero tu solicitud se ha creado correctamente.",
+            "uploadSuccess": "Documento de pasaporte guardado."
         },
         "options": {
             "periods": {

@@ -26,6 +26,7 @@ export default function DemandeurDemandeDetail() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [acceptanceLetterDoc, setAcceptanceLetterDoc] = useState(null);
+  const [passportDoc, setPassportDoc] = useState(null);
   const [loadingLetter, setLoadingLetter] = useState(false);
   const [preview, setPreview] = useState({ open: false, url: "", title: "" });
 
@@ -38,21 +39,24 @@ export default function DemandeurDemandeDetail() {
   }, [demandeId]);
 
   useEffect(() => {
-    if (!data?.demande || data.demande.status !== "VALIDATED" || !demandeId) return;
+    if (!data?.demande || !demandeId) return;
     setLoadingLetter(true);
     (async () => {
       try {
         const res = await documentService.listByDemande(demandeId);
         const list = Array.isArray(res) ? res : (res?.documents || res?.data || []);
-        const doc = list.find((item) => (item.type || "").toUpperCase() === "LETTRE_ACCEPTATION");
-        setAcceptanceLetterDoc(doc || null);
+        const letter = list.find((item) => (item.type || "").toUpperCase() === "LETTRE_ACCEPTATION");
+        const passport = list.find((item) => (item.type || "").toUpperCase() === "PASSPORT");
+        setAcceptanceLetterDoc(letter || null);
+        setPassportDoc(passport || null);
       } catch (e) {
         setAcceptanceLetterDoc(null);
+        setPassportDoc(null);
       } finally {
         setLoadingLetter(false);
       }
     })();
-  }, [data?.demande?.status, demandeId]);
+  }, [data?.demande, demandeId]);
 
   useEffect(() => {
     return () => {
@@ -79,6 +83,27 @@ export default function DemandeurDemandeDetail() {
         message.error(t("demandeDetail.acceptanceLetter.notFound") || "Document non disponible.");
       } else {
         message.error(error?.response?.data?.message || error?.message || t("demandeDetail.acceptanceLetter.openError"));
+      }
+    }
+  };
+
+  const openPassport = async () => {
+    if (!passportDoc?.id) return;
+    try {
+      const blob = await documentService.getContent(passportDoc.id, { type: "original", display: true });
+      const url = URL.createObjectURL(blob);
+      setPreview({
+        open: true,
+        url,
+        title: t("demandeDetail.passport.previewTitle"),
+      });
+    } catch (error) {
+      if (error.response?.status === 403) {
+        message.error(t("demandeDetail.passport.accessDenied") || "Accès refusé.");
+      } else if (error.response?.status === 404) {
+        message.error(t("demandeDetail.passport.notFound") || "Document non disponible.");
+      } else {
+        message.error(error?.response?.data?.message || error?.message || t("demandeDetail.passport.openError"));
       }
     }
   };
@@ -191,6 +216,25 @@ export default function DemandeurDemandeDetail() {
                 <Descriptions.Item label={t("demandeDetail.fields.citizenship")}>{d.citizenship || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.passport")}>{d.passport || t("demandeDetail.common.na")}</Descriptions.Item>
               </Descriptions>
+
+              {/* Passeport (PDF) */}
+              <Divider>{t("demandeDetail.passport.sectionTitle")}</Divider>
+              <Card size="small" className="mb-4">
+                {loadingLetter ? (
+                  <Space><Spin size="small" /><Text type="secondary">{t("demandeDetail.passport.loading")}</Text></Space>
+                ) : passportDoc ? (
+                  <Space wrap>
+                    <Button type="primary" icon={<FilePdfOutlined />} onClick={openPassport}>
+                      {t("demandeDetail.passport.viewButton")}
+                    </Button>
+                    {passportDoc.createdAt && (
+                      <Text type="secondary">{t("demandeDetail.passport.addedOn")} {fmtDateTime(passportDoc.createdAt)}</Text>
+                    )}
+                  </Space>
+                ) : (
+                  <Text type="secondary">{t("demandeDetail.passport.notYetAvailable")}</Text>
+                )}
+              </Card>
 
               {/* Anglais / Tests */}
               <Divider>{t("demandeDetail.sections.englishTests")}</Divider>

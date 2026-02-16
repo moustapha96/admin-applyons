@@ -757,6 +757,17 @@
             "openError": "Unable to open the document.",
             "close": "Close"
         },
+        "passport": {
+            "sectionTitle": "Passport (PDF)",
+            "loading": "Loading…",
+            "viewButton": "View passport",
+            "addedOn": "Added on",
+            "notYetAvailable": "No passport document has been uploaded for this application.",
+            "previewTitle": "Passport",
+            "accessDenied": "Access denied.",
+            "notFound": "Document not available.",
+            "openError": "Unable to open the document."
+        },
         "common": {
             "yes": "Yes",
             "no": "No",
@@ -2279,6 +2290,12 @@
             "deleteConfirmTitle": "Delete this document?",
             "deleteConfirmMessage": "This action cannot be undone."
         },
+        "passport": {
+            "title": "Passport",
+            "view": "View passport",
+            "addedOn": "Added on",
+            "none": "No passport document available."
+        },
         "acceptanceLetter": {
             "title": "Acceptance letter",
             "view": "View / Download",
@@ -2392,6 +2409,7 @@
             "ATTESTATION": "CERTIFICATE",
             "RELEVE": "TRANSCRIPT",
             "DIPLOME": "DIPLOMA",
+            "PASSPORT": "Passport",
             "AUTRE": "OTHER",
             "LETTRE_ACCEPTATION": "Acceptance letter"
         },
@@ -4501,6 +4519,7 @@
             "reset": "Reset",
             "completePayment": "Complete payment",
             "createApplication": "Submit",
+            "saveChanges": "Save changes",
             "autoSaving": "Auto-saving..."
         },
         "fields": {
@@ -4509,6 +4528,7 @@
             "dateOfBirth": "Date of birth",
             "countryOfCitizenship": "Country of citizenship",
             "passportNumber": "Passport number",
+            "passportFile": "Passport (PDF)",
             "preferredStartTerm": "Preferred start term",
             "year": "Year",
             "isEnglishFirstLanguage": "Is English your first language?",
@@ -4556,6 +4576,15 @@
             "address": "Address (opt.)",
             "role": "Role (opt.)",
             "notifyOrgs": "Select organizations to notify"
+        },
+        "tooltips": {
+            "passportFile": "Upload your passport as a PDF file (optional)."
+        },
+        "passportUpload": {
+            "text": "Click or drag a passport PDF here to upload",
+            "hint": "PDF only, up to 10 MB.",
+            "error": "Passport upload failed, but your application was created.",
+            "uploadSuccess": "Passport document saved."
         },
         "options": {
             "periods": {

@@ -355,6 +355,8 @@ export default function DemandeDocumentAdd() {
     { label: t("demandeDocAdd.types.ATTESTATION"), value: "ATTESTATION" },
     { label: t("demandeDocAdd.types.RELEVE"), value: "RELEVE" },
     { label: t("demandeDocAdd.types.DIPLOME"), value: "DIPLOME" },
+    // Passport file for application requests
+    { label: t("demandeDocAdd.types.PASSPORT") || "Passport", value: "PASSPORT" },
     { label: t("demandeDocAdd.types.AUTRE"), value: "AUTRE" },
     { label: t("demandeDocAdd.types.LETTRE_ACCEPTATION"), value: "LETTRE_ACCEPTATION" },
   ];

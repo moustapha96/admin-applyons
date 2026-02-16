@@ -770,6 +770,28 @@
         "empty": {
             "noPayment": "Keine Zahlung erfasst."
         },
+        "acceptanceLetter": {
+            "sectionTitle": "Annahmeschreiben",
+            "loading": "Laden…",
+            "viewButton": "Annahmeschreiben ansehen",
+            "addedOn": "Hinzugefügt am",
+            "notYetAvailable": "Das Annahmeschreiben ist noch nicht verfügbar.",
+            "previewTitle": "Annahmeschreiben",
+            "accessDenied": "Zugriff verweigert.",
+            "notFound": "Dokument nicht verfügbar.",
+            "openError": "Dokument konnte nicht geöffnet werden."
+        },
+        "passport": {
+            "sectionTitle": "Reisepass (PDF)",
+            "loading": "Laden…",
+            "viewButton": "Reisepass ansehen",
+            "addedOn": "Hinzugefügt am",
+            "notYetAvailable": "Für diese Bewerbung wurde kein Reisepassdokument hochgeladen.",
+            "previewTitle": "Reisepass",
+            "accessDenied": "Zugriff verweigert.",
+            "notFound": "Dokument nicht verfügbar.",
+            "openError": "Dokument konnte nicht geöffnet werden."
+        },
         "common": {
             "yes": "Ja",
             "no": "Nein",
@@ -2298,6 +2320,12 @@
             "deleteConfirmTitle": "Dieses Dokument löschen?",
             "deleteConfirmMessage": "Diese Aktion kann nicht rückgängig gemacht werden."
         },
+        "passport": {
+            "title": "Reisepass",
+            "view": "Reisepass ansehen",
+            "addedOn": "Hinzugefügt am",
+            "none": "Kein Reisepassdokument vorhanden."
+        },
         "acceptanceLetter": {
             "title": "Annahmeschreiben",
             "view": "Ansehen / Herunterladen",
@@ -2412,6 +2440,7 @@
             "ATTESTATION": "ATTEST",
             "RELEVE": "ZEUGNIS",
             "DIPLOME": "DIPLOM",
+            "PASSPORT": "Reisepass",
             "AUTRE": "ANDERE",
             "LETTRE_ACCEPTATION": "Annahmeschreiben"
         },
@@ -4440,6 +4469,7 @@
             "reset": "Zurücksetzen",
             "completePayment": "Zahlung abschließen",
             "createApplication": "Einreichen",
+            "saveChanges": "Änderungen speichern",
             "autoSaving": "Automatisches Speichern..."
         },
         "fields": {
@@ -4448,6 +4478,7 @@
             "dateOfBirth": "Geburtsdatum",
             "countryOfCitizenship": "Staatsangehörigkeit",
             "passportNumber": "Reisepassnummer",
+            "passportFile": "Reisepass (PDF)",
             "preferredStartTerm": "Bevorzugtes Startsemester",
             "year": "Jahr",
             "isEnglishFirstLanguage": "Ist Englisch Ihre Muttersprache?",
@@ -4495,6 +4526,15 @@
             "address": "Adresse (opt.)",
             "role": "Rolle (opt.)",
             "notifyOrgs": "Organisationen zum Benachrichtigen auswählen"
+        },
+        "tooltips": {
+            "passportFile": "Laden Sie Ihren Reisepass als PDF-Datei hoch (optional)."
+        },
+        "passportUpload": {
+            "text": "Klicken oder PDF hierher ziehen zum Hochladen",
+            "hint": "Nur PDF, max. 10 MB.",
+            "error": "Reisepass-Upload fehlgeschlagen, aber Ihre Bewerbung wurde erstellt.",
+            "uploadSuccess": "Reisepass-Dokument gespeichert."
         },
         "options": {
             "periods": {

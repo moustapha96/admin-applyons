@@ -785,6 +785,17 @@
             "openError": "Impossible d'ouvrir le document.",
             "close": "Fermer"
         },
+        "passport": {
+            "sectionTitle": "Passeport (PDF)",
+            "loading": "Chargement…",
+            "viewButton": "Voir le passeport",
+            "addedOn": "Ajouté le",
+            "notYetAvailable": "Aucun document passeport n'a été téléversé pour cette candidature.",
+            "previewTitle": "Passeport",
+            "accessDenied": "Accès refusé.",
+            "notFound": "Document non disponible.",
+            "openError": "Impossible d'ouvrir le document."
+        },
         "common": {
             "yes": "Oui",
             "no": "Non",
@@ -2318,6 +2329,12 @@
             "deleteConfirmTitle": "Supprimer ce document ?",
             "deleteConfirmMessage": "Cette action est irréversible."
         },
+        "passport": {
+            "title": "Passeport",
+            "view": "Voir le passeport",
+            "addedOn": "Ajouté le",
+            "none": "Aucun document passeport disponible."
+        },
         "acceptanceLetter": {
             "title": "Lettre d'acceptation",
             "view": "Voir / Télécharger",
@@ -2432,6 +2449,7 @@
             "ATTESTATION": "ATTESTATION",
             "RELEVE": "RELEVE",
             "DIPLOME": "DIPLOME",
+            "PASSPORT": "Passeport",
             "AUTRE": "AUTRE",
             "LETTRE_ACCEPTATION": "Lettre d'acceptation"
         },
@@ -4509,6 +4527,7 @@
             "dateOfBirth": "Date de naissance",
             "countryOfCitizenship": "Pays de citoyenneté",
             "passportNumber": "Numéro de passeport",
+            "passportFile": "Passeport (PDF)",
             "preferredStartTerm": "Trimestre de début préféré",
             "year": "Année",
             "isEnglishFirstLanguage": "L'anglais est-il votre langue maternelle ?",
@@ -4556,6 +4575,15 @@
             "address": "Adresse (opt.)",
             "role": "Rôle (opt.)",
             "notifyOrgs": "Sélectionner les organisations à notifier"
+        },
+        "tooltips": {
+            "passportFile": "Téléversez votre passeport en fichier PDF (facultatif)."
+        },
+        "passportUpload": {
+            "text": "Cliquez ou glissez-déposez un PDF de passeport ici",
+            "hint": "PDF uniquement, 10 Mo max.",
+            "error": "Échec de l'envoi du passeport, mais votre candidature a bien été créée.",
+            "uploadSuccess": "Document passeport enregistré."
         },
         "options": {
             "periods": {
@@ -4613,6 +4641,7 @@
             "reset": "Réinitialiser",
             "completePayment": "Compléter le paiement",
             "createApplication": "Soumettre",
+            "saveChanges": "Enregistrer les modifications",
             "autoSaving": "Sauvegarde automatique..."
         },
         "invitations": {

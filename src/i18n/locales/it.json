@@ -770,6 +770,28 @@
         "empty": {
             "noPayment": "Nessun pagamento registrato."
         },
+        "acceptanceLetter": {
+            "sectionTitle": "Lettera di accettazione",
+            "loading": "Caricamento…",
+            "viewButton": "Visualizza lettera di accettazione",
+            "addedOn": "Aggiunta il",
+            "notYetAvailable": "La lettera di accettazione non è ancora disponibile.",
+            "previewTitle": "Lettera di accettazione",
+            "accessDenied": "Accesso negato.",
+            "notFound": "Documento non disponibile.",
+            "openError": "Impossibile aprire il documento."
+        },
+        "passport": {
+            "sectionTitle": "Passaporto (PDF)",
+            "loading": "Caricamento…",
+            "viewButton": "Visualizza passaporto",
+            "addedOn": "Aggiunto il",
+            "notYetAvailable": "Nessun documento passaporto è stato caricato per questa candidatura.",
+            "previewTitle": "Passaporto",
+            "accessDenied": "Accesso negato.",
+            "notFound": "Documento non disponibile.",
+            "openError": "Impossibile aprire il documento."
+        },
         "common": {
             "yes": "Sì",
             "no": "No",
@@ -2298,6 +2320,12 @@
             "deleteConfirmTitle": "Eliminare questo documento?",
             "deleteConfirmMessage": "Questa azione non può essere annullata."
         },
+        "passport": {
+            "title": "Passaporto",
+            "view": "Visualizza passaporto",
+            "addedOn": "Aggiunto il",
+            "none": "Nessun documento passaporto disponibile."
+        },
         "acceptanceLetter": {
             "title": "Lettera di accettazione",
             "view": "Visualizza / Scarica",
@@ -2412,6 +2440,7 @@
             "ATTESTATION": "CERTIFICATO",
             "RELEVE": "CERTIFICATO ESAMI",
             "DIPLOME": "DIPLOMA",
+            "PASSPORT": "Passaporto",
             "AUTRE": "ALTRO",
             "LETTRE_ACCEPTATION": "Lettera di accettazione"
         },
@@ -4440,6 +4469,7 @@
             "reset": "Reimposta",
             "completePayment": "Completa pagamento",
             "createApplication": "Invia",
+            "saveChanges": "Salva modifiche",
             "autoSaving": "Salvataggio automatico..."
         },
         "fields": {
@@ -4448,6 +4478,7 @@
             "dateOfBirth": "Data di nascita",
             "countryOfCitizenship": "Paese di cittadinanza",
             "passportNumber": "Numero di passaporto",
+            "passportFile": "Passaporto (PDF)",
             "preferredStartTerm": "Termine di inizio preferito",
             "year": "Anno",
             "isEnglishFirstLanguage": "L'inglese è la tua lingua madre?",
@@ -4495,6 +4526,15 @@
             "address": "Indirizzo (opz.)",
             "role": "Ruolo (opz.)",
             "notifyOrgs": "Selezionare le organizzazioni da notificare"
+        },
+        "tooltips": {
+            "passportFile": "Carica il tuo passaporto come file PDF (opzionale)."
+        },
+        "passportUpload": {
+            "text": "Clicca o trascina un PDF del passaporto qui",
+            "hint": "Solo PDF, max 10 MB.",
+            "error": "Caricamento passaporto fallito, ma la tua candidatura è stata creata.",
+            "uploadSuccess": "Documento passaporto salvato."
         },
         "options": {
             "periods": {

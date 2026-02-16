@@ -237,6 +237,12 @@ export default function InstitutDemandeDetails() {
     [docs]
   );
 
+  // Passport document (uploaded as a regular document with type = "PASSPORT")
+  const passportDoc = useMemo(
+    () => docs.find((d) => (d.type || "").toUpperCase() === "PASSPORT") || null,
+    [docs]
+  );
+
   const openAcceptanceLetterModal = () => {
     setAcceptanceLetterFile(null);
     setAcceptanceLetterModalOpen(true);
@@ -485,6 +491,31 @@ export default function InstitutDemandeDetails() {
                             >
                               {t("institutDemandeDetails.buttons.addAcceptanceLetter")}
                             </Button>
+                          )}
+                        </Card>
+
+                        {/* Passport document (if available) */}
+                        <Card
+                          className="mt-3"
+                          title={t("institutDemandeDetails.passport.title")}
+                          size="small"
+                        >
+                          {passportDoc ? (
+                            <Space wrap>
+                              <Button
+                                type="default"
+                                size="small"
+                                icon={<FileTextOutlined />}
+                                onClick={() => openUrl(passportDoc, "original")}
+                              >
+                                {t("institutDemandeDetails.passport.view")}
+                              </Button>
+                              <Tag>{t("institutDemandeDetails.passport.addedOn")} {fmtDate(passportDoc.createdAt, true)}</Tag>
+                            </Space>
+                          ) : (
+                            <Text type="secondary">
+                              {t("institutDemandeDetails.passport.none")}
+                            </Text>
                           )}
                         </Card>
                       </>

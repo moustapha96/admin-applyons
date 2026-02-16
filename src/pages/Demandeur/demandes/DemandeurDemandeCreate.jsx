@@ -23,6 +23,7 @@ import {
   Typography,
   Modal,
   Spin,
+  Upload,
 } from "antd";
 import {
   BankOutlined,
@@ -31,11 +32,13 @@ import {
   TeamOutlined,
   CreditCardOutlined,
   CheckCircleOutlined,
+  InboxOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import demandeService from "@/services/demandeService";
 import organizationService from "@/services/organizationService";
 import filiereService from "@/services/filiereService";
+import documentService from "@/services/documentService";
 import { useAuth } from "@/hooks/useAuth";
 import OrgNotifyPicker from "@/components/OrgNotifyPicker";
 import { Elements } from "@stripe/react-stripe-js";
@@ -47,8 +50,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import countries from "@/assets/countries.json";
 import { useTranslation } from "react-i18next";
 import { DATE_FORMAT } from "@/utils/dateFormat";
+import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 
 const { Text } = Typography;
+const { Dragger } = Upload;
 
 /** Input date natif (comme auth-signup) pour usage avec Form.Item */
 function NativeDateInput({ value, onChange, max, hasError, ...rest }) {
@@ -138,13 +143,15 @@ const RequiredLabel = ({ children }) => (
   </span>
 );
 
-export default function DemandeurDemandeCreate() {
+export default function DemandeurDemandeCreate(props = {}) {
+  const { editDemandeIdFromRoute } = props;
   /** State */
   const { t } = useTranslation();
   const { user: me } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const editDemandeId = location.state?.editDemandeId ?? null;
+  const editDemandeId = editDemandeIdFromRoute ?? location.state?.editDemandeId ?? null;
+  const isEditMode = !!editDemandeId;
   const [form] = Form.useForm();
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -283,6 +290,38 @@ export default function DemandeurDemandeCreate() {
     }
   };
 
+  // Fichier passeport (PDF)
+  const [passportFile, setPassportFile] = useState(null);
+  /** En mode édition : code et targetOrgId de la demande chargée (pour upload passeport après update) */
+  const [editDemandeMeta, setEditDemandeMeta] = useState({ code: null, targetOrgId: null });
+
+  // Props pour l'upload du passeport (PDF uniquement)
+  const passportUploadProps = useMemo(
+    () => ({
+      name: "file",
+      multiple: false,
+      beforeUpload: createPdfBeforeUpload(
+        (msg) => message.error(msg),
+        t,
+        [],
+      ),
+      onRemove: () => {
+        setPassportFile(null);
+        return true;
+      },
+      onChange: (info) => {
+        const f =
+          Array.isArray(info.fileList) && info.fileList[0]?.originFileObj
+            ? info.fileList[0].originFileObj
+            : null;
+        setPassportFile(f || null);
+      },
+      accept: PDF_ACCEPT,
+      maxCount: 1,
+    }),
+    [t],
+  );
+
   /** Reset form completely (vide sauf champs récupérables du profil utilisateur) */
   const resetForm = () => {
     try {
@@ -362,6 +401,7 @@ export default function DemandeurDemandeCreate() {
         setPaymentCompleted(true);
         setCurrent(0);
         setEditDataLoaded(true);
+        setEditDemandeMeta({ code: d.code ?? null, targetOrgId: d.targetOrgId ?? d.targetOrg?.id ?? null });
       } catch (e) {
         console.error("Erreur chargement demande pour édition:", e);
         message.error(t("demandeurDemandeCreate.messages.loadError", "Erreur lors du chargement de la demande"));
@@ -608,6 +648,9 @@ export default function DemandeurDemandeCreate() {
     { title: t("demandeurDemandeCreate.steps.invitations"), icon: <TeamOutlined /> },
     { title: t("demandeurDemandeCreate.steps.payment"), icon: <CreditCardOutlined /> },
   ];
+  /** En mode édition : pas d’étape paiement, soumission après Invitations */
+  const displaySteps = isEditMode ? steps.slice(0, 6) : steps;
+  const lastStepIndex = displaySteps.length - 1;
 
   const breakpoint = Grid.useBreakpoint();
   const isSmallScreen = !breakpoint.md;
@@ -620,7 +663,6 @@ export default function DemandeurDemandeCreate() {
 
   /** ------- Submit ------- */
   const onFinish = async (values) => {
-    const isEditMode = !!editDemandeId;
     if (!isEditMode && !paymentCompleted) {
       message.warning(t("demandeurDemandeCreate.messages.paymentRequired"));
       return;
@@ -698,8 +740,28 @@ export default function DemandeurDemandeCreate() {
 
       if (isEditMode) {
         await demandeService.update(editDemandeId, payload);
+        if (passportFile && editDemandeMeta?.code && editDemandeMeta?.targetOrgId) {
+          try {
+            const fd = new FormData();
+            fd.append("type", "PASSPORT");
+            fd.append("mention", "");
+            fd.append("demandeCode", String(editDemandeMeta.code));
+            fd.append("ownerOrgId", String(editDemandeMeta.targetOrgId));
+            fd.append("file", passportFile);
+            await documentService.create(fd);
+            message.success(t("demandeurDemandeCreate.passportUpload.uploadSuccess") || "Passport document saved.");
+          } catch (passportError) {
+            console.error("Passport upload error (edit):", passportError);
+            message.error(passportError?.response?.data?.message || passportError?.message || t("demandeurDemandeCreate.passportUpload.error"));
+          }
+        }
         message.success(t("demandeurDemandeCreate.messages.updateSuccess", "Candidature mise à jour avec succès"));
         navigate(`/demandeur/mes-demandes/${editDemandeId}/details`, { replace: true });
+        return;
+      }
+
+      if (!lastPaymentMeta) {
+        message.error(t("demandeurDemandeCreate.messages.paymentRequired") || "Veuillez finaliser le paiement avant de soumettre.");
         return;
       }
 
@@ -731,6 +793,27 @@ export default function DemandeurDemandeCreate() {
         paymentType: lastPaymentMeta.paymentType,   // "card" | "paypal"
         paymentInfo: lastPaymentMeta.paymentInfo || null,
       });
+
+      // Upload du passeport (PDF) comme document lié à la demande
+      if (passportFile && d?.code && d?.targetOrgId) {
+        try {
+          const fd = new FormData();
+          fd.append("type", "PASSPORT");
+          fd.append("mention", "");
+          fd.append("demandeCode", String(d.code));
+          fd.append("ownerOrgId", String(d.targetOrgId));
+          fd.append("file", passportFile);
+          await documentService.create(fd);
+          message.success(t("demandeurDemandeCreate.passportUpload.uploadSuccess") || "Passport document saved.");
+        } catch (passportError) {
+          console.error("Passport upload error:", passportError);
+          message.error(
+            passportError?.response?.data?.message ||
+              passportError?.message ||
+              t("demandeurDemandeCreate.passportUpload.error"),
+          );
+        }
+      }
 
       // Sauvegarder tous les champs du formulaire dans le localStorage (sauf paiement)
       try {
@@ -795,7 +878,7 @@ export default function DemandeurDemandeCreate() {
               color: "#333",
             }}
           >
-            {t("demandeurDemandeCreate.pageTitle")}
+            {isEditMode ? t("demandeDetail.actions.edit") : t("demandeurDemandeCreate.pageTitle")}
           </h1>
 
           <Card
@@ -805,8 +888,8 @@ export default function DemandeurDemandeCreate() {
             <Steps
               direction={isSmallScreen ? "vertical" : "horizontal"}
               current={current}
-              onChange={(step) => setCurrent(step)}
-              items={steps.map((step, idx) => ({
+              onChange={(step) => setCurrent(Math.min(step, lastStepIndex))}
+              items={displaySteps.map((step, idx) => ({
                 title: step.title,
                 icon: current > idx ? <CheckCircleOutlined /> : step.icon,
                 status: current > idx ? "finish" : current === idx ? "process" : "wait",
@@ -821,14 +904,14 @@ export default function DemandeurDemandeCreate() {
                 <div
                   className="shrink-0 w-10 h-10 sm:w-8 sm:h-8 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-700 text-base"
                 >
-                  {steps[current].icon}
+                  {displaySteps[current]?.icon ?? steps[current]?.icon}
                 </div>
                 <div className="min-w-0">
                   <div className="font-semibold text-base sm:text-lg text-neutral-800 truncate">
-                    {steps[current].title}
+                    {displaySteps[current]?.title ?? steps[current]?.title}
                   </div>
                   <div className="text-xs sm:text-sm text-neutral-500">
-                    {t("demandeurDemandeCreate.stepCounter", { current: current + 1, total: steps.length })}
+                    {t("demandeurDemandeCreate.stepCounter", { current: current + 1, total: displaySteps.length })}
                   </div>
                 </div>
               </div>
@@ -937,6 +1020,28 @@ export default function DemandeurDemandeCreate() {
                       rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Input size="large" />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} md={8}>
+                    <Form.Item
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          {t("demandeurDemandeCreate.fields.passportFile") || "Passport (PDF)"}
+                        </span>
+                      }
+                      tooltip={t("demandeurDemandeCreate.tooltips.passportFile") || "Upload your passport as a PDF file (optional)."}
+                    >
+                      <Dragger {...passportUploadProps}>
+                        <p className="ant-upload-drag-icon">
+                          <InboxOutlined />
+                        </p>
+                        <p className="ant-upload-text">
+                          {t("demandeurDemandeCreate.passportUpload.text") || "Click or drag a passport PDF here to upload"}
+                        </p>
+                        <p className="ant-upload-hint">
+                          {t("demandeurDemandeCreate.passportUpload.hint") || "PDF only, up to 10 MB."}
+                        </p>
+                      </Dragger>
                     </Form.Item>
                   </Col>
                 </Row>
@@ -1626,24 +1731,28 @@ export default function DemandeurDemandeCreate() {
                   <Button onClick={saveDraft} size="large" loading={savingDraft}>
                     {t("demandeurDemandeCreate.buttons.save") || "Enregistrer"}
                   </Button>
-                  {current < 6 && (
+                  {current < lastStepIndex && (
                     <Button type="primary" onClick={next} size="large">
                       {t("demandeurDemandeCreate.buttons.next")}
                     </Button>
                   )}
-                  {current === 6 && (
+                  {current === lastStepIndex && (
                     <Button
                       type="primary"
                       htmlType="submit"
                       loading={loading || isSubmitting}
                       size="large"
-                      disabled={!paymentCompleted}
+                      disabled={!isEditMode && !paymentCompleted}
                       style={{
-                        background: paymentCompleted ? "#52c41a" : undefined,
-                        borderColor: paymentCompleted ? "#52c41a" : undefined,
+                        background: (isEditMode || paymentCompleted) ? "#52c41a" : undefined,
+                        borderColor: (isEditMode || paymentCompleted) ? "#52c41a" : undefined,
                       }}
                     >
-                      {paymentCompleted ? t("demandeurDemandeCreate.buttons.createApplication") : t("demandeurDemandeCreate.buttons.completePayment")}
+                      {isEditMode
+                        ? t("demandeurDemandeCreate.buttons.saveChanges")
+                        : paymentCompleted
+                          ? t("demandeurDemandeCreate.buttons.createApplication")
+                          : t("demandeurDemandeCreate.buttons.completePayment")}
                     </Button>
                   )}
                 </Space>
