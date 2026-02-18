@@ -23,6 +23,7 @@ import {
   Typography,
   Modal,
   Spin,
+  Upload,
 } from "antd";
 import {
   BankOutlined,
@@ -31,6 +32,7 @@ import {
   TeamOutlined,
   CreditCardOutlined,
   CheckCircleOutlined,
+  InboxOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import demandeService from "@/services/demandeService";
@@ -47,8 +49,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import countries from "@/assets/countries.json";
 import { useTranslation } from "react-i18next";
 import { DATE_FORMAT } from "@/utils/dateFormat";
+import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 
 const { Text } = Typography;
+const { Dragger } = Upload;
 
 /** Input date natif (comme auth-signup) pour usage avec Form.Item */
 function NativeDateInput({ value, onChange, max, hasError, ...rest }) {
@@ -110,6 +114,16 @@ const toDateInputValue = (v) => {
 };
 const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || "").trim());
 
+/** Mapping nom du champ formulaire -> clé du libellé dans demandeurDemandeCreate.fields (pour messages de validation traduits) */
+const FIELD_TO_LABEL_KEY = {
+  dob: "dateOfBirth",
+  citizenship: "countryOfCitizenship",
+  passport: "passportNumber",
+  targetOrgId: "targetOrg",
+  assignedOrgId: "translationOrg",
+  periode: "preferredStartTerm",
+};
+
 /** Valeurs initiales récupérables depuis le profil utilisateur connecté (nouvelle candidature) */
 const getInitialValuesFromUser = (me, countriesList = []) => {
   const initial = {};
@@ -155,6 +169,9 @@ export default function DemandeurDemandeCreate() {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Fichier passeport (PDF) — obligatoire en création
+  const [passportFile, setPassportFile] = useState(null);
+  const [passportFileList, setPassportFileList] = useState([]);
 
   // Stripe
   const [stripePromise, setStripePromise] = useState(null);
@@ -202,6 +219,46 @@ export default function DemandeurDemandeCreate() {
       console.error("Échec sauvegarde brouillon:", e);
     }
   }, [form, current, invites, selectedNotifyOrgIds, paymentMethod, paymentCompleted, me?.id]);
+
+  /** Props d'upload pour le passeport (PDF uniquement, max 5 Mo, upload manuel) */
+  const passportUploadProps = useMemo(
+    () => ({
+      name: "file",
+      multiple: false,
+      accept: PDF_ACCEPT,
+      showUploadList: true,
+      fileList: passportFileList,
+      // Validation PDF + on laisse Ant Design gérer la liste (upload manuel)
+      beforeUpload: (file) => {
+        const validator = createPdfBeforeUpload(message.error, t, Upload.LIST_IGNORE);
+        const result = validator(file);
+        // Si la validation renvoie LIST_IGNORE, on bloque ce fichier
+        if (result === Upload.LIST_IGNORE) return result;
+        // Sinon, on empêche l'upload auto mais on garde le fichier dans la liste
+        return false;
+      },
+      onChange: (info) => {
+        const fileList = info.fileList || [];
+        setPassportFileList(fileList);
+        const latest = info.file;
+        if (latest) {
+          const f = latest.originFileObj || latest;
+          setPassportFile(f);
+          form.setFieldsValue({ passportFile: true });
+        } else if (fileList.length === 0) {
+          setPassportFile(null);
+          form.setFieldsValue({ passportFile: undefined });
+        }
+      },
+      onRemove: () => {
+        setPassportFile(null);
+        setPassportFileList([]);
+        form.setFieldsValue({ passportFile: undefined });
+        return true;
+      },
+    }),
+    [passportFileList, t, form],
+  );
 
   const loadDraft = useCallback(() => {
     try {
@@ -618,6 +675,26 @@ export default function DemandeurDemandeCreate() {
   };
   const prev = () => setCurrent((c) => c - 1);
 
+  /** Affichage des erreurs de validation au submit : message traduit + scroll vers le premier champ en erreur */
+  const onFinishFailed = useCallback(
+    ({ errorFields }) => {
+      if (!errorFields?.length) return;
+      const fieldNames = [...new Set(errorFields.map((item) => (Array.isArray(item.name) ? item.name[0] : item.name)))];
+      const labels = fieldNames.map((name) => {
+        const key = FIELD_TO_LABEL_KEY[name] ?? name;
+        return t(`demandeurDemandeCreate.fields.${key}`);
+      });
+      const messageKey = labels.length === 1
+        ? "demandeurDemandeCreate.validation.requiredField"
+        : "demandeurDemandeCreate.validation.fillRequiredFields";
+      message.error(t(messageKey, { fields: labels.join(", ") }));
+      if (typeof form.scrollToField === "function") {
+        form.scrollToField(errorFields[0].name, { behavior: "smooth", block: "center" });
+      }
+    },
+    [t, form]
+  );
+
   /** ------- Submit ------- */
   const onFinish = async (values) => {
     const isEditMode = !!editDemandeId;
@@ -697,13 +774,46 @@ export default function DemandeurDemandeCreate() {
       };
 
       if (isEditMode) {
+        // Mode édition: on reste en JSON simple (pas besoin de passport côté backend en edit ici)
         await demandeService.update(editDemandeId, payload);
         message.success(t("demandeurDemandeCreate.messages.updateSuccess", "Candidature mise à jour avec succès"));
         navigate(`/demandeur/mes-demandes/${editDemandeId}/details`, { replace: true });
         return;
       }
 
-      const created = await demandeService.create(payload);
+      // Mode création: si un fichier passeport est présent, on envoie tout en multipart/form-data
+      let created;
+      if (passportFile) {
+        const fd = new FormData();
+        // Champs scalaires
+        Object.entries(payload).forEach(([key, value]) => {
+          if (value === undefined || value === null) return;
+          // Tableaux simples: notifyOrgIds, examsTaken, englishProficiencyTests, invitedOrganizations
+          if (Array.isArray(value)) {
+            // Pour les IDs simples, on envoie un champ par valeur
+            if (key === "notifyOrgIds") {
+              value.forEach((v) => fd.append("notifyOrgIds", String(v)));
+            } else if (key === "invitedOrganizations") {
+              // Pour les objets, on sérialise en JSON unique
+              fd.append("invitedOrganizations", JSON.stringify(value));
+            } else {
+              // Autres tableaux (tests, exams...) en JSON
+              fd.append(key, JSON.stringify(value));
+            }
+          } else if (typeof value === "object") {
+            // Objets complexes -> JSON
+            fd.append(key, JSON.stringify(value));
+          } else {
+            fd.append(key, String(value));
+          }
+        });
+        fd.append("passportFile", passportFile);
+        created = await demandeService.create(fd);
+      } else {
+        // Pas de fichier passeport: JSON classique
+        created = await demandeService.create(payload);
+      }
+
       const d = created?.demande || created;
       const data = {
         demandePartageId: d.id,
@@ -881,6 +991,7 @@ export default function DemandeurDemandeCreate() {
               layout="vertical"
               preserve
               onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
@@ -937,6 +1048,38 @@ export default function DemandeurDemandeCreate() {
                       rules={[{ required: true, message: t("common.required") }]}
                     >
                       <Input size="large" />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={[12, 16]} style={{ marginTop: 8 }}>
+                  <Col xs={24}>
+                    <Form.Item
+                      name="passportFile"
+                      label={
+                        <span style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold" }}>
+                          <RequiredLabel>{t("demandeurDemandeCreate.fields.passportFile", "Passport (PDF)")}</RequiredLabel>
+                        </span>
+                      }
+                      colon={false}
+                      rules={
+                        editDemandeId
+                          ? []
+                          : [{ required: true, message: t("demandeurDemandeCreate.validation.passportFileRequired") }]
+                      }
+                    >
+                      <div>
+                        <Dragger {...passportUploadProps}>
+                          <p className="ant-upload-drag-icon">
+                            <InboxOutlined style={{ color: "#1890ff" }} />
+                          </p>
+                          <p className="ant-upload-text">
+                            {t("demandeurDemandeCreate.passportUpload.text")}
+                          </p>
+                          <p className="ant-upload-hint">
+                            {t("demandeurDemandeCreate.passportUpload.hint")}
+                          </p>
+                        </Dragger>
+                      </div>
                     </Form.Item>
                   </Col>
                 </Row>

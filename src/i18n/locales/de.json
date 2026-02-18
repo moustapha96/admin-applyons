@@ -2311,6 +2311,16 @@
             "uploadError": "Speichern fehlgeschlagen.",
             "selectFile": "Bitte wählen Sie eine PDF-Datei."
         },
+        "passport": {
+            "title": "Reisepass (PDF)",
+            "view": "Reisepass anzeigen",
+            "previewTitle": "Reisepass (PDF)",
+            "notYetAvailable": "Reisepass-Datei nicht verfügbar."
+        },
+        "drawer": {
+            "title": "Alle Informationen",
+            "openButton": "Alle Informationen anzeigen"
+        },
         "modals": {
             "statusTitle": "Status & Hinweis aktualisieren",
             "statusField": "Status",
@@ -3749,6 +3759,149 @@
             "na": "—"
         }
     },
+    "adminOrganizationDemandeDocuments": {
+        "title": "Dokumente der Anfrage",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "demandes": "Anfragen",
+            "documents": "Dokumente"
+        },
+        "buttons": {
+            "back": "Zurück zu den Anfragen"
+        },
+        "cardTitle": "Dokumente",
+        "table": {
+            "id": "ID",
+            "type": "Typ",
+            "document": "Dokument",
+            "translated": "Übersetzt",
+            "encrypted": "Verschlüsselt",
+            "createdAt": "Erstellt am",
+            "organization": "Organisation",
+            "actions": "Aktionen"
+        },
+        "tooltips": {
+            "previewOriginal": "Original anzeigen",
+            "downloadOriginal": "Original herunterladen",
+            "previewTranslation": "Übersetzung anzeigen",
+            "downloadTranslation": "Übersetzung herunterladen",
+            "delete": "Löschen"
+        },
+        "deleteConfirm": {
+            "title": "Dieses Dokument löschen?",
+            "content": "Diese Aktion kann nicht rückgängig gemacht werden.",
+            "okText": "Löschen",
+            "cancelText": "Abbrechen"
+        },
+        "messages": {
+            "loadError": "Fehler beim Laden der Dokumente",
+            "sessionExpired": "Sitzung abgelaufen. Bitte melden Sie sich erneut an.",
+            "accessDenied": "Sie haben keinen Zugriff auf dieses Dokument.",
+            "openError": "Fehler beim Öffnen des Dokuments",
+            "downloadSuccess": "Download erfolgreich",
+            "downloadError": "Fehler beim Herunterladen des Dokuments",
+            "deleteSuccess": "Dokument erfolgreich gelöscht",
+            "deleteError": "Fehler beim Löschen des Dokuments"
+        }
+    },
+    "adminOrgDemandeDetail": {
+        "title": "Anfragedetails",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organisations": "Organisationen",
+            "detail": "Anfragedetails"
+        },
+        "buttons": {
+            "back": "Zurück",
+            "edit": "Bearbeiten"
+        },
+        "sections": {
+            "info": "Anfrageinformationen"
+        },
+        "fields": {
+            "title": "Titel",
+            "type": "Typ",
+            "status": "Status",
+            "description": "Beschreibung",
+            "createdAt": "Erstellt am",
+            "updatedAt": "Aktualisiert am"
+        },
+        "status": {
+            "PENDING": "Ausstehend",
+            "APPROVED": "Genehmigt",
+            "REJECTED": "Abgelehnt",
+            "COMPLETED": "Abgeschlossen"
+        },
+        "type": {
+            "TRADUCTION": "Übersetzung",
+            "VERIFICATION": "Überprüfung",
+            "AUTRE": "Sonstige"
+        },
+        "notFound": "Anfrage nicht gefunden."
+    },
+    "adminOrgDemandesList": {
+        "title": "Anfragen der Organisation",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organisations": "Organisationen",
+            "demandes": "Anfragen"
+        },
+        "searchPlaceholder": "Anfrage suchen...",
+        "filterByStatus": "Nach Status filtern",
+        "filterByType": "Nach Typ filtern",
+        "reset": "Zurücksetzen",
+        "newDemande": "Neue Anfrage",
+        "table": {
+            "title": "Titel",
+            "type": "Typ",
+            "status": "Status",
+            "createdAt": "Erstellt am",
+            "actions": "Aktionen"
+        },
+        "actions": {
+            "details": "Details",
+            "delete": "Löschen"
+        },
+        "deleteConfirm": {
+            "title": "Diese Anfrage löschen?",
+            "content": "Diese Aktion kann nicht rückgängig gemacht werden.",
+            "okText": "Löschen",
+            "cancelText": "Abbrechen"
+        },
+        "status": {
+            "PENDING": "Ausstehend",
+            "APPROVED": "Genehmigt",
+            "REJECTED": "Abgelehnt",
+            "COMPLETED": "Abgeschlossen"
+        },
+        "type": {
+            "TRADUCTION": "Übersetzung",
+            "VERIFICATION": "Überprüfung",
+            "AUTRE": "Sonstige"
+        },
+        "messages": {
+            "loadError": "Fehler beim Laden der Anfragen",
+            "deleteSuccess": "Anfrage erfolgreich gelöscht",
+            "deleteError": "Löschen fehlgeschlagen"
+        },
+        "totalDemandes": "Gesamt {{count}} Anfragen"
+    },
+    "adminOrgDepartmentDetail": {
+        "title": "Abteilungsdetails",
+        "breadcrumb": { "dashboard": "Dashboard", "organisations": "Organisationen", "detail": "Abteilungsdetails" },
+        "buttons": { "back": "Zurück", "edit": "Bearbeiten" },
+        "sections": { "info": "Abteilungsinformationen" },
+        "fields": { "name": "Name", "description": "Beschreibung", "createdAt": "Erstellt am", "updatedAt": "Aktualisiert am" },
+        "notFound": "Abteilung nicht gefunden."
+    },
+    "adminOrgFiliereDetail": {
+        "title": "Studiengangdetails",
+        "breadcrumb": { "dashboard": "Dashboard", "organisations": "Organisationen", "detail": "Studiengangdetails" },
+        "buttons": { "back": "Zurück", "edit": "Bearbeiten" },
+        "sections": { "info": "Studienganginformationen" },
+        "fields": { "name": "Name", "description": "Beschreibung", "createdAt": "Erstellt am", "updatedAt": "Aktualisiert am" },
+        "notFound": "Studiengang nicht gefunden."
+    },
     "adminDemandeDetail": {
         "title": "Anfrage — Detail",
         "breadcrumb": {
@@ -3841,6 +3994,31 @@
             "applicationRound": "Bewerbungsrunde",
             "howDidYouHearAboutUs": "Wie haben Sie von uns erfahren"
         }
+    },
+    "adminUserDemandeEdit": {
+        "title": "Anfrage bearbeiten",
+        "breadcrumb": { "dashboard": "Dashboard", "myDemandes": "Meine Anfragen", "edit": "Anfrage bearbeiten" },
+        "buttons": { "back": "Zurück", "prev": "Zurück", "next": "Weiter", "update": "Aktualisieren", "updating": "Wird aktualisiert..." },
+        "cardTitle": "Anfrage bearbeiten",
+        "steps": { "basic": "Grundinformationen", "academic": "Akademische Informationen", "personal": "Persönliche Informationen", "financial": "Finanzielle Informationen", "extra": "Zusätzliche Informationen" },
+        "fields": { "type": "Anfrageart", "targetOrg": "Zielorganisation", "observation": "Anmerkungen", "serie": "Serie", "niveau": "Niveau", "mention": "Erwähnung", "annee": "Jahr", "countryOfSchool": "Land der Schule", "secondarySchoolName": "Schulname", "graduationDate": "Abschlussdatum", "dob": "Geburtsdatum", "citizenship": "Staatsangehörigkeit", "passport": "Reisepassnummer", "isEnglishFirstLanguage": "Ist Englisch Ihre Muttersprache?", "englishProficiencyTests": "Englisch-Tests", "testScores": "Testergebnisse", "willApplyForFinancialAid": "Möchten Sie finanzielle Unterstützung beantragen?", "hasExternalSponsorship": "Haben Sie eine externe Förderung?", "personalStatement": "Persönliche Erklärung", "optionalEssay": "Optionaler Aufsatz" },
+        "placeholders": { "selectType": "Typ auswählen", "selectOrg": "Organisation auswählen", "observation": "Zusätzliche Anmerkungen", "serie": "Serie (z. B. S, L, ES)", "niveau": "Niveau (z. B. Bac, Bachelor, Master)", "mention": "Erwähnung (z. B. Gut, Sehr gut)", "annee": "Jahr (z. B. 2023)", "countryOfSchool": "Land der Schule", "secondarySchoolName": "Name der weiterführenden Schule", "passport": "Reisepassnummer", "englishTests": "Englisch-Tests (z. B. TOEFL, IELTS)", "testScores": "Testergebnisse" },
+        "validation": { "typeRequired": "Typ ist erforderlich", "orgRequired": "Organisation ist erforderlich" },
+        "type": { "TRADUCTION": "Übersetzung", "VERIFICATION": "Überprüfung", "AUTRE": "Sonstige" },
+        "messages": { "loadDemandeError": "Fehler beim Laden der Anfrage", "loadOrgsError": "Fehler beim Laden der Organisationen", "updateSuccess": "Anfrage erfolgreich aktualisiert", "updateError": "Fehler beim Aktualisieren der Anfrage" }
+    },
+    "adminUserDemandeCreate": {
+        "title": "Neue Anfrage",
+        "breadcrumb": { "dashboard": "Dashboard", "myDemandes": "Meine Anfragen", "new": "Neue Anfrage" },
+        "buttons": { "back": "Zurück", "prev": "Zurück", "next": "Weiter" },
+        "cardTitle": "Neue Anfrage",
+        "steps": { "basic": "Grundinformationen", "academic": "Akademische Informationen", "personal": "Persönliche Informationen", "financial": "Finanzielle Informationen", "extra": "Zusätzliche Informationen", "payment": "Zahlung" },
+        "fields": { "type": "Anfrageart", "targetOrg": "Zielorganisation", "assignedOrg": "Übersetzungsorganisation", "observation": "Anmerkungen", "serie": "Serie", "niveau": "Niveau", "mention": "Erwähnung", "annee": "Jahr", "countryOfSchool": "Land der Schule", "secondarySchoolName": "Schulname", "graduationDate": "Abschlussdatum", "dob": "Geburtsdatum", "citizenship": "Staatsangehörigkeit", "passport": "Reisepassnummer", "isEnglishFirstLanguage": "Ist Englisch Ihre Muttersprache?", "englishProficiencyTests": "Englisch-Tests", "testScores": "Testergebnisse", "willApplyForFinancialAid": "Möchten Sie finanzielle Unterstützung beantragen?", "hasExternalSponsorship": "Haben Sie eine externe Förderung?", "personalStatement": "Persönliche Erklärung", "optionalEssay": "Optionaler Aufsatz" },
+        "placeholders": { "selectType": "Typ auswählen", "selectTargetOrg": "Zielorganisation auswählen", "selectAssignedOrg": "Übersetzungsorganisation auswählen", "observation": "Zusätzliche Anmerkungen", "serie": "Serie (z. B. S, L, ES)", "niveau": "Niveau (z. B. Bac, Bachelor, Master)", "mention": "Erwähnung (z. B. Gut, Sehr gut)", "annee": "Jahr (z. B. 2023)", "countryOfSchool": "Land der Schule", "secondarySchoolName": "Name der weiterführenden Schule", "passport": "Reisepassnummer", "englishTests": "Englisch-Tests (z. B. TOEFL, IELTS)", "testScores": "Testergebnisse" },
+        "validation": { "typeRequired": "Typ ist erforderlich", "targetOrgRequired": "Zielorganisation ist erforderlich", "assignedOrgRequired": "Übersetzungsorganisation ist erforderlich" },
+        "type": { "TRADUCTION": "Übersetzung", "VERIFICATION": "Überprüfung", "AUTRE": "Sonstige" },
+        "payment": { "alert": "Bitte schließen Sie die Zahlung ab, um Ihre Anfrage abzuschließen.", "payNow": "Jetzt zahlen", "chooseMethod": "Zahlungsmethode wählen", "stripe": "Mit Stripe zahlen", "paypal": "Mit PayPal zahlen", "processing": "Wird bearbeitet...", "payAmount": "49 USD zahlen" },
+        "messages": { "loadOrgsError": "Fehler beim Laden der Organisationen", "createSuccess": "Anfrage erfolgreich erstellt", "createError": "Fehler beim Erstellen der Anfrage", "fillRequired": "Bitte füllen Sie alle Pflichtfelder aus.", "stripeNotLoaded": "Stripe ist nicht geladen. Bitte versuchen Sie es erneut.", "paymentSuccess": "Zahlung erfolgreich!", "paymentPrepError": "Fehler bei der Vorbereitung der Zahlung" }
     },
     "adminUserCreate": {
         "title": "Neuer Benutzer",
@@ -4391,6 +4569,11 @@
             "paypalError": "PayPal-Fehler: {{error}}",
             "required": "Erforderlich"
         },
+        "validation": {
+            "fillRequiredFields": "Bitte füllen Sie die Pflichtfelder aus: {{fields}}",
+            "requiredField": "Pflichtfeld nicht ausgefüllt: {{fields}}",
+            "passportFileRequired": "Die Reisepassdatei (PDF) ist erforderlich."
+        },
         "sections": {
             "personalInfo": "1. Persönliche Angaben",
             "intendedProgram": "4. Gewünschtes Studienprogramm",
@@ -4448,6 +4631,7 @@
             "dateOfBirth": "Geburtsdatum",
             "countryOfCitizenship": "Staatsangehörigkeit",
             "passportNumber": "Reisepassnummer",
+            "passportFile": "Reisepass (PDF)",
             "preferredStartTerm": "Bevorzugtes Startsemester",
             "year": "Jahr",
             "isEnglishFirstLanguage": "Ist Englisch Ihre Muttersprache?",
@@ -4495,6 +4679,12 @@
             "address": "Adresse (opt.)",
             "role": "Rolle (opt.)",
             "notifyOrgs": "Organisationen zum Benachrichtigen auswählen"
+        },
+        "passportUpload": {
+            "text": "Klicken oder ziehen Sie eine Reisepass-PDF-Datei hierher zum Hochladen",
+            "hint": "Nur PDF, max. 5 MB.",
+            "error": "Reisepass-Upload fehlgeschlagen, aber Ihre Bewerbung wurde erstellt.",
+            "uploadSuccess": "Reisepass-Dokument gespeichert."
         },
         "options": {
             "periods": {

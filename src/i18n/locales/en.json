@@ -2292,6 +2292,51 @@
             "uploadError": "Save failed.",
             "selectFile": "Please select a PDF file."
         },
+        "passport": {
+            "title": "Passport (PDF)",
+            "view": "View passport",
+            "previewTitle": "Passport (PDF)",
+            "notYetAvailable": "Passport file not available."
+        },
+        "drawer": {
+            "title": "All information",
+            "openButton": "View all information",
+            "sections": {
+                "personalInfo": "Personal",
+                "academicExtra": "Academic (details)",
+                "englishInfo": "English",
+                "visaInfo": "Visa",
+                "applicationInfo": "Application",
+                "familyInfo": "Family",
+                "activitiesInfo": "Activities",
+                "financialInfo": "Financial",
+                "essaysInfo": "Essays"
+            },
+            "fields": {
+                "dob": "Date of birth",
+                "citizenship": "Citizenship",
+                "passport": "Passport number",
+                "gradingScale": "Grading scale",
+                "gpa": "GPA",
+                "intendedMajor": "Intended major",
+                "examsTaken": "Exams taken",
+                "englishTests": "Tests",
+                "testScores": "Scores",
+                "visaType": "Visa type",
+                "hasPreviouslyStudiedInUS": "Previously studied in US",
+                "applicationRound": "Round",
+                "howDidYouHear": "How did you hear about us",
+                "parentGuardianName": "Parent / Guardian",
+                "occupation": "Occupation",
+                "educationLevel": "Education level",
+                "extracurricular": "Extracurricular",
+                "honorsOrAwards": "Honors / Awards",
+                "willApplyFinancialAid": "Financial aid",
+                "hasSponsorship": "External sponsorship",
+                "personalStatement": "Personal statement",
+                "optionalEssay": "Optional essay"
+            }
+        },
         "modals": {
             "statusTitle": "Update status & note",
             "statusField": "Status",
@@ -2736,6 +2781,7 @@
         "breadcrumb": { "dashboard": "Dashboard" },
         "hello": "Hello, {{firstName}} {{lastName}}",
         "welcome": "Welcome to your translator space.",
+        "welcomeOrg": "Logged in as {{orgName}}.",
         "links": {
             "title": "Quick access",
             "demandes": "Assigned applications",
@@ -3811,6 +3857,149 @@
             "na": "—"
         }
     },
+    "adminOrganizationDemandeDocuments": {
+        "title": "Request Documents",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "demandes": "Applications",
+            "documents": "Documents"
+        },
+        "buttons": {
+            "back": "Back to applications"
+        },
+        "cardTitle": "Documents",
+        "table": {
+            "id": "ID",
+            "type": "Type",
+            "document": "Document",
+            "translated": "Translated",
+            "encrypted": "Encrypted",
+            "createdAt": "Created on",
+            "organization": "Organization",
+            "actions": "Actions"
+        },
+        "tooltips": {
+            "previewOriginal": "Preview original",
+            "downloadOriginal": "Download original",
+            "previewTranslation": "Preview translation",
+            "downloadTranslation": "Download translation",
+            "delete": "Delete"
+        },
+        "deleteConfirm": {
+            "title": "Delete this document?",
+            "content": "This action cannot be undone.",
+            "okText": "Delete",
+            "cancelText": "Cancel"
+        },
+        "messages": {
+            "loadError": "Error loading documents",
+            "sessionExpired": "Session expired. Please log in again.",
+            "accessDenied": "You do not have access to this document.",
+            "openError": "Error opening document",
+            "downloadSuccess": "Download successful",
+            "downloadError": "Error downloading document",
+            "deleteSuccess": "Document deleted successfully",
+            "deleteError": "Error deleting document"
+        }
+    },
+    "adminOrgDemandeDetail": {
+        "title": "Request details",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organisations": "Organizations",
+            "detail": "Request details"
+        },
+        "buttons": {
+            "back": "Back",
+            "edit": "Edit"
+        },
+        "sections": {
+            "info": "Request information"
+        },
+        "fields": {
+            "title": "Title",
+            "type": "Type",
+            "status": "Status",
+            "description": "Description",
+            "createdAt": "Created on",
+            "updatedAt": "Updated on"
+        },
+        "status": {
+            "PENDING": "Pending",
+            "APPROVED": "Approved",
+            "REJECTED": "Rejected",
+            "COMPLETED": "Completed"
+        },
+        "type": {
+            "TRADUCTION": "Translation",
+            "VERIFICATION": "Verification",
+            "AUTRE": "Other"
+        },
+        "notFound": "Request not found."
+    },
+    "adminOrgDemandesList": {
+        "title": "Organization requests",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organisations": "Organizations",
+            "demandes": "Requests"
+        },
+        "searchPlaceholder": "Search for a request...",
+        "filterByStatus": "Filter by status",
+        "filterByType": "Filter by type",
+        "reset": "Reset",
+        "newDemande": "New request",
+        "table": {
+            "title": "Title",
+            "type": "Type",
+            "status": "Status",
+            "createdAt": "Created on",
+            "actions": "Actions"
+        },
+        "actions": {
+            "details": "Details",
+            "delete": "Delete"
+        },
+        "deleteConfirm": {
+            "title": "Delete this request?",
+            "content": "This action cannot be undone.",
+            "okText": "Delete",
+            "cancelText": "Cancel"
+        },
+        "status": {
+            "PENDING": "Pending",
+            "APPROVED": "Approved",
+            "REJECTED": "Rejected",
+            "COMPLETED": "Completed"
+        },
+        "type": {
+            "TRADUCTION": "Translation",
+            "VERIFICATION": "Verification",
+            "AUTRE": "Other"
+        },
+        "messages": {
+            "loadError": "Error loading requests",
+            "deleteSuccess": "Request deleted successfully",
+            "deleteError": "Deletion failed"
+        },
+        "totalDemandes": "Total {{count}} requests"
+    },
+    "adminOrgDepartmentDetail": {
+        "title": "Department details",
+        "breadcrumb": { "dashboard": "Dashboard", "organisations": "Organizations", "detail": "Department details" },
+        "buttons": { "back": "Back", "edit": "Edit" },
+        "sections": { "info": "Department information" },
+        "fields": { "name": "Name", "description": "Description", "createdAt": "Created on", "updatedAt": "Updated on" },
+        "notFound": "Department not found."
+    },
+    "adminOrgFiliereDetail": {
+        "title": "Programme details",
+        "breadcrumb": { "dashboard": "Dashboard", "organisations": "Organizations", "detail": "Programme details" },
+        "buttons": { "back": "Back", "edit": "Edit" },
+        "sections": { "info": "Programme information" },
+        "fields": { "name": "Name", "description": "Description", "createdAt": "Created on", "updatedAt": "Updated on" },
+        "notFound": "Programme not found."
+    },
     "adminDemandeDetail": {
         "title": "Application — Details",
         "breadcrumb": {
@@ -3819,7 +4008,23 @@
             "detail": "Detail"
         },
         "actions": {
-            "back": "Back"
+            "back": "Back",
+            "close": "Close"
+        },
+        "passport": {
+            "title": "Passport (PDF)",
+            "view": "View passport",
+            "notAvailable": "Not available."
+        },
+        "acceptanceLetter": {
+            "title": "Acceptance letter",
+            "view": "View / Download",
+            "addedOn": "Added on",
+            "notAdded": "No acceptance letter added."
+        },
+        "drawer": {
+            "title": "All information",
+            "openButton": "View all information"
         },
         "sections": {
             "mainInfo": "Main Information",
@@ -3845,7 +4050,15 @@
             "download": "Download",
             "verify": "Verify Integrity",
             "original": "Document (original)",
-            "translated": "Document (translated)"
+            "translated": "Document (translated)",
+            "ownerOrg": "Institute (source)",
+            "type": "Type",
+            "mention": "Mention",
+            "obtainedAt": "Obtained on",
+            "addedAt": "Added on",
+            "delete": "Delete",
+            "deleteConfirmTitle": "Delete this document?",
+            "deleteConfirmMessage": "This action cannot be undone."
         },
         "verify": {
             "title": "Integrity Verification",
@@ -3861,7 +4074,11 @@
             "loadError": "Loading error",
             "openError": "Cannot open document",
             "downloadError": "Download failed",
-            "verifyError": "Verification failed"
+            "verifyError": "Verification failed",
+            "noDocument": "Document not available",
+            "sessionExpired": "Session expired. Please log in again.",
+            "accessDenied": "Access denied.",
+            "docDeleted": "Document deleted."
         },
         "common": {
             "na": "—",
@@ -3903,6 +4120,31 @@
             "applicationRound": "Application round",
             "howDidYouHearAboutUs": "How did you hear about us"
         }
+    },
+    "adminUserDemandeEdit": {
+        "title": "Edit request",
+        "breadcrumb": { "dashboard": "Dashboard", "myDemandes": "My requests", "edit": "Edit request" },
+        "buttons": { "back": "Back", "prev": "Previous", "next": "Next", "update": "Update", "updating": "Updating..." },
+        "cardTitle": "Edit request",
+        "steps": { "basic": "Basic information", "academic": "Academic information", "personal": "Personal information", "financial": "Financial information", "extra": "Additional information" },
+        "fields": { "type": "Request type", "targetOrg": "Target organization", "observation": "Observations", "serie": "Series", "niveau": "Level", "mention": "Mention", "annee": "Year", "countryOfSchool": "Country of school", "secondarySchoolName": "School name", "graduationDate": "Graduation date", "dob": "Date of birth", "citizenship": "Citizenship", "passport": "Passport number", "isEnglishFirstLanguage": "Is English your first language?", "englishProficiencyTests": "English proficiency tests", "testScores": "Test scores", "willApplyForFinancialAid": "Will you apply for financial aid?", "hasExternalSponsorship": "Do you have external sponsorship?", "personalStatement": "Personal statement", "optionalEssay": "Optional essay" },
+        "placeholders": { "selectType": "Select a type", "selectOrg": "Select an organization", "observation": "Additional observations", "serie": "Series (e.g. S, L, ES)", "niveau": "Level (e.g. Bac, Bachelor, Master)", "mention": "Mention (e.g. Good, Very Good)", "annee": "Year (e.g. 2023)", "countryOfSchool": "Country of school", "secondarySchoolName": "Secondary school name", "passport": "Passport number", "englishTests": "English tests (e.g. TOEFL, IELTS)", "testScores": "Test scores" },
+        "validation": { "typeRequired": "Type is required", "orgRequired": "Organization is required" },
+        "type": { "TRADUCTION": "Translation", "VERIFICATION": "Verification", "AUTRE": "Other" },
+        "messages": { "loadDemandeError": "Error loading request", "loadOrgsError": "Error loading organizations", "updateSuccess": "Request updated successfully", "updateError": "Error updating request" }
+    },
+    "adminUserDemandeCreate": {
+        "title": "New request",
+        "breadcrumb": { "dashboard": "Dashboard", "myDemandes": "My requests", "new": "New request" },
+        "buttons": { "back": "Back", "prev": "Previous", "next": "Next" },
+        "cardTitle": "New request",
+        "steps": { "basic": "Basic information", "academic": "Academic information", "personal": "Personal information", "financial": "Financial information", "extra": "Additional information", "payment": "Payment" },
+        "fields": { "type": "Request type", "targetOrg": "Target organization", "assignedOrg": "Translation organization", "observation": "Observations", "serie": "Series", "niveau": "Level", "mention": "Mention", "annee": "Year", "countryOfSchool": "Country of school", "secondarySchoolName": "School name", "graduationDate": "Graduation date", "dob": "Date of birth", "citizenship": "Citizenship", "passport": "Passport number", "isEnglishFirstLanguage": "Is English your first language?", "englishProficiencyTests": "English proficiency tests", "testScores": "Test scores", "willApplyForFinancialAid": "Will you apply for financial aid?", "hasExternalSponsorship": "Do you have external sponsorship?", "personalStatement": "Personal statement", "optionalEssay": "Optional essay" },
+        "placeholders": { "selectType": "Select a type", "selectTargetOrg": "Select target organization", "selectAssignedOrg": "Select translation organization", "observation": "Additional observations", "serie": "Series (e.g. S, L, ES)", "niveau": "Level (e.g. Bac, Bachelor, Master)", "mention": "Mention (e.g. Good, Very Good)", "annee": "Year (e.g. 2023)", "countryOfSchool": "Country of school", "secondarySchoolName": "Secondary school name", "passport": "Passport number", "englishTests": "English tests (e.g. TOEFL, IELTS)", "testScores": "Test scores" },
+        "validation": { "typeRequired": "Type is required", "targetOrgRequired": "Target organization is required", "assignedOrgRequired": "Translation organization is required" },
+        "type": { "TRADUCTION": "Translation", "VERIFICATION": "Verification", "AUTRE": "Other" },
+        "payment": { "alert": "Please proceed to payment to finalize your request.", "payNow": "Pay now", "chooseMethod": "Choose a payment method", "stripe": "Pay with Stripe", "paypal": "Pay with PayPal", "processing": "Processing...", "payAmount": "Pay 49 USD" },
+        "messages": { "loadOrgsError": "Error loading organizations", "createSuccess": "Request created successfully", "createError": "Error creating request", "fillRequired": "Please fill in all required fields.", "stripeNotLoaded": "Stripe is not loaded. Please try again.", "paymentSuccess": "Payment successful!", "paymentPrepError": "Error preparing payment" }
     },
     "adminUserCreate": {
         "title": "New User",
@@ -4509,6 +4751,7 @@
             "dateOfBirth": "Date of birth",
             "countryOfCitizenship": "Country of citizenship",
             "passportNumber": "Passport number",
+            "passportFile": "Passport (PDF)",
             "preferredStartTerm": "Preferred start term",
             "year": "Year",
             "isEnglishFirstLanguage": "Is English your first language?",
@@ -4556,6 +4799,12 @@
             "address": "Address (opt.)",
             "role": "Role (opt.)",
             "notifyOrgs": "Select organizations to notify"
+        },
+        "passportUpload": {
+            "text": "Click or drag a passport PDF here to upload",
+            "hint": "PDF only, up to 5 MB.",
+            "error": "Passport upload failed, but your application was created.",
+            "uploadSuccess": "Passport document saved."
         },
         "options": {
             "periods": {
@@ -4642,6 +4891,11 @@
             "creationError": "Creation failed",
             "paypalError": "PayPal error: {{error}}",
             "required": "Required"
+        },
+        "validation": {
+            "fillRequiredFields": "Please fill in the required fields: {{fields}}",
+            "requiredField": "Required field not filled: {{fields}}",
+            "passportFileRequired": "The passport file (PDF) is required."
         }
     },
     "demandeurDemandePayment": {

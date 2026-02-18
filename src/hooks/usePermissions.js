@@ -36,7 +36,7 @@ export const usePermissions = () => {
   // Si le contexte n'est pas disponible, retourner les valeurs par défaut
   // Cela évite les erreurs pendant l'initialisation
   if (context === undefined) {
-    console.warn("usePermissions: PermissionsContext is undefined. Using default values. Make sure PermissionsProvider is mounted.");
+    // console.warn("usePermissions: PermissionsContext is undefined. Using default values. Make sure PermissionsProvider is mounted.");
     return defaultPermissionsContext;
   }
   return context;

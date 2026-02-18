@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, Card, Descriptions, Space, Button, Divider, Spin } from "antd";
 import { BookOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import organizationService from "../../../services/organizationService";
 
 const OrganizationFiliereDetail = () => {
+  const { t } = useTranslation();
   const { id: orgId, filiereId } = useParams();
   const [filiere, setFiliere] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -38,49 +40,49 @@ const OrganizationFiliereDetail = () => {
   }
 
   if (!filiere) {
-    return <div>Filière non trouvée.</div>;
+    return <div>{t("adminOrgFiliereDetail.notFound")}</div>;
   }
 
   return (
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
         <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Détails de la Filière</h5>
+          <h5 className="text-lg font-semibold">{t("adminOrgFiliereDetail.title")}</h5>
           <Breadcrumb
             items={[
-              { title: <Link to="/">Dashboard</Link> },
-              { title: <Link to="/admin/organisations">Organisations</Link> },
-              { title: "Détails de la Filière" },
+              { title: <Link to="/">{t("adminOrgFiliereDetail.breadcrumb.dashboard")}</Link> },
+              { title: <Link to="/admin/organisations">{t("adminOrgFiliereDetail.breadcrumb.organisations")}</Link> },
+              { title: t("adminOrgFiliereDetail.breadcrumb.detail") },
             ]}
           />
         </div>
         <div className="md:flex md:justify-end justify-end items-center mb-6">
           <Button onClick={() => navigate(-1)} icon={<ArrowLeftOutlined />}>
-            Retour
+            {t("adminOrgFiliereDetail.buttons.back")}
           </Button>
           <Button
             type="primary"
             onClick={() => navigate(`/admin/organisations/${orgId}/filieres/${filiereId}/edit`)}
             className="ml-2"
           >
-            Modifier
+            {t("adminOrgFiliereDetail.buttons.edit")}
           </Button>
         </div>
         <Card>
-          <Descriptions title="Informations de la Filière" bordered column={3}>
-            <Descriptions.Item label="Nom" span={2}>
+          <Descriptions title={t("adminOrgFiliereDetail.sections.info")} bordered column={3}>
+            <Descriptions.Item label={t("adminOrgFiliereDetail.fields.name")} span={2}>
               <Space>
                 <BookOutlined />
                 <span className="ml-3">{filiere.name}</span>
               </Space>
             </Descriptions.Item>
-            <Descriptions.Item label="Description" span={3}>
-              {filiere.description || "N/A"}
+            <Descriptions.Item label={t("adminOrgFiliereDetail.fields.description")} span={3}>
+              {filiere.description || t("common.na")}
             </Descriptions.Item>
-            <Descriptions.Item label="Créé le" span={1}>
+            <Descriptions.Item label={t("adminOrgFiliereDetail.fields.createdAt")} span={1}>
               {new Date(filiere.createdAt).toLocaleString()}
             </Descriptions.Item>
-            <Descriptions.Item label="Mis à jour le" span={2}>
+            <Descriptions.Item label={t("adminOrgFiliereDetail.fields.updatedAt")} span={2}>
               {new Date(filiere.updatedAt).toLocaleString()}
             </Descriptions.Item>
           </Descriptions>

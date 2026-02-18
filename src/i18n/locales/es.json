@@ -2310,6 +2310,16 @@
             "uploadError": "Error al guardar.",
             "selectFile": "Por favor seleccione un archivo PDF."
         },
+        "passport": {
+            "title": "Pasaporte (PDF)",
+            "view": "Ver pasaporte",
+            "previewTitle": "Pasaporte (PDF)",
+            "notYetAvailable": "Archivo de pasaporte no disponible."
+        },
+        "drawer": {
+            "title": "Toda la información",
+            "openButton": "Ver toda la información"
+        },
         "modals": {
             "statusTitle": "Actualizar estado y observación",
             "statusField": "Estado",
@@ -3748,6 +3758,149 @@
             "na": "—"
         }
     },
+    "adminOrganizationDemandeDocuments": {
+        "title": "Documentos de la solicitud",
+        "breadcrumb": {
+            "dashboard": "Panel",
+            "demandes": "Solicitudes",
+            "documents": "Documentos"
+        },
+        "buttons": {
+            "back": "Volver a las solicitudes"
+        },
+        "cardTitle": "Documentos",
+        "table": {
+            "id": "ID",
+            "type": "Tipo",
+            "document": "Documento",
+            "translated": "Traducido",
+            "encrypted": "Cifrado",
+            "createdAt": "Creado el",
+            "organization": "Organización",
+            "actions": "Acciones"
+        },
+        "tooltips": {
+            "previewOriginal": "Vista previa del original",
+            "downloadOriginal": "Descargar original",
+            "previewTranslation": "Vista previa de la traducción",
+            "downloadTranslation": "Descargar traducción",
+            "delete": "Eliminar"
+        },
+        "deleteConfirm": {
+            "title": "¿Eliminar este documento?",
+            "content": "Esta acción no se puede deshacer.",
+            "okText": "Eliminar",
+            "cancelText": "Cancelar"
+        },
+        "messages": {
+            "loadError": "Error al cargar los documentos",
+            "sessionExpired": "Sesión expirada. Por favor, inicie sesión de nuevo.",
+            "accessDenied": "No tiene acceso a este documento.",
+            "openError": "Error al abrir el documento",
+            "downloadSuccess": "Descarga correcta",
+            "downloadError": "Error al descargar el documento",
+            "deleteSuccess": "Documento eliminado correctamente",
+            "deleteError": "Error al eliminar el documento"
+        }
+    },
+    "adminOrgDemandeDetail": {
+        "title": "Detalles de la solicitud",
+        "breadcrumb": {
+            "dashboard": "Panel",
+            "organisations": "Organizaciones",
+            "detail": "Detalles de la solicitud"
+        },
+        "buttons": {
+            "back": "Volver",
+            "edit": "Editar"
+        },
+        "sections": {
+            "info": "Información de la solicitud"
+        },
+        "fields": {
+            "title": "Título",
+            "type": "Tipo",
+            "status": "Estado",
+            "description": "Descripción",
+            "createdAt": "Creado el",
+            "updatedAt": "Actualizado el"
+        },
+        "status": {
+            "PENDING": "Pendiente",
+            "APPROVED": "Aprobada",
+            "REJECTED": "Rechazada",
+            "COMPLETED": "Completada"
+        },
+        "type": {
+            "TRADUCTION": "Traducción",
+            "VERIFICATION": "Verificación",
+            "AUTRE": "Otro"
+        },
+        "notFound": "Solicitud no encontrada."
+    },
+    "adminOrgDemandesList": {
+        "title": "Solicitudes de la organización",
+        "breadcrumb": {
+            "dashboard": "Panel",
+            "organisations": "Organizaciones",
+            "demandes": "Solicitudes"
+        },
+        "searchPlaceholder": "Buscar una solicitud...",
+        "filterByStatus": "Filtrar por estado",
+        "filterByType": "Filtrar por tipo",
+        "reset": "Restablecer",
+        "newDemande": "Nueva solicitud",
+        "table": {
+            "title": "Título",
+            "type": "Tipo",
+            "status": "Estado",
+            "createdAt": "Creado el",
+            "actions": "Acciones"
+        },
+        "actions": {
+            "details": "Detalles",
+            "delete": "Eliminar"
+        },
+        "deleteConfirm": {
+            "title": "¿Eliminar esta solicitud?",
+            "content": "Esta acción es irreversible.",
+            "okText": "Eliminar",
+            "cancelText": "Cancelar"
+        },
+        "status": {
+            "PENDING": "Pendiente",
+            "APPROVED": "Aprobada",
+            "REJECTED": "Rechazada",
+            "COMPLETED": "Completada"
+        },
+        "type": {
+            "TRADUCTION": "Traducción",
+            "VERIFICATION": "Verificación",
+            "AUTRE": "Otro"
+        },
+        "messages": {
+            "loadError": "Error al cargar las solicitudes",
+            "deleteSuccess": "Solicitud eliminada correctamente",
+            "deleteError": "Error al eliminar"
+        },
+        "totalDemandes": "Total {{count}} solicitudes"
+    },
+    "adminOrgDepartmentDetail": {
+        "title": "Detalles del departamento",
+        "breadcrumb": { "dashboard": "Panel", "organisations": "Organizaciones", "detail": "Detalles del departamento" },
+        "buttons": { "back": "Volver", "edit": "Editar" },
+        "sections": { "info": "Información del departamento" },
+        "fields": { "name": "Nombre", "description": "Descripción", "createdAt": "Creado el", "updatedAt": "Actualizado el" },
+        "notFound": "Departamento no encontrado."
+    },
+    "adminOrgFiliereDetail": {
+        "title": "Detalles de la rama",
+        "breadcrumb": { "dashboard": "Panel", "organisations": "Organizaciones", "detail": "Detalles de la rama" },
+        "buttons": { "back": "Volver", "edit": "Editar" },
+        "sections": { "info": "Información de la rama" },
+        "fields": { "name": "Nombre", "description": "Descripción", "createdAt": "Creado el", "updatedAt": "Actualizado el" },
+        "notFound": "Rama no encontrada."
+    },
     "adminDemandeDetail": {
         "title": "Solicitud — Detalle",
         "breadcrumb": {
@@ -3840,6 +3993,31 @@
             "applicationRound": "Ronda de solicitud",
             "howDidYouHearAboutUs": "Cómo nos conoció"
         }
+    },
+    "adminUserDemandeEdit": {
+        "title": "Editar solicitud",
+        "breadcrumb": { "dashboard": "Panel", "myDemandes": "Mis solicitudes", "edit": "Editar solicitud" },
+        "buttons": { "back": "Volver", "prev": "Anterior", "next": "Siguiente", "update": "Actualizar", "updating": "Actualizando..." },
+        "cardTitle": "Editar solicitud",
+        "steps": { "basic": "Información básica", "academic": "Información académica", "personal": "Información personal", "financial": "Información financiera", "extra": "Información adicional" },
+        "fields": { "type": "Tipo de solicitud", "targetOrg": "Organización destino", "observation": "Observaciones", "serie": "Serie", "niveau": "Nivel", "mention": "Mención", "annee": "Año", "countryOfSchool": "País del centro", "secondarySchoolName": "Nombre del centro", "graduationDate": "Fecha de graduación", "dob": "Fecha de nacimiento", "citizenship": "Nacionalidad", "passport": "Número de pasaporte", "isEnglishFirstLanguage": "¿Es el inglés su primera lengua?", "englishProficiencyTests": "Pruebas de inglés", "testScores": "Puntuaciones", "willApplyForFinancialAid": "¿Solicitará ayuda financiera?", "hasExternalSponsorship": "¿Tiene patrocinio externo?", "personalStatement": "Declaración personal", "optionalEssay": "Ensayo opcional" },
+        "placeholders": { "selectType": "Seleccionar tipo", "selectOrg": "Seleccionar organización", "observation": "Observaciones adicionales", "serie": "Serie (ej: S, L, ES)", "niveau": "Nivel (ej: Bac, Licenciatura, Master)", "mention": "Mención (ej: Bien, Muy bien)", "annee": "Año (ej: 2023)", "countryOfSchool": "País del centro", "secondarySchoolName": "Nombre del centro secundario", "passport": "Número de pasaporte", "englishTests": "Pruebas (ej: TOEFL, IELTS)", "testScores": "Puntuaciones" },
+        "validation": { "typeRequired": "El tipo es obligatorio", "orgRequired": "La organización es obligatoria" },
+        "type": { "TRADUCTION": "Traducción", "VERIFICATION": "Verificación", "AUTRE": "Otro" },
+        "messages": { "loadDemandeError": "Error al cargar la solicitud", "loadOrgsError": "Error al cargar las organizaciones", "updateSuccess": "Solicitud actualizada correctamente", "updateError": "Error al actualizar la solicitud" }
+    },
+    "adminUserDemandeCreate": {
+        "title": "Nueva solicitud",
+        "breadcrumb": { "dashboard": "Panel", "myDemandes": "Mis solicitudes", "new": "Nueva solicitud" },
+        "buttons": { "back": "Volver", "prev": "Anterior", "next": "Siguiente" },
+        "cardTitle": "Nueva solicitud",
+        "steps": { "basic": "Información básica", "academic": "Información académica", "personal": "Información personal", "financial": "Información financiera", "extra": "Información adicional", "payment": "Pago" },
+        "fields": { "type": "Tipo de solicitud", "targetOrg": "Organización destino", "assignedOrg": "Organización de traducción", "observation": "Observaciones", "serie": "Serie", "niveau": "Nivel", "mention": "Mención", "annee": "Año", "countryOfSchool": "País del centro", "secondarySchoolName": "Nombre del centro", "graduationDate": "Fecha de graduación", "dob": "Fecha de nacimiento", "citizenship": "Nacionalidad", "passport": "Número de pasaporte", "isEnglishFirstLanguage": "¿Es el inglés su primera lengua?", "englishProficiencyTests": "Pruebas de inglés", "testScores": "Puntuaciones", "willApplyForFinancialAid": "¿Solicitará ayuda financiera?", "hasExternalSponsorship": "¿Tiene patrocinio externo?", "personalStatement": "Declaración personal", "optionalEssay": "Ensayo opcional" },
+        "placeholders": { "selectType": "Seleccionar tipo", "selectTargetOrg": "Seleccionar organización destino", "selectAssignedOrg": "Seleccionar organización de traducción", "observation": "Observaciones adicionales", "serie": "Serie (ej: S, L, ES)", "niveau": "Nivel (ej: Bac, Licenciatura, Master)", "mention": "Mención (ej: Bien, Muy bien)", "annee": "Año (ej: 2023)", "countryOfSchool": "País del centro", "secondarySchoolName": "Nombre del centro secundario", "passport": "Número de pasaporte", "englishTests": "Pruebas (ej: TOEFL, IELTS)", "testScores": "Puntuaciones" },
+        "validation": { "typeRequired": "El tipo es obligatorio", "targetOrgRequired": "La organización destino es obligatoria", "assignedOrgRequired": "La organización de traducción es obligatoria" },
+        "type": { "TRADUCTION": "Traducción", "VERIFICATION": "Verificación", "AUTRE": "Otro" },
+        "payment": { "alert": "Por favor proceda al pago para finalizar su solicitud.", "payNow": "Pagar ahora", "chooseMethod": "Elegir método de pago", "stripe": "Pagar con Stripe", "paypal": "Pagar con PayPal", "processing": "Procesando...", "payAmount": "Pagar 49 USD" },
+        "messages": { "loadOrgsError": "Error al cargar las organizaciones", "createSuccess": "Solicitud creada correctamente", "createError": "Error al crear la solicitud", "fillRequired": "Por favor complete todos los campos obligatorios.", "stripeNotLoaded": "Stripe no está cargado. Por favor intente de nuevo.", "paymentSuccess": "¡Pago exitoso!", "paymentPrepError": "Error al preparar el pago" }
     },
     "adminUserCreate": {
         "title": "Nuevo usuario",
@@ -4390,6 +4568,11 @@
             "paypalError": "Error de PayPal: {{error}}",
             "required": "Requerido"
         },
+        "validation": {
+            "fillRequiredFields": "Por favor complete los campos obligatorios: {{fields}}",
+            "requiredField": "Campo obligatorio no completado: {{fields}}",
+            "passportFileRequired": "El archivo del pasaporte (PDF) es obligatorio."
+        },
         "sections": {
             "personalInfo": "1. Información personal",
             "intendedProgram": "4. Programa de estudios deseado",
@@ -4447,6 +4630,7 @@
             "dateOfBirth": "Fecha de nacimiento",
             "countryOfCitizenship": "País de ciudadanía",
             "passportNumber": "Número de pasaporte",
+            "passportFile": "Pasaporte (PDF)",
             "preferredStartTerm": "Trimestre de inicio preferido",
             "year": "Año",
             "isEnglishFirstLanguage": "¿Es el inglés su idioma materno?",
@@ -4494,6 +4678,12 @@
             "address": "Dirección (opc.)",
             "role": "Rol (opc.)",
             "notifyOrgs": "Seleccionar organizaciones para notificar"
+        },
+        "passportUpload": {
+            "text": "Haz clic o arrastra aquí un PDF del pasaporte para subirlo",
+            "hint": "Solo PDF, hasta 5 MB.",
+            "error": "Error al subir el pasaporte, pero tu solicitud se ha creado correctamente.",
+            "uploadSuccess": "Documento de pasaporte guardado."
         },
         "options": {
             "periods": {

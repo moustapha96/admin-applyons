@@ -46,7 +46,7 @@ export const PermissionsProvider = ({ children }) => {
         : Array.isArray(data)
         ? data
         : [];
-      console.log(permsList);
+      // console.log(permsList);
       setPermissions(permsList);
 
       // Créer un map pour accès rapide par clé

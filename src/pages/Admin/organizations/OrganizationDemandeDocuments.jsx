@@ -22,6 +22,7 @@ import {
   TranslationOutlined,
   ExclamationCircleOutlined
 } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import documentService from "../../../services/documentService";
 import { useAuth } from "../../../hooks/useAuth";
 import { buildImageUrl } from "@/utils/imageUtils";
@@ -29,6 +30,7 @@ import { buildImageUrl } from "@/utils/imageUtils";
 const { confirm } = Modal;
 
 const OrganizationDemandeDocuments = () => {
+  const { t } = useTranslation();
   const { id: demandeId } = useParams();
   const { user } = useAuth();
   const [documents, setDocuments] = useState([]);
@@ -48,10 +50,11 @@ const OrganizationDemandeDocuments = () => {
     setLoading(true);
     try {
       const response = await documentService.list({ demandePartageId: demandeId });
+
       setDocuments(response.documents);
     } catch (error) {
       console.error("Erreur lors de la récupération des documents:", error);
-      message.error("Erreur lors de la récupération des documents");
+      message.error(t("adminOrganizationDemandeDocuments.messages.loadError"));
     } finally {
       setLoading(false);
     }
@@ -68,47 +71,46 @@ const OrganizationDemandeDocuments = () => {
       setTimeout(() => URL.revokeObjectURL(url), 100);
     } catch (error) {
       if (error.response?.status === 401) {
-        message.error("Session expirée. Veuillez vous reconnecter.");
+        message.error(t("adminOrganizationDemandeDocuments.messages.sessionExpired"));
       } else if (error.response?.status === 403) {
-        message.error("Vous n'avez pas accès à ce document.");
+        message.error(t("adminOrganizationDemandeDocuments.messages.accessDenied"));
       } else {
-        message.error(error?.response?.data?.message || error?.message || "Erreur lors de l'ouverture du document");
+        message.error(error?.response?.data?.message || error?.message || t("adminOrganizationDemandeDocuments.messages.openError"));
       }
     }
   };
 
   const handleDownloadDocument = async (documentId, type = "original") => {
     try {
-      // Utiliser downloadDocument pour télécharger avec authentification
       await documentService.downloadDocument(documentId, type, `document_${documentId}_${type}.pdf`);
-      message.success("Téléchargement réussi");
+      message.success(t("adminOrganizationDemandeDocuments.messages.downloadSuccess"));
     } catch (error) {
       if (error.response?.status === 401) {
-        message.error("Session expirée. Veuillez vous reconnecter.");
+        message.error(t("adminOrganizationDemandeDocuments.messages.sessionExpired"));
       } else if (error.response?.status === 403) {
-        message.error("Vous n'avez pas accès à ce document.");
+        message.error(t("adminOrganizationDemandeDocuments.messages.accessDenied"));
       } else {
-        message.error(error?.response?.data?.message || error?.message || "Erreur lors du téléchargement du document");
+        message.error(error?.response?.data?.message || error?.message || t("adminOrganizationDemandeDocuments.messages.downloadError"));
       }
     }
   };
 
   const handleDeleteDocument = async (documentId) => {
     confirm({
-      title: "Supprimer ce document ?",
+      title: t("adminOrganizationDemandeDocuments.deleteConfirm.title"),
       icon: <ExclamationCircleOutlined />,
-      content: "Cette action est irréversible.",
-      okText: "Supprimer",
+      content: t("adminOrganizationDemandeDocuments.deleteConfirm.content"),
+      okText: t("adminOrganizationDemandeDocuments.deleteConfirm.okText"),
       okType: "danger",
-      cancelText: "Annuler",
+      cancelText: t("adminOrganizationDemandeDocuments.deleteConfirm.cancelText"),
       onOk: async () => {
         try {
           await documentService.remove(documentId);
-          message.success("Document supprimé avec succès");
+          message.success(t("adminOrganizationDemandeDocuments.messages.deleteSuccess"));
           await fetchDocuments();
         } catch (error) {
           console.error("Erreur lors de la suppression:", error);
-          message.error("Erreur lors de la suppression du document");
+          message.error(t("adminOrganizationDemandeDocuments.messages.deleteError"));
         }
       },
     });
@@ -118,47 +120,46 @@ const OrganizationDemandeDocuments = () => {
 
   const columns = [
     {
-      title: "ID",
+      title: t("adminOrganizationDemandeDocuments.table.id"),
       dataIndex: "id",
       key: "id",
       render: (id) => `#${id}`,
     },
-   
     {
-      title: "Type",
+      title: t("adminOrganizationDemandeDocuments.table.type"),
       key: "type",
       render: (_, record) => (
         <Space>
-          {record.aDocument && <Tag icon={<FilePdfOutlined />} color="blue">Document</Tag>}
-          {record.estTraduit && <Tag icon={<TranslationOutlined />} color="green">Traduit</Tag>}
-          {record.urlChiffre && <Tag icon={<LockOutlined />} color="purple">Chiffré</Tag>}
+          {record.aDocument && <Tag icon={<FilePdfOutlined />} color="blue">{t("adminOrganizationDemandeDocuments.table.document")}</Tag>}
+          {record.estTraduit && <Tag icon={<TranslationOutlined />} color="green">{t("adminOrganizationDemandeDocuments.table.translated")}</Tag>}
+          {record.urlChiffre && <Tag icon={<LockOutlined />} color="purple">{t("adminOrganizationDemandeDocuments.table.encrypted")}</Tag>}
         </Space>
       ),
     },
     {
-      title: "Créé le",
+      title: t("adminOrganizationDemandeDocuments.table.createdAt"),
       dataIndex: "createdAt",
       key: "createdAt",
       render: (date) => new Date(date).toLocaleString(),
     },
     {
-      title: "Organisation",
+      title: t("adminOrganizationDemandeDocuments.table.organization"),
       dataIndex: ["ownerOrg", "name"],
       key: "ownerOrg",
     },
     {
-      title: "Actions",
+      title: t("adminOrganizationDemandeDocuments.table.actions"),
       key: "actions",
       render: (_, record) => (
         <Space size="middle">
-          <Tooltip title="Prévisualiser l'original">
+          <Tooltip title={t("adminOrganizationDemandeDocuments.tooltips.previewOriginal")}>
             <Button
               type="link"
               icon={<EyeOutlined />}
               onClick={() => handlePreviewDocument(record.id, "original")}
             />
           </Tooltip>
-          <Tooltip title="Télécharger l'original">
+          <Tooltip title={t("adminOrganizationDemandeDocuments.tooltips.downloadOriginal")}>
             <Button
               type="link"
               icon={<DownloadOutlined />}
@@ -167,14 +168,14 @@ const OrganizationDemandeDocuments = () => {
           </Tooltip>
           {record.estTraduit && (
             <>
-              <Tooltip title="Prévisualiser la traduction">
+              <Tooltip title={t("adminOrganizationDemandeDocuments.tooltips.previewTranslation")}>
                 <Button
                   type="link"
                   icon={<TranslationOutlined />}
                   onClick={() => handlePreviewDocument(record.id, "traduit")}
                 />
               </Tooltip>
-              <Tooltip title="Télécharger la traduction">
+              <Tooltip title={t("adminOrganizationDemandeDocuments.tooltips.downloadTranslation")}>
                 <Button
                   type="link"
                   icon={<DownloadOutlined />}
@@ -183,7 +184,7 @@ const OrganizationDemandeDocuments = () => {
               </Tooltip>
             </>
           )}
-          <Tooltip title="Supprimer">
+          <Tooltip title={t("adminOrganizationDemandeDocuments.tooltips.delete")}>
             <Button
               type="link"
               danger
@@ -200,23 +201,23 @@ const OrganizationDemandeDocuments = () => {
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
         <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Documents de la Demande</h5>
+          <h5 className="text-lg font-semibold">{t("adminOrganizationDemandeDocuments.title")}</h5>
           <Breadcrumb
             items={[
-              { title: <Link to="/">Dashboard</Link> },
-              { title: <Link to="/demandes">Demandes</Link> },
-              { title: "Documents" },
+              { title: <Link to="/admin/dashboard">{t("adminOrganizationDemandeDocuments.breadcrumb.dashboard")}</Link> },
+              { title: <Link to="/admin/demandes">{t("adminOrganizationDemandeDocuments.breadcrumb.demandes")}</Link> },
+              { title: t("adminOrganizationDemandeDocuments.breadcrumb.documents") },
             ]}
           />
         </div>
         <div className="md:flex md:justify-end justify-end items-center mb-6">
           <Button onClick={() => navigate(-1)} icon={<ArrowLeftOutlined />}>
-            Retour aux demandes
+            {t("adminOrganizationDemandeDocuments.buttons.back")}
           </Button>
         </div>
 
         <Card
-          title={`Documents de la demande #${demandeId}`}
+          title={t("adminOrganizationDemandeDocuments.cardTitle")}
         
         >
           {uploading && (

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Form, Input, Button, Select, Card, Breadcrumb, Row, Col, message, Steps, DatePicker, Checkbox, Divider, Spin } from "antd";
 import { SaveOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import demandeService from "@/services/demandeService";
 import organizationService from "@/services/organizationService";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,16 +12,16 @@ const { Option } = Select;
 const { TextArea } = Input;
 const { Step } = Steps;
 
-const typeOptions = [
-  { value: "TRADUCTION", label: "Traduction" },
-  { value: "VERIFICATION", label: "Vérification" },
-  { value: "AUTRE", label: "Autre" },
-];
-
 const UserDemandeEdit = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const { user } = useAuth();
   const [form] = Form.useForm();
+  const typeOptions = [
+    { value: "TRADUCTION", label: t("adminUserDemandeEdit.type.TRADUCTION") },
+    { value: "VERIFICATION", label: t("adminUserDemandeEdit.type.VERIFICATION") },
+    { value: "AUTRE", label: t("adminUserDemandeEdit.type.AUTRE") },
+  ];
   const [loading, setLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(0);
   const [demande, setDemande] = useState(null);
@@ -68,7 +69,7 @@ const UserDemandeEdit = () => {
         optionalEssay: response.demande.optionalEssay,
       });
     } catch (error) {
-      message.error("Erreur lors de la récupération de la demande");
+      message.error(t("adminUserDemandeEdit.messages.loadDemandeError"));
       console.error(error);
     } finally {
       setLoading(false);
@@ -81,7 +82,7 @@ const UserDemandeEdit = () => {
       const response = await organizationService.list({ limit: 1000, type: "TRADUCTEUR" });
       setOrganizations(response.organizations);
     } catch (error) {
-      message.error("Erreur lors de la récupération des organisations");
+      message.error(t("adminUserDemandeEdit.messages.loadOrgsError"));
       console.error(error);
     } finally {
       setFetchingOrgs(false);
@@ -90,16 +91,16 @@ const UserDemandeEdit = () => {
 
   const steps = [
     {
-      title: "Informations de base",
+      title: t("adminUserDemandeEdit.steps.basic"),
       content: (
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="type"
-              label="Type de demande"
-              rules={[{ required: true, message: "Le type est obligatoire" }]}
+              label={t("adminUserDemandeEdit.fields.type")}
+              rules={[{ required: true, message: t("adminUserDemandeEdit.validation.typeRequired") }]}
             >
-              <Select placeholder="Sélectionner un type" disabled>
+              <Select placeholder={t("adminUserDemandeEdit.placeholders.selectType")} disabled>
                 {typeOptions.map(option => (
                   <Option key={option.value} value={option.value}>
                     {option.label}
@@ -111,11 +112,11 @@ const UserDemandeEdit = () => {
           <Col span={12}>
             <Form.Item
               name="targetOrgId"
-              label="Organisation cible"
-              rules={[{ required: true, message: "L'organisation est obligatoire" }]}
+              label={t("adminUserDemandeEdit.fields.targetOrg")}
+              rules={[{ required: true, message: t("adminUserDemandeEdit.validation.orgRequired") }]}
             >
               <Select
-                placeholder="Sélectionner une organisation"
+                placeholder={t("adminUserDemandeEdit.placeholders.selectOrg")}
                 loading={fetchingOrgs}
                 showSearch
                 optionFilterProp="children"
@@ -134,71 +135,50 @@ const UserDemandeEdit = () => {
           <Col span={24}>
             <Form.Item
               name="observation"
-              label="Observations"
+              label={t("adminUserDemandeEdit.fields.observation")}
             >
-              <TextArea rows={4} placeholder="Observations supplémentaires" />
+              <TextArea rows={4} placeholder={t("adminUserDemandeEdit.placeholders.observation")} />
             </Form.Item>
           </Col>
         </Row>
       ),
     },
     {
-      title: "Informations académiques",
+      title: t("adminUserDemandeEdit.steps.academic"),
       content: (
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="serie"
-              label="Série"
-            >
-              <Input placeholder="Série (ex: S, L, ES)" />
+            <Form.Item name="serie" label={t("adminUserDemandeEdit.fields.serie")}>
+              <Input placeholder={t("adminUserDemandeEdit.placeholders.serie")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="niveau"
-              label="Niveau"
-            >
-              <Input placeholder="Niveau (ex: Bac, Licence, Master)" />
+            <Form.Item name="niveau" label={t("adminUserDemandeEdit.fields.niveau")}>
+              <Input placeholder={t("adminUserDemandeEdit.placeholders.niveau")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="mention"
-              label="Mention"
-            >
-              <Input placeholder="Mention (ex: Bien, Très Bien)" />
+            <Form.Item name="mention" label={t("adminUserDemandeEdit.fields.mention")}>
+              <Input placeholder={t("adminUserDemandeEdit.placeholders.mention")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="annee"
-              label="Année"
-            >
-              <Input placeholder="Année (ex: 2023)" />
+            <Form.Item name="annee" label={t("adminUserDemandeEdit.fields.annee")}>
+              <Input placeholder={t("adminUserDemandeEdit.placeholders.annee")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="countryOfSchool"
-              label="Pays de l'école"
-            >
-              <Input placeholder="Pays de l'école" />
+            <Form.Item name="countryOfSchool" label={t("adminUserDemandeEdit.fields.countryOfSchool")}>
+              <Input placeholder={t("adminUserDemandeEdit.placeholders.countryOfSchool")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="secondarySchoolName"
-              label="Nom de l'école"
-            >
-              <Input placeholder="Nom de l'école secondaire" />
+            <Form.Item name="secondarySchoolName" label={t("adminUserDemandeEdit.fields.secondarySchoolName")}>
+              <Input placeholder={t("adminUserDemandeEdit.placeholders.secondarySchoolName")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="graduationDate"
-              label="Date de graduation"
-            >
+            <Form.Item name="graduationDate" label={t("adminUserDemandeEdit.fields.graduationDate")}>
               <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
             </Form.Item>
           </Col>
@@ -206,69 +186,54 @@ const UserDemandeEdit = () => {
       ),
     },
     {
-      title: "Informations personnelles",
+      title: t("adminUserDemandeEdit.steps.personal"),
       content: (
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="dob"
-              label="Date de naissance"
-            >
+            <Form.Item name="dob" label={t("adminUserDemandeEdit.fields.dob")}>
               <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="citizenship"
-              label="Nationalité"
-            >
-              <Input placeholder="Nationalité" />
+            <Form.Item name="citizenship" label={t("adminUserDemandeEdit.fields.citizenship")}>
+              <Input placeholder={t("adminUserDemandeEdit.fields.citizenship")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="passport"
-              label="Numéro de passeport"
-            >
-              <Input placeholder="Numéro de passeport" />
+            <Form.Item name="passport" label={t("adminUserDemandeEdit.fields.passport")}>
+              <Input placeholder={t("adminUserDemandeEdit.placeholders.passport")} />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
               name="isEnglishFirstLanguage"
-              label="L'anglais est-il votre première langue ?"
+              label={t("adminUserDemandeEdit.fields.isEnglishFirstLanguage")}
               valuePropName="checked"
             >
               <Checkbox />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item
-              name="englishProficiencyTests"
-              label="Tests de compétence en anglais"
-            >
-              <TextArea rows={2} placeholder="Tests de compétence en anglais (ex: TOEFL, IELTS)" />
+            <Form.Item name="englishProficiencyTests" label={t("adminUserDemandeEdit.fields.englishProficiencyTests")}>
+              <TextArea rows={2} placeholder={t("adminUserDemandeEdit.placeholders.englishTests")} />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item
-              name="testScores"
-              label="Scores des tests"
-            >
-              <TextArea rows={2} placeholder="Scores des tests" />
+            <Form.Item name="testScores" label={t("adminUserDemandeEdit.fields.testScores")}>
+              <TextArea rows={2} placeholder={t("adminUserDemandeEdit.placeholders.testScores")} />
             </Form.Item>
           </Col>
         </Row>
       ),
     },
     {
-      title: "Informations financières",
+      title: t("adminUserDemandeEdit.steps.financial"),
       content: (
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item
               name="willApplyForFinancialAid"
-              label="Souhaitez-vous demander une aide financière ?"
+              label={t("adminUserDemandeEdit.fields.willApplyForFinancialAid")}
               valuePropName="checked"
             >
               <Checkbox />
@@ -277,7 +242,7 @@ const UserDemandeEdit = () => {
           <Col span={24}>
             <Form.Item
               name="hasExternalSponsorship"
-              label="Avez-vous un parrainage externe ?"
+              label={t("adminUserDemandeEdit.fields.hasExternalSponsorship")}
               valuePropName="checked"
             >
               <Checkbox />
@@ -287,23 +252,17 @@ const UserDemandeEdit = () => {
       ),
     },
     {
-      title: "Informations supplémentaires",
+      title: t("adminUserDemandeEdit.steps.extra"),
       content: (
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item
-              name="personalStatement"
-              label="Déclaration personnelle"
-            >
-              <TextArea rows={4} placeholder="Déclaration personnelle" />
+            <Form.Item name="personalStatement" label={t("adminUserDemandeEdit.fields.personalStatement")}>
+              <TextArea rows={4} placeholder={t("adminUserDemandeEdit.fields.personalStatement")} />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item
-              name="optionalEssay"
-              label="Essai optionnel"
-            >
-              <TextArea rows={4} placeholder="Essai optionnel" />
+            <Form.Item name="optionalEssay" label={t("adminUserDemandeEdit.fields.optionalEssay")}>
+              <TextArea rows={4} placeholder={t("adminUserDemandeEdit.fields.optionalEssay")} />
             </Form.Item>
           </Col>
         </Row>
@@ -321,11 +280,11 @@ const UserDemandeEdit = () => {
         dob: values.dob ? values.dob.toISOString() : null,
       };
       const response = await demandeService.update(id, payload);
-      message.success("Demande mise à jour avec succès");
+      message.success(t("adminUserDemandeEdit.messages.updateSuccess"));
       navigate(`/user/demandes/${response.demande.id}/details`);
     } catch (error) {
       console.error("Erreur lors de la mise à jour:", error);
-      message.error(error?.message || "Erreur lors de la mise à jour de la demande");
+      message.error(error?.message || t("adminUserDemandeEdit.messages.updateError"));
     } finally {
       setLoading(false);
     }
@@ -343,21 +302,21 @@ const UserDemandeEdit = () => {
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
         <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Modifier la Demande</h5>
+          <h5 className="text-lg font-semibold">{t("adminUserDemandeEdit.title")}</h5>
           <Breadcrumb
             items={[
-              { title: <Link to="/">Dashboard</Link> },
-              { title: <Link to="/user/demandes">Mes Demandes</Link> },
-              { title: "Modifier la Demande" },
+              { title: <Link to="/">{t("adminUserDemandeEdit.breadcrumb.dashboard")}</Link> },
+              { title: <Link to="/user/demandes">{t("adminUserDemandeEdit.breadcrumb.myDemandes")}</Link> },
+              { title: t("adminUserDemandeEdit.breadcrumb.edit") },
             ]}
           />
         </div>
         <div className="md:flex md:justify-end justify-end items-center mb-6">
           <Button onClick={() => navigate(-1)} icon={<ArrowLeftOutlined />}>
-            Retour
+            {t("adminUserDemandeEdit.buttons.back")}
           </Button>
         </div>
-        <Card title="Modifier la Demande" className="mt-4">
+        <Card title={t("adminUserDemandeEdit.cardTitle")} className="mt-4">
           <Steps current={currentStep} className="mb-6">
             {steps.map((step, index) => (
               <Step key={index} title={step.title} />
@@ -377,7 +336,7 @@ const UserDemandeEdit = () => {
                     onClick={() => setCurrentStep(currentStep - 1)}
                     icon={<ArrowLeftOutlined />}
                   >
-                    Précédent
+                    {t("adminUserDemandeEdit.buttons.prev")}
                   </Button>
                 )}
               </Col>
@@ -387,7 +346,7 @@ const UserDemandeEdit = () => {
                     type="primary"
                     onClick={() => setCurrentStep(currentStep + 1)}
                   >
-                    Suivant
+                    {t("adminUserDemandeEdit.buttons.next")}
                   </Button>
                 ) : (
                   <Button
@@ -396,7 +355,7 @@ const UserDemandeEdit = () => {
                     loading={loading}
                     icon={<SaveOutlined />}
                   >
-                    {loading ? "Mise à jour en cours..." : "Mettre à jour"}
+                    {loading ? t("adminUserDemandeEdit.buttons.updating") : t("adminUserDemandeEdit.buttons.update")}
                   </Button>
                 )}
               </Col>

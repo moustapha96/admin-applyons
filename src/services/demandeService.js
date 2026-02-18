@@ -13,7 +13,15 @@ const demandeService = {
     getByCode: (code) => axiosInstance.get(`/demandes/by-code/${encodeURIComponent(code)}`),
 
     // POST /demandes
-    create: (data) => axiosInstance.post('/demandes', data),
+    // Accepte soit un objet JSON classique, soit un FormData (pour upload de passeport, etc.)
+    create: (data) => {
+        if (typeof FormData !== "undefined" && data instanceof FormData) {
+            return axiosInstance.post('/demandes', data, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+        }
+        return axiosInstance.post('/demandes', data);
+    },
 
     // PUT /demandes/:id
     update: (id, data) => axiosInstance.put(`/demandes/${id}`, data),

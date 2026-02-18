@@ -42,6 +42,10 @@ export default defineConfig({
                 target: BACKEND_URL,
                 changeOrigin: true,
             },
+            '^/passport': {
+                target: BACKEND_URL,
+                changeOrigin: true,
+            },
             '^/uploads': {
                 target: BACKEND_URL,
                 changeOrigin: true,

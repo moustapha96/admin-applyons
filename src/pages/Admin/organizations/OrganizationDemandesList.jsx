@@ -2,27 +2,27 @@ import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Table, Tag, Space, Breadcrumb, Button, Input, Select, message, Modal, Badge } from "antd";
 import { SearchOutlined, PlusOutlined, FileTextOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import organizationService from "../../../services/organizationService";
 import { useAuth } from "../../../hooks/useAuth";
 
 const { Search } = Input;
 
-const statusOptions = [
-  { value: "PENDING", label: "En attente" },
-  { value: "APPROVED", label: "Approuvée" },
-  { value: "REJECTED", label: "Rejetée" },
-  { value: "COMPLETED", label: "Terminée" },
-];
-
-const typeOptions = [
-  { value: "TRADUCTION", label: "Traduction" },
-  { value: "VERIFICATION", label: "Vérification" },
-  { value: "AUTRE", label: "Autre" },
-];
-
 const OrganizationDemandesList = () => {
+  const { t } = useTranslation();
   const { id: orgId } = useParams();
   const { user: currentUser } = useAuth();
+  const statusOptions = [
+    { value: "PENDING", label: t("adminOrgDemandesList.status.PENDING") },
+    { value: "APPROVED", label: t("adminOrgDemandesList.status.APPROVED") },
+    { value: "REJECTED", label: t("adminOrgDemandesList.status.REJECTED") },
+    { value: "COMPLETED", label: t("adminOrgDemandesList.status.COMPLETED") },
+  ];
+  const typeOptions = [
+    { value: "TRADUCTION", label: t("adminOrgDemandesList.type.TRADUCTION") },
+    { value: "VERIFICATION", label: t("adminOrgDemandesList.type.VERIFICATION") },
+    { value: "AUTRE", label: t("adminOrgDemandesList.type.AUTRE") },
+  ];
   const [demandes, setDemandes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -61,11 +61,11 @@ const OrganizationDemandesList = () => {
       }));
     } catch (error) {
       console.error("Erreur lors de la récupération des demandes:", error);
-      message.error("Erreur lors de la récupération des demandes");
+      message.error(t("adminOrgDemandesList.messages.loadError"));
     } finally {
       setLoading(false);
     }
-  }, [orgId, pagination.current, pagination.pageSize, filters, sortConfig]);
+  }, [orgId, pagination.current, pagination.pageSize, filters, sortConfig, t]);
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
@@ -111,11 +111,10 @@ const OrganizationDemandesList = () => {
 
   const handleDeleteDemande = async (demandeId) => {
     try {
-      // Logique pour supprimer une demande
-      message.success("Demande supprimée avec succès");
+      message.success(t("adminOrgDemandesList.messages.deleteSuccess"));
       fetchDemandes();
     } catch (error) {
-      message.error("Échec de la suppression");
+      message.error(t("adminOrgDemandesList.messages.deleteError"));
       console.error(error);
     }
   };
@@ -132,7 +131,7 @@ const OrganizationDemandesList = () => {
 
   const columns = [
     {
-      title: "Titre",
+      title: t("adminOrgDemandesList.table.title"),
       dataIndex: "title",
       key: "title",
       sorter: true,
@@ -146,7 +145,7 @@ const OrganizationDemandesList = () => {
       ),
     },
     {
-      title: "Type",
+      title: t("adminOrgDemandesList.table.type"),
       dataIndex: "type",
       key: "type",
       filters: typeOptions,
@@ -159,7 +158,7 @@ const OrganizationDemandesList = () => {
       ),
     },
     {
-      title: "Statut",
+      title: t("adminOrgDemandesList.table.status"),
       dataIndex: "status",
       key: "status",
       filters: statusOptions,
@@ -172,19 +171,19 @@ const OrganizationDemandesList = () => {
       ),
     },
     {
-      title: "Créé le",
+      title: t("adminOrgDemandesList.table.createdAt"),
       dataIndex: "createdAt",
       key: "createdAt",
       sorter: true,
       render: (createdAt) => new Date(createdAt).toLocaleString(),
     },
     {
-      title: "Actions",
+      title: t("adminOrgDemandesList.table.actions"),
       key: "actions",
       render: (_, record) => (
         <Space size="middle">
           <Button type="link">
-            <Link to={`/organisations/${orgId}/demandes/${record.id}/details`}>Détails</Link>
+            <Link to={`/organisations/${orgId}/demandes/${record.id}/details`}>{t("adminOrgDemandesList.actions.details")}</Link>
           </Button>
           {currentUser?.role === "SUPER_ADMIN" && (
             <Button
@@ -192,16 +191,16 @@ const OrganizationDemandesList = () => {
               danger
               onClick={() => {
                 Modal.confirm({
-                  title: "Supprimer cette demande ?",
-                  content: "Cette action est irréversible.",
-                  okText: "Supprimer",
+                  title: t("adminOrgDemandesList.deleteConfirm.title"),
+                  content: t("adminOrgDemandesList.deleteConfirm.content"),
+                  okText: t("adminOrgDemandesList.deleteConfirm.okText"),
                   okType: "danger",
-                  cancelText: "Annuler",
+                  cancelText: t("adminOrgDemandesList.deleteConfirm.cancelText"),
                   onOk: () => handleDeleteDemande(record.id),
                 });
               }}
             >
-              Supprimer
+              {t("adminOrgDemandesList.actions.delete")}
             </Button>
           )}
         </Space>
@@ -213,12 +212,12 @@ const OrganizationDemandesList = () => {
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
         <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Demandes de l'organisation</h5>
+          <h5 className="text-lg font-semibold">{t("adminOrgDemandesList.title")}</h5>
           <Breadcrumb
             items={[
-              { title: <Link to="/">Dashboard</Link> },
-              { title: <Link to="/organisations">Organisations</Link> },
-              { title: "Demandes" },
+              { title: <Link to="/">{t("adminOrgDemandesList.breadcrumb.dashboard")}</Link> },
+              { title: <Link to="/organisations">{t("adminOrgDemandesList.breadcrumb.organisations")}</Link> },
+              { title: t("adminOrgDemandesList.breadcrumb.demandes") },
             ]}
           />
         </div>
@@ -226,7 +225,7 @@ const OrganizationDemandesList = () => {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 w-full">
             <div className="w-full md:flex-1">
               <Search
-                placeholder="Rechercher une demande..."
+                placeholder={t("adminOrgDemandesList.searchPlaceholder")}
                 allowClear
                 enterButton={<SearchOutlined />}
                 size="large"
@@ -236,21 +235,21 @@ const OrganizationDemandesList = () => {
             </div>
             <div className="flex flex-wrap gap-4 w-full md:w-auto justify-start sm:justify-center md:justify-end">
               <Select
-                placeholder="Filtrer par statut"
+                placeholder={t("adminOrgDemandesList.filterByStatus")}
                 allowClear
                 className="w-full sm:w-44"
                 onChange={(value) => handleFilterChange("status", value)}
                 options={statusOptions}
               />
               <Select
-                placeholder="Filtrer par type"
+                placeholder={t("adminOrgDemandesList.filterByType")}
                 allowClear
                 className="w-full sm:w-44"
                 onChange={(value) => handleFilterChange("type", value)}
                 options={typeOptions}
               />
               <Button className="w-full sm:w-auto" onClick={clearFilters}>
-                Réinitialiser
+                {t("adminOrgDemandesList.reset")}
               </Button>
             </div>
             <div className="w-full md:w-auto flex justify-start md:justify-end">
@@ -260,7 +259,7 @@ const OrganizationDemandesList = () => {
                 icon={<PlusOutlined />}
                 className="w-full sm:w-auto"
               >
-                Nouvelle Demande
+                {t("adminOrgDemandesList.newDemande")}
               </Button>
             </div>
           </div>
@@ -274,7 +273,7 @@ const OrganizationDemandesList = () => {
             ...pagination,
             showSizeChanger: true,
             pageSizeOptions: ["5", "10", "20", "50"],
-            showTotal: (total) => `Total ${total} demandes`,
+            showTotal: (total) => t("adminOrgDemandesList.totalDemandes", { count: total }),
           }}
           onChange={handleTableChange}
           scroll={{ x: true }}

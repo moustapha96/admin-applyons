@@ -185,7 +185,7 @@ export default function OrganizationNotificationDetail() {
                   </Link>
                 ),
               },
-              { title: <span className="break-words">{notification.id || id}</span> },
+              // { title: <span className="break-words">{notification.id || id}</span> },
             ]}
           />
         </div>

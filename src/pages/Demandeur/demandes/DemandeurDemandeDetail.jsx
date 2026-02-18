@@ -83,6 +83,19 @@ export default function DemandeurDemandeDetail() {
     }
   };
 
+  /** Ouvre le PDF passeport (documentPassport) dans la modal d'aperçu */
+  const openPassportPreview = () => {
+    const path = d?.documentPassport;
+    if (!path) return;
+    const base = (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL_SIMPLE) || "";
+    const fullUrl = base.replace(/\/$/, "") + (path.startsWith("/") ? path : `/${path}`);
+    setPreview({
+      open: true,
+      url: fullUrl,
+      title: t("demandeDetail.passport.previewTitle", "Passport (PDF)"),
+    });
+  };
+
   const d = data?.demande, p = data?.payment, tr = data?.transaction;
   const editable = canEditStatus(d?.status);
 
@@ -190,6 +203,22 @@ export default function DemandeurDemandeDetail() {
                 <Descriptions.Item label={t("demandeDetail.fields.dob")}>{fmtDate(d.dob)}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.citizenship")}>{d.citizenship || t("demandeDetail.common.na")}</Descriptions.Item>
                 <Descriptions.Item label={t("demandeDetail.fields.passport")}>{d.passport || t("demandeDetail.common.na")}</Descriptions.Item>
+                <Descriptions.Item label={t("demandeDetail.fields.passportFile", "Passport (PDF)")}>
+                  {d.documentPassport ? (
+                    <Button
+                      type="primary"
+                      ghost
+                      icon={<FilePdfOutlined />}
+                      onClick={openPassportPreview}
+                    >
+                      {t("demandeDetail.passport.viewButton", "View passport")}
+                    </Button>
+                  ) : (
+                    <Text type="secondary">
+                      {t("demandeDetail.passport.notYetAvailable", "Passport file not available yet")}
+                    </Text>
+                  )}
+                </Descriptions.Item>
               </Descriptions>
 
               {/* Anglais / Tests */}
@@ -323,7 +352,7 @@ export default function DemandeurDemandeDetail() {
           destroyOnClose
         >
           {preview.url ? (
-            <iframe src={preview.url} title="lettre-acceptation" style={{ width: "100%", height: "100%", border: "none" }} />
+            <iframe src={preview.url} title={preview.title || "PDF"} style={{ width: "100%", height: "100%", border: "none" }} />
           ) : (
             <div style={{ padding: 16 }}><Text type="secondary">{t("demandeDetail.acceptanceLetter.noContent")}</Text></div>
           )}

@@ -2311,6 +2311,16 @@
             "uploadError": "保存失败。",
             "selectFile": "请选择一个 PDF 文件。"
         },
+        "passport": {
+            "title": "护照 (PDF)",
+            "view": "查看护照",
+            "previewTitle": "护照 (PDF)",
+            "notYetAvailable": "护照文件不可用。"
+        },
+        "drawer": {
+            "title": "全部信息",
+            "openButton": "查看全部信息"
+        },
         "modals": {
             "statusTitle": "更新状态与备注",
             "statusField": "状态",
@@ -3749,6 +3759,149 @@
             "na": "—"
         }
     },
+    "adminOrganizationDemandeDocuments": {
+        "title": "申请文档",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "demandes": "申请",
+            "documents": "文档"
+        },
+        "buttons": {
+            "back": "返回申请列表"
+        },
+        "cardTitle": "文档",
+        "table": {
+            "id": "ID",
+            "type": "类型",
+            "document": "文档",
+            "translated": "已翻译",
+            "encrypted": "已加密",
+            "createdAt": "创建于",
+            "organization": "机构",
+            "actions": "操作"
+        },
+        "tooltips": {
+            "previewOriginal": "预览原文",
+            "downloadOriginal": "下载原文",
+            "previewTranslation": "预览译文",
+            "downloadTranslation": "下载译文",
+            "delete": "删除"
+        },
+        "deleteConfirm": {
+            "title": "确定删除此文档？",
+            "content": "此操作不可撤销。",
+            "okText": "删除",
+            "cancelText": "取消"
+        },
+        "messages": {
+            "loadError": "加载文档失败",
+            "sessionExpired": "会话已过期，请重新登录。",
+            "accessDenied": "您无权访问此文档。",
+            "openError": "打开文档时出错",
+            "downloadSuccess": "下载成功",
+            "downloadError": "下载文档时出错",
+            "deleteSuccess": "文档已成功删除",
+            "deleteError": "删除文档时出错"
+        }
+    },
+    "adminOrgDemandeDetail": {
+        "title": "申请详情",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "organisations": "组织",
+            "detail": "申请详情"
+        },
+        "buttons": {
+            "back": "返回",
+            "edit": "编辑"
+        },
+        "sections": {
+            "info": "申请信息"
+        },
+        "fields": {
+            "title": "标题",
+            "type": "类型",
+            "status": "状态",
+            "description": "描述",
+            "createdAt": "创建于",
+            "updatedAt": "更新于"
+        },
+        "status": {
+            "PENDING": "待处理",
+            "APPROVED": "已批准",
+            "REJECTED": "已拒绝",
+            "COMPLETED": "已完成"
+        },
+        "type": {
+            "TRADUCTION": "翻译",
+            "VERIFICATION": "验证",
+            "AUTRE": "其他"
+        },
+        "notFound": "未找到申请。"
+    },
+    "adminOrgDemandesList": {
+        "title": "组织申请",
+        "breadcrumb": {
+            "dashboard": "仪表板",
+            "organisations": "组织",
+            "demandes": "申请"
+        },
+        "searchPlaceholder": "搜索申请...",
+        "filterByStatus": "按状态筛选",
+        "filterByType": "按类型筛选",
+        "reset": "重置",
+        "newDemande": "新建申请",
+        "table": {
+            "title": "标题",
+            "type": "类型",
+            "status": "状态",
+            "createdAt": "创建于",
+            "actions": "操作"
+        },
+        "actions": {
+            "details": "详情",
+            "delete": "删除"
+        },
+        "deleteConfirm": {
+            "title": "确定删除此申请？",
+            "content": "此操作不可撤销。",
+            "okText": "删除",
+            "cancelText": "取消"
+        },
+        "status": {
+            "PENDING": "待处理",
+            "APPROVED": "已批准",
+            "REJECTED": "已拒绝",
+            "COMPLETED": "已完成"
+        },
+        "type": {
+            "TRADUCTION": "翻译",
+            "VERIFICATION": "验证",
+            "AUTRE": "其他"
+        },
+        "messages": {
+            "loadError": "加载申请失败",
+            "deleteSuccess": "申请已成功删除",
+            "deleteError": "删除失败"
+        },
+        "totalDemandes": "共 {{count}} 条申请"
+    },
+    "adminOrgDepartmentDetail": {
+        "title": "部门详情",
+        "breadcrumb": { "dashboard": "仪表板", "organisations": "组织", "detail": "部门详情" },
+        "buttons": { "back": "返回", "edit": "编辑" },
+        "sections": { "info": "部门信息" },
+        "fields": { "name": "名称", "description": "描述", "createdAt": "创建于", "updatedAt": "更新于" },
+        "notFound": "未找到部门。"
+    },
+    "adminOrgFiliereDetail": {
+        "title": "专业详情",
+        "breadcrumb": { "dashboard": "仪表板", "organisations": "组织", "detail": "专业详情" },
+        "buttons": { "back": "返回", "edit": "编辑" },
+        "sections": { "info": "专业信息" },
+        "fields": { "name": "名称", "description": "描述", "createdAt": "创建于", "updatedAt": "更新于" },
+        "notFound": "未找到专业。"
+    },
     "adminDemandeDetail": {
         "title": "请求 — 详情",
         "breadcrumb": {
@@ -3841,6 +3994,31 @@
             "applicationRound": "申请轮次",
             "howDidYouHearAboutUs": "您如何了解我们"
         }
+    },
+    "adminUserDemandeEdit": {
+        "title": "编辑申请",
+        "breadcrumb": { "dashboard": "仪表板", "myDemandes": "我的申请", "edit": "编辑申请" },
+        "buttons": { "back": "返回", "prev": "上一步", "next": "下一步", "update": "更新", "updating": "更新中..." },
+        "cardTitle": "编辑申请",
+        "steps": { "basic": "基本信息", "academic": "学业信息", "personal": "个人信息", "financial": "财务信息", "extra": "补充信息" },
+        "fields": { "type": "申请类型", "targetOrg": "目标组织", "observation": "备注", "serie": "系列", "niveau": "学历", "mention": "等级", "annee": "年份", "countryOfSchool": "学校国家", "secondarySchoolName": "学校名称", "graduationDate": "毕业日期", "dob": "出生日期", "citizenship": "国籍", "passport": "护照号码", "isEnglishFirstLanguage": "英语是否为您的第一语言？", "englishProficiencyTests": "英语水平考试", "testScores": "考试成绩", "willApplyForFinancialAid": "您是否申请助学金？", "hasExternalSponsorship": "您是否有外部资助？", "personalStatement": "个人陈述", "optionalEssay": "可选短文" },
+        "placeholders": { "selectType": "选择类型", "selectOrg": "选择组织", "observation": "补充备注", "serie": "系列（如 S, L, ES）", "niveau": "学历（如 Bac、本科、硕士）", "mention": "等级（如良好、优秀）", "annee": "年份（如 2023）", "countryOfSchool": "学校国家", "secondarySchoolName": "中学名称", "passport": "护照号码", "englishTests": "英语考试（如 TOEFL、IELTS）", "testScores": "考试成绩" },
+        "validation": { "typeRequired": "请选择类型", "orgRequired": "请选择组织" },
+        "type": { "TRADUCTION": "翻译", "VERIFICATION": "验证", "AUTRE": "其他" },
+        "messages": { "loadDemandeError": "加载申请失败", "loadOrgsError": "加载组织失败", "updateSuccess": "申请已成功更新", "updateError": "更新申请时出错" }
+    },
+    "adminUserDemandeCreate": {
+        "title": "新建申请",
+        "breadcrumb": { "dashboard": "仪表板", "myDemandes": "我的申请", "new": "新建申请" },
+        "buttons": { "back": "返回", "prev": "上一步", "next": "下一步" },
+        "cardTitle": "新建申请",
+        "steps": { "basic": "基本信息", "academic": "学业信息", "personal": "个人信息", "financial": "财务信息", "extra": "补充信息", "payment": "付款" },
+        "fields": { "type": "申请类型", "targetOrg": "目标组织", "assignedOrg": "翻译组织", "observation": "备注", "serie": "系列", "niveau": "学历", "mention": "等级", "annee": "年份", "countryOfSchool": "学校国家", "secondarySchoolName": "学校名称", "graduationDate": "毕业日期", "dob": "出生日期", "citizenship": "国籍", "passport": "护照号码", "isEnglishFirstLanguage": "英语是否为您的第一语言？", "englishProficiencyTests": "英语水平考试", "testScores": "考试成绩", "willApplyForFinancialAid": "您是否申请助学金？", "hasExternalSponsorship": "您是否有外部资助？", "personalStatement": "个人陈述", "optionalEssay": "可选短文" },
+        "placeholders": { "selectType": "选择类型", "selectTargetOrg": "选择目标组织", "selectAssignedOrg": "选择翻译组织", "observation": "补充备注", "serie": "系列（如 S, L, ES）", "niveau": "学历（如 Bac、本科、硕士）", "mention": "等级（如良好、优秀）", "annee": "年份（如 2023）", "countryOfSchool": "学校国家", "secondarySchoolName": "中学名称", "passport": "护照号码", "englishTests": "英语考试（如 TOEFL、IELTS）", "testScores": "考试成绩" },
+        "validation": { "typeRequired": "请选择类型", "targetOrgRequired": "请选择目标组织", "assignedOrgRequired": "请选择翻译组织" },
+        "type": { "TRADUCTION": "翻译", "VERIFICATION": "验证", "AUTRE": "其他" },
+        "payment": { "alert": "请完成付款以提交您的申请。", "payNow": "立即付款", "chooseMethod": "选择付款方式", "stripe": "使用 Stripe 付款", "paypal": "使用 PayPal 付款", "processing": "处理中...", "payAmount": "支付 49 USD" },
+        "messages": { "loadOrgsError": "加载组织失败", "createSuccess": "申请已成功创建", "createError": "创建申请时出错", "fillRequired": "请填写所有必填项。", "stripeNotLoaded": "Stripe 未加载，请重试。", "paymentSuccess": "付款成功！", "paymentPrepError": "准备付款时出错" }
     },
     "adminUserCreate": {
         "title": "新用户",
@@ -4391,6 +4569,11 @@
             "paypalError": "PayPal错误：{{error}}",
             "required": "必填"
         },
+        "validation": {
+            "fillRequiredFields": "请填写必填项：{{fields}}",
+            "requiredField": "必填项未填写：{{fields}}",
+            "passportFileRequired": "护照文件（PDF）为必填项。"
+        },
         "sections": {
             "personalInfo": "1. 个人信息",
             "intendedProgram": "4. 期望的学习项目",
@@ -4448,6 +4631,7 @@
             "dateOfBirth": "出生日期",
             "countryOfCitizenship": "国籍",
             "passportNumber": "护照号码",
+            "passportFile": "护照（PDF）",
             "preferredStartTerm": "首选开始学期",
             "year": "年份",
             "isEnglishFirstLanguage": "英语是您的母语吗？",
@@ -4495,6 +4679,12 @@
             "address": "地址（可选）",
             "role": "角色（可选）",
             "notifyOrgs": "选择要通知的组织"
+        },
+        "passportUpload": {
+            "text": "点击或拖拽护照 PDF 文件到此处上传",
+            "hint": "仅限 PDF，最大 5 MB。",
+            "error": "护照上传失败，但您的申请已成功创建。",
+            "uploadSuccess": "护照文件已保存。"
         },
         "options": {
             "periods": {

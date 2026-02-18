@@ -30,6 +30,7 @@ import paymentService from "@/services/paymentService";
 import { useAuth } from "@/hooks/useAuth";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useTranslation } from "react-i18next";
 import { DATE_FORMAT } from "@/utils/dateFormat";
 
 const { Option } = Select;
@@ -37,14 +38,14 @@ const { TextArea } = Input;
 const { Step } = Steps;
 const { confirm } = Modal;
 
-const typeOptions = [
-  { value: "TRADUCTION", label: "Traduction" },
-  { value: "VERIFICATION", label: "Vérification" },
-  { value: "AUTRE", label: "Autre" },
-];
-
 const UserDemandeCreate = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
+  const typeOptions = [
+    { value: "TRADUCTION", label: t("adminUserDemandeCreate.type.TRADUCTION") },
+    { value: "VERIFICATION", label: t("adminUserDemandeCreate.type.VERIFICATION") },
+    { value: "AUTRE", label: t("adminUserDemandeCreate.type.AUTRE") },
+  ];
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -93,26 +94,25 @@ const UserDemandeCreate = () => {
       });
       setTranslatorOrgs(translatorResponse.organizations);
     } catch (error) {
-      message.error("Erreur lors de la récupération des organisations");
+      message.error(t("adminUserDemandeCreate.messages.loadOrgsError"));
       console.error(error);
     } finally {
       setFetchingOrgs(false);
     }
   };
 
-  // Étapes du formulaire
   const steps = [
     {
-      title: "Informations de base",
+      title: t("adminUserDemandeCreate.steps.basic"),
       content: (
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
               name="type"
-              label="Type de demande"
-              rules={[{ required: true, message: "Le type est obligatoire" }]}
+              label={t("adminUserDemandeCreate.fields.type")}
+              rules={[{ required: true, message: t("adminUserDemandeCreate.validation.typeRequired") }]}
             >
-              <Select placeholder="Sélectionner un type">
+              <Select placeholder={t("adminUserDemandeCreate.placeholders.selectType")}>
                 {typeOptions.map(option => (
                   <Option key={option.value} value={option.value}>
                     {option.label}
@@ -124,11 +124,11 @@ const UserDemandeCreate = () => {
           <Col span={12}>
             <Form.Item
               name="targetOrgId"
-              label="Organisation cible"
-              rules={[{ required: true, message: "L'organisation cible est obligatoire" }]}
+              label={t("adminUserDemandeCreate.fields.targetOrg")}
+              rules={[{ required: true, message: t("adminUserDemandeCreate.validation.targetOrgRequired") }]}
             >
               <Select
-                placeholder="Sélectionner une organisation cible"
+                placeholder={t("adminUserDemandeCreate.placeholders.selectTargetOrg")}
                 loading={fetchingOrgs}
                 showSearch
                 optionFilterProp="children"
@@ -147,11 +147,11 @@ const UserDemandeCreate = () => {
           <Col span={12}>
             <Form.Item
               name="assignedOrgId"
-              label="Organisation de traduction"
-              rules={[{ required: true, message: "L'organisation de traduction est obligatoire" }]}
+              label={t("adminUserDemandeCreate.fields.assignedOrg")}
+              rules={[{ required: true, message: t("adminUserDemandeCreate.validation.assignedOrgRequired") }]}
             >
               <Select
-                placeholder="Sélectionner une organisation de traduction"
+                placeholder={t("adminUserDemandeCreate.placeholders.selectAssignedOrg")}
                 loading={fetchingOrgs}
                 showSearch
                 optionFilterProp="children"
@@ -170,71 +170,50 @@ const UserDemandeCreate = () => {
           <Col span={24}>
             <Form.Item
               name="observation"
-              label="Observations"
+              label={t("adminUserDemandeCreate.fields.observation")}
             >
-              <TextArea rows={4} placeholder="Observations supplémentaires" />
+              <TextArea rows={4} placeholder={t("adminUserDemandeCreate.placeholders.observation")} />
             </Form.Item>
           </Col>
         </Row>
       ),
     },
     {
-      title: "Informations académiques",
+      title: t("adminUserDemandeCreate.steps.academic"),
       content: (
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="serie"
-              label="Série"
-            >
-              <Input placeholder="Série (ex: S, L, ES)" />
+            <Form.Item name="serie" label={t("adminUserDemandeCreate.fields.serie")}>
+              <Input placeholder={t("adminUserDemandeCreate.placeholders.serie")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="niveau"
-              label="Niveau"
-            >
-              <Input placeholder="Niveau (ex: Bac, Licence, Master)" />
+            <Form.Item name="niveau" label={t("adminUserDemandeCreate.fields.niveau")}>
+              <Input placeholder={t("adminUserDemandeCreate.placeholders.niveau")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="mention"
-              label="Mention"
-            >
-              <Input placeholder="Mention (ex: Bien, Très Bien)" />
+            <Form.Item name="mention" label={t("adminUserDemandeCreate.fields.mention")}>
+              <Input placeholder={t("adminUserDemandeCreate.placeholders.mention")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="annee"
-              label="Année"
-            >
-              <Input placeholder="Année (ex: 2023)" />
+            <Form.Item name="annee" label={t("adminUserDemandeCreate.fields.annee")}>
+              <Input placeholder={t("adminUserDemandeCreate.placeholders.annee")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="countryOfSchool"
-              label="Pays de l'école"
-            >
-              <Input placeholder="Pays de l'école" />
+            <Form.Item name="countryOfSchool" label={t("adminUserDemandeCreate.fields.countryOfSchool")}>
+              <Input placeholder={t("adminUserDemandeCreate.placeholders.countryOfSchool")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="secondarySchoolName"
-              label="Nom de l'école"
-            >
-              <Input placeholder="Nom de l'école secondaire" />
+            <Form.Item name="secondarySchoolName" label={t("adminUserDemandeCreate.fields.secondarySchoolName")}>
+              <Input placeholder={t("adminUserDemandeCreate.placeholders.secondarySchoolName")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="graduationDate"
-              label="Date de graduation"
-            >
+            <Form.Item name="graduationDate" label={t("adminUserDemandeCreate.fields.graduationDate")}>
               <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
             </Form.Item>
           </Col>
@@ -242,69 +221,54 @@ const UserDemandeCreate = () => {
       ),
     },
     {
-      title: "Informations personnelles",
+      title: t("adminUserDemandeCreate.steps.personal"),
       content: (
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
-              name="dob"
-              label="Date de naissance"
-            >
+            <Form.Item name="dob" label={t("adminUserDemandeCreate.fields.dob")}>
               <DatePicker style={{ width: "100%" }} format={DATE_FORMAT} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="citizenship"
-              label="Nationalité"
-            >
-              <Input placeholder="Nationalité" />
+            <Form.Item name="citizenship" label={t("adminUserDemandeCreate.fields.citizenship")}>
+              <Input placeholder={t("adminUserDemandeCreate.fields.citizenship")} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item
-              name="passport"
-              label="Numéro de passeport"
-            >
-              <Input placeholder="Numéro de passeport" />
+            <Form.Item name="passport" label={t("adminUserDemandeCreate.fields.passport")}>
+              <Input placeholder={t("adminUserDemandeCreate.placeholders.passport")} />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
               name="isEnglishFirstLanguage"
-              label="L'anglais est-il votre première langue ?"
+              label={t("adminUserDemandeCreate.fields.isEnglishFirstLanguage")}
               valuePropName="checked"
             >
               <Checkbox />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item
-              name="englishProficiencyTests"
-              label="Tests de compétence en anglais"
-            >
-              <TextArea rows={2} placeholder="Tests de compétence en anglais (ex: TOEFL, IELTS)" />
+            <Form.Item name="englishProficiencyTests" label={t("adminUserDemandeCreate.fields.englishProficiencyTests")}>
+              <TextArea rows={2} placeholder={t("adminUserDemandeCreate.placeholders.englishTests")} />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item
-              name="testScores"
-              label="Scores des tests"
-            >
-              <TextArea rows={2} placeholder="Scores des tests" />
+            <Form.Item name="testScores" label={t("adminUserDemandeCreate.fields.testScores")}>
+              <TextArea rows={2} placeholder={t("adminUserDemandeCreate.placeholders.testScores")} />
             </Form.Item>
           </Col>
         </Row>
       ),
     },
     {
-      title: "Informations financières",
+      title: t("adminUserDemandeCreate.steps.financial"),
       content: (
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item
               name="willApplyForFinancialAid"
-              label="Souhaitez-vous demander une aide financière ?"
+              label={t("adminUserDemandeCreate.fields.willApplyForFinancialAid")}
               valuePropName="checked"
             >
               <Checkbox />
@@ -313,7 +277,7 @@ const UserDemandeCreate = () => {
           <Col span={24}>
             <Form.Item
               name="hasExternalSponsorship"
-              label="Avez-vous un parrainage externe ?"
+              label={t("adminUserDemandeCreate.fields.hasExternalSponsorship")}
               valuePropName="checked"
             >
               <Checkbox />
@@ -323,34 +287,28 @@ const UserDemandeCreate = () => {
       ),
     },
     {
-      title: "Informations supplémentaires",
+      title: t("adminUserDemandeCreate.steps.extra"),
       content: (
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item
-              name="personalStatement"
-              label="Déclaration personnelle"
-            >
-              <TextArea rows={4} placeholder="Déclaration personnelle" />
+            <Form.Item name="personalStatement" label={t("adminUserDemandeCreate.fields.personalStatement")}>
+              <TextArea rows={4} placeholder={t("adminUserDemandeCreate.fields.personalStatement")} />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item
-              name="optionalEssay"
-              label="Essai optionnel"
-            >
-              <TextArea rows={4} placeholder="Essai optionnel" />
+            <Form.Item name="optionalEssay" label={t("adminUserDemandeCreate.fields.optionalEssay")}>
+              <TextArea rows={4} placeholder={t("adminUserDemandeCreate.fields.optionalEssay")} />
             </Form.Item>
           </Col>
         </Row>
       ),
     },
     {
-      title: "Paiement",
+      title: t("adminUserDemandeCreate.steps.payment"),
       content: (
         <div className="text-center p-4">
           <Alert
-            message="Veuillez procéder au paiement pour finaliser votre demande."
+            message={t("adminUserDemandeCreate.payment.alert")}
             type="info"
             showIcon
             className="mb-4"
@@ -367,11 +325,11 @@ const UserDemandeCreate = () => {
                 })
                 .catch(error => {
                     console.error("Erreur lors de la validation des champs:", error);
-                  message.error("Veuillez remplir tous les champs obligatoires.");
+                  message.error(t("adminUserDemandeCreate.messages.fillRequired"));
                 });
             }}
           >
-            Payer maintenant
+            {t("adminUserDemandeCreate.payment.payNow")}
           </Button>
         </div>
       ),
@@ -391,11 +349,11 @@ const UserDemandeCreate = () => {
         dob: values.dob ? values.dob.toISOString() : null,
       };
       const response = await demandeService.create(payload);
-      message.success("Demande créée avec succès");
+      message.success(t("adminUserDemandeCreate.messages.createSuccess"));
       navigate(`/user/demandes/${response.demande.id}/details`);
     } catch (error) {
       console.error("Erreur lors de la création:", error);
-      message.error(error?.message || "Erreur lors de la création de la demande");
+      message.error(error?.message || t("adminUserDemandeCreate.messages.createError"));
     } finally {
       setLoading(false);
     }
@@ -404,7 +362,7 @@ const UserDemandeCreate = () => {
   // Gestion du paiement Stripe
   const handleStripePayment = async () => {
     if (!stripePromise) {
-      message.error("Stripe n'est pas chargé. Veuillez réessayer.");
+      message.error(t("adminUserDemandeCreate.messages.stripeNotLoaded"));
       return;
     }
 
@@ -430,7 +388,7 @@ const UserDemandeCreate = () => {
       setPaymentMethod("stripe-form");
     } catch (error) {
       console.error("Erreur lors de la création du paiement Stripe:", error);
-      message.error("Erreur lors de la préparation du paiement");
+      message.error(t("adminUserDemandeCreate.messages.paymentPrepError"));
     } finally {
       setPaymentLoading(false);
     }
@@ -456,7 +414,7 @@ const UserDemandeCreate = () => {
       window.location.href = paymentResponse.approvalUrl;
     } catch (error) {
       console.error("Erreur lors de la création du paiement PayPal:", error);
-      message.error("Erreur lors de la préparation du paiement");
+      message.error(t("adminUserDemandeCreate.messages.paymentPrepError"));
     } finally {
       setPaymentLoading(false);
     }
@@ -472,7 +430,7 @@ const UserDemandeCreate = () => {
       setPaymentLoading(true);
 
       if (!stripe || !elements) {
-        message.error("Stripe n'est pas chargé. Veuillez réessayer.");
+        message.error(t("adminUserDemandeCreate.messages.stripeNotLoaded"));
         return;
       }
 
@@ -487,7 +445,7 @@ const UserDemandeCreate = () => {
         message.error(error.message);
         setPaymentLoading(false);
       } else if (paymentIntent.status === "succeeded") {
-        message.success("Paiement réussi !");
+        message.success(t("adminUserDemandeCreate.messages.paymentSuccess"));
         setPaymentModalVisible(false);
 
         // Soumettre le formulaire après paiement réussi
@@ -520,7 +478,7 @@ const UserDemandeCreate = () => {
           className="mt-4"
           block
         >
-          {paymentLoading ? "Traitement..." : "Payer 49 USD"}
+          {paymentLoading ? t("adminUserDemandeCreate.payment.processing") : t("adminUserDemandeCreate.payment.payAmount")}
         </Button>
       </form>
     );
@@ -530,21 +488,21 @@ const UserDemandeCreate = () => {
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
         <div className="md:flex justify-between items-center mb-6">
-          <h5 className="text-lg font-semibold">Nouvelle Demande</h5>
+          <h5 className="text-lg font-semibold">{t("adminUserDemandeCreate.title")}</h5>
           <Breadcrumb
             items={[
-              { title: <Link to="/">Dashboard</Link> },
-              { title: <Link to="/user/demandes">Mes Demandes</Link> },
-              { title: "Nouvelle Demande" },
+              { title: <Link to="/">{t("adminUserDemandeCreate.breadcrumb.dashboard")}</Link> },
+              { title: <Link to="/user/demandes">{t("adminUserDemandeCreate.breadcrumb.myDemandes")}</Link> },
+              { title: t("adminUserDemandeCreate.breadcrumb.new") },
             ]}
           />
         </div>
         <div className="md:flex md:justify-end justify-end items-center mb-6">
           <Button onClick={() => navigate(-1)} icon={<ArrowLeftOutlined />}>
-            Retour
+            {t("adminUserDemandeCreate.buttons.back")}
           </Button>
         </div>
-        <Card title="Nouvelle Demande" className="mt-4">
+        <Card title={t("adminUserDemandeCreate.cardTitle")} className="mt-4">
           <Steps current={currentStep} className="mb-6">
             {steps.map((step, index) => (
               <Step key={index} title={step.title} />
@@ -564,7 +522,7 @@ const UserDemandeCreate = () => {
                     onClick={() => setCurrentStep(currentStep - 1)}
                     icon={<ArrowLeftOutlined />}
                   >
-                    Précédent
+                    {t("adminUserDemandeCreate.buttons.prev")}
                   </Button>
                 )}
               </Col>
@@ -575,10 +533,10 @@ const UserDemandeCreate = () => {
                     onClick={() => {
                       form.validateFields()
                         .then(() => setCurrentStep(currentStep + 1))
-                        .catch(() => message.error("Veuillez remplir tous les champs obligatoires."));
+                        .catch(() => message.error(t("adminUserDemandeCreate.messages.fillRequired")));
                     }}
                   >
-                    Suivant
+                    {t("adminUserDemandeCreate.buttons.next")}
                   </Button>
                 ) : null}
               </Col>
@@ -588,7 +546,7 @@ const UserDemandeCreate = () => {
 
         {/* Modal de paiement */}
         <Modal
-          title="Choisir un moyen de paiement"
+          title={t("adminUserDemandeCreate.payment.chooseMethod")}
           visible={paymentModalVisible}
           onCancel={() => setPaymentModalVisible(false)}
           footer={null}
@@ -609,7 +567,7 @@ const UserDemandeCreate = () => {
                 onClick={handleStripePayment}
                 loading={paymentLoading && paymentMethod === "stripe"}
               >
-                Payer avec Stripe
+                {t("adminUserDemandeCreate.payment.stripe")}
               </Button>
               <Button
                 type="default"
@@ -619,7 +577,7 @@ const UserDemandeCreate = () => {
                 onClick={handlePayPalPayment}
                 loading={paymentLoading && paymentMethod === "paypal"}
               >
-                Payer avec PayPal
+                {t("adminUserDemandeCreate.payment.paypal")}
               </Button>
             </div>
           )}

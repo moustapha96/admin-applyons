@@ -138,35 +138,39 @@ export default function TraducteurDashboard() {
                 lastName: user?.lastName || "",
               })}
             </h5>
-            <h6 className="font-semibold text-slate-400">{t("traducteurDashboard.welcome")}</h6>
+            <h6 className="font-semibold text-slate-400">
+              {user?.organization?.name
+                ? t("traducteurDashboard.welcomeOrg", { orgName: user.organization.name })
+                : t("traducteurDashboard.welcome")}
+            </h6>
           </div>
         </div>
 
-        {/* Liens rapides */}
+        {/* Liens rapides — cartes à hauteur uniforme */}
         <Card title={t("traducteurDashboard.links.title")} className="mb-4">
-          <Row gutter={[12, 12]}>
-            {/* <Col xs={12} sm={8} md={6}>
-              <Link to="/traducteur/demandes" className="block rounded-lg border p-3 hover:bg-slate-50">
-                <FileTextOutlined className="text-xl text-primary" />
-                <span className="ml-2 font-medium">{t("traducteurDashboard.links.demandes")}</span>
-              </Link>
-            </Col> */}
-            <Col xs={12} sm={8} md={8}>
-              <Link to="/traducteur/dossiers-a-traiter" className="block rounded-lg border p-3 hover:bg-slate-50">
-                <FolderOpenOutlined className="text-xl text-primary" />
-                <span className="ml-2 font-medium">{t("traducteurDashboard.links.dossiers")}</span>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/traducteur/dossiers-a-traiter" className="block h-full">
+                <Card size="small" className="h-full min-h-[80px] hover:shadow-md transition-shadow border-slate-200" bodyStyle={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <FolderOpenOutlined className="text-2xl text-primary shrink-0" />
+                  <span className="font-medium">{t("traducteurDashboard.links.dossiers")}</span>
+                </Card>
               </Link>
             </Col>
-            <Col xs={12} sm={8} md={8}>
-              <Link to="/traducteur/profile" className="block rounded-lg border p-3 hover:bg-slate-50">
-                <UserOutlined className="text-xl text-primary" />
-                <span className="ml-2 font-medium">{t("traducteurDashboard.links.profile")}</span>
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/traducteur/profile" className="block h-full">
+                <Card size="small" className="h-full min-h-[80px] hover:shadow-md transition-shadow border-slate-200" bodyStyle={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <UserOutlined className="text-2xl text-primary shrink-0" />
+                  <span className="font-medium">{t("traducteurDashboard.links.profile")}</span>
+                </Card>
               </Link>
             </Col>
-            <Col xs={12} sm={8} md={8}>
-              <Link to="/traducteur/users" className="block rounded-lg border p-3 hover:bg-slate-50">
-                <TeamOutlined className="text-xl text-primary" />
-                <span className="ml-2 font-medium">{t("traducteurDashboard.links.users")}</span>
+            <Col xs={24} sm={12} md={8}>
+              <Link to="/traducteur/users" className="block h-full">
+                <Card size="small" className="h-full min-h-[80px] hover:shadow-md transition-shadow border-slate-200" bodyStyle={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <TeamOutlined className="text-2xl text-primary shrink-0" />
+                  <span className="font-medium">{t("traducteurDashboard.links.users")}</span>
+                </Card>
               </Link>
             </Col>
           </Row>
@@ -180,47 +184,48 @@ export default function TraducteurDashboard() {
 
         {!loading && stats && (
           <>
-            <Row gutter={[16, 16]} className="mb-4">
-              <Col xs={12} md={6}>
-                <Link to="/traducteur/demandes" className="block">
-                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+            {/* KPIs — 4 cartes alignées, même hauteur */}
+            <Row gutter={[16, 16]} className="mb-4" align="stretch">
+              <Col xs={24} sm={12} md={6} style={{ display: "flex" }}>
+                <Link to="/traducteur/demandes" className="block w-full h-full" style={{ minHeight: 120, flex: 1 }}>
+                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={{ height: "100%", minHeight: 120, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                     <Statistic
                       title={t("traducteurDashboard.kpis.demandesAsTranslationOrg")}
                       value={demandesAsTranslationOrg.total ?? demandesAssigned.total ?? 0}
-                      prefix={<FileTextOutlined />}
+                      prefix={<FileTextOutlined className="mr-1" />}
                     />
                   </Card>
                 </Link>
               </Col>
-              <Col xs={12} md={6}>
-                <Link to="/traducteur/dossiers-a-traiter" className="block">
-                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+              <Col xs={24} sm={12} md={6} style={{ display: "flex" }}>
+                <Link to="/traducteur/dossiers-a-traiter" className="block w-full h-full" style={{ minHeight: 120, flex: 1 }}>
+                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={{ height: "100%", minHeight: 120, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                     <Statistic
                       title={t("traducteurDashboard.links.dossiers")}
                       value={demandesAsTranslationOrg.total ?? demandesAssigned.total ?? 0}
-                      prefix={<FolderOpenOutlined />}
+                      prefix={<FolderOpenOutlined className="mr-1" />}
                     />
                   </Card>
                 </Link>
               </Col>
-              <Col xs={12} md={6}>
-                <Link to="/traducteur/users" className="block">
-                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+              <Col xs={24} sm={12} md={6} style={{ display: "flex" }}>
+                <Link to="/traducteur/users" className="block w-full h-full" style={{ minHeight: 120, flex: 1 }}>
+                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={{ height: "100%", minHeight: 120, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                     <Statistic
                       title={t("traducteurDashboard.links.users")}
                       value={organization?.usersCount ?? organization?.totalUsers ?? "—"}
-                      prefix={<TeamOutlined />}
+                      prefix={<TeamOutlined className="mr-1" />}
                     />
                   </Card>
                 </Link>
               </Col>
-              <Col xs={12} md={6}>
-                <Link to="/traducteur/notifications" className="block">
-                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+              <Col xs={24} sm={12} md={6} style={{ display: "flex" }}>
+                <Link to="/traducteur/notifications" className="block w-full h-full" style={{ minHeight: 120, flex: 1 }}>
+                  <Card className="h-full hover:shadow-md transition-shadow cursor-pointer" bodyStyle={{ height: "100%", minHeight: 120, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                     <Statistic
                       title={t("traducteurDashboard.links.notifications", { defaultValue: "Notifications" })}
                       value={notificationStats.total}
-                      prefix={<BellOutlined />}
+                      prefix={<BellOutlined className="mr-1" />}
                     />
                   </Card>
                 </Link>
@@ -232,6 +237,7 @@ export default function TraducteurDashboard() {
                 title={t("traducteurDashboard.tables.recentAssigned")}
                 loading={loading}
                 className="hover:shadow-md transition-shadow cursor-pointer"
+                bodyStyle={{ padding: "16px 24px" }}
                 extra={
                   recentDemandes.length > 0 ? (
                     <span className="text-primary font-medium">{t("traducteurDashboard.links.seeAll")}</span>

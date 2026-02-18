@@ -289,47 +289,51 @@ export default function TranslatorDemandeDetails() {
                         {demande.periode || "—"} / {demande.year || "—"}
                       </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.serieNiveauMention")}>
-                        {(demande.serie || "—") + " / " + (demande.niveau || "—") + " / " + (demande.mention || "—")}
+                        {(demande.academicInfo?.serie ?? demande.serie ?? "—") + " / " + (demande.academicInfo?.niveau ?? demande.niveau ?? "—") + " / " + (demande.academicInfo?.mention ?? demande.mention ?? "—")}
                       </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.secondarySchool")}>
-                        {(demande.secondarySchoolName || "—") + " (" + (demande.countryOfSchool || "—") + ")"}
+                        {(demande.academicInfo?.secondarySchoolName ?? demande.secondarySchoolName ?? "—") + " (" + (demande.academicInfo?.countryOfSchool ?? demande.countryOfSchool ?? "—") + ")"}
                       </Descriptions.Item>
-                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.graduationDate")}>{fmtDate(demande.graduationDate)}</Descriptions.Item>
-                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.dob")}>{fmtDate(demande.dob)}</Descriptions.Item>
+                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.graduationDate")}>{fmtDate(demande.academicInfo?.graduationDate ?? demande.graduationDate)}</Descriptions.Item>
+                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.dob")}>{fmtDate(demande.personalInfo?.dob ?? demande.dob)}</Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.citizenshipPassport")}>
-                        {(demande.citizenship || "—") + " / " + (demande.passport || "—")}
+                        {(demande.personalInfo?.citizenship ?? demande.citizenship ?? "—") + " / " + (demande.personalInfo?.passport ?? demande.passport ?? "—")}
                       </Descriptions.Item>
-                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.englishFirstLanguage")}>{yesNo(demande.isEnglishFirstLanguage, t)}</Descriptions.Item>
-                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.englishTests")}>{demande.englishProficiencyTests || "—"}</Descriptions.Item>
+                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.englishFirstLanguage")}>{yesNo(demande.englishInfo?.isEnglishFirstLanguage ?? demande.isEnglishFirstLanguage, t)}</Descriptions.Item>
+                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.englishTests")}>
+                        {Array.isArray(demande.englishInfo?.englishProficiencyTests) ? demande.englishInfo.englishProficiencyTests.join(", ") : (demande.englishInfo?.englishProficiencyTests ?? demande.englishProficiencyTests ?? "—")}
+                      </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.scoresGpaScale")}>
-                        {(demande.testScores || "—") + " / " + (demande.gpa || "—") + " / " + (demande.gradingScale || "—")}
+                        {(demande.englishInfo?.testScores ?? demande.testScores ?? "—") + " / " + (demande.academicInfo?.gpa ?? demande.gpa ?? "—") + " / " + (demande.academicInfo?.gradingScale ?? demande.gradingScale ?? "—")}
                       </Descriptions.Item>
-                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.examsTaken")}>{demande.examsTaken || "—"}</Descriptions.Item>
-                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.intendedMajor")}>{demande.intendedMajor || "—"}</Descriptions.Item>
+                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.examsTaken")}>
+                        {Array.isArray(demande.academicInfo?.examsTaken) ? demande.academicInfo.examsTaken.join(", ") : (demande.academicInfo?.examsTaken ?? demande.examsTaken ?? "—")}
+                      </Descriptions.Item>
+                      <Descriptions.Item label={t("traducteurDemandeDetails.fields.intendedMajor")}>{demande.academicInfo?.intendedMajor ?? demande.intendedMajor ?? "—"}</Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.activitiesAwards")}>
-                        {(demande.extracurricularActivities || "—") + " / " + (demande.honorsOrAwards || "—")}
+                        {(demande.activitiesInfo?.extracurricularActivities ?? demande.extracurricularActivities ?? "—") + " / " + (demande.activitiesInfo?.honorsOrAwards ?? demande.honorsOrAwards ?? "—")}
                       </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.parentInfo")}>
-                        {(demande.parentGuardianName || "—") +
+                        {(demande.familyInfo?.parentGuardianName ?? demande.parentGuardianName ?? "—") +
                           " / " +
-                          (demande.educationLevel || "—") +
+                          (demande.familyInfo?.educationLevel ?? demande.educationLevel ?? "—") +
                           " / " +
-                          (demande.occupation || "—")}
+                          (demande.familyInfo?.occupation ?? demande.occupation ?? "—")}
                       </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.financialAid")}>
-                        {yesNo(demande.willApplyForFinancialAid, t)} / {yesNo(demande.hasExternalSponsorship, t)}
+                        {yesNo(demande.financialInfo?.willApplyForFinancialAid ?? demande.willApplyForFinancialAid, t)} / {yesNo(demande.financialInfo?.hasExternalSponsorship ?? demande.hasExternalSponsorship, t)}
                       </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.visa")}>
-                        {(demande.visaType || "—") + " / " + yesNo(demande.hasPreviouslyStudiedInUS, t)}
+                        {(demande.visaInfo?.visaType ?? demande.visaType ?? "—") + " / " + yesNo(demande.visaInfo?.hasPreviouslyStudiedInUS ?? demande.hasPreviouslyStudiedInUS, t)}
                       </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.personalStatement")}>
-                        <Text>{demande.personalStatement || "—"}</Text>
+                        <Text>{demande.essaysInfo?.personalStatement ?? demande.personalStatement ?? "—"}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.optionalEssay")}>
-                        <Text>{demande.optionalEssay || "—"}</Text>
+                        <Text>{demande.essaysInfo?.optionalEssay ?? demande.optionalEssay ?? "—"}</Text>
                       </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.applicationRound")}>
-                        {(demande.applicationRound || "—") + " / " + (demande.howDidYouHearAboutUs || "—")}
+                        {(demande.applicationInfo?.applicationRound ?? demande.applicationRound ?? "—") + " / " + (demande.applicationInfo?.howDidYouHearAboutUs ?? demande.howDidYouHearAboutUs ?? "—")}
                       </Descriptions.Item>
                       <Descriptions.Item label={t("traducteurDemandeDetails.fields.observation")}>
                         <Text>{demande.observation || "—"}</Text>

@@ -2331,6 +2331,51 @@
             "uploadError": "Échec de l'enregistrement.",
             "selectFile": "Veuillez sélectionner un fichier PDF."
         },
+        "passport": {
+            "title": "Passeport (PDF)",
+            "view": "Voir le passeport",
+            "previewTitle": "Passeport (PDF)",
+            "notYetAvailable": "Fichier passeport non disponible."
+        },
+        "drawer": {
+            "title": "Toutes les informations",
+            "openButton": "Voir toutes les informations",
+            "sections": {
+                "personalInfo": "Identité",
+                "academicExtra": "Scolarité (détails)",
+                "englishInfo": "Anglais",
+                "visaInfo": "Visa",
+                "applicationInfo": "Candidature",
+                "familyInfo": "Famille",
+                "activitiesInfo": "Activités",
+                "financialInfo": "Financier",
+                "essaysInfo": "Essais"
+            },
+            "fields": {
+                "dob": "Date de naissance",
+                "citizenship": "Nationalité",
+                "passport": "N° passeport",
+                "gradingScale": "Échelle de notes",
+                "gpa": "GPA",
+                "intendedMajor": "Filière visée",
+                "examsTaken": "Examens passés",
+                "englishTests": "Tests",
+                "testScores": "Scores",
+                "visaType": "Type de visa",
+                "hasPreviouslyStudiedInUS": "Déjà étudié aux USA",
+                "applicationRound": "Session",
+                "howDidYouHear": "Comment nous avez-vous connus",
+                "parentGuardianName": "Parent / Tuteur",
+                "occupation": "Profession",
+                "educationLevel": "Niveau d'études",
+                "extracurricular": "Activités extrascolaires",
+                "honorsOrAwards": "Distinctions / Prix",
+                "willApplyFinancialAid": "Aide financière",
+                "hasSponsorship": "Parrainage externe",
+                "personalStatement": "Lettre de motivation",
+                "optionalEssay": "Essai optionnel"
+            }
+        },
         "modals": {
             "statusTitle": "Mettre à jour le statut & l’observation",
             "statusField": "Statut",
@@ -2338,9 +2383,9 @@
             "observationField": "Observation (visible dans la demande)",
             "observationPlaceholder": "Ajoutez une remarque utile (motif de validation/refus, éléments manquants, etc.)",
             "orgSourceTitle": "Institut qui a ajouté le document",
-            "buyerTitle": "Institut acheteur (organisation assignée)",
+            "buyerTitle": "Institut Traducteur",
             "noneSelected": "Aucun document sélectionné.",
-            "noneBuyer": "Aucune organisation acheteuse."
+            "noneBuyer": "Aucune organisation traducteur."
         },
         "statuses": {
             "PENDING": "En attente",
@@ -2789,6 +2834,7 @@
         },
         "hello": "Bonjour, {{firstName}} {{lastName}}",
         "welcome": "Bienvenue sur votre espace traducteur.",
+        "welcomeOrg": "Connecté en tant que {{orgName}}.",
         "links": {
             "title": "Accès rapide",
             "demandes": "Candidatures assignées",
@@ -3864,6 +3910,149 @@
             "na": "—"
         }
     },
+    "adminOrganizationDemandeDocuments": {
+        "title": "Documents de la demande",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "demandes": "Candidatures",
+            "documents": "Documents"
+        },
+        "buttons": {
+            "back": "Retour aux demandes"
+        },
+        "cardTitle": "Documents",
+        "table": {
+            "id": "ID",
+            "type": "Type",
+            "document": "Document",
+            "translated": "Traduit",
+            "encrypted": "Chiffré",
+            "createdAt": "Créé le",
+            "organization": "Organisation",
+            "actions": "Actions"
+        },
+        "tooltips": {
+            "previewOriginal": "Prévisualiser l'original",
+            "downloadOriginal": "Télécharger l'original",
+            "previewTranslation": "Prévisualiser la traduction",
+            "downloadTranslation": "Télécharger la traduction",
+            "delete": "Supprimer"
+        },
+        "deleteConfirm": {
+            "title": "Supprimer ce document ?",
+            "content": "Cette action est irréversible.",
+            "okText": "Supprimer",
+            "cancelText": "Annuler"
+        },
+        "messages": {
+            "loadError": "Erreur lors de la récupération des documents",
+            "sessionExpired": "Session expirée. Veuillez vous reconnecter.",
+            "accessDenied": "Vous n'avez pas accès à ce document.",
+            "openError": "Erreur lors de l'ouverture du document",
+            "downloadSuccess": "Téléchargement réussi",
+            "downloadError": "Erreur lors du téléchargement du document",
+            "deleteSuccess": "Document supprimé avec succès",
+            "deleteError": "Erreur lors de la suppression du document"
+        }
+    },
+    "adminOrgDemandeDetail": {
+        "title": "Détails de la demande",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organisations": "Organisations",
+            "detail": "Détails de la demande"
+        },
+        "buttons": {
+            "back": "Retour",
+            "edit": "Modifier"
+        },
+        "sections": {
+            "info": "Informations de la demande"
+        },
+        "fields": {
+            "title": "Titre",
+            "type": "Type",
+            "status": "Statut",
+            "description": "Description",
+            "createdAt": "Créé le",
+            "updatedAt": "Mis à jour le"
+        },
+        "status": {
+            "PENDING": "En attente",
+            "APPROVED": "Approuvée",
+            "REJECTED": "Rejetée",
+            "COMPLETED": "Terminée"
+        },
+        "type": {
+            "TRADUCTION": "Traduction",
+            "VERIFICATION": "Vérification",
+            "AUTRE": "Autre"
+        },
+        "notFound": "Demande non trouvée."
+    },
+    "adminOrgDemandesList": {
+        "title": "Demandes de l'organisation",
+        "breadcrumb": {
+            "dashboard": "Dashboard",
+            "organisations": "Organisations",
+            "demandes": "Demandes"
+        },
+        "searchPlaceholder": "Rechercher une demande...",
+        "filterByStatus": "Filtrer par statut",
+        "filterByType": "Filtrer par type",
+        "reset": "Réinitialiser",
+        "newDemande": "Nouvelle demande",
+        "table": {
+            "title": "Titre",
+            "type": "Type",
+            "status": "Statut",
+            "createdAt": "Créé le",
+            "actions": "Actions"
+        },
+        "actions": {
+            "details": "Détails",
+            "delete": "Supprimer"
+        },
+        "deleteConfirm": {
+            "title": "Supprimer cette demande ?",
+            "content": "Cette action est irréversible.",
+            "okText": "Supprimer",
+            "cancelText": "Annuler"
+        },
+        "status": {
+            "PENDING": "En attente",
+            "APPROVED": "Approuvée",
+            "REJECTED": "Rejetée",
+            "COMPLETED": "Terminée"
+        },
+        "type": {
+            "TRADUCTION": "Traduction",
+            "VERIFICATION": "Vérification",
+            "AUTRE": "Autre"
+        },
+        "messages": {
+            "loadError": "Erreur lors de la récupération des demandes",
+            "deleteSuccess": "Demande supprimée avec succès",
+            "deleteError": "Échec de la suppression"
+        },
+        "totalDemandes": "Total {{count}} demandes"
+    },
+    "adminOrgDepartmentDetail": {
+        "title": "Détails du département",
+        "breadcrumb": { "dashboard": "Dashboard", "organisations": "Organisations", "detail": "Détails du département" },
+        "buttons": { "back": "Retour", "edit": "Modifier" },
+        "sections": { "info": "Informations du département" },
+        "fields": { "name": "Nom", "description": "Description", "createdAt": "Créé le", "updatedAt": "Mis à jour le" },
+        "notFound": "Département non trouvé."
+    },
+    "adminOrgFiliereDetail": {
+        "title": "Détails de la filière",
+        "breadcrumb": { "dashboard": "Dashboard", "organisations": "Organisations", "detail": "Détails de la filière" },
+        "buttons": { "back": "Retour", "edit": "Modifier" },
+        "sections": { "info": "Informations de la filière" },
+        "fields": { "name": "Nom", "description": "Description", "createdAt": "Créé le", "updatedAt": "Mis à jour le" },
+        "notFound": "Filière non trouvée."
+    },
     "adminDemandeDetail": {
         "title": "Demande — Détail",
         "breadcrumb": {
@@ -3872,7 +4061,23 @@
             "detail": "Détail"
         },
         "actions": {
-            "back": "Retour"
+            "back": "Retour",
+            "close": "Fermer"
+        },
+        "passport": {
+            "title": "Passeport (PDF)",
+            "view": "Voir le passeport",
+            "notAvailable": "Non disponible."
+        },
+        "acceptanceLetter": {
+            "title": "Lettre d'acceptation",
+            "view": "Voir / Télécharger",
+            "addedOn": "Ajoutée le",
+            "notAdded": "Aucune lettre d'acceptation ajoutée."
+        },
+        "drawer": {
+            "title": "Toutes les informations",
+            "openButton": "Voir toutes les informations"
         },
         "sections": {
             "mainInfo": "Informations principales",
@@ -3898,7 +4103,15 @@
             "download": "Télécharger",
             "verify": "Vérifier l'intégrité",
             "original": "Document (original)",
-            "translated": "Document (traduit)"
+            "translated": "Document (traduit)",
+            "ownerOrg": "Institut (source)",
+            "type": "Type",
+            "mention": "Mention",
+            "obtainedAt": "Obtenu le",
+            "addedAt": "Ajouté le",
+            "delete": "Supprimer",
+            "deleteConfirmTitle": "Supprimer ce document ?",
+            "deleteConfirmMessage": "Cette action est irréversible."
         },
         "verify": {
             "title": "Vérification d'intégrité",
@@ -3914,7 +4127,11 @@
             "loadError": "Erreur de chargement",
             "openError": "Impossible d'ouvrir le document",
             "downloadError": "Téléchargement impossible",
-            "verifyError": "Échec de vérification"
+            "verifyError": "Échec de vérification",
+            "noDocument": "Document non disponible",
+            "sessionExpired": "Session expirée. Veuillez vous reconnecter.",
+            "accessDenied": "Accès refusé.",
+            "docDeleted": "Document supprimé."
         },
         "common": {
             "na": "—",
@@ -3956,6 +4173,31 @@
             "applicationRound": "Application round",
             "howDidYouHearAboutUs": "Découverte"
         }
+    },
+    "adminUserDemandeEdit": {
+        "title": "Modifier la demande",
+        "breadcrumb": { "dashboard": "Dashboard", "myDemandes": "Mes demandes", "edit": "Modifier la demande" },
+        "buttons": { "back": "Retour", "prev": "Précédent", "next": "Suivant", "update": "Mettre à jour", "updating": "Mise à jour en cours..." },
+        "cardTitle": "Modifier la demande",
+        "steps": { "basic": "Informations de base", "academic": "Informations académiques", "personal": "Informations personnelles", "financial": "Informations financières", "extra": "Informations supplémentaires" },
+        "fields": { "type": "Type de demande", "targetOrg": "Organisation cible", "observation": "Observations", "serie": "Série", "niveau": "Niveau", "mention": "Mention", "annee": "Année", "countryOfSchool": "Pays de l'école", "secondarySchoolName": "Nom de l'école", "graduationDate": "Date de graduation", "dob": "Date de naissance", "citizenship": "Nationalité", "passport": "Numéro de passeport", "isEnglishFirstLanguage": "L'anglais est-il votre première langue ?", "englishProficiencyTests": "Tests de compétence en anglais", "testScores": "Scores des tests", "willApplyForFinancialAid": "Souhaitez-vous demander une aide financière ?", "hasExternalSponsorship": "Avez-vous un parrainage externe ?", "personalStatement": "Déclaration personnelle", "optionalEssay": "Essai optionnel" },
+        "placeholders": { "selectType": "Sélectionner un type", "selectOrg": "Sélectionner une organisation", "observation": "Observations supplémentaires", "serie": "Série (ex: S, L, ES)", "niveau": "Niveau (ex: Bac, Licence, Master)", "mention": "Mention (ex: Bien, Très Bien)", "annee": "Année (ex: 2023)", "countryOfSchool": "Pays de l'école", "secondarySchoolName": "Nom de l'école secondaire", "passport": "Numéro de passeport", "englishTests": "Tests (ex: TOEFL, IELTS)", "testScores": "Scores des tests" },
+        "validation": { "typeRequired": "Le type est obligatoire", "orgRequired": "L'organisation est obligatoire" },
+        "type": { "TRADUCTION": "Traduction", "VERIFICATION": "Vérification", "AUTRE": "Autre" },
+        "messages": { "loadDemandeError": "Erreur lors de la récupération de la demande", "loadOrgsError": "Erreur lors de la récupération des organisations", "updateSuccess": "Demande mise à jour avec succès", "updateError": "Erreur lors de la mise à jour de la demande" }
+    },
+    "adminUserDemandeCreate": {
+        "title": "Nouvelle demande",
+        "breadcrumb": { "dashboard": "Dashboard", "myDemandes": "Mes demandes", "new": "Nouvelle demande" },
+        "buttons": { "back": "Retour", "prev": "Précédent", "next": "Suivant" },
+        "cardTitle": "Nouvelle demande",
+        "steps": { "basic": "Informations de base", "academic": "Informations académiques", "personal": "Informations personnelles", "financial": "Informations financières", "extra": "Informations supplémentaires", "payment": "Paiement" },
+        "fields": { "type": "Type de demande", "targetOrg": "Organisation cible", "assignedOrg": "Organisation de traduction", "observation": "Observations", "serie": "Série", "niveau": "Niveau", "mention": "Mention", "annee": "Année", "countryOfSchool": "Pays de l'école", "secondarySchoolName": "Nom de l'école", "graduationDate": "Date de graduation", "dob": "Date de naissance", "citizenship": "Nationalité", "passport": "Numéro de passeport", "isEnglishFirstLanguage": "L'anglais est-il votre première langue ?", "englishProficiencyTests": "Tests de compétence en anglais", "testScores": "Scores des tests", "willApplyForFinancialAid": "Souhaitez-vous demander une aide financière ?", "hasExternalSponsorship": "Avez-vous un parrainage externe ?", "personalStatement": "Déclaration personnelle", "optionalEssay": "Essai optionnel" },
+        "placeholders": { "selectType": "Sélectionner un type", "selectTargetOrg": "Sélectionner une organisation cible", "selectAssignedOrg": "Sélectionner une organisation de traduction", "observation": "Observations supplémentaires", "serie": "Série (ex: S, L, ES)", "niveau": "Niveau (ex: Bac, Licence, Master)", "mention": "Mention (ex: Bien, Très Bien)", "annee": "Année (ex: 2023)", "countryOfSchool": "Pays de l'école", "secondarySchoolName": "Nom de l'école secondaire", "passport": "Numéro de passeport", "englishTests": "Tests (ex: TOEFL, IELTS)", "testScores": "Scores des tests" },
+        "validation": { "typeRequired": "Le type est obligatoire", "targetOrgRequired": "L'organisation cible est obligatoire", "assignedOrgRequired": "L'organisation de traduction est obligatoire" },
+        "type": { "TRADUCTION": "Traduction", "VERIFICATION": "Vérification", "AUTRE": "Autre" },
+        "payment": { "alert": "Veuillez procéder au paiement pour finaliser votre demande.", "payNow": "Payer maintenant", "chooseMethod": "Choisir un moyen de paiement", "stripe": "Payer avec Stripe", "paypal": "Payer avec PayPal", "processing": "Traitement...", "payAmount": "Payer 49 USD" },
+        "messages": { "loadOrgsError": "Erreur lors de la récupération des organisations", "createSuccess": "Demande créée avec succès", "createError": "Erreur lors de la création de la demande", "fillRequired": "Veuillez remplir tous les champs obligatoires.", "stripeNotLoaded": "Stripe n'est pas chargé. Veuillez réessayer.", "paymentSuccess": "Paiement réussi !", "paymentPrepError": "Erreur lors de la préparation du paiement" }
     },
     "adminUserCreate": {
         "title": "Nouvel utilisateur",
@@ -4509,6 +4751,7 @@
             "dateOfBirth": "Date de naissance",
             "countryOfCitizenship": "Pays de citoyenneté",
             "passportNumber": "Numéro de passeport",
+            "passportFile": "Passeport (PDF)",
             "preferredStartTerm": "Trimestre de début préféré",
             "year": "Année",
             "isEnglishFirstLanguage": "L'anglais est-il votre langue maternelle ?",
@@ -4556,6 +4799,12 @@
             "address": "Adresse (opt.)",
             "role": "Rôle (opt.)",
             "notifyOrgs": "Sélectionner les organisations à notifier"
+        },
+        "passportUpload": {
+            "text": "Cliquez ou glissez-déposez un PDF de passeport ici",
+            "hint": "PDF uniquement, 5 Mo max.",
+            "error": "Échec de l'envoi du passeport, mais votre candidature a bien été créée.",
+            "uploadSuccess": "Document passeport enregistré."
         },
         "options": {
             "periods": {
@@ -4690,6 +4939,11 @@
             "creationError": "Échec de création",
             "paypalError": "Erreur PayPal: {{error}}",
             "required": "Requis"
+        },
+        "validation": {
+            "fillRequiredFields": "Veuillez remplir les champs obligatoires : {{fields}}",
+            "requiredField": "Champ obligatoire non rempli : {{fields}}",
+            "passportFileRequired": "Le fichier passeport (PDF) est obligatoire."
         },
         "formMessages": {
             "stripeSuccess": "Stripe payment confirmed!",

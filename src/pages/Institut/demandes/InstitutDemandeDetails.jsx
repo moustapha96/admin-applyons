@@ -9,6 +9,7 @@ import {
   Card,
   Descriptions,
   Divider,
+  Drawer,
   Space,
   Tag,
   Typography,
@@ -22,7 +23,7 @@ import {
   Upload,
 } from "antd";
 import dayjs from "dayjs";
-import { ArrowLeftOutlined, DeleteOutlined, FileTextOutlined, InboxOutlined, UploadOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, DeleteOutlined, FilePdfOutlined, FileTextOutlined, InboxOutlined, UnorderedListOutlined, UploadOutlined } from "@ant-design/icons";
 import demandeService from "@/services/demandeService";
 import documentService from "@/services/documentService";
 import { useTranslation } from "react-i18next";
@@ -81,6 +82,9 @@ export default function InstitutDemandeDetails() {
   const [acceptanceLetterModalOpen, setAcceptanceLetterModalOpen] = useState(false);
   const [acceptanceLetterFile, setAcceptanceLetterFile] = useState(null);
   const [acceptanceLetterUploading, setAcceptanceLetterUploading] = useState(false);
+
+  // Tiroir « Toutes les informations » (ouvert / fermé)
+  const [drawerOpen, setDrawerOpen] = useState(false);
   
   // Cleanup URL when preview closes
   useEffect(() => {
@@ -190,6 +194,19 @@ export default function InstitutDemandeDetails() {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
+  /** Ouvre le PDF passeport (documentPassport) dans la modal d'aperçu */
+  const openPassportPreview = () => {
+    const path = demande?.documentPassport ?? demande?.personalInfo?.documentPassport;
+    if (!path) return;
+    const base = (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL_SIMPLE) || "";
+    const fullUrl = base.replace(/\/$/, "") + (path.startsWith("/") ? path : `/${path}`);
+    setPreview({
+      open: true,
+      url: fullUrl,
+      title: t("institutDemandeDetails.passport.previewTitle", "Passport (PDF)"),
+    });
+  };
+
   const callUpdateStatusApi = async (status, observation) => {
     try {
       await demandeService.updateStatus(id, { status, observation });
@@ -231,9 +248,14 @@ export default function InstitutDemandeDetails() {
 
   const openOrgPopup = (doc) => { setOrgDoc(doc); setOrgOpen(true); };
 
-  // Document "Lettre d'acceptation" (un seul par demande validée)
+  // Document "Lettre d'acceptation" (un seul par demande validée) — affiché dans sa propre carte, pas dans le tableau des documents
   const acceptanceLetterDoc = useMemo(
     () => docs.find((d) => (d.type || "").toUpperCase() === "LETTRE_ACCEPTATION") || null,
+    [docs]
+  );
+  /** Documents à afficher dans le tableau (sans la lettre d'acceptation) */
+  const docsWithoutAcceptanceLetter = useMemo(
+    () => docs.filter((d) => (d.type || "").toUpperCase() !== "LETTRE_ACCEPTATION"),
     [docs]
   );
 
@@ -273,7 +295,8 @@ export default function InstitutDemandeDetails() {
 
   const handleDeleteDocument = (docRow) => {
     if (!docRow?.id) return;
-    const isOwner = docRow.ownerOrgId === userOrgId || docRow.ownerOrg?.id === userOrgId;
+    // Uniquement l'organisation qui a ajouté le document (ownerOrg) peut le supprimer
+    const isOwner = (docRow.ownerOrgId && docRow.ownerOrgId === userOrgId) || (docRow.ownerOrg?.id && docRow.ownerOrg.id === userOrgId);
     if (!isOwner || !hasPermission("documents.delete")) return;
     Modal.confirm({
       title: t("institutDemandeDetails.docs.deleteConfirmTitle"),
@@ -293,9 +316,10 @@ export default function InstitutDemandeDetails() {
     });
   };
 
+  /** Uniquement l'organisation qui a ajouté le document (ownerOrg) peut le supprimer */
   const canDeleteDoc = (r) => {
-    const isOwner = r.ownerOrgId === userOrgId || r.ownerOrg?.id === userOrgId;
-    return isOwner && hasPermission("documents.delete");
+    const isOwner = (r.ownerOrgId && r.ownerOrgId === userOrgId) || (r.ownerOrg?.id && r.ownerOrg.id === userOrgId);
+    return Boolean(isOwner && hasPermission("documents.delete"));
   };
 
   // Colonnes documents
@@ -377,6 +401,7 @@ export default function InstitutDemandeDetails() {
           <Card loading={loading} className="mb-4">
             {demande && (
               <>
+                {/* Vue par défaut : informations les plus importantes */}
                 <Descriptions bordered column={2} size="middle">
                   <Descriptions.Item label={t("institutDemandeDetails.fields.code")}>
                     <Typography.Text copyable={{ text: demande?.code }}>
@@ -387,11 +412,6 @@ export default function InstitutDemandeDetails() {
 
                   <Descriptions.Item label={t("institutDemandeDetails.fields.requestDate")}>{fmtDate(demande.dateDemande)}</Descriptions.Item>
                   <Descriptions.Item label={t("institutDemandeDetails.fields.updatedAt")}>{fmtDate(demande.updatedAt, true)}</Descriptions.Item>
-
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.createdAt")}>{fmtDate(demande.createdAt, true)}</Descriptions.Item>
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.deletedAt")}>
-                    {demande.deletedAt ? fmtDate(demande.deletedAt, true) : t("institutDemandeDetails.tags.dash")}
-                  </Descriptions.Item>
 
                   <Descriptions.Item label={t("institutDemandeDetails.fields.targetOrg")} span={1}>
                     {demande.targetOrg?.name || t("institutDemandeDetails.tags.dash")}{" "}
@@ -418,23 +438,39 @@ export default function InstitutDemandeDetails() {
                     </div>
                   </Descriptions.Item>
 
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.serie")}>{demande.serie || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.niveau")}>{demande.niveau || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
-
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.mention")}>{demande.mention || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.anneeTxt")}>{demande.annee || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
-
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.periode")}>{demande.periode || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.year")}>{demande.year || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
-
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.countryOfSchool")}>{demande.countryOfSchool || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.secondarySchoolName")}>{demande.secondarySchoolName || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
-
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.graduationDate")}>{fmtDate(demande.graduationDate)}</Descriptions.Item>
-                  <Descriptions.Item label={t("institutDemandeDetails.fields.observation")}>
+                  <Descriptions.Item label={t("institutDemandeDetails.fields.observation")} span={2}>
                     <Text>{demande.observation || t("institutDemandeDetails.tags.dash")}</Text>
                   </Descriptions.Item>
                 </Descriptions>
+
+                <div className="mt-3">
+                  <Button
+                    type="default"
+                    icon={<UnorderedListOutlined />}
+                    onClick={() => setDrawerOpen(true)}
+                  >
+                    {t("institutDemandeDetails.drawer.openButton", "Voir toutes les informations")}
+                  </Button>
+                </div>
+
+                {/* Passport (PDF) — affiché pour toute personne voyant la demande */}
+                <Divider />
+                <Card size="small" className="mt-3" title={t("institutDemandeDetails.passport.title", "Passport (PDF)")}>
+                  {(demande.documentPassport ?? demande.personalInfo?.documentPassport) ? (
+                    <Space wrap>
+                      <Button
+                        type="primary"
+                        ghost
+                        icon={<FilePdfOutlined />}
+                        onClick={openPassportPreview}
+                      >
+                        {t("institutDemandeDetails.passport.view", "View passport")}
+                      </Button>
+                    </Space>
+                  ) : (
+                    <Text type="secondary">{t("institutDemandeDetails.passport.notYetAvailable", "Passport file not available.")}</Text>
+                  )}
+                </Card>
 
                 {isTargetOrganization && (
                   <>
@@ -476,6 +512,17 @@ export default function InstitutDemandeDetails() {
                                 {t("institutDemandeDetails.acceptanceLetter.view")}
                               </Button>
                               <Tag color="green">{t("institutDemandeDetails.acceptanceLetter.addedOn")} {fmtDate(acceptanceLetterDoc.createdAt, true)}</Tag>
+                              {canDeleteDoc(acceptanceLetterDoc) && (
+                                <Button
+                                  type="text"
+                                  danger
+                                  size="small"
+                                  icon={<DeleteOutlined />}
+                                  onClick={() => handleDeleteDocument(acceptanceLetterDoc)}
+                                >
+                                  {t("institutDemandeDetails.docs.delete")}
+                                </Button>
+                              )}
                             </Space>
                           ) : (
                             <Button
@@ -510,7 +557,7 @@ export default function InstitutDemandeDetails() {
             title={
               <Space>
                 {t("institutDemandeDetails.docs.title")}
-                {isTargetOrganization && <Tag>{demande?._count?.documents ?? docs?.length ?? 0}</Tag>}
+                {isTargetOrganization && <Tag>{docsWithoutAcceptanceLetter.length}</Tag>}
               </Space>
             }
           >
@@ -518,7 +565,7 @@ export default function InstitutDemandeDetails() {
               <Table
                 rowKey={(r) => r.id}
                 columns={docColumns}
-                dataSource={docs}
+                dataSource={docsWithoutAcceptanceLetter}
                 pagination={{ pageSize: 5 }}
                 locale={{ emptyText: t("institutDemandeDetails.docs.empty") }}
                 scroll={{ x: true }}
@@ -531,6 +578,164 @@ export default function InstitutDemandeDetails() {
           </Card>
         </div>
       </div>
+
+      {/* ===== Tiroir : toutes les informations de la demande ===== */}
+      <Drawer
+        title={t("institutDemandeDetails.drawer.title", "Toutes les informations")}
+        placement="right"
+        width={Math.min(560, typeof window !== "undefined" ? window.innerWidth * 0.9 : 560)}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        footer={
+          <Button type="primary" onClick={() => setDrawerOpen(false)}>
+            {t("institutDemandeDetails.buttons.close")}
+          </Button>
+        }
+      >
+        {demande && (
+          <>
+            <Descriptions bordered column={1} size="small" className="mb-4">
+              <Descriptions.Item label={t("institutDemandeDetails.fields.code")}>
+                <Typography.Text copyable={{ text: demande?.code }}>
+                  <Tag>{demande.code || t("institutDemandeDetails.tags.dash")}</Tag>
+                </Typography.Text>
+              </Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.status")}>{statusTag}</Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.requestDate")}>{fmtDate(demande.dateDemande)}</Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.updatedAt")}>{fmtDate(demande.updatedAt, true)}</Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.createdAt")}>{fmtDate(demande.createdAt, true)}</Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.deletedAt")}>
+                {demande.deletedAt ? fmtDate(demande.deletedAt, true) : t("institutDemandeDetails.tags.dash")}
+              </Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.targetOrg")}>
+                {demande.targetOrg?.name || t("institutDemandeDetails.tags.dash")}{" "}
+                {demande.targetOrg?.type ? <Tag>{demande.targetOrg.type}</Tag> : null}
+              </Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.assignedOrg")}>
+                {demande.assignedOrg ? (
+                  <Button type="link" size="small" onClick={() => { setDrawerOpen(false); setBuyerOpen(true); }}>
+                    {demande.assignedOrg?.name || t("institutDemandeDetails.tags.dash")}{" "}
+                    {demande.assignedOrg?.type ? <Tag>{demande.assignedOrg.type}</Tag> : null}
+                  </Button>
+                ) : t("institutDemandeDetails.tags.dash")}
+              </Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.requester")}>
+                <div className="flex flex-col">
+                  <span>{demande.user?.firstName || t("institutDemandeDetails.tags.dash")} {demande.user?.lastName || ""}</span>
+                  <span>{demande.user?.email || t("institutDemandeDetails.tags.dash")}</span>
+                </div>
+              </Descriptions.Item>
+              {/* <Descriptions.Item label={t("institutDemandeDetails.fields.serie")}>{demande.academicInfo?.serie ?? demande.serie ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item> */}
+              {/* <Descriptions.Item label={t("institutDemandeDetails.fields.niveau")}>{demande.academicInfo?.niveau ?? demande.niveau ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item> */}
+              {/* <Descriptions.Item label={t("institutDemandeDetails.fields.mention")}>{demande.academicInfo?.mention ?? demande.mention ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item> */}
+              {/* <Descriptions.Item label={t("institutDemandeDetails.fields.anneeTxt")}>{demande.academicInfo?.annee ?? demande.annee ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item> */}
+              <Descriptions.Item label={t("institutDemandeDetails.fields.periode")}>{demande.periode || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.year")}>{demande.year || t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.countryOfSchool")}>{demande.academicInfo?.countryOfSchool ?? demande.countryOfSchool ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.secondarySchoolName")}>{demande.academicInfo?.secondarySchoolName ?? demande.secondarySchoolName ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.graduationDate")}>{fmtDate(demande.academicInfo?.graduationDate ?? demande.graduationDate)}</Descriptions.Item>
+              <Descriptions.Item label={t("institutDemandeDetails.fields.observation")}>
+                <Text>{demande.observation || t("institutDemandeDetails.tags.dash")}</Text>
+              </Descriptions.Item>
+            </Descriptions>
+
+            {/* Blocs personalInfo, academicInfo (complément), englishInfo, visaInfo, applicationInfo, etc. */}
+          {demande.personalInfo && (
+            <>
+              <Divider orientation="left">{t("institutDemandeDetails.drawer.sections.personalInfo", "Personal")}</Divider>
+              <Descriptions bordered column={1} size="small" className="mb-3">
+                <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.dob", "Date of birth")}>{fmtDate(demande.personalInfo.dob)}</Descriptions.Item>
+                <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.citizenship", "Citizenship")}>{demande.personalInfo.citizenship ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
+                <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.passport", "Passport number")}>{demande.personalInfo.passport ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item>
+              </Descriptions>
+            </>
+          )}
+          {demande.academicInfo && (demande.academicInfo.gradingScale || demande.academicInfo.gpa || demande.academicInfo.intendedMajor || (demande.academicInfo.examsTaken && demande.academicInfo.examsTaken.length > 0)) && (
+            <>
+              <Divider orientation="left">{t("institutDemandeDetails.drawer.sections.academicExtra", "Academic (details)")}</Divider>
+              <Descriptions bordered column={1} size="small" className="mb-3">
+                {demande.academicInfo.gradingScale && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.gradingScale", "Grading scale")}>{demande.academicInfo.gradingScale}</Descriptions.Item>}
+                {demande.academicInfo.gpa && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.gpa", "GPA")}>{demande.academicInfo.gpa}</Descriptions.Item>}
+                {demande.academicInfo.intendedMajor && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.intendedMajor", "Intended major")}>{demande.academicInfo.intendedMajor}</Descriptions.Item>}
+                {demande.academicInfo.examsTaken && demande.academicInfo.examsTaken.length > 0 && (
+                  <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.examsTaken", "Exams taken")}>
+                    {Array.isArray(demande.academicInfo.examsTaken) ? demande.academicInfo.examsTaken.join(", ") : demande.academicInfo.examsTaken}
+                  </Descriptions.Item>
+                )}
+              </Descriptions>
+            </>
+          )}
+          {demande.englishInfo && (demande.englishInfo.englishProficiencyTests?.length > 0 || demande.englishInfo.testScores) && (
+            <>
+              <Divider orientation="left">{t("institutDemandeDetails.drawer.sections.englishInfo", "English")}</Divider>
+              <Descriptions bordered column={1} size="small" className="mb-3">
+                {demande.englishInfo.englishProficiencyTests?.length > 0 && (
+                  <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.englishTests", "Tests")}>
+                    {demande.englishInfo.englishProficiencyTests.join(", ")}
+                  </Descriptions.Item>
+                )}
+                {demande.englishInfo.testScores && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.testScores", "Scores")}>{demande.englishInfo.testScores}</Descriptions.Item>}
+              </Descriptions>
+            </>
+          )}
+          {demande.visaInfo && (demande.visaInfo.visaType || demande.visaInfo.hasPreviouslyStudiedInUS != null) && (
+            <>
+              <Divider orientation="left">{t("institutDemandeDetails.drawer.sections.visaInfo", "Visa")}</Divider>
+              <Descriptions bordered column={1} size="small" className="mb-3">
+                {demande.visaInfo.visaType && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.visaType", "Visa type")}>{demande.visaInfo.visaType}</Descriptions.Item>}
+                {demande.visaInfo.hasPreviouslyStudiedInUS != null && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.hasPreviouslyStudiedInUS", "Previously studied in US")}>{fmtBool(demande.visaInfo.hasPreviouslyStudiedInUS)}</Descriptions.Item>}
+              </Descriptions>
+            </>
+          )}
+          {demande.applicationInfo && (demande.applicationInfo.applicationRound || demande.applicationInfo.howDidYouHearAboutUs) && (
+            <>
+              <Divider orientation="left">{t("institutDemandeDetails.drawer.sections.applicationInfo", "Application")}</Divider>
+              <Descriptions bordered column={1} size="small" className="mb-3">
+                {demande.applicationInfo.applicationRound && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.applicationRound", "Round")}>{demande.applicationInfo.applicationRound}</Descriptions.Item>}
+                {demande.applicationInfo.howDidYouHearAboutUs && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.howDidYouHear", "How did you hear")}>{demande.applicationInfo.howDidYouHearAboutUs}</Descriptions.Item>}
+              </Descriptions>
+            </>
+          )}
+          {demande.familyInfo && (demande.familyInfo.parentGuardianName || demande.familyInfo.occupation || demande.familyInfo.educationLevel) && (
+            <>
+              <Divider orientation="left">{t("institutDemandeDetails.drawer.sections.familyInfo", "Family")}</Divider>
+              <Descriptions bordered column={1} size="small" className="mb-3">
+                {demande.familyInfo.parentGuardianName && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.parentGuardianName", "Parent / Guardian")}>{demande.familyInfo.parentGuardianName}</Descriptions.Item>}
+                {demande.familyInfo.occupation && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.occupation", "Occupation")}>{demande.familyInfo.occupation}</Descriptions.Item>}
+                {demande.familyInfo.educationLevel && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.educationLevel", "Education level")}>{demande.familyInfo.educationLevel}</Descriptions.Item>}
+              </Descriptions>
+            </>
+          )}
+          {demande.activitiesInfo && (demande.activitiesInfo.extracurricularActivities || demande.activitiesInfo.honorsOrAwards) && (
+            <>
+              <Divider orientation="left">{t("institutDemandeDetails.drawer.sections.activitiesInfo", "Activities")}</Divider>
+              <Descriptions bordered column={1} size="small" className="mb-3">
+                {demande.activitiesInfo.extracurricularActivities && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.extracurricular", "Extracurricular")}><Text ellipsis={{ rows: 3 }}>{demande.activitiesInfo.extracurricularActivities}</Text></Descriptions.Item>}
+                {demande.activitiesInfo.honorsOrAwards && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.honorsOrAwards", "Honors / Awards")}><Text ellipsis={{ rows: 2 }}>{demande.activitiesInfo.honorsOrAwards}</Text></Descriptions.Item>}
+              </Descriptions>
+            </>
+          )}
+          {demande.financialInfo && (demande.financialInfo.willApplyForFinancialAid != null || demande.financialInfo.hasExternalSponsorship != null) && (
+            <>
+              <Divider orientation="left">{t("institutDemandeDetails.drawer.sections.financialInfo", "Financial")}</Divider>
+              <Descriptions bordered column={1} size="small" className="mb-3">
+                {demande.financialInfo.willApplyForFinancialAid != null && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.willApplyFinancialAid", "Financial aid")}>{fmtBool(demande.financialInfo.willApplyForFinancialAid)}</Descriptions.Item>}
+                {demande.financialInfo.hasExternalSponsorship != null && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.hasSponsorship", "External sponsorship")}>{fmtBool(demande.financialInfo.hasExternalSponsorship)}</Descriptions.Item>}
+              </Descriptions>
+            </>
+          )}
+          {demande.essaysInfo && (demande.essaysInfo.personalStatement || demande.essaysInfo.optionalEssay) && (
+            <>
+              <Divider orientation="left">{t("institutDemandeDetails.drawer.sections.essaysInfo", "Essays")}</Divider>
+              <Descriptions bordered column={1} size="small" className="mb-3">
+                {demande.essaysInfo.personalStatement && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.personalStatement", "Personal statement")}><Text ellipsis={{ rows: 4 }}>{demande.essaysInfo.personalStatement}</Text></Descriptions.Item>}
+                {demande.essaysInfo.optionalEssay && <Descriptions.Item label={t("institutDemandeDetails.drawer.fields.optionalEssay", "Optional essay")}><Text ellipsis={{ rows: 3 }}>{demande.essaysInfo.optionalEssay}</Text></Descriptions.Item>}
+              </Descriptions>
+            </>
+          )}
+          </>
+        )}
+      </Drawer>
 
       {/* ===== Modal Statut + Observation ===== */}
       <Modal
@@ -671,25 +876,22 @@ export default function InstitutDemandeDetails() {
         {demande?.assignedOrg ? (
           <Descriptions bordered column={1} size="small">
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.nameShort")}>
-              {demande.assignedOrg.name || t("institutDemandeDetails.tags.dash")}
+              {demande.assignedOrg?.name ?? t("institutDemandeDetails.tags.dash")}
             </Descriptions.Item>
-            {/* <Descriptions.Item label={t("institutDemandeDetails.orgFields.slug")}>
-              <Tag>{demande.assignedOrg.slug || t("institutDemandeDetails.tags.dash")}</Tag>
-            </Descriptions.Item> */}
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.type")}>
-              <Tag color="purple">{demande.assignedOrg.type || t("institutDemandeDetails.tags.dash")}</Tag>
+              <Tag color="purple">{demande.assignedOrg?.type ?? t("institutDemandeDetails.tags.dash")}</Tag>
             </Descriptions.Item>
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.phone")}>
-              {demande.assignedOrg.phone || t("institutDemandeDetails.tags.dash")}
+              {demande.assignedOrg?.phone ?? t("institutDemandeDetails.tags.dash")}
             </Descriptions.Item>
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.address")}>
-              {demande.assignedOrg.address || t("institutDemandeDetails.tags.dash")}
+              {demande.assignedOrg?.address ?? t("institutDemandeDetails.tags.dash")}
             </Descriptions.Item>
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.country")}>
-              {demande.assignedOrg.country || t("institutDemandeDetails.tags.dash")}
+              {demande.assignedOrg?.country ?? t("institutDemandeDetails.tags.dash")}
             </Descriptions.Item>
             <Descriptions.Item label={t("institutDemandeDetails.orgFields.website")}>
-              {demande.assignedOrg.website ? (
+              {demande.assignedOrg?.website ? (
                 <a href={demande.assignedOrg.website} target="_blank" rel="noreferrer">
                   {demande.assignedOrg.website}
                 </a>
