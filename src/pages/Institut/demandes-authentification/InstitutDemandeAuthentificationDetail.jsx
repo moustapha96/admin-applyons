@@ -1,15 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Card, Descriptions, Tag, Button, Table, message, Modal, Spin } from "antd";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Card, Descriptions, Tag, Button, message, Modal, Spin, Alert, Space } from "antd";
+import { ArrowLeftOutlined, PlusOutlined, FileTextOutlined, DeleteOutlined } from "@ant-design/icons";
 import demandeAuthentificationService from "@/services/demandeAuthentification.service";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { useAuth } from "@/hooks/useAuth";
 
-
 const statusColors = { EN_ATTENTE: "blue", DOCUMENTS_RECUS: "gold", TRAITEE: "green", ANNULEE: "red" };
+const DOC_TYPE_KEYS = ["DIPLOMA", "TRANSCRIPT", "ID_CARD", "BIRTH_CERTIFICATE", "PASSPORT", "CERTIFICATE", "LETTER", "OTHER"];
 
 export default function InstitutDemandeAuthentificationDetail() {
   const { id } = useParams();
@@ -20,6 +20,7 @@ export default function InstitutDemandeAuthentificationDetail() {
   const [demande, setDemande] = useState(null);
   const [loading, setLoading] = useState(true);
   const [openingDoc, setOpeningDoc] = useState(null);
+  const [deleting, setDeleting] = useState(false);
   const isAttributedOrg = Boolean(userOrgId && userOrgId === demande?.attributedOrganizationId);
   const [viewingDoc, setViewingDoc] = useState(null); // { url, blobUrl }
 
@@ -42,6 +43,28 @@ export default function InstitutDemandeAuthentificationDetail() {
   const closeDocumentModal = () => {
     if (viewingDoc?.blobUrl) URL.revokeObjectURL(viewingDoc.blobUrl);
     setViewingDoc(null);
+  };
+
+  const handleDeleteDocument = () => {
+    if (!id) return;
+    Modal.confirm({
+      title: t("demandesAuthentification.doc.deleteConfirm"),
+      okText: t("demandesAuthentification.doc.deleteDocument"),
+      okType: "danger",
+      cancelText: t("demandesAuthentification.cancel"),
+      onOk: async () => {
+        setDeleting(true);
+        try {
+          await demandeAuthentificationService.deleteDocumentByDemandeId(id);
+          message.success(t("demandesAuthentification.doc.deleteSuccess"));
+          fetchData();
+        } catch (e) {
+          message.error(e?.response?.data?.message || e?.message || t("demandesAuthentification.toasts.loadError"));
+        } finally {
+          setDeleting(false);
+        }
+      },
+    });
   };
 
   const fetchData = async () => {
@@ -75,54 +98,13 @@ export default function InstitutDemandeAuthentificationDetail() {
   }
 
   const documentsList = Array.isArray(demande?.documents) ? demande.documents : [];
+  const singleDocument = documentsList.length > 0 ? documentsList[0] : null;
 
-  const renderInstitutDetails = (org) => {
-    if (!org) return null;
-    return (
-      <div className="py-2 px-3 bg-gray-50 rounded text-sm">
-        <div className="font-medium text-gray-700 mb-2">{t("demandesAuthentification.doc.institutDetails")}</div>
-        <Descriptions size="small" column={1} bordered>
-          <Descriptions.Item label={t("demandesAuthentification.doc.orgName")}>{org.name || "—"}</Descriptions.Item>
-          {org.type && <Descriptions.Item label={t("demandesAuthentification.doc.orgType")}>{org.type}</Descriptions.Item>}
-          {org.email && <Descriptions.Item label={t("demandesAuthentification.doc.orgEmail")}><a href={`mailto:${org.email}`}>{org.email}</a></Descriptions.Item>}
-          {org.phone && <Descriptions.Item label={t("demandesAuthentification.doc.orgPhone")}>{org.phone}</Descriptions.Item>}
-          {org.address && <Descriptions.Item label={t("demandesAuthentification.doc.orgAddress")}>{org.address}</Descriptions.Item>}
-          {org.website && <Descriptions.Item label={t("demandesAuthentification.doc.orgWebsite")}><a href={org.website.startsWith("http") ? org.website : `https://${org.website}`} target="_blank" rel="noopener noreferrer">{org.website}</a></Descriptions.Item>}
-          {org.country && <Descriptions.Item label={t("demandesAuthentification.doc.orgCountry")}>{org.country}</Descriptions.Item>}
-        </Descriptions>
-      </div>
-    );
+  const getTypeLabel = (v) => {
+    if (!v) return "—";
+    if (DOC_TYPE_KEYS.includes(v)) return t(`demandesAuthentification.documentTypes.${v}`);
+    return v;
   };
-
-  const docColumns = [
-    { title: t("demandesAuthentification.doc.type"), dataIndex: "type", render: (v) => v || "—" },
-    { title: t("demandesAuthentification.doc.mention"), dataIndex: "mention", render: (v) => v || "—" },
-    {
-      title: t("demandesAuthentification.doc.addedBy"),
-      dataIndex: ["organization", "name"],
-      render: (v) => v || "—",
-    },
-    {
-      title: t("demandesAuthentification.doc.date"),
-      dataIndex: "createdAt",
-      render: (v) => (v ? dayjs(v).format("DD/MM/YYYY HH:mm") : "—"),
-    },
-    {
-      title: t("demandesAuthentification.doc.file"),
-      dataIndex: "urlOriginal",
-      render: (url) =>
-        url ? (
-          <Button
-            type="link"
-            size="small"
-            loading={openingDoc === url}
-            onClick={() => openDocument(url)}
-          >
-            {t("demandesAuthentification.doc.viewFile")}
-          </Button>
-        ) : "—",
-    },
-  ];
 
   return (
     <div className="container-fluid relative px-3">
@@ -148,52 +130,84 @@ export default function InstitutDemandeAuthentificationDetail() {
             <Descriptions.Item label={t("demandesAuthentification.fields.observation")}>{demande.observation || "—"}</Descriptions.Item>
           </Descriptions>
         </Card>
-        {!isAttributedOrg && (
-          <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
-            <Button
-              type="primary"
-              onClick={() => navigate(`/organisations/code-adn?code=${encodeURIComponent(demande.codeADN || "")}`)}
-            >
-              {t("demandesAuthentification.doc.addDocument")}
-            </Button>
-          </Card>
-        )}
-        {isAttributedOrg && <>
 
-          <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
-            <Table
-              rowKey="id"
-              dataSource={documentsList}
-              columns={docColumns}
-              pagination={false}
-              size="small"
-              locale={{ emptyText: t("demandesAuthentification.noDocuments") }}
-              expandable={{
-                expandedRowRender: (record) => renderInstitutDetails(record.organization),
-                rowExpandable: (record) => !!record?.organization,
-              }}
-            />
-          </Card>
-
-          <Modal
-            title={t("demandesAuthentification.doc.viewFile")}
-            open={!!viewingDoc}
-            onCancel={closeDocumentModal}
-            footer={[<Button key="close" onClick={closeDocumentModal}>{t("demandesAuthentification.cancel")}</Button>]}
-            width="90vw"
-            style={{ top: 24 }}
-            destroyOnHidden
-          >
-            <div style={{ minHeight: "75vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              {viewingDoc?.blobUrl ? (
-                <iframe src={`${viewingDoc.blobUrl}#toolbar=0`} title={t("demandesAuthentification.doc.viewFile")} style={{ width: "100%", height: "75vh", border: "none" }} />
+        <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
+          {singleDocument ? (
+            <>
+              <Descriptions bordered column={1} size="small" className="mb-4">
+                <Descriptions.Item label={t("demandesAuthentification.doc.type")}>{getTypeLabel(singleDocument.type)}</Descriptions.Item>
+                <Descriptions.Item label={t("demandesAuthentification.doc.mention")}>{singleDocument.mention || "—"}</Descriptions.Item>
+                <Descriptions.Item label={t("demandesAuthentification.doc.date")}>
+                  {singleDocument.createdAt ? dayjs(singleDocument.createdAt).format("DD/MM/YYYY HH:mm") : "—"}
+                </Descriptions.Item>
+              </Descriptions>
+              <Space>
+                <Button
+                  type="primary"
+                  icon={<FileTextOutlined />}
+                  loading={openingDoc === singleDocument.urlOriginal}
+                  onClick={() => openDocument(singleDocument.urlOriginal)}
+                >
+                  {t("demandesAuthentification.doc.viewFile")}
+                </Button>
+                {isAttributedOrg && (
+                  <Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    loading={deleting}
+                    onClick={handleDeleteDocument}
+                  >
+                    {t("demandesAuthentification.doc.deleteDocument")}
+                  </Button>
+                )}
+              </Space>
+            </>
+          ) : (
+            <>
+              <p className="text-gray-600 mb-4">{t("demandesAuthentification.noDocuments")}</p>
+              {isAttributedOrg ? (
+                <Button
+                  type="primary"
+                  size="large"
+                  icon={<PlusOutlined />}
+                  onClick={() => navigate(`/organisations/code-adn?code=${encodeURIComponent(demande.codeADN || "")}`)}
+                >
+                  {t("demandesAuthentification.actions.addDocument")}
+                </Button>
               ) : (
-                <Spin size="large" />
+                <Alert
+                  type="info"
+                  message={t("demandesAuthentification.onlyAttributedOrgCanAdd")}
+                  description={t("demandesAuthentification.viewDocumentsReadOnly")}
+                  showIcon
+                />
               )}
-            </div>
-          </Modal>
-        </>}
+            </>
+          )}
+        </Card>
 
+        <Modal
+          title={t("demandesAuthentification.doc.viewFile")}
+          open={!!viewingDoc}
+          onCancel={closeDocumentModal}
+          footer={[<Button key="close" onClick={closeDocumentModal}>{t("demandesAuthentification.cancel")}</Button>]}
+          width="90vw"
+          style={{ top: 24 }}
+          destroyOnHidden
+        >
+          <div style={{ minHeight: "75vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {viewingDoc?.blobUrl ? (
+              <embed
+                src={`${viewingDoc.blobUrl}#toolbar=0`}
+                type="application/pdf"
+                style={{ width: "100%", height: "75vh", border: "none" }}
+                title={t("demandesAuthentification.doc.viewFile")}
+              />
+            ) : (
+              <Spin size="large" />
+            )}
+          </div>
+        </Modal>
       </div>
     </div>
   );

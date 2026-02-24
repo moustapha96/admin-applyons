@@ -81,7 +81,22 @@
         "toastPaymentLoadError": "Erreur chargement paramètres de paiement",
         "toastPaymentSaved": "Paramètres de paiement enregistrés",
         "toastSaveError": "Erreur lors de la sauvegarde",
-        "toastGeneralSaved": "Paramètres généraux sauvegardés avec succès"
+        "toastGeneralSaved": "Paramètres généraux sauvegardés avec succès",
+        "tabTeam": "Notre Équipe",
+        "teamTitle": "Notre Équipe",
+        "teamDescription": "Définissez les membres affichés dans la section « Notre Équipe » de la page À propos (nom, poste, photo, courte description).",
+        "teamPhoto": "Photo",
+        "teamUpload": "Ajouter une photo",
+        "teamName": "Nom",
+        "teamNamePlaceholder": "Ex. Jean Dupont",
+        "teamRole": "Poste / Fonction",
+        "teamRolePlaceholder": "Ex. Fondateur & PDG",
+        "teamDescriptionLabel": "Courte description",
+        "teamDescriptionPlaceholder": "Quelques mots sur ce membre...",
+        "teamAddMember": "Ajouter un membre",
+        "teamRemove": "Supprimer",
+        "teamSave": "Enregistrer l'équipe",
+        "toastTeamSaved": "Équipe enregistrée avec succès"
     },
     "notifications": {
         "newMessage": "Nouveau message",
@@ -269,7 +284,60 @@
         "copyCode": "Copier le code ADN",
         "justCreatedMessage": "Votre demande a été créée. Communiquez ce code ADN à l'institut attributaire ou aux instituts que vous souhaitez notifier.",
         "notifyInstituts": "Notifier des instituts",
-        "attributedTitle": "Demandes qui me sont attribuées",
+        "institutChoice": {
+            "label": "Destinataire du document",
+            "fromList": "Choisir un institut dans la liste",
+            "invite": "Inviter un institut par nom et email"
+        },
+        "inviteInstituts": {
+            "title": "Inviter un institut (nom et email)",
+            "description": "Saisissez le nom et l'email de l'institut. Il recevra un email pour s'inscrire ; après inscription, la demande apparaîtra sur son espace et il pourra déposer le document.",
+            "addOneRequired": "Veuillez ajouter au moins un institut (nom et email).",
+            "namePlaceholder": "Nom de l'institut ou contact",
+            "emailPlaceholder": "Email",
+            "add": "Ajouter",
+            "emailRequired": "Veuillez saisir un email.",
+            "emailInvalid": "Email invalide.",
+            "alreadyInList": "Cet email est déjà dans la liste.",
+            "sent": "{{count}} invitation(s) envoyée(s) par email.",
+            "error": "Erreur lors de l'envoi des invitations."
+        },
+        "invitationAccept": {
+            "title": "Créer mon compte – Invitation demande d'authentification",
+            "loading": "Chargement de l'invitation...",
+            "notFound": "Invitation introuvable ou expirée.",
+            "invalidTitle": "Invitation invalide",
+            "invalidDesc": "Ce lien d'invitation n'existe pas, a expiré ou a déjà été utilisé.",
+            "backToLogin": "Retour à la connexion",
+            "infoMessage": "Vous avez été invité à déposer un document pour une demande d'authentification. Créez votre compte pour accéder à la demande sur votre espace.",
+            "codeADN": "Code ADN de la demande",
+            "accountTypeFixed": "Le type de compte est fixé : Institut / Université / Collège. Il ne peut pas être modifié.",
+            "accountTypeLabel": "Institut / Université / Collège",
+            "orgSection": "Votre organisation",
+            "orgName": "Nom de l'organisation",
+            "orgNameRequired": "Le nom est obligatoire.",
+            "orgNamePlaceholder": "Ex. Université de Paris",
+            "orgType": "Type",
+            "orgTypePlaceholder": "Choisir le type",
+            "orgEmail": "Email de l'organisation",
+            "orgPhone": "Téléphone",
+            "userSection": "Votre compte",
+            "userEmail": "Email",
+            "userEmailRequired": "L'email est obligatoire.",
+            "userEmailInvalid": "Email invalide.",
+            "firstName": "Prénom",
+            "firstNameRequired": "Le prénom est obligatoire.",
+            "lastName": "Nom",
+            "lastNameRequired": "Le nom est obligatoire.",
+            "password": "Mot de passe",
+            "passwordRequired": "Le mot de passe est obligatoire.",
+            "passwordMin": "Minimum 6 caractères.",
+            "submit": "Créer mon compte",
+            "success": "Compte créé. Connectez-vous pour accéder à la demande.",
+            "error": "Erreur lors de la création du compte."
+        },
+        "attributedTitle": "Demandes attribuées à l'institut pour ajout du document",
+        "attributedDescription": "Liste des demandes qui vous sont destinées ; vous devez ajouter le document pour chaque demande.",
         "columns": {
             "codeADN": "Code ADN",
             "objet": "Objet",
@@ -282,7 +350,8 @@
         },
         "actions": {
             "detail": "Détail",
-            "notify": "Notifier"
+            "notify": "Notifier",
+            "addDocument": "Ajouter document"
         },
         "fields": {
             "codeADN": "Code ADN",
@@ -296,6 +365,7 @@
             "status": "Statut",
             "createdAt": "Créé le"
         },
+        "invitedInstitutPending": "En attente d'inscription",
         "validation": {
             "attributedOrgRequired": "Veuillez sélectionner l'institut attributaire."
         },
@@ -313,6 +383,9 @@
             "file": "Fichier",
             "viewFile": "Voir le document",
             "addDocument": "Ajouter un document",
+            "deleteDocument": "Supprimer le document",
+            "deleteConfirm": "Supprimer ce document pour pouvoir en ajouter un autre ?",
+            "deleteSuccess": "Document supprimé. Vous pouvez en ajouter un autre.",
             "institutDetails": "Détails de l'institut ayant déposé le document",
             "orgName": "Nom",
             "orgType": "Type",
@@ -344,6 +417,7 @@
             "submit": "Envoyer",
             "success": "Document ajouté avec succès.",
             "error": "Erreur lors de l'ajout du document.",
+            "oneDocumentMax": "Cette demande possède déjà un document. Une seule pièce est autorisée par demande.",
             "typePlaceholder": "Sélectionner un type de document",
             "typeOtherPlaceholder": "Précisez le type de document",
             "mentionPlaceholder": "Mention (optionnel)",
@@ -351,12 +425,20 @@
         },
         "codeADN": {
             "title": "Accéder par code ADN",
-            "description": "Saisissez le code ADN communiqué par le demandeur pour accéder à la demande et déposer des documents.",
+            "description": "Saisissez le code ADN communiqué par le demandeur pour accéder à la demande et consulter ou déposer le document.",
             "placeholder": "Ex. ADN-20250204-0001",
+            "placeholderNoDash": "Ex. ADN202502040001 (sans tirets)",
             "submit": "Accéder à la demande",
             "enterCode": "Veuillez saisir un code ADN.",
-            "notFound": "Aucune demande trouvée pour ce code."
+            "notFound": "Aucune demande trouvée pour ce code.",
+            "subscriptionRequired": "Abonnement actif requis",
+            "subscriptionRequiredDesc": "Votre organisation doit disposer d'un abonnement actif pour saisir un code ADN et consulter les documents.",
+            "subscriptionRequiredLink": "Souscrire ou gérer mes abonnements",
+            "noOrganization": "Vous devez être rattaché à une organisation."
         },
+        "onlyAttributedOrgCanAdd": "Seul l'institut auquel la demande est destinée peut ajouter le document (un seul document par demande).",
+        "viewDocumentsReadOnly": "Vous pouvez consulter les documents de cette demande en lecture seule (accès réservé aux instituts avec abonnement actif).",
+        "documentAlreadyAdded": "Le document a déjà été déposé pour cette demande.",
         "notify": {
             "title": "Notifier des instituts",
             "description": "Sélectionnez les instituts à qui envoyer le code ADN par email. Ils pourront accéder à la demande et déposer des documents.",
@@ -2597,6 +2679,10 @@
             "country": "Pays *",
             "address": "Adresse",
             "accountType": "Type de compte *",
+            "chooseAccountTypeModal": {
+                "title": "Choisir votre type de compte",
+                "description": "Sélectionnez le type de compte avec lequel vous souhaitez vous inscrire, puis poursuivez le formulaire."
+            },
             "password": "Mot de passe *",
             "confirmPassword": "Confirmer le mot de passe *",
             "minPassword": "Minimum 6 caractères",

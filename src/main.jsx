@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { ConfigProvider } from "antd";
+import { App as AntdApp, ConfigProvider } from "antd";
 import frFR from "antd/locale/fr_FR";
 import "./assets/css/tailwind.css";
 import "./assets/css/materialdesignicons.min.css";
@@ -25,13 +25,15 @@ if ("serviceWorker" in navigator) {
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <ConfigProvider locale={frFR} theme={{ token: {} }}>
-      <AppProvider>
-        <AuthProvider>
-          <PermissionsProvider>
-            <App />
-          </PermissionsProvider>
-        </AuthProvider>
-      </AppProvider>
+      <AntdApp>
+        <AppProvider>
+          <AuthProvider>
+            <PermissionsProvider>
+              <App />
+            </PermissionsProvider>
+          </AuthProvider>
+        </AppProvider>
+      </AntdApp>
     </ConfigProvider>
   </BrowserRouter>
 );

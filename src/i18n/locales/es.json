@@ -81,7 +81,22 @@
         "toastPaymentLoadError": "Error al cargar la configuración de pago",
         "toastPaymentSaved": "Configuración de pago guardada",
         "toastSaveError": "Error al guardar",
-        "toastGeneralSaved": "Configuración general guardada correctamente"
+        "toastGeneralSaved": "Configuración general guardada correctamente",
+        "tabTeam": "Nuestro equipo",
+        "teamTitle": "Nuestro equipo",
+        "teamDescription": "Defina los miembros que aparecen en la sección « Nuestro equipo » de la página Acerca de (nombre, cargo, foto, breve descripción).",
+        "teamPhoto": "Foto",
+        "teamUpload": "Añadir foto",
+        "teamName": "Nombre",
+        "teamNamePlaceholder": "ej. Juan Pérez",
+        "teamRole": "Cargo / Función",
+        "teamRolePlaceholder": "ej. Fundador y CEO",
+        "teamDescriptionLabel": "Breve descripción",
+        "teamDescriptionPlaceholder": "Unas palabras sobre este miembro...",
+        "teamAddMember": "Añadir miembro",
+        "teamRemove": "Eliminar",
+        "teamSave": "Guardar equipo",
+        "toastTeamSaved": "Equipo guardado correctamente"
     },
     "notifications": {
         "newMessage": "Nuevo mensaje",
@@ -262,7 +277,8 @@
         "copyCode": "Copiar código ADN",
         "justCreatedMessage": "Su solicitud ha sido creada. Comparta este código ADN con la institución atribuida o con las que desee notificar.",
         "notifyInstituts": "Notificar instituciones",
-        "attributedTitle": "Solicitudes que me fueron atribuidas",
+        "attributedTitle": "Solicitudes asignadas al instituto para añadir el documento",
+        "attributedDescription": "Lista de solicitudes asignadas a su institución; debe añadir el documento para cada solicitud.",
         "columns": {
             "codeADN": "Código ADN",
             "objet": "Asunto",
@@ -275,7 +291,8 @@
         },
         "actions": {
             "detail": "Detalle",
-            "notify": "Notificar"
+            "notify": "Notificar",
+            "addDocument": "Añadir documento"
         },
         "fields": {
             "codeADN": "Código ADN",
@@ -306,6 +323,8 @@
             "file": "Archivo",
             "viewFile": "Ver documento",
             "addDocument": "Añadir documento",
+            "deleteDocument": "Eliminar documento",
+            "deleteConfirm": "¿Eliminar este documento para añadir otro?",
             "institutDetails": "Detalles de la institución que envió el documento",
             "orgName": "Nombre",
             "orgType": "Tipo",
@@ -340,16 +359,25 @@
             "typePlaceholder": "Seleccionar tipo de documento",
             "typeOtherPlaceholder": "Especifique el tipo de documento",
             "mentionPlaceholder": "Mención (opcional)",
-            "pdfOnlyExtra": "Solo PDF, 5 MB máx."
+            "pdfOnlyExtra": "Solo PDF, 5 MB máx.",
+            "oneDocumentMax": "Esta solicitud ya tiene un documento. Solo se permite un documento por solicitud."
         },
         "codeADN": {
             "title": "Acceder por código ADN",
             "description": "Introduzca el código ADN facilitado por el solicitante para acceder a la solicitud y subir documentos.",
             "placeholder": "ej. ADN-20250204-0001",
+            "placeholderNoDash": "ej. ADN202502040001 (sin guiones)",
             "submit": "Acceder a la solicitud",
             "enterCode": "Introduzca un código ADN.",
-            "notFound": "Ninguna solicitud encontrada para este código."
+            "notFound": "Ninguna solicitud encontrada para este código.",
+            "subscriptionRequired": "Suscripción activa requerida",
+            "subscriptionRequiredDesc": "Su organización debe tener una suscripción activa para introducir un código ADN y ver los documentos.",
+            "subscriptionRequiredLink": "Suscribirse o gestionar mis suscripciones",
+            "noOrganization": "Debe estar vinculado a una organización."
         },
+        "onlyAttributedOrgCanAdd": "Solo la institución a la que está asignada la solicitud puede añadir el documento (un documento por solicitud).",
+        "viewDocumentsReadOnly": "Puede consultar los documentos de esta solicitud en solo lectura (acceso reservado a instituciones con suscripción activa).",
+        "documentAlreadyAdded": "El documento ya ha sido enviado para esta solicitud.",
         "notify": {
             "title": "Notificar instituciones",
             "description": "Seleccione las instituciones a las que enviar el código ADN por correo.",
@@ -2463,6 +2491,10 @@
             "country": "País *",
             "address": "Dirección",
             "accountType": "Tipo de cuenta *",
+            "chooseAccountTypeModal": {
+                "title": "Elija su tipo de cuenta",
+                "description": "Seleccione el tipo de cuenta con el que desea registrarse y continúe con el formulario."
+            },
             "password": "Contraseña *",
             "confirmPassword": "Confirmar contraseña *",
             "minPassword": "Mínimo 6 caracteres",

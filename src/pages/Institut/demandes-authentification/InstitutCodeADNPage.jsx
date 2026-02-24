@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Card, Input, Button, message, Descriptions, Tag, Table, Form, Upload, Alert, Modal, Spin, Select } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { useSearchParams, Link } from "react-router-dom";
+import { Card, Input, Button, message, Descriptions, Tag, Form, Upload, Alert, Modal, Spin, Select } from "antd";
+import { UploadOutlined, DeleteOutlined } from "@ant-design/icons";
 import demandeAuthentificationService from "@/services/demandeAuthentification.service";
+import abonnementService from "@/services/abonnement.service";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { PDF_ACCEPT, PDF_ACCEPT_MIME, createPdfBeforeUpload } from "@/utils/uploadValidation";
@@ -51,7 +52,30 @@ export default function InstitutCodeADNPage() {
     setViewingDoc(null);
   };
 
+  const [subscriptionRequired, setSubscriptionRequired] = useState(false);
+  const [noActiveSubscription, setNoActiveSubscription] = useState(false);
+
+  useEffect(() => {
+    if (!userOrgId) {
+      setNoActiveSubscription(false);
+      return;
+    }
+    let cancelled = false;
+    abonnementService
+      .getActiveForOrg(userOrgId)
+      .then((res) => {
+        if (cancelled) return;
+        const hasActive = !!(res?.abonnement ?? res?.data?.abonnement);
+        setNoActiveSubscription(!hasActive);
+      })
+      .catch(() => {
+        if (!cancelled) setNoActiveSubscription(false);
+      });
+    return () => { cancelled = true; };
+  }, [userOrgId]);
+
   const onAccess = async () => {
+    if (noActiveSubscription) return;
     const code = (codeADN || "").trim();
     if (!code) {
       message.warning(t("demandesAuthentification.codeADN.enterCode"));
@@ -59,13 +83,22 @@ export default function InstitutCodeADNPage() {
     }
     setLoading(true);
     setDemande(null);
+    setSubscriptionRequired(false);
     try {
       const res = await demandeAuthentificationService.getByCode(code);
       const d = res?.data ?? res;
       if (d?.id) setDemande(d);
       else message.error(t("demandesAuthentification.codeADN.notFound"));
     } catch (e) {
-      message.error(e?.message || t("demandesAuthentification.codeADN.notFound"));
+      const codeErr = e?.response?.data?.code;
+      if (codeErr === "SUBSCRIPTION_REQUIRED") {
+        setSubscriptionRequired(true);
+        message.error(t("demandesAuthentification.codeADN.subscriptionRequired"));
+      } else if (codeErr === "NO_ORGANIZATION") {
+        message.error(t("demandesAuthentification.codeADN.noOrganization"));
+      } else {
+        message.error(e?.response?.data?.message || e?.message || t("demandesAuthentification.codeADN.notFound"));
+      }
     } finally {
       setLoading(false);
     }
@@ -77,6 +110,7 @@ export default function InstitutCodeADNPage() {
     autoLoadDoneRef.current = true;
     setLoading(true);
     setDemande(null);
+    setSubscriptionRequired(false);
     demandeAuthentificationService
       .getByCode(codeFromUrl)
       .then((res) => {
@@ -84,7 +118,10 @@ export default function InstitutCodeADNPage() {
         if (d?.id) setDemande(d);
         else message.error(t("demandesAuthentification.codeADN.notFound"));
       })
-      .catch((e) => message.error(e?.message || t("demandesAuthentification.codeADN.notFound")))
+      .catch((e) => {
+        if (e?.response?.data?.code === "SUBSCRIPTION_REQUIRED") setSubscriptionRequired(true);
+        message.error(e?.response?.data?.message || e?.message || t("demandesAuthentification.codeADN.notFound"));
+      })
       .finally(() => setLoading(false));
   }, [codeFromUrl, t]);
 
@@ -107,13 +144,20 @@ export default function InstitutCodeADNPage() {
       form.resetFields();
       onAccess();
     } catch (e) {
-      message.error(e?.message || t("demandesAuthentification.upload.error"));
+      const codeErr = e?.response?.data?.code;
+      if (codeErr === "ONE_DOCUMENT_MAX") {
+        message.error(t("demandesAuthentification.upload.oneDocumentMax"));
+        onAccess();
+      } else {
+        message.error(e?.response?.data?.message || e?.message || t("demandesAuthentification.upload.error"));
+      }
     } finally {
       setUploading(false);
     }
   };
 
   const documentsList = demande ? (Array.isArray(demande.documents) ? demande.documents : []) : [];
+  const singleDoc = documentsList.length > 0 ? documentsList[0] : null;
 
   const getTypeLabel = (v) => {
     if (!v) return "—";
@@ -121,42 +165,57 @@ export default function InstitutCodeADNPage() {
     return v;
   };
 
-  const docColumns = [
-    { title: t("demandesAuthentification.doc.type"), dataIndex: "type", render: getTypeLabel },
-    { title: t("demandesAuthentification.doc.mention"), dataIndex: "mention", render: (v) => v || "—" },
-    { title: t("demandesAuthentification.doc.addedBy"), dataIndex: ["organization", "name"], render: (v) => v || "—" },
-    { title: t("demandesAuthentification.doc.date"), dataIndex: "createdAt", render: (v) => (v ? dayjs(v).format("DD/MM/YYYY HH:mm") : "—") },
-    {
-      title: t("demandesAuthentification.doc.file"),
-      dataIndex: "urlOriginal",
-      render: (url) =>
-        url ? (
-          <Button
-            type="link"
-            size="small"
-            loading={openingDoc === url}
-            onClick={() => openDocument(url)}
-          >
-            {t("demandesAuthentification.doc.viewFile")}
-          </Button>
-        ) : "—",
-    },
-  ];
+  const handleDeleteDocument = () => {
+    if (!demande?.id || !singleDoc) return;
+    Modal.confirm({
+      title: t("demandesAuthentification.doc.deleteConfirm"),
+      okText: t("common.delete") || "Supprimer",
+      okType: "danger",
+      cancelText: t("demandesAuthentification.cancel"),
+      onOk: async () => {
+        try {
+          await demandeAuthentificationService.deleteDocumentByDemandeId(demande.id);
+          message.success(t("demandesAuthentification.doc.deleteSuccess"));
+          onAccess();
+        } catch (e) {
+          message.error(e?.response?.data?.message || e?.message || t("demandesAuthentification.upload.error"));
+        }
+      },
+    });
+  };
 
   return (
     <div className="container-fluid relative px-3">
       <div className="layout-specing max-w-3xl mx-auto">
+        {(subscriptionRequired || noActiveSubscription) && (
+          <Alert
+            type="warning"
+            message={t("demandesAuthentification.codeADN.subscriptionRequired")}
+            description={
+              <>
+                <p className="mb-2">{t("demandesAuthentification.codeADN.subscriptionRequiredDesc")}</p>
+                {userOrgId && (
+                  <Link to={`/organisations/${userOrgId}/abonnement`} className="font-medium text-[var(--applyons-blue)] hover:underline">
+                    {t("demandesAuthentification.codeADN.subscriptionRequiredLink")}
+                  </Link>
+                )}
+              </>
+            }
+            className="mb-4"
+            showIcon
+          />
+        )}
         <Card title={t("demandesAuthentification.codeADN.title")}>
           <p className="mb-4 text-gray-600">{t("demandesAuthentification.codeADN.description")}</p>
           <Input
-            placeholder={t("demandesAuthentification.codeADN.placeholder")}
+            placeholder={t("demandesAuthentification.codeADN.placeholderNoDash")}
             value={codeADN}
             onChange={(e) => setCodeADN(e.target.value)}
             onPressEnter={onAccess}
             size="large"
             className="mb-4"
           />
-          <Button type="primary" size="large" onClick={onAccess} loading={loading} block>
+          <Button type="primary" size="large" onClick={onAccess} loading={loading} block disabled={noActiveSubscription}>
             {t("demandesAuthentification.codeADN.submit")}
           </Button>
         </Card>
@@ -179,12 +238,31 @@ export default function InstitutCodeADNPage() {
                 <Descriptions.Item label={t("demandesAuthentification.fields.observation")}>{demande.observation || "—"}</Descriptions.Item>
               </Descriptions>
             </Card>
-            {/* <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
-              <Table rowKey="id" dataSource={documentsList} columns={docColumns} pagination={false} size="small" locale={{ emptyText: t("demandesAuthentification.noDocuments") }} />
-            </Card> */}
-            {userOrgId && userOrgId === demande.attributedOrganizationId ? (
-              <Alert type="info" message={t("demandesAuthentification.attributedOrgCannotAdd")} className="mt-4" showIcon />
-            ) : (
+            {singleDoc ? (
+              <Card title={t("demandesAuthentification.documentsTitle")} className="mt-4">
+                <Descriptions bordered column={1} size="small">
+                  <Descriptions.Item label={t("demandesAuthentification.doc.type")}>{getTypeLabel(singleDoc.type)}</Descriptions.Item>
+                  <Descriptions.Item label={t("demandesAuthentification.doc.mention")}>{singleDoc.mention || "—"}</Descriptions.Item>
+                  <Descriptions.Item label={t("demandesAuthentification.doc.addedBy")}>
+                    {singleDoc.organization?.name ?? "—"}
+                  </Descriptions.Item>
+                  <Descriptions.Item label={t("demandesAuthentification.doc.date")}>{singleDoc.createdAt ? dayjs(singleDoc.createdAt).format("DD/MM/YYYY HH:mm") : "—"}</Descriptions.Item>
+                  <Descriptions.Item label={t("demandesAuthentification.doc.file")}>
+                    <Button type="link" size="small" loading={openingDoc === singleDoc.urlOriginal} onClick={() => openDocument(singleDoc.urlOriginal)}>
+                      {t("demandesAuthentification.doc.viewFile")}
+                    </Button>
+                  </Descriptions.Item>
+                </Descriptions>
+                {userOrgId === demande.attributedOrganizationId && (
+                  <div className="mt-3">
+                    <Button type="primary" danger icon={<DeleteOutlined />} onClick={handleDeleteDocument}>
+                      {t("demandesAuthentification.doc.deleteDocument")}
+                    </Button>
+                  </div>
+                )}
+              </Card>
+            ) : null}
+            {userOrgId && userOrgId === demande.attributedOrganizationId && !singleDoc ? (
               <Card title={t("demandesAuthentification.addDocumentTitle")} className="mt-4">
                 <Form form={form} onFinish={onUpload} layout="vertical">
                   <Form.Item name="file" label={t("demandesAuthentification.upload.file")} valuePropName="file" rules={[{ required: true }]} extra={t("demandesAuthentification.upload.pdfOnlyExtra", "PDF uniquement, 5 Mo max.")}>
@@ -224,7 +302,16 @@ export default function InstitutCodeADNPage() {
                   </Form.Item>
                 </Form>
               </Card>
-            )}
+            ) : null}
+            {userOrgId && userOrgId !== demande.attributedOrganizationId && !singleDoc ? (
+              <Alert
+                type="info"
+                message={t("demandesAuthentification.onlyAttributedOrgCanAdd")}
+                description={t("demandesAuthentification.viewDocumentsReadOnly")}
+                className="mt-4"
+                showIcon
+              />
+            ) : null}
             <Modal
               title={t("demandesAuthentification.doc.viewFile")}
               open={!!viewingDoc}

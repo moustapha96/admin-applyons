@@ -46,6 +46,13 @@ export default function AuthLogin() {
         htmlTag.classList.remove('dark');
     }, []);
 
+    useEffect(() => {
+        const msg = location.state?.message;
+        if (msg && typeof msg === 'string') {
+            toast.success(msg);
+        }
+    }, [location.state?.message]);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setIsLoading(true);

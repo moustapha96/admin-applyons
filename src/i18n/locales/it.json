@@ -81,7 +81,22 @@
         "toastPaymentLoadError": "Errore nel caricamento delle impostazioni di pagamento",
         "toastPaymentSaved": "Impostazioni di pagamento salvate",
         "toastSaveError": "Errore durante il salvataggio",
-        "toastGeneralSaved": "Impostazioni generali salvate con successo"
+        "toastGeneralSaved": "Impostazioni generali salvate con successo",
+        "tabTeam": "Il nostro team",
+        "teamTitle": "Il nostro team",
+        "teamDescription": "Definisci i membri mostrati nella sezione « Il nostro team » della pagina Chi siamo (nome, ruolo, foto, breve descrizione).",
+        "teamPhoto": "Foto",
+        "teamUpload": "Aggiungi foto",
+        "teamName": "Nome",
+        "teamNamePlaceholder": "es. Mario Rossi",
+        "teamRole": "Ruolo / Posizione",
+        "teamRolePlaceholder": "es. Fondatore e CEO",
+        "teamDescriptionLabel": "Breve descrizione",
+        "teamDescriptionPlaceholder": "Qualche parola su questo membro...",
+        "teamAddMember": "Aggiungi membro",
+        "teamRemove": "Rimuovi",
+        "teamSave": "Salva team",
+        "toastTeamSaved": "Team salvato con successo"
     },
     "notifications": {
         "newMessage": "Nuovo messaggio",
@@ -262,7 +277,8 @@
         "copyCode": "Copia codice ADN",
         "justCreatedMessage": "La tua richiesta è stata creata. Comunica questo codice ADN all'istituzione attribuita o a quelle che desideri notificare.",
         "notifyInstituts": "Notifica istituzioni",
-        "attributedTitle": "Richieste a me attribuite",
+        "attributedTitle": "Richieste assegnate all'istituto per l'aggiunta del documento",
+        "attributedDescription": "Elenco delle richieste assegnate a voi; dovete aggiungere il documento per ogni richiesta.",
         "columns": {
             "codeADN": "Codice ADN",
             "objet": "Oggetto",
@@ -275,7 +291,8 @@
         },
         "actions": {
             "detail": "Dettaglio",
-            "notify": "Notifica"
+            "notify": "Notifica",
+            "addDocument": "Aggiungi documento"
         },
         "fields": {
             "codeADN": "Codice ADN",
@@ -306,6 +323,8 @@
             "file": "File",
             "viewFile": "Visualizza documento",
             "addDocument": "Aggiungi documento",
+            "deleteDocument": "Elimina documento",
+            "deleteConfirm": "Eliminare questo documento per aggiungerne un altro?",
             "institutDetails": "Dettagli dell'istituzione che ha depositato il documento",
             "orgName": "Nome",
             "orgType": "Tipo",
@@ -340,16 +359,25 @@
             "typePlaceholder": "Seleziona tipo di documento",
             "typeOtherPlaceholder": "Specificare il tipo di documento",
             "mentionPlaceholder": "Menzione (opzionale)",
-            "pdfOnlyExtra": "Solo PDF, 5 MB max."
+            "pdfOnlyExtra": "Solo PDF, 5 MB max.",
+            "oneDocumentMax": "Questa richiesta ha già un documento. È consentito un solo documento per richiesta."
         },
         "codeADN": {
             "title": "Accedi con codice ADN",
             "description": "Inserisci il codice ADN fornito dal richiedente per accedere alla richiesta e caricare documenti.",
             "placeholder": "es. ADN-20250204-0001",
+            "placeholderNoDash": "es. ADN202502040001 (senza trattini)",
             "submit": "Accedi alla richiesta",
             "enterCode": "Inserisci un codice ADN.",
-            "notFound": "Nessuna richiesta trovata per questo codice."
+            "notFound": "Nessuna richiesta trovata per questo codice.",
+            "subscriptionRequired": "Abbonamento attivo richiesto",
+            "subscriptionRequiredDesc": "La vostra organizzazione deve avere un abbonamento attivo per inserire un codice ADN e visualizzare i documenti.",
+            "subscriptionRequiredLink": "Sottoscrivi o gestisci i miei abbonamenti",
+            "noOrganization": "Devi essere collegato a un'organizzazione."
         },
+        "onlyAttributedOrgCanAdd": "Solo l'istituzione a cui è assegnata la richiesta può aggiungere il documento (un documento per richiesta).",
+        "viewDocumentsReadOnly": "Puoi consultare i documenti di questa richiesta in sola lettura (accesso riservato alle istituzioni con abbonamento attivo).",
+        "documentAlreadyAdded": "Il documento è già stato inviato per questa richiesta.",
         "notify": {
             "title": "Notifica istituzioni",
             "description": "Seleziona le istituzioni a cui inviare il codice ADN via email.",
@@ -2464,6 +2492,10 @@
             "country": "Paese *",
             "address": "Indirizzo",
             "accountType": "Tipo di account *",
+            "chooseAccountTypeModal": {
+                "title": "Scegli il tipo di account",
+                "description": "Seleziona il tipo di account con cui desideri registrarti, quindi continua con il modulo."
+            },
             "password": "Password *",
             "confirmPassword": "Conferma password *",
             "minPassword": "Minimo 6 caratteri",

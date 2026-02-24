@@ -29,6 +29,7 @@ function App() {
     "/auth/lock-screen",
     "/auth/not-access",
     "/auth/invitations/accept",
+    "/auth/demande-authentification-invitation/accept",
     "/comingsoon",
     "/maintenance",
     "/error",

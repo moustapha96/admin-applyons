@@ -14,15 +14,24 @@ import { useAuth } from "../../../hooks/useAuth";
 import dashboardService from "../../../services/dashboardService";
 import { useTranslation } from "react-i18next";
 
-// Petites cartes KPI
-function StatCard({ label, value, sublabel }) {
-  return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+// Petites cartes KPI (cliquables si `to` fourni)
+function StatCard({ label, value, sublabel, to }) {
+  const content = (
+    <>
       <div className="text-sm text-slate-500">{label}</div>
       <div className="mt-1 text-2xl font-semibold">{value ?? 0}</div>
       {sublabel && <div className="mt-1 text-xs text-slate-400">{sublabel}</div>}
-    </div>
+    </>
   );
+  const className = "rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-colors hover:border-primary/30 hover:bg-slate-50";
+  if (to) {
+    return (
+      <Link to={to} className={`block ${className}`}>
+        {content}
+      </Link>
+    );
+  }
+  return <div className={className}>{content}</div>;
 }
 
 export default function DemandeurDashboard() {
@@ -61,7 +70,7 @@ export default function DemandeurDashboard() {
   const widgets = data.widgets || {};
   const tables = data.tables || {};
 
-  // Calcul des KPIs
+  // Calcul des KPIs (avec liens de navigation pour chaque carte)
   const kpis = useMemo(() => {
     return [
       {
@@ -71,6 +80,7 @@ export default function DemandeurDashboard() {
           widgets.myDemandes?.byStatus && Object.keys(widgets.myDemandes.byStatus).length > 0
             ? t("demandeurDashboard.kpis.seeBreakdown")
             : t("demandeurDashboard.kpis.none"),
+        to: "/demandeur/mes-demandes",
       },
       {
         label: t("demandeurDashboard.kpis.myDemandesAuthentification"),
@@ -79,6 +89,7 @@ export default function DemandeurDashboard() {
           widgets.myDemandesAuthentification?.byStatus && Object.keys(widgets.myDemandesAuthentification.byStatus).length > 0
             ? t("demandeurDashboard.kpis.seeBreakdown")
             : t("demandeurDashboard.kpis.none"),
+        to: "/demandeur/demandes-authentification",
       },
       {
         label: t("demandeurDashboard.kpis.myDocuments"),
@@ -86,6 +97,7 @@ export default function DemandeurDashboard() {
         sublabel: t("demandeurDashboard.kpis.translatedCount", {
           count: widgets.myDocuments?.translated ?? 0,
         }),
+        to: "/demandeur/mes-demandes",
       },
       {
         label: t("demandeurDashboard.kpis.myPayments"),
@@ -94,6 +106,7 @@ export default function DemandeurDashboard() {
           widgets.myPayments?.byStatus && Object.keys(widgets.myPayments.byStatus).length > 0
             ? t("demandeurDashboard.kpis.seeBreakdown")
             : "—",
+        to: "/demandeur/mes-demandes",
       },
     ];
   }, [widgets, t]);
@@ -263,10 +276,10 @@ export default function DemandeurDashboard() {
         {/* Contenu principal */}
         {!loading && payload && (
           <>
-            {/* KPIs */}
+            {/* KPIs (cartes cliquables) */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
               {kpis.map((k) => (
-                <StatCard key={k.label} label={k.label} value={k.value} sublabel={k.sublabel} />
+                <StatCard key={k.label} label={k.label} value={k.value} sublabel={k.sublabel} to={k.to} />
               ))}
             </div>
 

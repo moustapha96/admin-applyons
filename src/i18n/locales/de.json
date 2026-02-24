@@ -81,7 +81,22 @@
         "toastPaymentLoadError": "Fehler beim Laden der Zahlungseinstellungen",
         "toastPaymentSaved": "Zahlungseinstellungen gespeichert",
         "toastSaveError": "Fehler beim Speichern",
-        "toastGeneralSaved": "Allgemeine Einstellungen erfolgreich gespeichert"
+        "toastGeneralSaved": "Allgemeine Einstellungen erfolgreich gespeichert",
+        "tabTeam": "Unser Team",
+        "teamTitle": "Unser Team",
+        "teamDescription": "Legen Sie die Mitglieder fest, die im Abschnitt « Unser Team » auf der Über-uns-Seite angezeigt werden (Name, Rolle, Foto, kurze Beschreibung).",
+        "teamPhoto": "Foto",
+        "teamUpload": "Foto hinzufügen",
+        "teamName": "Name",
+        "teamNamePlaceholder": "z. B. Max Mustermann",
+        "teamRole": "Rolle / Position",
+        "teamRolePlaceholder": "z. B. Gründer & CEO",
+        "teamDescriptionLabel": "Kurze Beschreibung",
+        "teamDescriptionPlaceholder": "Ein paar Worte zu diesem Mitglied...",
+        "teamAddMember": "Mitglied hinzufügen",
+        "teamRemove": "Entfernen",
+        "teamSave": "Team speichern",
+        "toastTeamSaved": "Team erfolgreich gespeichert"
     },
     "notifications": {
         "newMessage": "Neue Nachricht",
@@ -262,7 +277,8 @@
         "copyCode": "ADN-Code kopieren",
         "justCreatedMessage": "Ihre Anfrage wurde erstellt. Teilen Sie diesen ADN-Code mit der zugewiesenen Institution oder den von Ihnen benachrichtigten Institutionen.",
         "notifyInstituts": "Institutionen benachrichtigen",
-        "attributedTitle": "Mir zugewiesene Anfragen",
+        "attributedTitle": "Dem Institut zugewiesene Anfragen zur Dokumentenabgabe",
+        "attributedDescription": "Liste der Ihnen zugewiesenen Anfragen; Sie müssen für jede Anfrage das Dokument hinzufügen.",
         "columns": {
             "codeADN": "ADN-Code",
             "objet": "Betreff",
@@ -275,7 +291,8 @@
         },
         "actions": {
             "detail": "Details",
-            "notify": "Benachrichtigen"
+            "notify": "Benachrichtigen",
+            "addDocument": "Dokument hinzufügen"
         },
         "fields": {
             "codeADN": "ADN-Code",
@@ -306,6 +323,8 @@
             "file": "Datei",
             "viewFile": "Dokument ansehen",
             "addDocument": "Dokument hinzufügen",
+            "deleteDocument": "Dokument löschen",
+            "deleteConfirm": "Dieses Dokument löschen, um ein anderes hinzuzufügen?",
             "institutDetails": "Details der Institution, die das Dokument eingereicht hat",
             "orgName": "Name",
             "orgType": "Typ",
@@ -340,16 +359,25 @@
             "typePlaceholder": "Dokumenttyp auswählen",
             "typeOtherPlaceholder": "Dokumenttyp angeben",
             "mentionPlaceholder": "Vermerk (optional)",
-            "pdfOnlyExtra": "Nur PDF, max. 5 MB."
+            "pdfOnlyExtra": "Nur PDF, max. 5 MB.",
+            "oneDocumentMax": "Diese Anfrage hat bereits ein Dokument. Pro Anfrage ist nur ein Dokument erlaubt."
         },
         "codeADN": {
             "title": "Zugang per ADN-Code",
             "description": "Geben Sie den vom Antragsteller mitgeteilten ADN-Code ein, um auf die Anfrage zuzugreifen und Dokumente hochzuladen.",
             "placeholder": "z.B. ADN-20250204-0001",
+            "placeholderNoDash": "z.B. ADN202502040001 (ohne Bindestriche)",
             "submit": "Anfrage öffnen",
             "enterCode": "Bitte geben Sie einen ADN-Code ein.",
-            "notFound": "Keine Anfrage für diesen Code gefunden."
+            "notFound": "Keine Anfrage für diesen Code gefunden.",
+            "subscriptionRequired": "Aktives Abonnement erforderlich",
+            "subscriptionRequiredDesc": "Ihre Organisation muss ein aktives Abonnement haben, um einen ADN-Code einzugeben und Dokumente einzusehen.",
+            "subscriptionRequiredLink": "Abonnement abschließen oder verwalten",
+            "noOrganization": "Sie müssen einer Organisation zugeordnet sein."
         },
+        "onlyAttributedOrgCanAdd": "Nur die Institution, der die Anfrage zugewiesen ist, kann das Dokument hinzufügen (ein Dokument pro Anfrage).",
+        "viewDocumentsReadOnly": "Sie können die Dokumente dieser Anfrage schreibgeschützt einsehen (Zugang für Institutionen mit aktivem Abonnement).",
+        "documentAlreadyAdded": "Das Dokument wurde für diese Anfrage bereits eingereicht.",
         "notify": {
             "title": "Institutionen benachrichtigen",
             "description": "Wählen Sie die Institutionen, an die der ADN-Code per E-Mail gesendet werden soll.",
@@ -2464,6 +2492,10 @@
             "country": "Land *",
             "address": "Adresse",
             "accountType": "Kontotyp *",
+            "chooseAccountTypeModal": {
+                "title": "Wählen Sie Ihren Kontotyp",
+                "description": "Wählen Sie den Kontotyp, mit dem Sie sich registrieren möchten, und fahren Sie dann mit dem Formular fort."
+            },
             "password": "Passwort *",
             "confirmPassword": "Passwort bestätigen *",
             "minPassword": "Mindestens 6 Zeichen",

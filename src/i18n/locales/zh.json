@@ -81,7 +81,22 @@
         "toastPaymentLoadError": "加载支付设置时出错",
         "toastPaymentSaved": "支付设置已保存",
         "toastSaveError": "保存时出错",
-        "toastGeneralSaved": "常规设置已成功保存"
+        "toastGeneralSaved": "常规设置已成功保存",
+        "tabTeam": "我们的团队",
+        "teamTitle": "我们的团队",
+        "teamDescription": "设置「关于我们」页面中「我们的团队」部分显示的成员（姓名、职位、照片、简短描述）。",
+        "teamPhoto": "照片",
+        "teamUpload": "添加照片",
+        "teamName": "姓名",
+        "teamNamePlaceholder": "例如：张三",
+        "teamRole": "职位 / 职能",
+        "teamRolePlaceholder": "例如：创始人兼首席执行官",
+        "teamDescriptionLabel": "简短描述",
+        "teamDescriptionPlaceholder": "关于该成员的简要介绍...",
+        "teamAddMember": "添加成员",
+        "teamRemove": "删除",
+        "teamSave": "保存团队",
+        "toastTeamSaved": "团队已成功保存"
     },
     "notifications": {
         "newMessage": "新消息",
@@ -262,7 +277,8 @@
         "copyCode": "复制ADN码",
         "justCreatedMessage": "您的申请已创建。请将此ADN码告知指定机构或您要通知的机构。",
         "notifyInstituts": "通知机构",
-        "attributedTitle": "分配给我的申请",
+        "attributedTitle": "分配给本机构以添加文件的申请",
+        "attributedDescription": "分配给您的申请列表；您需要为每份申请添加文件。",
         "columns": {
             "codeADN": "ADN码",
             "objet": "主题",
@@ -275,7 +291,8 @@
         },
         "actions": {
             "detail": "详情",
-            "notify": "通知"
+            "notify": "通知",
+            "addDocument": "添加文件"
         },
         "fields": {
             "codeADN": "ADN码",
@@ -306,6 +323,8 @@
             "file": "文件",
             "viewFile": "查看文件",
             "addDocument": "添加文档",
+            "deleteDocument": "删除文档",
+            "deleteConfirm": "删除此文档以添加其他文档？",
             "institutDetails": "提交文件的机构详情",
             "orgName": "名称",
             "orgType": "类型",
@@ -340,16 +359,25 @@
             "typePlaceholder": "选择文件类型",
             "typeOtherPlaceholder": "请说明文件类型",
             "mentionPlaceholder": "说明（可选）",
-            "pdfOnlyExtra": "仅PDF，最大5MB。"
+            "pdfOnlyExtra": "仅PDF，最大5MB。",
+            "oneDocumentMax": "该申请已有一份文件。每个申请仅允许一份文件。"
         },
         "codeADN": {
             "title": "通过ADN码访问",
             "description": "输入申请人提供的ADN码以访问申请并上传文件。",
             "placeholder": "例如 ADN-20250204-0001",
+            "placeholderNoDash": "例如 ADN202502040001（无连字符）",
             "submit": "访问申请",
             "enterCode": "请输入ADN码。",
-            "notFound": "未找到与此码对应的申请。"
+            "notFound": "未找到与此码对应的申请。",
+            "subscriptionRequired": "需要有效订阅",
+            "subscriptionRequiredDesc": "您的机构必须有有效订阅才能输入ADN码并查看文件。",
+            "subscriptionRequiredLink": "订阅或管理我的订阅",
+            "noOrganization": "您必须隶属于某个机构。"
         },
+        "onlyAttributedOrgCanAdd": "只有被分配该申请的机构才能添加文件（每个申请仅限一份文件）。",
+        "viewDocumentsReadOnly": "您可以在只读模式下查看该申请的文件（仅限拥有有效订阅的机构）。",
+        "documentAlreadyAdded": "该申请的文件已提交。",
         "notify": {
             "title": "通知机构",
             "description": "选择要通过电子邮件发送ADN码的机构。",
@@ -2464,6 +2492,10 @@
             "country": "国家 *",
             "address": "地址",
             "accountType": "账户类型 *",
+            "chooseAccountTypeModal": {
+                "title": "选择您的账户类型",
+                "description": "选择您要注册的账户类型，然后继续填写表单。"
+            },
             "password": "密码 *",
             "confirmPassword": "确认密码 *",
             "minPassword": "至少6个字符",

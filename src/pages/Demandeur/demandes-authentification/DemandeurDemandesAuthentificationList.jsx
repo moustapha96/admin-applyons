@@ -92,16 +92,11 @@ export default function DemandeurDemandesAuthentificationList() {
     {
       title: t("demandesAuthentification.columns.actions"),
       key: "actions",
-      width: 220,
+      width: 120,
       render: (_, r) => (
-        <Space size="small">
-          <Link to={`/demandeur/demandes-authentification/${r.id}`}>
-            <Button size="small">{t("demandesAuthentification.actions.detail")}</Button>
-          </Link>
-          <Link to={`/demandeur/demandes-authentification/${r.id}/notify-instituts`}>
-            <Button size="small" icon={<MailOutlined />}>{t("demandesAuthentification.actions.notify")}</Button>
-          </Link>
-        </Space>
+        <Link to={`/demandeur/demandes-authentification/${r.id}`}>
+          <Button size="small">{t("demandesAuthentification.actions.detail")}</Button>
+        </Link>
       ),
     },
   ];

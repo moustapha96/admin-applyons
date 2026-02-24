@@ -25,6 +25,10 @@ import {
     InstagramOutlined,
     YoutubeOutlined,
     DollarOutlined,
+    TeamOutlined,
+    PlusOutlined,
+    DeleteOutlined,
+    UserOutlined,
 } from "@ant-design/icons";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -44,6 +48,11 @@ const SettingsPage = () => {
     const [faviconFileList, setFaviconFileList] = useState([]);
     const [paymentSettings, setPaymentSettings] = useState(null);
     const [savingPayment, setSavingPayment] = useState(false);
+    const [teamMembers, setTeamMembers] = useState([]);
+    const [savingTeam, setSavingTeam] = useState(false);
+    const [uploadingImageIndex, setUploadingImageIndex] = useState(null);
+
+    const apiBaseUrl = (import.meta.env.VITE_API_URL || "").replace(/\/api\/?$/, "") || "";
 
     useEffect(() => {
         loadData();
@@ -53,7 +62,6 @@ const SettingsPage = () => {
         setLoading(true);
         try {
             const siteResponse = await settingsService.getAll();
-            console.log(siteResponse);
             const data = siteResponse?.data || null;
             setSiteSettings(data);
             if (data) {
@@ -97,6 +105,8 @@ const SettingsPage = () => {
                           ]
                         : []
                 );
+                const raw = data?.data?.teamMembers ?? data?.teamMembers;
+                setTeamMembers(Array.isArray(raw) ? raw.map((m) => ({ name: m?.name ?? "", role: m?.role ?? "", description: m?.description ?? "", image: m?.image ?? "" })) : []);
             }
         } catch (error) {
             toast.error(t("adminConfig.toastLoadError"));
@@ -109,6 +119,7 @@ const SettingsPage = () => {
     const loadPaymentSettings = async () => {
         try {
             const res = await settingsService.getPaymentSettings();
+            console.log("Payment settings response:", res);
             const data = res?.data?.data ?? res?.data ?? null;
             setPaymentSettings(data);
             const defaults = {
@@ -151,6 +162,41 @@ const SettingsPage = () => {
             toast.error(e?.response?.data?.message || t("adminConfig.toastSaveError"));
         } finally {
             setSavingPayment(false);
+        }
+    };
+
+    const addTeamMember = () => {
+        setTeamMembers((prev) => [...prev, { name: "", role: "", description: "", image: "" }]);
+    };
+    const removeTeamMember = (index) => {
+        setTeamMembers((prev) => prev.filter((_, i) => i !== index));
+    };
+    const updateTeamMember = (index, field, value) => {
+        setTeamMembers((prev) => prev.map((m, i) => (i === index ? { ...m, [field]: value } : m)));
+    };
+    const handleTeamImageUpload = async (index, file) => {
+        setUploadingImageIndex(index);
+        try {
+            const res = await settingsService.uploadTeamMemberImage(file);
+            const url = res?.data?.url ?? res?.url;
+            if (url) updateTeamMember(index, "image", url);
+        } catch (e) {
+            toast.error(t("adminConfig.toastSaveError") || "Upload failed");
+        } finally {
+            setUploadingImageIndex(null);
+        }
+        return false;
+    };
+    const handleSaveTeam = async () => {
+        setSavingTeam(true);
+        try {
+            await settingsService.updateTeamMembers({ teamMembers });
+            toast.success(t("adminConfig.toastTeamSaved"));
+            loadData();
+        } catch (e) {
+            toast.error(e?.response?.data?.message || t("adminConfig.toastSaveError"));
+        } finally {
+            setSavingTeam(false);
         }
     };
 
@@ -469,6 +515,76 @@ const SettingsPage = () => {
                                                     </Button>
                                                 </Form.Item>
                                             </Form>
+                                        ),
+                                    },
+                                    {
+                                        key: "team",
+                                        label: (
+                                            <span>
+                                                <TeamOutlined />
+                                                {t("adminConfig.tabTeam")}
+                                            </span>
+                                        ),
+                                        children: (
+                                            <div style={{ maxWidth: "800px" }}>
+                                                <Title level={4}>{t("adminConfig.teamTitle")}</Title>
+                                                <Text type="secondary" style={{ display: "block", marginBottom: 16 }}>
+                                                    {t("adminConfig.teamDescription")}
+                                                </Text>
+                                                <Divider />
+                                                {teamMembers.map((member, index) => (
+                                                    <Card
+                                                        key={index}
+                                                        size="small"
+                                                        style={{ marginBottom: 16 }}
+                                                        extra={
+                                                            <Button type="text" danger icon={<DeleteOutlined />} onClick={() => removeTeamMember(index)}>
+                                                                {t("adminConfig.teamRemove")}
+                                                            </Button>
+                                                        }
+                                                    >
+                                                        <Space direction="vertical" style={{ width: "100%" }} size="middle">
+                                                            <div style={{ display: "flex", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
+                                                                <div>
+                                                                    <Text type="secondary" style={{ display: "block", marginBottom: 4 }}>{t("adminConfig.teamPhoto")}</Text>
+                                                                    <Upload
+                                                                        listType="picture-card"
+                                                                        showUploadList={false}
+                                                                        beforeUpload={(file) => { handleTeamImageUpload(index, file); return false; }}
+                                                                        accept="image/jpeg,image/png,image/webp,image/gif"
+                                                                    >
+                                                                        {member.image ? (
+                                                                            <div style={{ position: "relative" }}>
+                                                                                <img src={member.image.startsWith("http") ? member.image : `${apiBaseUrl}${member.image}`} alt="" style={{ width: 104, height: 104, objectFit: "cover" }} />
+                                                                                {uploadingImageIndex === index && <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center" }}><Spin /></div>}
+                                                                            </div>
+                                                                        ) : (
+                                                                            <div>{uploadingImageIndex === index ? <Spin /> : <><UserOutlined style={{ fontSize: 24 }} /><br /><span>{t("adminConfig.teamUpload")}</span></>}</div>
+                                                                        )}
+                                                                    </Upload>
+                                                                </div>
+                                                                <div style={{ flex: 1, minWidth: 200 }}>
+                                                                    <Form.Item label={t("adminConfig.teamName")} style={{ marginBottom: 8 }}>
+                                                                        <Input value={member.name} onChange={(e) => updateTeamMember(index, "name", e.target.value)} placeholder={t("adminConfig.teamNamePlaceholder")} />
+                                                                    </Form.Item>
+                                                                    <Form.Item label={t("adminConfig.teamRole")} style={{ marginBottom: 8 }}>
+                                                                        <Input value={member.role} onChange={(e) => updateTeamMember(index, "role", e.target.value)} placeholder={t("adminConfig.teamRolePlaceholder")} />
+                                                                    </Form.Item>
+                                                                    <Form.Item label={t("adminConfig.teamDescriptionLabel")} style={{ marginBottom: 0 }}>
+                                                                        <Input.TextArea rows={2} value={member.description} onChange={(e) => updateTeamMember(index, "description", e.target.value)} placeholder={t("adminConfig.teamDescriptionPlaceholder")} />
+                                                                    </Form.Item>
+                                                                </div>
+                                                            </div>
+                                                        </Space>
+                                                    </Card>
+                                                ))}
+                                                <Button type="dashed" onClick={addTeamMember} block icon={<PlusOutlined />} style={{ marginBottom: 16 }}>
+                                                    {t("adminConfig.teamAddMember")}
+                                                </Button>
+                                                <Button type="primary" icon={<SaveOutlined />} loading={savingTeam} onClick={handleSaveTeam}>
+                                                    {t("adminConfig.teamSave")}
+                                                </Button>
+                                            </div>
                                         ),
                                     },
                                 ]}

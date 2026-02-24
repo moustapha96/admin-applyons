@@ -2,13 +2,18 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Form, Input, Select, Button, Card, message, Space, Alert, Tabs, Divider } from "antd";
+import { Form, Input, Select, Button, Card, message, Space, Alert, Tabs, Divider, Radio } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import organizationService from "@/services/organizationService";
 import paymentService from "@/services/paymentService";
+import demandeAuthentificationService from "@/services/demandeAuthentification.service";
 import { useTranslation } from "react-i18next";
+
+function isEmail(s) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || "").trim());
+}
 
 const STRIPE_PUBLISHABLE = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 const stripePromise = STRIPE_PUBLISHABLE ? loadStripe(STRIPE_PUBLISHABLE) : null;
@@ -90,7 +95,8 @@ function PaypalButtonsCreate({ payload, quote, onSuccess }) {
   }, [quote?.currency, t]);
 
   useEffect(() => {
-    if (!sdkReady || !window.paypal || !payload?.attributedOrganizationId) return;
+    const canPay = payload?.attributedOrganizationId || (Array.isArray(payload?.invitedInstituts) && payload.invitedInstituts.length > 0);
+    if (!sdkReady || !window.paypal || !canPay) return;
     const containerId = "paypal-buttons-create-demande-auth";
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -100,7 +106,8 @@ function PaypalButtonsCreate({ payload, quote, onSuccess }) {
         createOrder: async () => {
           try {
             const { data } = await paymentService.createPaypalOrderDemandeAuth({
-              attributedOrganizationId: payload.attributedOrganizationId,
+              ...(payload.attributedOrganizationId && { attributedOrganizationId: payload.attributedOrganizationId }),
+              ...(Array.isArray(payload.invitedInstituts) && payload.invitedInstituts.length > 0 && { invitedInstituts: payload.invitedInstituts }),
               objet: payload.objet,
               observation: payload.observation,
               amount: quote?.amount,
@@ -164,6 +171,8 @@ export default function DemandeurDemandeAuthentificationCreate() {
   const [step, setStep] = useState("form");
   const [stripeClientSecret, setStripeClientSecret] = useState("");
   const [paymentPayload, setPaymentPayload] = useState(null);
+  const [institutMode, setInstitutMode] = useState("list"); // "list" | "invite"
+  const [invite, setInvite] = useState({ name: "", email: "" });
 
   useEffect(() => {
     (async () => {
@@ -183,14 +192,34 @@ export default function DemandeurDemandeAuthentificationCreate() {
   }, [t]);
 
   const onFinish = async (values) => {
+    const isInviteMode = institutMode === "invite";
+    const email = String(invite.email || "").trim().toLowerCase();
+    if (isInviteMode) {
+      if (!email) {
+        message.warning(t("demandesAuthentification.inviteInstituts.emailRequired"));
+        return;
+      }
+      if (!isEmail(email)) {
+        message.warning(t("demandesAuthentification.inviteInstituts.emailInvalid"));
+        return;
+      }
+    }
+    if (!isInviteMode && !values.attributedOrganizationId) {
+      message.warning(t("demandesAuthentification.validation.attributedOrgRequired"));
+      return;
+    }
     setLoading(true);
     try {
       const payload = {
-        attributedOrganizationId: values.attributedOrganizationId,
         objet: values.objet || undefined,
         observation: values.observation || undefined,
         currency: (quote?.currency || "USD").toUpperCase(),
       };
+      if (isInviteMode) {
+        payload.invitedInstituts = [{ name: String(invite.name || "").trim() || null, email }];
+      } else {
+        payload.attributedOrganizationId = values.attributedOrganizationId;
+      }
       setPaymentPayload(payload);
       if (STRIPE_PUBLISHABLE) {
         const res = await paymentService.createStripeIntentDemandeAuth(payload);
@@ -207,7 +236,8 @@ export default function DemandeurDemandeAuthentificationCreate() {
   };
 
   const onPaymentSuccess = useCallback(
-    (demande) => {
+    async (demande) => {
+      // When payload had invitedInstituts, backend already sent the invitation on payment confirm
       navigate(`/demandeur/demandes-authentification/${demande.id}`, {
         state: { justCreated: true, codeADN: demande.codeADN },
       });
@@ -256,24 +286,67 @@ export default function DemandeurDemandeAuthentificationCreate() {
                 description={t("demandesAuthentification.paymentRequiredFirstDesc")}
               />
               <Form form={form} layout="vertical" onFinish={onFinish}>
-                <Form.Item
-                  name="attributedOrganizationId"
-                  label={t("demandesAuthentification.fields.attributedOrg")}
-                  rules={[{ required: true, message: t("demandesAuthentification.validation.attributedOrgRequired") }]}
-                >
-                  <Select
-                    placeholder={t("demandesAuthentification.fields.attributedOrgPlaceholder")}
-                    showSearch
-                    optionFilterProp="label"
-                    options={organizations.map((o) => ({ value: o.id, label: `${o.name} (${o.type})` }))}
-                  />
+                <Form.Item label={t("demandesAuthentification.institutChoice.label")}>
+                  <Radio.Group
+                    optionType="button"
+                    value={institutMode}
+                    onChange={(e) => {
+                      setInstitutMode(e.target.value);
+                      form.setFieldValue("attributedOrganizationId", undefined);
+                      setInvite({ name: "", email: "" });
+                    }}
+                  >
+                    <Radio value="list">{t("demandesAuthentification.institutChoice.fromList")}</Radio>
+                    <Radio value="invite">{t("demandesAuthentification.institutChoice.invite")}</Radio>
+                  </Radio.Group>
                 </Form.Item>
+                {institutMode === "list" && (
+                  <Form.Item
+                    name="attributedOrganizationId"
+                    label={t("demandesAuthentification.fields.attributedOrg")}
+                    rules={[{ required: true, message: t("demandesAuthentification.validation.attributedOrgRequired") }]}
+                  >
+                    <Select
+                      placeholder={t("demandesAuthentification.fields.attributedOrgPlaceholder")}
+                      showSearch
+                      optionFilterProp="label"
+                      options={organizations.map((o) => ({ value: o.id, label: `${o.name} (${o.type})` }))}
+                    />
+                  </Form.Item>
+                )}
+                {institutMode === "invite" && (
+                  <>
+                    <h4 className="mb-2">{t("demandesAuthentification.inviteInstituts.title")}</h4>
+                    <p className="text-gray-600 mb-3 text-sm">{t("demandesAuthentification.inviteInstituts.description")}</p>
+                    <Form.Item label={t("demandesAuthentification.inviteInstituts.namePlaceholder")}>
+                      <Input
+                        placeholder={t("demandesAuthentification.inviteInstituts.namePlaceholder")}
+                        value={invite.name}
+                        onChange={(e) => setInvite((s) => ({ ...s, name: e.target.value }))}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      label={t("demandesAuthentification.inviteInstituts.emailPlaceholder")}
+                      required
+                      validateStatus={invite.email && !isEmail(invite.email) ? "error" : undefined}
+                      help={invite.email && !isEmail(invite.email) ? t("demandesAuthentification.inviteInstituts.emailInvalid") : undefined}
+                    >
+                      <Input
+                        type="email"
+                        placeholder={t("demandesAuthentification.inviteInstituts.emailPlaceholder")}
+                        value={invite.email}
+                        onChange={(e) => setInvite((s) => ({ ...s, email: e.target.value }))}
+                      />
+                    </Form.Item>
+                  </>
+                )}
                 <Form.Item name="objet" label={t("demandesAuthentification.fields.objet")}>
                   <Input.TextArea rows={2} placeholder={t("demandesAuthentification.fields.objetPlaceholder")} />
                 </Form.Item>
                 <Form.Item name="observation" label={t("demandesAuthentification.fields.observation")}>
                   <Input.TextArea rows={3} placeholder={t("demandesAuthentification.fields.observationPlaceholder")} />
                 </Form.Item>
+                <Divider />
                 <Form.Item>
                   <Space>
                     <Button type="primary" htmlType="submit" loading={loading}>

@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Table, Tag, Button, message } from "antd";
-import { FileTextOutlined } from "@ant-design/icons";
+import { FileTextOutlined, PlusOutlined } from "@ant-design/icons";
 import demandeAuthentificationService from "@/services/demandeAuthentification.service";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
@@ -86,19 +86,34 @@ export default function InstitutDemandesAuthentificationAttribueesList() {
     {
       title: t("demandesAuthentification.columns.actions"),
       key: "actions",
-      width: 120,
-      render: (_, r) => (
-        <Link to={`/organisations/demandes-authentification/${r.id}`}>
-          <Button size="small">{t("demandesAuthentification.actions.detail")}</Button>
-        </Link>
-      ),
+      width: 200,
+      render: (_, r) => {
+        const docCount = r._count?.documents ?? 0;
+        const hasNoDocument = docCount === 0;
+        const addDocUrl = r.codeADN ? `/organisations/code-adn?code=${encodeURIComponent(r.codeADN)}` : null;
+        return (
+          <span className="flex gap-2 flex-wrap">
+            <Link to={`/organisations/demandes-authentification/${r.id}`}>
+              <Button size="small">{t("demandesAuthentification.actions.detail")}</Button>
+            </Link>
+            {hasNoDocument && addDocUrl && (
+              <Link to={addDocUrl}>
+                <Button size="small" type="primary" icon={<PlusOutlined />}>
+                  {t("demandesAuthentification.actions.addDocument")}
+                </Button>
+              </Link>
+            )}
+          </span>
+        );
+      },
     },
   ];
 
   return (
     <div className="container-fluid relative px-3">
       <div className="layout-specing">
-        <h5 className="text-lg font-semibold mb-4">{t("demandesAuthentification.attributedTitle")}</h5>
+        <h5 className="text-lg font-semibold mb-1">{t("demandesAuthentification.attributedTitle")}</h5>
+        <p className="text-gray-600 mb-4">{t("demandesAuthentification.attributedDescription")}</p>
         <Table
           rowKey="id"
           loading={loading}

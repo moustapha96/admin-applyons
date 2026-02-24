@@ -9,6 +9,7 @@ import AuthNotAccess from "../pages/Authentication/auth-not-access";
 import AuthActivateAccount from "../pages/Authentication/auth-activated";
 import AuthSignupSuccess from "../pages/Authentication/auth-signup-success";
 import OrgInviteAccept from "../pages/Authentication/OrgInviteAccept";
+import DemandeAuthInvitationAccept from "../pages/Authentication/DemandeAuthInvitationAccept";
 import ErrorPage from "../pages/error";
 
 export const publicRoutes = (
@@ -23,6 +24,7 @@ export const publicRoutes = (
     <Route path="/auth/not-access" element={<AuthNotAccess />} />
     <Route path="/auth/activate" element={<AuthActivateAccount />} />
     <Route path="/auth/invitations/accept" element={<OrgInviteAccept />} />
+    <Route path="/auth/demande-authentification-invitation/accept" element={<DemandeAuthInvitationAccept />} />
     <Route path="/error-page" element={<ErrorPage />} />
   </>
 );

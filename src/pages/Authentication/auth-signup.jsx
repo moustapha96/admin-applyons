@@ -7,6 +7,7 @@ import Switcher from "../../components/switcher";
 import BackButton from "../../components/backButton";
 import authService from "../../services/authService";
 import { toast } from "sonner";
+import { Modal } from "antd";
 import applyonsAbout1 from "../../assets/logo.png";
 import countries from "@/assets/countries.json";
 
@@ -58,7 +59,13 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showAccountTypeModal, setShowAccountTypeModal] = useState(false);
   const navigate = useNavigate();
+
+  // Afficher le popup de choix du type de compte si pas de type dans l'URL
+  useEffect(() => {
+    if (!typeFromUrl) setShowAccountTypeModal(true);
+  }, [typeFromUrl]);
 
   // Pré-sélection du type de compte depuis l'URL (ex: /registration?type=institut ou ?type=demandeur)
   useEffect(() => {
@@ -435,8 +442,41 @@ export default function Signup() {
     }
   };
 
+  const handleChooseAccountType = (role) => {
+    const firstOrgType = (orgTypeOptions[role] && orgTypeOptions[role][0]?.value) || formData.orgType;
+    setFormData((prev) => ({ ...prev, role, orgType: firstOrgType }));
+    setErrors((prev) => ({ ...prev, orgName: undefined, orgType: undefined, orgEmail: undefined }));
+    setShowAccountTypeModal(false);
+  };
+
   return (
     <>
+      <Modal
+        open={showAccountTypeModal}
+        onCancel={() => setShowAccountTypeModal(false)}
+        footer={null}
+        closable={true}
+        width={480}
+        centered
+        title={<span className="text-lg font-semibold">{t("auth.signup.chooseAccountTypeModal.title")}</span>}
+      >
+        <p className="text-slate-600 dark:text-slate-300 mb-4">
+          {t("auth.signup.chooseAccountTypeModal.description")}
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {roleOptions.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => handleChooseAccountType(opt.value)}
+              className="py-3 px-4 rounded-lg border-2 border-gray-200 dark:border-slate-600 hover:border-[var(--applyons-blue)] hover:bg-blue-50 dark:hover:bg-slate-700 dark:hover:border-[var(--applyons-blue)] text-left font-medium text-slate-800 dark:text-slate-200 transition-colors"
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </Modal>
+
       <section
         className="min-h-screen py-12 md:py-20 flex items-center relative bg-no-repeat bg-center bg-cover"
         style={{ backgroundImage: `url(${applyonsAbout1})` }}

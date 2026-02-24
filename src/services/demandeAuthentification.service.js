@@ -2,6 +2,12 @@ import axiosInstance from "./api";
 
 const base = "/demandes-authentification";
 
+/** Normalise le code ADN (supprime les tirets) pour les appels API */
+function normalizeADNCode(code) {
+  if (!code || typeof code !== "string") return "";
+  return code.replace(/-/g, "").trim().toUpperCase();
+}
+
 /** Extrait le chemin relatif à l'API pour un urlOriginal (ex: .../api/documents/file/xxx => documents/file/xxx) */
 function getDocumentFilePath(urlOriginal) {
   if (!urlOriginal || typeof urlOriginal !== "string") return null;
@@ -25,14 +31,21 @@ const demandeAuthentificationService = {
   listAttributed: (params = {}) => axiosInstance.get(`${base}/attributed`, { params }),
   listAll: (params = {}) => axiosInstance.get(`${base}/all`, { params }),
   getById: (id) => axiosInstance.get(`${base}/${id}`),
-  getByCode: (codeADN) => axiosInstance.get(`${base}/by-code/${encodeURIComponent(codeADN)}`),
+  getByCode: (codeADN) => axiosInstance.get(`${base}/by-code/${encodeURIComponent(normalizeADNCode(codeADN))}`),
   create: (data) => axiosInstance.post(base, data),
   notifyInstituts: (id, organizationIds) =>
     axiosInstance.post(`${base}/${id}/notify-instituts`, { organizationIds }),
+  inviteInstituts: (id, invitedInstituts) =>
+    axiosInstance.post(`${base}/${id}/invite-instituts`, { invitedInstituts }),
+  getInvitationByToken: (token) =>
+    axiosInstance.get(`${base}/invitation-by-token/${encodeURIComponent(token)}`),
+  acceptInvitation: (token, data) =>
+    axiosInstance.post(`${base}/accept-invitation/${encodeURIComponent(token)}`, data),
   addDocumentByCode: (codeADN, formData) =>
-    axiosInstance.post(`${base}/by-code/${encodeURIComponent(codeADN)}/documents`, formData, {
+    axiosInstance.post(`${base}/by-code/${encodeURIComponent(normalizeADNCode(codeADN))}/documents`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     }),
+  deleteDocumentByDemandeId: (demandeId) => axiosInstance.delete(`${base}/${demandeId}/document`),
   updateStatus: (id, data) => axiosInstance.patch(`${base}/${id}/status`, data),
   getDocumentFileBlob,
 };
