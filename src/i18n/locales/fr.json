@@ -247,12 +247,12 @@
         "organizationInvites": "Invitations d'organisations",
         "notifications": "Notifications",
         "logout": "Déconnexion",
-        "demandesAuthentification": "Authentification de documents",
+        "demandesAuthentification": "Auth. documents",
         "demandesAuthentificationList": "Mes demandes d'authentification",
         "demandesAuthentificationCreate": "Nouvelle demande",
-        "demandesAuthentificationAttribuees": "Demandes qui me sont attribuées",
+        "demandesAuthentificationAttribuees": "Mes demandes attribuées",
         "codeADN": "Accéder par code ADN",
-        "authenticationDocument": "Authentification de documents",
+        "authenticationDocument": "Auth. documents",
         "demandesAuthentificationAdmin": "Demandes d'authentification"
     },
     "demandesAuthentification": {
@@ -436,6 +436,11 @@
             "subscriptionRequiredLink": "Souscrire ou gérer mes abonnements",
             "noOrganization": "Vous devez être rattaché à une organisation."
         },
+        "tabs": {
+            "addDocument": "Ajouter un document",
+            "consultInfoAndDoc": "Code pour infos et document"
+        },
+        "tabsCodeHint": "Saisissez le code ADN ci-dessus et validez pour charger la demande.",
         "onlyAttributedOrgCanAdd": "Seul l'institut auquel la demande est destinée peut ajouter le document (un seul document par demande).",
         "viewDocumentsReadOnly": "Vous pouvez consulter les documents de cette demande en lecture seule (accès réservé aux instituts avec abonnement actif).",
         "documentAlreadyAdded": "Le document a déjà été déposé pour cette demande.",

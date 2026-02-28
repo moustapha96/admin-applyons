@@ -246,12 +246,12 @@
         "dossiersTraiter": "Fascicoli da trattare",
         "notifications": "Notifiche",
         "logout": "Disconnettersi",
-        "demandesAuthentification": "Autenticazione documenti",
+        "demandesAuthentification": "Auth. documenti",
         "demandesAuthentificationList": "Le mie richieste di autenticazione",
         "demandesAuthentificationCreate": "Nuova richiesta",
-        "demandesAuthentificationAttribuees": "Richieste a me attribuite",
+        "demandesAuthentificationAttribuees": "Assegnate a me",
         "codeADN": "Accedi con codice ADN",
-        "authenticationDocument": "Autenticazione documenti",
+        "authenticationDocument": "Auth. documenti",
         "demandesAuthentificationAdmin": "Richieste di autenticazione"
     },
     "demandesAuthentification": {
@@ -375,6 +375,11 @@
             "subscriptionRequiredLink": "Sottoscrivi o gestisci i miei abbonamenti",
             "noOrganization": "Devi essere collegato a un'organizzazione."
         },
+        "tabs": {
+            "addDocument": "Aggiungi un documento",
+            "consultInfoAndDoc": "Codice per info e documento"
+        },
+        "tabsCodeHint": "Inserisci il codice ADN sopra e convalida per caricare la richiesta.",
         "onlyAttributedOrgCanAdd": "Solo l'istituzione a cui è assegnata la richiesta può aggiungere il documento (un documento per richiesta).",
         "viewDocumentsReadOnly": "Puoi consultare i documenti di questa richiesta in sola lettura (accesso riservato alle istituzioni con abbonamento attivo).",
         "documentAlreadyAdded": "Il documento è già stato inviato per questa richiesta.",

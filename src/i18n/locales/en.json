@@ -246,12 +246,12 @@
         "dossiersTraiter": "Files to process",
         "notifications": "Notifications",
         "logout": "Log out",
-        "demandesAuthentification": "Document authentication",
+        "demandesAuthentification": "Doc authentication",
         "demandesAuthentificationList": "My authentication requests",
         "demandesAuthentificationCreate": "New request",
-        "demandesAuthentificationAttribuees": "Requests attributed to me",
+        "demandesAuthentificationAttribuees": "Assigned to me",
         "codeADN": "Access by ADN code",
-        "authenticationDocument": "Authentication document",
+        "authenticationDocument": "Doc authentication",
         "demandesAuthentificationAdmin": "Authentication requests"
     },
     "demandesAuthentification": {
@@ -369,6 +369,11 @@
             "subscriptionRequiredLink": "Subscribe or manage my subscriptions",
             "noOrganization": "You must be linked to an organization."
         },
+        "tabs": {
+            "addDocument": "Add a document",
+            "consultInfoAndDoc": "Code for info and document"
+        },
+        "tabsCodeHint": "Enter the ADN code above and submit to load the request.",
         "invitationAccept": {
             "title": "Create my account – Authentication request invitation",
             "loading": "Loading invitation...",

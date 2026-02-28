@@ -246,12 +246,12 @@
         "dossiersTraiter": "Zu bearbeitende Dossiers",
         "notifications": "Benachrichtigungen",
         "logout": "Abmelden",
-        "demandesAuthentification": "Dokumentenauthentifizierung",
+        "demandesAuthentification": "Dok.-Authentifizierung",
         "demandesAuthentificationList": "Meine Authentifizierungsanfragen",
         "demandesAuthentificationCreate": "Neue Anfrage",
-        "demandesAuthentificationAttribuees": "Mir zugewiesene Anfragen",
+        "demandesAuthentificationAttribuees": "Mir zugewiesen",
         "codeADN": "Zugang per ADN-Code",
-        "authenticationDocument": "Dokumentenauthentifizierung",
+        "authenticationDocument": "Dok.-Authentifizierung",
         "demandesAuthentificationAdmin": "Authentifizierungsanfragen"
     },
     "demandesAuthentification": {
@@ -375,6 +375,11 @@
             "subscriptionRequiredLink": "Abonnement abschließen oder verwalten",
             "noOrganization": "Sie müssen einer Organisation zugeordnet sein."
         },
+        "tabs": {
+            "addDocument": "Dokument hinzufügen",
+            "consultInfoAndDoc": "Code für Infos und Dokument"
+        },
+        "tabsCodeHint": "Geben Sie den ADN-Code oben ein und bestätigen Sie, um die Anfrage zu laden.",
         "onlyAttributedOrgCanAdd": "Nur die Institution, der die Anfrage zugewiesen ist, kann das Dokument hinzufügen (ein Dokument pro Anfrage).",
         "viewDocumentsReadOnly": "Sie können die Dokumente dieser Anfrage schreibgeschützt einsehen (Zugang für Institutionen mit aktivem Abonnement).",
         "documentAlreadyAdded": "Das Dokument wurde für diese Anfrage bereits eingereicht.",

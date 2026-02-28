@@ -37,7 +37,7 @@ server {
     ssl_certificate_key /etc/letsencrypt/live/admin.applyons.com/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-
+    
     root /var/www/admin.applyons.com;
     index index.html;
 

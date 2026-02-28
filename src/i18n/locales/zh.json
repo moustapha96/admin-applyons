@@ -249,7 +249,7 @@
         "demandesAuthentification": "文件认证",
         "demandesAuthentificationList": "我的认证申请",
         "demandesAuthentificationCreate": "新建申请",
-        "demandesAuthentificationAttribuees": "分配给我的申请",
+        "demandesAuthentificationAttribuees": "分配给我",
         "codeADN": "通过ADN码访问",
         "authenticationDocument": "文件认证",
         "demandesAuthentificationAdmin": "认证申请"
@@ -375,6 +375,11 @@
             "subscriptionRequiredLink": "订阅或管理我的订阅",
             "noOrganization": "您必须隶属于某个机构。"
         },
+        "tabs": {
+            "addDocument": "添加文档",
+            "consultInfoAndDoc": "代码查询信息与文档"
+        },
+        "tabsCodeHint": "在上方输入 ADN 代码并提交以加载申请。",
         "onlyAttributedOrgCanAdd": "只有被分配该申请的机构才能添加文件（每个申请仅限一份文件）。",
         "viewDocumentsReadOnly": "您可以在只读模式下查看该申请的文件（仅限拥有有效订阅的机构）。",
         "documentAlreadyAdded": "该申请的文件已提交。",
