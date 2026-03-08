@@ -233,6 +233,7 @@
         "messages": "Messaggi",
         "configurations": "Configurazioni",
         "settings": "Impostazioni",
+        "sendNotification": "Invia notifica",
         "mailer": "Mailer",
         "auditLogs": "Registri di audit",
         "permissions": "Permessi",
@@ -245,6 +246,7 @@
         "souscrire": "Iscriviti",
         "dossiersTraiter": "Fascicoli da trattare",
         "notifications": "Notifiche",
+        "demandeurNotifications": "Notifiche",
         "logout": "Disconnettersi",
         "demandesAuthentification": "Auth. documenti",
         "demandesAuthentificationList": "Le mie richieste di autenticazione",
@@ -3565,6 +3567,20 @@
             "htmlVersion": "Versione HTML",
             "attachmentsCount": "Allegati"
         }
+    },
+    "adminSendNotification": {
+        "title": "Invia notifica",
+        "description": "Invia una notifica a tutti i richiedenti, a tutti gli istituti o agli istituti per tipo di organizzazione. I destinatari la vedranno nel centro notifiche (solo lettura).",
+        "breadcrumb": { "admin": "Admin", "send": "Invia notifica" },
+        "audience": { "allDemandeurs": "Tutti i richiedenti", "allInstituts": "Tutti gli istituti", "byOrgType": "Per tipo di organizzazione" },
+        "fields": { "audience": "Destinatari", "orgType": "Tipo di organizzazione", "title": "Titolo", "message": "Messaggio" },
+        "placeholders": { "audience": "Seleziona destinatari", "orgType": "Seleziona tipo", "title": "Titolo della notifica", "message": "Contenuto del messaggio" },
+        "required": { "audience": "Seleziona i destinatari", "orgType": "Seleziona il tipo di organizzazione", "title": "Il titolo è obbligatorio", "message": "Il messaggio è obbligatorio" },
+        "orgTypes": { "INSTITUT": "Istituto", "COLLEGE": "Collegio", "BANQUE": "Banca", "UNIVERSITE": "Università", "LYCEE": "Liceo", "ENTREPRISE": "Azienda", "TRADUCTEUR": "Traduttore" },
+        "submit": "Invia notifica",
+        "success": "{{count}} notifica/he inviata/e.",
+        "lastSent": "Ultimo invio: {{count}} destinatari ({{audience}}).",
+        "error": "Errore nell'invio delle notifiche."
     },
     "adminAuditLogs": {
         "pageTitle": "Log di audit",

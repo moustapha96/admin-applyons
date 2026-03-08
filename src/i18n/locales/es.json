@@ -233,6 +233,7 @@
         "messages": "Mensajes",
         "configurations": "Configuraciones",
         "settings": "Ajustes",
+        "sendNotification": "Enviar notificación",
         "mailer": "Mailer",
         "auditLogs": "Registros de auditoría",
         "permissions": "Permisos",
@@ -245,6 +246,7 @@
         "souscrire": "Suscribirse",
         "dossiersTraiter": "Archivos para procesar",
         "notifications": "Notificaciones",
+        "demandeurNotifications": "Notificaciones",
         "logout": "Cerrar sesión",
         "demandesAuthentification": "Auth. documentos",
         "demandesAuthentificationList": "Mis solicitudes de autenticación",
@@ -3564,6 +3566,20 @@
             "htmlVersion": "Versión HTML",
             "attachmentsCount": "Adjuntos"
         }
+    },
+    "adminSendNotification": {
+        "title": "Enviar notificación",
+        "description": "Envíe una notificación a todos los demandantes, a todos los institutos o a institutos por tipo de organización. Los destinatarios la verán en su centro de notificaciones (solo lectura).",
+        "breadcrumb": { "admin": "Admin", "send": "Enviar notificación" },
+        "audience": { "allDemandeurs": "Todos los demandantes", "allInstituts": "Todos los institutos", "byOrgType": "Por tipo de organización" },
+        "fields": { "audience": "Destinatarios", "orgType": "Tipo de organización", "title": "Título", "message": "Mensaje" },
+        "placeholders": { "audience": "Seleccionar destinatarios", "orgType": "Seleccionar tipo", "title": "Título de la notificación", "message": "Contenido del mensaje" },
+        "required": { "audience": "Seleccione destinatarios", "orgType": "Seleccione tipo de organización", "title": "El título es obligatorio", "message": "El mensaje es obligatorio" },
+        "orgTypes": { "INSTITUT": "Instituto", "COLLEGE": "Colegio", "BANQUE": "Banco", "UNIVERSITE": "Universidad", "LYCEE": "Liceo", "ENTREPRISE": "Empresa", "TRADUCTEUR": "Traductor" },
+        "submit": "Enviar notificación",
+        "success": "{{count}} notificación(es) enviada(s).",
+        "lastSent": "Último envío: {{count}} destinatario(s) ({{audience}}).",
+        "error": "Error al enviar las notificaciones."
     },
     "adminAuditLogs": {
         "pageTitle": "Registros de auditoría",

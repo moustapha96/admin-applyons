@@ -233,6 +233,7 @@
         "messages": "消息",
         "configurations": "配置",
         "settings": "设置",
+        "sendNotification": "发送通知",
         "mailer": "邮件服务",
         "auditLogs": "审计日志",
         "permissions": "权限",
@@ -245,6 +246,7 @@
         "souscrire": "订阅",
         "dossiersTraiter": "待处理文件",
         "notifications": "通知",
+        "demandeurNotifications": "通知",
         "logout": "退出登录",
         "demandesAuthentification": "文件认证",
         "demandesAuthentificationList": "我的认证申请",
@@ -3565,6 +3567,20 @@
             "htmlVersion": "HTML 版本",
             "attachmentsCount": "附件"
         }
+    },
+    "adminSendNotification": {
+        "title": "发送通知",
+        "description": "向所有申请人、所有机构或按组织类型的机构发送通知。收件人将在其通知中心查看（仅读）。",
+        "breadcrumb": { "admin": "管理", "send": "发送通知" },
+        "audience": { "allDemandeurs": "所有申请人", "allInstituts": "所有机构", "byOrgType": "按组织类型" },
+        "fields": { "audience": "收件人", "orgType": "组织类型", "title": "标题", "message": "消息" },
+        "placeholders": { "audience": "选择收件人", "orgType": "选择类型", "title": "通知标题", "message": "消息内容" },
+        "required": { "audience": "请选择收件人", "orgType": "请选择组织类型", "title": "标题必填", "message": "消息必填" },
+        "orgTypes": { "INSTITUT": "机构", "COLLEGE": "学院", "BANQUE": "银行", "UNIVERSITE": "大学", "LYCEE": "高中", "ENTREPRISE": "企业", "TRADUCTEUR": "翻译" },
+        "submit": "发送通知",
+        "success": "已发送 {{count}} 条通知。",
+        "lastSent": "上次发送：{{count}} 位收件人（{{audience}}）。",
+        "error": "发送通知时出错。"
     },
     "adminAuditLogs": {
         "pageTitle": "审计日志",

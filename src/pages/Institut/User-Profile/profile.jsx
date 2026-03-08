@@ -276,9 +276,9 @@ export default function InstitutUserProfile() {
 
   return (
     <>
-      <div className="container-fluid relative w-full px-3 sm:px-4 md:px-6 overflow-x-hidden max-w-full">
-        <div className="layout-specing w-full py-3 sm:py-4 md:py-6">
-          <div className="p-3 sm:p-4 md:p-6 w-full bg-gray-50 dark:bg-gray-900/30 min-h-screen sm:min-h-0 rounded-lg sm:rounded-xl">
+      <div className="container-fluid relative w-full min-w-0 px-3 sm:px-4 md:px-6 overflow-x-hidden max-w-full">
+        <div className="layout-specing w-full py-3 sm:py-4 md:py-6 min-w-0">
+          <div className="p-3 sm:p-4 md:p-6 w-full min-w-0 bg-gray-50 dark:bg-gray-900/30 min-h-screen sm:min-h-0 rounded-lg sm:rounded-xl">
             <Row gutter={[16, 16]} className="!mx-0 sm:!mx-[-8px] w-full">
               {/* Header */}
               <Col xs={24}>
@@ -305,7 +305,7 @@ export default function InstitutUserProfile() {
                         </Upload>
                       </Badge>
                     </Col>
-                    <Col xs={24} md={10} className="flex flex-col justify-center order-3 md:order-2 text-center md:text-left">
+                    <Col xs={24} md={10} className="flex flex-col justify-center order-2 md:order-2 text-center md:text-left min-w-0">
                       <Title level={4} className="!m-0 !text-white !mb-1 !text-base sm:!text-lg md:!text-xl truncate max-w-full">
                         {userData.firstName || userData.lastName || userData.username || t("profilePage.header.userFallback")}
                       </Title>
@@ -318,7 +318,7 @@ export default function InstitutUserProfile() {
                         </Tag>
                       </Space>
                     </Col>
-                    <Col xs={24} md={8} className="flex justify-center md:justify-end order-2 md:order-3">
+                    <Col xs={24} md={8} className="flex justify-center md:justify-end order-3 md:order-3">
                       <Space
                         wrap
                         size="small"
@@ -450,7 +450,7 @@ export default function InstitutUserProfile() {
                   </Form>
                   {!isEditing && (
                     <Descriptions
-                      column={{ xs: 1, sm: 2 }}
+                      column={{ xs: 1, sm: 2, md: 3 }}
                       size="small"
                       layout="horizontal"
                       labelStyle={{ fontWeight: 500, whiteSpace: "nowrap", paddingRight: 16, verticalAlign: "top" }}

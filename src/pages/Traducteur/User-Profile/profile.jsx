@@ -538,7 +538,7 @@ export default function TraducteurUserProfile() {
                                         </Form>
                                     ) : (
                                         <Descriptions
-                                            column={{ xs: 1, sm: 2 }}
+                                            column={{ xs: 1, sm: 2, md: 3 }}
                                             size="small"
                                             layout="horizontal"
                                             labelStyle={{ fontWeight: 500, whiteSpace: "nowrap", paddingRight: 16, verticalAlign: "top" }}

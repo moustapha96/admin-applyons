@@ -16,6 +16,7 @@ import DemandeurDemandeAuthentificationCreate from "../pages/Demandeur/demandes-
 import DemandeurDemandeAuthentificationDetail from "../pages/Demandeur/demandes-authentification/DemandeurDemandeAuthentificationDetail";
 import DemandeurDemandeAuthentificationNotifyInstituts from "../pages/Demandeur/demandes-authentification/DemandeurDemandeAuthentificationNotifyInstituts";
 import DemandeurDemandeAuthentificationPaymentPage from "../pages/Demandeur/demandes-authentification/DemandeurDemandeAuthentificationPaymentPage";
+import DemandeurNotificationsList from "../pages/Demandeur/Notifications/DemandeurNotificationsList";
 
 export const demandeurRoutes = (
   <>
@@ -32,6 +33,9 @@ export const demandeurRoutes = (
       <Route index element={<DemandeurDashboard />} />
       <Route path="dashboard" element={<DemandeurDashboard />} />
       <Route path="profile" element={<DemandeurUserProfile />} />
+
+      {/* Notifications : tous les demandeurs peuvent afficher cette page */}
+      <Route path="notifications" element={<DemandeurNotificationsList />} />
 
       {/* demandes d'authentification (code ADN) */}
       <Route path="demandes-authentification" element={<DemandeurDemandesAuthentificationList />} />

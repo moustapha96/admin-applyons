@@ -278,6 +278,7 @@
         "messages": "Messages",
         "configurations": "Configurations",
         "settings": "Settings",
+        "sendNotification": "Send notification",
         "mailer": "Mailer",
         "auditLogs": "Audit logs",
         "permissions": "Permissions",
@@ -290,6 +291,7 @@
         "souscrire": "Subscribe",
         "dossiersTraiter": "Files to process",
         "notifications": "Notifications",
+        "demandeurNotifications": "Notifications",
         "logout": "Log out",
         "demandesAuthentification": "Doc authentication",
         "demandesAuthentificationList": "My authentication requests",
@@ -300,6 +302,24 @@
         "demandesAuthentificationAdmin": "Authentication requests",
         "adminDemandesAuthList": "Request list",
         "adminDemandesAuthStats": "Statistics"
+    },
+    "demandeurNotifications": {
+        "title": "Notifications",
+        "loadError": "Error loading notifications.",
+        "allRead": "All notifications marked as read.",
+        "markAllError": "Could not mark all as read.",
+        "markAllRead": "Mark all as read",
+        "empty": "No notifications",
+        "total": "{{total}} notification(s)",
+        "view": "View",
+        "read": "Read",
+        "unread": "Unread",
+        "columns": {
+            "title": "Title",
+            "message": "Message",
+            "date": "Date",
+            "status": "Status"
+        }
     },
     "demandesAuthentification": {
         "title": "Document authentication requests",
@@ -3756,6 +3776,50 @@
             "htmlVersion": "HTML Version",
             "attachmentsCount": "Attachments"
         }
+    },
+    "adminSendNotification": {
+        "title": "Send notification",
+        "description": "Send a notification to all demandeurs, all instituts, or instituts by organization type. Recipients will see it in their notification center (read-only).",
+        "breadcrumb": {
+            "admin": "Admin",
+            "send": "Send notification"
+        },
+        "audience": {
+            "allDemandeurs": "All demandeurs",
+            "allInstituts": "All instituts",
+            "byOrgType": "By organization type"
+        },
+        "fields": {
+            "audience": "Recipients",
+            "orgType": "Organization type",
+            "title": "Title",
+            "message": "Message"
+        },
+        "placeholders": {
+            "audience": "Select recipients",
+            "orgType": "Select type",
+            "title": "Notification title",
+            "message": "Message content"
+        },
+        "required": {
+            "audience": "Please select recipients",
+            "orgType": "Please select organization type",
+            "title": "Title is required",
+            "message": "Message is required"
+        },
+        "orgTypes": {
+            "INSTITUT": "Institut",
+            "COLLEGE": "College",
+            "BANQUE": "Bank",
+            "UNIVERSITE": "University",
+            "LYCEE": "High school",
+            "ENTREPRISE": "Company",
+            "TRADUCTEUR": "Translator"
+        },
+        "submit": "Send notification",
+        "success": "{{count}} notification(s) sent.",
+        "lastSent": "Last sent: {{count}} recipient(s) ({{audience}}).",
+        "error": "Error sending notifications."
     },
     "adminAuditLogs": {
         "pageTitle": "Audit Logs",

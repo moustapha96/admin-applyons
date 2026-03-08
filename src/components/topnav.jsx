@@ -121,6 +121,11 @@ export default function Topnav({ setToggle, toggle }) {
   // Détermine vers quelle page aller quand on clique sur une notification.
   const handleNotificationClick = (notification) => {
     markAsRead(notification.id);
+    // Notifications broadcast admin : lecture seule, pas de navigation
+    if (notification.type === "ADMIN_BROADCAST" || notification.isBroadcast) {
+      closeNotificationUi();
+      return;
+    }
     const go = (path) => {
       if (path) {
         closeNotificationUi();

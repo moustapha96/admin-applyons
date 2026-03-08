@@ -233,6 +233,7 @@
         "messages": "Nachrichten",
         "configurations": "Konfigurationen",
         "settings": "Einstellungen",
+        "sendNotification": "Benachrichtigung senden",
         "mailer": "Mailer",
         "auditLogs": "Audit-Logs",
         "permissions": "Berechtigungen",
@@ -245,6 +246,7 @@
         "souscrire": "Abonnieren",
         "dossiersTraiter": "Zu bearbeitende Dossiers",
         "notifications": "Benachrichtigungen",
+        "demandeurNotifications": "Benachrichtigungen",
         "logout": "Abmelden",
         "demandesAuthentification": "Dok.-Authentifizierung",
         "demandesAuthentificationList": "Meine Authentifizierungsanfragen",
@@ -3565,6 +3567,20 @@
             "htmlVersion": "HTML-Version",
             "attachmentsCount": "Anhänge"
         }
+    },
+    "adminSendNotification": {
+        "title": "Benachrichtigung senden",
+        "description": "Senden Sie eine Benachrichtigung an alle Antragsteller, alle Institute oder Institute nach Organisationstyp. Empfänger sehen sie in ihrem Benachrichtigungscenter (nur Lesen).",
+        "breadcrumb": { "admin": "Admin", "send": "Benachrichtigung senden" },
+        "audience": { "allDemandeurs": "Alle Antragsteller", "allInstituts": "Alle Institute", "byOrgType": "Nach Organisationstyp" },
+        "fields": { "audience": "Empfänger", "orgType": "Organisationstyp", "title": "Titel", "message": "Nachricht" },
+        "placeholders": { "audience": "Empfänger wählen", "orgType": "Typ wählen", "title": "Titel der Benachrichtigung", "message": "Nachrichteninhalt" },
+        "required": { "audience": "Bitte Empfänger wählen", "orgType": "Bitte Organisationstyp wählen", "title": "Titel ist erforderlich", "message": "Nachricht ist erforderlich" },
+        "orgTypes": { "INSTITUT": "Institut", "COLLEGE": "Kolleg", "BANQUE": "Bank", "UNIVERSITE": "Universität", "LYCEE": "Gymnasium", "ENTREPRISE": "Unternehmen", "TRADUCTEUR": "Übersetzer" },
+        "submit": "Benachrichtigung senden",
+        "success": "{{count}} Benachrichtigung(en) gesendet.",
+        "lastSent": "Zuletzt gesendet: {{count}} Empfänger ({{audience}}).",
+        "error": "Fehler beim Senden der Benachrichtigungen."
     },
     "adminAuditLogs": {
         "pageTitle": "Audit-Protokolle",

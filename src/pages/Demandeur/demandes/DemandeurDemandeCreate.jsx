@@ -54,7 +54,7 @@ import { PDF_ACCEPT, createPdfBeforeUpload } from "@/utils/uploadValidation";
 const { Text } = Typography;
 const { Dragger } = Upload;
 
-/** Input date natif (comme auth-signup) pour usage avec Form.Item */
+/** Input date natif (comme auth-signup) pour usage avec Form.Item — compatible mode clair / nuit */
 function NativeDateInput({ value, onChange, max, hasError, ...rest }) {
   return (
     <input
@@ -62,7 +62,11 @@ function NativeDateInput({ value, onChange, max, hasError, ...rest }) {
       value={value ?? ""}
       onChange={(e) => onChange(e.target.value)}
       max={max}
-      className={`w-full px-3 py-2 border ${hasError ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]`}
+      className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--applyons-blue)] focus:border-[var(--applyons-blue)]
+        ${hasError ? "border-red-500 dark:border-red-500" : "border-gray-300 dark:border-slate-600"}
+        bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100
+        [color-scheme:light]
+        dark:[color-scheme:dark]`}
       {...rest}
     />
   );
@@ -144,11 +148,11 @@ const getInitialValuesFromUser = (me, countriesList = []) => {
   return initial;
 };
 
-// Helper pour ajouter l'astérisque rouge aux champs obligatoires
+// Helper pour ajouter l'astérisque rouge aux champs obligatoires (visible en clair et nuit)
 const RequiredLabel = ({ children }) => (
   <span>
     {children}
-    <span style={{ color: "#ff4d4f", marginLeft: 4 }}>*</span>
+    <span className="text-red-500 dark:text-red-400 ml-1">*</span>
   </span>
 );
 
@@ -882,35 +886,17 @@ export default function DemandeurDemandeCreate() {
   return (
     <PayPalScriptProvider options={getPayPalConfig()}>
       <div
-        className="container-fluid relative overflow-x-hidden max-w-full"
-        style={{
-          background: "#f9f9f9",
-          minHeight: "100vh",
-          paddingTop: "clamp(12px, 3vw, 24px)",
-          paddingBottom: "clamp(24px, 6vw, 48px)",
-          paddingLeft: "clamp(8px, 2vw, 24px)",
-          paddingRight: "clamp(8px, 2vw, 24px)",
-        }}
+        className="container-fluid relative overflow-x-hidden max-w-full min-h-screen
+          bg-gray-100 dark:bg-slate-900
+          pt-[clamp(12px,3vw,24px)] pb-[clamp(24px,6vw,48px)] px-[clamp(8px,2vw,24px)]"
       >
-        <div
-          className="layout-specing"
-          style={{ maxWidth: "min(100%, 1400px)", width: "100%", margin: "0 auto" }}
-        >
-          <h1
-            className="!mb-4 sm:!mb-5"
-            style={{
-              fontFamily: "Arial, sans-serif",
-              fontSize: "clamp(1.25rem, 4vw, 1.75rem)",
-              fontWeight: "normal",
-              color: "#333",
-            }}
-          >
+        <div className="layout-specing max-w-[min(100%,1400px)] w-full mx-auto">
+          <h1 className="!mb-4 sm:!mb-5 font-sans text-[clamp(1.25rem,4vw,1.75rem)] font-normal text-gray-800 dark:text-slate-100">
             {t("demandeurDemandeCreate.pageTitle")}
           </h1>
 
           <Card
-            className="mb-4 sm:mb-5 overflow-x-auto"
-            style={{ borderRadius: 0, boxShadow: "0 0 10px rgba(0,0,0,0.05)", background: "white", border: "none" }}
+            className="mb-4 sm:mb-5 overflow-x-auto rounded-none shadow-sm bg-white dark:bg-slate-800 dark:border-slate-700 border-0 dark:shadow-none"
           >
             <Steps
               direction={isSmallScreen ? "vertical" : "horizontal"}
@@ -929,22 +915,21 @@ export default function DemandeurDemandeCreate() {
             title={
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
                 <div
-                  className="shrink-0 w-10 h-10 sm:w-8 sm:h-8 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-700 text-base"
+                  className="shrink-0 w-10 h-10 sm:w-8 sm:h-8 rounded-full bg-neutral-200 dark:bg-slate-600 flex items-center justify-center text-neutral-700 dark:text-slate-200 text-base"
                 >
                   {steps[current].icon}
                 </div>
                 <div className="min-w-0">
-                  <div className="font-semibold text-base sm:text-lg text-neutral-800 truncate">
+                  <div className="font-semibold text-base sm:text-lg text-neutral-800 dark:text-slate-100 truncate">
                     {steps[current].title}
                   </div>
-                  <div className="text-xs sm:text-sm text-neutral-500">
+                  <div className="text-xs sm:text-sm text-neutral-500 dark:text-slate-400">
                     {t("demandeurDemandeCreate.stepCounter", { current: current + 1, total: steps.length })}
                   </div>
                 </div>
               </div>
             }
-            className="overflow-hidden"
-            style={{ borderRadius: 0, boxShadow: "0 0 10px rgba(0,0,0,0.05)", background: "white", border: "none" }}
+            className="overflow-hidden rounded-none shadow-sm bg-white dark:bg-slate-800 dark:border-slate-700 border-0 dark:shadow-none"
           >
             <style>{`
               .ant-form-item-label > label {
@@ -978,6 +963,10 @@ export default function DemandeurDemandeCreate() {
                 padding-bottom: 5px;
                 margin-top: 24px;
                 margin-bottom: 16px;
+              }
+              .dark .demande-create-section-title {
+                color: #e2e8f0;
+                border-bottom-color: #475569;
               }
               .demande-create-section-title:first-child {
                 margin-top: 8px;
@@ -1068,14 +1057,14 @@ export default function DemandeurDemandeCreate() {
                       }
                     >
                       <div>
-                        <Dragger {...passportUploadProps}>
-                          <p className="ant-upload-drag-icon">
-                            <InboxOutlined style={{ color: "#1890ff" }} />
+                        <Dragger {...passportUploadProps} className="dark:!bg-slate-800/50 dark:!border-slate-600 dark:hover:!border-blue-500">
+                          <p className="ant-upload-drag-icon text-blue-500 dark:text-blue-400">
+                            <InboxOutlined />
                           </p>
-                          <p className="ant-upload-text">
+                          <p className="ant-upload-text text-gray-700 dark:text-slate-300">
                             {t("demandeurDemandeCreate.passportUpload.text")}
                           </p>
-                          <p className="ant-upload-hint">
+                          <p className="ant-upload-hint text-gray-500 dark:text-slate-400">
                             {t("demandeurDemandeCreate.passportUpload.hint")}
                           </p>
                         </Dragger>
@@ -1588,7 +1577,7 @@ export default function DemandeurDemandeCreate() {
                 <h2 className="demande-create-section-title">
                   {t("demandeurDemandeCreate.sections.inviteOrgs")}
                 </h2>
-                <Card style={{ background: "#fafafa", marginBottom: 16, border: "1px solid #e0e0e0" }}>
+                <Card className="!mb-4 bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-600">
                   <Row gutter={12} className="mb-2">
                     <Col xs={24} md={12}>
                       <Input
@@ -1629,7 +1618,7 @@ export default function DemandeurDemandeCreate() {
                   bordered
                   dataSource={invites}
                   locale={{ emptyText: t("demandeurDemandeCreate.invitations.noOrgsInvited") }}
-                  style={{ marginBottom: 24 }}
+                  className="!mb-6 dark:border-slate-600 [&_.ant-list-item]:dark:border-slate-600"
                   renderItem={(item) => (
                     <List.Item
                       key={item.email}
@@ -1678,13 +1667,13 @@ export default function DemandeurDemandeCreate() {
                   {t("demandeurDemandeCreate.sections.choosePayment")}
                 </h2>
 
-                <Card className="!mb-4 sm:!mb-6" style={{ background: "#f5f5f5", color: "#333", border: "1px solid #ccc" }}>
+                <Card className="!mb-4 sm:!mb-6 bg-gray-100 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-600 text-gray-800 dark:text-slate-200">
                   <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
                     <div className="min-w-0">
-                      <h3 className="!m-0 text-base sm:text-lg text-neutral-800">{t("demandeurDemandeCreate.payment.processingFee")}</h3>
-                      <p className="mt-1 text-sm text-neutral-500">{t("demandeurDemandeCreate.payment.oneTimePayment")}</p>
+                      <h3 className="!m-0 text-base sm:text-lg text-neutral-800 dark:text-slate-100">{t("demandeurDemandeCreate.payment.processingFee")}</h3>
+                      <p className="mt-1 text-sm text-neutral-500 dark:text-slate-400">{t("demandeurDemandeCreate.payment.oneTimePayment")}</p>
                     </div>
-                    <div className="text-2xl sm:text-3xl font-bold text-neutral-800 shrink-0">
+                    <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-slate-100 shrink-0">
                       {priceLabel}
                     </div>
                   </div>
@@ -1694,21 +1683,20 @@ export default function DemandeurDemandeCreate() {
                   <Col xs={24} md={12}>
                     <Card
                       hoverable
-                      style={{
-                        border: paymentMethod === "stripe" ? "2px solid #1890ff" : "1px solid #d9d9d9",
-                        borderRadius: 8,
-                        cursor: "pointer",
-                        transition: "all 0.3s",
-                      }}
+                      className={`rounded-lg cursor-pointer transition-all duration-300 ${
+                        paymentMethod === "stripe"
+                          ? "border-2 border-blue-500 dark:border-blue-400"
+                          : "border border-gray-300 dark:border-slate-600 hover:border-gray-400 dark:hover:border-slate-500"
+                      }`}
                       onClick={() => handlePaymentSelection("stripe")}
                     >
-                      <div style={{ textAlign: "center", padding: "24px 0" }}>
-                        <CreditCardOutlined style={{ fontSize: 48, color: "#1890ff", marginBottom: 16 }} />
-                        <h3 style={{ fontFamily: "Arial, sans-serif", fontSize: 20, fontWeight: 600, marginBottom: 8 }}>{t("demandeurDemandeCreate.payment.stripe")}</h3>
-                        <p style={{ fontFamily: "Arial, sans-serif", color: "#8c8c8c", marginBottom: 12 }}>{t("demandeurDemandeCreate.payment.secureCreditCard")}</p>
-                        <div style={{ display: "inline-block", padding: "4px 12px", background: "#52c41a", color: "white", borderRadius: 12, fontSize: 12, fontWeight: 500 }}>
+                      <div className="text-center py-6">
+                        <CreditCardOutlined className="text-4xl text-blue-500 dark:text-blue-400 mb-4 block" />
+                        <h3 className="font-sans text-xl font-semibold mb-2 text-gray-800 dark:text-slate-100">{t("demandeurDemandeCreate.payment.stripe")}</h3>
+                        <p className="font-sans text-gray-500 dark:text-slate-400 mb-3">{t("demandeurDemandeCreate.payment.secureCreditCard")}</p>
+                        <span className="inline-block px-3 py-1 bg-green-500 dark:bg-green-600 text-white rounded-xl text-xs font-medium">
                           {t("demandeurDemandeCreate.payment.recommended")}
-                        </div>
+                        </span>
                       </div>
                     </Card>
                   </Col>
@@ -1716,35 +1704,34 @@ export default function DemandeurDemandeCreate() {
                   <Col xs={24} md={12}>
                     <Card
                       hoverable
-                      style={{
-                        border: paymentMethod === "paypal" ? "2px solid #1890ff" : "1px solid #d9d9d9",
-                        borderRadius: 8,
-                        cursor: "pointer",
-                        transition: "all 0.3s",
-                      }}
+                      className={`rounded-lg cursor-pointer transition-all duration-300 ${
+                        paymentMethod === "paypal"
+                          ? "border-2 border-blue-500 dark:border-blue-400"
+                          : "border border-gray-300 dark:border-slate-600 hover:border-gray-400 dark:hover:border-slate-500"
+                      }`}
                       onClick={() => handlePaymentSelection("paypal")}
                     >
-                      <div style={{ textAlign: "center", padding: "24px 0" }}>
-                        <svg style={{ width: 48, height: 48, marginBottom: 16 }} viewBox="0 0 24 24" fill="#0070BA">
+                      <div className="text-center py-6">
+                        <svg className="w-12 h-12 mx-auto mb-4 text-[#0070BA] dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 0 0-.794.68l-.04.22-.63 3.993-.028.15a.805.805 0 0 1-.794.68H7.72a.483.483 0 0 1-.477-.558L9.22 7.08a.964.964 0 0 1 .952-.814h4.242c.94 0 1.814.078 2.592.28 1.318.34 2.29 1.098 2.817 2.218z" />
                         </svg>
-                        <h3 style={{ fontFamily: "Arial, sans-serif", fontSize: 20, fontWeight: 600, marginBottom: 8 }}>{t("demandeurDemandeCreate.payment.paypal")}</h3>
-                        <p style={{ fontFamily: "Arial, sans-serif", color: "#8c8c8c", marginBottom: 12 }}>{t("demandeurDemandeCreate.payment.paypalAccount")}</p>
-                        <div style={{ display: "inline-block", padding: "4px 12px", background: "#f0f0f0", color: "#595959", borderRadius: 12, fontSize: 12, fontWeight: 500 }}>
+                        <h3 className="font-sans text-xl font-semibold mb-2 text-gray-800 dark:text-slate-100">{t("demandeurDemandeCreate.payment.paypal")}</h3>
+                        <p className="font-sans text-gray-500 dark:text-slate-400 mb-3">{t("demandeurDemandeCreate.payment.paypalAccount")}</p>
+                        <span className="inline-block px-3 py-1 bg-gray-200 dark:bg-slate-600 text-gray-600 dark:text-slate-300 rounded-xl text-xs font-medium">
                           {t("demandeurDemandeCreate.payment.available")}
-                        </div>
+                        </span>
                       </div>
                     </Card>
                   </Col>
                 </Row>
 
                 {paymentCompleted && (
-                  <Card style={{ marginTop: 24, background: "#f6ffed", border: "1px solid #b7eb8f" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <CheckCircleOutlined style={{ fontSize: 24, color: "#52c41a" }} />
+                  <Card className="mt-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+                    <div className="flex items-center gap-3">
+                      <CheckCircleOutlined className="text-2xl text-green-600 dark:text-green-400 shrink-0" />
                       <div>
-                        <h4 style={{ margin: 0, fontSize: 16, fontWeight: 600, color: "#52c41a" }}>{t("demandeurDemandeCreate.payment.paymentConfirmed")}</h4>
-                        <p style={{ margin: "4px 0 0 0", color: "#389e0d" }}>{t("demandeurDemandeCreate.payment.canSubmitNow")}</p>
+                        <h4 className="m-0 text-base font-semibold text-green-700 dark:text-green-400">{t("demandeurDemandeCreate.payment.paymentConfirmed")}</h4>
+                        <p className="mt-1 mb-0 text-green-600 dark:text-green-500 text-sm">{t("demandeurDemandeCreate.payment.canSubmitNow")}</p>
                       </div>
                     </div>
                   </Card>
@@ -1781,10 +1768,7 @@ export default function DemandeurDemandeCreate() {
                       loading={loading || isSubmitting}
                       size="large"
                       disabled={!paymentCompleted}
-                      style={{
-                        background: paymentCompleted ? "#52c41a" : undefined,
-                        borderColor: paymentCompleted ? "#52c41a" : undefined,
-                      }}
+                      className={paymentCompleted ? "!bg-green-600 hover:!bg-green-700 dark:!bg-green-600 dark:hover:!bg-green-500 !border-green-600" : ""}
                     >
                       {paymentCompleted ? t("demandeurDemandeCreate.buttons.createApplication") : t("demandeurDemandeCreate.buttons.completePayment")}
                     </Button>
@@ -1824,16 +1808,16 @@ export default function DemandeurDemandeCreate() {
           >
             <div className="p-4 sm:p-6 sm:py-6">
               <div
-                className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center p-4 rounded-lg mb-6 bg-[#f0f5ff] border border-[#adc6ff]"
+                className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center p-4 rounded-lg mb-6 bg-blue-50 dark:bg-slate-800 border border-blue-200 dark:border-slate-600"
               >
                 <div className="min-w-0">
-                  <h4 className="!m-0 text-sm sm:text-base">{t("demandeurDemandeCreate.payment.processingFeeLabel")}</h4>
-                  <p className="mt-1 text-xs sm:text-sm text-neutral-500">
+                  <h4 className="!m-0 text-sm sm:text-base text-gray-800 dark:text-slate-100">{t("demandeurDemandeCreate.payment.processingFeeLabel")}</h4>
+                  <p className="mt-1 text-xs sm:text-sm text-neutral-500 dark:text-slate-400">
                     {t("demandeurDemandeCreate.payment.securePaymentBy")}{" "}
                     {paymentMethod === "stripe" ? t("demandeurDemandeCreate.payment.stripe") : t("demandeurDemandeCreate.payment.paypal")}
                   </p>
                 </div>
-                <div className="text-xl sm:text-2xl font-bold text-[#1890ff] shrink-0">{priceLabel}</div>
+                <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400 shrink-0">{priceLabel}</div>
               </div>
 
               {paymentMethod === "stripe" && (
@@ -1884,31 +1868,11 @@ export default function DemandeurDemandeCreate() {
           </Modal>
 
           {isSubmitting && (
-            <div
-              style={{
-                position: "fixed",
-                inset: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "rgba(0, 0, 0, 0.5)",
-                zIndex: 9999,
-              }}
-            >
-              <Card style={{ padding: 24, textAlign: "center" }}>
-                <div
-                  style={{
-                    width: 48,
-                    height: 48,
-                    border: "4px solid #f3f3f3",
-                    borderTop: "4px solid #1890ff",
-                    borderRadius: "50%",
-                    animation: "spin 1s linear infinite",
-                    margin: "0 auto 16px",
-                  }}
-                />
-                <h4 style={{ margin: 0, fontSize: 18, fontWeight: 600 }}>{t("demandeurDemandeCreate.payment.processing")}</h4>
-                <p style={{ margin: "8px 0 0 0", color: "#8c8c8c" }}>{t("demandeurDemandeCreate.payment.pleaseWait")}</p>
+            <div className="fixed inset-0 flex items-center justify-center bg-black/50 dark:bg-black/60 z-[9999]">
+              <Card className="!p-6 text-center bg-white dark:bg-slate-800 dark:border-slate-600">
+                <div className="w-12 h-12 border-4 border-gray-200 dark:border-slate-600 border-t-blue-500 dark:border-t-blue-400 rounded-full animate-spin mx-auto mb-4" />
+                <h4 className="m-0 text-lg font-semibold text-gray-800 dark:text-slate-100">{t("demandeurDemandeCreate.payment.processing")}</h4>
+                <p className="mt-2 mb-0 text-gray-500 dark:text-slate-400">{t("demandeurDemandeCreate.payment.pleaseWait")}</p>
               </Card>
             </div>
           )}
@@ -1940,8 +1904,9 @@ function Summary({ form, invites, orgs, tradOrgs, t, me }) {
     const formattedValue = formatValue(value);
     if (formattedValue === null) return null;
     return (
-      <div className="mb-1">
-        <span className="font-medium">{label}:</span> <span>{formattedValue}</span>
+      <div className="mb-1 text-gray-700 dark:text-slate-300">
+        <span className="font-medium text-gray-800 dark:text-slate-200">{label}:</span>{" "}
+        <span>{formattedValue}</span>
       </div>
     );
   };
@@ -1956,7 +1921,7 @@ function Summary({ form, invites, orgs, tradOrgs, t, me }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* 1) IDENTITÉ (à partir de l'utilisateur connecté, pas des champs du formulaire) */}
-      <Card size="small" title={t("demandeurDemandeCreate.summary.identity")} style={{ borderRadius: 8 }}>
+      <Card size="small" title={t("demandeurDemandeCreate.summary.identity")} className="rounded-lg dark:bg-slate-800/50 dark:border-slate-600 [&_.ant-card-head]:dark:text-slate-100 [&_.ant-card-head]:dark:border-slate-600">
         <Item
           label={t("demandeurDemandeCreate.summary.fullName")}
           value={me ? `${me.firstName || ""} ${me.lastName || ""}`.trim() || me.email : null}
@@ -1980,7 +1945,7 @@ function Summary({ form, invites, orgs, tradOrgs, t, me }) {
       </Card>
 
       {/* 2) ACADÉMIQUE */}
-      <Card size="small" title={t("demandeurDemandeCreate.summary.academic")} style={{ borderRadius: 8 }}>
+      <Card size="small" title={t("demandeurDemandeCreate.summary.academic")} className="rounded-lg dark:bg-slate-800/50 dark:border-slate-600 [&_.ant-card-head]:dark:text-slate-100 [&_.ant-card-head]:dark:border-slate-600">
         <Item
           label={t("demandeurDemandeCreate.summary.serieLevelMention")}
           value={[v.serie, v.niveau, v.mention].filter(Boolean).join(" / ") || null}
@@ -2012,7 +1977,7 @@ function Summary({ form, invites, orgs, tradOrgs, t, me }) {
       </Card>
 
       {/* 3) CIBLE (avec filière souhaitée ici) */}
-      <Card size="small" title={t("demandeurDemandeCreate.summary.target")} style={{ borderRadius: 8 }}>
+      <Card size="small" title={t("demandeurDemandeCreate.summary.target")} className="rounded-lg dark:bg-slate-800/50 dark:border-slate-600 [&_.ant-card-head]:dark:text-slate-100 [&_.ant-card-head]:dark:border-slate-600">
         <Item
           label={t("demandeurDemandeCreate.fields.targetOrg")}
           value={getOrgName(v.targetOrgId)}
@@ -2040,7 +2005,7 @@ function Summary({ form, invites, orgs, tradOrgs, t, me }) {
       </Card>
 
       {/* 4) FAMILLE */}
-      <Card size="small" title={t("demandeurDemandeCreate.sections.familyInfo")} style={{ borderRadius: 8 }}>
+      <Card size="small" title={t("demandeurDemandeCreate.sections.familyInfo")} className="rounded-lg dark:bg-slate-800/50 dark:border-slate-600 [&_.ant-card-head]:dark:text-slate-100 [&_.ant-card-head]:dark:border-slate-600">
         <Item
           label={t("demandeurDemandeCreate.fields.parentGuardianName")}
           value={v.parentGuardianName}
@@ -2056,7 +2021,7 @@ function Summary({ form, invites, orgs, tradOrgs, t, me }) {
       </Card>
 
       {/* 5) INVITATIONS */}
-      <Card size="small" title={t("demandeurDemandeCreate.summary.invitations")} style={{ borderRadius: 8 }}>
+      <Card size="small" title={t("demandeurDemandeCreate.summary.invitations")} className="rounded-lg dark:bg-slate-800/50 dark:border-slate-600 [&_.ant-card-head]:dark:text-slate-100 [&_.ant-card-head]:dark:border-slate-600">
         {invites?.length ? (
           invites.map((it) => (
             <div key={it.email}>

@@ -278,6 +278,7 @@
         "messages": "Messages",
         "configurations": "Configurations",
         "settings": "Paramètres",
+        "sendNotification": "Envoyer une notification",
         "mailer": "Mailer",
         "auditLogs": "Audit logs",
         "permissions": "Permissions",
@@ -291,6 +292,7 @@
         "dossiersTraiter": "Dossier à traiter",
         "organizationInvites": "Invitations d'organisations",
         "notifications": "Notifications",
+        "demandeurNotifications": "Notifications",
         "logout": "Déconnexion",
         "demandesAuthentification": "Auth. documents",
         "demandesAuthentificationList": "Mes demandes d'authentification",
@@ -301,6 +303,24 @@
         "demandesAuthentificationAdmin": "Demandes d'authentification",
         "adminDemandesAuthList": "Liste des demandes",
         "adminDemandesAuthStats": "Statistiques"
+    },
+    "demandeurNotifications": {
+        "title": "Notifications",
+        "loadError": "Erreur lors du chargement des notifications.",
+        "allRead": "Toutes les notifications ont été marquées comme lues.",
+        "markAllError": "Impossible de tout marquer comme lu.",
+        "markAllRead": "Tout marquer comme lu",
+        "empty": "Aucune notification",
+        "total": "{{total}} notification(s)",
+        "view": "Voir",
+        "read": "Lu",
+        "unread": "Non lu",
+        "columns": {
+            "title": "Titre",
+            "message": "Message",
+            "date": "Date",
+            "status": "Statut"
+        }
     },
     "demandesAuthentification": {
         "title": "Demandes d'authentification de documents",
@@ -3817,6 +3837,50 @@
             "htmlVersion": "Version HTML",
             "attachmentsCount": "Pièces jointes"
         }
+    },
+    "adminSendNotification": {
+        "title": "Envoyer une notification",
+        "description": "Envoyez une notification à tous les demandeurs, à tous les instituts, ou aux instituts d'un type d'organisation donné. Les destinataires la verront dans leur centre de notifications (lecture seule).",
+        "breadcrumb": {
+            "admin": "Admin",
+            "send": "Envoyer une notification"
+        },
+        "audience": {
+            "allDemandeurs": "Tous les demandeurs",
+            "allInstituts": "Tous les instituts",
+            "byOrgType": "Par type d'organisation"
+        },
+        "fields": {
+            "audience": "Destinataires",
+            "orgType": "Type d'organisation",
+            "title": "Titre",
+            "message": "Message"
+        },
+        "placeholders": {
+            "audience": "Choisir les destinataires",
+            "orgType": "Choisir le type",
+            "title": "Titre de la notification",
+            "message": "Contenu du message"
+        },
+        "required": {
+            "audience": "Veuillez sélectionner les destinataires",
+            "orgType": "Veuillez sélectionner le type d'organisation",
+            "title": "Le titre est requis",
+            "message": "Le message est requis"
+        },
+        "orgTypes": {
+            "INSTITUT": "Institut",
+            "COLLEGE": "Collège",
+            "BANQUE": "Banque",
+            "UNIVERSITE": "Université",
+            "LYCEE": "Lycée",
+            "ENTREPRISE": "Entreprise",
+            "TRADUCTEUR": "Traducteur"
+        },
+        "submit": "Envoyer la notification",
+        "success": "{{count}} notification(s) envoyée(s).",
+        "lastSent": "Dernier envoi : {{count}} destinataire(s) ({{audience}}).",
+        "error": "Erreur lors de l'envoi des notifications."
     },
     "adminAuditLogs": {
         "pageTitle": "Logs d'audit",

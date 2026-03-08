@@ -15,6 +15,19 @@ import "antd/dist/reset.css";
 import "./assets/css/style.css";
 import "./i18n";
 
+// En production (VITE_NODE_ENV depuis .env) : désactiver toutes les sorties console
+const isProduction =
+  (import.meta.env.VITE_NODE_ENV && String(import.meta.env.VITE_NODE_ENV).toLowerCase() === "production") ||
+  import.meta.env.PROD;
+if (isProduction) {
+  const noop = () => {};
+  ["log", "info", "warn", "debug", "trace", "error"].forEach((method) => {
+    if (typeof console[method] === "function") {
+      console[method] = noop;
+    }
+  });
+}
+
 // Désinscription de tout Service Worker pour éviter le cache après déploiement
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {

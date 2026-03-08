@@ -212,9 +212,9 @@ export default function DemandeurUserProfile() {
 
   return (
     <>
-      <div className="container-fluid relative w-full px-3 sm:px-4 md:px-6 overflow-x-hidden max-w-full">
-        <div className="layout-specing w-full py-3 sm:py-4 md:py-6">
-          <div className="p-3 sm:p-4 md:p-6 w-full bg-gray-50 dark:bg-gray-900/30 min-h-screen sm:min-h-0 rounded-lg sm:rounded-xl">
+      <div className="container-fluid relative w-full min-w-0 px-3 sm:px-4 md:px-6 overflow-x-hidden max-w-full">
+        <div className="layout-specing w-full py-3 sm:py-4 md:py-6 min-w-0">
+          <div className="p-3 sm:p-4 md:p-6 w-full min-w-0 bg-gray-50 dark:bg-gray-900/30 min-h-screen sm:min-h-0 rounded-lg sm:rounded-xl">
             <Row gutter={[16, 16]} className="!mx-0 sm:!mx-[-8px] w-full">
               {/* Header */}
               <Col xs={24}>
@@ -312,9 +312,9 @@ export default function DemandeurUserProfile() {
 
               {/* Stats */}
               <Col xs={24}>
-                <Row gutter={[12, 12]} className="!mx-0 sm:!mx-[-8px]">
-                  <Col xs={24} sm={12}>
-                    <Card className="overflow-hidden !rounded-lg" bodyStyle={{ padding: "12px 16px" }}>
+                <Row gutter={[12, 12]} className="!mx-0 sm:!mx-[-8px] w-full">
+                  <Col xs={24} sm={12} className="min-w-0">
+                    <Card className="overflow-hidden !rounded-lg w-full min-w-0" bodyStyle={{ padding: screens.sm ? "12px 16px" : "10px 12px" }}>
                       <Statistic
                         title={<span className="text-xs sm:text-sm">{t("profilePage.stats.lastLogin")}</span>}
                         value={formatDate(userData.updatedAt)}
@@ -327,8 +327,9 @@ export default function DemandeurUserProfile() {
                       />
                     </Card>
                   </Col>
-                  <Col xs={24} sm={12}>
-                    <Card className="overflow-hidden !rounded-lg" bodyStyle={{ padding: "12px 16px" }}>
+                  
+                  <Col xs={24} sm={12} className="min-w-0">
+                    <Card className="overflow-hidden !rounded-lg w-full min-w-0" bodyStyle={{ padding: screens.sm ? "12px 16px" : "10px 12px" }}>
                       <Statistic
                         title={<span className="text-xs sm:text-sm">{t("profilePage.stats.memberSince")}</span>}
                         value={formatDate(userData.createdAt)}
@@ -413,7 +414,7 @@ export default function DemandeurUserProfile() {
                     </Form>
                   ) : (
                     <Descriptions
-                      column={{ xs: 1, sm: 2 }}
+                      column={{ xs: 1, sm: 2, md: 3 }}
                       size="small"
                       layout="horizontal"
                       labelStyle={{

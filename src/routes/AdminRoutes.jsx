@@ -91,6 +91,7 @@ import ApiRoutesList from "../pages/Admin/ApiRoutes/ApiRoutesList.jsx";
 import AdminDemandesAuthentificationList from "../pages/Admin/DemandesAuthentification/AdminDemandesAuthentificationList.jsx";
 import AdminDemandeAuthentificationDetail from "../pages/Admin/DemandesAuthentification/AdminDemandeAuthentificationDetail.jsx";
 import AdminDemandesAuthentificationStats from "../pages/Admin/DemandesAuthentification/AdminDemandesAuthentificationStats.jsx";
+import AdminSendNotification from "../pages/Admin/Notifications/AdminSendNotification.jsx";
 
 export const adminRoutes = (
   <>
@@ -338,6 +339,9 @@ export const adminRoutes = (
         <Route path="mailer" element={<MailerManagement />} />
         <Route path="api-routes" element={<ApiRoutesList />} />
       </Route>
+
+      {/* Envoi de notifications en masse (tous les demandeurs, tous les instituts, ou par type d'org) */}
+      <Route path="notifications/send" element={<AdminSendNotification />} />
 
 
 

@@ -144,6 +144,7 @@ const MENU_ADMIN = [
     anyPerms: ["settings.read", "config.read", "permissions.manage"],
     children: [
       { i18nKey: "settings", to: "/admin/config", anyPerms: ["config.read", "config.manage"], icon: <RiSettings4Line /> },
+      { i18nKey: "sendNotification", to: "/admin/notifications/send", anyPerms: [], icon: <BellOutlined /> },
       { i18nKey: "mailer", to: "/admin/mailer", anyPerms: ["config.read", "config.manage"], icon: <RiMailSettingsLine /> },
       { i18nKey: "auditLogs", to: "/admin/audit-logs", anyPerms: ["audit.read", "audit.manage"], icon: <RiFileList3Line /> },
       { i18nKey: "permissions", to: "/admin/permissions", anyPerms: ["permissions.read", "permissions.manage"], icon: <RiShieldUserLine /> },
@@ -240,6 +241,7 @@ const MENU_SUPER_ADMIN = [
     anyPerms: [],
     children: [
       { i18nKey: "settings", to: "/admin/config", anyPerms: [], icon: <RiSettings4Line /> },
+      { i18nKey: "sendNotification", to: "/admin/notifications/send", anyPerms: [], icon: <BellOutlined /> },
       { i18nKey: "mailer", to: "/admin/mailer", anyPerms: [], icon: <RiMailSettingsLine /> },
       { i18nKey: "auditLogs", to: "/admin/audit-logs", anyPerms: [], icon: <RiFileList3Line /> },
       { i18nKey: "permissions", to: "/admin/permissions", anyPerms: [], icon: <RiShieldUserLine /> },
@@ -295,6 +297,7 @@ const MENU_DEMANDEUR = [
       { i18nKey: "demandesAuthentificationCreate", to: "/demandeur/demandes-authentification/create", anyPerms: ["demandes-authentification.create"], icon: <HiOutlineDocumentAdd /> },
     ],
   },
+  { i18nKey: "demandeurNotifications", to: "/demandeur/notifications", anyPerms: [], icon: <BellOutlined /> },
   { i18nKey: "profile", icon: <AiOutlineUser />, to: "/profile" },
 ];
 
