@@ -16,6 +16,8 @@ import { toast } from 'sonner';
 // image de fond (tu peux en changer si tu veux)
 import applyonsAbout1 from "../../assets/logo.png";
 
+const REMEMBER_ME_KEY = 'applyons_remember_me';
+
 export default function AuthLogin() {
     const { t } = useTranslation();
     const location = useLocation();
@@ -28,11 +30,19 @@ export default function AuthLogin() {
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(() => {
         try {
-            return localStorage.getItem('applyons_remember_me') === '1';
+            return localStorage.getItem(REMEMBER_ME_KEY) === '1';
         } catch {
             return false;
         }
     });
+
+    const handleRememberMeChange = (e) => {
+        const checked = e.target.checked;
+        setRememberMe(checked);
+        try {
+            localStorage.setItem(REMEMBER_ME_KEY, checked ? '1' : '0');
+        } catch (_) {}
+    };
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -58,7 +68,6 @@ export default function AuthLogin() {
 
         try {
             const response = await authService.login({ email, password });
-            console.log(response);
             if (response.token && response.user) {
                 login({ ...response.user, token: response.token }, rememberMe);
                 const isSafeRedirect = redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//") && !redirectTo.startsWith("/auth");
@@ -68,7 +77,6 @@ export default function AuthLogin() {
                 setError(t('auth.login.errorNoToken'));
             }
         } catch (err) {
-            console.log(err);
             toast.error(err?.message || t('auth.login.errorLogin'));
             if (err?.code === 'ACCOUNT_INACTIVE') {
                 navigate('/auth/lock-screen');
@@ -164,11 +172,11 @@ export default function AuthLogin() {
                                     <div className="flex justify-between mb-4">
                                         <label className="flex items-center gap-2 select-none cursor-pointer">
                                             <input
-                                                className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-[var(--applyons-orange)] focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+                                                className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-[var(--applyons-orange)] focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 accent-[var(--applyons-orange)]"
                                                 type="checkbox"
                                                 id="RememberMe"
                                                 checked={rememberMe}
-                                                onChange={(e) => setRememberMe(e.target.checked)}
+                                                onChange={handleRememberMeChange}
                                             />
                                             <span className="text-slate-500">{t('auth.login.rememberMe')}</span>
                                         </label>
