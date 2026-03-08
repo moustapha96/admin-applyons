@@ -1,4 +1,4 @@
-// // src/services/user.service.js
+// services/userService.js
 import axiosInstance from "./api";
 import organizationService from "./organizationService";
 const userService = {
