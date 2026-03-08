@@ -96,7 +96,52 @@
         "teamAddMember": "Add member",
         "teamRemove": "Remove",
         "teamSave": "Save team",
-        "toastTeamSaved": "Team saved successfully"
+        "toastTeamSaved": "Team saved successfully",
+        "tabPageContent": "Page contents",
+        "pageContent": {
+            "title": "Frontend page contents",
+            "description": "Edit text shown on public pages: home, about, contact, privacy policy, terms and conditions, cookies, legal notice, security & trust. Content stored per page and per language (JSON).",
+            "page": "Page",
+            "language": "Language",
+            "pages": {
+                "landing": "Home",
+                "about": "About",
+                "contact": "Contact",
+                "privacyPolicy": "Privacy policy",
+                "termsAndConditions": "Terms and conditions",
+                "cookiePolicy": "Cookie policy",
+                "legalNotice": "Legal notice",
+                "securityTrust": "Security & trust"
+            },
+            "editorMode": "Editor mode",
+            "modeRich": "Rich editor",
+            "modeJson": "JSON",
+            "richHint": "Use the editors below for title, subtitle and main content. Formatting (bold, lists, links) is preserved on the site.",
+            "richPlaceholder": "Enter main page content…",
+            "fields": {
+                "title": "Page title",
+                "subtitle": "Subtitle / introduction",
+                "lastUpdated": "Last updated (free text)",
+                "body": "Main content"
+            },
+            "placeholders": {
+                "title": "E.g. Privacy policy",
+                "subtitle": "Short introduction (formatting allowed)",
+                "lastUpdated": "E.g. Last updated: January 2025"
+            },
+            "jsonHint": "JSON content for this page and language. E.g. for landing hero: { \"hero\": { \"title\": \"...\", \"subtitle\": \"...\", \"cta\": \"...\" } }",
+            "save": "Save content",
+            "saved": "Content saved.",
+            "loadError": "Error loading content.",
+            "invalidJson": "Invalid JSON. Check syntax.",
+            "insertImage": "Insert image",
+            "imageInsert": "Insert",
+            "imageByUrl": "Image URL",
+            "imageUrlPlaceholder": "https://example.com/image.jpg",
+            "imageOrUpload": "or",
+            "imageUpload": "Upload an image (JPEG, PNG, GIF, WebP — max 5 MB)",
+            "imageUploadError": "Failed to upload image."
+        }
     },
     "notifications": {
         "newMessage": "New message",
@@ -252,7 +297,9 @@
         "demandesAuthentificationAttribuees": "Assigned to me",
         "codeADN": "Access by ADN code",
         "authenticationDocument": "Doc authentication",
-        "demandesAuthentificationAdmin": "Authentication requests"
+        "demandesAuthentificationAdmin": "Authentication requests",
+        "adminDemandesAuthList": "Request list",
+        "adminDemandesAuthStats": "Statistics"
     },
     "demandesAuthentification": {
         "title": "Document authentication requests",
@@ -459,9 +506,19 @@
             "documents": "Documents",
             "actions": "Actions"
         },
-        "actions": { "detail": "Details", "refresh": "Refresh" },
+        "actions": { "detail": "Details", "refresh": "Refresh", "exportCsv": "Export CSV", "stats": "Statistics" },
+        "export": { "success": "CSV export downloaded." },
+        "stats": {
+            "title": "Authentication requests statistics",
+            "breadcrumb": "Statistics",
+            "total": "Total requests",
+            "viewAll": "View full list",
+            "viewStatus": "View this list",
+            "loadError": "Error loading statistics."
+        },
         "pagination": { "total": "Total {{total}} requests" },
         "toasts": { "loadError": "Error loading requests." },
+        "empty": "No authentication requests",
         "statusLabel": "Status",
         "statusUpdateSuccess": "Status updated.",
         "statusUpdateError": "Error updating status.",

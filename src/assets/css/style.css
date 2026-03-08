@@ -3,6 +3,21 @@
   max-height: 300px;
   overflow-y: auto;
 }
+
+/* Éditeur riche Contenus des pages (admin config) */
+.page-content-quill-wrap .ql-container {
+  min-height: 300px;
+}
+.page-content-quill-wrap .ql-editor {
+  min-height: 300px;
+  overflow-y: auto;
+}
+.page-content-quill-subtitle .ql-container {
+  min-height: 60px;
+}
+.page-content-quill-subtitle .ql-editor {
+  min-height: 60px;
+}
 /* styles.css */
 :root {
   --ant-primary-color: #e28743;
@@ -131,4 +146,159 @@ h3 {
 .layout-specing {
   scrollbar-width: thin;
   scrollbar-color: #e28743 #f1f1f1;
+}
+
+/* ----- Mode sombre : scrollbar ----- */
+.dark .layout-specing::-webkit-scrollbar-track {
+  background: #334155;
+}
+.dark .layout-specing::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+}
+.dark .layout-specing {
+  scrollbar-color: #94a3b8 #334155;
+}
+
+/* ----- Éditeur Quill (contenus des pages) : mode clair / sombre ----- */
+.page-content-quill-wrap .ql-toolbar.ql-snow,
+.page-content-quill-wrap .ql-container.ql-snow {
+  border-color: #e5e7eb;
+}
+.page-content-quill-wrap .ql-editor {
+  background: #fff;
+  color: #111827;
+}
+.page-content-quill-wrap .ql-toolbar.ql-snow {
+  background: #f9fafb;
+}
+
+.dark .page-content-quill-wrap .ql-toolbar.ql-snow,
+.dark .page-content-quill-wrap .ql-container.ql-snow {
+  border-color: #475569;
+}
+.dark .page-content-quill-wrap .ql-toolbar.ql-snow {
+  background: #334155;
+}
+.dark .page-content-quill-wrap .ql-toolbar.ql-snow .ql-stroke {
+  stroke: #94a3b8;
+}
+.dark .page-content-quill-wrap .ql-toolbar.ql-snow .ql-fill {
+  fill: #94a3b8;
+}
+.dark .page-content-quill-wrap .ql-toolbar.ql-snow button,
+.dark .page-content-quill-wrap .ql-toolbar.ql-snow .ql-picker-label {
+  color: #e2e8f0;
+}
+.dark .page-content-quill-wrap .ql-editor {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+.dark .page-content-quill-wrap .ql-editor.ql-blank::before {
+  color: #64748b;
+}
+
+/* Cartes et zones de contenu en mode sombre */
+.dark .ant-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+.dark .ant-modal-content {
+  background: #1e293b;
+}
+.dark .ant-modal-header {
+  background: #1e293b;
+  border-color: #334155;
+}
+.dark .ant-modal-title {
+  color: #e2e8f0;
+}
+.dark .ant-modal-close-x {
+  color: #94a3b8;
+}
+.dark .ant-input,
+.dark .ant-input-affix-wrapper {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #e2e8f0 !important;
+}
+.dark .ant-input::placeholder,
+.dark .ant-input-affix-wrapper input::placeholder {
+  color: #94a3b8;
+}
+.dark .ant-select-selector {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #e2e8f0 !important;
+}
+.dark .ant-segmented {
+  background: #334155 !important;
+}
+.dark .ant-segmented-item-selected {
+  background: #475569 !important;
+  color: #e2e8f0 !important;
+}
+.dark .ant-form-item-label > label {
+  color: #e2e8f0 !important;
+}
+.dark .ant-typography {
+  color: #e2e8f0;
+}
+.dark .ant-typography.ant-typography-secondary {
+  color: #94a3b8;
+}
+.dark .ant-divider {
+  border-color: #475569;
+}
+.dark .ant-btn-default {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #e2e8f0 !important;
+}
+.dark .ant-btn-default:hover {
+  border-color: #64748b !important;
+  color: #f1f5f9 !important;
+}
+.dark .ant-btn-link {
+  color: #94a3b8;
+}
+.dark .ant-btn-link:hover {
+  color: #e2e8f0;
+}
+.dark input[type="file"] {
+  color: #e2e8f0;
+}
+
+/* Contenu des pages dashboard : titres et texte en mode sombre */
+.dark .layout-specing h1,
+.dark .layout-specing h2,
+.dark .layout-specing h3,
+.dark .layout-specing h4,
+.dark .layout-specing h5,
+.dark .layout-specing h6 {
+  color: #e2e8f0;
+}
+.dark .layout-specing .text-slate-400,
+.dark .layout-specing .text-slate-500 {
+  color: #94a3b8;
+}
+.dark .layout-specing .text-slate-600 {
+  color: #cbd5e1;
+}
+.dark .layout-specing .text-slate-700,
+.dark .layout-specing .text-slate-800 {
+  color: #e2e8f0;
+}
+.dark .layout-specing .bg-white {
+  background-color: #1e293b;
+}
+.dark .layout-specing .border-slate-200 {
+  border-color: #475569;
+}
+.dark .layout-specing .hover\:bg-slate-50:hover {
+  background-color: #334155;
+}
+.dark .layout-specing select.form-select {
+  background-color: #334155;
+  border-color: #475569;
+  color: #e2e8f0;
 }

@@ -14,8 +14,6 @@ export default function Email(){
     const { t } = useTranslation();
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr");
-        document.documentElement.classList.add('light');
-        document.documentElement.classList.remove('dark');
     }, []);
     
     let [composeModal, setComposeModal] = useState(false)

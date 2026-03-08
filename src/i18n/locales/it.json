@@ -252,7 +252,9 @@
         "demandesAuthentificationAttribuees": "Assegnate a me",
         "codeADN": "Accedi con codice ADN",
         "authenticationDocument": "Auth. documenti",
-        "demandesAuthentificationAdmin": "Richieste di autenticazione"
+        "demandesAuthentificationAdmin": "Richieste di autenticazione",
+        "adminDemandesAuthList": "Elenco richieste",
+        "adminDemandesAuthStats": "Statistiche"
     },
     "demandesAuthentification": {
         "title": "Richieste di autenticazione documenti",
@@ -399,22 +401,22 @@
         "paymentStepDesc": "Choose a payment method below. Once payment is confirmed, your request will be created and you will receive your ADN code.",
         "backToForm": "Back to form",
         "payment": {
-            "title": "Payment",
-            "status": "Payment status",
-            "amount": "Amount",
-            "paid": "Paid",
-            "unpaid": "Unpaid",
-            "payButton": "Pay for this request",
-            "alreadyPaid": "This authentication request is already paid.",
-            "loading": "Loading payment status..."
+            "title": "Pagamento",
+            "status": "Stato del pagamento",
+            "amount": "Importo",
+            "paid": "Pagato",
+            "unpaid": "Non pagato",
+            "payButton": "Paga per questa richiesta",
+            "alreadyPaid": "Questa richiesta di autenticazione è già stata pagata.",
+            "loading": "Caricamento stato del pagamento..."
         },
         "paymentPage": {
-            "title": "Payment - Authentication request",
-            "breadcrumbList": "Authentication requests",
-            "breadcrumbDetail": "Detail",
-            "breadcrumbPayment": "Payment",
-            "summaryTitle": "Summary",
-            "backToDetail": "Back to request detail"
+            "title": "Pagamento - Richiesta di autenticazione",
+            "breadcrumbList": "Richieste di autenticazione",
+            "breadcrumbDetail": "Dettaglio",
+            "breadcrumbPayment": "Pagamento",
+            "summaryTitle": "Riepilogo",
+            "backToDetail": "Torna al dettaglio della richiesta"
         }
     },
     "adminDemandesAuthentification": {
@@ -440,7 +442,18 @@
         },
         "actions": {
             "detail": "Dettaglio",
-            "refresh": "Aggiorna"
+            "refresh": "Aggiorna",
+            "exportCsv": "Esporta CSV",
+            "stats": "Statistiche"
+        },
+        "export": { "success": "Esportazione CSV scaricata." },
+        "stats": {
+            "title": "Statistiche richieste di autenticazione",
+            "breadcrumb": "Statistiche",
+            "total": "Totale richieste",
+            "viewAll": "Vedi elenco completo",
+            "viewStatus": "Vedi questo elenco",
+            "loadError": "Errore nel caricamento delle statistiche."
         },
         "pagination": {
             "total": "Totale {{total}} richieste"
@@ -448,6 +461,7 @@
         "toasts": {
             "loadError": "Errore nel caricamento delle richieste."
         },
+        "empty": "Nessuna richiesta di autenticazione",
         "statusLabel": "Stato",
         "statusUpdateSuccess": "Stato aggiornato.",
         "statusUpdateError": "Errore nell'aggiornamento dello stato.",

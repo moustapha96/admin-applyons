@@ -17,6 +17,17 @@ export const settingsService = {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
     },
+    // Contenus des pages du frontend
+    getPageContentList: () => axiosInstance.get('/settings/page-content'),
+    getPageContent: (pageKey) => axiosInstance.get(`/settings/page-content/${pageKey}`),
+    updatePageContent: (pageKey, content) => axiosInstance.put(`/settings/page-content/${pageKey}`, { content }),
+    uploadPageContentImage: (file) => {
+        const formData = new FormData();
+        formData.append('image', file);
+        return axiosInstance.post('/settings/page-content/upload-image', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
+    },
 };
 
 export default settingsService;

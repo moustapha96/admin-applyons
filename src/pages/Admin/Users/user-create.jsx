@@ -51,8 +51,6 @@ const UserCreate = () => {
 
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr");
-        document.documentElement.classList.add("light");
-        document.documentElement.classList.remove("dark");
 
         const fetchOrganizations = async () => {
             setFetchingOrgs(true);

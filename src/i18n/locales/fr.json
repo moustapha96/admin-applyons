@@ -96,7 +96,52 @@
         "teamAddMember": "Ajouter un membre",
         "teamRemove": "Supprimer",
         "teamSave": "Enregistrer l'équipe",
-        "toastTeamSaved": "Équipe enregistrée avec succès"
+        "toastTeamSaved": "Équipe enregistrée avec succès",
+        "tabPageContent": "Contenus des pages",
+        "pageContent": {
+            "title": "Contenus des pages du site (frontend)",
+            "description": "Modifiez les textes affichés sur les pages du site public : accueil, à propos, contact, politique de confidentialité, CGU, cookies, mentions légales, sécurité et confiance. Contenu stocké par page et par langue (JSON).",
+            "page": "Page",
+            "language": "Langue",
+            "pages": {
+                "landing": "Page d'accueil",
+                "about": "À propos",
+                "contact": "Contact",
+                "privacyPolicy": "Politique de confidentialité",
+                "termsAndConditions": "CGU",
+                "cookiePolicy": "Politique des cookies",
+                "legalNotice": "Mentions légales",
+                "securityTrust": "Sécurité et confiance"
+            },
+            "editorMode": "Mode d'édition",
+            "modeRich": "Éditeur riche",
+            "modeJson": "JSON",
+            "richHint": "Utilisez les éditeurs ci-dessous pour le titre, le sous-titre et le contenu principal. La mise en forme (gras, listes, liens) est conservée sur le site.",
+            "richPlaceholder": "Saisissez le contenu principal de la page…",
+            "fields": {
+                "title": "Titre de la page",
+                "subtitle": "Sous-titre / introduction",
+                "lastUpdated": "Dernière mise à jour (texte libre)",
+                "body": "Contenu principal"
+            },
+            "placeholders": {
+                "title": "Ex. Politique de confidentialité",
+                "subtitle": "Court texte d’introduction (formatage possible)",
+                "lastUpdated": "Ex. Dernière mise à jour : janvier 2025"
+            },
+            "jsonHint": "Contenu JSON pour cette page et cette langue. Ex. pour landing/hero : { \"hero\": { \"title\": \"...\", \"subtitle\": \"...\", \"cta\": \"...\" } }",
+            "save": "Enregistrer le contenu",
+            "saved": "Contenu enregistré.",
+            "loadError": "Erreur lors du chargement du contenu.",
+            "invalidJson": "JSON invalide. Vérifiez la syntaxe.",
+            "insertImage": "Insérer une image",
+            "imageInsert": "Insérer",
+            "imageByUrl": "URL de l'image",
+            "imageUrlPlaceholder": "https://exemple.com/image.jpg",
+            "imageOrUpload": "ou",
+            "imageUpload": "Téléverser une image (JPEG, PNG, GIF, WebP — max 5 Mo)",
+            "imageUploadError": "Échec du téléversement de l'image."
+        }
     },
     "notifications": {
         "newMessage": "Nouveau message",
@@ -253,7 +298,9 @@
         "demandesAuthentificationAttribuees": "Mes demandes attribuées",
         "codeADN": "Accéder par code ADN",
         "authenticationDocument": "Auth. documents",
-        "demandesAuthentificationAdmin": "Demandes d'authentification"
+        "demandesAuthentificationAdmin": "Demandes d'authentification",
+        "adminDemandesAuthList": "Liste des demandes",
+        "adminDemandesAuthStats": "Statistiques"
     },
     "demandesAuthentification": {
         "title": "Demandes d'authentification de documents",
@@ -495,7 +542,20 @@
         },
         "actions": {
             "detail": "Détail",
-            "refresh": "Actualiser"
+            "refresh": "Actualiser",
+            "exportCsv": "Exporter CSV",
+            "stats": "Statistiques"
+        },
+        "export": {
+            "success": "Export CSV téléchargé."
+        },
+        "stats": {
+            "title": "Statistiques des demandes d'authentification",
+            "breadcrumb": "Statistiques",
+            "total": "Total des demandes",
+            "viewAll": "Voir toute la liste",
+            "viewStatus": "Voir cette liste",
+            "loadError": "Erreur lors du chargement des statistiques."
         },
         "pagination": {
             "total": "Total {{total}} demandes"
@@ -503,6 +563,7 @@
         "toasts": {
             "loadError": "Erreur lors du chargement des demandes."
         },
+        "empty": "Aucune demande d'authentification",
         "statusLabel": "Statut",
         "statusUpdateSuccess": "Statut mis à jour.",
         "statusUpdateError": "Erreur lors de la mise à jour du statut.",

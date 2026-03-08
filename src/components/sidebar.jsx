@@ -93,7 +93,15 @@ const MENU_ADMIN = [
     ],
   },
 
-  { i18nKey: "authenticationDocument", to: "/admin/demandes-authentification", anyPerms: ["demandes-authentification.manage"], icon: <RiFileList3Line /> },
+  {
+    i18nKey: "authenticationDocument",
+    icon: <RiFileList3Line />,
+    anyPerms: ["demandes-authentification.manage"],
+    children: [
+      { i18nKey: "adminDemandesAuthList", to: "/admin/demandes-authentification", anyPerms: ["demandes-authentification.manage"], icon: <BiListCheck /> },
+      { i18nKey: "adminDemandesAuthStats", to: "/admin/demandes-authentification/stats", anyPerms: ["demandes-authentification.manage"], icon: <MdOutlineBarChart /> },
+    ],
+  },
 
   {
     i18nKey: "documents",
@@ -181,7 +189,15 @@ const MENU_SUPER_ADMIN = [
     ],
   },
 
-  { i18nKey: "authenticationDocument", to: "/admin/demandes-authentification", anyPerms: [], icon: <RiFileList3Line /> },
+  {
+    i18nKey: "authenticationDocument",
+    icon: <RiFileList3Line />,
+    anyPerms: [],
+    children: [
+      { i18nKey: "adminDemandesAuthList", to: "/admin/demandes-authentification", anyPerms: [], icon: <BiListCheck /> },
+      { i18nKey: "adminDemandesAuthStats", to: "/admin/demandes-authentification/stats", anyPerms: [], icon: <MdOutlineBarChart /> },
+    ],
+  },
 
   {
     i18nKey: "documents",

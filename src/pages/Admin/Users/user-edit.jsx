@@ -66,8 +66,6 @@ const UserEdit = () => {
 
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr");
-        document.documentElement.classList.add("light");
-        document.documentElement.classList.remove("dark");
         if (id) fetchUser();
         fetchOrganizations();
     }, [id]);

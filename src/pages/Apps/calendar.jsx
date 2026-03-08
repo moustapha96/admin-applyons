@@ -13,8 +13,6 @@ export default function Calendar(){
 
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr");
-        document.documentElement.classList.add('light');
-        document.documentElement.classList.remove('dark');
     }, []);
     
     const events = [{date:'2023-09-16T13:00:00', title:'Business Lunch'}];

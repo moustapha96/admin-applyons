@@ -106,8 +106,6 @@ export default function Signup() {
   useEffect(() => {
     const htmlTag = document.documentElement;
     htmlTag.setAttribute("dir", "ltr");
-    htmlTag.classList.add("light");
-    htmlTag.classList.remove("dark");
   }, []);
 
   const roleNeedsOrganization = (role) => ["INSTITUT", "TRADUCTEUR", "BANQUE"].includes(role);

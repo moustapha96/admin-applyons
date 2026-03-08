@@ -1,8 +1,9 @@
-import {useEffect, useState} from 'react'
-import { LiaSun } from 'react-icons/lia';
-import { PiMoon } from 'react-icons/pi';
+import { useEffect, useState } from "react";
+import { LiaSun } from "react-icons/lia";
+import { PiMoon } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import { useTheme } from "../context/ThemeContext";
 
 const LANGS = [
     { key: "fr", label: "FR" },
@@ -15,6 +16,7 @@ const LANGS = [
 
 export default function Switcher() {
     const { i18n } = useTranslation();
+    const { toggleTheme } = useTheme();
     const [currentLang, setCurrentLang] = useState(i18n.language || 'fr');
 
     useEffect(() => {
@@ -37,11 +39,7 @@ export default function Switcher() {
     function changeMode(mode, event) {
         switch (mode) {
             case 'mode':
-                if (document.documentElement.className.includes("dark")) {
-                    document.documentElement.className = 'light'
-                } else {
-                    document.documentElement.className = 'dark'
-                }
+                toggleTheme();
                 break;
             case 'layout':
                 if (event.target?.innerText === "LTR") {

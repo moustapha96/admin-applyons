@@ -49,8 +49,6 @@ export default function UserEditTraducteur() {
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
-    document.documentElement.classList.add("light");
-    document.documentElement.classList.remove("dark");
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);

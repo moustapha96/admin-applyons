@@ -17,8 +17,6 @@ export default function AuthSignupSuccess() {
   useEffect(() => {
     const htmlTag = document.documentElement;
     htmlTag.setAttribute("dir", "ltr");
-    htmlTag.classList.add("light");
-    htmlTag.classList.remove("dark");
   }, []);
 
   return (

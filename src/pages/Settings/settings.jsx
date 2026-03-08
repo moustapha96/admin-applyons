@@ -1,6 +1,6 @@
 // export default SettingsPage;
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
     Card,
     Tabs,
@@ -14,7 +14,12 @@ import {
     Space,
     Upload,
     message,
+    Select,
+    Segmented,
+    Modal,
 } from "antd";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import {
     SaveOutlined,
     SettingOutlined,
@@ -29,6 +34,8 @@ import {
     PlusOutlined,
     DeleteOutlined,
     UserOutlined,
+    FileTextOutlined,
+    PictureOutlined,
 } from "@ant-design/icons";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -51,8 +58,101 @@ const SettingsPage = () => {
     const [teamMembers, setTeamMembers] = useState([]);
     const [savingTeam, setSavingTeam] = useState(false);
     const [uploadingImageIndex, setUploadingImageIndex] = useState(null);
+    // Contenus des pages (frontend)
+    const [pageContentList, setPageContentList] = useState([]);
+    const [pageContentKey, setPageContentKey] = useState("landing");
+    const [pageContentLang, setPageContentLang] = useState("fr");
+    const [pageContentData, setPageContentData] = useState(null);
+    const [pageContentJson, setPageContentJson] = useState("");
+    const [pageContentLoading, setPageContentLoading] = useState(false);
+    const [pageContentSaving, setPageContentSaving] = useState(false);
+    const [pageContentEditorMode, setPageContentEditorMode] = useState("rich"); // "json" | "rich"
+    const [richEditorHtml, setRichEditorHtml] = useState("");
+    const [richEditorTitle, setRichEditorTitle] = useState("");
+    const [richEditorSubtitle, setRichEditorSubtitle] = useState("");
+    const [richEditorLastUpdated, setRichEditorLastUpdated] = useState("");
+    // Modal insertion d'image (URL ou upload)
+    const [imageModalOpen, setImageModalOpen] = useState(false);
+    const [imageModalUrl, setImageModalUrl] = useState("");
+    const [imageModalUploading, setImageModalUploading] = useState(false);
+    const [imageModalTarget, setImageModalTarget] = useState("body"); // "body" | "subtitle"
+    const imageModalRangeRef = useRef(null);
+    const quillBodyRef = useRef(null);
+    const quillSubtitleRef = useRef(null);
 
     const apiBaseUrl = (import.meta.env.VITE_API_URL || "").replace(/\/api\/?$/, "") || "";
+
+    const quillModules = {
+        toolbar: [
+            [{ header: [1, 2, 3, false] }],
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            [{ align: [] }],
+            ["link", "image"],
+            ["clean"],
+        ],
+    };
+    const quillFormats = ["header", "bold", "italic", "underline", "strike", "list", "bullet", "align", "link", "image"];
+
+    const openImageModal = useCallback((target) => {
+        const quillRef = target === "body" ? quillBodyRef : quillSubtitleRef;
+        const editor = quillRef.current?.getEditor?.();
+        const range = editor?.getSelection?.(true);
+        imageModalRangeRef.current = range ?? null;
+        setImageModalTarget(target);
+        setImageModalUrl("");
+        setImageModalOpen(true);
+    }, []);
+
+    const insertImageIntoEditor = useCallback((url) => {
+        const quillRef = imageModalTarget === "body" ? quillBodyRef : quillSubtitleRef;
+        const setContent = imageModalTarget === "body" ? setRichEditorHtml : setRichEditorSubtitle;
+        const editor = quillRef.current?.getEditor?.();
+        if (!editor) return;
+        let range = imageModalRangeRef.current;
+        if (!range) {
+            const n = editor.getLength();
+            range = { index: Math.max(0, n - 1), length: 0 };
+        }
+        editor.insertEmbed(range.index, "image", url);
+        editor.setSelection(range.index + 1);
+        setContent(editor.root.innerHTML);
+    }, [imageModalTarget]);
+
+    const handleImageModalOk = useCallback(() => {
+        const url = (imageModalUrl || "").trim();
+        if (url) {
+            insertImageIntoEditor(url);
+            setImageModalOpen(false);
+            setImageModalUrl("");
+        }
+    }, [imageModalUrl, insertImageIntoEditor]);
+
+    const handleImageUpload = useCallback(
+        async (e) => {
+            const file = e?.target?.files?.[0];
+            if (!file) return;
+            setImageModalUploading(true);
+            try {
+                const res = await settingsService.uploadPageContentImage(file);
+                const path = res?.data?.url ?? res?.url ?? "";
+                const fullUrl = path ? (path.startsWith("http") ? path : `${apiBaseUrl}${path}`) : "";
+                if (fullUrl) {
+                    insertImageIntoEditor(fullUrl);
+                    setImageModalOpen(false);
+                    setImageModalUrl("");
+                } else {
+                    toast.error(t("adminConfig.pageContent.imageUploadError"));
+                }
+            } catch (err) {
+                toast.error(err?.response?.data?.message || t("adminConfig.pageContent.imageUploadError"));
+            } finally {
+                setImageModalUploading(false);
+                e.target.value = "";
+            }
+        },
+        [apiBaseUrl, insertImageIntoEditor, t]
+    );
 
     useEffect(() => {
         loadData();
@@ -200,6 +300,94 @@ const SettingsPage = () => {
         }
     };
 
+    const loadPageContentList = async () => {
+        try {
+            const res = await settingsService.getPageContentList();
+            const data = res?.data?.data ?? res?.data ?? [];
+            setPageContentList(Array.isArray(data) ? data : []);
+        } catch (e) {
+            toast.error(e?.response?.data?.message || t("adminConfig.pageContent.loadError"));
+        }
+    };
+
+    const loadPageContent = async (pageKey, lang) => {
+        if (!pageKey) return;
+        setPageContentLoading(true);
+        try {
+            const res = await settingsService.getPageContent(pageKey);
+            const raw = res?.data?.data ?? res?.data;
+            const content = (raw?.content && typeof raw.content === "object") ? raw.content : {};
+            setPageContentData(content);
+            const langContent = content[lang];
+            setPageContentJson(langContent ? JSON.stringify(langContent, null, 2) : "{}");
+            const langObj = typeof langContent === "object" && langContent && !Array.isArray(langContent) ? langContent : {};
+            const html = typeof langContent === "string" ? langContent : (langObj.body ?? "");
+            setRichEditorHtml(html || "");
+            setRichEditorTitle(langObj.title ?? "");
+            setRichEditorSubtitle(langObj.subtitle ?? "");
+            setRichEditorLastUpdated(langObj.lastUpdated ?? "");
+        } catch (e) {
+            toast.error(e?.response?.data?.message || t("adminConfig.pageContent.loadError"));
+            setPageContentJson("{}");
+            setRichEditorHtml("");
+            setRichEditorTitle("");
+            setRichEditorSubtitle("");
+            setRichEditorLastUpdated("");
+        } finally {
+            setPageContentLoading(false);
+        }
+    };
+
+    const handleSavePageContent = async () => {
+        if (pageContentEditorMode === "rich") {
+            setPageContentSaving(true);
+            try {
+                const currentLangData = pageContentData?.[pageContentLang];
+                const base = typeof currentLangData === "object" && currentLangData && !Array.isArray(currentLangData) ? { ...currentLangData } : {};
+                const nextLangData = {
+                    ...base,
+                    title: richEditorTitle,
+                    subtitle: richEditorSubtitle,
+                    lastUpdated: richEditorLastUpdated,
+                    body: richEditorHtml,
+                };
+                const nextContent = { ...(pageContentData || {}), [pageContentLang]: nextLangData };
+                await settingsService.updatePageContent(pageContentKey, nextContent);
+                toast.success(t("adminConfig.pageContent.saved"));
+                setPageContentData(nextContent);
+                setPageContentJson(JSON.stringify(nextLangData, null, 2));
+            } catch (e) {
+                toast.error(e?.response?.data?.message || t("adminConfig.toastSaveError"));
+            } finally {
+                setPageContentSaving(false);
+            }
+            return;
+        }
+        let parsed;
+        try {
+            parsed = JSON.parse(pageContentJson);
+        } catch {
+            toast.error(t("adminConfig.pageContent.invalidJson"));
+            return;
+        }
+        setPageContentSaving(true);
+        try {
+            const nextContent = { ...(pageContentData || {}), [pageContentLang]: parsed };
+            await settingsService.updatePageContent(pageContentKey, nextContent);
+            toast.success(t("adminConfig.pageContent.saved"));
+            setPageContentData(nextContent);
+            const parsedObj = typeof parsed === "object" && parsed && !Array.isArray(parsed) ? parsed : {};
+            setRichEditorHtml(parsed?.body ?? "");
+            setRichEditorTitle(parsedObj.title ?? "");
+            setRichEditorSubtitle(parsedObj.subtitle ?? "");
+            setRichEditorLastUpdated(parsedObj.lastUpdated ?? "");
+        } catch (e) {
+            toast.error(e?.response?.data?.message || t("adminConfig.toastSaveError"));
+        } finally {
+            setPageContentSaving(false);
+        }
+    };
+
     const validateFile = (file, { maxMB = 2, types = [] } = {}) => {
         const sizeMB = file.size / 1024 / 1024;
         const isIco = file.name?.toLowerCase().endsWith(".ico");
@@ -289,7 +477,11 @@ const SettingsPage = () => {
                         <Card>
                             <Tabs 
                                 activeKey={activeTab} 
-                                onChange={(k) => { setActiveTab(k); if (k === "payment") loadPaymentSettings(); }}
+                                onChange={(k) => {
+                                    setActiveTab(k);
+                                    if (k === "payment") loadPaymentSettings();
+                                    if (k === "pageContent") { loadPageContentList(); loadPageContent(pageContentKey, pageContentLang); }
+                                }}
                                 items={[
                                     {
                                         key: "general",
@@ -587,12 +779,193 @@ const SettingsPage = () => {
                                             </div>
                                         ),
                                     },
+                                    {
+                                        key: "pageContent",
+                                        label: (
+                                            <span>
+                                                <FileTextOutlined />
+                                                {t("adminConfig.tabPageContent")}
+                                            </span>
+                                        ),
+                                        children: (
+                                            <div style={{ maxWidth: "900px" }}>
+                                                <Title level={4}>{t("adminConfig.pageContent.title")}</Title>
+                                                <Text type="secondary" style={{ display: "block", marginBottom: 16 }}>
+                                                    {t("adminConfig.pageContent.description")}
+                                                </Text>
+                                                <Space wrap style={{ marginBottom: 16 }}>
+                                                    <span>{t("adminConfig.pageContent.page")}</span>
+                                                    <Select
+                                                        value={pageContentKey}
+                                                        onChange={(v) => { setPageContentKey(v); loadPageContent(v, pageContentLang); }}
+                                                        style={{ minWidth: 220 }}
+                                                        options={[
+                                                            { value: "landing", label: t("adminConfig.pageContent.pages.landing") },
+                                                            { value: "about", label: t("adminConfig.pageContent.pages.about") },
+                                                            { value: "contact", label: t("adminConfig.pageContent.pages.contact") },
+                                                            { value: "privacy-policy", label: t("adminConfig.pageContent.pages.privacyPolicy") },
+                                                            { value: "terms-and-conditions", label: t("adminConfig.pageContent.pages.termsAndConditions") },
+                                                            { value: "cookie-policy", label: t("adminConfig.pageContent.pages.cookiePolicy") },
+                                                            { value: "legal-notice", label: t("adminConfig.pageContent.pages.legalNotice") },
+                                                            { value: "security-trust", label: t("adminConfig.pageContent.pages.securityTrust") },
+                                                        ]}
+                                                    />
+                                                    <span style={{ marginLeft: 16 }}>{t("adminConfig.pageContent.language")}</span>
+                                                    <Select
+                                                        value={pageContentLang}
+                                                        onChange={(v) => { setPageContentLang(v); loadPageContent(pageContentKey, v); }}
+                                                        style={{ minWidth: 80 }}
+                                                        options={[
+                                                            { value: "fr", label: "FR" },
+                                                            { value: "en", label: "EN" },
+                                                            { value: "de", label: "DE" },
+                                                            { value: "es", label: "ES" },
+                                                            { value: "it", label: "IT" },
+                                                            { value: "zh", label: "ZH" },
+                                                        ]}
+                                                    />
+                                                </Space>
+                                                {pageContentLoading ? (
+                                                    <div style={{ padding: 40, textAlign: "center" }}><Spin size="large" /></div>
+                                                ) : (
+                                                    <>
+                                                        <Space style={{ marginBottom: 16 }}>
+                                                            <span>{t("adminConfig.pageContent.editorMode")}</span>
+                                                            <Segmented
+                                                                value={pageContentEditorMode}
+                                                                onChange={(v) => setPageContentEditorMode(v)}
+                                                                options={[
+                                                                    { value: "rich", label: t("adminConfig.pageContent.modeRich") },
+                                                                    { value: "json", label: t("adminConfig.pageContent.modeJson") },
+                                                                ]}
+                                                            />
+                                                        </Space>
+                                                        {pageContentEditorMode === "rich" ? (
+                                                            <>
+                                                                <div style={{ marginBottom: 16 }}>
+                                                                    <Text type="secondary">{t("adminConfig.pageContent.richHint")}</Text>
+                                                                </div>
+                                                                <Form layout="vertical" style={{ marginBottom: 16 }}>
+                                                                    <Form.Item label={t("adminConfig.pageContent.fields.title")}>
+                                                                        <Input
+                                                                            value={richEditorTitle}
+                                                                            onChange={(e) => setRichEditorTitle(e.target.value)}
+                                                                            placeholder={t("adminConfig.pageContent.placeholders.title")}
+                                                                        />
+                                                                    </Form.Item>
+                                                                    <Form.Item
+                                                                        label={t("adminConfig.pageContent.fields.subtitle")}
+                                                                        extra={
+                                                                            <Button type="link" size="small" icon={<PictureOutlined />} onClick={() => openImageModal("subtitle")}>
+                                                                                {t("adminConfig.pageContent.insertImage")}
+                                                                            </Button>
+                                                                        }
+                                                                    >
+                                                                        <div className="page-content-quill-wrap page-content-quill-subtitle">
+                                                                            <ReactQuill
+                                                                                ref={quillSubtitleRef}
+                                                                                theme="snow"
+                                                                                value={richEditorSubtitle}
+                                                                                onChange={setRichEditorSubtitle}
+                                                                                modules={quillModules}
+                                                                                formats={quillFormats}
+                                                                                placeholder={t("adminConfig.pageContent.placeholders.subtitle")}
+                                                                                style={{ minHeight: 80 }}
+                                                                            />
+                                                                        </div>
+                                                                    </Form.Item>
+                                                                    <Form.Item label={t("adminConfig.pageContent.fields.lastUpdated")}>
+                                                                        <Input
+                                                                            value={richEditorLastUpdated}
+                                                                            onChange={(e) => setRichEditorLastUpdated(e.target.value)}
+                                                                            placeholder={t("adminConfig.pageContent.placeholders.lastUpdated")}
+                                                                        />
+                                                                    </Form.Item>
+                                                                    <Form.Item
+                                                                        label={t("adminConfig.pageContent.fields.body")}
+                                                                        extra={
+                                                                            <Button type="link" size="small" icon={<PictureOutlined />} onClick={() => openImageModal("body")}>
+                                                                                {t("adminConfig.pageContent.insertImage")}
+                                                                            </Button>
+                                                                        }
+                                                                    >
+                                                                        <div className="page-content-quill-wrap" style={{ marginBottom: 0 }}>
+                                                                            <ReactQuill
+                                                                                ref={quillBodyRef}
+                                                                                theme="snow"
+                                                                                value={richEditorHtml}
+                                                                                onChange={setRichEditorHtml}
+                                                                                modules={quillModules}
+                                                                                formats={quillFormats}
+                                                                                placeholder={t("adminConfig.pageContent.richPlaceholder")}
+                                                                                style={{ minHeight: 320 }}
+                                                                            />
+                                                                        </div>
+                                                                    </Form.Item>
+                                                                </Form>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <div style={{ marginBottom: 8 }}>
+                                                                    <Text type="secondary">{t("adminConfig.pageContent.jsonHint")}</Text>
+                                                                </div>
+                                                                <Input.TextArea
+                                                                    value={pageContentJson}
+                                                                    onChange={(e) => setPageContentJson(e.target.value)}
+                                                                    rows={18}
+                                                                    style={{ fontFamily: "monospace", fontSize: 13 }}
+                                                                />
+                                                            </>
+                                                        )}
+                                                        <div style={{ marginTop: 16 }}>
+                                                            <Button type="primary" icon={<SaveOutlined />} loading={pageContentSaving} onClick={handleSavePageContent}>
+                                                                {t("adminConfig.pageContent.save")}
+                                                            </Button>
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        ),
+                                    },
                                 ]}
                             />
                         </Card>
                     </div>
                 </div>
             </div>
+            <Modal
+                title={t("adminConfig.pageContent.insertImage")}
+                open={imageModalOpen}
+                onOk={handleImageModalOk}
+                onCancel={() => { setImageModalOpen(false); setImageModalUrl(""); }}
+                okText={t("adminConfig.pageContent.imageInsert")}
+                cancelText={t("common.cancel")}
+                okButtonProps={{ disabled: !(imageModalUrl?.trim()) }}
+            >
+                <Space direction="vertical" style={{ width: "100%" }} size="middle">
+                    <div>
+                        <Typography.Text strong>{t("adminConfig.pageContent.imageByUrl")}</Typography.Text>
+                        <Input
+                            placeholder={t("adminConfig.pageContent.imageUrlPlaceholder")}
+                            value={imageModalUrl}
+                            onChange={(e) => setImageModalUrl(e.target.value)}
+                            style={{ marginTop: 8 }}
+                        />
+                    </div>
+                    <Divider plain>{t("adminConfig.pageContent.imageOrUpload")}</Divider>
+                    <div>
+                        <Typography.Text strong>{t("adminConfig.pageContent.imageUpload")}</Typography.Text>
+                        <input
+                            type="file"
+                            accept="image/jpeg,image/png,image/gif,image/webp"
+                            onChange={handleImageUpload}
+                            disabled={imageModalUploading}
+                            style={{ marginTop: 8 }}
+                        />
+                        {imageModalUploading && <Spin size="small" style={{ marginLeft: 8 }} />}
+                    </div>
+                </Space>
+            </Modal>
         </>
     );
 };

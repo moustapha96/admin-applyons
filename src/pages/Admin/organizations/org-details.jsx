@@ -164,8 +164,6 @@ const OrganizationDetail = () => {
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
-    document.documentElement.classList.add("light");
-    document.documentElement.classList.remove("dark");
     fetchOrganization();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);

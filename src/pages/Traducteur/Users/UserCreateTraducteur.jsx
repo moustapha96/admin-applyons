@@ -49,8 +49,6 @@ export default function UserCreateTraducteur() {
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
-    document.documentElement.classList.add("light");
-    document.documentElement.classList.remove("dark");
   }, []);
 
   const normFile = (e) => (Array.isArray(e) ? e : e?.fileList);

@@ -1,11 +1,12 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { App as AntdApp, ConfigProvider } from "antd";
+import { App as AntdApp, ConfigProvider, theme as antdTheme } from "antd";
 import frFR from "antd/locale/fr_FR";
 import "./assets/css/tailwind.css";
 import "./assets/css/materialdesignicons.min.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import { AppProvider } from "./context/AppProvider.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { PermissionsProvider } from "./context/PermissionsContext.jsx";
@@ -22,9 +23,16 @@ if ("serviceWorker" in navigator) {
   caches.keys().then((names) => names.forEach((name) => caches.delete(name)));
 }
 
-createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <ConfigProvider locale={frFR} theme={{ token: {} }}>
+function ThemedApp() {
+  const { isDark } = useTheme();
+  return (
+    <ConfigProvider
+      locale={frFR}
+      theme={{
+        algorithm: isDark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+        token: {},
+      }}
+    >
       <AntdApp>
         <AppProvider>
           <AuthProvider>
@@ -35,5 +43,13 @@ createRoot(document.getElementById("root")).render(
         </AppProvider>
       </AntdApp>
     </ConfigProvider>
+  );
+}
+
+createRoot(document.getElementById("root")).render(
+  <BrowserRouter>
+    <ThemeProvider>
+      <ThemedApp />
+    </ThemeProvider>
   </BrowserRouter>
 );

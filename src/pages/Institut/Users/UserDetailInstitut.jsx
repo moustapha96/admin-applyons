@@ -127,8 +127,6 @@ export default function UserDetailInstitut() {
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
-    document.documentElement.classList.add("light");
-    document.documentElement.classList.remove("dark");
     fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);

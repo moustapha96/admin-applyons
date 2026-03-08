@@ -184,8 +184,6 @@ export default function UserCreateInstitut() {
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
-    document.documentElement.classList.add("light");
-    document.documentElement.classList.remove("dark");
   }, []);
 
   const normFile = (e) => {

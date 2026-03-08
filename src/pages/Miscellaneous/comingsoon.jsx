@@ -10,8 +10,6 @@ export default function Comingsoon(){
 
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr");
-        document.documentElement.classList.add('light');
-        document.documentElement.classList.remove('dark');
     }, []);
     let [days,setDays] = useState();
     let [hours,setHours] = useState();

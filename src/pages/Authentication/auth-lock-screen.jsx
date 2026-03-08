@@ -22,8 +22,6 @@ export default function AuthInactiveScreen() {
 
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr")
-        document.documentElement.classList.add("light")
-        document.documentElement.classList.remove("dark")
 
         const email = searchParams.get("email") || localStorage.getItem("userEmail") || "Utilisateur"
         setUserEmail(email)

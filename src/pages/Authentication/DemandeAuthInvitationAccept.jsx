@@ -79,8 +79,6 @@ export default function DemandeAuthInvitationAccept() {
   useEffect(() => {
     const htmlTag = document.documentElement;
     htmlTag.setAttribute("dir", "ltr");
-    htmlTag.classList.add("light");
-    htmlTag.classList.remove("dark");
   }, []);
 
   const getDialCode = useMemo(() => {

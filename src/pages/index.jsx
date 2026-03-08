@@ -13,8 +13,6 @@ export default function Index() {
 
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr");
-        document.documentElement.classList.add('light');
-        document.documentElement.classList.remove('dark');
     }, []);
     return(
         <>
@@ -22,10 +20,10 @@ export default function Index() {
             <div className="layout-specing">
                 <div className="flex justify-between items-center">
                     <div>
-                        <h5 className="text-xl font-bold">
+                        <h5 className="text-xl font-bold text-slate-800 dark:text-slate-100">
                             {t("dashboardIndex.greeting", { name: "Cristina" })}
                         </h5>
-                        <h6 className="text-slate-400 font-semibold">
+                        <h6 className="text-slate-400 dark:text-slate-400 font-semibold">
                             {t("dashboardIndex.welcome")}
                         </h6>
                     </div>

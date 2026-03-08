@@ -18,9 +18,9 @@ import { useTranslation } from "react-i18next";
 function StatCard({ label, value, sublabel, to }) {
   const content = (
     <>
-      <div className="text-sm text-slate-500">{label}</div>
-      <div className="mt-1 text-2xl font-semibold">{value ?? 0}</div>
-      {sublabel && <div className="mt-1 text-xs text-slate-400">{sublabel}</div>}
+      <div className="text-sm text-slate-500 dark:text-slate-400">{label}</div>
+      <div className="mt-1 text-2xl font-semibold text-slate-800 dark:text-slate-100">{value ?? 0}</div>
+      {sublabel && <div className="mt-1 text-xs text-slate-400 dark:text-slate-500">{sublabel}</div>}
     </>
   );
   const className = "rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-colors hover:border-primary/30 hover:bg-slate-50";
@@ -61,8 +61,6 @@ export default function DemandeurDashboard() {
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
-    document.documentElement.classList.add("light");
-    document.documentElement.classList.remove("dark");
   }, []);
 
   // Extraction des données (payload = réponse API : { data: { widgets, tables } } ou { success, data } )
@@ -268,7 +266,7 @@ export default function DemandeurDashboard() {
         {loading && (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-24 animate-pulse rounded-2xl bg-slate-100" />
+              <div key={i} className="h-24 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-700" />
             ))}
           </div>
         )}
@@ -306,7 +304,7 @@ export default function DemandeurDashboard() {
                     locale={{ emptyText: t("demandeurDashboard.activity.none") }}
                   />
                 ) : (
-                  <p className="text-sm text-slate-500">{t("demandeurDashboard.activity.none")}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{t("demandeurDashboard.activity.none")}</p>
                 )}
               </div>
             </div>
@@ -315,7 +313,7 @@ export default function DemandeurDashboard() {
 
         {/* Message si pas de données */}
         {!loading && !payload && (
-          <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 text-slate-500">
+          <div className="mt-6 rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 p-6 text-slate-500 dark:text-slate-400">
             {t("demandeurDashboard.empty")}
           </div>
         )}

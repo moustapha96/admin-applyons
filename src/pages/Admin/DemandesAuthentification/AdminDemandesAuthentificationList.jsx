@@ -1,20 +1,26 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Table, Tag, Space, Breadcrumb, Button, Input, Select, message, Card } from "antd";
-import { SearchOutlined, ReloadOutlined, FileTextOutlined } from "@ant-design/icons";
+import { SearchOutlined, ReloadOutlined, FileTextOutlined, DownloadOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import demandeAuthentificationService from "@/services/demandeAuthentification.service";
 
 const statusColors = { EN_ATTENTE: "blue", DOCUMENTS_RECUS: "gold", TRAITEE: "green", ANNULEE: "red" };
 
+function buildCsvLine(arr) {
+  return arr.map((v) => (v == null ? "" : String(v).replace(/"/g, '""'))).map((v) => `"${v}"`).join(",");
+}
+
 export default function AdminDemandesAuthentificationList() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const urlStatus = searchParams.get("status") || undefined;
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 });
-  const [filters, setFilters] = useState({ search: "", status: undefined });
+  const [filters, setFilters] = useState({ search: "", status: urlStatus });
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -40,6 +46,47 @@ export default function AdminDemandesAuthentificationList() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  useEffect(() => {
+    if (urlStatus !== undefined && urlStatus !== filters.status) {
+      setFilters((f) => ({ ...f, status: urlStatus }));
+    }
+  }, [urlStatus]);
+
+  const exportCsv = () => {
+    const headers = [
+      t("adminDemandesAuthentification.columns.codeADN"),
+      t("adminDemandesAuthentification.columns.objet"),
+      t("adminDemandesAuthentification.columns.demandeur"),
+      t("adminDemandesAuthentification.columns.attributedOrg"),
+      t("adminDemandesAuthentification.columns.date"),
+      t("adminDemandesAuthentification.columns.status"),
+      t("adminDemandesAuthentification.columns.documents"),
+    ];
+    const lines = [
+      "\uFEFF" + buildCsvLine(headers),
+      ...rows.map((r) => {
+        const name = r.user ? [r.user.firstName, r.user.lastName].filter(Boolean).join(" ") || r.user?.email : "";
+        const statusLabel = t(`demandesAuthentification.status.${r.status}`);
+        return buildCsvLine([
+          r.codeADN,
+          r.objet || "",
+          name,
+          r.attributedOrganization?.name || "",
+          r.createdAt ? dayjs(r.createdAt).format("DD/MM/YYYY") : "",
+          statusLabel,
+          r._count?.documents ?? r.documents?.length ?? 0,
+        ]);
+      }),
+    ];
+    const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `demandes-authentification-${dayjs().format("YYYY-MM-DD")}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    message.success(t("adminDemandesAuthentification.export.success"));
+  };
 
   const formatDate = (v) => (v ? dayjs(v).format("DD/MM/YYYY") : "—");
 
@@ -148,9 +195,17 @@ export default function AdminDemandesAuthentificationList() {
                 onChange={(v) => setFilters((f) => ({ ...f, status: v || undefined }))}
               />
             </Space>
-            <Button icon={<ReloadOutlined />} onClick={fetchData}>
-              {t("adminDemandesAuthentification.actions.refresh")}
-            </Button>
+            <Space>
+              <Button icon={<DownloadOutlined />} onClick={exportCsv} disabled={rows.length === 0}>
+                {t("adminDemandesAuthentification.actions.exportCsv")}
+              </Button>
+              <Link to="/admin/demandes-authentification/stats">
+                <Button>{t("adminDemandesAuthentification.actions.stats")}</Button>
+              </Link>
+              <Button icon={<ReloadOutlined />} onClick={fetchData}>
+                {t("adminDemandesAuthentification.actions.refresh")}
+              </Button>
+            </Space>
           </Space>
         </Card>
 
@@ -159,6 +214,7 @@ export default function AdminDemandesAuthentificationList() {
           loading={loading}
           dataSource={rows}
           columns={columns}
+          locale={{ emptyText: t("adminDemandesAuthentification.empty") }}
           pagination={{
             current: pagination.current,
             pageSize: pagination.pageSize,

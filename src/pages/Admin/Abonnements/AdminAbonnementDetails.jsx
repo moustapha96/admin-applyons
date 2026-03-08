@@ -51,8 +51,6 @@ export default function AdminAbonnementDetails() {
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
-    document.documentElement.classList.add("light");
-    document.documentElement.classList.remove("dark");
     fetchAbonnement();
   }, [id]);
 

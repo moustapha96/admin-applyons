@@ -21,8 +21,6 @@ export default function AuthResetPassword() {
     useEffect(() => {
         const html = document.documentElement;
         html.setAttribute("dir", "ltr");
-        html.classList.add("light");
-        html.classList.remove("dark");
     }, []);
 
     const handleResetPassword = async (e) => {

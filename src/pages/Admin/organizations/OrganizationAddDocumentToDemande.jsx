@@ -46,8 +46,6 @@ const OrganizationAddDocumentToDemande = () => {
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", "ltr");
-    document.documentElement.classList.add("light");
-    document.documentElement.classList.remove("dark");
     fetchOrganizations();
   }, []);
 

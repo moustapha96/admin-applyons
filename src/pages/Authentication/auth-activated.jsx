@@ -31,8 +31,6 @@ export default function AuthActivateAccount() {
     useEffect(() => {
         const htmlTag = document.documentElement;
         htmlTag.setAttribute("dir", "ltr");
-        htmlTag.classList.add("light");
-        htmlTag.classList.remove("dark");
     }, []);
 
     // Activation automatique au chargement

@@ -252,7 +252,9 @@
         "demandesAuthentificationAttribuees": "分配给我",
         "codeADN": "通过ADN码访问",
         "authenticationDocument": "文件认证",
-        "demandesAuthentificationAdmin": "认证申请"
+        "demandesAuthentificationAdmin": "认证申请",
+        "adminDemandesAuthList": "申请列表",
+        "adminDemandesAuthStats": "统计"
     },
     "demandesAuthentification": {
         "title": "文件认证申请",
@@ -399,22 +401,22 @@
         "paymentStepDesc": "Choose a payment method below. Once payment is confirmed, your request will be created and you will receive your ADN code.",
         "backToForm": "Back to form",
         "payment": {
-            "title": "Payment",
-            "status": "Payment status",
-            "amount": "Amount",
-            "paid": "Paid",
-            "unpaid": "Unpaid",
-            "payButton": "Pay for this request",
-            "alreadyPaid": "This authentication request is already paid.",
-            "loading": "Loading payment status..."
+            "title": "付款",
+            "status": "付款状态",
+            "amount": "金额",
+            "paid": "已付",
+            "unpaid": "未付",
+            "payButton": "为此申请付款",
+            "alreadyPaid": "此认证申请已付款。",
+            "loading": "正在加载付款状态..."
         },
         "paymentPage": {
-            "title": "Payment - Authentication request",
-            "breadcrumbList": "Authentication requests",
-            "breadcrumbDetail": "Detail",
-            "breadcrumbPayment": "Payment",
-            "summaryTitle": "Summary",
-            "backToDetail": "Back to request detail"
+            "title": "付款 - 认证申请",
+            "breadcrumbList": "认证申请",
+            "breadcrumbDetail": "详情",
+            "breadcrumbPayment": "付款",
+            "summaryTitle": "摘要",
+            "backToDetail": "返回申请详情"
         }
     },
     "adminDemandesAuthentification": {
@@ -440,7 +442,18 @@
         },
         "actions": {
             "detail": "详情",
-            "refresh": "刷新"
+            "refresh": "刷新",
+            "exportCsv": "导出 CSV",
+            "stats": "统计"
+        },
+        "export": { "success": "CSV 已下载。" },
+        "stats": {
+            "title": "认证申请统计",
+            "breadcrumb": "统计",
+            "total": "申请总数",
+            "viewAll": "查看完整列表",
+            "viewStatus": "查看此列表",
+            "loadError": "加载统计失败。"
         },
         "pagination": {
             "total": "共 {{total}} 条申请"
@@ -448,6 +461,7 @@
         "toasts": {
             "loadError": "加载申请失败。"
         },
+        "empty": "暂无认证申请",
         "statusLabel": "状态",
         "statusUpdateSuccess": "状态已更新。",
         "statusUpdateError": "更新状态时出错。",
