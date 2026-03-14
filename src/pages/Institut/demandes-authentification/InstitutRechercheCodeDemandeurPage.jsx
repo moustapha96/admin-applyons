@@ -103,17 +103,17 @@ export default function InstitutRechercheCodeDemandeurPage() {
       title: t("demandesAuthentification.fields.createdAt"),
       dataIndex: "createdAt",
       width: 120,
-      render: (v) => (v ? dayjs(v).format("DD/MM/YYYY HH:mm") : "—"),
+      render: (v) => (v ? dayjs(v).format("DD/MM/YYYY") : "—"),
     },
-    {
-      title: t("demandesAuthentification.documentsTitle"),
-      key: "documents",
-      width: 100,
-      render: (_, r) => {
-        const docs = Array.isArray(r.documents) ? r.documents : [];
-        return docs.length > 0 ? `${docs.length} document(s)` : "—";
-      },
-    },
+    // {
+    //   title: t("demandesAuthentification.documentsTitle"),
+    //   key: "documents",
+    //   width: 100,
+    //   render: (_, r) => {
+    //     const docs = Array.isArray(r.documents) ? r.documents : [];
+    //     return docs.length > 0 ? `${docs.length} document(s)` : "—";
+    //   },
+    // },
     {
       title: t("demandesAuthentification.actions.detail"),
       key: "actions",
@@ -244,11 +244,11 @@ export default function InstitutRechercheCodeDemandeurPage() {
                   </Tag>
                 </Descriptions.Item>
                 <Descriptions.Item label={t("demandesAuthentification.fields.createdAt")}>
-                  {detailModalDemande.createdAt ? dayjs(detailModalDemande.createdAt).format("DD/MM/YYYY HH:mm") : "—"}
+                  {detailModalDemande.createdAt ? dayjs(detailModalDemande.createdAt).format("DD/MM/YYYY") : "—"}
                 </Descriptions.Item>
-                <Descriptions.Item label={t("demandesAuthentification.fields.observation")}>
+                {/* <Descriptions.Item label={t("demandesAuthentification.fields.observation")}>
                   {detailModalDemande.observation || "—"}
-                </Descriptions.Item>
+                </Descriptions.Item> */}
                 {detailModalDemande.attributedOrganization && (
                   <Descriptions.Item label={t("demandesAuthentification.fields.attributedOrg")}>
                     {detailModalDemande.attributedOrganization.name}

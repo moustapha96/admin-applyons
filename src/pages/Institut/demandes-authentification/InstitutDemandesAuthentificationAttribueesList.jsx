@@ -77,12 +77,12 @@ export default function InstitutDemandesAuthentificationAttribueesList() {
         <Tag color={statusColors[s] || "default"}>{t(`demandesAuthentification.status.${s || "EN_ATTENTE"}`)}</Tag>
       ),
     },
-    {
-      title: t("demandesAuthentification.columns.documents"),
-      dataIndex: ["_count", "documents"],
-      width: 90,
-      render: (v) => v ?? 0,
-    },
+    // {
+    //   title: t("demandesAuthentification.columns.documents"),
+    //   dataIndex: ["_count", "documents"],
+    //   width: 90,
+    //   render: (v) => v ?? 0,
+    // },
     {
       title: t("demandesAuthentification.columns.actions"),
       key: "actions",

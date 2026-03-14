@@ -124,10 +124,10 @@ export default function InstitutDemandeAuthentificationDetail() {
             <Descriptions.Item label={t("demandesAuthentification.fields.attributedOrg")}>
               {demande.attributedOrganization?.name ?? "—"}
             </Descriptions.Item>
-            <Descriptions.Item label={t("demandesAuthentification.fields.status")}>
+            {/* <Descriptions.Item label={t("demandesAuthentification.fields.status")}>
               <Tag color={statusColors[demande.status] || "default"}>{t(`demandesAuthentification.status.${demande.status}`)}</Tag>
             </Descriptions.Item>
-            <Descriptions.Item label={t("demandesAuthentification.fields.observation")}>{demande.observation || "—"}</Descriptions.Item>
+            <Descriptions.Item label={t("demandesAuthentification.fields.observation")}>{demande.observation || "—"}</Descriptions.Item> */}
           </Descriptions>
         </Card>
 
