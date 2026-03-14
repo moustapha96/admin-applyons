@@ -33,6 +33,8 @@ const demandeAuthentificationService = {
   getStats: () => axiosInstance.get(`${base}/all/stats`),
   getById: (id) => axiosInstance.get(`${base}/${id}`),
   getByCode: (codeADN) => axiosInstance.get(`${base}/by-code/${encodeURIComponent(normalizeADNCode(codeADN))}`),
+  getByDemandeurCode: (code) =>
+    axiosInstance.get(`${base}/by-demandeur-code/${encodeURIComponent(String(code || "").trim().toUpperCase())}`),
   create: (data) => axiosInstance.post(base, data),
   notifyInstituts: (id, organizationIds) =>
     axiosInstance.post(`${base}/${id}/notify-instituts`, { organizationIds }),

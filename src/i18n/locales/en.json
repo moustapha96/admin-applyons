@@ -39,6 +39,7 @@
         "tabGeneral": "General settings",
         "tabPayment": "Payment amounts",
         "tabReportSchedule": "Report by email",
+        "tabModules": "Modules",
         "siteInfo": "Site information",
         "siteName": "Site name",
         "siteNameRequired": "Site name is required",
@@ -105,6 +106,20 @@
             "loadError": "Error loading report schedule.",
             "saveError": "Error saving.",
             "saved": "Report schedule saved."
+        },
+        "modules": {
+            "title": "Dashboard modules",
+            "description": "Enable or disable modules. When a module is disabled, it is hidden from the user menu even if they have permissions.",
+            "authentification": "Authentication (document authentication requests)",
+            "authentificationDesc": "Menu and access to document authentication requests.",
+            "demandeApplication": "Application request (applications / sharing requests)",
+            "demandeApplicationDesc": "Menu and access to applications and sharing requests.",
+            "rechercheCodeDemandeur": "Search by applicant code",
+            "rechercheCodeDemandeurDesc": "Menu entry and API for search by APU code (institute).",
+            "save": "Save",
+            "loadError": "Error loading modules.",
+            "saveError": "Error saving.",
+            "saved": "Modules saved."
         },
         "teamTitle": "Our Team",
         "teamDescription": "Define the members shown in the « Our Team » section on the About page (name, role, photo, short description).",
@@ -321,6 +336,7 @@
         "demandesAuthentificationCreate": "New request",
         "demandesAuthentificationAttribuees": "Assigned to me",
         "codeADN": "Access by ADN code",
+        "rechercheCodeDemandeur": "Search by applicant code",
         "authenticationDocument": "Doc authentication",
         "demandesAuthentificationAdmin": "Authentication requests",
         "adminDemandesAuthList": "Request list",
@@ -392,8 +408,23 @@
             "attributedOrg": "Attributed institution",
             "attributedOrgPlaceholder": "Select the attributed institution",
             "demandeur": "Applicant",
+            "demandeurCode": "Applicant code (APU)",
             "status": "Status",
             "createdAt": "Created at"
+        },
+        "byDemandeurCode": {
+            "title": "Search by applicant code",
+            "description": "Enter the applicant code (APU format, e.g. APU20260301) to view their authentication requests and associated documents.",
+            "placeholder": "e.g. APU20260301",
+            "enterCode": "Please enter an applicant code.",
+            "search": "Search",
+            "notFound": "No applicant found for this code.",
+            "demandeurInfo": "Applicant",
+            "email": "Email",
+            "demandesList": "Authentication requests",
+            "noDemandes": "No authentication requests for this applicant.",
+            "viewDetails": "View details",
+            "openFullPage": "Open full page"
         },
         "validation": { "attributedOrgRequired": "Please select the attributed institution." },
         "institutChoice": {
@@ -672,6 +703,7 @@
         }
     },
     "profilePage": {
+        "demandeurCode": "Applicant code",
         "alerts": {
             "loading": "Loading profile...",
             "errorTitle": "Error",

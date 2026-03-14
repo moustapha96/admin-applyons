@@ -189,6 +189,11 @@ export default function AdminDemandeAuthentificationDetail() {
               {demandeurName}
               {demande.user?.email ? ` (${demande.user.email})` : ""}
             </Descriptions.Item>
+            {demande.user?.demandeurCode && (
+              <Descriptions.Item label={t("demandesAuthentification.fields.demandeurCode")}>
+                <strong>{demande.user.demandeurCode}</strong>
+              </Descriptions.Item>
+            )}
             <Descriptions.Item label={t("demandesAuthentification.fields.attributedOrg")}>
               {demande.attributedOrganization?.name ?? "—"}
             </Descriptions.Item>

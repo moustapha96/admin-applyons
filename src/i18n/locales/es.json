@@ -39,6 +39,7 @@
         "tabGeneral": "Configuración general",
         "tabPayment": "Importes de pago",
         "tabReportSchedule": "Informe por correo",
+        "tabModules": "Módulos",
         "siteInfo": "Información del sitio",
         "siteName": "Nombre del sitio",
         "siteNameRequired": "El nombre del sitio es obligatorio",
@@ -105,6 +106,20 @@
             "loadError": "Error al cargar la configuración del informe.",
             "saveError": "Error al guardar.",
             "saved": "Configuración del informe guardada."
+        },
+        "modules": {
+            "title": "Módulos del panel",
+            "description": "Active o desactive los módulos. Si un módulo está desactivado, no se muestra en el menú aunque el usuario tenga permisos.",
+            "authentification": "Autenticación (solicitudes de autenticación de documentos)",
+            "authentificationDesc": "Menú y acceso a solicitudes de autenticación de documentos.",
+            "demandeApplication": "Solicitud de aplicación (candidaturas / solicitudes de compartir)",
+            "demandeApplicationDesc": "Menú y acceso a candidaturas y solicitudes de compartir.",
+            "rechercheCodeDemandeur": "Búsqueda por código de solicitante",
+            "rechercheCodeDemandeurDesc": "Entrada de menú y API de búsqueda por código APU (institución).",
+            "save": "Guardar",
+            "loadError": "Error al cargar los módulos.",
+            "saveError": "Error al guardar.",
+            "saved": "Módulos guardados."
         },
         "teamTitle": "Nuestro equipo",
         "teamDescription": "Defina los miembros que aparecen en la sección « Nuestro equipo » de la página Acerca de (nombre, cargo, foto, breve descripción).",
@@ -276,6 +291,7 @@
         "demandesAuthentificationCreate": "Nueva solicitud",
         "demandesAuthentificationAttribuees": "Asignadas a mí",
         "codeADN": "Acceder por código ADN",
+        "rechercheCodeDemandeur": "Búsqueda por código solicitante",
         "authenticationDocument": "Auth. documentos",
         "demandesAuthentificationAdmin": "Solicitudes de autenticación",
         "adminDemandesAuthList": "Lista de solicitudes",
@@ -330,8 +346,23 @@
             "attributedOrg": "Institución atribuida",
             "attributedOrgPlaceholder": "Seleccionar la institución atribuida",
             "demandeur": "Solicitante",
+            "demandeurCode": "Código solicitante (APU)",
             "status": "Estado",
             "createdAt": "Creado el"
+        },
+        "byDemandeurCode": {
+            "title": "Búsqueda por código solicitante",
+            "description": "Introduzca el código del solicitante (formato APU, ej. APU20260301) para ver sus solicitudes de autenticación y documentos asociados.",
+            "placeholder": "ej. APU20260301",
+            "enterCode": "Introduzca un código de solicitante.",
+            "search": "Buscar",
+            "notFound": "Ningún solicitante encontrado con este código.",
+            "demandeurInfo": "Solicitante",
+            "email": "Email",
+            "demandesList": "Solicitudes de autenticación",
+            "noDemandes": "Ninguna solicitud de autenticación para este solicitante.",
+            "viewDetails": "Ver detalles",
+            "openFullPage": "Abrir página completa"
         },
         "validation": {
             "attributedOrgRequired": "Seleccione la institución atribuida."
@@ -597,6 +628,7 @@
         }
     },
     "profilePage": {
+        "demandeurCode": "Código solicitante",
         "alerts": {
             "loading": "Cargando perfil...",
             "errorTitle": "Error",

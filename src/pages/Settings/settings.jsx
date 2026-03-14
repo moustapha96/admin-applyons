@@ -38,6 +38,7 @@ import {
     FileTextOutlined,
     PictureOutlined,
     MailOutlined,
+    AppstoreOutlined,
 } from "@ant-design/icons";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -60,6 +61,9 @@ const SettingsPage = () => {
     const [reportForm] = Form.useForm();
     const [reportScheduleLoading, setReportScheduleLoading] = useState(false);
     const [reportScheduleSaving, setReportScheduleSaving] = useState(false);
+    const [enabledModules, setEnabledModules] = useState({ authentification: true, demandeApplication: true, rechercheCodeDemandeur: true });
+    const [modulesLoading, setModulesLoading] = useState(false);
+    const [modulesSaving, setModulesSaving] = useState(false);
     const [teamMembers, setTeamMembers] = useState([]);
     const [savingTeam, setSavingTeam] = useState(false);
     const [uploadingImageIndex, setUploadingImageIndex] = useState(null);
@@ -310,6 +314,35 @@ const SettingsPage = () => {
         }
     };
 
+    const loadEnabledModules = async () => {
+        setModulesLoading(true);
+        try {
+            const res = await settingsService.getEnabledModules();
+            const data = res?.data?.data ?? res?.data ?? {};
+            setEnabledModules({
+                authentification: data.authentification !== false,
+                demandeApplication: data.demandeApplication !== false,
+                rechercheCodeDemandeur: data.rechercheCodeDemandeur !== false,
+            });
+        } catch (e) {
+            toast.error(e?.response?.data?.message || t("adminConfig.modules.loadError"));
+        } finally {
+            setModulesLoading(false);
+        }
+    };
+
+    const handleSaveEnabledModules = async () => {
+        setModulesSaving(true);
+        try {
+            await settingsService.updateEnabledModules(enabledModules);
+            toast.success(t("adminConfig.modules.saved"));
+        } catch (e) {
+            toast.error(e?.response?.data?.message || t("adminConfig.modules.saveError"));
+        } finally {
+            setModulesSaving(false);
+        }
+    };
+
     const addTeamMember = () => {
         setTeamMembers((prev) => [...prev, { name: "", role: "", description: "", image: "" }]);
     };
@@ -526,6 +559,7 @@ const SettingsPage = () => {
                                     setActiveTab(k);
                                     if (k === "payment") loadPaymentSettings();
                                     if (k === "report") loadReportSchedule();
+                                    if (k === "modules") loadEnabledModules();
                                     if (k === "pageContent") { loadPageContentList(); loadPageContent(pageContentKey, pageContentLang); }
                                 }}
                                 items={[
@@ -841,6 +875,66 @@ const SettingsPage = () => {
                                                             </Button>
                                                         </Form.Item>
                                                     </Form>
+                                                )}
+                                            </div>
+                                        ),
+                                    },
+                                    {
+                                        key: "modules",
+                                        label: (
+                                            <span>
+                                                <AppstoreOutlined />
+                                                {t("adminConfig.tabModules")}
+                                            </span>
+                                        ),
+                                        children: (
+                                            <div style={{ maxWidth: "600px" }}>
+                                                <Title level={4}>{t("adminConfig.modules.title")}</Title>
+                                                <Text type="secondary" style={{ display: "block", marginBottom: 16 }}>
+                                                    {t("adminConfig.modules.description")}
+                                                </Text>
+                                                {modulesLoading ? (
+                                                    <Spin />
+                                                ) : (
+                                                    <>
+                                                        <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+                                                            <div className="flex items-center justify-between rounded border border-gray-200 dark:border-gray-600 p-4">
+                                                                <div>
+                                                                    <Text strong>{t("adminConfig.modules.authentification")}</Text>
+                                                                    <div style={{ fontSize: 12, color: "#888" }}>{t("adminConfig.modules.authentificationDesc")}</div>
+                                                                </div>
+                                                                <Switch
+                                                                    checked={enabledModules.authentification}
+                                                                    onChange={(v) => setEnabledModules((p) => ({ ...p, authentification: v }))}
+                                                                />
+                                                            </div>
+                                                            <div className="flex items-center justify-between rounded border border-gray-200 dark:border-gray-600 p-4">
+                                                                <div>
+                                                                    <Text strong>{t("adminConfig.modules.demandeApplication")}</Text>
+                                                                    <div style={{ fontSize: 12, color: "#888" }}>{t("adminConfig.modules.demandeApplicationDesc")}</div>
+                                                                </div>
+                                                                <Switch
+                                                                    checked={enabledModules.demandeApplication}
+                                                                    onChange={(v) => setEnabledModules((p) => ({ ...p, demandeApplication: v }))}
+                                                                />
+                                                            </div>
+                                                            <div className="flex items-center justify-between rounded border border-gray-200 dark:border-gray-600 p-4">
+                                                                <div>
+                                                                    <Text strong>{t("adminConfig.modules.rechercheCodeDemandeur")}</Text>
+                                                                    <div style={{ fontSize: 12, color: "#888" }}>{t("adminConfig.modules.rechercheCodeDemandeurDesc")}</div>
+                                                                </div>
+                                                                <Switch
+                                                                    checked={enabledModules.rechercheCodeDemandeur}
+                                                                    onChange={(v) => setEnabledModules((p) => ({ ...p, rechercheCodeDemandeur: v }))}
+                                                                />
+                                                            </div>
+                                                        </Space>
+                                                        <div className="mt-4">
+                                                            <Button type="primary" icon={<SaveOutlined />} onClick={handleSaveEnabledModules} loading={modulesSaving}>
+                                                                {t("adminConfig.modules.save")}
+                                                            </Button>
+                                                        </div>
+                                                    </>
                                                 )}
                                             </div>
                                         ),

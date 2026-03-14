@@ -39,6 +39,7 @@
         "tabGeneral": "Allgemeine Einstellungen",
         "tabPayment": "Zahlungsbeträge",
         "tabReportSchedule": "Bericht per E-Mail",
+        "tabModules": "Module",
         "siteInfo": "Website-Informationen",
         "siteName": "Website-Name",
         "siteNameRequired": "Website-Name ist erforderlich",
@@ -105,6 +106,20 @@
             "loadError": "Fehler beim Laden der Berichtseinstellungen.",
             "saveError": "Fehler beim Speichern.",
             "saved": "Berichtseinstellungen gespeichert."
+        },
+        "modules": {
+            "title": "Dashboard-Module",
+            "description": "Module aktivieren oder deaktivieren. Wenn ein Modul deaktiviert ist, wird es im Menü ausgeblendet, auch wenn der Benutzer Berechtigungen hat.",
+            "authentification": "Authentifizierung (Dokumentenauthentifizierungsanfragen)",
+            "authentificationDesc": "Menü und Zugang zu Dokumentenauthentifizierungsanfragen.",
+            "demandeApplication": "Bewerbung (Kandidaturen / Teilungsanfragen)",
+            "demandeApplicationDesc": "Menü und Zugang zu Kandidaturen und Teilungsanfragen.",
+            "rechercheCodeDemandeur": "Suche nach Antragstellercode",
+            "rechercheCodeDemandeurDesc": "Menüeintrag und API zur Suche nach APU-Code (Institut).",
+            "save": "Speichern",
+            "loadError": "Fehler beim Laden der Module.",
+            "saveError": "Fehler beim Speichern.",
+            "saved": "Module gespeichert."
         },
         "teamTitle": "Unser Team",
         "teamDescription": "Legen Sie die Mitglieder fest, die im Abschnitt « Unser Team » auf der Über-uns-Seite angezeigt werden (Name, Rolle, Foto, kurze Beschreibung).",
@@ -276,6 +291,7 @@
         "demandesAuthentificationCreate": "Neue Anfrage",
         "demandesAuthentificationAttribuees": "Mir zugewiesen",
         "codeADN": "Zugang per ADN-Code",
+        "rechercheCodeDemandeur": "Suche nach Antragstellercode",
         "authenticationDocument": "Dok.-Authentifizierung",
         "demandesAuthentificationAdmin": "Authentifizierungsanfragen",
         "adminDemandesAuthList": "Anfragenliste",
@@ -330,8 +346,23 @@
             "attributedOrg": "Zugewiesene Institution",
             "attributedOrgPlaceholder": "Institution auswählen",
             "demandeur": "Antragsteller",
+            "demandeurCode": "Antragstellercode (APU)",
             "status": "Status",
             "createdAt": "Erstellt am"
+        },
+        "byDemandeurCode": {
+            "title": "Suche nach Antragstellercode",
+            "description": "Geben Sie den Antragstellercode ein (APU-Format, z. B. APU20260301), um seine Authentifizierungsanfragen und zugehörige Dokumente anzuzeigen.",
+            "placeholder": "z. B. APU20260301",
+            "enterCode": "Bitte geben Sie einen Antragstellercode ein.",
+            "search": "Suchen",
+            "notFound": "Kein Antragsteller mit diesem Code gefunden.",
+            "demandeurInfo": "Antragsteller",
+            "email": "E-Mail",
+            "demandesList": "Authentifizierungsanfragen",
+            "noDemandes": "Keine Authentifizierungsanfragen für diesen Antragsteller.",
+            "viewDetails": "Details anzeigen",
+            "openFullPage": "Vollständige Seite öffnen"
         },
         "validation": {
             "attributedOrgRequired": "Bitte wählen Sie die zugewiesene Institution."
@@ -597,6 +628,7 @@
         }
     },
     "profilePage": {
+        "demandeurCode": "Antragstellercode",
         "alerts": {
             "loading": "Profil wird geladen...",
             "errorTitle": "Fehler",

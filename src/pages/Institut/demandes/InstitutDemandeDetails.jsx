@@ -437,6 +437,11 @@ export default function InstitutDemandeDetails() {
                       <span>{demande.user?.email || t("institutDemandeDetails.tags.dash")}</span>
                     </div>
                   </Descriptions.Item>
+                  {demande.user?.demandeurCode && (
+                    <Descriptions.Item label={t("demandesAuthentification.fields.demandeurCode")} span={2}>
+                      <strong>{demande.user.demandeurCode}</strong>
+                    </Descriptions.Item>
+                  )}
 
                   <Descriptions.Item label={t("institutDemandeDetails.fields.observation")} span={2}>
                     <Text>{demande.observation || t("institutDemandeDetails.tags.dash")}</Text>
@@ -625,6 +630,9 @@ export default function InstitutDemandeDetails() {
                   <span>{demande.user?.email || t("institutDemandeDetails.tags.dash")}</span>
                 </div>
               </Descriptions.Item>
+              {demande.user?.demandeurCode && (
+                <Descriptions.Item label={t("demandesAuthentification.fields.demandeurCode")}><strong>{demande.user.demandeurCode}</strong></Descriptions.Item>
+              )}
               {/* <Descriptions.Item label={t("institutDemandeDetails.fields.serie")}>{demande.academicInfo?.serie ?? demande.serie ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item> */}
               {/* <Descriptions.Item label={t("institutDemandeDetails.fields.niveau")}>{demande.academicInfo?.niveau ?? demande.niveau ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item> */}
               {/* <Descriptions.Item label={t("institutDemandeDetails.fields.mention")}>{demande.academicInfo?.mention ?? demande.mention ?? t("institutDemandeDetails.tags.dash")}</Descriptions.Item> */}

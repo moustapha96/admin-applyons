@@ -259,6 +259,11 @@ export default function DemandeurUserProfile() {
                       </Title>
                       <Space direction="vertical" size={4} className="w-full justify-center md:justify-start">
                         <Space size="small" wrap className="justify-center md:justify-start">
+                          {userData.demandeurCode && (
+                            <Tag color="blue" className="!text-xs !text-inherit">
+                              {t("profilePage.demandeurCode")}: {userData.demandeurCode}
+                            </Tag>
+                          )}
                           <Tag
                             color={getRoleColor(userData.role)}
                             icon={<CrownOutlined />}

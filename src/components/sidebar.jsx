@@ -14,6 +14,7 @@ import { BellOutlined, FolderOpenOutlined } from "@ant-design/icons";
 import { useAuth } from "../hooks/useAuth";
 import { usePermissions } from "../hooks/usePermissions";
 import { useTranslation } from "react-i18next";
+import settingsService from "../services/settingsService";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 
@@ -345,6 +346,7 @@ function buildStaffMenu(orgId, handleLogOut) {
       children: [
         { i18nKey: "demandesAuthentificationAttribuees", to: "/organisations/demandes-authentification", anyPerms: ["demandes-authentification.read-attributed"], icon: <BiListCheck /> },
         { i18nKey: "codeADN", to: "/organisations/code-adn", anyPerms: ["demandes-authentification.read-by-code"], icon: <HiOutlineDocumentAdd /> },
+        { i18nKey: "rechercheCodeDemandeur", to: "/organisations/recherche-code-demandeur", anyPerms: ["demandes-authentification.read-by-code"], icon: <HiOutlineDocumentAdd /> },
       ],
     },
 
@@ -398,6 +400,31 @@ function buildStaffMenuSuperviseur(orgId) {
   ];
 }
 
+/** Filtre le menu selon les modules activés (admin). Si un module est désactivé, on masque l'entrée même si l'utilisateur a les permissions. */
+const applyModuleFilter = (menu, modules) => {
+  if (!menu || !Array.isArray(menu)) return menu;
+  if (!modules || typeof modules !== "object") return menu;
+  const auth = modules.authentification !== false;
+  const demandeApp = modules.demandeApplication !== false;
+  const rechercheCode = modules.rechercheCodeDemandeur !== false;
+  return menu
+    .filter((item) => {
+      if (item.i18nKey === "authenticationDocument" && !auth) return false;
+      if (item.i18nKey === "demandes" && !demandeApp) return false;
+      return true;
+    })
+    .map((item) => {
+      if (!item.children || !item.children.length) return item;
+      let children = item.children;
+      if (item.i18nKey === "authenticationDocument" && auth && !rechercheCode) {
+        children = children.filter((c) => c.i18nKey !== "rechercheCodeDemandeur");
+      }
+      if (!children.length) return null;
+      return { ...item, children };
+    })
+    .filter(Boolean);
+};
+
 /* Map rôle -> menu (Staff construit dynamiquement) */
 const resolveMenuForUser = (user, handleLogOut) => {
   const roles = Array.isArray(user?.roles) ? user.roles : user?.role ? [user.role] : [];
@@ -427,6 +454,26 @@ export default function Sidebar({ isCollapsed = false }) {
   const [openKeys, setOpenKeys] = useState(new Set());
   const [isManualToggle, setIsManualToggle] = useState(false);
   const lastPathRef = useRef(current);
+  const [enabledModules, setEnabledModules] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    settingsService
+      .getEnabledModules()
+      .then((res) => {
+        if (cancelled) return;
+        const data = res?.data?.data ?? res?.data ?? {};
+        setEnabledModules({
+          authentification: data.authentification !== false,
+          demandeApplication: data.demandeApplication !== false,
+          rechercheCodeDemandeur: data.rechercheCodeDemandeur !== false,
+        });
+      })
+      .catch(() => {
+        if (!cancelled) setEnabledModules({ authentification: true, demandeApplication: true, rechercheCodeDemandeur: true });
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   // Fonction de déconnexion
   const handleLogOut = useCallback(async () => {
@@ -440,6 +487,12 @@ export default function Sidebar({ isCollapsed = false }) {
 
   // Menu de base selon le rôle de l'utilisateur
   const baseMenu = useMemo(() => resolveMenuForUser(user, handleLogOut), [user, handleLogOut]);
+
+  // Application du filtre modules (masquer les entrées si module désactivé par l'admin)
+  const menuAfterModules = useMemo(
+    () => applyModuleFilter(baseMenu, enabledModules),
+    [baseMenu, enabledModules]
+  );
 
   // Fonction pour vérifier si une route correspond (gère les routes paramétrées)
   const isRouteActive = useCallback((route) => {
@@ -463,7 +516,7 @@ export default function Sidebar({ isCollapsed = false }) {
     lastPathRef.current = current;
     
     if (!isManualToggle) {
-      const parentWithChild = baseMenu.find((m) => 
+      const parentWithChild = menuAfterModules.find((m) => 
         m.children?.some?.((c) => {
           if (!c.to) return false;
           if (current === c.to) return true;
@@ -482,11 +535,11 @@ export default function Sidebar({ isCollapsed = false }) {
         });
       }
     }
-  }, [current, baseMenu, isManualToggle]);
+  }, [current, menuAfterModules, isManualToggle]);
 
-  // Filtrage par permissions + rôles
+  // Filtrage par permissions + rôles (appliqué après le filtre modules)
   const filteredMenu = useMemo(() => {
-    return baseMenu
+    return menuAfterModules
       .filter((item) => canSee(user, item, hasAnyPermission))
       .map((item) => {
         if (item.children?.length) {
@@ -497,7 +550,7 @@ export default function Sidebar({ isCollapsed = false }) {
         return item;
       })
       .filter(Boolean);
-  }, [user, baseMenu, hasAnyPermission]);
+  }, [user, menuAfterModules, hasAnyPermission]);
 
   const labelOf = (key) => t(`sidebar.${key}`);
 

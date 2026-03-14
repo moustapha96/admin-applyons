@@ -29,6 +29,7 @@ import OrganizationNotificationsList from "../pages/Institut/notifications/Organ
 import OrganizationNotificationDetail from "../pages/Institut/notifications/OrganizationNotificationDetail.jsx";
 import InstitutDemandesAuthentificationAttribueesList from "../pages/Institut/demandes-authentification/InstitutDemandesAuthentificationAttribueesList";
 import InstitutCodeADNPage from "../pages/Institut/demandes-authentification/InstitutCodeADNPage";
+import InstitutRechercheCodeDemandeurPage from "../pages/Institut/demandes-authentification/InstitutRechercheCodeDemandeurPage";
 import InstitutDemandeAuthentificationDetail from "../pages/Institut/demandes-authentification/InstitutDemandeAuthentificationDetail";
 
 export const organizationRoutes = (
@@ -55,6 +56,7 @@ export const organizationRoutes = (
       <Route path="demandes-authentification" element={<InstitutDemandesAuthentificationAttribueesList />} />
       <Route path="demandes-authentification/:id" element={<InstitutDemandeAuthentificationDetail />} />
       <Route path="code-adn" element={<InstitutCodeADNPage />} />
+      <Route path="recherche-code-demandeur" element={<InstitutRechercheCodeDemandeurPage />} />
 
       <Route path="demandes" element={<InstitutDemandesList />} />
       <Route path="demandes/invited" element={<InstitutDemandesInviteesList />} />

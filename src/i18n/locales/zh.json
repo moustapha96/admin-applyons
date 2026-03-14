@@ -39,6 +39,7 @@
         "tabGeneral": "常规设置",
         "tabPayment": "支付金额",
         "tabReportSchedule": "邮件报告",
+        "tabModules": "模块",
         "siteInfo": "站点信息",
         "siteName": "站点名称",
         "siteNameRequired": "站点名称为必填项",
@@ -105,6 +106,20 @@
             "loadError": "加载报告设置时出错。",
             "saveError": "保存时出错。",
             "saved": "报告设置已保存。"
+        },
+        "modules": {
+            "title": "仪表板模块",
+            "description": "启用或禁用模块。禁用后，即使用户有权限，菜单中也不会显示。",
+            "authentification": "认证（文件认证申请）",
+            "authentificationDesc": "菜单及文件认证申请访问。",
+            "demandeApplication": "申请（候选/共享申请）",
+            "demandeApplicationDesc": "菜单及候选与共享申请访问。",
+            "rechercheCodeDemandeur": "按申请人代码搜索",
+            "rechercheCodeDemandeurDesc": "菜单项及按 APU 代码搜索 API（机构）。",
+            "save": "保存",
+            "loadError": "加载模块时出错。",
+            "saveError": "保存时出错。",
+            "saved": "模块已保存。"
         },
         "teamTitle": "我们的团队",
         "teamDescription": "设置「关于我们」页面中「我们的团队」部分显示的成员（姓名、职位、照片、简短描述）。",
@@ -276,6 +291,7 @@
         "demandesAuthentificationCreate": "新建申请",
         "demandesAuthentificationAttribuees": "分配给我",
         "codeADN": "通过ADN码访问",
+        "rechercheCodeDemandeur": "按申请人代码搜索",
         "authenticationDocument": "文件认证",
         "demandesAuthentificationAdmin": "认证申请",
         "adminDemandesAuthList": "申请列表",
@@ -330,8 +346,23 @@
             "attributedOrg": "指定机构",
             "attributedOrgPlaceholder": "选择指定机构",
             "demandeur": "申请人",
+            "demandeurCode": "申请人代码（APU）",
             "status": "状态",
             "createdAt": "创建于"
+        },
+        "byDemandeurCode": {
+            "title": "按申请人代码搜索",
+            "description": "输入申请人代码（APU格式，如 APU20260301）以查看其认证申请及关联文件。",
+            "placeholder": "例如：APU20260301",
+            "enterCode": "请输入申请人代码。",
+            "search": "搜索",
+            "notFound": "未找到与此代码对应的申请人。",
+            "demandeurInfo": "申请人",
+            "email": "邮箱",
+            "demandesList": "认证申请",
+            "noDemandes": "该申请人暂无认证申请。",
+            "viewDetails": "查看详情",
+            "openFullPage": "打开完整页面"
         },
         "validation": {
             "attributedOrgRequired": "请选择指定机构。"
@@ -597,6 +628,7 @@
         }
     },
     "profilePage": {
+        "demandeurCode": "申请人代码",
         "alerts": {
             "loading": "正在加载个人资料…",
             "errorTitle": "错误",

@@ -240,6 +240,11 @@ export default function AdminDemandeDetail() {
             <Descriptions.Item label={t("adminDemandeDetail.fields.demandeur")} span={2}>
               {d.user?.email} {d.user?.firstName || d.user?.lastName ? `— ${d.user?.firstName ?? ""} ${d.user?.lastName ?? ""}` : ""}
             </Descriptions.Item>
+            {d.user?.demandeurCode && (
+              <Descriptions.Item label={t("demandesAuthentification.fields.demandeurCode")} span={2}>
+                <strong>{d.user.demandeurCode}</strong>
+              </Descriptions.Item>
+            )}
 
             <Descriptions.Item label={t("adminDemandeDetail.fields.targetOrg")}>
               {d.targetOrg ? (
@@ -458,6 +463,9 @@ export default function AdminDemandeDetail() {
             <Descriptions.Item label={t("adminDemandeDetail.fields.status")}><Tag color={statusTagColor(d.status)}>{d.status}</Tag></Descriptions.Item>
             <Descriptions.Item label={t("adminDemandeDetail.fields.date")}>{fmtDate(d.dateDemande, true)}</Descriptions.Item>
             <Descriptions.Item label={t("adminDemandeDetail.fields.demandeur")}>{d.user?.firstName} {d.user?.lastName} — {d.user?.email}</Descriptions.Item>
+            {d.user?.demandeurCode && (
+              <Descriptions.Item label={t("demandesAuthentification.fields.demandeurCode")}><strong>{d.user.demandeurCode}</strong></Descriptions.Item>
+            )}
             <Descriptions.Item label={t("adminDemandeDetail.fields.targetOrg")}>{d.targetOrg?.name ?? "—"}</Descriptions.Item>
             <Descriptions.Item label={t("adminDemandeDetail.fields.assignedOrg")}>{d.assignedOrg?.name ?? "—"}</Descriptions.Item>
             <Descriptions.Item label={t("adminDemandeDetail.fields.periode")}>{d.periode ?? "—"}</Descriptions.Item>

@@ -103,6 +103,11 @@ const UserDetail = () => {
                                 {getRoleLabel(user.role, t)}
                             </Tag>
                         </Descriptions.Item>
+                        {user.role === "DEMANDEUR" && user.demandeurCode && (
+                            <Descriptions.Item label={t("demandesAuthentification.fields.demandeurCode")} span={1}>
+                                <strong>{user.demandeurCode}</strong>
+                            </Descriptions.Item>
+                        )}
                         <Descriptions.Item label={t("adminUserDetails.fields.status")} span={1}>
                             <Tag color={user.enabled ? "green" : "red"}>
                                 {user.enabled ? t("adminUserDetails.status.active") : t("adminUserDetails.status.inactive")}

@@ -121,6 +121,11 @@ export default function DemandeurDemandeAuthentificationDetail() {
                 <Button type="text" size="small" icon={<CopyOutlined />} onClick={copyCode} />
               </Space>
             </Descriptions.Item>
+            {demande.user?.demandeurCode && (
+              <Descriptions.Item label={t("demandesAuthentification.fields.demandeurCode")}>
+                <strong>{demande.user.demandeurCode}</strong>
+              </Descriptions.Item>
+            )}
             <Descriptions.Item label={t("demandesAuthentification.fields.objet")}>{demande.objet || "—"}</Descriptions.Item>
             <Descriptions.Item label={t("demandesAuthentification.fields.attributedOrg")}>
               <div>

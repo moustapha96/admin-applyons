@@ -39,6 +39,7 @@
         "tabGeneral": "Paramètres généraux",
         "tabPayment": "Montants de paiement",
         "tabReportSchedule": "Rapport par mail",
+        "tabModules": "Modules",
         "siteInfo": "Informations du site",
         "siteName": "Nom du site",
         "siteNameRequired": "Le nom du site est requis",
@@ -105,6 +106,20 @@
             "loadError": "Erreur lors du chargement des paramètres du rapport.",
             "saveError": "Erreur lors de l'enregistrement.",
             "saved": "Paramètres du rapport enregistrés."
+        },
+        "modules": {
+            "title": "Modules du tableau de bord",
+            "description": "Activez ou désactivez les modules. Si un module est désactivé, il n'apparaît plus dans le menu des utilisateurs, même s'ils ont les permissions.",
+            "authentification": "Authentification (demandes d'authentification de documents)",
+            "authentificationDesc": "Menu et accès aux demandes d'authentification de documents.",
+            "demandeApplication": "Demande d'application (candidatures / demandes de partage)",
+            "demandeApplicationDesc": "Menu et accès aux candidatures et demandes de partage.",
+            "rechercheCodeDemandeur": "Recherche par code demandeur",
+            "rechercheCodeDemandeurDesc": "Entrée de menu et API de recherche par code APU (institut).",
+            "save": "Enregistrer",
+            "loadError": "Erreur lors du chargement des modules.",
+            "saveError": "Erreur lors de l'enregistrement.",
+            "saved": "Modules enregistrés."
         },
         "teamTitle": "Notre Équipe",
         "teamDescription": "Définissez les membres affichés dans la section « Notre Équipe » de la page À propos (nom, poste, photo, courte description).",
@@ -322,6 +337,7 @@
         "demandesAuthentificationCreate": "Nouvelle demande",
         "demandesAuthentificationAttribuees": "Mes demandes attribuées",
         "codeADN": "Accéder par code ADN",
+        "rechercheCodeDemandeur": "Recherche par code demandeur",
         "authenticationDocument": "Auth. documents",
         "demandesAuthentificationAdmin": "Demandes d'authentification",
         "adminDemandesAuthList": "Liste des demandes",
@@ -452,6 +468,7 @@
             "attributedOrg": "Institut attributaire",
             "attributedOrgPlaceholder": "Choisir l'institut attributaire",
             "demandeur": "Demandeur",
+            "demandeurCode": "Code demandeur (APU)",
             "status": "Statut",
             "createdAt": "Créé le"
         },
@@ -512,6 +529,20 @@
             "typeOtherPlaceholder": "Précisez le type de document",
             "mentionPlaceholder": "Mention (optionnel)",
             "pdfOnlyExtra": "PDF uniquement, 5 Mo max."
+        },
+        "byDemandeurCode": {
+            "title": "Recherche par code demandeur",
+            "description": "Saisissez le code demandeur (format APU, ex. APU20260301) pour afficher la liste de ses demandes d'authentification et des documents associés.",
+            "placeholder": "Ex. APU20260301",
+            "enterCode": "Veuillez saisir un code demandeur.",
+            "search": "Rechercher",
+            "notFound": "Aucun demandeur trouvé pour ce code.",
+            "demandeurInfo": "Demandeur",
+            "email": "Email",
+            "demandesList": "Demandes d'authentification",
+            "noDemandes": "Aucune demande d'authentification pour ce demandeur.",
+            "viewDetails": "Voir détails",
+            "openFullPage": "Ouvrir la page complète"
         },
         "codeADN": {
             "title": "Accéder par code ADN",
@@ -724,6 +755,7 @@
             "noDataDesc": "Aucune donnée utilisateur disponible",
             "loadError": "Erreur lors du chargement du profil utilisateur"
         },
+        "demandeurCode": "Code demandeur",
         "header": {
             "editProfile": "Modifier le profil",
             "password": "Mot de passe",

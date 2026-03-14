@@ -139,6 +139,9 @@ export default function DemandeurDemandeDetail() {
               {/* Dossier */}
               <Descriptions bordered size="small" column={{ xs: 1, sm: 2 }} title={t("demandeDetail.sections.case")}>
                 <Descriptions.Item label={t("demandeDetail.fields.code")}>{d.code || t("demandeDetail.common.na")}</Descriptions.Item>
+                {d.user?.demandeurCode && (
+                  <Descriptions.Item label={t("demandesAuthentification.fields.demandeurCode")}><strong>{d.user.demandeurCode}</strong></Descriptions.Item>
+                )}
                 <Descriptions.Item label={t("demandeDetail.fields.status")}>
                   <Tag color={statusColor(d.status)}>{t(`demandeurDemandes.status.${d.status || "PENDING"}`)}</Tag>
                 </Descriptions.Item>
