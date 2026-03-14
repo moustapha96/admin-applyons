@@ -21,6 +21,8 @@ export const settingsService = {
     getPageContentList: () => axiosInstance.get('/settings/page-content'),
     getPageContent: (pageKey) => axiosInstance.get(`/settings/page-content/${pageKey}`),
     updatePageContent: (pageKey, content) => axiosInstance.put(`/settings/page-content/${pageKey}`, { content }),
+    getReportSchedule: () => axiosInstance.get("/settings/report-schedule"),
+    updateReportSchedule: (data) => axiosInstance.put("/settings/report-schedule", data),
     uploadPageContentImage: (file) => {
         const formData = new FormData();
         formData.append('image', file);

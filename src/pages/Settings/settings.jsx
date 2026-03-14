@@ -17,6 +17,7 @@ import {
     Select,
     Segmented,
     Modal,
+    Switch,
 } from "antd";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -36,6 +37,7 @@ import {
     UserOutlined,
     FileTextOutlined,
     PictureOutlined,
+    MailOutlined,
 } from "@ant-design/icons";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -55,6 +57,9 @@ const SettingsPage = () => {
     const [faviconFileList, setFaviconFileList] = useState([]);
     const [paymentSettings, setPaymentSettings] = useState(null);
     const [savingPayment, setSavingPayment] = useState(false);
+    const [reportForm] = Form.useForm();
+    const [reportScheduleLoading, setReportScheduleLoading] = useState(false);
+    const [reportScheduleSaving, setReportScheduleSaving] = useState(false);
     const [teamMembers, setTeamMembers] = useState([]);
     const [savingTeam, setSavingTeam] = useState(false);
     const [uploadingImageIndex, setUploadingImageIndex] = useState(null);
@@ -262,6 +267,46 @@ const SettingsPage = () => {
             toast.error(e?.response?.data?.message || t("adminConfig.toastSaveError"));
         } finally {
             setSavingPayment(false);
+        }
+    };
+
+    const loadReportSchedule = async () => {
+        setReportScheduleLoading(true);
+        try {
+            const res = await settingsService.getReportSchedule();
+            const data = res?.data?.data ?? res?.data ?? null;
+            if (data) {
+                reportForm.setFieldsValue({
+                    enabled: data.enabled !== false,
+                    dayOfWeek: data.dayOfWeek ?? 1,
+                    hour: data.hour ?? 9,
+                    minute: data.minute ?? 0,
+                    timezone: data.timezone || "Europe/Paris",
+                });
+            }
+        } catch (e) {
+            toast.error(t("adminConfig.reportSchedule.loadError"));
+        } finally {
+            setReportScheduleLoading(false);
+        }
+    };
+
+    const handleSaveReportSchedule = async (values) => {
+        setReportScheduleSaving(true);
+        try {
+            await settingsService.updateReportSchedule({
+                enabled: values.enabled,
+                dayOfWeek: values.dayOfWeek,
+                hour: values.hour,
+                minute: values.minute,
+                timezone: values.timezone,
+            });
+            toast.success(t("adminConfig.reportSchedule.saved"));
+            loadReportSchedule();
+        } catch (e) {
+            toast.error(e?.response?.data?.message || t("adminConfig.reportSchedule.saveError"));
+        } finally {
+            setReportScheduleSaving(false);
         }
     };
 
@@ -480,6 +525,7 @@ const SettingsPage = () => {
                                 onChange={(k) => {
                                     setActiveTab(k);
                                     if (k === "payment") loadPaymentSettings();
+                                    if (k === "report") loadReportSchedule();
                                     if (k === "pageContent") { loadPageContentList(); loadPageContent(pageContentKey, pageContentLang); }
                                 }}
                                 items={[
@@ -707,6 +753,96 @@ const SettingsPage = () => {
                                                     </Button>
                                                 </Form.Item>
                                             </Form>
+                                        ),
+                                    },
+                                    {
+                                        key: "report",
+                                        label: (
+                                            <span>
+                                                <MailOutlined />
+                                                {t("adminConfig.tabReportSchedule")}
+                                            </span>
+                                        ),
+                                        children: (
+                                            <div style={{ maxWidth: "600px" }}>
+                                                <Title level={4}>{t("adminConfig.reportSchedule.title")}</Title>
+                                                <Text type="secondary" style={{ display: "block", marginBottom: 16 }}>
+                                                    {t("adminConfig.reportSchedule.description")}
+                                                </Text>
+                                                {reportScheduleLoading ? (
+                                                    <Spin />
+                                                ) : (
+                                                    <Form
+                                                        form={reportForm}
+                                                        layout="vertical"
+                                                        onFinish={handleSaveReportSchedule}
+                                                    >
+                                                        <Form.Item
+                                                            name="enabled"
+                                                            label={t("adminConfig.reportSchedule.enabled")}
+                                                            valuePropName="checked"
+                                                        >
+                                                            <Switch />
+                                                        </Form.Item>
+                                                        <Form.Item
+                                                            name="dayOfWeek"
+                                                            label={t("adminConfig.reportSchedule.dayOfWeek")}
+                                                            rules={[{ required: true }]}
+                                                        >
+                                                            <Select
+                                                                options={[
+                                                                    { value: 0, label: t("adminConfig.reportSchedule.days.0") },
+                                                                    { value: 1, label: t("adminConfig.reportSchedule.days.1") },
+                                                                    { value: 2, label: t("adminConfig.reportSchedule.days.2") },
+                                                                    { value: 3, label: t("adminConfig.reportSchedule.days.3") },
+                                                                    { value: 4, label: t("adminConfig.reportSchedule.days.4") },
+                                                                    { value: 5, label: t("adminConfig.reportSchedule.days.5") },
+                                                                    { value: 6, label: t("adminConfig.reportSchedule.days.6") },
+                                                                ]}
+                                                            />
+                                                        </Form.Item>
+                                                        <Form.Item
+                                                            name="hour"
+                                                            label={t("adminConfig.reportSchedule.hour")}
+                                                            rules={[{ required: true }]}
+                                                        >
+                                                            <InputNumber min={0} max={23} style={{ width: 80 }} />
+                                                        </Form.Item>
+                                                        <Form.Item
+                                                            name="minute"
+                                                            label={t("adminConfig.reportSchedule.minute")}
+                                                            rules={[{ required: true }]}
+                                                        >
+                                                            <InputNumber min={0} max={59} style={{ width: 80 }} />
+                                                        </Form.Item>
+                                                        <Form.Item
+                                                            name="timezone"
+                                                            label={t("adminConfig.reportSchedule.timezone")}
+                                                            rules={[{ required: true }]}
+                                                        >
+                                                            <Select
+                                                                showSearch
+                                                                optionFilterProp="label"
+                                                                options={[
+                                                                    { value: "Europe/Paris", label: "Europe/Paris" },
+                                                                    { value: "Europe/London", label: "Europe/London" },
+                                                                    { value: "America/New_York", label: "America/New_York" },
+                                                                    { value: "America/Los_Angeles", label: "America/Los_Angeles" },
+                                                                    { value: "Africa/Dakar", label: "Africa/Dakar" },
+                                                                    { value: "Africa/Abidjan", label: "Africa/Abidjan" },
+                                                                    { value: "UTC", label: "UTC" },
+                                                                ]}
+                                                                style={{ width: 220 }}
+                                                            />
+                                                        </Form.Item>
+                                                        <Form.Item>
+                                                            <Button type="primary" htmlType="submit" icon={<SaveOutlined />} loading={reportScheduleSaving}>
+                                                                {t("adminConfig.reportSchedule.save")}
+                                                            </Button>
+                                                        </Form.Item>
+                                                    </Form>
+                                                )}
+                                            </div>
                                         ),
                                     },
                                     {
