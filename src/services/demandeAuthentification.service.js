@@ -30,6 +30,7 @@ const demandeAuthentificationService = {
   list: (params = {}) => axiosInstance.get(base, { params }),
   listAttributed: (params = {}) => axiosInstance.get(`${base}/attributed`, { params }),
   listAll: (params = {}) => axiosInstance.get(`${base}/all`, { params }),
+  listAllDocuments: (params = {}) => axiosInstance.get(`${base}/all/documents`, { params }),
   getStats: () => axiosInstance.get(`${base}/all/stats`),
   getById: (id) => axiosInstance.get(`${base}/${id}`),
   getByCode: (codeADN) => axiosInstance.get(`${base}/by-code/${encodeURIComponent(normalizeADNCode(codeADN))}`),

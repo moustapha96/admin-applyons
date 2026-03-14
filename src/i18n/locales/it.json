@@ -295,7 +295,8 @@
         "authenticationDocument": "Auth. documenti",
         "demandesAuthentificationAdmin": "Richieste di autenticazione",
         "adminDemandesAuthList": "Elenco richieste",
-        "adminDemandesAuthStats": "Statistiche"
+        "adminDemandesAuthStats": "Statistiche",
+        "adminDemandesAuthDocumentsList": "Elenco documenti"
     },
     "demandesAuthentification": {
         "title": "Richieste di autenticazione documenti",
@@ -362,7 +363,8 @@
             "demandesList": "Richieste di autenticazione",
             "noDemandes": "Nessuna richiesta di autenticazione per questo richiedente.",
             "viewDetails": "Vedi dettagli",
-            "openFullPage": "Apri pagina completa"
+            "openFullPage": "Apri pagina completa",
+            "subscriptionRequiredDesc": "Questa pagina è riservata agli istituti con abbonamento attivo. Sottoscrivete un abbonamento per accedere alla ricerca per codice richiedente."
         },
         "validation": {
             "attributedOrgRequired": "Seleziona l'istituzione attribuita."
@@ -525,7 +527,17 @@
         "docAddedBy": "Aggiunto da (istituzione)",
         "noDocuments": "Nessun documento",
         "notifiedInstitutsTitle": "Istituzioni notificate per email",
-        "notifiedAt": "Notificato il"
+        "notifiedAt": "Notificato il",
+        "documentsList": {
+            "title": "Documenti delle richieste di autenticazione",
+            "breadcrumb": "Elenco documenti",
+            "description": "Tutti i documenti inviati dagli istituti per le richieste di autenticazione.",
+            "filters": { "search": "Cerca (codice ADN, richiedente, istituto…)", "type": "Tipo documento" },
+            "columns": { "type": "Tipo", "mention": "Menzione", "organization": "Istituto (mittente)", "demande": "Richiesta", "demandeur": "Richiedente", "date": "Data invio", "actions": "Azioni" },
+            "actions": { "viewDocument": "Visualizza documento", "viewDemande": "Visualizza richiesta" },
+            "empty": "Nessun documento",
+            "pagination": "Totale {{total}} documenti"
+        }
     },
     "profile": {
         "title": "Profilo utente",

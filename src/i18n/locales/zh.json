@@ -295,7 +295,8 @@
         "authenticationDocument": "文件认证",
         "demandesAuthentificationAdmin": "认证申请",
         "adminDemandesAuthList": "申请列表",
-        "adminDemandesAuthStats": "统计"
+        "adminDemandesAuthStats": "统计",
+        "adminDemandesAuthDocumentsList": "文档列表"
     },
     "demandesAuthentification": {
         "title": "文件认证申请",
@@ -362,7 +363,8 @@
             "demandesList": "认证申请",
             "noDemandes": "该申请人暂无认证申请。",
             "viewDetails": "查看详情",
-            "openFullPage": "打开完整页面"
+            "openFullPage": "打开完整页面",
+            "subscriptionRequiredDesc": "此页面仅对拥有有效订阅的机构开放。请订阅以使用按申请人代码搜索功能。"
         },
         "validation": {
             "attributedOrgRequired": "请选择指定机构。"
@@ -525,7 +527,17 @@
         "docAddedBy": "添加者（机构）",
         "noDocuments": "暂无文件",
         "notifiedInstitutsTitle": "已邮件通知的机构",
-        "notifiedAt": "通知时间"
+        "notifiedAt": "通知时间",
+        "documentsList": {
+            "title": "认证申请文档列表",
+            "breadcrumb": "文档列表",
+            "description": "机构为申请人认证申请提交的所有文档。",
+            "filters": { "search": "搜索（ADN代码、申请人、机构…）", "type": "文档类型" },
+            "columns": { "type": "类型", "mention": "备注", "organization": "机构（提交方）", "demande": "申请", "demandeur": "申请人", "date": "提交日期", "actions": "操作" },
+            "actions": { "viewDocument": "查看文档", "viewDemande": "查看申请" },
+            "empty": "暂无文档",
+            "pagination": "共 {{total}} 个文档"
+        }
     },
     "profile": {
         "title": "用户资料",

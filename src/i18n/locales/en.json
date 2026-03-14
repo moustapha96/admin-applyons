@@ -340,7 +340,8 @@
         "authenticationDocument": "Doc authentication",
         "demandesAuthentificationAdmin": "Authentication requests",
         "adminDemandesAuthList": "Request list",
-        "adminDemandesAuthStats": "Statistics"
+        "adminDemandesAuthStats": "Statistics",
+        "adminDemandesAuthDocumentsList": "Documents list"
     },
     "demandeurNotifications": {
         "title": "Notifications",
@@ -424,7 +425,8 @@
             "demandesList": "Authentication requests",
             "noDemandes": "No authentication requests for this applicant.",
             "viewDetails": "View details",
-            "openFullPage": "Open full page"
+            "openFullPage": "Open full page",
+            "subscriptionRequiredDesc": "This page is restricted to institutes with an active subscription. Subscribe to access the search by applicant code."
         },
         "validation": { "attributedOrgRequired": "Please select the attributed institution." },
         "institutChoice": {
@@ -600,7 +602,31 @@
         "docAddedBy": "Added by (institution)",
         "noDocuments": "No documents",
         "notifiedInstitutsTitle": "Institutions notified by email",
-        "notifiedAt": "Notified at"
+        "notifiedAt": "Notified at",
+        "documentsList": {
+            "title": "Authentication request documents",
+            "breadcrumb": "Documents list",
+            "description": "All documents submitted by institutes for applicants' authentication requests.",
+            "filters": {
+                "search": "Search (ADN code, applicant, institute…)",
+                "type": "Document type"
+            },
+            "columns": {
+                "type": "Type",
+                "mention": "Mention",
+                "organization": "Institute (submitter)",
+                "demande": "Request",
+                "demandeur": "Applicant",
+                "date": "Submission date",
+                "actions": "Actions"
+            },
+            "actions": {
+                "viewDocument": "View document",
+                "viewDemande": "View request"
+            },
+            "empty": "No documents",
+            "pagination": "Total {{total}} documents"
+        }
     },
     "profile": {
         "title": "User profile",

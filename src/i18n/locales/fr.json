@@ -341,7 +341,8 @@
         "authenticationDocument": "Auth. documents",
         "demandesAuthentificationAdmin": "Demandes d'authentification",
         "adminDemandesAuthList": "Liste des demandes",
-        "adminDemandesAuthStats": "Statistiques"
+        "adminDemandesAuthStats": "Statistiques",
+        "adminDemandesAuthDocumentsList": "Liste des documents"
     },
     "demandeurNotifications": {
         "title": "Notifications",
@@ -542,7 +543,8 @@
             "demandesList": "Demandes d'authentification",
             "noDemandes": "Aucune demande d'authentification pour ce demandeur.",
             "viewDetails": "Voir détails",
-            "openFullPage": "Ouvrir la page complète"
+            "openFullPage": "Ouvrir la page complète",
+            "subscriptionRequiredDesc": "Cette page est réservée aux instituts disposant d'un abonnement actif. Souscrivez à un abonnement pour accéder à la recherche par code demandeur."
         },
         "codeADN": {
             "title": "Accéder par code ADN",
@@ -645,7 +647,31 @@
         "docAddedBy": "Ajouté par (institut)",
         "noDocuments": "Aucun document",
         "notifiedInstitutsTitle": "Instituts notifiés par email",
-        "notifiedAt": "Notifié le"
+        "notifiedAt": "Notifié le",
+        "documentsList": {
+            "title": "Documents des demandes d'authentification",
+            "breadcrumb": "Liste des documents",
+            "description": "Tous les documents déposés par les instituts pour les demandes d'authentification des demandeurs.",
+            "filters": {
+                "search": "Rechercher (code ADN, demandeur, institut…)",
+                "type": "Type de document"
+            },
+            "columns": {
+                "type": "Type",
+                "mention": "Mention",
+                "organization": "Institut (déposant)",
+                "demande": "Demande",
+                "demandeur": "Demandeur",
+                "date": "Date dépôt",
+                "actions": "Actions"
+            },
+            "actions": {
+                "viewDocument": "Voir le document",
+                "viewDemande": "Voir la demande"
+            },
+            "empty": "Aucun document",
+            "pagination": "Total {{total}} documents"
+        }
     },
     "profile": {
         "title": "Profil utilisateur",

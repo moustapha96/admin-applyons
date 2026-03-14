@@ -91,6 +91,7 @@ import ApiRoutesList from "../pages/Admin/ApiRoutes/ApiRoutesList.jsx";
 import AdminDemandesAuthentificationList from "../pages/Admin/DemandesAuthentification/AdminDemandesAuthentificationList.jsx";
 import AdminDemandeAuthentificationDetail from "../pages/Admin/DemandesAuthentification/AdminDemandeAuthentificationDetail.jsx";
 import AdminDemandesAuthentificationStats from "../pages/Admin/DemandesAuthentification/AdminDemandesAuthentificationStats.jsx";
+import AdminDemandesAuthentificationDocumentsList from "../pages/Admin/DemandesAuthentification/AdminDemandesAuthentificationDocumentsList.jsx";
 import AdminSendNotification from "../pages/Admin/Notifications/AdminSendNotification.jsx";
 
 export const adminRoutes = (
@@ -290,6 +291,7 @@ export const adminRoutes = (
       <Route element={<ProtectedRoute requiredPermissions={["demandes-authentification.manage"]} />}>
         <Route path="demandes-authentification" element={<AdminDemandesAuthentificationList />} />
         <Route path="demandes-authentification/stats" element={<AdminDemandesAuthentificationStats />} />
+        <Route path="demandes-authentification/documents" element={<AdminDemandesAuthentificationDocumentsList />} />
         <Route path="demandes-authentification/:id" element={<AdminDemandeAuthentificationDetail />} />
       </Route>
 

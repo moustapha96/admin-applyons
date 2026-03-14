@@ -295,7 +295,8 @@
         "authenticationDocument": "Auth. documentos",
         "demandesAuthentificationAdmin": "Solicitudes de autenticación",
         "adminDemandesAuthList": "Lista de solicitudes",
-        "adminDemandesAuthStats": "Estadísticas"
+        "adminDemandesAuthStats": "Estadísticas",
+        "adminDemandesAuthDocumentsList": "Lista de documentos"
     },
     "demandesAuthentification": {
         "title": "Solicitudes de autenticación de documentos",
@@ -362,7 +363,8 @@
             "demandesList": "Solicitudes de autenticación",
             "noDemandes": "Ninguna solicitud de autenticación para este solicitante.",
             "viewDetails": "Ver detalles",
-            "openFullPage": "Abrir página completa"
+            "openFullPage": "Abrir página completa",
+            "subscriptionRequiredDesc": "Esta página está reservada a los institutos con suscripción activa. Suscríbase para acceder a la búsqueda por código de solicitante."
         },
         "validation": {
             "attributedOrgRequired": "Seleccione la institución atribuida."
@@ -525,7 +527,17 @@
         "docAddedBy": "Añadido por (institución)",
         "noDocuments": "Ningún documento",
         "notifiedInstitutsTitle": "Instituciones notificadas por correo",
-        "notifiedAt": "Notificado el"
+        "notifiedAt": "Notificado el",
+        "documentsList": {
+            "title": "Documentos de solicitudes de autenticación",
+            "breadcrumb": "Lista de documentos",
+            "description": "Todos los documentos enviados por los institutos para las solicitudes de autenticación.",
+            "filters": { "search": "Buscar (código ADN, solicitante, instituto…)", "type": "Tipo de documento" },
+            "columns": { "type": "Tipo", "mention": "Mención", "organization": "Instituto (remitente)", "demande": "Solicitud", "demandeur": "Solicitante", "date": "Fecha de envío", "actions": "Acciones" },
+            "actions": { "viewDocument": "Ver documento", "viewDemande": "Ver solicitud" },
+            "empty": "Ningún documento",
+            "pagination": "Total {{total}} documentos"
+        }
     },
     "profile": {
         "title": "Perfil de usuario",

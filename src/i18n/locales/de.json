@@ -295,7 +295,8 @@
         "authenticationDocument": "Dok.-Authentifizierung",
         "demandesAuthentificationAdmin": "Authentifizierungsanfragen",
         "adminDemandesAuthList": "Anfragenliste",
-        "adminDemandesAuthStats": "Statistiken"
+        "adminDemandesAuthStats": "Statistiken",
+        "adminDemandesAuthDocumentsList": "Dokumentenliste"
     },
     "demandesAuthentification": {
         "title": "Anfragen zur Dokumentenauthentifizierung",
@@ -362,7 +363,8 @@
             "demandesList": "Authentifizierungsanfragen",
             "noDemandes": "Keine Authentifizierungsanfragen für diesen Antragsteller.",
             "viewDetails": "Details anzeigen",
-            "openFullPage": "Vollständige Seite öffnen"
+            "openFullPage": "Vollständige Seite öffnen",
+            "subscriptionRequiredDesc": "Diese Seite ist nur für Institute mit aktivem Abonnement. Schließen Sie ein Abonnement ab, um die Suche nach Antragstellercode zu nutzen."
         },
         "validation": {
             "attributedOrgRequired": "Bitte wählen Sie die zugewiesene Institution."
@@ -525,7 +527,17 @@
         "docAddedBy": "Hinzugefügt von (Institution)",
         "noDocuments": "Keine Dokumente",
         "notifiedInstitutsTitle": "Per E-Mail benachrichtigte Institutionen",
-        "notifiedAt": "Benachrichtigt am"
+        "notifiedAt": "Benachrichtigt am",
+        "documentsList": {
+            "title": "Dokumente der Authentifizierungsanfragen",
+            "breadcrumb": "Dokumentenliste",
+            "description": "Alle von Institutionen eingereichten Dokumente zu Authentifizierungsanfragen.",
+            "filters": { "search": "Suchen (ADN-Code, Antragsteller, Institut…)", "type": "Dokumenttyp" },
+            "columns": { "type": "Typ", "mention": "Vermerk", "organization": "Institut (Einreicher)", "demande": "Anfrage", "demandeur": "Antragsteller", "date": "Einreichdatum", "actions": "Aktionen" },
+            "actions": { "viewDocument": "Dokument anzeigen", "viewDemande": "Anfrage anzeigen" },
+            "empty": "Keine Dokumente",
+            "pagination": "Gesamt {{total}} Dokumente"
+        }
     },
     "profile": {
         "title": "Benutzerprofil",

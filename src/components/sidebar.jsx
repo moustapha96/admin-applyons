@@ -101,6 +101,7 @@ const MENU_ADMIN = [
     children: [
       { i18nKey: "adminDemandesAuthList", to: "/admin/demandes-authentification", anyPerms: ["demandes-authentification.manage"], icon: <BiListCheck /> },
       { i18nKey: "adminDemandesAuthStats", to: "/admin/demandes-authentification/stats", anyPerms: ["demandes-authentification.manage"], icon: <MdOutlineBarChart /> },
+      { i18nKey: "adminDemandesAuthDocumentsList", to: "/admin/demandes-authentification/documents", anyPerms: ["demandes-authentification.manage"], icon: <BiListCheck /> },
     ],
   },
 
@@ -198,6 +199,7 @@ const MENU_SUPER_ADMIN = [
     children: [
       { i18nKey: "adminDemandesAuthList", to: "/admin/demandes-authentification", anyPerms: [], icon: <BiListCheck /> },
       { i18nKey: "adminDemandesAuthStats", to: "/admin/demandes-authentification/stats", anyPerms: [], icon: <MdOutlineBarChart /> },
+      { i18nKey: "adminDemandesAuthDocumentsList", to: "/admin/demandes-authentification/documents", anyPerms: [], icon: <BiListCheck /> },
     ],
   },
 

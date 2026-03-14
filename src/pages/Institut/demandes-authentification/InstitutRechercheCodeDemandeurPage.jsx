@@ -1,23 +1,72 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Card, Input, Button, Table, Tag, message, Descriptions, Spin, Modal, Space } from "antd";
+import { Card, Input, Button, Table, Tag, message, Descriptions, Spin, Modal, Space, Alert } from "antd";
 import { SearchOutlined, UserOutlined, FileTextOutlined, EyeOutlined } from "@ant-design/icons";
 import demandeAuthentificationService from "@/services/demandeAuthentification.service";
+import abonnementService from "@/services/abonnement.service";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/useAuth";
 import dayjs from "dayjs";
 
 const statusColors = { EN_ATTENTE: "blue", DOCUMENTS_RECUS: "gold", TRAITEE: "green", ANNULEE: "red" };
 const DOC_TYPE_KEYS = ["DIPLOMA", "TRANSCRIPT", "ID_CARD", "BIRTH_CERTIFICATE", "PASSPORT", "CERTIFICATE", "LETTER", "OTHER"];
 
+const SubscriptionAlert = ({ userOrgId, t }) => (
+  <Alert
+    type="warning"
+    message={t("demandesAuthentification.codeADN.subscriptionRequired")}
+    description={
+      <>
+        <p className="mb-2">{t("demandesAuthentification.byDemandeurCode.subscriptionRequiredDesc")}</p>
+        {userOrgId && (
+          <Link to={`/organisations/${userOrgId}/abonnement`} className="font-medium text-[var(--applyons-blue)] hover:underline">
+            {t("demandesAuthentification.codeADN.subscriptionRequiredLink")}
+          </Link>
+        )}
+      </>
+    }
+    className="mb-4"
+    showIcon
+  />
+);
+
 export default function InstitutRechercheCodeDemandeurPage() {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const userOrgId = user?.organization?.id ?? user?.organizationId ?? null;
+
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [detailModalDemande, setDetailModalDemande] = useState(null);
   const [openingDoc, setOpeningDoc] = useState(null);
   const [viewingDoc, setViewingDoc] = useState(null);
+  const [subscriptionChecked, setSubscriptionChecked] = useState(false);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+
+  useEffect(() => {
+    if (!userOrgId) {
+      setSubscriptionChecked(true);
+      setHasActiveSubscription(false);
+      return;
+    }
+    let cancelled = false;
+    abonnementService
+      .getActiveForOrg(userOrgId)
+      .then((res) => {
+        if (cancelled) return;
+        const hasActive = !!(res?.abonnement ?? res?.data?.abonnement);
+        setHasActiveSubscription(hasActive);
+      })
+      .catch(() => {
+        if (!cancelled) setHasActiveSubscription(false);
+      })
+      .finally(() => {
+        if (!cancelled) setSubscriptionChecked(true);
+      });
+    return () => { cancelled = true; };
+  }, [userOrgId]);
 
   const openDocument = async (urlOriginal) => {
     if (!urlOriginal) return;
@@ -47,6 +96,10 @@ export default function InstitutRechercheCodeDemandeurPage() {
   };
 
   const onSearch = async () => {
+    if (!hasActiveSubscription) {
+      message.warning(t("demandesAuthentification.codeADN.subscriptionRequired"));
+      return;
+    }
     const trimmed = (code || "").trim().toUpperCase();
     if (!trimmed) {
       message.warning(t("demandesAuthentification.byDemandeurCode.enterCode"));
@@ -65,8 +118,14 @@ export default function InstitutRechercheCodeDemandeurPage() {
         message.info(t("demandesAuthentification.byDemandeurCode.notFound"));
       }
     } catch (e) {
-      const msg = e?.response?.data?.message || e?.message || t("demandesAuthentification.toasts.loadError");
-      message.error(msg);
+      const codeErr = e?.response?.data?.code;
+      if (codeErr === "SUBSCRIPTION_REQUIRED") {
+        setHasActiveSubscription(false);
+        message.error(t("demandesAuthentification.codeADN.subscriptionRequired"));
+      } else {
+        const msg = e?.response?.data?.message || e?.message || t("demandesAuthentification.toasts.loadError");
+        message.error(msg);
+      }
       setResult(null);
     } finally {
       setLoading(false);
@@ -131,6 +190,31 @@ export default function InstitutRechercheCodeDemandeurPage() {
       ),
     },
   ];
+
+  if (!subscriptionChecked) {
+    return (
+      <div className="container-fluid relative px-3 py-4">
+        <div className="layout-specing flex justify-center items-center min-h-[200px]">
+          <Spin size="large" tip={t("demandesAuthentification.loading")} />
+        </div>
+      </div>
+    );
+  }
+
+  if (!hasActiveSubscription) {
+    return (
+      <div className="container-fluid relative px-3 py-4">
+        <div className="layout-specing">
+          <SubscriptionAlert userOrgId={userOrgId} t={t} />
+          <Card title={t("demandesAuthentification.byDemandeurCode.title")} className="mb-4">
+            <p className="text-gray-500 dark:text-gray-400 mb-0">
+              {t("demandesAuthentification.byDemandeurCode.subscriptionRequiredDesc")}
+            </p>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container-fluid relative px-3 py-4">
